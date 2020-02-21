@@ -1,0 +1,22 @@
+{
+    "extends": ["tslint:latest", "tslint-react", "tslint-config-prettier"],
+    "rules": {
+        "member-access": false,
+        "interface-name": [true, "never-prefix"],
+        "jsx-no-lambda": false,
+        "no-submodule-imports": false,
+        "object-literal-sort-keys": false,
+        "no-bitwise": false,
+        "no-duplicate-imports": true,
+        "no-shadowed-variable": true,
+        "no-var-requires": false,
+        "no-implicit-dependencies": false,
+        "no-empty-interface": false,
+        "ordered-imports": false,
+        "prefer-object-spread": true,
+        "max-classes-per-file": false,
+        "jsdoc-format": false,
+        "prefer-conditional-expression": false,
+        "prettier": true
+    }
+}
