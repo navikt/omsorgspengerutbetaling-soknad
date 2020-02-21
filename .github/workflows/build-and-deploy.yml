@@ -94,10 +94,8 @@ jobs:
           cp docker_image/.docker_image .
           cp docker_tag/.docker_tag .
       - name: deploy to dev-sbs
-        uses: navikt/deployment-cli/action@0.4.0
+        uses: nais/deploy/actions/deploy@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          cluster: dev-sbs
-          team: dusseldorf
-          resources: nais/dev-sbs.yml
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: dev-sbs
+          RESOURCE: nais/dev-sbs.yml
