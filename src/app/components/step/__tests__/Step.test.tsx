@@ -35,7 +35,7 @@ describe('<Step>', () => {
 
     it('should render common <Step> content', () => {
         const { getByText } = renderResult;
-        expect(getByText('Søknad om ekstra omsorgsdager')).toBeTruthy();
+        expect(getByText('Søknad om utbetaling av omsorgsdager for selvstendige og frilansere')).toBeTruthy();
         expect(getByText('Barn')).toBeTruthy();
         expect(getByText('Fortsett')).toBeTruthy();
         expect(getByText('Tilbake')).toBeTruthy();
