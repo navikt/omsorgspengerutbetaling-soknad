@@ -18,6 +18,7 @@ moment.locale(localeFromSessionStorage);
 
 const App: React.FunctionComponent = () => {
     const [locale, setLocale] = React.useState<Locale>(localeFromSessionStorage);
+
     return (
         <ApplicationWrapper
             locale={locale}

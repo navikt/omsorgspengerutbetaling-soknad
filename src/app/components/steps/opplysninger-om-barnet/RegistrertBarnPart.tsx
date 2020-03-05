@@ -9,12 +9,12 @@ import intlHelper from '@navikt/sif-common/lib/common/utils/intlUtils';
 import { formatName } from '@navikt/sif-common/lib/common/utils/personUtils';
 import { CustomFormikProps } from '../../../types/FormikProps';
 import { AppFormField, initialValues } from '../../../types/OmsorgspengesøknadFormData';
-import { BarnReceivedFromApi } from '../../../types/Søkerdata';
 import { validateValgtBarn } from '../../../validation/fieldValidations';
+import {Barn} from "../../../../@types/omsorgspengerutbetaling-schema";
 
 interface Props {
     formikProps: CustomFormikProps;
-    søkersBarn: BarnReceivedFromApi[];
+    søkersBarn: Barn[];
 }
 
 const RegistrertBarnPart: React.FunctionComponent<Props> = ({
@@ -32,7 +32,7 @@ const RegistrertBarnPart: React.FunctionComponent<Props> = ({
                 name={AppFormField.barnetSøknadenGjelder}
                 radios={søkersBarn.map((barn) => {
                     const { fornavn, mellomnavn, etternavn, fødselsdato, aktørId } = barn;
-                    const barnetsNavn = formatName(fornavn, etternavn, mellomnavn);
+                    const barnetsNavn = formatName(fornavn, etternavn, mellomnavn || undefined);
                     return {
                         value: aktørId,
                         key: aktørId,
@@ -42,7 +42,7 @@ const RegistrertBarnPart: React.FunctionComponent<Props> = ({
                                 <Normaltekst>
                                     <FormattedMessage
                                         id="steg.omBarnet.hvilketBarn.født"
-                                        values={{ dato: prettifyDate(fødselsdato) }}
+                                        values={{ dato: prettifyDate(new Date(fødselsdato)) }}
                                     />
                                 </Normaltekst>
                             </>

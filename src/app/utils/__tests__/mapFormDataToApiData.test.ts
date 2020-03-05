@@ -7,9 +7,9 @@ import {
     OmsorgspengesøknadFormData,
     SøkersRelasjonTilBarnet
 } from '../../types/OmsorgspengesøknadFormData';
-import { BarnReceivedFromApi } from '../../types/Søkerdata';
 import { isFeatureEnabled } from '../featureToggleUtils';
 import { mapFormDataToApiData } from '../mapFormDataToApiData';
+import { Barn } from '../../../@types/omsorgspengerutbetaling-schema';
 
 const moment = require('moment');
 
@@ -22,8 +22,8 @@ const todaysDate = moment()
     .startOf('day')
     .toDate();
 
-const barnMock: BarnReceivedFromApi[] = [
-    { fødselsdato: todaysDate, fornavn: 'Mock', etternavn: 'Mocknes', aktørId: '123' }
+const barnMock: Barn[] = [
+    { fødselsdato: todaysDate, fornavn: 'Mock', etternavn: 'Mocknes', aktørId: '123', mellomnavn: null }
 ];
 
 type AttachmentMock = Attachment & { failed: boolean };

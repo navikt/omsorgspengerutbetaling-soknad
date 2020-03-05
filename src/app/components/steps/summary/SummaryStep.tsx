@@ -19,7 +19,7 @@ import routeConfig from '../../../config/routeConfig';
 import { StepID } from '../../../config/stepConfig';
 import { SøkerdataContextConsumer } from '../../../context/SøkerdataContext';
 import { AppFormField } from '../../../types/OmsorgspengesøknadFormData';
-import { BarnReceivedFromApi, Søkerdata } from '../../../types/Søkerdata';
+import { Søkerdata } from '../../../types/Søkerdata';
 import * as apiUtils from '../../../utils/apiUtils';
 import { appIsRunningInDemoMode } from '../../../utils/envUtils';
 import { mapFormDataToApiData } from '../../../utils/mapFormDataToApiData';
@@ -28,6 +28,7 @@ import FormikStep from '../../formik-step/FormikStep';
 import LegeerklæringAttachmentList from '../../legeerklæring-attachment-list/LegeerklæringAttachmentList';
 import { CommonStepFormikProps } from '../../omsorgspengesøknad-content/OmsorgspengesøknadContent';
 import SamværsavtaleAttachmentList from '../../samværsavtale-attachment-list/SamværsavtaleAttachmentList';
+import { Barn } from '../../../../@types/omsorgspengerutbetaling-schema';
 
 interface State {
     sendingInProgress: boolean;
@@ -44,7 +45,7 @@ class SummaryStep extends React.Component<Props, State> {
         this.navigate = this.navigate.bind(this);
     }
 
-    async navigate(barn: BarnReceivedFromApi[]) {
+    async navigate(barn: Barn[]) {
         const { history, formValues, intl } = this.props;
         this.setState({
             sendingInProgress: true
@@ -119,7 +120,7 @@ class SummaryStep extends React.Component<Props, State> {
                                                                         navn: formatName(
                                                                             barnReceivedFromApi!.fornavn,
                                                                             barnReceivedFromApi!.etternavn,
-                                                                            barnReceivedFromApi!.mellomnavn
+                                                                            barnReceivedFromApi!.mellomnavn || undefined
                                                                         )
                                                                     }}
                                                                 />
@@ -129,7 +130,7 @@ class SummaryStep extends React.Component<Props, State> {
                                                                     id="steg.oppsummering.barnet.fødselsdato"
                                                                     values={{
                                                                         dato: prettifyDate(
-                                                                            barnReceivedFromApi!.fødselsdato
+                                                                            new Date(barnReceivedFromApi!.fødselsdato)
                                                                         )
                                                                     }}
                                                                 />

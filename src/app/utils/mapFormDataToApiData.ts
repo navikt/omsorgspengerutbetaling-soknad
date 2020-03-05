@@ -11,7 +11,7 @@ import {
     UtenlandsoppholdApiData
 } from '../types/OmsorgspengesøknadApiData';
 import { OmsorgspengesøknadFormData } from '../types/OmsorgspengesøknadFormData';
-import { BarnReceivedFromApi } from '../types/Søkerdata';
+import {Barn} from "../../@types/omsorgspengerutbetaling-schema";
 
 export const mapFormDataToApiData = (
     {
@@ -33,7 +33,7 @@ export const mapFormDataToApiData = (
         utenlandsoppholdNeste12Mnd,
         utenlandsoppholdSiste12Mnd
     }: OmsorgspengesøknadFormData,
-    barn: BarnReceivedFromApi[],
+    barn: Barn[],
     sprak: Locale
 ): OmsorgspengesøknadApiData => {
     // const barnObject: BarnToSendToApi = { navn: null, norskIdentifikator: null, alternativId: null, aktørId: null };
@@ -89,7 +89,7 @@ const mapUtenlandsoppholdTilApiData = (opphold: Utenlandsopphold, locale: string
 });
 
 export const mapBarnToApiData = (
-    barn: BarnReceivedFromApi[],
+    barn: Barn[],
     barnetsNavn: string,
     barnetsFødselsnummer: string | undefined,
     barnetsFødselsdato: Date | undefined,
@@ -99,10 +99,10 @@ export const mapBarnToApiData = (
         const barnChosenFromList = barn.find((currentBarn) => currentBarn.aktørId === barnetSøknadenGjelder)!;
         const { fornavn, etternavn, mellomnavn, aktørId } = barnChosenFromList;
         return {
-            navn: formatName(fornavn, etternavn, mellomnavn),
+            navn: formatName(fornavn, etternavn, mellomnavn || undefined),
             norskIdentifikator: null,
             aktørId,
-            fødselsdato: formatDateToApiFormat(barnChosenFromList.fødselsdato)
+            fødselsdato: formatDateToApiFormat(new Date(barnChosenFromList.fødselsdato))
         };
     } else {
         return {

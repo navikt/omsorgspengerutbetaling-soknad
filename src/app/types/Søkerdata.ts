@@ -1,3 +1,5 @@
+import {Barn} from "../../@types/omsorgspengerutbetaling-schema";
+
 export interface BarnReceivedFromApi {
     fornavn: string;
     etternavn: string;
@@ -17,5 +19,5 @@ export interface Person {
 
 export interface Søkerdata {
     person: Person;
-    barn: BarnReceivedFromApi[];
+    barn: Barn[];
 }
