@@ -3,12 +3,13 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { getTypedFormComponents } from '@navikt/sif-common-formik/lib';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import Lenke from 'nav-frontend-lenker';
-import CounsellorPanel from 'common/components/counsellor-panel/CounsellorPanel';
 import FormBlock from 'common/components/form-block/FormBlock';
 import bemHelper from 'common/utils/bemUtils';
 import { commonFieldErrorRenderer } from 'common/utils/commonFieldErrorRenderer';
 import intlHelper from 'common/utils/intlUtils';
 import { AppFormField, OmsorgspengesøknadFormData } from '../../../types/OmsorgspengesøknadFormData';
+import LegeerklæringInformationPanel from 'common/components/legeerklæring-information-panel/LegeerklæringInformationPanel';
+import Box from 'common/components/box/Box';
 
 interface Props {
     onConfirm: () => void;
@@ -42,13 +43,10 @@ const SamtykkeForm: React.FunctionComponent<Props> = ({
             {/*</FormBlock>*/}
             <FormBlock>
                 {/*{formValues.kroniskEllerFunksjonshemming === YesOrNo.NO && (*/}
-                <CounsellorPanel>
-                    TODO
-                    {/*<FormattedHTMLMessage*/}
-                    {/*    id={`introPage.infoIkkeKroniskEllerFunksjonshemmende.html`}*/}
-                    {/*    values={{ url: getLenker(intl.locale).papirskjemaPrivat }}*/}
-                    {/*/>*/}
-                </CounsellorPanel>
+
+                <Box margin={'xl'}>
+                    <LegeerklæringInformationPanel text={intlHelper(intl, 'welcomingPage.legeerklæring')} />
+                </Box>
                 {/*)}*/}
                 {/*{formValues.kroniskEllerFunksjonshemming === YesOrNo.YES && (*/}
                 <>

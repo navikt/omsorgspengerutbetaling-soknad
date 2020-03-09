@@ -106,8 +106,8 @@
 
 
 
-    "step.inntekt.pageTitle": "Pleiepengesøknad - opplysninger om ditt arbeidsforhold",
-    "step.inntekt.stepTitle": "Arbeidsforhold",
+    "step.inntekt.pageTitle": "Inntekt",
+    "step.inntekt.stepTitle": "Inntekt",
     "step.inntekt.stepIndicatorLabel": "Om ditt arbeidsforhold",
 
 
@@ -153,8 +153,8 @@
     "step.oppsummering.stepIndicatorLabel": "Oppsummering",
 
     "introPage.tittel": "Søknad om ekstra omsorgsdager",
-    "introPage.stegTittel": "Kan jeg bruke den digitale omsorgspengesøknaden?",
-    "introPage.intro.html": "<div>TODO</div>",
+    "introPage.stegTittel": "Kan jeg søke om utbetaling av omsorgspenger?",
+    "introPage.intro.html": "<p>Hvis du er selvstendig næringsdrivende eller frilanser kan du søke om å få utbetalt omsorgspenger fra NAV. Du må i de fleste tilfeller betale de 10 første dagene selv, men det er unntak fra dette hvis du har innvilget utvidet rett og ikke har andre barn under 12 år.</p><p>Hvis du er arbeidstaker og skal ha utbetalt omsorgspenger skal du ikke søke her, din arbeidsgiver må sende innteksmelding til NAV.</p>",
     "introPage.legeerklæring.html": "<p>Har du legeerklæringen klar? Du trenger den når du skal fylle ut søknaden. Da tar du bare et bilde av den og laster den opp.</p><p>Hvis du ikke bor på samme folkeregistrerte adresse som barnet, men har en avtale om delt bosted, må du også laste opp denne.</p>",
     "introPage.spm.kroniskEllerFunksjonshemmende": "Har du et barn som har en kronisk sykdom eller funksjonshemming?",
     "introPage.infoIkkeKroniskEllerFunksjonshemmende.html": "<p>Du må foreløpig bruke <a href=\"{url}\" class=\"lenke\">papirsøknaden</a> hvis du skal<ol><li>søke om å ta over dager fra en annen omsorgsperson</li><li>fordele dager med en annen omsorgsperson</li><li>overføre dager til en ny samlivspartner</li></ol></p>",
@@ -162,7 +162,8 @@
     "welcomingPage.sidetittel": "Søknad om ekstra omsorgsdager",
     "welcomingPage.banner.tittel": "Hei,",
     "welcomingPage.banner.tekst": "jeg vil hjelpe deg med å fylle ut søknaden!",
-    "welcomingPage.introtittel": "Søknad om utbetaling av omsorgsdager for selvstendig næringsdrivende og frilansere",
+    "welcomingPage.introtittel": "Søknad om utbetaling av omsorgspenger til selvstendig næringsdrivende eller frilansere",
+    "welcomingPage.legeerklæring": "Har du legeerklæringen klar? Du trenger den senere i søknaden. Da tar du bare et bilde av den og laster opp.",
     "welcomingPage.samtykke.tekst": "Jeg bekrefter at jeg har lest og forstått",
     "welcomingPage.samtykke.harIkkeGodkjentVilkår": "Du må godkjenne vilkårene",
     "welcomingPage.samtykke.harForståttLabel": "For å gå videre med søknaden må du bekrefte at du har lest og forstått {plikterLink}.",
