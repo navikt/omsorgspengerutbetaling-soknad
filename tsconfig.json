@@ -19,7 +19,10 @@
         "noUnusedLocals": true,
         "baseUrl": "./src",
         "paths": {
-            "common*": ["../node_modules/@navikt/sif-common/lib/common*"]
+            "common/forms": ["../node_modules/@navikt/sif-common-forms"],
+            "common/forms*": ["../node_modules/@navikt/sif-common-forms/lib*"],
+            "common/formik*": ["../node_modules/@navikt/sif-common-formik/lib*"],
+            "common*": ["../node_modules/@navikt/sif-common-core/lib*"]
         },
 
         "typeRoots": ["./node_modules/@types", "./src/@types"]

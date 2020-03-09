@@ -2,8 +2,7 @@ import { render, RenderResult } from '@testing-library/react';
 import * as React from 'react';
 import { MemoryRouter } from 'react-router';
 import IntlProvider from 'app/components/intl-provider/IntlProvider';
-import { StepID } from '../../../config/stepConfig';
-import { initialValues } from '../../../types/OmsorgspengesøknadFormData';
+import { getStepConfig, StepID } from '../../../config/stepConfig';
 import Step from '../Step';
 
 jest.mock('../../../utils/featureToggleUtils', () => {
@@ -20,24 +19,17 @@ const renderWrappedInMemoryRouter = (child: React.ReactNode) =>
         </IntlProvider>
     );
 
-const handleSubmit = jest.fn();
-
 describe('<Step>', () => {
-    const stepID: StepID = StepID.OPPLYSNINGER_OM_BARNET;
-
+    const stepID: StepID = StepID.NÅR_KAN_MAN_FÅ_UTBETALT_OMSORGSPENGER;
     let renderResult: RenderResult;
 
     beforeAll(() => {
-        renderResult = renderWrappedInMemoryRouter(
-            <Step id={stepID} handleSubmit={handleSubmit} formValues={initialValues} />
-        );
+        renderResult = renderWrappedInMemoryRouter(<Step id={stepID} stepConfig={getStepConfig()} />);
     });
 
     it('should render common <Step> content', () => {
         const { getByText } = renderResult;
-        expect(getByText('Søknad om utbetaling av omsorgsdager for selvstendige og frilansere')).toBeTruthy();
-        expect(getByText('Barn')).toBeTruthy();
-        expect(getByText('Fortsett')).toBeTruthy();
-        expect(getByText('Tilbake')).toBeTruthy();
+        expect(getByText('Søknad om utbetaling av omsorgspenger til selvstendig næringsdrivende eller frilansere')).toBeTruthy();
+        expect(getByText('Når kan man få utbetalt omsorgspenger fra NAV?')).toBeTruthy();
     });
 });

@@ -3,11 +3,13 @@ import { getStepConfig, StepID } from '../config/stepConfig';
 import { AppFormField, OmsorgspengesøknadFormData } from '../types/OmsorgspengesøknadFormData';
 import { appIsRunningInDemoMode, appIsRunningInDevEnvironment } from './envUtils';
 import {
-    arbeidStepIsAvailable,
+    harUtbetaltDeFørsteTiDagene,
+    hvisUtenlandsoppholdAvailable,
+    inntektStepAvailable,
     legeerklæringStepAvailable,
     medlemskapStepAvailable,
-    opplysningerOmBarnetStepAvailable,
-    samværsavtaleStepAvailable,
+    nårKanManFåUtbetaltOmsorgspengerAvailable,
+    periodeAvailable,
     summaryStepAvailable
 } from './stepUtils';
 
@@ -26,16 +28,20 @@ export const getNextStepRoute = (stepId: StepID, formData?: OmsorgspengesøknadF
 export const isAvailable = (path: StepID | RouteConfig, values: OmsorgspengesøknadFormData) => {
     if (!appIsRunningInDevEnvironment() && !appIsRunningInDemoMode()) {
         switch (path) {
-            case StepID.OPPLYSNINGER_OM_BARNET:
-                return opplysningerOmBarnetStepAvailable(values);
+            case StepID.NÅR_KAN_MAN_FÅ_UTBETALT_OMSORGSPENGER:
+                return nårKanManFåUtbetaltOmsorgspengerAvailable(values);
+            case StepID.HAR_UTBETALT_DE_FØRST_TI_DAGENE:
+                return harUtbetaltDeFørsteTiDagene(values);
+            case StepID.PERIODE:
+                return periodeAvailable(values);
+            case StepID.HVIS_UTENLANDSOPPHOLD:
+                return hvisUtenlandsoppholdAvailable(values);
             case StepID.LEGEERKLÆRING:
                 return legeerklæringStepAvailable(values);
-            case StepID.ARBEID:
-                return arbeidStepIsAvailable(values);
+            case StepID.INNTEKT:
+                return inntektStepAvailable(values);
             case StepID.MEDLEMSKAP:
                 return medlemskapStepAvailable(values);
-            case StepID.SAMVÆRSAVTALE:
-                return samværsavtaleStepAvailable(values);
             case StepID.SUMMARY:
                 return summaryStepAvailable(values);
             case RouteConfig.SØKNAD_SENDT_ROUTE:

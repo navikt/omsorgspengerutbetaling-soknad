@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { FormattedHTMLMessage, FormattedMessage, useIntl } from 'react-intl';
 import AlertStripe from 'nav-frontend-alertstriper';
+import Lenke from 'nav-frontend-lenker';
 import { Ingress, Innholdstittel } from 'nav-frontend-typografi';
 import Box from 'common/components/box/Box';
 import CheckmarkIcon from 'common/components/checkmark-icon/CheckmarkIcon';
@@ -51,7 +52,11 @@ const ConfirmationPage: React.FunctionComponent = () => {
                     <AlertStripe type="info">
                         <p>
                             Hvis du har flere innspill til oss om hvordan vi kan gjøre søknaden bedre, kan du skrive til
-                            oss <a href="https://surveys.hotjar.com/s?siteId=148751&surveyId=144184">på denne siden</a>.
+                            oss{' '}
+                            <Lenke href="https://surveys.hotjar.com/s?siteId=148751&surveyId=144184">
+                                på denne siden
+                            </Lenke>
+                            .
                         </p>
                         <p>Tusen takk for hjelpen!</p>
                     </AlertStripe>

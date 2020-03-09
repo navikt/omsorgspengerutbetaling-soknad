@@ -1,20 +1,16 @@
 import { IntlShape } from 'react-intl';
-import { YesOrNo } from 'common/types/YesOrNo';
 import intlHelper from 'common/utils/intlUtils';
 import { StepConfigInterface, StepConfigItemTexts, StepID } from 'app/config/stepConfig';
-import { AppFormField, OmsorgspengesøknadFormData, SøkersRelasjonTilBarnet } from '../types/OmsorgspengesøknadFormData';
+import { OmsorgspengesøknadFormData } from '../types/OmsorgspengesøknadFormData';
 import {
-    arbeidStepIsValid,
+    harUtbetaltDeFørsteTiDagenePageIsValid,
+    inntektStepIsValid,
     legeerklæringStepIsValid,
     medlemskapStepIsValid,
-    opplysningerOmBarnetStepIsValid,
+    nårKanManFåUtbetaltOmsorgspengerPageIsValid,
+    periodeStepIsValid,
     welcomingPageIsValid
 } from '../validation/stepValidations';
-
-export const includeAvtaleStep = (formData: Partial<OmsorgspengesøknadFormData>): boolean =>
-    formData !== undefined &&
-    formData[AppFormField.sammeAdresse] === YesOrNo.NO &&
-    formData[AppFormField.søkersRelasjonTilBarnet] !== SøkersRelasjonTilBarnet.FOSTERFORELDER;
 
 export const getStepTexts = (intl: IntlShape, stepId: StepID, stepConfig: StepConfigInterface): StepConfigItemTexts => {
     const conf = stepConfig[stepId];
@@ -27,16 +23,21 @@ export const getStepTexts = (intl: IntlShape, stepId: StepID, stepConfig: StepCo
     };
 };
 
-export const opplysningerOmBarnetStepAvailable = (formData: OmsorgspengesøknadFormData) =>
+export const nårKanManFåUtbetaltOmsorgspengerAvailable = (formData: OmsorgspengesøknadFormData) =>
     welcomingPageIsValid(formData);
 
-export const arbeidStepIsAvailable = (formData: OmsorgspengesøknadFormData) =>
-    opplysningerOmBarnetStepIsValid(formData);
+export const harUtbetaltDeFørsteTiDagene = (formData: OmsorgspengesøknadFormData) =>
+    nårKanManFåUtbetaltOmsorgspengerPageIsValid(formData);
 
-export const medlemskapStepAvailable = (formData: OmsorgspengesøknadFormData) => arbeidStepIsValid(formData);
+export const periodeAvailable = (formData: OmsorgspengesøknadFormData) =>
+    harUtbetaltDeFørsteTiDagenePageIsValid(formData);
+
+export const hvisUtenlandsoppholdAvailable = (formData: OmsorgspengesøknadFormData) => periodeStepIsValid(formData);
+
+export const medlemskapStepAvailable = (formData: OmsorgspengesøknadFormData) => inntektStepIsValid(formData);
 
 export const legeerklæringStepAvailable = (formData: OmsorgspengesøknadFormData) => medlemskapStepIsValid(formData);
 
-export const samværsavtaleStepAvailable = (formData: OmsorgspengesøknadFormData) => legeerklæringStepIsValid();
+export const inntektStepAvailable = (formData: OmsorgspengesøknadFormData) => legeerklæringStepIsValid();
 
 export const summaryStepAvailable = (formData: OmsorgspengesøknadFormData) => legeerklæringStepIsValid();

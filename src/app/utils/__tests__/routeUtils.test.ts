@@ -13,9 +13,7 @@ jest.mock('../featureToggleUtils', () => {
 
 jest.mock('./../stepUtils', () => {
     return {
-        opplysningerOmBarnetStepAvailable: jest.fn(() => 'barn step available'),
         legeerklæringStepAvailable: jest.fn(() => 'legeerklæring step available'),
-        samværsavtaleStepAvailable: jest.fn(() => 'samværsavtale step available'),
         medlemskapStepAvailable: jest.fn(() => 'medlemskap step available'),
         summaryStepAvailable: jest.fn(() => 'summary step available')
     };
@@ -34,22 +32,10 @@ describe('routeUtils', () => {
     });
 
     describe('isAvailable', () => {
-        it('should return result from calling opplysningerOmBarnetStepAvailable if route=StepID.OPPLYSNINGER_OM_BARNET', () => {
-            const result = isAvailable(StepID.OPPLYSNINGER_OM_BARNET, formValues);
-            expect(stepUtils.opplysningerOmBarnetStepAvailable).toHaveBeenCalledWith(formValues);
-            expect(result).toEqual(stepUtils.opplysningerOmBarnetStepAvailable(formValues));
-        });
-
         it('should return result from calling legeerklæringStepAvailable if route=StepID.LEGEERKLÆRING', () => {
             const result = isAvailable(StepID.LEGEERKLÆRING, formValues);
             expect(stepUtils.legeerklæringStepAvailable).toHaveBeenCalledWith(formValues);
             expect(result).toEqual(stepUtils.legeerklæringStepAvailable(formValues));
-        });
-
-        it('should return result from calling samværsavtaleAvailable if route=StepID.SAMVÆRSAVTALE', () => {
-            const result = isAvailable(StepID.SAMVÆRSAVTALE, formValues);
-            expect(stepUtils.samværsavtaleStepAvailable).toHaveBeenCalledWith(formValues);
-            expect(result).toEqual(stepUtils.samværsavtaleStepAvailable(formValues));
         });
 
         it('should return result from calling medlemskapStepAvailable if route=StepID.MEDLEMSKAP', () => {
@@ -78,13 +64,6 @@ describe('routeUtils', () => {
                 [AppFormField.harBekreftetOpplysninger]: false
             });
             expect(result).toBe(false);
-        });
-
-        describe('when running app in development', () => {
-            it('should return true if app is running in development', () => {
-                process.env.NODE_ENV = 'development';
-                expect(isAvailable(StepID.OPPLYSNINGER_OM_BARNET, formValues)).toBe(true);
-            });
         });
     });
 });

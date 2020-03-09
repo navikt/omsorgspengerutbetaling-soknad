@@ -1,15 +1,14 @@
 import * as React from 'react';
-import {AxiosError, AxiosResponse} from 'axios';
-import {getBarn, getSøker} from '../../api/api';
-import routeConfig, {getRouteUrl} from '../../config/routeConfig';
-import {SøkerdataContextProvider} from '../../context/SøkerdataContext';
+import { AxiosError, AxiosResponse } from 'axios';
+import { getBarn, getSøker } from '../../api/api';
+import routeConfig, { getRouteUrl } from '../../config/routeConfig';
+import { SøkerdataContextProvider } from '../../context/SøkerdataContext';
 import demoSøkerdata from '../../demo/demoData';
-import {Søkerdata} from '../../types/Søkerdata';
+import { Søkerdata } from '../../types/Søkerdata';
 import * as apiUtils from '../../utils/apiUtils';
-import {appIsRunningInDemoMode} from '../../utils/envUtils';
-import {navigateToLoginPage, userIsCurrentlyOnErrorPage} from '../../utils/navigationUtils';
+import { appIsRunningInDemoMode } from '../../utils/envUtils';
+import { navigateToLoginPage, userIsCurrentlyOnErrorPage } from '../../utils/navigationUtils';
 import LoadingPage from '../pages/loading-page/LoadingPage';
-import {BarnResponse} from "../../../@types/omsorgspengerutbetaling-schema";
 
 interface Props {
     contentLoadedRenderer: (søkerdata?: Søkerdata) => React.ReactNode;
@@ -57,11 +56,11 @@ class AppEssentialsLoader extends React.Component<Props, State> {
         this.stopLoading();
     }
 
-    handleSøkerdataFetchSuccess(søkerResponse: AxiosResponse, barnResponse?: AxiosResponse<BarnResponse>) {
+    handleSøkerdataFetchSuccess(søkerResponse: AxiosResponse, barnResponse?: AxiosResponse) {
         this.updateSøkerdata(
             {
                 person: søkerResponse.data,
-                barn: barnResponse ? barnResponse.data.barn : []
+                barn: barnResponse ? barnResponse.data.barn : undefined
             },
             () => {
                 this.stopLoading();

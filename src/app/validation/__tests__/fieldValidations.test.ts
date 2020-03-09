@@ -1,14 +1,8 @@
 import { Attachment } from 'common/types/Attachment';
 import { YesOrNo } from 'common/types/YesOrNo';
 import {
-    AppFieldValidationErrors,
-    fieldValidationError,
-    hasValue,
-    validateFødselsnummer,
-    validateLegeerklæring,
-    validateNavn,
-    validateRelasjonTilBarnet,
-    validateYesOrNoIsAnswered
+    AppFieldValidationErrors, fieldValidationError, hasValue, validateFødselsnummer,
+    validateLegeerklæring, validateNavn, validateRelasjonTilBarnet, validateYesOrNoIsAnswered
 } from '../fieldValidations';
 import * as fødselsnummerValidator from '../fødselsnummerValidator';
 

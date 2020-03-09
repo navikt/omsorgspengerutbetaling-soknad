@@ -1,12 +1,9 @@
 import * as React from 'react';
+import { TypedFormikWrapper } from '@navikt/sif-common-formik/lib';
+import { initialValues, OmsorgspengesøknadFormData } from '../../types/OmsorgspengesøknadFormData';
 import AppEssentialsLoader from '../app-essentials-loader/AppEssentialsLoader';
-import FormikWrapper from '../formik-wrapper/FormikWrapper';
 import OmsorgspengesøknadContent from '../omsorgspengesøknad-content/OmsorgspengesøknadContent';
 import IkkeMyndigPage from '../pages/ikke-myndig-page/IkkeMyndigPage';
-
-const renderOmsorgspengesoknad = () => (
-    <FormikWrapper contentRenderer={(formikProps) => <OmsorgspengesøknadContent formikProps={formikProps} />} />
-);
 
 const Omsorgspengesøknad = () => (
     <AppEssentialsLoader
@@ -17,7 +14,13 @@ const Omsorgspengesøknad = () => (
                     return <IkkeMyndigPage />;
                 }
             }
-            return renderOmsorgspengesoknad();
+            return (
+                <TypedFormikWrapper<OmsorgspengesøknadFormData>
+                    initialValues={initialValues}
+                    onSubmit={() => null}
+                    renderForm={() => <OmsorgspengesøknadContent />}
+                />
+            );
         }}
     />
 );

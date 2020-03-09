@@ -1,82 +1,95 @@
 import * as React from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
+import { useFormikContext } from 'formik';
 import RouteConfig from '../../config/routeConfig';
 import { StepID } from '../../config/stepConfig';
-import { CustomFormikProps } from '../../types/FormikProps';
 import { OmsorgspengesøknadFormData } from '../../types/OmsorgspengesøknadFormData';
+import { navigateTo } from '../../utils/navigationUtils';
 import { getNextStepRoute, getSøknadRoute, isAvailable } from '../../utils/routeUtils';
 import ConfirmationPage from '../pages/confirmation-page/ConfirmationPage';
 import GeneralErrorPage from '../pages/general-error-page/GeneralErrorPage';
 import WelcomingPage from '../pages/welcoming-page/WelcomingPage';
-import ArbeidStep from '../step/arbeid/ArbeidStep';
 import LegeerklæringStep from '../steps/legeerklæring/LegeerklæringStep';
 import MedlemsskapStep from '../steps/medlemskap/MedlemsskapStep';
-import OpplysningerOmBarnetStep from '../steps/opplysninger-om-barnet/OpplysningerOmBarnetStep';
-import SamværsavtaleStep from '../steps/samværsavtale/SamværsavtaleStep';
 import SummaryStep from '../steps/summary/SummaryStep';
+import NårKanManFåUtbetaltOmsorgspengerStep from '../steps/når-kan-man-få-utbetalt-omsorgspenger/NårKanManFåUtbetaltOmsorgspengerStep';
+import HarUtbetaltDeFørsteTiDageneStep from '../steps/har-utbetalt-de-første-ti-dagene/HarUtbetaltDeFørsteTiDageneStep';
+import PeriodeStep from '../steps/periode/PeriodeStep';
+import HvisUtenlandsoppholdStep from '../steps/hvis-utenlandsopphold/HvisUtenlandsoppholdStep';
+import InntektStep from '../steps/inntekt/InntektStep';
 
-interface OmsorgspengesøknadContentProps {
-    formikProps: CustomFormikProps;
-}
-
-export interface CommonStepFormikProps {
-    formValues: OmsorgspengesøknadFormData;
-    handleSubmit: () => void;
-}
-
-const OmsorgspengesøknadContent: React.FunctionComponent<OmsorgspengesøknadContentProps> = ({ formikProps }) => {
+const OmsorgspengesøknadContent: React.FunctionComponent = () => {
     const [søknadHasBeenSent, setSøknadHasBeenSent] = React.useState(false);
-    const { handleSubmit, values, isSubmitting, isValid, resetForm } = formikProps;
-    const commonFormikProps: CommonStepFormikProps = { handleSubmit, formValues: formikProps.values };
+    const formik = useFormikContext<OmsorgspengesøknadFormData>();
+    const history = useHistory();
+    const { values, resetForm } = formik;
+
+    const navigateToNextStep = (stepId: StepID) => {
+        setTimeout(() => {
+            const nextStepRoute = getNextStepRoute(stepId, values);
+            if (nextStepRoute) {
+                navigateTo(nextStepRoute, history);
+            }
+        });
+    };
     return (
         <Switch>
             <Route
                 path={RouteConfig.WELCOMING_PAGE_ROUTE}
-                render={(props) => (
+                render={() => (
                     <WelcomingPage
-                        {...commonFormikProps}
-                        {...props}
-                        isSubmitting={isSubmitting}
-                        isValid={isValid}
-                        nextStepRoute={`${RouteConfig.SØKNAD_ROUTE_PREFIX}/${StepID.OPPLYSNINGER_OM_BARNET}`}
+                        onValidSubmit={() =>
+                            setTimeout(() => {
+                                navigateTo(
+                                    `${RouteConfig.SØKNAD_ROUTE_PREFIX}/${StepID.NÅR_KAN_MAN_FÅ_UTBETALT_OMSORGSPENGER}`,
+                                    history
+                                );
+                            })
+                        }
                     />
                 )}
             />
 
-            {isAvailable(StepID.OPPLYSNINGER_OM_BARNET, values) && (
+            {isAvailable(StepID.NÅR_KAN_MAN_FÅ_UTBETALT_OMSORGSPENGER, values) && (
                 <Route
-                    path={getSøknadRoute(StepID.OPPLYSNINGER_OM_BARNET)}
-                    render={(props) => (
-                        <OpplysningerOmBarnetStep
-                            formikProps={formikProps}
-                            {...props}
-                            nextStepRoute={getNextStepRoute(StepID.OPPLYSNINGER_OM_BARNET, values)}
+                    path={getSøknadRoute(StepID.NÅR_KAN_MAN_FÅ_UTBETALT_OMSORGSPENGER)}
+                    render={() => (
+                        <NårKanManFåUtbetaltOmsorgspengerStep
+                            onValidSubmit={() => navigateToNextStep(StepID.NÅR_KAN_MAN_FÅ_UTBETALT_OMSORGSPENGER)}
+                            formValues={values}
                         />
                     )}
                 />
             )}
 
-            {isAvailable(StepID.ARBEID, values) && (
+            {isAvailable(StepID.HAR_UTBETALT_DE_FØRST_TI_DAGENE, values) && (
                 <Route
-                    path={getSøknadRoute(StepID.ARBEID)}
-                    render={(props) => (
-                        <ArbeidStep
-                            {...commonFormikProps}
-                            {...props}
-                            nextStepRoute={getNextStepRoute(StepID.ARBEID, values)}
+                    path={getSøknadRoute(StepID.HAR_UTBETALT_DE_FØRST_TI_DAGENE)}
+                    render={() => (
+                        <HarUtbetaltDeFørsteTiDageneStep
+                            onValidSubmit={() => navigateToNextStep(StepID.HAR_UTBETALT_DE_FØRST_TI_DAGENE)}
+                            formValues={values}
                         />
                     )}
                 />
             )}
 
-            {isAvailable(StepID.MEDLEMSKAP, values) && (
+            {isAvailable(StepID.PERIODE, values) && (
                 <Route
-                    path={getSøknadRoute(StepID.MEDLEMSKAP)}
-                    render={(props) => (
-                        <MedlemsskapStep
-                            {...commonFormikProps}
-                            {...props}
-                            nextStepRoute={getNextStepRoute(StepID.MEDLEMSKAP, values)}
+                    path={getSøknadRoute(StepID.PERIODE)}
+                    render={() => (
+                        <PeriodeStep onValidSubmit={() => navigateToNextStep(StepID.PERIODE)} formValues={values} />
+                    )}
+                />
+            )}
+
+            {isAvailable(StepID.HVIS_UTENLANDSOPPHOLD, values) && (
+                <Route
+                    path={getSøknadRoute(StepID.HVIS_UTENLANDSOPPHOLD)}
+                    render={() => (
+                        <HvisUtenlandsoppholdStep
+                            onValidSubmit={() => navigateToNextStep(StepID.HVIS_UTENLANDSOPPHOLD)}
+                            formValues={values}
                         />
                     )}
                 />
@@ -85,26 +98,31 @@ const OmsorgspengesøknadContent: React.FunctionComponent<OmsorgspengesøknadCon
             {isAvailable(StepID.LEGEERKLÆRING, values) && (
                 <Route
                     path={getSøknadRoute(StepID.LEGEERKLÆRING)}
-                    render={(props) => (
+                    render={() => (
                         <LegeerklæringStep
-                            formikProps={formikProps}
-                            {...commonFormikProps}
-                            {...props}
-                            nextStepRoute={getNextStepRoute(StepID.LEGEERKLÆRING, values)}
+                            onValidSubmit={() => navigateToNextStep(StepID.LEGEERKLÆRING)}
+                            formValues={values}
                         />
                     )}
                 />
             )}
 
-            {isAvailable(StepID.SAMVÆRSAVTALE, values) && (
+            {isAvailable(StepID.INNTEKT, values) && (
                 <Route
-                    path={getSøknadRoute(StepID.SAMVÆRSAVTALE)}
-                    render={(props) => (
-                        <SamværsavtaleStep
-                            formikProps={formikProps}
-                            {...commonFormikProps}
-                            {...props}
-                            nextStepRoute={getNextStepRoute(StepID.SAMVÆRSAVTALE, values)}
+                    path={getSøknadRoute(StepID.INNTEKT)}
+                    render={() => (
+                        <InntektStep onValidSubmit={() => navigateToNextStep(StepID.INNTEKT)} formValues={values} />
+                    )}
+                />
+            )}
+
+            {isAvailable(StepID.MEDLEMSKAP, values) && (
+                <Route
+                    path={getSøknadRoute(StepID.MEDLEMSKAP)}
+                    render={() => (
+                        <MedlemsskapStep
+                            onValidSubmit={() => navigateToNextStep(StepID.MEDLEMSKAP)}
+                            formValues={values}
                         />
                     )}
                 />
@@ -113,7 +131,7 @@ const OmsorgspengesøknadContent: React.FunctionComponent<OmsorgspengesøknadCon
             {isAvailable(StepID.SUMMARY, values) && (
                 <Route
                     path={getSøknadRoute(StepID.SUMMARY)}
-                    render={(props) => <SummaryStep {...commonFormikProps} {...props} />}
+                    render={(props) => <SummaryStep formValues={values} onValidSubmit={() => null} />}
                 />
             )}
 

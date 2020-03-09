@@ -1,8 +1,8 @@
 import moment from 'moment';
-import { Utenlandsopphold } from 'common/forms/utenlandsopphold/types';
-import { Attachment } from 'common/types/Attachment';
-import { YesOrNo } from 'common/types/YesOrNo';
-import { attachmentHasBeenUploaded } from 'common/utils/attachmentUtils';
+import {Utenlandsopphold} from 'common/forms/utenlandsopphold/types';
+import {Attachment} from 'common/types/Attachment';
+import {YesOrNo} from 'common/types/YesOrNo';
+import {attachmentHasBeenUploaded} from 'common/utils/attachmentUtils';
 import {
     date1YearAgo,
     date1YearFromNow,
@@ -11,10 +11,10 @@ import {
     dateRangesExceedsRange,
     dateToday
 } from 'common/utils/dateUtils';
-import { createFieldValidationError } from 'common/validation/fieldValidations';
-import { FieldValidationResult } from 'common/validation/types';
-import { Arbeidssituasjon, SøkersRelasjonTilBarnet } from '../types/OmsorgspengesøknadFormData';
-import { fødselsnummerIsValid, FødselsnummerValidationErrorReason } from './fødselsnummerValidator';
+import {createFieldValidationError} from 'common/validation/fieldValidations';
+import {FieldValidationResult} from 'common/validation/types';
+import {SøkersRelasjonTilBarnet} from '../types/OmsorgspengesøknadFormData';
+import {fødselsnummerIsValid, FødselsnummerValidationErrorReason} from './fødselsnummerValidator';
 
 export enum AppFieldValidationErrors {
     'fødselsdato_ugyldig' = 'fieldvalidation.fødelsdato.ugyldig',
@@ -55,13 +55,6 @@ export const validateFødselsnummer = (v: string): FieldValidationResult => {
             return fieldValidationError(AppFieldValidationErrors.fødselsnummer_ugyldig);
         }
     }
-};
-
-export const validateValgtBarn = (v: string): FieldValidationResult => {
-    if (!hasValue(v)) {
-        return fieldIsRequiredError();
-    }
-    return undefined;
 };
 
 export const validateNavn = (v: string, isRequired?: boolean): FieldValidationResult => {
@@ -131,26 +124,8 @@ export const validateLegeerklæring = (attachments: Attachment[]): FieldValidati
     return undefined;
 };
 
-export const validateSamværsavtale = (attachments: Attachment[]): FieldValidationResult => {
-    const uploadedAttachments = attachments.filter((attachment) => attachmentHasBeenUploaded(attachment));
-    if (uploadedAttachments.length === 0) {
-        return fieldValidationError(AppFieldValidationErrors.samværsavtale_mangler);
-    }
-    if (uploadedAttachments.length > 3) {
-        return fieldValidationError(AppFieldValidationErrors.samværsavtale_forMangeFiler);
-    }
-    return undefined;
-};
-
 export const validateRequiredField = (value: any): FieldValidationResult => {
     if (!hasValue(value)) {
-        return fieldIsRequiredError();
-    }
-    return undefined;
-};
-
-export const validateArbeid = (value: Arbeidssituasjon[]): FieldValidationResult => {
-    if (value === undefined || value.length === 0) {
         return fieldIsRequiredError();
     }
     return undefined;

@@ -3,8 +3,8 @@ import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import Lenke from 'nav-frontend-lenker';
 import Box from 'common/components/box/Box';
 import Page from 'common/components/page/Page';
+import StepBanner from 'common/components/step-banner/StepBanner';
 import bemUtils from 'common/utils/bemUtils';
-import StepBanner from '../../step-banner/StepBanner';
 import './unavailablePage.less';
 
 const bem = bemUtils('introPage');

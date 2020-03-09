@@ -1,6 +1,5 @@
 import { ApiStringDate } from 'common/types/ApiStringDate';
 import { Locale } from 'common/types/Locale';
-import { Arbeidssituasjon, SøkersRelasjonTilBarnet } from './OmsorgspengesøknadFormData';
 
 export type ISO8601Duration = string;
 
@@ -28,15 +27,8 @@ export interface UtenlandsoppholdApiData {
 export interface OmsorgspengesøknadApiData {
     newVersion: boolean;
     språk: Locale;
-    erYrkesaktiv: boolean;
-    kroniskEllerFunksjonshemming: boolean;
-    barn: BarnToSendToApi;
-    sammeAdresse?: boolean;
-    relasjonTilBarnet: SøkersRelasjonTilBarnet | undefined;
-    arbeidssituasjon: Arbeidssituasjon[];
-    legeerklæring: string[];
-    samværsavtale?: string[];
-    medlemskap: Medlemskap;
     harForståttRettigheterOgPlikter: boolean;
     harBekreftetOpplysninger: boolean;
+    legeerklæring: string[];
+    medlemskap: Medlemskap;
 }
