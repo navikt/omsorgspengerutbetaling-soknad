@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { connect } from 'formik';
+import { connect, useFormikContext } from 'formik';
 import { Normaltekst } from 'nav-frontend-typografi';
 import AttachmentListWithDeletion from 'common/components/attachment-list-with-deletion/AttachmentListWithDeletion';
 import AttachmentList from 'common/components/attachment-list/AttachmentList';
@@ -9,22 +9,22 @@ import { Attachment } from 'common/types/Attachment';
 import { containsAnyUploadedAttachments, fileExtensionIsValid } from 'common/utils/attachmentUtils';
 import { removeElementFromArray } from 'common/utils/listUtils';
 import { deleteFile } from '../../api/api';
-import { ConnectedFormikProps } from '../../types/ConnectedFormikProps';
-import { AppFormField } from '../../types/OmsorgspengesøknadFormData';
+import { AppFormField, OmsorgspengesøknadFormData } from '../../types/OmsorgspengesøknadFormData';
 
 interface LegeerklæringAttachmentListProps {
     includeDeletionFunctionality: boolean;
     wrapNoAttachmentsInBox?: boolean;
 }
 
-type Props = LegeerklæringAttachmentListProps & ConnectedFormikProps<AppFormField>;
+type Props = LegeerklæringAttachmentListProps;
 
 const LegeerklæringAttachmentList: React.FunctionComponent<Props> = ({
-    formik: { values, setFieldValue },
     wrapNoAttachmentsInBox,
     includeDeletionFunctionality
 }) => {
-    const legeerklæring: Attachment[] = values[AppFormField.legeerklæring].filter(({ file }: Attachment) =>
+    const { values, setFieldValue } = useFormikContext<OmsorgspengesøknadFormData>();
+
+    const legeerklæring: Attachment[] = values.legeerklæring.filter(({ file }: Attachment) =>
         fileExtensionIsValid(file.name)
     );
 

@@ -5,7 +5,7 @@ import moment from 'moment';
 import Modal from 'nav-frontend-modal';
 import { Locale } from 'common/types/Locale';
 import ApplicationWrapper from './components/application-wrapper/ApplicationWrapper';
-import OmsorgspengerutbetalingSøknad from './components/omsorgspengesøknad/Omsorgspengesøknad';
+import Omsorgspengesøknad from './components/omsorgspengesøknad/Omsorgspengesøknad';
 import IntroPage from './components/pages/intro-page/IntroPage';
 import UnavailablePage from './components/pages/unavailable-page/UnavailablePage';
 import RouteConfig from './config/routeConfig';
@@ -30,7 +30,7 @@ const App: React.FunctionComponent = () => {
                     <UnavailablePage />
                 ) : (
                     <Switch>
-                        <Route path={RouteConfig.SØKNAD_ROUTE_PREFIX} component={OmsorgspengerutbetalingSøknad} />
+                        <Route path={RouteConfig.SØKNAD_ROUTE_PREFIX} component={Omsorgspengesøknad} />
                         <Route path="/" component={IntroPage} />
                     </Switch>
                 )}

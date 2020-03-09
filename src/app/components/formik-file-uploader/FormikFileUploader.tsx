@@ -1,20 +1,19 @@
 import * as React from 'react';
-import { ArrayHelpers, connect } from 'formik';
-import FormikFileInput from 'common/formik/formik-file-input/FormikFileInput';
-import { FieldArrayPushFn, FieldArrayReplaceFn, FormikValidateFunction } from 'common/formik/FormikProps';
+import { FormikValidateFunction } from '@navikt/sif-common-formik/lib';
+import { ArrayHelpers, useFormikContext } from 'formik';
 import { Attachment, PersistedFile } from 'common/types/Attachment';
-import { ConnectedFormikProps } from 'common/types/ConnectedFormikProps';
 import {
-    attachmentShouldBeProcessed,
-    attachmentShouldBeUploaded,
-    attachmentUploadHasFailed,
-    getPendingAttachmentFromFile,
-    isFileObject,
-    VALID_EXTENSIONS
+    attachmentShouldBeProcessed, attachmentShouldBeUploaded, attachmentUploadHasFailed,
+    getPendingAttachmentFromFile, isFileObject, VALID_EXTENSIONS
 } from 'common/utils/attachmentUtils';
 import { uploadFile } from '../../api/api';
 import { AppFormField } from '../../types/OmsorgspengesøknadFormData';
 import * as apiUtils from '../../utils/apiUtils';
+import AppForm from '../app-form/AppForm';
+
+export type FieldArrayReplaceFn = (index: number, value: any) => void;
+export type FieldArrayPushFn = (obj: any) => void;
+export type FieldArrayRemoveFn = (index: number) => undefined;
 
 interface FormikFileUploader {
     name: AppFormField;
@@ -25,16 +24,16 @@ interface FormikFileUploader {
     onUnauthorizedOrForbiddenUpload: () => void;
 }
 
-type Props = FormikFileUploader & ConnectedFormikProps<AppFormField>;
+type Props = FormikFileUploader;
 
 const FormikFileUploader: React.FunctionComponent<Props> = ({
     name,
-    formik: { values },
     onFileInputClick,
     onErrorUploadingAttachments,
     onUnauthorizedOrForbiddenUpload,
     ...otherProps
 }) => {
+    const { values } = useFormikContext();
     async function uploadAttachment(attachment: Attachment) {
         const { file } = attachment;
         if (isFileObject(file)) {
@@ -110,7 +109,7 @@ const FormikFileUploader: React.FunctionComponent<Props> = ({
     }
 
     return (
-        <FormikFileInput<AppFormField>
+        <AppForm.FileInput
             name={name}
             acceptedExtensions={VALID_EXTENSIONS.join(', ')}
             onFilesSelect={async (files: File[], { push, replace }: ArrayHelpers) => {
@@ -123,4 +122,4 @@ const FormikFileUploader: React.FunctionComponent<Props> = ({
     );
 };
 
-export default connect<FormikFileUploader, AppFormField>(FormikFileUploader);
+export default FormikFileUploader;

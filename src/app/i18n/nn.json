@@ -24,7 +24,7 @@
     "Torsdag": "Torsdag",
     "Fredag": "Fredag",
 
-    "banner.title": "Søknad om utbetaling av omsorgsdager for selvstendige og frilansere",
+    "banner.title": "Søknad om ekstra omsorgsdager",
 
     "page.loadingPage.tekst": "Laster ...",
     "gotoApplicationLink.lenketekst": "Gå til den digitale søknaden",
@@ -58,6 +58,24 @@
     "step.sendButtonLabel": "Send inn søknaden",
     "step.sendButtonAriaLabel": "Send inn søknaden",
 
+    "step.når-kan-man-få-utbetalt-omsorgspenger.pageTitle": "TODOO",
+    "step.når-kan-man-få-utbetalt-omsorgspenger.stepTitle": "TODO",
+    "step.når-kan-man-få-utbetalt-omsorgspenger.stepIndicatorLabel": "TODO",
+    "step.når-kan-man-få-utbetalt-omsorgspenger.tre_eller_fler_barn.spm": "Jeg har 3 eller flere barn",
+    "step.når-kan-man-få-utbetalt-omsorgspenger.alene_om_omsorg_for_barn.spm": "Jeg er alene om omsorg for barn",
+    "step.når-kan-man-få-utbetalt-omsorgspenger.rett_til_mer_enn_ti_dager_totalt.spm": "Jeg har fått overført dager og rett til mer enn 10 dager totalt",
+    "step.når-kan-man-få-utbetalt-omsorgspenger.den_andre_forelderen_ikke_kan_ta_seg_av_barnet.spm": "Jeg har innvilget ekstra dager fordi den andre forelderen ikke kan ta seg av barnet",
+    "step.når-kan-man-få-utbetalt-omsorgspenger.har_barn_som_har_kronisk_sykdom_eller_funksjonshemming.spm": "Jeg har innvilget ekstra dager fordi jeg har barn som har kronisk sykdom/funksjonshemming",
+
+
+    "step.har-utbetalt-de-første-ti-dagene.pageTitle": "TODO",
+    "step.har-utbetalt-de-første-ti-dagene.stepTitle": "Har du utbetalt 10 dager for deg selv i dette kalenderåret?",
+    "step.har-utbetalt-de-første-ti-dagene.stepIndicatorLabel": "TODO",
+    "step.har-utbetalt-de-første-ti-dagene.counsellorpanel.content":"I de fleste tilfeller må man som selvstendig næringsdrivende og frilanser betale de 10 første dager med omsorgspenger i året selv.",
+
+
+
+
     "step.opplysninger-om-barnet.pageTitle": "Omsorgspengesøknad - opplysninger om barnet",
     "step.opplysninger-om-barnet.stepTitle": "Barn",
     "step.opplysninger-om-barnet.stepIndicatorLabel": "Om barnet",
@@ -74,9 +92,9 @@
     "step.legeerklaering.stepTitle": "Legeerklæring",
     "step.legeerklaering.stepIndicatorLabel": "Last opp din legeerklæring",
 
-    "step.samværsavtale.pageTitle": "Omsorgspengesøknad - samværsavtale",
-    "step.samværsavtale.stepTitle": "Samværsavtale/avtale om delt bosted",
-    "step.samværsavtale.stepIndicatorLabel": "Last opp din samværsavtale/avtale om delt bosted",
+    "step.samværsavtale.pageTitle": "Omsorgspengesøknad - avtale om delt bosted",
+    "step.samværsavtale.stepTitle": "Avtale om delt bosted",
+    "step.samværsavtale.stepIndicatorLabel": "Last opp din avtale om delt bosted",
 
     "step.oppsummering.pageTitle": "Omsorgspengesøknad - oppsummering",
     "step.oppsummering.stepTitle": "Oppsummering",
@@ -84,10 +102,10 @@
 
     "introPage.tittel": "Søknad om ekstra omsorgsdager",
     "introPage.stegTittel": "Kan jeg bruke den digitale omsorgspengesøknaden?",
-    "introPage.intro.html": "<p>Den digitale søknaden er under utvikling og kan foreløpig kun brukes til å søke om utvidet rett til omsorgspenger for et barn som har en kronisk sykdom eller funksjonshemming. </p><div>For å søke må du være i én eller flere av disse arbeidssituasjonene:<ul><li>arbeidstaker</li><li>selvstendig næringsdrivende</li><li>frilanser</li></ul></div>",
-    "introPage.legeerklæring.html": "<p>Har du legeerklæringen klar? Du trenger den når du skal fylle ut søknaden. Da tar du bare et bilde av den og laster den opp.</p>Hvis du ikke bor fast sammen med barnet, må du også laste opp avtalen du og den andre forelderen har om samværet med barnet. Det kan for eksempel være en samværsavtale eller en avtale om delt bosted.",
+    "introPage.intro.html": "<div>TODO NYNORSK</div>",
+    "introPage.legeerklæring.html": "<p>Har du legeerklæringen klar? Du trenger den når du skal fylle ut søknaden. Da tar du bare et bilde av den og laster den opp.</p><p>Hvis du ikke bor på samme folkeregistrerte adresse som barnet, men har en avtale om delt bosted, må du også laste opp denne.</p>",
     "introPage.spm.kroniskEllerFunksjonshemmende": "Har du et barn som har en kronisk sykdom eller funksjonshemming?",
-    "introPage.infoIkkeKroniskEllerFunksjonshemmende.html": "Du må foreløpig bruke <a href=\"{url}\" class=\"lenke\">papirsøknaden</a> hvis du skal<ol><li>søke om å ta over dager fra en annen omsorgsperson</li><li>fordele dager med en annen omsorgsperson</li><li>overføre dager til en ny samlivspartner</li></ol>",
+    "introPage.infoIkkeKroniskEllerFunksjonshemmende.html": "<p>Du må foreløpig bruke <a href=\"{url}\" class=\"lenke\">papirsøknaden</a> hvis du skal<ol><li>søke om å ta over dager fra en annen omsorgsperson</li><li>fordele dager med en annen omsorgsperson</li><li>overføre dager til en ny samlivspartner</li></ol></p>",
 
     "welcomingPage.sidetittel": "Søknad om ekstra omsorgsdager",
     "welcomingPage.banner.tittel": "Hei,",
@@ -141,7 +159,7 @@
     "steg.omBarnet.fødselsdato": "Barnets fødselsdato",
     "steg.omBarnet.navn": "Barnets navn",
     "steg.omBarnet.relasjon": "Min relasjon til barnet",
-    "steg.omBarnet.veileder.samværsavtale": "Senere i søknaden laster du opp samværsavtale eller avtale om delt bosted for barnet.",
+    "steg.omBarnet.veileder.samværsavtale": "Senere i søknaden laster du opp avtale om delt bosted for barnet.",
 
     "steg.arbeid.spm": "Hva er din arbeidssituasjon? Du kan velge flere.",
 
@@ -157,7 +175,7 @@
     "steg.lege.intro.1.html": "For de første 8 ukene må legeerklæringen skrives av en sykehuslege. Etter de første 8 ukene kan legeerklæringen skrives av alle leger i spesialisthelsetjenesten.",
     "steg.lege.intro.2.html": "Disse yrkesgruppene kan <strong>ikke</strong> undertegne legeerklæringen: Sosionom, legesekretær, psykolog, psykologspesialist, fysioterapeut, fastlege og spesialist i allmennmedisin.",
 
-    "steg.samværsavtale.info.html": "<p>Ta bilde av avtalen du og den andre forelderen har om samvær med barnet. Det kan for eksempel være en samværsavtale eller en avtale om delt bosted. </p>Vær nøye med:<ul><li>å få all tekst med på bildet</li><li>at signaturen fra begge parter er synlig på bildet</li><li>at bildet er leselig</li></ul>",
+    "steg.samværsavtale.info.html": "<p>Ta bilde av avtalen om delt bosted og last opp.</p>Vær nøye med:<ul><li>å få all tekst med på bildet</li><li>at signaturen fra begge parter er synlig på bildet</li><li>at bildet er leselig</li></ul>",
     "steg.samværsavtale.vedlegg": "Last opp bilde av avtalen (maks 3 bilder)",
 
     "steg.oppsummering.info": "Les gjennom oppsummeringen før du sender inn søknaden. Hvis du vil gjøre endringer, kan du gå tilbake.",
@@ -180,7 +198,7 @@
     "steg.oppsummering.utlandetSiste12.liste.header": "Utenlandsopphold siste 12 måneder",
     "steg.oppsummering.utlandetNeste12.liste.header": "Utenlandsopphold neste 12 måneder",
     "steg.oppsummering.legeerklæring.header": "Legeerklæring",
-    "steg.oppsummering.samværsavtale.header": "Samværsavtale/avtale om delt bosted",
+    "steg.oppsummering.samværsavtale.header": "Avtale om delt bosted",
     "steg.oppsummering.bekrefterOpplysninger": "Jeg bekrefter at opplysningene jeg har gitt er riktige, og at jeg ikke har holdt tilbake opplysninger som har betydning for min rett til omsorgspenger.",
     "steg.oppsummering.bekrefterOpplysninger.ikkeBekreftet": "Du må bekrefte opplysningene",
 
@@ -189,7 +207,7 @@
     "page.confirmation.undertittel": "Hva skjer videre nå?",
     "page.confirmation.hvaSkjer1": "Søknaden din vil bli synlig på Ditt NAV etter omkring en uke. Da vil du også kunne se hva slags dokumentasjon vi har fått fra deg.",
     "page.confirmation.hvaSkjer2": "Vi starter behandlingen av søknaden din når vi har mottatt all nødvendig dokumentasjon. Vi kontakter deg hvis vi trenger flere opplysninger i saken din.",
-    "page.confirmation.hvaSkjer3": "Når søknaden er ferdig behandlet, får du et svarbrev fra oss. Du kan se <a href=\"{lenke}\" className=\"lenke\" rel=\"noopener\">saksbehandlingstiden</a> for ditt fylke her.",
+    "page.confirmation.hvaSkjer3": "Når søknaden er ferdig behandlet, får du et svarbrev fra oss. Du kan se <a href=\"{lenke}\" class=\"lenke\" rel=\"noopener\">saksbehandlingstiden</a> for ditt fylke her.",
 
     "page.generalErrorPage.sidetittel": "Feil",
     "page.generalErrorPage.tittel": "Noe gikk galt...",

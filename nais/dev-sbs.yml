@@ -6,7 +6,7 @@ metadata:
     labels:
         team: dusseldorf
 spec:
-    image: {{ image }}:{{ tag }}
+    image: {{ image }}
     port: 8080
     liveness:
         path: /familie/sykdom-i-familien/soknad/omsorgspengerutbetaling/health/isAlive
