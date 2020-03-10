@@ -43,7 +43,10 @@ export enum AppFormField {
 
     // STEG 3: Periode
 
+    periode_har_vært_i_utlandet = "periode_har_vært_i_utlandet",
+
     // STEG 4: Conditional perioder i utlandet
+    hvis_utenlandsopphold_en_test_verdi = "hvis_utenlandsopphold_en_test_verdi",
 
     // STEG 5: Legeerklæring
     legeerklæring = 'legeerklæring',
@@ -59,7 +62,7 @@ export enum AppFormField {
     harBoddUtenforNorgeSiste12Mnd = 'harBoddUtenforNorgeSiste12Mnd',
     utenlandsoppholdSiste12Mnd = 'utenlandsoppholdSiste12Mnd',
     skalBoUtenforNorgeNeste12Mnd = 'skalBoUtenforNorgeNeste12Mnd',
-    utenlandsoppholdNeste12Mnd = 'utenlandsoppholdNeste12Mnd'
+    utenlandsoppholdNeste12Mnd = 'utenlandsoppholdNeste12Mnd',
 
     // TODO: Må gå over å se om noen av disse trengs
     // barnetHarIkkeFåttFødselsnummerEnda = 'barnetHarIkkeFåttFødselsnummerEnda',
@@ -96,7 +99,10 @@ export interface OmsorgspengesøknadFormData {
 
     // STEG 3: Periode
 
+    [AppFormField.periode_har_vært_i_utlandet]: YesOrNo;
+
     // STEG 4: Conditional perioder i utlandet
+    [AppFormField.hvis_utenlandsopphold_en_test_verdi]: YesOrNo;
 
     // STEG 5: Legeerklæring
     [AppFormField.legeerklæring]: Attachment[];
@@ -149,7 +155,10 @@ export const initialValues: OmsorgspengesøknadFormData = {
 
     // STEG 3: Periode
 
+    [AppFormField.periode_har_vært_i_utlandet]: YesOrNo.UNANSWERED,
+
     // STEG 4: Conditional perioder i utlandet
+    [AppFormField.hvis_utenlandsopphold_en_test_verdi]: YesOrNo.UNANSWERED,
 
     // STEG 5: Legeerklæring
     [AppFormField.legeerklæring]: [],

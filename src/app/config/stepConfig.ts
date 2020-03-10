@@ -1,18 +1,16 @@
-import {OmsorgspengesøknadFormData} from '../types/OmsorgspengesøknadFormData';
+import {AppFormField, OmsorgspengesøknadFormData} from '../types/OmsorgspengesøknadFormData';
 import {getSøknadRoute} from '../utils/routeUtils';
 import routeConfig from './routeConfig';
+import {YesOrNo} from "common/types/YesOrNo";
 
 export enum StepID {
     'NÅR_KAN_MAN_FÅ_UTBETALT_OMSORGSPENGER' = 'når-kan-man-få-utbetalt-omsorgspenger',
     'HAR_UTBETALT_DE_FØRST_TI_DAGENE' = 'har-utbetalt-de-første-ti-dagene',
-
     'PERIODE' = 'periode',
     'HVIS_UTENLANDSOPPHOLD' = 'hvis-utenlandsopphold',
-
     'LEGEERKLÆRING' = 'legeerklaering',
     'INNTEKT' = 'inntekt',
     'MEDLEMSKAP' = 'medlemskap',
-
     'SUMMARY' = 'oppsummering'
 }
 
@@ -23,6 +21,7 @@ export interface StepConfigItemTexts {
     nextButtonLabel?: string;
     nextButtonAriaLabel?: string;
 }
+
 export interface StepItemConfigInterface extends StepConfigItemTexts {
     index: number;
     nextStep?: StepID;
@@ -43,63 +42,75 @@ const getStepConfigItemTextKeys = (stepId: StepID): StepConfigItemTexts => {
     };
 };
 
+const shouldIncludeHvisUtenlandsopphold = (formData?: OmsorgspengesøknadFormData): boolean => {
+    return !!(formData && formData[AppFormField.periode_har_vært_i_utlandet] === YesOrNo.YES)
+};
+
 export const getStepConfig = (formData?: OmsorgspengesøknadFormData): StepConfigInterface => {
     let idx = 0;
 
-    const config = {
+    const showHvisUtenlandopphold = shouldIncludeHvisUtenlandsopphold(formData);
+
+    let config = {
         [StepID.NÅR_KAN_MAN_FÅ_UTBETALT_OMSORGSPENGER]: {
             ...getStepConfigItemTextKeys(StepID.NÅR_KAN_MAN_FÅ_UTBETALT_OMSORGSPENGER),
             index: idx++,
-            nextStep: StepID.HAR_UTBETALT_DE_FØRST_TI_DAGENE, // TODO: STEP 2 skal være HAR_UTBETALT_DE_TI_FØRSTE_DAGENE
+            nextStep: StepID.HAR_UTBETALT_DE_FØRST_TI_DAGENE,
             backLinkHref: routeConfig.WELCOMING_PAGE_ROUTE
         },
         [StepID.HAR_UTBETALT_DE_FØRST_TI_DAGENE]: {
             ...getStepConfigItemTextKeys(StepID.HAR_UTBETALT_DE_FØRST_TI_DAGENE),
             index: idx++,
-            nextStep: StepID.PERIODE, // TODO: STEP 2 skal være HAR_UTBETALT_DE_TI_FØRSTE_DAGENE
+            nextStep: StepID.PERIODE,
             backLinkHref: getSøknadRoute(StepID.NÅR_KAN_MAN_FÅ_UTBETALT_OMSORGSPENGER)
         },
-
         [StepID.PERIODE]: {
             ...getStepConfigItemTextKeys(StepID.PERIODE),
             index: idx++,
-            nextStep: StepID.HVIS_UTENLANDSOPPHOLD, // TODO: conditional if hvis-utenlandsopphold.
+            nextStep: showHvisUtenlandopphold ? StepID.HVIS_UTENLANDSOPPHOLD : StepID.LEGEERKLÆRING, // TODO: conditional if hvis-utenlandsopphold.
             backLinkHref: getSøknadRoute(StepID.HAR_UTBETALT_DE_FØRST_TI_DAGENE)
-        },
-        [StepID.HVIS_UTENLANDSOPPHOLD]: {
+        }
+    };
+
+    if (showHvisUtenlandopphold) {
+        config[StepID.HVIS_UTENLANDSOPPHOLD] = {
             ...getStepConfigItemTextKeys(StepID.HVIS_UTENLANDSOPPHOLD),
             index: idx++,
             nextStep: StepID.LEGEERKLÆRING,
             backLinkHref: getSøknadRoute(StepID.PERIODE)
-        },
+        };
+    }
 
-        [StepID.LEGEERKLÆRING]: {
-            ...getStepConfigItemTextKeys(StepID.LEGEERKLÆRING),
-            index: idx++,
-            nextStep: StepID.INNTEKT,
-            backLinkHref: getSøknadRoute(StepID.HVIS_UTENLANDSOPPHOLD) // TODO: conditional if hvis-utenlandsopphold.
-        },
-
-        [StepID.INNTEKT]: {
-            ...getStepConfigItemTextKeys(StepID.INNTEKT),
-            index: idx++,
-            nextStep: StepID.MEDLEMSKAP,
-            backLinkHref: getSøknadRoute(StepID.LEGEERKLÆRING)
-        },
-
-        [StepID.MEDLEMSKAP]: {
-            ...getStepConfigItemTextKeys(StepID.MEDLEMSKAP),
-            index: idx++,
-            nextStep: StepID.SUMMARY,
-            backLinkHref: getSøknadRoute(StepID.HVIS_UTENLANDSOPPHOLD)
-        },
-
-        [StepID.SUMMARY]: {
-            ...getStepConfigItemTextKeys(StepID.SUMMARY),
-            index: idx++,
-            backLinkHref: getSøknadRoute(StepID.MEDLEMSKAP),
-            nextButtonLabel: 'step.sendButtonLabel',
-            nextButtonAriaLabel: 'step.sendButtonAriaLabel'
+    config = {
+        ...config,
+        ...{
+            [StepID.LEGEERKLÆRING]: {
+                ...getStepConfigItemTextKeys(StepID.LEGEERKLÆRING),
+                index: idx++,
+                nextStep: StepID.INNTEKT,
+                backLinkHref: showHvisUtenlandopphold
+                    ? getSøknadRoute(StepID.HVIS_UTENLANDSOPPHOLD)
+                    : getSøknadRoute(StepID.PERIODE)
+            },
+            [StepID.INNTEKT]: {
+                ...getStepConfigItemTextKeys(StepID.INNTEKT),
+                index: idx++,
+                nextStep: StepID.MEDLEMSKAP,
+                backLinkHref: getSøknadRoute(StepID.LEGEERKLÆRING)
+            },
+            [StepID.MEDLEMSKAP]: {
+                ...getStepConfigItemTextKeys(StepID.MEDLEMSKAP),
+                index: idx++,
+                nextStep: StepID.SUMMARY,
+                backLinkHref: getSøknadRoute(StepID.INNTEKT)
+            },
+            [StepID.SUMMARY]: {
+                ...getStepConfigItemTextKeys(StepID.SUMMARY),
+                index: idx++,
+                backLinkHref: getSøknadRoute(StepID.MEDLEMSKAP),
+                nextButtonLabel: 'step.sendButtonLabel',
+                nextButtonAriaLabel: 'step.sendButtonAriaLabel'
+            }
         }
     };
 

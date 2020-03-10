@@ -62,9 +62,9 @@
 
 
 
-    "step.når-kan-man-få-utbetalt-omsorgspenger.pageTitle": "TODO",
+    "step.når-kan-man-få-utbetalt-omsorgspenger.pageTitle": "Når kan man få utbetalt omsorgspenger fra NAV?",
     "step.når-kan-man-få-utbetalt-omsorgspenger.stepTitle": "Når kan man få utbetalt omsorgspenger fra NAV?",
-    "step.når-kan-man-få-utbetalt-omsorgspenger.stepIndicatorLabel": "TODO",
+    "step.når-kan-man-få-utbetalt-omsorgspenger.stepIndicatorLabel": "Når kan man få utbetalt omsorgspenger fra NAV?",
     "step.når-kan-man-få-utbetalt-omsorgspenger.counsellorpanel.content": "For å kunne få utbetalt omsorgspenger fra NAV må du totalt ha rett til mer enn 10 dager i kalenderåret",
     "step.når-kan-man-få-utbetalt-omsorgspenger.tre_eller_fler_barn.spm": "Jeg har 3 eller flere barn",
     "step.når-kan-man-få-utbetalt-omsorgspenger.alene_om_omsorg_for_barn.spm": "Jeg er alene om omsorg for barn",
@@ -75,9 +75,9 @@
 
 
 
-    "step.har-utbetalt-de-første-ti-dagene.pageTitle": "TODO",
+    "step.har-utbetalt-de-første-ti-dagene.pageTitle": "De første 10 dagene",
     "step.har-utbetalt-de-første-ti-dagene.stepTitle": "Har du utbetalt 10 dager for deg selv i dette kalenderåret?",
-    "step.har-utbetalt-de-første-ti-dagene.stepIndicatorLabel": "TODO",
+    "step.har-utbetalt-de-første-ti-dagene.stepIndicatorLabel": "De første 10 dagene",
     "step.har-utbetalt-de-første-ti-dagene.counsellorpanel.content":"I de fleste tilfeller må man som selvstendig næringsdrivende og frilanser betale de 10 første dager med omsorgspenger i året selv.",
 
     "step.har-utbetalt-de-første-ti-dagene.ja_nei_spm.legend":"Har du utbetalt 10 dager for deg selv i dette kalenderåret?",
@@ -90,17 +90,18 @@
 
 
 
-    "step.periode.pageTitle": "TODO",
-    "step.periode.stepTitle": "Har du utbetalt 10 dager for deg selv i dette kalenderåret?",
-    "step.periode.stepIndicatorLabel": "TODO",
+    "step.periode.pageTitle": "Spesifisering av dager og tidspunkter",
+    "step.periode.stepTitle": "Hvilke dager søker du om utbetaling for?",
+    "step.periode.stepIndicatorLabel": "Spesifisering av dager og tidspunkter",
     "step.periode.counsellorpanel.content":"I de fleste tilfeller må man som selvstendig næringsdrivende og frilanser betale de 10 første dager med omsorgspenger i året selv.",
+    "step.periode.har_dy_oppholdt_deg_i_utlandet_for_dager_du_soker_ok.spm": "Har du oppholdt deg i utlandet i noen av dagene du søker om utbetaling for?",
 
 
-    "step.hvis-utenlandsopphold.pageTitle": "TODO",
-    "step.hvis-utenlandsopphold.stepTitle": "Har du utbetalt 10 dager for deg selv i dette kalenderåret?",
-    "step.hvis-utenlandsopphold.stepIndicatorLabel": "TODO",
+    "step.hvis-utenlandsopphold.pageTitle": "Opphold i utlandet",
+    "step.hvis-utenlandsopphold.stepTitle": "Spesifiser hvilke perioder du har oppholdt deg i utlandet",
+    "step.hvis-utenlandsopphold.stepIndicatorLabel": "Opphold i utlandet",
     "step.hvis-utenlandsopphold.counsellorpanel.content":"I de fleste tilfeller må man som selvstendig næringsdrivende og frilanser betale de 10 første dager med omsorgspenger i året selv.",
-
+    "step.hvis_utenlandsopphold.en_test_verdi.spm": "Dette er en test verdi som skal bli tømt hvis bruker velger å gå tilbake å trykke nei på at personen har vært i utlandet etter å først ha sagt ja og så lagt inn data på det ekstra steget som dukker opp om å spesifisere perioder i utlandet.",
 
 
 
@@ -116,10 +117,6 @@
     "steg.inntekt.aktivtArbeidsforhold.info.html": "<p>For å ha rett til pleiepengar må du ha minst 20 prosent inntektstap mens du pleier barnet ditt. Dagpengar, sjukepengar, foreldrepengar, pleiepengar og opplæringspengar blir også rekna som inntekt.</p><p>Vi har funne desse arbeidsforholda registrerte på deg.</p>",
     "steg.inntekt.ingenOpplysninger": "Vi har ikkje nokon opplysningar om arbeidsgivar.",
     "steg.inntekt.manglesOpplysninger": "Manglar det ein arbeidsgivar her? Be arbeidsgivaren din sende ny A-melding, anten via lønns- og personalsystemet eller gjennom Altinn.",
-
-
-
-
 
 
 
