@@ -12,8 +12,21 @@ const selvstendigMessagesNn = require('../../i18n/selvstendigOgFrilans.nn.json')
 const appBokmålstekster = require('../../i18n/nb.json');
 const appNynorsktekster = require('../../i18n/nn.json');
 
-const bokmålstekster = { ...allCommonMessages.nb, ...appBokmålstekster, ...selvstendigMessagesNb };
-const nynorsktekster = { ...allCommonMessages.nn, ...appNynorsktekster, ...selvstendigMessagesNn };
+const periodeformNb = require('../steps/periode/periode.nb.json');
+const periodeformNn = require('../steps/periode/periode.nn.json');
+
+const bokmålstekster = {
+    ...allCommonMessages.nb,
+    ...appBokmålstekster,
+    ...selvstendigMessagesNb,
+    ...periodeformNb
+};
+const nynorsktekster = {
+    ...allCommonMessages.nn,
+    ...appNynorsktekster,
+    ...selvstendigMessagesNn,
+    ...periodeformNn
+};
 
 export interface IntlProviderProps {
     locale: Locale;

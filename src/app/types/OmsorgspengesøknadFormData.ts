@@ -2,6 +2,7 @@ import { Utenlandsopphold } from 'common/forms/utenlandsopphold/types';
 import { Attachment } from 'common/types/Attachment';
 import { YesOrNo } from 'common/types/YesOrNo';
 import { Virksomhet } from 'common/forms';
+import { FraværDelerAvDag, Periode } from '../../@types/omsorgspengerutbetaling-schema';
 
 export enum Omsorgssituasjon {
     'tre_eller_flere_barn' = 'tre_eller_flere_barn',
@@ -17,6 +18,7 @@ export enum SøkersRelasjonTilBarnet {
     'ADOPTIVFORELDER' = 'adoptivforelder',
     'FOSTERFORELDER' = 'fosterforelder'
 }
+
 export enum Arbeidssituasjon {
     'arbeidstaker' = 'arbeidstaker',
     'selvstendigNæringsdrivende' = 'selvstendigNæringsdrivende',
@@ -42,11 +44,12 @@ export enum AppFormField {
     nettop_startet_selvstendig_frilanser = 'nettop_startet_selvstendig_frilanser',
 
     // STEG 3: Periode
-
-    periode_har_vært_i_utlandet = "periode_har_vært_i_utlandet",
+    perioderMedFravær = 'perioderMedFravær',
+    dagerMedDelvisFravær = 'dagerMedDelvisFravær',
+    periode_har_vært_i_utlandet = 'periode_har_vært_i_utlandet',
 
     // STEG 4: Conditional perioder i utlandet
-    hvis_utenlandsopphold_en_test_verdi = "hvis_utenlandsopphold_en_test_verdi",
+    hvis_utenlandsopphold_en_test_verdi = 'hvis_utenlandsopphold_en_test_verdi',
 
     // STEG 5: Legeerklæring
     legeerklæring = 'legeerklæring',
@@ -62,7 +65,7 @@ export enum AppFormField {
     harBoddUtenforNorgeSiste12Mnd = 'harBoddUtenforNorgeSiste12Mnd',
     utenlandsoppholdSiste12Mnd = 'utenlandsoppholdSiste12Mnd',
     skalBoUtenforNorgeNeste12Mnd = 'skalBoUtenforNorgeNeste12Mnd',
-    utenlandsoppholdNeste12Mnd = 'utenlandsoppholdNeste12Mnd',
+    utenlandsoppholdNeste12Mnd = 'utenlandsoppholdNeste12Mnd'
 
     // TODO: Må gå over å se om noen av disse trengs
     // barnetHarIkkeFåttFødselsnummerEnda = 'barnetHarIkkeFåttFødselsnummerEnda',
@@ -99,6 +102,8 @@ export interface OmsorgspengesøknadFormData {
 
     // STEG 3: Periode
 
+    [AppFormField.perioderMedFravær]: Periode[];
+    [AppFormField.dagerMedDelvisFravær]: FraværDelerAvDag[];
     [AppFormField.periode_har_vært_i_utlandet]: YesOrNo;
 
     // STEG 4: Conditional perioder i utlandet
@@ -154,7 +159,8 @@ export const initialValues: OmsorgspengesøknadFormData = {
     [AppFormField.nettop_startet_selvstendig_frilanser]: YesOrNo.UNANSWERED,
 
     // STEG 3: Periode
-
+    [AppFormField.perioderMedFravær]: [],
+    [AppFormField.dagerMedDelvisFravær]: [],
     [AppFormField.periode_har_vært_i_utlandet]: YesOrNo.UNANSWERED,
 
     // STEG 4: Conditional perioder i utlandet

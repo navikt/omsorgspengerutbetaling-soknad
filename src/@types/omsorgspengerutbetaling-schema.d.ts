@@ -58,5 +58,15 @@ export interface Utenlandsopphold {
     landnavn: string;
 }
 
+export interface Periode {
+    fom: Date;
+    tom: Date;
+}
+
+
+export interface FraværDelerAvDag {
+    dato: Date;
+    timer: number;
+}
 
 

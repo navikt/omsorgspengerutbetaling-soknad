@@ -94,6 +94,10 @@
     "step.periode.stepTitle": "Hvilke dager søker du om utbetaling for?",
     "step.periode.stepIndicatorLabel": "Spesifisering av dager og tidspunkter",
     "step.periode.counsellorpanel.content":"I de fleste tilfeller må man som selvstendig næringsdrivende og frilanser betale de 10 første dager med omsorgspenger i året selv.",
+    "step.periode.dager_med_fullt_fravært.label": "Dager med fullt fravær",
+    "step.periode.dager_med_fullt_fravært.info": "TODO",
+    "step.periode.dager_med_delvis_fravært.label": "Dager med delvis fravær",
+    "step.periode.dager_med_delvis_fravært.info": "TODO",
     "step.periode.har_dy_oppholdt_deg_i_utlandet_for_dager_du_soker_ok.spm": "Har du oppholdt deg i utlandet i noen av dagene du søker om utbetaling for?",
 
 

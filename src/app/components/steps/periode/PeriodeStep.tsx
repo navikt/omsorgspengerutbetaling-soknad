@@ -6,8 +6,12 @@ import FormBlock from 'common/components/form-block/FormBlock';
 import FormikYesOrNoQuestion from 'common/formik/components/formik-yes-or-no-question/FormikYesOrNoQuestion';
 import { AppFormField } from '../../../types/OmsorgspengesøknadFormData';
 import intlHelper from 'common/utils/intlUtils';
-import { useIntl } from 'react-intl';
-import PeriodeForm from './PeriodeForm';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { date1YearAgo, dateToday } from 'common/utils/dateUtils';
+import { validatePerioder } from '../../../validation/fieldValidations';
+import PeriodeListAndDialog from './PeriodeListAndDialog';
+import Box from 'common/components/box/Box';
+import LabelWithInfo from 'common/formik/components/helpers/label-with-info/LabelWithInfo';
 
 const PeriodeStep = ({ onValidSubmit }: StepConfigProps) => {
     const intl = useIntl();
@@ -16,7 +20,33 @@ const PeriodeStep = ({ onValidSubmit }: StepConfigProps) => {
         <FormikStep id={StepID.PERIODE} onValidFormSubmit={onValidSubmit}>
             <CounsellorPanel>TODO: PERIODE</CounsellorPanel>
 
-            <PeriodeForm />
+            <FormBlock margin={'xxl'}>
+                <Box padBottom="l">
+                    <LabelWithInfo info={<FormattedMessage id="step.periode.dager_med_fullt_fravært.info" />}>
+                        <FormattedMessage id="step.periode.dager_med_fullt_fravært.label" />
+                    </LabelWithInfo>
+                </Box>
+
+                <PeriodeListAndDialog<AppFormField>
+                    name={AppFormField.perioderMedFravær}
+                    minDate={date1YearAgo}
+                    maxDate={dateToday}
+                    validate={validatePerioder}
+                    labels={{
+                        addLabel: 'Legg til ny periode',
+                        modalTitle: 'Periode'
+                    }}
+                />
+            </FormBlock>
+
+            <FormBlock margin={'xxl'}>
+                <Box padBottom="l">
+                    <LabelWithInfo info={<FormattedMessage id="step.periode.dager_med_delvis_fravært.info" />}>
+                        <FormattedMessage id="step.periode.dager_med_delvis_fravært.label" />
+                    </LabelWithInfo>
+                </Box>
+
+            </FormBlock>
 
             <FormBlock margin={'xxl'}>
                 <FormikYesOrNoQuestion

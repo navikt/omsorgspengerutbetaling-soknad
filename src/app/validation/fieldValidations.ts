@@ -15,6 +15,7 @@ import {createFieldValidationError} from 'common/validation/fieldValidations';
 import {FieldValidationResult} from 'common/validation/types';
 import {SøkersRelasjonTilBarnet} from '../types/OmsorgspengesøknadFormData';
 import {fødselsnummerIsValid, FødselsnummerValidationErrorReason} from './fødselsnummerValidator';
+import {Periode} from "../../@types/omsorgspengerutbetaling-schema";
 
 export enum AppFieldValidationErrors {
     'fødselsdato_ugyldig' = 'fieldvalidation.fødelsdato.ugyldig',
@@ -32,7 +33,8 @@ export enum AppFieldValidationErrors {
     'samværsavtale_forMangeFiler' = 'fieldvalidation.samværsavtale.forMangeFiler',
     'utenlandsopphold_ikke_registrert' = 'fieldvalidation.utenlandsopphold_ikke_registrert',
     'utenlandsopphold_overlapper' = 'fieldvalidation.utenlandsopphold_overlapper',
-    'utenlandsopphold_utenfor_periode' = 'fieldvalidation.utenlandsopphold_utenfor_periode'
+    'utenlandsopphold_utenfor_periode' = 'fieldvalidation.utenlandsopphold_utenfor_periode',
+    'periode_ikke_registrert' = 'fieldvalidation.periode_ikke_registrert'
 }
 
 export const hasValue = (v: any) => v !== '' && v !== undefined && v !== null;
@@ -166,6 +168,20 @@ export const validateFødselsdato = (date: Date): FieldValidationResult => {
     }
     if (moment(date).isAfter(dateToday)) {
         return createAppFieldValidationError(AppFieldValidationErrors.fødselsdato_ugyldig);
+    }
+    return undefined;
+};
+
+export const validatePerioder = (perioder: Periode[]): FieldValidationResult => {
+    if (perioder.length === 0) {
+        return fieldValidationError(AppFieldValidationErrors.utenlandsopphold_ikke_registrert);
+    }
+    const dateRanges = perioder.map((u) => ({ from: u.fom, to: u.tom }));
+    if (dateRangesCollide(dateRanges)) {
+        return fieldValidationError(AppFieldValidationErrors.utenlandsopphold_overlapper);
+    }
+    if (dateRangesExceedsRange(dateRanges, { from: date1YearAgo, to: new Date() })) {
+        return fieldValidationError(AppFieldValidationErrors.utenlandsopphold_utenfor_periode);
     }
     return undefined;
 };
