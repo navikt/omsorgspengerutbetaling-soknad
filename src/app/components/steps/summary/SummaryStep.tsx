@@ -35,6 +35,7 @@ const SummaryStep = ({ formValues }: StepConfigProps) => {
         if (appIsRunningInDemoMode()) {
             navigateTo(routeConfig.SØKNAD_SENDT_ROUTE, history);
         } else {
+
             try {
                 await sendApplication(mapFormDataToApiData(formValues, barn, intl.locale as Locale));
                 navigateTo(routeConfig.SØKNAD_SENDT_ROUTE, history);
@@ -45,8 +46,10 @@ const SummaryStep = ({ formValues }: StepConfigProps) => {
                     navigateTo(routeConfig.ERROR_PAGE_ROUTE, history);
                 }
             }
+
         }
     }
+
     return (
         <SøkerdataContextConsumer>
             {({ person: { fornavn, mellomnavn, etternavn, fødselsnummer }, barn }: Søkerdata) => {

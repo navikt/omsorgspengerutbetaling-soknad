@@ -2,42 +2,100 @@ import * as React from 'react';
 import { StepConfigProps, StepID } from '../../../config/stepConfig';
 import FormikStep from '../../formik-step/FormikStep';
 import CounsellorPanel from 'common/components/counsellor-panel/CounsellorPanel';
-import FormBlock from 'common/components/form-block/FormBlock';
-import FormikYesOrNoQuestion from 'common/formik/components/formik-yes-or-no-question/FormikYesOrNoQuestion';
-import { AppFormField } from '../../../types/OmsorgspengesøknadFormData';
-import intlHelper from 'common/utils/intlUtils';
+import { AppFormField, OmsorgspengesøknadFormData } from '../../../types/OmsorgspengesøknadFormData';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { date1YearAgo, dateToday } from 'common/utils/dateUtils';
-import { validatePerioder } from '../../../validation/fieldValidations';
-import PeriodeListAndDialog from './PeriodeListAndDialog';
+import { FieldArray } from 'formik';
+import FormBlock from 'common/components/form-block/FormBlock';
 import Box from 'common/components/box/Box';
+import { FormikDateIntervalPicker, FormikYesOrNoQuestion } from 'common/formik';
+import { Periode } from '../../../../@types/omsorgspengerutbetaling-schema';
+import intlHelper from 'common/utils/intlUtils';
+import { date3YearsAgo } from 'common/utils/dateUtils';
 import LabelWithInfo from 'common/formik/components/helpers/label-with-info/LabelWithInfo';
 
-const PeriodeStep = ({ onValidSubmit }: StepConfigProps) => {
+const PeriodeStep = (stepConfigProps: StepConfigProps) => {
+    const {
+        formValues,
+        onValidSubmit
+    }: { onValidSubmit: () => void; formValues: OmsorgspengesøknadFormData } = stepConfigProps;
+
     const intl = useIntl();
 
     return (
         <FormikStep id={StepID.PERIODE} onValidFormSubmit={onValidSubmit}>
             <CounsellorPanel>TODO: PERIODE</CounsellorPanel>
 
-            <FormBlock margin={'xxl'}>
-                <Box padBottom="l">
-                    <LabelWithInfo info={<FormattedMessage id="step.periode.dager_med_fullt_fravært.info" />}>
-                        <FormattedMessage id="step.periode.dager_med_fullt_fravært.label" />
-                    </LabelWithInfo>
-                </Box>
-
-                <PeriodeListAndDialog<AppFormField>
-                    name={AppFormField.perioderMedFravær}
-                    minDate={date1YearAgo}
-                    maxDate={dateToday}
-                    validate={validatePerioder}
-                    labels={{
-                        addLabel: 'Legg til ny periode',
-                        modalTitle: 'Periode'
-                    }}
-                />
-            </FormBlock>
+            <FieldArray
+                name={AppFormField.perioderMedFravær}
+                render={(arrayHelpers) => {
+                    return (
+                        <FormBlock>
+                            <Box>Perioder</Box>
+                            <span>-----------------</span>
+                            <Box>
+                                {formValues[AppFormField.perioderMedFravær] &&
+                                formValues[AppFormField.perioderMedFravær].length > 0 ? (
+                                    <div>
+                                        {formValues[AppFormField.perioderMedFravær].map(
+                                            (periode: Periode, index: number) => {
+                                                return (
+                                                    <div key={index}>
+                                                        <FormikDateIntervalPicker
+                                                            legend={'THE LEGEND'}
+                                                            key={`THE_KEY_MASTER${index}`}
+                                                            info={'TODO: Write info...?'}
+                                                            fromDatepickerProps={{
+                                                                label: intlHelper(intl, 'todo.label'),
+                                                                validate: () => null,
+                                                                name: `${AppFormField.perioderMedFravær}.${index}.fom`,
+                                                                dateLimitations: {
+                                                                    minDato: date3YearsAgo,
+                                                                    maksDato: undefined
+                                                                }
+                                                            }}
+                                                            toDatepickerProps={{
+                                                                label: intlHelper(intl, 'todo.label'),
+                                                                validate: () => null,
+                                                                name: `${AppFormField.perioderMedFravær}.${index}.tom`,
+                                                                dateLimitations: {
+                                                                    minDato: date3YearsAgo
+                                                                }
+                                                            }}
+                                                        />
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => arrayHelpers.remove(index)} // remove a friend from the list
+                                                        >
+                                                            -
+                                                        </button>
+                                                    </div>
+                                                );
+                                            }
+                                        )}
+                                        <Box>
+                                            <button
+                                                type="button"
+                                                onClick={() =>
+                                                    arrayHelpers.insert(formValues[AppFormField.perioderMedFravær].length, {
+                                                        fom: undefined,
+                                                        tom: undefined
+                                                    })
+                                                }>
+                                                +
+                                            </button>
+                                        </Box>
+                                    </div>
+                                ) : (
+                                    <button type="button" onClick={() => arrayHelpers.push('')}>
+                                        {/* show this when user has removed all elements from the list */}
+                                        Add an element
+                                    </button>
+                                )}
+                            </Box>
+                        </FormBlock>
+                    );
+                }}
+            />
 
             <FormBlock margin={'xxl'}>
                 <Box padBottom="l">
@@ -45,7 +103,6 @@ const PeriodeStep = ({ onValidSubmit }: StepConfigProps) => {
                         <FormattedMessage id="step.periode.dager_med_delvis_fravært.label" />
                     </LabelWithInfo>
                 </Box>
-
             </FormBlock>
 
             <FormBlock margin={'xxl'}>

@@ -48,6 +48,9 @@ export enum AppFormField {
     dagerMedDelvisFravær = 'dagerMedDelvisFravær',
     periode_har_vært_i_utlandet = 'periode_har_vært_i_utlandet',
 
+    testing_dato_thingy = 'testing_dato_thingy',
+    aiur_field_array = 'aiur_field_array',
+
     // STEG 4: Conditional perioder i utlandet
     hvis_utenlandsopphold_en_test_verdi = 'hvis_utenlandsopphold_en_test_verdi',
 
@@ -106,6 +109,9 @@ export interface OmsorgspengesøknadFormData {
     [AppFormField.dagerMedDelvisFravær]: FraværDelerAvDag[];
     [AppFormField.periode_har_vært_i_utlandet]: YesOrNo;
 
+    [AppFormField.testing_dato_thingy]: Date | undefined;
+    [AppFormField.aiur_field_array]: string[];
+
     // STEG 4: Conditional perioder i utlandet
     [AppFormField.hvis_utenlandsopphold_en_test_verdi]: YesOrNo;
 
@@ -140,6 +146,11 @@ export interface OmsorgspengesøknadFormData {
     // [AppFormField.samværsavtale]?: Attachment[];
 }
 
+export const enInitiellPeriode: Periode = {
+    fom: undefined,
+    tom: undefined
+};
+
 export const initialValues: OmsorgspengesøknadFormData = {
     [AppFormField.harForståttRettigheterOgPlikter]: false,
     [AppFormField.harBekreftetOpplysninger]: false,
@@ -159,9 +170,12 @@ export const initialValues: OmsorgspengesøknadFormData = {
     [AppFormField.nettop_startet_selvstendig_frilanser]: YesOrNo.UNANSWERED,
 
     // STEG 3: Periode
-    [AppFormField.perioderMedFravær]: [],
+    [AppFormField.perioderMedFravær]: [enInitiellPeriode],
     [AppFormField.dagerMedDelvisFravær]: [],
     [AppFormField.periode_har_vært_i_utlandet]: YesOrNo.UNANSWERED,
+
+    [AppFormField.testing_dato_thingy]: undefined,
+    [AppFormField.aiur_field_array]: ['Raynor', 'Kerrigan'],
 
     // STEG 4: Conditional perioder i utlandet
     [AppFormField.hvis_utenlandsopphold_en_test_verdi]: YesOrNo.UNANSWERED,
