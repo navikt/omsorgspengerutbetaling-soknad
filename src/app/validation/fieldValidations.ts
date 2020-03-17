@@ -15,7 +15,6 @@ import {createFieldValidationError} from 'common/validation/fieldValidations';
 import {FieldValidationResult} from 'common/validation/types';
 import {SøkersRelasjonTilBarnet} from '../types/OmsorgspengesøknadFormData';
 import {fødselsnummerIsValid, FødselsnummerValidationErrorReason} from './fødselsnummerValidator';
-import {Periode} from "../../@types/omsorgspengerutbetaling-schema";
 
 export enum AppFieldValidationErrors {
     'fødselsdato_ugyldig' = 'fieldvalidation.fødelsdato.ugyldig',
@@ -172,16 +171,18 @@ export const validateFødselsdato = (date: Date): FieldValidationResult => {
     return undefined;
 };
 
-export const validatePerioder = (perioder: Periode[]): FieldValidationResult => {
-    if (perioder.length === 0) {
-        return fieldValidationError(AppFieldValidationErrors.utenlandsopphold_ikke_registrert);
-    }
-    const dateRanges = perioder.map((u) => ({ from: u.fom, to: u.tom }));
-    if (dateRangesCollide(dateRanges)) {
-        return fieldValidationError(AppFieldValidationErrors.utenlandsopphold_overlapper);
-    }
-    if (dateRangesExceedsRange(dateRanges, { from: date1YearAgo, to: new Date() })) {
-        return fieldValidationError(AppFieldValidationErrors.utenlandsopphold_utenfor_periode);
-    }
-    return undefined;
-};
+// export const validatePerioder = (perioder: Periode[]): FieldValidationResult => {
+//     if (perioder.length === 0) {
+//         return fieldValidationError(AppFieldValidationErrors.utenlandsopphold_ikke_registrert);
+//     }
+//
+//     const dateRanges: DateRange[] = perioder.map((periode: Periode) => ({ from: periode.fom, to: periode.tom }));
+//
+//     if (dateRangesCollide(dateRanges)) {
+//         return fieldValidationError(AppFieldValidationErrors.utenlandsopphold_overlapper);
+//     }
+//     if (dateRangesExceedsRange(dateRanges, { from: date1YearAgo, to: new Date() })) {
+//         return fieldValidationError(AppFieldValidationErrors.utenlandsopphold_utenfor_periode);
+//     }
+//     return undefined;
+// };

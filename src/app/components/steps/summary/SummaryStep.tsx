@@ -36,19 +36,16 @@ const SummaryStep = ({ formValues }: StepConfigProps) => {
             navigateTo(routeConfig.SØKNAD_SENDT_ROUTE, history);
         } else {
 
-            console.warn(JSON.stringify(formValues, null, 4))
-
-            // TODO: ACTUALLY SEND THE JSON DATA
-            // try {
-            //     await sendApplication(mapFormDataToApiData(formValues, barn, intl.locale as Locale));
-            //     navigateTo(routeConfig.SØKNAD_SENDT_ROUTE, history);
-            // } catch (error) {
-            //     if (apiUtils.isForbidden(error) || apiUtils.isUnauthorized(error)) {
-            //         navigateToLoginPage();
-            //     } else {
-            //         navigateTo(routeConfig.ERROR_PAGE_ROUTE, history);
-            //     }
-            // }
+            try {
+                await sendApplication(mapFormDataToApiData(formValues, barn, intl.locale as Locale));
+                navigateTo(routeConfig.SØKNAD_SENDT_ROUTE, history);
+            } catch (error) {
+                if (apiUtils.isForbidden(error) || apiUtils.isUnauthorized(error)) {
+                    navigateToLoginPage();
+                } else {
+                    navigateTo(routeConfig.ERROR_PAGE_ROUTE, history);
+                }
+            }
 
         }
     }

@@ -25,7 +25,6 @@ const PeriodeStep = (stepConfigProps: StepConfigProps) => {
         <FormikStep id={StepID.PERIODE} onValidFormSubmit={onValidSubmit}>
             <CounsellorPanel>TODO: PERIODE</CounsellorPanel>
 
-            {/* FOR PERIODER */}
             <FieldArray
                 name={AppFormField.perioderMedFravær}
                 render={(arrayHelpers) => {
@@ -73,17 +72,18 @@ const PeriodeStep = (stepConfigProps: StepConfigProps) => {
                                                 );
                                             }
                                         )}
-                                        <span> </span>
-                                        <button
-                                            type="button"
-                                            onClick={() =>
-                                                arrayHelpers.insert(formValues[AppFormField.perioderMedFravær].length, {
-                                                    fom: undefined,
-                                                    tom: undefined
-                                                })
-                                            }>
-                                            +
-                                        </button>
+                                        <Box>
+                                            <button
+                                                type="button"
+                                                onClick={() =>
+                                                    arrayHelpers.insert(formValues[AppFormField.perioderMedFravær].length, {
+                                                        fom: undefined,
+                                                        tom: undefined
+                                                    })
+                                                }>
+                                                +
+                                            </button>
+                                        </Box>
                                     </div>
                                 ) : (
                                     <button type="button" onClick={() => arrayHelpers.push('')}>
@@ -96,76 +96,6 @@ const PeriodeStep = (stepConfigProps: StepConfigProps) => {
                     );
                 }}
             />
-
-            {/*<FormBlock margin={'xxl'}>*/}
-            {/*    <Box padBottom="l">*/}
-            {/*        <LabelWithInfo info={<FormattedMessage id="step.periode.dager_med_fullt_fravært.info" />}>*/}
-            {/*            <FormattedMessage id="step.periode.dager_med_fullt_fravært.label" />*/}
-            {/*        </LabelWithInfo>*/}
-            {/*    </Box>*/}
-
-            {/*    <PeriodeListAndDialog<AppFormField>*/}
-            {/*        name={AppFormField.perioderMedFravær}*/}
-            {/*        minDate={date1YearAgo}*/}
-            {/*        maxDate={dateToday}*/}
-            {/*        validate={validatePerioder}*/}
-            {/*        labels={{*/}
-            {/*            addLabel: 'Legg til ny periode',*/}
-            {/*            modalTitle: 'Periode'*/}
-            {/*        }}*/}
-            {/*    />*/}
-            {/*</FormBlock>*/}
-
-            {/*{formValues.perioderMedFravær.map((periode: Periode, index: number) => {*/}
-            {/*    return (*/}
-            {/*        <FormikDateIntervalPicker<AppFormField>*/}
-            {/*            legend={'THE LEGEND'}*/}
-            {/*            key={`THE_KEY_MASTER${index}`}*/}
-            {/*            info={'TODO: Write info...?'}*/}
-            {/*            fromDatepickerProps={{*/}
-            {/*                label: intlHelper(intl, 'todo.label'),*/}
-            {/*                validate: () => null,*/}
-            {/*                name: AppFormField.testing_dato_thingy,*/}
-            {/*                dateLimitations: {*/}
-            {/*                    minDato: date3YearsAgo,*/}
-            {/*                    maksDato: undefined*/}
-            {/*                }*/}
-            {/*            }}*/}
-            {/*            toDatepickerProps={{*/}
-            {/*                label: intlHelper(intl, 'steg.tidsrom.hvilketTidsrom.tom'),*/}
-            {/*                validate: () => null,*/}
-            {/*                name: AppFormField.testing_dato_thingy,*/}
-            {/*                dateLimitations: {*/}
-            {/*                    minDato: date3YearsAgo*/}
-            {/*                }*/}
-            {/*            }}*/}
-            {/*        />*/}
-            {/*    );*/}
-            {/*})}*/}
-
-            {/*<FormBlock>*/}
-            {/*    <div className={'periode-date-picker-row'}>*/}
-            {/*        <div className={'periode-date-picker-element'}>*/}
-            {/*            <FormikDatepicker*/}
-            {/*                name={AppFormField.testing_dato_thingy}*/}
-            {/*                label="Fødselsdato"*/}
-            {/*                validate={validateRequiredField}*/}
-            {/*            />*/}
-            {/*        </div>*/}
-            {/*        <div className={'periode-date-picker-element'}>*/}
-            {/*            <FormikDatepicker*/}
-            {/*                name={AppFormField.testing_dato_thingy}*/}
-            {/*                label="Fødselsdato"*/}
-            {/*                validate={validateRequiredField}*/}
-            {/*            />*/}
-            {/*        </div>*/}
-            {/*    </div>*/}
-            {/*</FormBlock>*/}
-
-            {/*<Box margin={'xl'}>*/}
-            {/*    asdf*/}
-            {/*    <FormikDatepicker id={'TODO_ID'} name={'testing_dato_thingy_feil_name'} label={'Datovelger Label'} />*/}
-            {/*</Box>*/}
 
             <FormBlock margin={'xxl'}>
                 <Box padBottom="l">
