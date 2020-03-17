@@ -7,11 +7,14 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { FieldArray } from 'formik';
 import FormBlock from 'common/components/form-block/FormBlock';
 import Box from 'common/components/box/Box';
-import { FormikDateIntervalPicker, FormikYesOrNoQuestion } from 'common/formik';
+import { FormikDatepicker, FormikYesOrNoQuestion } from 'common/formik';
 import { Periode } from '../../../../@types/omsorgspengerutbetaling-schema';
 import intlHelper from 'common/utils/intlUtils';
 import { date3YearsAgo } from 'common/utils/dateUtils';
 import LabelWithInfo from 'common/formik/components/helpers/label-with-info/LabelWithInfo';
+import DeleteButton from 'common/components/delete-button/DeleteButton';
+import './periodeStep.less';
+import { SkjemaGruppe } from 'nav-frontend-skjema';
 
 const PeriodeStep = (stepConfigProps: StepConfigProps) => {
     const {
@@ -30,67 +33,73 @@ const PeriodeStep = (stepConfigProps: StepConfigProps) => {
                 render={(arrayHelpers) => {
                     return (
                         <FormBlock>
-                            <Box>Perioder</Box>
-                            <span>-----------------</span>
                             <Box>
-                                {formValues[AppFormField.perioderMedFravær] &&
-                                formValues[AppFormField.perioderMedFravær].length > 0 ? (
-                                    <div>
-                                        {formValues[AppFormField.perioderMedFravær].map(
-                                            (periode: Periode, index: number) => {
-                                                return (
-                                                    <div key={index}>
-                                                        <FormikDateIntervalPicker
-                                                            legend={'THE LEGEND'}
-                                                            key={`THE_KEY_MASTER${index}`}
-                                                            info={'TODO: Write info...?'}
-                                                            fromDatepickerProps={{
-                                                                label: intlHelper(intl, 'todo.label'),
-                                                                validate: () => null,
-                                                                name: `${AppFormField.perioderMedFravær}.${index}.fom`,
-                                                                dateLimitations: {
-                                                                    minDato: date3YearsAgo,
-                                                                    maksDato: undefined
-                                                                }
-                                                            }}
-                                                            toDatepickerProps={{
-                                                                label: intlHelper(intl, 'todo.label'),
-                                                                validate: () => null,
-                                                                name: `${AppFormField.perioderMedFravær}.${index}.tom`,
-                                                                dateLimitations: {
-                                                                    minDato: date3YearsAgo
-                                                                }
-                                                            }}
-                                                        />
-                                                        <button
-                                                            type="button"
-                                                            onClick={() => arrayHelpers.remove(index)} // remove a friend from the list
-                                                        >
-                                                            -
-                                                        </button>
-                                                    </div>
-                                                );
-                                            }
-                                        )}
-                                        <Box>
-                                            <button
-                                                type="button"
-                                                onClick={() =>
-                                                    arrayHelpers.insert(formValues[AppFormField.perioderMedFravær].length, {
-                                                        fom: undefined,
-                                                        tom: undefined
-                                                    })
-                                                }>
-                                                +
-                                            </button>
-                                        </Box>
-                                    </div>
-                                ) : (
-                                    <button type="button" onClick={() => arrayHelpers.push('')}>
-                                        {/* show this when user has removed all elements from the list */}
-                                        Add an element
-                                    </button>
-                                )}
+                                <SkjemaGruppe
+                                    legend={
+                                        <LabelWithInfo info={'dager med fullt fravær.'}>
+                                            Dager med fullt fravær
+                                        </LabelWithInfo>
+                                    }
+                                    className="dateIntervalPicker">
+                                    {formValues[AppFormField.perioderMedFravær] &&
+                                    formValues[AppFormField.perioderMedFravær].length > 0 ? (
+                                        <div>
+                                            {formValues[AppFormField.perioderMedFravær].map(
+                                                (periode: Periode, index: number) => {
+                                                    return (
+                                                        <div key={index}>
+                                                            <div className="dateIntervalPicker__flexContainer">
+                                                                <FormikDatepicker
+                                                                    label={intlHelper(intl, 'Fra og med')}
+                                                                    validate={() => null}
+                                                                    name={`${AppFormField.perioderMedFravær}.${index}.fom`}
+                                                                    dateLimitations={{
+                                                                        minDato: date3YearsAgo,
+                                                                        maksDato: undefined
+                                                                    }}
+                                                                />
+                                                                <FormikDatepicker
+                                                                    label={intlHelper(intl, 'Til og med')}
+                                                                    validate={() => null}
+                                                                    name={`${AppFormField.perioderMedFravær}.${index}.tom`}
+                                                                    dateLimitations={{
+                                                                        minDato: date3YearsAgo
+                                                                    }}
+                                                                />
+                                                            </div>
+                                                            {index > 0 && (
+                                                                <DeleteButton
+                                                                    ariaLabel={'TODO'}
+                                                                    onClick={() => arrayHelpers.remove(index)}
+                                                                />
+                                                            )}
+                                                        </div>
+                                                    );
+                                                }
+                                            )}
+                                            <Box>
+                                                <button
+                                                    type="button"
+                                                    onClick={() =>
+                                                        arrayHelpers.insert(
+                                                            formValues[AppFormField.perioderMedFravær].length,
+                                                            {
+                                                                fom: undefined,
+                                                                tom: undefined
+                                                            }
+                                                        )
+                                                    }>
+                                                    +
+                                                </button>
+                                            </Box>
+                                        </div>
+                                    ) : (
+                                        <button type="button" onClick={() => arrayHelpers.push('')}>
+                                            {/* show this when user has removed all elements from the list */}
+                                            Add an element
+                                        </button>
+                                    )}
+                                </SkjemaGruppe>
                             </Box>
                         </FormBlock>
                     );
