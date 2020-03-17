@@ -2,11 +2,11 @@ import * as React from 'react';
 import Box from 'common/components/box/Box';
 import intlHelper from 'common/utils/intlUtils';
 import dateRangeValidation from 'common/validation/dateRangeValidation';
-import { FormattedMessage, useIntl } from 'react-intl';
-import { Systemtittel } from 'nav-frontend-typografi';
-import { commonFieldErrorRenderer } from 'common/utils/commonFieldErrorRenderer';
-import { FormikErrors, FormikProps } from 'formik';
-import { getTypedFormComponents } from 'common/formik';
+import {FormattedMessage, useIntl} from 'react-intl';
+import {Systemtittel} from 'nav-frontend-typografi';
+import {commonFieldErrorRenderer} from 'common/utils/commonFieldErrorRenderer';
+import {FormikErrors, FormikProps} from 'formik';
+import {getTypedFormComponents} from 'common/formik';
 
 interface Props {
     minDate: Date;
@@ -23,7 +23,7 @@ export interface Periode {
 }
 
 export const isValidPeriode = (partialPeriode: Partial<Periode>): partialPeriode is Periode => {
-    const { fom, tom } = partialPeriode;
+    const {fom, tom} = partialPeriode;
     return fom !== undefined && tom !== undefined;
 };
 
@@ -36,7 +36,7 @@ type FormValues = Partial<Periode>;
 
 const Form = getTypedFormComponents<PeriodeFormFields, FormValues>();
 
-const PeriodeForm: React.FC<Props> = ({ maxDate, minDate, periode, onSubmit, onCancel }) => {
+const PeriodeForm: React.FC<Props> = ({maxDate, minDate, periode, onSubmit, onCancel}) => {
     const intl = useIntl();
 
     const onFormikSubmit = (formValues: Partial<Periode>) => {
@@ -52,14 +52,14 @@ const PeriodeForm: React.FC<Props> = ({ maxDate, minDate, periode, onSubmit, onC
             initialValues={periode || {}}
             onSubmit={onFormikSubmit}
             renderForm={(formik: FormikProps<FormValues>) => {
-                const { values } = formik;
+                const {values} = formik;
                 return (
                     <Form.Form
                         onCancel={onCancel}
                         fieldErrorRenderer={(error: FormikErrors<FormValues>) => commonFieldErrorRenderer(intl, error)}>
                         <Box padBottom="l">
                             <Systemtittel tag="h1">
-                                <FormattedMessage id="periodeform.form.tittel" />
+                                <FormattedMessage id="periodeform.form.tittel"/>
                             </Systemtittel>
                         </Box>
 
@@ -90,6 +90,7 @@ const PeriodeForm: React.FC<Props> = ({ maxDate, minDate, periode, onSubmit, onC
                                 }}
                             />
                         </Box>
+
                     </Form.Form>
                 );
             }}

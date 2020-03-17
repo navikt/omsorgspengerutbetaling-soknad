@@ -59,8 +59,8 @@ export interface Utenlandsopphold {
 }
 
 export interface Periode {
-    fom: Date;
-    tom: Date;
+    fom?: Date;
+    tom?: Date;
 }
 
 
