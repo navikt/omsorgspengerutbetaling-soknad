@@ -15,6 +15,7 @@ import LabelWithInfo from 'common/formik/components/helpers/label-with-info/Labe
 import DeleteButton from 'common/components/delete-button/DeleteButton';
 import './periodeStep.less';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
+import {Knapp} from "nav-frontend-knapper";
 
 const PeriodeStep = (stepConfigProps: StepConfigProps) => {
     const {
@@ -66,20 +67,23 @@ const PeriodeStep = (stepConfigProps: StepConfigProps) => {
                                                                         minDato: date3YearsAgo
                                                                     }}
                                                                 />
+                                                                {index > 0 && (
+                                                                    <DeleteButton
+                                                                        ariaLabel={'TODO'}
+                                                                        onClick={() => arrayHelpers.remove(index)}
+                                                                    />
+                                                                )}
                                                             </div>
-                                                            {index > 0 && (
-                                                                <DeleteButton
-                                                                    ariaLabel={'TODO'}
-                                                                    onClick={() => arrayHelpers.remove(index)}
-                                                                />
-                                                            )}
                                                         </div>
                                                     );
                                                 }
                                             )}
-                                            <Box>
-                                                <button
-                                                    type="button"
+                                            <Box className={"legg-til-wrapper"}>
+                                                <Knapp
+                                                    type='standard'
+                                                    htmlType={'button'}
+                                                    className={'step__button'}
+                                                    aria-label={'TODO: aria-label'}
                                                     onClick={() =>
                                                         arrayHelpers.insert(
                                                             formValues[AppFormField.perioderMedFravær].length,
@@ -88,9 +92,10 @@ const PeriodeStep = (stepConfigProps: StepConfigProps) => {
                                                                 tom: undefined
                                                             }
                                                         )
-                                                    }>
-                                                    +
-                                                </button>
+                                                    }
+                                                >
+                                                    Legg til
+                                                </Knapp>
                                             </Box>
                                         </div>
                                     ) : (
