@@ -1,5 +1,5 @@
 export interface BarnResponse {
-    barn: Barn[]
+    barn: Barn[];
 }
 
 export interface ListeAvBarn {
@@ -18,16 +18,16 @@ export interface Barn {
 }
 
 export type SokerBarnRelasjon =
-    | "mor"
-    | "far"
-    | "adoptivforelder"
-    | "samværsforelder"
-    | "steforelder"
-    | "fosterforelder";
+    | 'mor'
+    | 'far'
+    | 'adoptivforelder'
+    | 'samværsforelder'
+    | 'steforelder'
+    | 'fosterforelder';
 
 export interface Soknad {
     nyVersjon: boolean;
-    språk: "nb" | "nn";
+    språk: 'nb' | 'nn';
     kroniskEllerFunksjonshemming: boolean;
     barn: BarnDetaljer;
     sammeAdresse: boolean | null;
@@ -59,14 +59,11 @@ export interface Utenlandsopphold {
 }
 
 export interface Periode {
-    fom?: Date;
-    tom?: Date;
+    fom: Date;
+    tom: Date;
 }
-
 
 export interface FraværDelerAvDag {
-    dato?: Date;
-    timer?: number;
+    dato: Date;
+    timer: number;
 }
-
-
