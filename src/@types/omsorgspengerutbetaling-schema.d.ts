@@ -65,8 +65,8 @@ export interface Periode {
 
 
 export interface FraværDelerAvDag {
-    dato: Date;
-    timer: number;
+    dato?: Date;
+    timer?: number;
 }
 
 

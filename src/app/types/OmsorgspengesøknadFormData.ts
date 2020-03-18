@@ -151,6 +151,11 @@ export const enInitiellPeriode: Periode = {
     tom: undefined
 };
 
+export const etInitieltDelvisFravær: FraværDelerAvDag = {
+    dato: undefined,
+    timer: undefined
+}
+
 export const initialValues: OmsorgspengesøknadFormData = {
     [AppFormField.harForståttRettigheterOgPlikter]: false,
     [AppFormField.harBekreftetOpplysninger]: false,
@@ -171,7 +176,7 @@ export const initialValues: OmsorgspengesøknadFormData = {
 
     // STEG 3: Periode
     [AppFormField.perioderMedFravær]: [enInitiellPeriode],
-    [AppFormField.dagerMedDelvisFravær]: [],
+    [AppFormField.dagerMedDelvisFravær]: [etInitieltDelvisFravær],
     [AppFormField.periode_har_vært_i_utlandet]: YesOrNo.UNANSWERED,
 
     [AppFormField.testing_dato_thingy]: undefined,
