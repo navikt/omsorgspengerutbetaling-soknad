@@ -7,11 +7,16 @@ import Page from 'common/components/page/Page';
 import bemUtils from 'common/utils/bemUtils';
 import intlHelper from 'common/utils/intlUtils';
 import getLenker from 'app/lenker';
+import { KvitteringInfo } from '../../søknad/SøknadContent';
 import './confirmationPage.less';
 
 const bem = bemUtils('confirmationPage');
 
-const ConfirmationPage: React.FunctionComponent = () => {
+interface Props {
+    kvitteringInfo?: KvitteringInfo;
+}
+
+const ConfirmationPage: React.FunctionComponent<Props> = ({ kvitteringInfo }) => {
     const intl = useIntl();
     return (
         <Page title={intlHelper(intl, 'page.confirmation.sidetittel')} className={bem.block}>

@@ -6,10 +6,8 @@ import {
 
 jest.mock('./../fieldValidations', () => {
     return {
-        validateRelasjonTilBarnet: jest.fn(() => undefined),
         validateNavn: jest.fn(() => undefined),
-        validateFødselsnummer: jest.fn(() => undefined),
-        validateValgtBarn: jest.fn(() => undefined)
+        validateFødselsnummer: jest.fn(() => undefined)
     };
 });
 

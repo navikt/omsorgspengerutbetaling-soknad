@@ -4,7 +4,7 @@ import { Utenlandsopphold } from 'common/forms/utenlandsopphold/types';
 import { YesOrNo } from 'common/types/YesOrNo';
 import { attachmentUploadHasFailed } from 'common/utils/attachmentUtils';
 import { formatDateToApiFormat } from 'common/utils/dateUtils';
-import { OmsorgspengesøknadApiData, UtenlandsoppholdApiData } from '../types/SøknadApiData';
+import { SøknadApiData, UtenlandsoppholdApiData } from '../types/SøknadApiData';
 import { SøknadFormData } from '../types/SøknadFormData';
 
 export const mapFormDataToApiData = (
@@ -21,8 +21,8 @@ export const mapFormDataToApiData = (
         utenlandsoppholdSiste12Mnd
     }: SøknadFormData,
     sprak: Locale
-): OmsorgspengesøknadApiData => {
-    const apiData: OmsorgspengesøknadApiData = {
+): SøknadApiData => {
+    const apiData: SøknadApiData = {
         newVersion: true,
         språk: (sprak as any) === 'en' ? 'nn' : sprak,
 

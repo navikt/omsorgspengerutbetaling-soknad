@@ -1,14 +1,12 @@
 import moment from 'moment';
 import { Utenlandsopphold } from 'common/forms/utenlandsopphold/types';
 import { Attachment } from 'common/types/Attachment';
-import { YesOrNo } from 'common/types/YesOrNo';
 import { attachmentHasBeenUploaded } from 'common/utils/attachmentUtils';
 import {
     date1YearAgo, date1YearFromNow, DateRange, dateRangesCollide, dateRangesExceedsRange, dateToday
 } from 'common/utils/dateUtils';
 import { createFieldValidationError } from 'common/validation/fieldValidations';
 import { FieldValidationResult } from 'common/validation/types';
-import { SøkersRelasjonTilBarnet } from '../types/SøknadFormData';
 import { fødselsnummerIsValid, FødselsnummerValidationErrorReason } from './fødselsnummerValidator';
 
 export enum AppFieldValidationErrors {
@@ -64,20 +62,6 @@ export const validateNavn = (v: string, isRequired?: boolean): FieldValidationRe
     return nameIsValid
         ? undefined
         : fieldValidationError(AppFieldValidationErrors.navn_maksAntallTegn, { maxNumOfLetters });
-};
-
-export const validateRelasjonTilBarnet = (v?: SøkersRelasjonTilBarnet | string): FieldValidationResult => {
-    if (!hasValue(v)) {
-        return fieldIsRequiredError();
-    }
-    return undefined;
-};
-
-export const validateYesOrNoIsAnswered = (answer: YesOrNo): FieldValidationResult => {
-    if (answer === YesOrNo.UNANSWERED || answer === undefined) {
-        return fieldIsRequiredError();
-    }
-    return undefined;
 };
 
 export const validateUtenlandsoppholdSiste12Mnd = (utenlandsopphold: Utenlandsopphold[]): FieldValidationResult => {

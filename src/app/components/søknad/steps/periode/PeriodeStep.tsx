@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useIntl } from 'react-intl';
-import { FieldArray } from 'formik';
+import { FieldArray, useFormikContext } from 'formik';
 import { Knapp } from 'nav-frontend-knapper';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
 import Box from 'common/components/box/Box';
@@ -19,9 +19,8 @@ import { SøknadFormData, SøknadFormField } from '../../../../types/SøknadForm
 import FormikStep from '../../formik-step/FormikStep';
 import './periodeStep.less';
 
-const PeriodeStep = (stepConfigProps: StepConfigProps) => {
-    const { formValues, onValidSubmit }: { onValidSubmit: () => void; formValues: SøknadFormData } = stepConfigProps;
-
+const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) => {
+    const { values } = useFormikContext<SøknadFormData>();
     const intl = useIntl();
 
     return (
@@ -42,10 +41,10 @@ const PeriodeStep = (stepConfigProps: StepConfigProps) => {
                                         </LabelWithInfo>
                                     }
                                     className="dateIntervalPicker">
-                                    {formValues[SøknadFormField.perioderMedFravær] &&
-                                    formValues[SøknadFormField.perioderMedFravær].length > 0 ? (
+                                    {values[SøknadFormField.perioderMedFravær] &&
+                                    values[SøknadFormField.perioderMedFravær].length > 0 ? (
                                         <div>
-                                            {formValues[SøknadFormField.perioderMedFravær].map(
+                                            {values[SøknadFormField.perioderMedFravær].map(
                                                 (periode: Periode, index: number) => {
                                                     return (
                                                         <div key={index} className={'periode-row-wrapper'}>
@@ -88,7 +87,7 @@ const PeriodeStep = (stepConfigProps: StepConfigProps) => {
                                                     aria-label={'TODO: aria-label'}
                                                     onClick={() =>
                                                         arrayHelpers.insert(
-                                                            formValues[SøknadFormField.perioderMedFravær].length,
+                                                            values[SøknadFormField.perioderMedFravær].length,
                                                             {
                                                                 fom: undefined,
                                                                 tom: undefined
@@ -126,10 +125,10 @@ const PeriodeStep = (stepConfigProps: StepConfigProps) => {
                                         </LabelWithInfo>
                                     }
                                     className="dateIntervalPicker">
-                                    {formValues[SøknadFormField.dagerMedDelvisFravær] &&
-                                    formValues[SøknadFormField.dagerMedDelvisFravær].length > 0 ? (
+                                    {values[SøknadFormField.dagerMedDelvisFravær] &&
+                                    values[SøknadFormField.dagerMedDelvisFravær].length > 0 ? (
                                         <div>
-                                            {formValues[SøknadFormField.dagerMedDelvisFravær].map(
+                                            {values[SøknadFormField.dagerMedDelvisFravær].map(
                                                 (fraværDelerAvDag: FraværDelerAvDag, index: number) => {
                                                     return (
                                                         <div key={index}>
@@ -169,7 +168,7 @@ const PeriodeStep = (stepConfigProps: StepConfigProps) => {
                                                     aria-label={'TODO: aria-label'}
                                                     onClick={() =>
                                                         arrayHelpers.insert(
-                                                            formValues[SøknadFormField.dagerMedDelvisFravær].length,
+                                                            values[SøknadFormField.dagerMedDelvisFravær].length,
                                                             {
                                                                 dato: undefined,
                                                                 timer: undefined
@@ -189,7 +188,7 @@ const PeriodeStep = (stepConfigProps: StepConfigProps) => {
                                                 aria-label={'TODO: aria-label'}
                                                 onClick={() =>
                                                     arrayHelpers.insert(
-                                                        formValues[SøknadFormField.dagerMedDelvisFravær].length,
+                                                        values[SøknadFormField.dagerMedDelvisFravær].length,
                                                         {
                                                             dato: undefined,
                                                             timer: undefined
@@ -214,7 +213,7 @@ const PeriodeStep = (stepConfigProps: StepConfigProps) => {
                 />
             </FormBlock>
 
-            {formValues[SøknadFormField.periode_har_vært_i_utlandet] === YesOrNo.YES && (
+            {values[SøknadFormField.periode_har_vært_i_utlandet] === YesOrNo.YES && (
                 <FormBlock margin="m">
                     <BostedUtlandListAndDialog<SøknadFormField>
                         name={SøknadFormField.periode_utenlandsopphold}
