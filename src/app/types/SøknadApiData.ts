@@ -17,11 +17,39 @@ export interface UtenlandsoppholdApiData {
     landnavn: string;
 }
 
+export enum SpørsmålId {
+    HarBekreftetOpplysninger = "HarBekreftetOpplysninger",
+    HarForståttRettigheterOgPlikter = "HarForståttRettigheterOgPlikter"
+}
+
+export enum Svar {
+    Ja = "Ja",
+    Nei = "Nei",
+    VetIkke = "VetIkke"
+}
+
+export type Spørsmål = string
+export type Fritekst = string
+
+export interface SpørsmålOgSvar {
+    id?: SpørsmålId;
+    spørsmål: Spørsmål;
+    svar: Svar;
+    fritekst?: Fritekst;
+}
+
+export interface UtbetalingsperiodeMedVedlegg {
+    fraOgMed: ApiStringDate; // @JsonFormat(pattern = "yyyy-MM-dd")
+    tilOgMed: ApiStringDate; // @JsonFormat(pattern = "yyyy-MM-dd")
+    lengde?: string; // f eks PT5H30M | "null" (type Duration)
+    legeerklæringer: string[];
+}
+
+// TODO: Legge til frilans og selvstendig næringsdrivende når de er klare på backend.
 export interface SøknadApiData {
-    newVersion: boolean;
     språk: Locale;
-    harForståttRettigheterOgPlikter: boolean;
-    harBekreftetOpplysninger: boolean;
-    legeerklæring: string[];
-    medlemskap: MedlemskapApiData;
+    spørsmål: SpørsmålOgSvar[];
+    utbetalingsperioder: UtbetalingsperiodeMedVedlegg[]; // perioder
+    opphold: UtenlandsoppholdApiData[]; // hvis ja på har oppholdt seg i utlandet
+    bosteder: UtenlandsoppholdApiData[]; // medlemskap-siden
 }

@@ -35,7 +35,7 @@ export enum SøknadFormField {
     legeerklæring = 'legeerklæring',
 
     // STEG 6: Inntekt
-    frilans_harHattInntektSomFrilanser = 'harHattInntektSomFrilanser',
+    frilans_harHattInntektSomFrilanser = 'frilans_harHattInntektSomFrilanser',
     frilans_startdato = 'frilans_startdato',
     frilans_jobberFortsattSomFrilans = 'frilans_jobberFortsattSomFrilans',
     selvstendig_harHattInntektSomSN = 'selvstendig_harHattInntektSomSN',
