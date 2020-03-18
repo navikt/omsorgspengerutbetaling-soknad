@@ -48,7 +48,7 @@ const PeriodeStep = (stepConfigProps: StepConfigProps) => {
                                             {formValues[AppFormField.perioderMedFravær].map(
                                                 (periode: Periode, index: number) => {
                                                     return (
-                                                        <div key={index}>
+                                                        <div key={index} className={"periode-row-wrapper"}>
                                                             <div className="dateIntervalPicker__flexContainer">
                                                                 <FormikDatepicker
                                                                     label={intlHelper(intl, 'Fra og med')}
@@ -68,10 +68,12 @@ const PeriodeStep = (stepConfigProps: StepConfigProps) => {
                                                                     }}
                                                                 />
                                                                 {index > 0 && (
-                                                                    <DeleteButton
-                                                                        ariaLabel={'TODO'}
-                                                                        onClick={() => arrayHelpers.remove(index)}
-                                                                    />
+                                                                    <div className={"delete-button-wrapper"}>
+                                                                        <DeleteButton
+                                                                            ariaLabel={'TODO'}
+                                                                            onClick={() => arrayHelpers.remove(index)}
+                                                                        />
+                                                                    </div>
                                                                 )}
                                                             </div>
                                                         </div>
