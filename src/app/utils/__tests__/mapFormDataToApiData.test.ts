@@ -1,7 +1,7 @@
 import { Attachment } from 'common/types/Attachment';
 import { YesOrNo } from 'common/types/YesOrNo';
 import * as attachmentUtils from 'common/utils/attachmentUtils';
-import { OmsorgspengesøknadApiData } from '../../types/SøknadApiData';
+import { SøknadApiData } from '../../types/SøknadApiData';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import { isFeatureEnabled } from '../featureToggleUtils';
 import { mapFormDataToApiData } from '../mapFormDataToApiData';
@@ -38,7 +38,7 @@ jest.mock('common/utils/attachmentUtils', () => {
 });
 
 describe('mapFormDataToApiData', () => {
-    let resultingApiData: OmsorgspengesøknadApiData;
+    let resultingApiData: SøknadApiData;
 
     beforeAll(() => {
         (isFeatureEnabled as any).mockImplementation(() => false);

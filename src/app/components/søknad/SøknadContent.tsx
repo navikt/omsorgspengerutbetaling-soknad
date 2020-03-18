@@ -1,8 +1,11 @@
 import * as React from 'react';
 import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
+import { formatName } from '@navikt/sif-common-core/lib/utils/personUtils';
 import { useFormikContext } from 'formik';
 import RouteConfig from '../../config/routeConfig';
 import { StepID } from '../../config/stepConfig';
+import { Søkerdata } from '../../types/Søkerdata';
+import { SøknadApiData } from '../../types/SøknadApiData';
 import { SøknadFormData } from '../../types/SøknadFormData';
 import { navigateTo } from '../../utils/navigationUtils';
 import { getNextStepRoute, getSøknadRoute, isAvailable } from '../../utils/routeUtils';
@@ -18,11 +21,23 @@ import NårKanManFåUtbetaltOmsorgspengerStep from './steps/når-kan-man-få-utb
 import PeriodeStep from './steps/periode/PeriodeStep';
 import SummaryStep from './steps/summary/SummaryStep';
 
+export interface KvitteringInfo {
+    søkernavn: string;
+}
+
+const getKvitteringInfoFromApiData = (søkerdata: Søkerdata): KvitteringInfo | undefined => {
+    const { fornavn, mellomnavn, etternavn } = søkerdata.person;
+    return {
+        søkernavn: formatName(fornavn, etternavn, mellomnavn)
+    };
+};
+
 const SøknadContent: React.FunctionComponent = () => {
     const [søknadHasBeenSent, setSøknadHasBeenSent] = React.useState(false);
-    const formik = useFormikContext<SøknadFormData>();
+    const [kvitteringInfo, setKvitteringInfo] = React.useState<KvitteringInfo | undefined>(undefined);
+    const { values, resetForm } = useFormikContext<SøknadFormData>();
+
     const history = useHistory();
-    const { values, resetForm } = formik;
 
     const navigateToNextStep = (stepId: StepID) => {
         setTimeout(() => {
@@ -32,6 +47,7 @@ const SøknadContent: React.FunctionComponent = () => {
             }
         });
     };
+
     return (
         <Switch>
             <Route
@@ -56,7 +72,6 @@ const SøknadContent: React.FunctionComponent = () => {
                     render={() => (
                         <NårKanManFåUtbetaltOmsorgspengerStep
                             onValidSubmit={() => navigateToNextStep(StepID.NÅR_KAN_MAN_FÅ_UTBETALT_OMSORGSPENGER)}
-                            formValues={values}
                         />
                     )}
                 />
@@ -68,7 +83,6 @@ const SøknadContent: React.FunctionComponent = () => {
                     render={() => (
                         <HarUtbetaltDeFørsteTiDageneStep
                             onValidSubmit={() => navigateToNextStep(StepID.HAR_UTBETALT_DE_FØRST_TI_DAGENE)}
-                            formValues={values}
                         />
                     )}
                 />
@@ -77,9 +91,7 @@ const SøknadContent: React.FunctionComponent = () => {
             {isAvailable(StepID.PERIODE, values) && (
                 <Route
                     path={getSøknadRoute(StepID.PERIODE)}
-                    render={() => (
-                        <PeriodeStep onValidSubmit={() => navigateToNextStep(StepID.PERIODE)} formValues={values} />
-                    )}
+                    render={() => <PeriodeStep onValidSubmit={() => navigateToNextStep(StepID.PERIODE)} />}
                 />
             )}
 
@@ -89,7 +101,6 @@ const SøknadContent: React.FunctionComponent = () => {
                     render={() => (
                         <HvisUtenlandsoppholdStep
                             onValidSubmit={() => navigateToNextStep(StepID.HVIS_UTENLANDSOPPHOLD)}
-                            formValues={values}
                         />
                     )}
                 />
@@ -98,56 +109,45 @@ const SøknadContent: React.FunctionComponent = () => {
             {isAvailable(StepID.LEGEERKLÆRING, values) && (
                 <Route
                     path={getSøknadRoute(StepID.LEGEERKLÆRING)}
-                    render={() => (
-                        <LegeerklæringStep
-                            onValidSubmit={() => navigateToNextStep(StepID.LEGEERKLÆRING)}
-                            formValues={values}
-                        />
-                    )}
+                    render={() => <LegeerklæringStep onValidSubmit={() => navigateToNextStep(StepID.LEGEERKLÆRING)} />}
                 />
             )}
 
             {isAvailable(StepID.INNTEKT, values) && (
                 <Route
                     path={getSøknadRoute(StepID.INNTEKT)}
-                    render={() => (
-                        <InntektStep onValidSubmit={() => navigateToNextStep(StepID.INNTEKT)} formValues={values} />
-                    )}
+                    render={() => <InntektStep onValidSubmit={() => navigateToNextStep(StepID.INNTEKT)} />}
                 />
             )}
 
             {isAvailable(StepID.MEDLEMSKAP, values) && (
                 <Route
                     path={getSøknadRoute(StepID.MEDLEMSKAP)}
-                    render={() => (
-                        <MedlemsskapStep
-                            onValidSubmit={() => navigateToNextStep(StepID.MEDLEMSKAP)}
-                            formValues={values}
-                        />
-                    )}
+                    render={() => <MedlemsskapStep onValidSubmit={() => navigateToNextStep(StepID.MEDLEMSKAP)} />}
                 />
             )}
 
             {isAvailable(StepID.SUMMARY, values) && (
                 <Route
                     path={getSøknadRoute(StepID.SUMMARY)}
-                    render={(props) => <SummaryStep formValues={values} onValidSubmit={() => null} />}
+                    render={() => (
+                        <SummaryStep
+                            onApplicationSent={(apiData: SøknadApiData, søkerdata: Søkerdata) => {
+                                const info = getKvitteringInfoFromApiData(søkerdata);
+                                setKvitteringInfo(info);
+                                setSøknadHasBeenSent(true);
+                                resetForm();
+                                navigateTo(RouteConfig.SØKNAD_SENDT_ROUTE, history);
+                            }}
+                        />
+                    )}
                 />
             )}
 
             {(isAvailable(RouteConfig.SØKNAD_SENDT_ROUTE, values) || søknadHasBeenSent) && (
                 <Route
                     path={RouteConfig.SØKNAD_SENDT_ROUTE}
-                    render={() => {
-                        // we clear form state here to ensure that no steps will be available
-                        // after the application has been sent. this is done in a setTimeout
-                        // because we do not want to update state during render.
-                        setTimeout(() => {
-                            resetForm();
-                        });
-                        setSøknadHasBeenSent(true);
-                        return <ConfirmationPage />;
-                    }}
+                    render={() => <ConfirmationPage kvitteringInfo={kvitteringInfo} />}
                 />
             )}
 

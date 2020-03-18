@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { useIntl } from 'react-intl';
+import { validateYesOrNoIsAnswered } from '@navikt/sif-common-core/lib/validation/fieldValidations';
+import { useFormikContext } from 'formik';
 import Lenke from 'nav-frontend-lenker';
 import CounsellorPanel from 'common/components/counsellor-panel/CounsellorPanel';
 import FormBlock from 'common/components/form-block/FormBlock';
@@ -8,17 +10,17 @@ import { YesOrNo } from 'common/types/YesOrNo';
 import { date1YearAgo, date1YearFromNow, dateToday } from 'common/utils/dateUtils';
 import intlHelper from 'common/utils/intlUtils';
 import {
-    validateUtenlandsoppholdNeste12Mnd, validateUtenlandsoppholdSiste12Mnd,
-    validateYesOrNoIsAnswered
+    validateUtenlandsoppholdNeste12Mnd, validateUtenlandsoppholdSiste12Mnd
 } from 'app/validation/fieldValidations';
 import { StepConfigProps, StepID } from '../../../../config/stepConfig';
 import getLenker from '../../../../lenker';
-import { SøknadFormField } from '../../../../types/SøknadFormData';
+import { SøknadFormData, SøknadFormField } from '../../../../types/SøknadFormData';
 import FormikStep from '../../formik-step/FormikStep';
 import TypedFormComponents from '../../typed-form-components/TypedFormComponents';
 
-const MedlemsskapStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit, formValues }) => {
+const MedlemsskapStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) => {
     const intl = useIntl();
+    const { values } = useFormikContext<SøknadFormData>();
     return (
         <FormikStep id={StepID.MEDLEMSKAP} onValidFormSubmit={onValidSubmit}>
             <CounsellorPanel>
@@ -37,7 +39,7 @@ const MedlemsskapStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubm
                     info={intlHelper(intl, 'steg.medlemsskap.annetLandSiste12.hjelp')}
                 />
             </FormBlock>
-            {formValues.harBoddUtenforNorgeSiste12Mnd === YesOrNo.YES && (
+            {values.harBoddUtenforNorgeSiste12Mnd === YesOrNo.YES && (
                 <FormBlock margin="m">
                     <BostedUtlandListAndDialog<SøknadFormField>
                         name={SøknadFormField.utenlandsoppholdSiste12Mnd}
@@ -59,7 +61,7 @@ const MedlemsskapStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubm
                     info={intlHelper(intl, 'steg.medlemsskap.annetLandNeste12.hjelp')}
                 />
             </FormBlock>
-            {formValues.skalBoUtenforNorgeNeste12Mnd === YesOrNo.YES && (
+            {values.skalBoUtenforNorgeNeste12Mnd === YesOrNo.YES && (
                 <FormBlock margin="m">
                     <BostedUtlandListAndDialog<SøknadFormField>
                         minDate={dateToday}

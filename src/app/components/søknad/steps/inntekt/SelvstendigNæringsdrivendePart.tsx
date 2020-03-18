@@ -2,12 +2,14 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import { Panel } from 'nav-frontend-paneler';
 import Box from 'common/components/box/Box';
-import FormikYesOrNoQuestion from 'common/formik/components/formik-yes-or-no-question/FormikYesOrNoQuestion';
 import VirksomhetListAndDialog from 'common/forms/virksomhet/VirksomhetListAndDialog';
 import { YesOrNo } from 'common/types/YesOrNo';
 import intlHelper from 'common/utils/intlUtils';
-import { validateRequiredList } from 'common/validation/fieldValidations';
+import {
+    validateRequiredList, validateYesOrNoIsAnswered
+} from 'common/validation/fieldValidations';
 import { SøknadFormData, SøknadFormField } from '../../../../types/SøknadFormData';
+import TypedFormComponents from '../../typed-form-components/TypedFormComponents';
 
 interface Props {
     formValues: SøknadFormData;
@@ -18,9 +20,10 @@ const SelvstendigNæringsdrivendeFormPart: React.FunctionComponent<Props> = ({ f
     return (
         <>
             <Box margin="l">
-                <FormikYesOrNoQuestion<SøknadFormField>
+                <TypedFormComponents.YesOrNoQuestion
                     name={SøknadFormField.selvstendig_harHattInntektSomSN}
                     legend={intlHelper(intl, 'selvstendig.harDuHattInntekt.spm')}
+                    validate={validateYesOrNoIsAnswered}
                 />
             </Box>
             {formValues.selvstendig_harHattInntektSomSN === YesOrNo.YES && (

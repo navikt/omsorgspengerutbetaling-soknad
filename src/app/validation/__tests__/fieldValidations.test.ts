@@ -1,8 +1,7 @@
 import { Attachment } from 'common/types/Attachment';
-import { YesOrNo } from 'common/types/YesOrNo';
 import {
     AppFieldValidationErrors, fieldValidationError, hasValue, validateFødselsnummer,
-    validateLegeerklæring, validateNavn, validateRelasjonTilBarnet, validateYesOrNoIsAnswered
+    validateLegeerklæring, validateNavn
 } from '../fieldValidations';
 import * as fødselsnummerValidator from '../fødselsnummerValidator';
 
@@ -87,26 +86,6 @@ describe('fieldValidations', () => {
 
         it('should return undefined if value is empty string when isRequired set to false', () => {
             expect(validateNavn('', false)).toBeUndefined();
-        });
-    });
-
-    describe('validateRelasjonTilBarnet', () => {
-        it('should return an error message saying field is required if provided value is empty string', () => {
-            expect(validateRelasjonTilBarnet('')).toEqual(fieldRequiredError);
-        });
-    });
-
-    describe('validateYesOrNoIsAnswered', () => {
-        it('should return undefined if value is YesOrNo.YES', () => {
-            expect(validateYesOrNoIsAnswered(YesOrNo.YES)).toBeUndefined();
-        });
-
-        it('should return undefined if value is YesOrNo.NO', () => {
-            expect(validateYesOrNoIsAnswered(YesOrNo.NO)).toBeUndefined();
-        });
-
-        it('should return error message saying that field is required if value is YesOrNo.UNANSWERED', () => {
-            expect(validateYesOrNoIsAnswered(YesOrNo.UNANSWERED)).toEqual(fieldRequiredError);
         });
     });
 

@@ -119,7 +119,6 @@ export const getStepConfig = (formData?: SøknadFormData): StepConfigInterface =
 
 export interface StepConfigProps {
     onValidSubmit: () => void;
-    formValues: SøknadFormData;
 }
 
 export const stepConfig: StepConfigInterface = getStepConfig();
