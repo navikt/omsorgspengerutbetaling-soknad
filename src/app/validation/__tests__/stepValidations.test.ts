@@ -1,6 +1,8 @@
-import {YesOrNo} from 'common/types/YesOrNo';
-import {AppFormField, OmsorgspengesøknadFormData} from '../../types/OmsorgspengesøknadFormData';
-import {legeerklæringStepIsValid, medlemskapStepIsValid, welcomingPageIsValid} from '../stepValidations';
+import { YesOrNo } from 'common/types/YesOrNo';
+import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
+import {
+    legeerklæringStepIsValid, medlemskapStepIsValid, welcomingPageIsValid
+} from '../stepValidations';
 
 jest.mock('./../fieldValidations', () => {
     return {
@@ -15,53 +17,53 @@ jest.mock('./../../utils/featureToggleUtils', () => {
     return { isFeatureEnabled: () => false, Feature: {} };
 });
 
-const formData: Partial<OmsorgspengesøknadFormData> = {};
+const formData: Partial<SøknadFormData> = {};
 
 describe('stepValidation tests', () => {
     describe('welcomingPageIsValid', () => {
-        it(`should be valid if ${AppFormField.harForståttRettigheterOgPlikter} is true`, () => {
-            formData[AppFormField.harForståttRettigheterOgPlikter] = true;
-            expect(welcomingPageIsValid(formData as OmsorgspengesøknadFormData)).toBe(true);
+        it(`should be valid if ${SøknadFormField.harForståttRettigheterOgPlikter} is true`, () => {
+            formData[SøknadFormField.harForståttRettigheterOgPlikter] = true;
+            expect(welcomingPageIsValid(formData as SøknadFormData)).toBe(true);
         });
 
-        it(`should be invalid if ${AppFormField.harForståttRettigheterOgPlikter} is undefined or false`, () => {
-            formData[AppFormField.harForståttRettigheterOgPlikter] = undefined;
-            expect(welcomingPageIsValid(formData as OmsorgspengesøknadFormData)).toBe(false);
-            formData[AppFormField.harForståttRettigheterOgPlikter] = false;
-            expect(welcomingPageIsValid(formData as OmsorgspengesøknadFormData)).toBe(false);
+        it(`should be invalid if ${SøknadFormField.harForståttRettigheterOgPlikter} is undefined or false`, () => {
+            formData[SøknadFormField.harForståttRettigheterOgPlikter] = undefined;
+            expect(welcomingPageIsValid(formData as SøknadFormData)).toBe(false);
+            formData[SøknadFormField.harForståttRettigheterOgPlikter] = false;
+            expect(welcomingPageIsValid(formData as SøknadFormData)).toBe(false);
         });
     });
 
     describe('medlemskapStepIsValid', () => {
         it('should be valid if both harBoddUtenforNorgeSiste12Mnd and skalBoUtenforNorgeNeste12Mnd are either answered with YES or NO', () => {
-            formData[AppFormField.harBoddUtenforNorgeSiste12Mnd] = YesOrNo.YES;
-            formData[AppFormField.skalBoUtenforNorgeNeste12Mnd] = YesOrNo.YES;
-            expect(medlemskapStepIsValid(formData as OmsorgspengesøknadFormData)).toBe(true);
-            formData[AppFormField.harBoddUtenforNorgeSiste12Mnd] = YesOrNo.NO;
-            formData[AppFormField.skalBoUtenforNorgeNeste12Mnd] = YesOrNo.NO;
-            expect(medlemskapStepIsValid(formData as OmsorgspengesøknadFormData)).toBe(true);
-            formData[AppFormField.harBoddUtenforNorgeSiste12Mnd] = YesOrNo.YES;
-            formData[AppFormField.skalBoUtenforNorgeNeste12Mnd] = YesOrNo.NO;
-            expect(medlemskapStepIsValid(formData as OmsorgspengesøknadFormData)).toBe(true);
-            formData[AppFormField.harBoddUtenforNorgeSiste12Mnd] = YesOrNo.NO;
-            formData[AppFormField.skalBoUtenforNorgeNeste12Mnd] = YesOrNo.YES;
-            expect(medlemskapStepIsValid(formData as OmsorgspengesøknadFormData)).toBe(true);
+            formData[SøknadFormField.harBoddUtenforNorgeSiste12Mnd] = YesOrNo.YES;
+            formData[SøknadFormField.skalBoUtenforNorgeNeste12Mnd] = YesOrNo.YES;
+            expect(medlemskapStepIsValid(formData as SøknadFormData)).toBe(true);
+            formData[SøknadFormField.harBoddUtenforNorgeSiste12Mnd] = YesOrNo.NO;
+            formData[SøknadFormField.skalBoUtenforNorgeNeste12Mnd] = YesOrNo.NO;
+            expect(medlemskapStepIsValid(formData as SøknadFormData)).toBe(true);
+            formData[SøknadFormField.harBoddUtenforNorgeSiste12Mnd] = YesOrNo.YES;
+            formData[SøknadFormField.skalBoUtenforNorgeNeste12Mnd] = YesOrNo.NO;
+            expect(medlemskapStepIsValid(formData as SøknadFormData)).toBe(true);
+            formData[SøknadFormField.harBoddUtenforNorgeSiste12Mnd] = YesOrNo.NO;
+            formData[SøknadFormField.skalBoUtenforNorgeNeste12Mnd] = YesOrNo.YES;
+            expect(medlemskapStepIsValid(formData as SøknadFormData)).toBe(true);
         });
 
-        it(`should be invalid if ${AppFormField.harBoddUtenforNorgeSiste12Mnd} is UNANSWERED`, () => {
-            formData[AppFormField.harBoddUtenforNorgeSiste12Mnd] = YesOrNo.UNANSWERED;
-            formData[AppFormField.skalBoUtenforNorgeNeste12Mnd] = YesOrNo.YES;
-            expect(medlemskapStepIsValid(formData as OmsorgspengesøknadFormData)).toBe(false);
-            formData[AppFormField.skalBoUtenforNorgeNeste12Mnd] = YesOrNo.NO;
-            expect(medlemskapStepIsValid(formData as OmsorgspengesøknadFormData)).toBe(false);
+        it(`should be invalid if ${SøknadFormField.harBoddUtenforNorgeSiste12Mnd} is UNANSWERED`, () => {
+            formData[SøknadFormField.harBoddUtenforNorgeSiste12Mnd] = YesOrNo.UNANSWERED;
+            formData[SøknadFormField.skalBoUtenforNorgeNeste12Mnd] = YesOrNo.YES;
+            expect(medlemskapStepIsValid(formData as SøknadFormData)).toBe(false);
+            formData[SøknadFormField.skalBoUtenforNorgeNeste12Mnd] = YesOrNo.NO;
+            expect(medlemskapStepIsValid(formData as SøknadFormData)).toBe(false);
         });
 
-        it(`should be invalid if ${AppFormField.skalBoUtenforNorgeNeste12Mnd} is UNANSWERED`, () => {
-            formData[AppFormField.skalBoUtenforNorgeNeste12Mnd] = YesOrNo.UNANSWERED;
-            formData[AppFormField.harBoddUtenforNorgeSiste12Mnd] = YesOrNo.YES;
-            expect(medlemskapStepIsValid(formData as OmsorgspengesøknadFormData)).toBe(false);
-            formData[AppFormField.harBoddUtenforNorgeSiste12Mnd] = YesOrNo.NO;
-            expect(medlemskapStepIsValid(formData as OmsorgspengesøknadFormData)).toBe(false);
+        it(`should be invalid if ${SøknadFormField.skalBoUtenforNorgeNeste12Mnd} is UNANSWERED`, () => {
+            formData[SøknadFormField.skalBoUtenforNorgeNeste12Mnd] = YesOrNo.UNANSWERED;
+            formData[SøknadFormField.harBoddUtenforNorgeSiste12Mnd] = YesOrNo.YES;
+            expect(medlemskapStepIsValid(formData as SøknadFormData)).toBe(false);
+            formData[SøknadFormField.harBoddUtenforNorgeSiste12Mnd] = YesOrNo.NO;
+            expect(medlemskapStepIsValid(formData as SøknadFormData)).toBe(false);
         });
     });
 

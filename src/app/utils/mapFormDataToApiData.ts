@@ -1,12 +1,11 @@
+import { Locale } from '@navikt/sif-common-core/lib/types/Locale';
 import { getCountryName } from '@navikt/sif-common-formik/lib';
 import { Utenlandsopphold } from 'common/forms/utenlandsopphold/types';
-import { Locale } from 'common/types/Locale';
 import { YesOrNo } from 'common/types/YesOrNo';
 import { attachmentUploadHasFailed } from 'common/utils/attachmentUtils';
 import { formatDateToApiFormat } from 'common/utils/dateUtils';
-import { OmsorgspengesøknadApiData, UtenlandsoppholdApiData } from '../types/OmsorgspengesøknadApiData';
-import { OmsorgspengesøknadFormData } from '../types/OmsorgspengesøknadFormData';
-import { BarnReceivedFromApi } from '../types/Søkerdata';
+import { OmsorgspengesøknadApiData, UtenlandsoppholdApiData } from '../types/SøknadApiData';
+import { SøknadFormData } from '../types/SøknadFormData';
 
 export const mapFormDataToApiData = (
     // TODO: FIX MAPPING!!!
@@ -20,8 +19,7 @@ export const mapFormDataToApiData = (
         skalBoUtenforNorgeNeste12Mnd,
         utenlandsoppholdNeste12Mnd,
         utenlandsoppholdSiste12Mnd
-    }: OmsorgspengesøknadFormData,
-    barn: BarnReceivedFromApi[],
+    }: SøknadFormData,
     sprak: Locale
 ): OmsorgspengesøknadApiData => {
     const apiData: OmsorgspengesøknadApiData = {

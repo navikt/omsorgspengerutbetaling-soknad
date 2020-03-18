@@ -11,8 +11,6 @@ function createEnvSettingsFileForHeroku() {
             `window.appSettings = {
                 API_URL: 'https://omsorgspengesoknad.herokuapp.com/',
                 LOGIN_URL: 'https://omsorgspengesoknad.herokuapp.com/',
-                DEMO_MODE: 'on',
-                DEMO_MODE_ENABLE_UPLOAD: 'on'
             };`
         );
     });

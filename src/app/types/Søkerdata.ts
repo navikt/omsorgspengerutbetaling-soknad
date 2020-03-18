@@ -1,11 +1,3 @@
-export interface BarnReceivedFromApi {
-    fornavn: string;
-    etternavn: string;
-    mellomnavn?: string;
-    aktørId: string;
-    fødselsdato: Date;
-}
-
 export interface Person {
     etternavn: string;
     fornavn: string;
@@ -17,5 +9,4 @@ export interface Person {
 
 export interface Søkerdata {
     person: Person;
-    barn: BarnReceivedFromApi[];
 }

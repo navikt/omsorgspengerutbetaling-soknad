@@ -1,20 +1,15 @@
 import moment from 'moment';
-import {Utenlandsopphold} from 'common/forms/utenlandsopphold/types';
-import {Attachment} from 'common/types/Attachment';
-import {YesOrNo} from 'common/types/YesOrNo';
-import {attachmentHasBeenUploaded} from 'common/utils/attachmentUtils';
+import { Utenlandsopphold } from 'common/forms/utenlandsopphold/types';
+import { Attachment } from 'common/types/Attachment';
+import { YesOrNo } from 'common/types/YesOrNo';
+import { attachmentHasBeenUploaded } from 'common/utils/attachmentUtils';
 import {
-    date1YearAgo,
-    date1YearFromNow,
-    DateRange,
-    dateRangesCollide,
-    dateRangesExceedsRange,
-    dateToday
+    date1YearAgo, date1YearFromNow, DateRange, dateRangesCollide, dateRangesExceedsRange, dateToday
 } from 'common/utils/dateUtils';
-import {createFieldValidationError} from 'common/validation/fieldValidations';
-import {FieldValidationResult} from 'common/validation/types';
-import {SøkersRelasjonTilBarnet} from '../types/OmsorgspengesøknadFormData';
-import {fødselsnummerIsValid, FødselsnummerValidationErrorReason} from './fødselsnummerValidator';
+import { createFieldValidationError } from 'common/validation/fieldValidations';
+import { FieldValidationResult } from 'common/validation/types';
+import { SøkersRelasjonTilBarnet } from '../types/SøknadFormData';
+import { fødselsnummerIsValid, FødselsnummerValidationErrorReason } from './fødselsnummerValidator';
 
 export enum AppFieldValidationErrors {
     'fødselsdato_ugyldig' = 'fieldvalidation.fødelsdato.ugyldig',

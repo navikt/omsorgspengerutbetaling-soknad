@@ -7,16 +7,16 @@ import {
     getPendingAttachmentFromFile, isFileObject, VALID_EXTENSIONS
 } from 'common/utils/attachmentUtils';
 import { uploadFile } from '../../api/api';
-import { AppFormField } from '../../types/OmsorgspengesøknadFormData';
+import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import * as apiUtils from '../../utils/apiUtils';
-import AppForm from '../app-form/AppForm';
+import TypedFormComponents from '../søknad/typed-form-components/TypedFormComponents';
 
 export type FieldArrayReplaceFn = (index: number, value: any) => void;
 export type FieldArrayPushFn = (obj: any) => void;
 export type FieldArrayRemoveFn = (index: number) => undefined;
 
 interface FormikFileUploader {
-    name: AppFormField;
+    name: SøknadFormField;
     label: string;
     validate?: FormikValidateFunction;
     onFileInputClick?: () => void;
@@ -33,7 +33,7 @@ const FormikFileUploader: React.FunctionComponent<Props> = ({
     onUnauthorizedOrForbiddenUpload,
     ...otherProps
 }) => {
-    const { values } = useFormikContext();
+    const { values } = useFormikContext<SøknadFormData>();
     async function uploadAttachment(attachment: Attachment) {
         const { file } = attachment;
         if (isFileObject(file)) {
@@ -109,12 +109,12 @@ const FormikFileUploader: React.FunctionComponent<Props> = ({
     }
 
     return (
-        <AppForm.FileInput
+        <TypedFormComponents.FileInput
             name={name}
             acceptedExtensions={VALID_EXTENSIONS.join(', ')}
             onFilesSelect={async (files: File[], { push, replace }: ArrayHelpers) => {
                 const attachments = files.map((file) => addPendingAttachmentToFieldArray(file, push));
-                await uploadAttachments([...values[name], ...attachments], replace);
+                await uploadAttachments([...(values as any)[name], ...attachments], replace);
             }}
             onClick={onFileInputClick}
             {...otherProps}

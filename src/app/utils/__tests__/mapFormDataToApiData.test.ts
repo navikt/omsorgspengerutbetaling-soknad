@@ -1,39 +1,28 @@
 import { Attachment } from 'common/types/Attachment';
 import { YesOrNo } from 'common/types/YesOrNo';
 import * as attachmentUtils from 'common/utils/attachmentUtils';
-import { OmsorgspengesøknadApiData } from '../../types/OmsorgspengesøknadApiData';
-import { AppFormField, OmsorgspengesøknadFormData } from '../../types/OmsorgspengesøknadFormData';
-import { BarnReceivedFromApi } from '../../types/Søkerdata';
+import { OmsorgspengesøknadApiData } from '../../types/SøknadApiData';
+import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import { isFeatureEnabled } from '../featureToggleUtils';
 import { mapFormDataToApiData } from '../mapFormDataToApiData';
-
-const moment = require('moment');
 
 jest.mock('./../featureToggleUtils.ts', () => ({
     isFeatureEnabled: jest.fn(),
     Feature: {}
 }));
 
-const todaysDate = moment()
-    .startOf('day')
-    .toDate();
-
-const barnMock: BarnReceivedFromApi[] = [
-    { fødselsdato: todaysDate, fornavn: 'Mock', etternavn: 'Mocknes', aktørId: '123' }
-];
-
 type AttachmentMock = Attachment & { failed: boolean };
 const attachmentMock1: Partial<AttachmentMock> = { url: 'nav.no/1', failed: true };
 const attachmentMock2: Partial<AttachmentMock> = { url: 'nav.no/2', failed: false };
 
-const formDataMock: Partial<OmsorgspengesøknadFormData> = {
-    [AppFormField.harBekreftetOpplysninger]: true,
-    [AppFormField.harForståttRettigheterOgPlikter]: true,
-    [AppFormField.harBoddUtenforNorgeSiste12Mnd]: YesOrNo.YES,
-    [AppFormField.utenlandsoppholdNeste12Mnd]: [],
-    [AppFormField.utenlandsoppholdSiste12Mnd]: [],
-    [AppFormField.skalBoUtenforNorgeNeste12Mnd]: YesOrNo.NO,
-    [AppFormField.legeerklæring]: [attachmentMock1 as AttachmentMock, attachmentMock2 as AttachmentMock]
+const formDataMock: Partial<SøknadFormData> = {
+    [SøknadFormField.harBekreftetOpplysninger]: true,
+    [SøknadFormField.harForståttRettigheterOgPlikter]: true,
+    [SøknadFormField.harBoddUtenforNorgeSiste12Mnd]: YesOrNo.YES,
+    [SøknadFormField.utenlandsoppholdNeste12Mnd]: [],
+    [SøknadFormField.utenlandsoppholdSiste12Mnd]: [],
+    [SøknadFormField.skalBoUtenforNorgeNeste12Mnd]: YesOrNo.NO,
+    [SøknadFormField.legeerklæring]: [attachmentMock1 as AttachmentMock, attachmentMock2 as AttachmentMock]
 };
 
 jest.mock('common/utils/dateUtils', () => {
@@ -53,7 +42,7 @@ describe('mapFormDataToApiData', () => {
 
     beforeAll(() => {
         (isFeatureEnabled as any).mockImplementation(() => false);
-        resultingApiData = mapFormDataToApiData(formDataMock as OmsorgspengesøknadFormData, barnMock, 'nb');
+        resultingApiData = mapFormDataToApiData(formDataMock as SøknadFormData, 'nb');
     });
 
     it("should set 'medlemskap.skalBoIUtlandetNeste12Mnd' in api data correctly", () => {
@@ -72,12 +61,12 @@ describe('mapFormDataToApiData', () => {
     });
 
     it('should set harBekreftetOpplysninger to value of harBekreftetOpplysninger in form data', () => {
-        expect(resultingApiData.harBekreftetOpplysninger).toBe(formDataMock[AppFormField.harBekreftetOpplysninger]);
+        expect(resultingApiData.harBekreftetOpplysninger).toBe(formDataMock[SøknadFormField.harBekreftetOpplysninger]);
     });
 
     it('should set har_forstått_rettigheter_og_plikter to value of harForståttRettigheterOgPlikter in form data', () => {
         expect(resultingApiData.harForståttRettigheterOgPlikter).toBe(
-            formDataMock[AppFormField.harForståttRettigheterOgPlikter]
+            formDataMock[SøknadFormField.harForståttRettigheterOgPlikter]
         );
     });
 });

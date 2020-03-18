@@ -1,16 +1,11 @@
 import RouteConfig from '../config/routeConfig';
 import { getStepConfig, StepID } from '../config/stepConfig';
-import { AppFormField, OmsorgspengesøknadFormData } from '../types/OmsorgspengesøknadFormData';
-import { appIsRunningInDemoMode, appIsRunningInDevEnvironment } from './envUtils';
+import { SøknadFormData, SøknadFormField } from '../types/SøknadFormData';
+import { appIsRunningInDevEnvironment } from './envUtils';
 import {
-    harUtbetaltDeFørsteTiDagene,
-    hvisUtenlandsoppholdAvailable,
-    inntektStepAvailable,
-    legeerklæringStepAvailable,
-    medlemskapStepAvailable,
-    nårKanManFåUtbetaltOmsorgspengerAvailable,
-    periodeAvailable,
-    summaryStepAvailable
+    harUtbetaltDeFørsteTiDagene, hvisUtenlandsoppholdAvailable, inntektStepAvailable,
+    legeerklæringStepAvailable, medlemskapStepAvailable, nårKanManFåUtbetaltOmsorgspengerAvailable,
+    periodeAvailable, summaryStepAvailable
 } from './stepUtils';
 
 export const getSøknadRoute = (stepId: StepID | undefined) => {
@@ -20,13 +15,13 @@ export const getSøknadRoute = (stepId: StepID | undefined) => {
     return undefined;
 };
 
-export const getNextStepRoute = (stepId: StepID, formData?: OmsorgspengesøknadFormData): string | undefined => {
+export const getNextStepRoute = (stepId: StepID, formData?: SøknadFormData): string | undefined => {
     const stepConfig = getStepConfig(formData);
     return stepConfig[stepId] ? getSøknadRoute(stepConfig[stepId].nextStep) : undefined;
 };
 
-export const isAvailable = (path: StepID | RouteConfig, values: OmsorgspengesøknadFormData) => {
-    if (!appIsRunningInDevEnvironment() && !appIsRunningInDemoMode()) {
+export const isAvailable = (path: StepID | RouteConfig, values: SøknadFormData) => {
+    if (!appIsRunningInDevEnvironment()) {
         switch (path) {
             case StepID.NÅR_KAN_MAN_FÅ_UTBETALT_OMSORGSPENGER:
                 return nårKanManFåUtbetaltOmsorgspengerAvailable(values);
@@ -45,7 +40,7 @@ export const isAvailable = (path: StepID | RouteConfig, values: Omsorgspengesøk
             case StepID.SUMMARY:
                 return summaryStepAvailable(values);
             case RouteConfig.SØKNAD_SENDT_ROUTE:
-                return values[AppFormField.harBekreftetOpplysninger];
+                return values[SøknadFormField.harBekreftetOpplysninger];
         }
     }
     return true;

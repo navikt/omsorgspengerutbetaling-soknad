@@ -1,7 +1,5 @@
 export enum Feature {
-    'DEMO_MODE' = 'DEMO_MODE',
-    'UTILGJENGELIG' = 'UTILGJENGELIG',
-    'DEMO_MOVE_ENABLE_UPLOAD' = 'DEMO_MOVE_ENABLE_UPLOAD'
+    'UTILGJENGELIG' = 'UTILGJENGELIG'
 }
 
 export const isFeatureEnabled = (feature: Feature) => {
