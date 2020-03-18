@@ -1,21 +1,23 @@
 import * as React from 'react';
-import { StepConfigProps, StepID } from '../../../config/stepConfig';
+import {StepConfigProps, StepID} from '../../../config/stepConfig';
 import FormikStep from '../../formik-step/FormikStep';
 import CounsellorPanel from 'common/components/counsellor-panel/CounsellorPanel';
-import { AppFormField, OmsorgspengesøknadFormData } from '../../../types/OmsorgspengesøknadFormData';
-import { useIntl } from 'react-intl';
-import { FieldArray } from 'formik';
+import {AppFormField, OmsorgspengesøknadFormData} from '../../../types/OmsorgspengesøknadFormData';
+import {useIntl} from 'react-intl';
+import {FieldArray} from 'formik';
 import FormBlock from 'common/components/form-block/FormBlock';
 import Box from 'common/components/box/Box';
-import { FormikDatepicker, FormikInput, FormikYesOrNoQuestion } from 'common/formik';
-import { FraværDelerAvDag, Periode } from '../../../../@types/omsorgspengerutbetaling-schema';
+import {FormikDatepicker, FormikInput, FormikYesOrNoQuestion} from 'common/formik';
+import {FraværDelerAvDag, Periode} from '../../../../@types/omsorgspengerutbetaling-schema';
 import intlHelper from 'common/utils/intlUtils';
-import { date3YearsAgo } from 'common/utils/dateUtils';
+import {date1YearAgo, date3YearsAgo, dateToday} from 'common/utils/dateUtils';
 import LabelWithInfo from 'common/formik/components/helpers/label-with-info/LabelWithInfo';
 import DeleteButton from 'common/components/delete-button/DeleteButton';
 import './periodeStep.less';
-import { SkjemaGruppe } from 'nav-frontend-skjema';
-import { Knapp } from 'nav-frontend-knapper';
+import {SkjemaGruppe} from 'nav-frontend-skjema';
+import {Knapp} from 'nav-frontend-knapper';
+import {YesOrNo} from "common/types/YesOrNo";
+import BostedUtlandListAndDialog from "common/forms/bosted-utland/BostedUtlandListAndDialog";
 
 const PeriodeStep = (stepConfigProps: StepConfigProps) => {
     const {
@@ -214,6 +216,23 @@ const PeriodeStep = (stepConfigProps: StepConfigProps) => {
                     legend={intlHelper(intl, 'step.periode.har_dy_oppholdt_deg_i_utlandet_for_dager_du_soker_ok.spm')}
                 />
             </FormBlock>
+
+            {formValues[AppFormField.periode_har_vært_i_utlandet] === YesOrNo.YES && (
+                <FormBlock margin="m">
+                    <BostedUtlandListAndDialog<AppFormField>
+                        name={AppFormField.periode_utenlandsopphold}
+                        minDate={date1YearAgo}
+                        maxDate={dateToday}
+                        validate={undefined}
+                        labels={{
+                            addLabel: 'Legg til nytt utenlandsopphold',
+                            modalTitle: 'Utenlandsopphold siste 12 måneder'
+                        }}
+                    />
+                </FormBlock>
+            )}
+
+
         </FormikStep>
     );
 };
