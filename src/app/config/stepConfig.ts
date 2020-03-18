@@ -1,7 +1,7 @@
-import {AppFormField, OmsorgspengesøknadFormData} from '../types/OmsorgspengesøknadFormData';
-import {getSøknadRoute} from '../utils/routeUtils';
+import { YesOrNo } from 'common/types/YesOrNo';
+import { SøknadFormData, SøknadFormField } from '../types/SøknadFormData';
+import { getSøknadRoute } from '../utils/routeUtils';
 import routeConfig from './routeConfig';
-import {YesOrNo} from "common/types/YesOrNo";
 
 export enum StepID {
     'NÅR_KAN_MAN_FÅ_UTBETALT_OMSORGSPENGER' = 'når-kan-man-få-utbetalt-omsorgspenger',
@@ -42,11 +42,11 @@ const getStepConfigItemTextKeys = (stepId: StepID): StepConfigItemTexts => {
     };
 };
 
-const shouldIncludeHvisUtenlandsopphold = (formData?: OmsorgspengesøknadFormData): boolean => {
-    return !!(formData && formData[AppFormField.periode_har_vært_i_utlandet] === YesOrNo.YES)
+const shouldIncludeHvisUtenlandsopphold = (formData?: SøknadFormData): boolean => {
+    return !!(formData && formData[SøknadFormField.periode_har_vært_i_utlandet] === YesOrNo.YES);
 };
 
-export const getStepConfig = (formData?: OmsorgspengesøknadFormData): StepConfigInterface => {
+export const getStepConfig = (formData?: SøknadFormData): StepConfigInterface => {
     let idx = 0;
 
     const showHvisUtenlandopphold = shouldIncludeHvisUtenlandsopphold(formData);
@@ -119,7 +119,7 @@ export const getStepConfig = (formData?: OmsorgspengesøknadFormData): StepConfi
 
 export interface StepConfigProps {
     onValidSubmit: () => void;
-    formValues: OmsorgspengesøknadFormData;
+    formValues: SøknadFormData;
 }
 
 export const stepConfig: StepConfigInterface = getStepConfig();

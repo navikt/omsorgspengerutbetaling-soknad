@@ -58,10 +58,6 @@
     "step.sendButtonLabel": "Send inn søknaden",
     "step.sendButtonAriaLabel": "Send inn søknaden",
 
-
-
-
-
     "step.når-kan-man-få-utbetalt-omsorgspenger.pageTitle": "Når kan man få utbetalt omsorgspenger fra NAV?",
     "step.når-kan-man-få-utbetalt-omsorgspenger.stepTitle": "Når kan man få utbetalt omsorgspenger fra NAV?",
     "step.når-kan-man-få-utbetalt-omsorgspenger.stepIndicatorLabel": "Når kan man få utbetalt omsorgspenger fra NAV?",
@@ -72,62 +68,43 @@
     "step.når-kan-man-få-utbetalt-omsorgspenger.den_andre_forelderen_ikke_kan_ta_seg_av_barnet.spm": "Jeg har innvilget ekstra dager fordi den andre forelderen ikke kan ta seg av barnet",
     "step.når-kan-man-få-utbetalt-omsorgspenger.har_barn_som_har_kronisk_sykdom_eller_funksjonshemming.spm": "Jeg har innvilget ekstra dager fordi jeg har barn som har kronisk sykdom/funksjonshemming",
 
-
-
-
     "step.har-utbetalt-de-første-ti-dagene.pageTitle": "De første 10 dagene",
     "step.har-utbetalt-de-første-ti-dagene.stepTitle": "Har du utbetalt 10 dager for deg selv i dette kalenderåret?",
     "step.har-utbetalt-de-første-ti-dagene.stepIndicatorLabel": "De første 10 dagene",
-    "step.har-utbetalt-de-første-ti-dagene.counsellorpanel.content":"I de fleste tilfeller må man som selvstendig næringsdrivende og frilanser betale de 10 første dager med omsorgspenger i året selv.",
+    "step.har-utbetalt-de-første-ti-dagene.counsellorpanel.content": "I de fleste tilfeller må man som selvstendig næringsdrivende og frilanser betale de 10 første dager med omsorgspenger i året selv.",
 
-    "step.har-utbetalt-de-første-ti-dagene.ja_nei_spm.legend":"Har du utbetalt 10 dager for deg selv i dette kalenderåret?",
+    "step.har-utbetalt-de-første-ti-dagene.ja_nei_spm.legend": "Har du utbetalt 10 dager for deg selv i dette kalenderåret?",
 
     "step.har_utbetalt_de_første_ti_dagene.innvilget_rett_og_ingen_andre_barn_under_tolv.spm": "Jeg har innvilget utvidet rett for et kronisk sykt barn/funksjonshemmet og har ingen andre barn under 12 år",
     "step.har_utbetalt_de_første_ti_dagene.fisker_på_blad_B.spm": "Jeg er fisker på blad B",
     "step.har_utbetalt_de_første_ti_dagene.frivillig_forsikring.spm": "Jeg har frivillig forsikring for tilleggssykepenger fra 1. dag",
     "step.har_utbetalt_de_første_ti_dagene.nettop_startet_selvstendig_frilanser.spm": "Jeg har nettopp startet å jobbe som selvstendig/frilanser og jobbet under 4 uker",
 
-
-
-
     "step.periode.pageTitle": "Spesifisering av dager og tidspunkter",
     "step.periode.stepTitle": "Hvilke dager søker du om utbetaling for?",
     "step.periode.stepIndicatorLabel": "Spesifisering av dager og tidspunkter",
-    "step.periode.counsellorpanel.content":"I de fleste tilfeller må man som selvstendig næringsdrivende og frilanser betale de 10 første dager med omsorgspenger i året selv.",
+    "step.periode.counsellorpanel.content": "I de fleste tilfeller må man som selvstendig næringsdrivende og frilanser betale de 10 første dager med omsorgspenger i året selv.",
     "step.periode.dager_med_fullt_fravært.label": "Dager med fullt fravær",
     "step.periode.dager_med_fullt_fravært.info": "TODO",
     "step.periode.dager_med_delvis_fravært.label": "Dager med delvis fravær",
     "step.periode.dager_med_delvis_fravært.info": "TODO",
     "step.periode.har_dy_oppholdt_deg_i_utlandet_for_dager_du_soker_ok.spm": "Har du oppholdt deg i utlandet i noen av dagene du søker om utbetaling for?",
 
-
     "step.hvis-utenlandsopphold.pageTitle": "Opphold i utlandet",
     "step.hvis-utenlandsopphold.stepTitle": "Spesifiser hvilke perioder du har oppholdt deg i utlandet",
     "step.hvis-utenlandsopphold.stepIndicatorLabel": "Opphold i utlandet",
-    "step.hvis-utenlandsopphold.counsellorpanel.content":"I de fleste tilfeller må man som selvstendig næringsdrivende og frilanser betale de 10 første dager med omsorgspenger i året selv.",
+    "step.hvis-utenlandsopphold.counsellorpanel.content": "I de fleste tilfeller må man som selvstendig næringsdrivende og frilanser betale de 10 første dager med omsorgspenger i året selv.",
     "step.hvis_utenlandsopphold.en_test_verdi.spm": "Dette er en test verdi som skal bli tømt hvis bruker velger å gå tilbake å trykke nei på at personen har vært i utlandet etter å først ha sagt ja og så lagt inn data på det ekstra steget som dukker opp om å spesifisere perioder i utlandet.",
-
-
-
-
 
     "step.inntekt.pageTitle": "Inntekt",
     "step.inntekt.stepTitle": "Inntekt",
     "step.inntekt.stepIndicatorLabel": "Om ditt arbeidsforhold",
-
 
     "steg.inntekt.væreBorteFra.spm": "Kva jobb må du vere borte frå for å pleie barnet?",
     "steg.inntekt.aktivtArbeidsforhold.spm": "Vel arbeidsforholda du har i perioden du søkjer pleiepengar for.",
     "steg.inntekt.aktivtArbeidsforhold.info.html": "<p>For å ha rett til pleiepengar må du ha minst 20 prosent inntektstap mens du pleier barnet ditt. Dagpengar, sjukepengar, foreldrepengar, pleiepengar og opplæringspengar blir også rekna som inntekt.</p><p>Vi har funne desse arbeidsforholda registrerte på deg.</p>",
     "steg.inntekt.ingenOpplysninger": "Vi har ikkje nokon opplysningar om arbeidsgivar.",
     "steg.inntekt.manglesOpplysninger": "Manglar det ein arbeidsgivar her? Be arbeidsgivaren din sende ny A-melding, anten via lønns- og personalsystemet eller gjennom Altinn.",
-
-
-
-
-
-
-
 
     "step.opplysninger-om-barnet.pageTitle": "Omsorgspengesøknad - opplysninger om barnet",
     "step.opplysninger-om-barnet.stepTitle": "Barn",
@@ -292,7 +269,5 @@
     "fieldvalidation.samværsavtale.forMangeFiler": "Du kan maksimalt laste opp 3 bilder",
     "fieldvalidation.utenlandsopphold_ikke_registrert": "Du har ikke registrert noen utenlandsopphold for perioden",
     "fieldvalidation.utenlandsopphold_overlapper": "Ett eller flere av utenlandsoppholdene har datoer som overlapper",
-    "fieldvalidation.utenlandsopphold_utenfor_periode": "Ett eller flere av utenlandsoppholdene er utenfor tillatt tidsrom",
-
-    "demoInfo.html": "Dette er en <strong>demoversjon</strong> av søknadsskjemaet for omsorgspenger, og blir kun brukt i sammenheng med brukertest på <a href=\"http://navlab.no/\">http://navlab.no/</a>"
+    "fieldvalidation.utenlandsopphold_utenfor_periode": "Ett eller flere av utenlandsoppholdene er utenfor tillatt tidsrom"
 }

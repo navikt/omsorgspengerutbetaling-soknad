@@ -5,9 +5,9 @@ import moment from 'moment';
 import Modal from 'nav-frontend-modal';
 import { Locale } from 'common/types/Locale';
 import ApplicationWrapper from './components/application-wrapper/ApplicationWrapper';
-import Omsorgspengesøknad from './components/omsorgspengesøknad/Omsorgspengesøknad';
 import IntroPage from './components/pages/intro-page/IntroPage';
 import UnavailablePage from './components/pages/unavailable-page/UnavailablePage';
+import Søknad from './components/søknad/Søknad';
 import RouteConfig from './config/routeConfig';
 import { Feature, isFeatureEnabled } from './utils/featureToggleUtils';
 import { getLocaleFromSessionStorage, setLocaleInSessionStorage } from './utils/localeUtils';
@@ -30,7 +30,7 @@ const App: React.FunctionComponent = () => {
                     <UnavailablePage />
                 ) : (
                     <Switch>
-                        <Route path={RouteConfig.SØKNAD_ROUTE_PREFIX} component={Omsorgspengesøknad} />
+                        <Route path={RouteConfig.SØKNAD_ROUTE_PREFIX} component={Søknad} />
                         <Route path="/" component={IntroPage} />
                     </Switch>
                 )}

@@ -2,7 +2,7 @@ import axios from 'axios';
 import axiosConfig from '../../config/axiosConfig';
 import { ResourceType } from '../../types/ResourceType';
 import { getApiUrlByResourceType, sendMultipartPostRequest } from '../../utils/apiUtils';
-import { deleteFile, getBarn, getSøker, sendApplication, uploadFile } from '../api';
+import { deleteFile, getSøker, sendApplication, uploadFile } from '../api';
 
 const mockedApiUrl = 'nav.no/api';
 jest.mock('./../../utils/apiUtils', () => {
@@ -13,13 +13,6 @@ jest.mock('./../../utils/apiUtils', () => {
 });
 
 describe('api', () => {
-    describe('getBarn', () => {
-        it('should call axios.get with correct URL and axios config', () => {
-            getBarn();
-            expect(axios.get).toHaveBeenCalledWith(getApiUrlByResourceType(ResourceType.BARN), axiosConfig);
-        });
-    });
-
     describe('getSøker', () => {
         it('should call axios.get with correct URL and axios config', () => {
             getSøker();

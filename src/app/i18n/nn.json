@@ -67,14 +67,10 @@
     "step.når-kan-man-få-utbetalt-omsorgspenger.den_andre_forelderen_ikke_kan_ta_seg_av_barnet.spm": "Jeg har innvilget ekstra dager fordi den andre forelderen ikke kan ta seg av barnet",
     "step.når-kan-man-få-utbetalt-omsorgspenger.har_barn_som_har_kronisk_sykdom_eller_funksjonshemming.spm": "Jeg har innvilget ekstra dager fordi jeg har barn som har kronisk sykdom/funksjonshemming",
 
-
     "step.har-utbetalt-de-første-ti-dagene.pageTitle": "TODO",
     "step.har-utbetalt-de-første-ti-dagene.stepTitle": "Har du utbetalt 10 dager for deg selv i dette kalenderåret?",
     "step.har-utbetalt-de-første-ti-dagene.stepIndicatorLabel": "TODO",
-    "step.har-utbetalt-de-første-ti-dagene.counsellorpanel.content":"I de fleste tilfeller må man som selvstendig næringsdrivende og frilanser betale de 10 første dager med omsorgspenger i året selv.",
-
-
-
+    "step.har-utbetalt-de-første-ti-dagene.counsellorpanel.content": "I de fleste tilfeller må man som selvstendig næringsdrivende og frilanser betale de 10 første dager med omsorgspenger i året selv.",
 
     "step.opplysninger-om-barnet.pageTitle": "Omsorgspengesøknad - opplysninger om barnet",
     "step.opplysninger-om-barnet.stepTitle": "Barn",
@@ -238,7 +234,5 @@
     "fieldvalidation.samværsavtale.forMangeFiler": "Du kan maksimalt laste opp 3 bilder",
     "fieldvalidation.utenlandsopphold_ikke_registrert": "Du har ikke registrert noen utenlandsopphold for perioden",
     "fieldvalidation.utenlandsopphold_overlapper": "Ett eller flere av utenlandsoppholdene har datoer som overlapper",
-    "fieldvalidation.utenlandsopphold_utenfor_periode": "Ett eller flere av utenlandsoppholdene er utenfor tillatt tidsrom",
-
-    "demoInfo.html": "Dette er en <strong>demoversjon</strong> av søknadsskjemaet for omsorgspenger, og blir kun brukt i sammenheng med brukertest på <a href=\"http://navlab.no/\">http://navlab.no/</a>"
+    "fieldvalidation.utenlandsopphold_utenfor_periode": "Ett eller flere av utenlandsoppholdene er utenfor tillatt tidsrom"
 }

@@ -1,6 +1,6 @@
 import RouteConfig from '../../config/routeConfig';
 import { StepID } from '../../config/stepConfig';
-import { AppFormField } from '../../types/OmsorgspengesøknadFormData';
+import { SøknadFormField } from '../../types/SøknadFormData';
 import { getSøknadRoute, isAvailable } from '../routeUtils';
 import * as stepUtils from '../stepUtils';
 
@@ -53,7 +53,7 @@ describe('routeUtils', () => {
         it('should return true if route=RouteConfig.SØKNAD_SENDT_ROUTE and harBekreftetOpplysninger is true', () => {
             const result = isAvailable(RouteConfig.SØKNAD_SENDT_ROUTE, {
                 ...formValues,
-                [AppFormField.harBekreftetOpplysninger]: true
+                [SøknadFormField.harBekreftetOpplysninger]: true
             });
             expect(result).toBe(true);
         });
@@ -61,7 +61,7 @@ describe('routeUtils', () => {
         it('should return false if route=RouteConfig.SØKNAD_SENDT_ROUTE and harBekreftetOpplysninger is false', () => {
             const result = isAvailable(RouteConfig.SØKNAD_SENDT_ROUTE, {
                 ...formValues,
-                [AppFormField.harBekreftetOpplysninger]: false
+                [SøknadFormField.harBekreftetOpplysninger]: false
             });
             expect(result).toBe(false);
         });

@@ -3,13 +3,13 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { getTypedFormComponents } from '@navikt/sif-common-formik/lib';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import Lenke from 'nav-frontend-lenker';
+import Box from 'common/components/box/Box';
 import FormBlock from 'common/components/form-block/FormBlock';
+import LegeerklæringInformationPanel from 'common/components/legeerklæring-information-panel/LegeerklæringInformationPanel';
 import bemHelper from 'common/utils/bemUtils';
 import { commonFieldErrorRenderer } from 'common/utils/commonFieldErrorRenderer';
 import intlHelper from 'common/utils/intlUtils';
-import { AppFormField, OmsorgspengesøknadFormData } from '../../../types/OmsorgspengesøknadFormData';
-import LegeerklæringInformationPanel from 'common/components/legeerklæring-information-panel/LegeerklæringInformationPanel';
-import Box from 'common/components/box/Box';
+import { SøknadFormData, SøknadFormField } from '../../../types/SøknadFormData';
 
 interface Props {
     onConfirm: () => void;
@@ -17,7 +17,7 @@ interface Props {
     openBehandlingAvPersonopplysningerModal: () => void;
 }
 
-const AppForm = getTypedFormComponents<AppFormField, OmsorgspengesøknadFormData>();
+const AppForm = getTypedFormComponents<SøknadFormField, SøknadFormData>();
 
 const bem = bemHelper('welcomingPage');
 
@@ -56,7 +56,7 @@ const SamtykkeForm: React.FunctionComponent<Props> = ({
                     <FormBlock>
                         <AppForm.ConfirmationCheckbox
                             label={intlHelper(intl, 'welcomingPage.samtykke.tekst')}
-                            name={AppFormField.harForståttRettigheterOgPlikter}
+                            name={SøknadFormField.harForståttRettigheterOgPlikter}
                             validate={(value) => {
                                 let result;
                                 if (value !== true) {

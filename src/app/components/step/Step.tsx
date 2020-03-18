@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { useIntl } from 'react-intl';
+import Box from '@navikt/sif-common-core/lib/components/box/Box';
+import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import { FormikValidationErrorSummary } from '@navikt/sif-common-formik/lib';
 import { History } from 'history';
 import { Systemtittel } from 'nav-frontend-typografi';
 import BackLink from 'common/components/back-link/BackLink';
-import Box from 'common/components/box/Box';
 import Page from 'common/components/page/Page';
 import StepBanner from 'common/components/step-banner/StepBanner';
 import bemHelper from 'common/utils/bemUtils';
-import intlHelper from 'common/utils/intlUtils';
 import { getStepTexts } from 'app/utils/stepUtils';
 import { StepConfigInterface, StepConfigItemTexts, StepID } from '../../config/stepConfig';
 import StepIndicator from '../step-indicator/StepIndicator';
