@@ -4,27 +4,6 @@ import { Utenlandsopphold } from 'common/forms/utenlandsopphold/types';
 import { YesOrNo } from 'common/types/YesOrNo';
 import { FraværDelerAvDag, Periode } from '../../@types/omsorgspengerutbetaling-schema';
 
-export enum Omsorgssituasjon {
-    'tre_eller_flere_barn' = 'tre_eller_flere_barn',
-    'alene_om_omsorg_for_barn' = 'alene_om_omsorg_for_barn',
-    'fått_overført_dager_og_rett' = 'fått_overført_dager_og_rett',
-    'innvilget_ekstra_dager_fordi_den_andre_forelderen_ikke_kan_ta_seg_av_barnet' = 'innvilget_ekstra_dager_fordi_den_andre_forelderen_ikke_kan_ta_seg_av_barnet',
-    'innvilget_ekstra_dager_pga_kronisk_sykdom_funksjonshemming' = 'innvilget_ekstra_dager_pga_kronisk_sykdom_funksjonshemming'
-}
-
-export enum SøkersRelasjonTilBarnet {
-    'MOR' = 'mor',
-    'FAR' = 'far',
-    'ADOPTIVFORELDER' = 'adoptivforelder',
-    'FOSTERFORELDER' = 'fosterforelder'
-}
-
-export enum Arbeidssituasjon {
-    'arbeidstaker' = 'arbeidstaker',
-    'selvstendigNæringsdrivende' = 'selvstendigNæringsdrivende',
-    'frilanser' = 'frilanser'
-}
-
 export enum SøknadFormField {
     harForståttRettigheterOgPlikter = 'harForståttRettigheterOgPlikter',
     harBekreftetOpplysninger = 'harBekreftetOpplysninger',
@@ -68,19 +47,6 @@ export enum SøknadFormField {
     skalBoUtenforNorgeNeste12Mnd = 'skalBoUtenforNorgeNeste12Mnd',
     utenlandsoppholdNeste12Mnd = 'utenlandsoppholdNeste12Mnd'
 
-    // TODO: Må gå over å se om noen av disse trengs
-    // barnetHarIkkeFåttFødselsnummerEnda = 'barnetHarIkkeFåttFødselsnummerEnda',
-    // barnetsNavn = 'barnetsNavn',
-    // barnetsFødselsnummer = 'barnetsFødselsnummer',
-    // barnetsFødselsdato = 'barnetsFødselsdato',
-    // barnetSøknadenGjelder = 'barnetSøknadenGjelder',
-    // søkersRelasjonTilBarnet = 'søkersRelasjonTilBarnet',
-    // søknadenGjelderEtAnnetBarn = 'søknadenGjelderEtAnnetBarn',
-    // arbeidssituasjon = 'arbeidssituasjon',
-    // erYrkesaktiv = 'erYrkesaktiv',
-    // kroniskEllerFunksjonshemming = 'kroniskEllerFunksjonshemming',
-    // sammeAdresse = 'sammeAdresse',
-    // samværsavtale = 'samværsavtale'
 }
 
 export interface SøknadFormData {
@@ -127,19 +93,6 @@ export interface SøknadFormData {
     [SøknadFormField.skalBoUtenforNorgeNeste12Mnd]: YesOrNo;
     [SøknadFormField.utenlandsoppholdNeste12Mnd]: Utenlandsopphold[];
 
-    // TODO: Må gå over å sjekke hvilke som trengs
-    // [AppFormField.erYrkesaktiv]: YesOrNo;
-    // [AppFormField.kroniskEllerFunksjonshemming]: YesOrNo;
-    // [AppFormField.barnetsNavn]: string;
-    // [AppFormField.barnetsFødselsnummer]: string;
-    // [AppFormField.søkersRelasjonTilBarnet]?: SøkersRelasjonTilBarnet;
-    // [AppFormField.søknadenGjelderEtAnnetBarn]: boolean;
-    // [AppFormField.barnetSøknadenGjelder]: string;
-    // [AppFormField.sammeAdresse]?: YesOrNo;
-    // [AppFormField.arbeidssituasjon]: Arbeidssituasjon[];
-    // [AppFormField.barnetHarIkkeFåttFødselsnummerEnda]: boolean;
-    // [AppFormField.barnetsFødselsdato]?: Date;
-    // [AppFormField.samværsavtale]?: Attachment[];
 }
 
 export const enInitiellPeriode: Periode = {
@@ -191,19 +144,4 @@ export const initialValues: SøknadFormData = {
     [SøknadFormField.skalBoUtenforNorgeNeste12Mnd]: YesOrNo.UNANSWERED,
     [SøknadFormField.utenlandsoppholdNeste12Mnd]: []
 
-    // TODO: Må gå over å sjekke hvilke som trengs
-
-    // [AppFormField.erYrkesaktiv]: YesOrNo.YES,
-    // [AppFormField.kroniskEllerFunksjonshemming]: YesOrNo.UNANSWERED,
-
-    // [AppFormField.barnetsNavn]: '',
-    // [AppFormField.barnetsFødselsnummer]: '',
-    // [AppFormField.barnetSøknadenGjelder]: '',
-    // [AppFormField.søkersRelasjonTilBarnet]: undefined,
-    // [AppFormField.søknadenGjelderEtAnnetBarn]: false,
-
-    // [AppFormField.arbeidssituasjon]: [],
-    // [AppFormField.samværsavtale]: [],
-    // [AppFormField.barnetHarIkkeFåttFødselsnummerEnda]: false,
-    // [AppFormField.barnetsFødselsdato]: undefined,
 };

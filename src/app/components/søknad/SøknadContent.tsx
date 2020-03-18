@@ -13,7 +13,6 @@ import ConfirmationPage from '../pages/confirmation-page/ConfirmationPage';
 import GeneralErrorPage from '../pages/general-error-page/GeneralErrorPage';
 import WelcomingPage from '../pages/welcoming-page/WelcomingPage';
 import HarUtbetaltDeFørsteTiDageneStep from './steps/har-utbetalt-de-første-ti-dagene/HarUtbetaltDeFørsteTiDageneStep';
-import HvisUtenlandsoppholdStep from './steps/hvis-utenlandsopphold/HvisUtenlandsoppholdStep';
 import InntektStep from './steps/inntekt/InntektStep';
 import LegeerklæringStep from './steps/legeerklæring/LegeerklæringStep';
 import MedlemsskapStep from './steps/medlemskap/MedlemsskapStep';
@@ -92,17 +91,6 @@ const SøknadContent: React.FunctionComponent = () => {
                 <Route
                     path={getSøknadRoute(StepID.PERIODE)}
                     render={() => <PeriodeStep onValidSubmit={() => navigateToNextStep(StepID.PERIODE)} />}
-                />
-            )}
-
-            {isAvailable(StepID.HVIS_UTENLANDSOPPHOLD, values) && (
-                <Route
-                    path={getSøknadRoute(StepID.HVIS_UTENLANDSOPPHOLD)}
-                    render={() => (
-                        <HvisUtenlandsoppholdStep
-                            onValidSubmit={() => navigateToNextStep(StepID.HVIS_UTENLANDSOPPHOLD)}
-                        />
-                    )}
                 />
             )}
 
