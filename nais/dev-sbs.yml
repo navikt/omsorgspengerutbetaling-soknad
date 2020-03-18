@@ -41,7 +41,7 @@ spec:
         - name: APPRES_CMS_URL
           value: http://appres.nav.no
         - name: API_URL
-          value: https://omsorgspengerutbetaling-api-q.nav.no
+          value: https://omsorgspengerutbetalingsoknad-api-q.nav.no
         - name: PUBLIC_PATH
           value: /familie/sykdom-i-familien/soknad/omsorgspengerutbetaling
         - name: LOGIN_URL
