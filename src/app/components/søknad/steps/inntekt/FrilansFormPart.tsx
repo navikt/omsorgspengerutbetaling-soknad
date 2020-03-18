@@ -2,13 +2,14 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import Panel from 'nav-frontend-paneler';
 import Box from 'common/components/box/Box';
-import FormikDatepicker from 'common/formik/components/formik-datepicker/FormikDatepicker';
-import FormikYesOrNoQuestion from 'common/formik/components/formik-yes-or-no-question/FormikYesOrNoQuestion';
 import { YesOrNo } from 'common/types/YesOrNo';
 import { dateToday } from 'common/utils/dateUtils';
 import intlHelper from 'common/utils/intlUtils';
-import { validateRequiredField } from 'common/validation/fieldValidations';
+import {
+    validateRequiredField, validateYesOrNoIsAnswered
+} from 'common/validation/fieldValidations';
 import { SøknadFormData, SøknadFormField } from '../../../../types/SøknadFormData';
+import TypedFormComponents from '../../typed-form-components/TypedFormComponents';
 import FrilansEksempeltHtml from './FrilansEksempelHtml';
 
 interface Props {
@@ -20,15 +21,16 @@ const FrilansFormPart: React.FunctionComponent<Props> = ({ formValues }) => {
     const intl = useIntl();
     return (
         <>
-            <FormikYesOrNoQuestion<SøknadFormField>
+            <TypedFormComponents.YesOrNoQuestion
                 name={SøknadFormField.frilans_harHattInntektSomFrilanser}
                 legend={intlHelper(intl, 'frilanser.harDuHattInntekt.spm')}
                 info={<FrilansEksempeltHtml />}
+                validate={validateYesOrNoIsAnswered}
             />
             {harHattInntektSomFrilanser && (
                 <Panel>
                     <Box>
-                        <FormikDatepicker<SøknadFormField>
+                        <TypedFormComponents.DatePicker
                             name={SøknadFormField.frilans_startdato}
                             label={intlHelper(intl, 'frilanser.nårStartet.spm')}
                             showYearSelector={true}
@@ -37,9 +39,10 @@ const FrilansFormPart: React.FunctionComponent<Props> = ({ formValues }) => {
                         />
                     </Box>
                     <Box margin="xl">
-                        <FormikYesOrNoQuestion<SøknadFormField>
+                        <TypedFormComponents.YesOrNoQuestion
                             name={SøknadFormField.frilans_jobberFortsattSomFrilans}
                             legend={intlHelper(intl, 'frilanser.jobberFortsatt.spm')}
+                            validate={validateYesOrNoIsAnswered}
                         />
                     </Box>
                 </Panel>
