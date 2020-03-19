@@ -23,7 +23,9 @@ export enum SøknadFormField {
     nettop_startet_selvstendig_frilanser = 'nettop_startet_selvstendig_frilanser',
 
     // STEG 3: Periode
+    harPerioderMedFravær = 'harPerioderMedFravær',
     perioderMedFravær = 'perioderMedFravær',
+    harDagerMedDelvisFravær = 'harDagerMedDelvisFravær',
     dagerMedDelvisFravær = 'dagerMedDelvisFravær',
     periode_har_vært_i_utlandet = 'periode_har_vært_i_utlandet',
     periode_utenlandsopphold = 'periode_utenlandsopphold',
@@ -46,7 +48,6 @@ export enum SøknadFormField {
     utenlandsoppholdSiste12Mnd = 'utenlandsoppholdSiste12Mnd',
     skalBoUtenforNorgeNeste12Mnd = 'skalBoUtenforNorgeNeste12Mnd',
     utenlandsoppholdNeste12Mnd = 'utenlandsoppholdNeste12Mnd'
-
 }
 
 export interface SøknadFormData {
@@ -69,7 +70,9 @@ export interface SøknadFormData {
 
     // STEG 3: Periode
 
+    [SøknadFormField.harPerioderMedFravær]: YesOrNo;
     [SøknadFormField.perioderMedFravær]: Periode[];
+    [SøknadFormField.harDagerMedDelvisFravær]: YesOrNo;
     [SøknadFormField.dagerMedDelvisFravær]: FraværDelerAvDag[];
     [SøknadFormField.periode_har_vært_i_utlandet]: YesOrNo;
     [SøknadFormField.periode_utenlandsopphold]: Utenlandsopphold[];
@@ -92,18 +95,7 @@ export interface SøknadFormData {
     [SøknadFormField.utenlandsoppholdSiste12Mnd]: Utenlandsopphold[];
     [SøknadFormField.skalBoUtenforNorgeNeste12Mnd]: YesOrNo;
     [SøknadFormField.utenlandsoppholdNeste12Mnd]: Utenlandsopphold[];
-
 }
-
-export const enInitiellPeriode: Periode = {
-    fom: undefined,
-    tom: undefined
-};
-
-export const etInitieltDelvisFravær: FraværDelerAvDag = {
-    dato: undefined,
-    timer: undefined
-};
 
 export const initialValues: SøknadFormData = {
     [SøknadFormField.harForståttRettigheterOgPlikter]: false,
@@ -124,8 +116,10 @@ export const initialValues: SøknadFormData = {
     [SøknadFormField.nettop_startet_selvstendig_frilanser]: YesOrNo.UNANSWERED,
 
     // STEG 3: Periode
-    [SøknadFormField.perioderMedFravær]: [enInitiellPeriode],
-    [SøknadFormField.dagerMedDelvisFravær]: [etInitieltDelvisFravær],
+    [SøknadFormField.harPerioderMedFravær]: YesOrNo.UNANSWERED,
+    [SøknadFormField.perioderMedFravær]: [],
+    [SøknadFormField.harDagerMedDelvisFravær]: YesOrNo.UNANSWERED,
+    [SøknadFormField.dagerMedDelvisFravær]: [],
     [SøknadFormField.periode_har_vært_i_utlandet]: YesOrNo.UNANSWERED,
     [SøknadFormField.periode_utenlandsopphold]: [],
 
@@ -143,5 +137,4 @@ export const initialValues: SøknadFormData = {
     [SøknadFormField.utenlandsoppholdSiste12Mnd]: [],
     [SøknadFormField.skalBoUtenforNorgeNeste12Mnd]: YesOrNo.UNANSWERED,
     [SøknadFormField.utenlandsoppholdNeste12Mnd]: []
-
 };
