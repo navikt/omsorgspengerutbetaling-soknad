@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useIntl } from 'react-intl';
 import { validateYesOrNoIsAnswered } from '@navikt/sif-common-core/lib/validation/fieldValidations';
-import { FormikYesOrNoQuestion, SkjemagruppeQuestion } from '@navikt/sif-common-formik';
+import { FormikYesOrNoQuestion } from '@navikt/sif-common-formik';
 import { FieldArray, useFormikContext } from 'formik';
 import CounsellorPanel from 'common/components/counsellor-panel/CounsellorPanel';
 import FormBlock from 'common/components/form-block/FormBlock';
@@ -11,7 +11,6 @@ import { date1YearAgo, dateToday } from 'common/utils/dateUtils';
 import intlHelper from 'common/utils/intlUtils';
 import { StepConfigProps, StepID } from '../../../../config/stepConfig';
 import { SøknadFormData, SøknadFormField } from '../../../../types/SøknadFormData';
-import { validatePerioderMedFravær } from '../../../../validation/fieldValidations';
 import FormikStep from '../../formik-step/FormikStep';
 import TypedFormComponents from '../../typed-form-components/TypedFormComponents';
 import DagerMedDelvisFraværList from './dager-med-delvis-fravær-list/DagerMedDelvisFraværList';
@@ -23,39 +22,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
     const { perioderMedFravær, dagerMedDelvisFravær } = values;
     const intl = useIntl();
 
-    return 1 + 1 === 2 ? (
-        <FormikStep id={StepID.PERIODE} onValidFormSubmit={onValidSubmit}>
-            <TypedFormComponents.InputGroup
-                legend={perioderMedFravær.length > 0 ? 'Perioder med fullt fravær' : undefined}
-                name={SøknadFormField.perioderMedFravær}
-                validate={validatePerioderMedFravær}>
-                <FieldArray
-                    name={SøknadFormField.perioderMedFravær}
-                    render={(arrayHelpers) => {
-                        return (
-                            <PeriodeMedFulltFraværList
-                                perioderMedFravær={perioderMedFravær}
-                                onCreateNew={() =>
-                                    arrayHelpers.insert(perioderMedFravær.length, {
-                                        fom: undefined,
-                                        tom: undefined
-                                    })
-                                }
-                                onRemove={(idx) => arrayHelpers.remove(idx)}
-                            />
-                        );
-                    }}
-                />
-            </TypedFormComponents.InputGroup>
-            <FormBlock>
-                <TypedFormComponents.YesOrNoQuestion
-                    name={SøknadFormField.harDagerMedDelvisFravær}
-                    legend="Søker du om dager med delvis fravær?"
-                    validate={validateYesOrNoIsAnswered}
-                />
-            </FormBlock>
-        </FormikStep>
-    ) : (
+    return (
         <FormikStep id={StepID.PERIODE} onValidFormSubmit={onValidSubmit}>
             <CounsellorPanel>TODO: PERIODE</CounsellorPanel>
 
@@ -70,28 +37,23 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
             {/* DAGER MED FULLT FRAVÆR*/}
             {values.harPerioderMedFravær === YesOrNo.YES && (
                 <FormBlock margin="l">
-                    <TypedFormComponents.InputGroup
-                        legend={perioderMedFravær.length > 0 ? 'Perioder med fullt fravær' : undefined}
+                    <FieldArray
                         name={SøknadFormField.perioderMedFravær}
-                        validate={validatePerioderMedFravær}>
-                        <FieldArray
-                            name={SøknadFormField.perioderMedFravær}
-                            render={(arrayHelpers) => {
-                                return (
-                                    <PeriodeMedFulltFraværList
-                                        perioderMedFravær={perioderMedFravær}
-                                        onCreateNew={() =>
-                                            arrayHelpers.insert(perioderMedFravær.length, {
-                                                fom: undefined,
-                                                tom: undefined
-                                            })
-                                        }
-                                        onRemove={(idx) => arrayHelpers.remove(idx)}
-                                    />
-                                );
-                            }}
-                        />
-                    </TypedFormComponents.InputGroup>
+                        render={(arrayHelpers) => {
+                            return (
+                                <PeriodeMedFulltFraværList
+                                    perioderMedFravær={perioderMedFravær}
+                                    onCreateNew={() =>
+                                        arrayHelpers.insert(perioderMedFravær.length, {
+                                            fom: undefined,
+                                            tom: undefined
+                                        })
+                                    }
+                                    onRemove={(idx) => arrayHelpers.remove(idx)}
+                                />
+                            );
+                        }}
+                    />
                 </FormBlock>
             )}
 
@@ -105,27 +67,24 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
 
             {/* DAGER MED DELVIS FRAVÆR*/}
             {values.harDagerMedDelvisFravær === YesOrNo.YES && (
-                <FormBlock margin="l">
-                    <SkjemagruppeQuestion
-                        legend={dagerMedDelvisFravær.length > 0 ? 'Dager med delvis fravær' : undefined}>
-                        <FieldArray
-                            name={SøknadFormField.dagerMedDelvisFravær}
-                            render={(arrayHelpers) => {
-                                return (
-                                    <DagerMedDelvisFraværList
-                                        dagerMedDelvisFravær={dagerMedDelvisFravær}
-                                        onCreateNew={() =>
-                                            arrayHelpers.insert(dagerMedDelvisFravær.length, {
-                                                fom: undefined,
-                                                tom: undefined
-                                            })
-                                        }
-                                        onRemove={(idx) => arrayHelpers.remove(idx)}
-                                    />
-                                );
-                            }}
-                        />
-                    </SkjemagruppeQuestion>
+                <FormBlock margin={dagerMedDelvisFravær.length > 0 ? 'l' : 'none'}>
+                    <FieldArray
+                        name={SøknadFormField.dagerMedDelvisFravær}
+                        render={(arrayHelpers) => {
+                            return (
+                                <DagerMedDelvisFraværList
+                                    dagerMedDelvisFravær={dagerMedDelvisFravær}
+                                    onCreateNew={() =>
+                                        arrayHelpers.insert(dagerMedDelvisFravær.length, {
+                                            fom: undefined,
+                                            tom: undefined
+                                        })
+                                    }
+                                    onRemove={(idx) => arrayHelpers.remove(idx)}
+                                />
+                            );
+                        }}
+                    />
                 </FormBlock>
             )}
 

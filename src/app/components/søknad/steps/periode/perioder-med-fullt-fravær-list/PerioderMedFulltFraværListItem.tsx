@@ -30,7 +30,6 @@ const PerioderMedFulltFraværListItem: React.FunctionComponent<Props> = ({
                         validate: validateRequiredField,
                         label: 'Fra og med',
                         name: `${SøknadFormField.perioderMedFravær}.${index}.fom` as SøknadFormField,
-                        feil: undefined,
                         dateLimitations: {
                             minDato: date3YearsAgo,
                             maksDato: dateToday,
@@ -38,6 +37,7 @@ const PerioderMedFulltFraværListItem: React.FunctionComponent<Props> = ({
                         }
                     }}
                     toDatepickerProps={{
+                        validate: validateRequiredField,
                         label: 'Til og med',
                         name: `${SøknadFormField.perioderMedFravær}.${index}.tom` as SøknadFormField,
                         dateLimitations: {
