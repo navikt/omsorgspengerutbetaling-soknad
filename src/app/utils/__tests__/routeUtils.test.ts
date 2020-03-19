@@ -32,11 +32,11 @@ describe('routeUtils', () => {
     });
 
     describe('isAvailable', () => {
-        it('should return result from calling legeerklæringStepAvailable if route=StepID.LEGEERKLÆRING', () => {
-            const result = isAvailable(StepID.LEGEERKLÆRING, formValues);
-            expect(stepUtils.legeerklæringStepAvailable).toHaveBeenCalledWith(formValues);
-            expect(result).toEqual(stepUtils.legeerklæringStepAvailable(formValues));
-        });
+        // it('should return result from calling legeerklæringStepAvailable if route=StepID.LEGEERKLÆRING', () => {
+        //     const result = isAvailable(StepID.LEGEERKLÆRING, formValues);
+        //     expect(stepUtils.legeerklæringStepAvailable).toHaveBeenCalledWith(formValues);
+        //     expect(result).toEqual(stepUtils.legeerklæringStepAvailable(formValues));
+        // });
 
         it('should return result from calling medlemskapStepAvailable if route=StepID.MEDLEMSKAP', () => {
             const result = isAvailable(StepID.MEDLEMSKAP, formValues);

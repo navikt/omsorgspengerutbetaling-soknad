@@ -1,5 +1,4 @@
 import { Attachment } from '@navikt/sif-common-core/lib/types/Attachment';
-import moment from 'moment';
 import { Virksomhet } from 'common/forms';
 import { Utenlandsopphold } from 'common/forms/utenlandsopphold/types';
 import { YesOrNo } from 'common/types/YesOrNo';
