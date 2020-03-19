@@ -177,21 +177,19 @@ export const mapPeriodeTilUtbetalingsperiode = (
     dagerMedDelvisFravær: FraværDelerAvDag[]
 ): UtbetalingsperiodeMedVedlegg[] => {
     const periodeMappedTilUtbetalingsperiodeMedVedlegg: UtbetalingsperiodeMedVedlegg[] = perioderMedFravær
-        .filter((periode: Periode) => periode.fom && periode.tom)
         .map((periode: Periode) => {
             return {
-                fraOgMed: formatDateToApiFormat(periode.fom as Date),
-                tilOgMed: formatDateToApiFormat(periode.tom as Date),
+                fraOgMed: formatDateToApiFormat(periode.fom),
+                tilOgMed: formatDateToApiFormat(periode.tom),
                 legeerklæringer: [] as string[] // TODO: Legge til vedlegg adresse
             };
         });
 
     const fraværDeleravDagMappedTilUtbetalingsperiodeMedVedlegg: UtbetalingsperiodeMedVedlegg[] = dagerMedDelvisFravær
-        .filter((fravær: FraværDelerAvDag) => fravær.dato && fravær.timer)
         .map((fravær: FraværDelerAvDag) => {
             return {
-                fraOgMed: formatDateToApiFormat(fravær.dato as Date),
-                tilOgMed: formatDateToApiFormat(fravær.dato as Date),
+                fraOgMed: formatDateToApiFormat(fravær.dato),
+                tilOgMed: formatDateToApiFormat(fravær.dato),
                 lengde: (fravær.timer as number).toString(), // TODO: Her trengs det nok noe mer mapping for å få type Duration som backend trenger
                 legeerklæringer: [] // TODO: legge til vedlegg adresse
             };
