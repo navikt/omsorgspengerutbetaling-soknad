@@ -138,29 +138,3 @@ export const initialValues: SøknadFormData = {
     [SøknadFormField.skalBoUtenforNorgeNeste12Mnd]: YesOrNo.UNANSWERED,
     [SøknadFormField.utenlandsoppholdNeste12Mnd]: []
 };
-
-/** Mock values
-
-
-
-[SøknadFormField.harPerioderMedFravær]: YesOrNo.YES,
-[SøknadFormField.perioderMedFravær]: [
-    {
-        fom: moment()
-            .add(1, 'day')
-            .toDate(),
-        tom: moment()
-            .add(2, 'day')
-            .toDate()
-    }
-],
-[SøknadFormField.harDagerMedDelvisFravær]: YesOrNo.YES,
-[SøknadFormField.dagerMedDelvisFravær]: [
-    {
-        dato: moment()
-            .add(1, 'day')
-            .toDate(),
-        timer: 2
-    }
-]
-*/
