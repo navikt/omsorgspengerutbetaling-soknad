@@ -7,6 +7,7 @@ import {
 } from 'common/utils/dateUtils';
 import { createFieldValidationError } from 'common/validation/fieldValidations';
 import { FieldValidationResult } from 'common/validation/types';
+import { Periode } from '../../@types/omsorgspengerutbetaling-schema';
 import { fødselsnummerIsValid, FødselsnummerValidationErrorReason } from './fødselsnummerValidator';
 
 export enum AppFieldValidationErrors {
@@ -23,6 +24,9 @@ export enum AppFieldValidationErrors {
     'legeerklæring_forMangeFiler' = 'fieldvalidation.legeerklæring.forMangeFiler',
     'samværsavtale_mangler' = 'fieldvalidation.samværsavtale.mangler',
     'samværsavtale_forMangeFiler' = 'fieldvalidation.samværsavtale.forMangeFiler',
+    'fraværsperioder_mangler' = 'fieldvalidation.fraværsperioder_mangler',
+    'fraværsperioder_overlapper' = 'fieldvalidation.fraværsperioder_overlapper',
+    'fraværsperioder_utenfor_periode' = 'fieldvalidation.fraværsperioder_utenfor_periode',
     'utenlandsopphold_ikke_registrert' = 'fieldvalidation.utenlandsopphold_ikke_registrert',
     'utenlandsopphold_overlapper' = 'fieldvalidation.utenlandsopphold_overlapper',
     'utenlandsopphold_utenfor_periode' = 'fieldvalidation.utenlandsopphold_utenfor_periode',
@@ -150,6 +154,23 @@ export const validateFødselsdato = (date: Date): FieldValidationResult => {
     return undefined;
 };
 
+const isPeriodeMedFomTom = (periode: Periode): boolean => {
+    return periode.fom !== undefined && periode.tom !== undefined;
+};
+export const validatePerioderMedFravær = (allePerioder: Periode[]): FieldValidationResult => {
+    const perioder = allePerioder.filter(isPeriodeMedFomTom);
+    if (perioder.length === 0) {
+        return fieldValidationError(AppFieldValidationErrors.fraværsperioder_mangler);
+    }
+    const dateRanges: DateRange[] = perioder.map((periode: Periode) => ({ from: periode.fom, to: periode.tom }));
+    if (dateRangesCollide(dateRanges)) {
+        return fieldValidationError(AppFieldValidationErrors.fraværsperioder_overlapper);
+    }
+    if (dateRangesExceedsRange(dateRanges, { from: date1YearAgo, to: new Date() })) {
+        return fieldValidationError(AppFieldValidationErrors.fraværsperioder_utenfor_periode);
+    }
+    return undefined;
+};
 // export const validatePerioder = (perioder: Periode[]): FieldValidationResult => {
 //     if (perioder.length === 0) {
 //         return fieldValidationError(AppFieldValidationErrors.utenlandsopphold_ikke_registrert);

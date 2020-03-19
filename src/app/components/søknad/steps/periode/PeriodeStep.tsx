@@ -1,16 +1,17 @@
 import * as React from 'react';
 import { useIntl } from 'react-intl';
 import { validateYesOrNoIsAnswered } from '@navikt/sif-common-core/lib/validation/fieldValidations';
+import { FormikYesOrNoQuestion, SkjemagruppeQuestion } from '@navikt/sif-common-formik';
 import { FieldArray, useFormikContext } from 'formik';
 import CounsellorPanel from 'common/components/counsellor-panel/CounsellorPanel';
 import FormBlock from 'common/components/form-block/FormBlock';
-import { FormikYesOrNoQuestion, SkjemagruppeQuestion } from 'common/formik';
 import BostedUtlandListAndDialog from 'common/forms/bosted-utland/BostedUtlandListAndDialog';
 import { YesOrNo } from 'common/types/YesOrNo';
 import { date1YearAgo, dateToday } from 'common/utils/dateUtils';
 import intlHelper from 'common/utils/intlUtils';
 import { StepConfigProps, StepID } from '../../../../config/stepConfig';
 import { SøknadFormData, SøknadFormField } from '../../../../types/SøknadFormData';
+import { validatePerioderMedFravær } from '../../../../validation/fieldValidations';
 import FormikStep from '../../formik-step/FormikStep';
 import TypedFormComponents from '../../typed-form-components/TypedFormComponents';
 import DagerMedDelvisFraværList from './dager-med-delvis-fravær-list/DagerMedDelvisFraværList';
@@ -22,7 +23,39 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
     const { perioderMedFravær, dagerMedDelvisFravær } = values;
     const intl = useIntl();
 
-    return (
+    return 1 + 1 === 2 ? (
+        <FormikStep id={StepID.PERIODE} onValidFormSubmit={onValidSubmit}>
+            <TypedFormComponents.InputGroup
+                legend={perioderMedFravær.length > 0 ? 'Perioder med fullt fravær' : undefined}
+                name={SøknadFormField.perioderMedFravær}
+                validate={validatePerioderMedFravær}>
+                <FieldArray
+                    name={SøknadFormField.perioderMedFravær}
+                    render={(arrayHelpers) => {
+                        return (
+                            <PeriodeMedFulltFraværList
+                                perioderMedFravær={perioderMedFravær}
+                                onCreateNew={() =>
+                                    arrayHelpers.insert(perioderMedFravær.length, {
+                                        fom: undefined,
+                                        tom: undefined
+                                    })
+                                }
+                                onRemove={(idx) => arrayHelpers.remove(idx)}
+                            />
+                        );
+                    }}
+                />
+            </TypedFormComponents.InputGroup>
+            <FormBlock>
+                <TypedFormComponents.YesOrNoQuestion
+                    name={SøknadFormField.harDagerMedDelvisFravær}
+                    legend="Søker du om dager med delvis fravær?"
+                    validate={validateYesOrNoIsAnswered}
+                />
+            </FormBlock>
+        </FormikStep>
+    ) : (
         <FormikStep id={StepID.PERIODE} onValidFormSubmit={onValidSubmit}>
             <CounsellorPanel>TODO: PERIODE</CounsellorPanel>
 
@@ -37,8 +70,10 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
             {/* DAGER MED FULLT FRAVÆR*/}
             {values.harPerioderMedFravær === YesOrNo.YES && (
                 <FormBlock margin="l">
-                    <SkjemagruppeQuestion
-                        legend={perioderMedFravær.length > 0 ? 'Perioder med fullt fravær' : undefined}>
+                    <TypedFormComponents.InputGroup
+                        legend={perioderMedFravær.length > 0 ? 'Perioder med fullt fravær' : undefined}
+                        name={SøknadFormField.perioderMedFravær}
+                        validate={validatePerioderMedFravær}>
                         <FieldArray
                             name={SøknadFormField.perioderMedFravær}
                             render={(arrayHelpers) => {
@@ -56,7 +91,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                                 );
                             }}
                         />
-                    </SkjemagruppeQuestion>
+                    </TypedFormComponents.InputGroup>
                 </FormBlock>
             )}
 
@@ -98,6 +133,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                 <FormikYesOrNoQuestion
                     name={SøknadFormField.periode_har_vært_i_utlandet}
                     legend={intlHelper(intl, 'step.periode.har_dy_oppholdt_deg_i_utlandet_for_dager_du_soker_ok.spm')}
+                    validate={validateYesOrNoIsAnswered}
                 />
             </FormBlock>
 
@@ -107,7 +143,6 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                         name={SøknadFormField.periode_utenlandsopphold}
                         minDate={date1YearAgo}
                         maxDate={dateToday}
-                        validate={undefined}
                         labels={{
                             addLabel: 'Legg til nytt utenlandsopphold',
                             modalTitle: 'Utenlandsopphold siste 12 måneder'

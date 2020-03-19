@@ -15,12 +15,12 @@ const appNynorsktekster = require('../../i18n/nn.json');
 const bokmålstekster = {
     ...allCommonMessages.nb,
     ...appBokmålstekster,
-    ...selvstendigMessagesNb,
+    ...selvstendigMessagesNb
 };
 const nynorsktekster = {
     ...allCommonMessages.nn,
     ...appNynorsktekster,
-    ...selvstendigMessagesNn,
+    ...selvstendigMessagesNn
 };
 
 export interface IntlProviderProps {

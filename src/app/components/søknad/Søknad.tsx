@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { TypedFormikWrapper } from '@navikt/sif-common-formik/lib';
+import { TypedFormikWrapper } from '@navikt/sif-common-formik';
 import { initialValues, SøknadFormData } from '../../types/SøknadFormData';
 import IkkeMyndigPage from '../pages/ikke-myndig-page/IkkeMyndigPage';
 import SøknadContent from './SøknadContent';
