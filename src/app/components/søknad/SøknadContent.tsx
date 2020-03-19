@@ -140,7 +140,7 @@ const SøknadContent: React.FunctionComponent = () => {
             )}
 
             <Route path={RouteConfig.ERROR_PAGE_ROUTE} component={GeneralErrorPage} />
-            {console.log('no available step')}
+
             <Redirect to={RouteConfig.WELCOMING_PAGE_ROUTE} />
         </Switch>
     );

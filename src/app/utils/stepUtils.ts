@@ -3,11 +3,8 @@ import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import { StepConfigInterface, StepConfigItemTexts, StepID } from 'app/config/stepConfig';
 import { SøknadFormData } from '../types/SøknadFormData';
 import {
-    harUtbetaltDeFørsteTiDagenePageIsValid,
-    inntektStepIsValid,
-    legeerklæringStepIsValid,
-    medlemskapStepIsValid,
-    nårKanManFåUtbetaltOmsorgspengerPageIsValid,
+    harUtbetaltDeFørsteTiDagenePageIsValid, inntektStepIsValid, legeerklæringStepIsValid,
+    medlemskapStepIsValid, nårKanManFåUtbetaltOmsorgspengerPageIsValid, periodeStepIsValid,
     welcomingPageIsValid
 } from '../validation/stepValidations';
 
@@ -29,10 +26,10 @@ export const harUtbetaltDeFørsteTiDagene = (formData: SøknadFormData) =>
 
 export const periodeAvailable = (formData: SøknadFormData) => harUtbetaltDeFørsteTiDagenePageIsValid(formData);
 
-export const medlemskapStepAvailable = (formData: SøknadFormData) => inntektStepIsValid(formData);
-
-export const legeerklæringStepAvailable = (formData: SøknadFormData) => medlemskapStepIsValid(formData);
+export const legeerklæringStepAvailable = (formData: SøknadFormData) => periodeStepIsValid(formData);
 
 export const inntektStepAvailable = (formData: SøknadFormData) => legeerklæringStepIsValid();
 
-export const summaryStepAvailable = (formData: SøknadFormData) => legeerklæringStepIsValid();
+export const medlemskapStepAvailable = (formData: SøknadFormData) => inntektStepIsValid(formData);
+
+export const summaryStepAvailable = (formData: SøknadFormData) => medlemskapStepIsValid(formData);
