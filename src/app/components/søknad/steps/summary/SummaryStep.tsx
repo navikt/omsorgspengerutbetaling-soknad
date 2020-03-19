@@ -1,24 +1,24 @@
-import React, {useState} from 'react';
-import {FormattedMessage, useIntl} from 'react-intl';
-import {useHistory} from 'react-router-dom';
+import React, { useState } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { useHistory } from 'react-router-dom';
 import Box from '@navikt/sif-common-core/lib/components/box/Box';
 import ContentWithHeader from '@navikt/sif-common-core/lib/components/content-with-header/ContentWithHeader';
 import CounsellorPanel from '@navikt/sif-common-core/lib/components/counsellor-panel/CounsellorPanel';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
-import {formatName} from '@navikt/sif-common-core/lib/utils/personUtils';
-import {useFormikContext} from 'formik';
+import { formatName } from '@navikt/sif-common-core/lib/utils/personUtils';
+import { useFormikContext } from 'formik';
 import Panel from 'nav-frontend-paneler';
-import {Normaltekst} from 'nav-frontend-typografi';
-import {sendApplication} from '../../../../api/api';
+import { Normaltekst } from 'nav-frontend-typografi';
+import { sendApplication } from '../../../../api/api';
 import RouteConfig from '../../../../config/routeConfig';
-import {StepID} from '../../../../config/stepConfig';
-import {SøkerdataContext} from '../../../../context/SøkerdataContext';
-import {Søkerdata} from '../../../../types/Søkerdata';
-import {SøknadApiData} from '../../../../types/SøknadApiData';
-import {SøknadFormData, SøknadFormField} from '../../../../types/SøknadFormData';
+import { StepID } from '../../../../config/stepConfig';
+import { SøkerdataContext } from '../../../../context/SøkerdataContext';
+import { Søkerdata } from '../../../../types/Søkerdata';
+import { SøknadApiData } from '../../../../types/SøknadApiData';
+import { SøknadFormData, SøknadFormField } from '../../../../types/SøknadFormData';
 import * as apiUtils from '../../../../utils/apiUtils';
-import {mapFormDataToApiData} from '../../../../utils/mapFormDataToApiData';
-import {navigateTo, navigateToLoginPage} from '../../../../utils/navigationUtils';
+import { mapFormDataToApiData } from '../../../../utils/mapFormDataToApiData';
+import { navigateTo, navigateToLoginPage } from '../../../../utils/navigationUtils';
 import FormikStep from '../../formik-step/FormikStep';
 import TypedFormComponents from '../../typed-form-components/TypedFormComponents';
 import './summary.less';
@@ -69,8 +69,7 @@ const SummaryStep: React.StatelessComponent<Props> = ({ onApplicationSent }) => 
             }}
             useValidationErrorSummary={false}
             buttonDisabled={sendingInProgress}
-            showButtonSpinner={sendingInProgress}
-        >
+            showButtonSpinner={sendingInProgress}>
             {/*<ReactJson src={apiValues} />*/}
             <CounsellorPanel>
                 <FormattedMessage id="steg.oppsummering.info" />
