@@ -277,5 +277,6 @@
     "fieldvalidation.dager_med_fravær_ugyldig_dag": "En eller flere av dagene har ugyldige verdier",
     "fieldvalidation.dager_med_fravær_mangler": "Du har ikke lagt til dager med delvis fravær",
     "fieldvalidation.dager_med_fravær_like": "En eller flere dager har samme dato",
-    "fieldvalidation.dager_med_for_mange_timer": "En eller flere dager har for mange timer. 7,5 timer er det meste som er gyldig"
+    "fieldvalidation.dager_med_for_mange_timer": "En eller flere dager har for mange timer. 7,5 timer er det meste som er gyldig",
+    "fieldvalidation.dager_med_fravær_utenfor_periode": "En eller flere dager er utenfor gyldig tidsperiode"
 }

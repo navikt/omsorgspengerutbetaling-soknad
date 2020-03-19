@@ -8,6 +8,7 @@ import {
 import { createFieldValidationError } from 'common/validation/fieldValidations';
 import { FieldValidationResult } from 'common/validation/types';
 import { FraværDelerAvDag, Periode } from '../../@types/omsorgspengerutbetaling-schema';
+import { GYLDIG_TIDSROM, MAKS_ANTALL_TIMER_MED_FRAVÆR_EN_DAG } from './constants';
 import { fødselsnummerIsValid, FødselsnummerValidationErrorReason } from './fødselsnummerValidator';
 
 export enum AppFieldValidationErrors {
@@ -30,6 +31,7 @@ export enum AppFieldValidationErrors {
     'dager_med_fravær_ugyldig_dag' = 'fieldvalidation.dager_med_fravær_ugyldig_dag',
     'dager_med_fravær_mangler' = 'fieldvalidation.dager_med_fravær_mangler',
     'dager_med_fravær_like' = 'fieldvalidation.dager_med_fravær_like',
+    'dager_med_fravær_utenfor_periode' = 'fieldvalidation.dager_med_fravær_utenfor_periode',
     'dager_med_for_mange_timer' = 'fieldvalidation.dager_med_for_mange_timer',
     'utenlandsopphold_ikke_registrert' = 'fieldvalidation.utenlandsopphold_ikke_registrert',
     'utenlandsopphold_overlapper' = 'fieldvalidation.utenlandsopphold_overlapper',
@@ -170,7 +172,7 @@ export const validatePerioderMedFravær = (allePerioder: Periode[]): FieldValida
     if (dateRangesCollide(dateRanges)) {
         return fieldValidationError(AppFieldValidationErrors.fraværsperioder_overlapper);
     }
-    if (dateRangesExceedsRange(dateRanges, { from: date1YearAgo, to: new Date() })) {
+    if (dateRangesExceedsRange(dateRanges, { from: GYLDIG_TIDSROM.fom, to: GYLDIG_TIDSROM.tom })) {
         return fieldValidationError(AppFieldValidationErrors.fraværsperioder_utenfor_periode);
     }
     return undefined;
@@ -179,8 +181,6 @@ export const validatePerioderMedFravær = (allePerioder: Periode[]): FieldValida
 const harLikeDager = (dag: FraværDelerAvDag, alleDager: FraværDelerAvDag[]): boolean => {
     return alleDager.filter((d) => d !== dag).some((d) => d.dato);
 };
-
-const MAKS_ANTALL_TIMER_MED_FRAVÆR_EN_DAG = 7.5;
 
 export const validateDagerMedFravær = (alleDager: FraværDelerAvDag[]): FieldValidationResult => {
     const dager = alleDager.filter((d) => d.dato !== undefined && d.timer !== undefined && isNaN(d.timer) === false);
@@ -194,6 +194,10 @@ export const validateDagerMedFravær = (alleDager: FraværDelerAvDag[]): FieldVa
     const dagerMedSammeDato = dager.some((d) => harLikeDager(d, dager));
     if (dagerMedSammeDato) {
         return fieldValidationError(AppFieldValidationErrors.dager_med_fravær_like);
+    }
+
+    if (dager.some((d) => moment(d.dato).isBetween(GYLDIG_TIDSROM.fom, GYLDIG_TIDSROM.tom, 'days', '[]'))) {
+        return fieldValidationError(AppFieldValidationErrors.dager_med_fravær_utenfor_periode);
     }
 
     const dagerMedFormMangeTimer = dager.filter((d) => d.timer >= MAKS_ANTALL_TIMER_MED_FRAVÆR_EN_DAG);

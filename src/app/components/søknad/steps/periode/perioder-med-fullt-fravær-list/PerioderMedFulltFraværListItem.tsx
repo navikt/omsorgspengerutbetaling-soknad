@@ -1,11 +1,10 @@
 import React from 'react';
 import bemUtils from '@navikt/sif-common-core/lib/utils/bemUtils';
-import { dateToday } from '@navikt/sif-common-core/lib/utils/dateUtils';
 import { validateRequiredField } from '@navikt/sif-common-core/lib/validation/fieldValidations';
 import { Knapp } from 'nav-frontend-knapper';
 import { Periode } from '../../../../../../@types/omsorgspengerutbetaling-schema';
 import { SøknadFormField } from '../../../../../types/SøknadFormData';
-import { date3MonthsAgo } from '../../../../../utils/dates';
+import { GYLDIG_TIDSROM } from '../../../../../validation/constants';
 import TypedFormComponents from '../../../typed-form-components/TypedFormComponents';
 
 interface Props {
@@ -32,8 +31,8 @@ const PerioderMedFulltFraværListItem: React.FunctionComponent<Props> = ({
                         label: 'Fra og med',
                         name: `${SøknadFormField.perioderMedFravær}.${index}.fom` as SøknadFormField,
                         dateLimitations: {
-                            minDato: date3MonthsAgo,
-                            maksDato: dateToday,
+                            minDato: GYLDIG_TIDSROM.fom,
+                            maksDato: GYLDIG_TIDSROM.tom,
                             ugyldigeTidsperioder: disabledPerioder || []
                         }
                     }}
@@ -42,8 +41,8 @@ const PerioderMedFulltFraværListItem: React.FunctionComponent<Props> = ({
                         label: 'Til og med',
                         name: `${SøknadFormField.perioderMedFravær}.${index}.tom` as SøknadFormField,
                         dateLimitations: {
-                            minDato: periode?.fom ? periode.fom : date3MonthsAgo,
-                            maksDato: dateToday,
+                            minDato: periode?.fom ? periode.fom : GYLDIG_TIDSROM.fom,
+                            maksDato: GYLDIG_TIDSROM.tom,
                             ugyldigeTidsperioder: disabledPerioder || []
                         }
                     }}
