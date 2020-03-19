@@ -118,18 +118,18 @@ export const initialValues: SøknadFormData = {
     [SøknadFormField.nettop_startet_selvstendig_frilanser]: YesOrNo.UNANSWERED,
 
     // STEG 3: Periode
-    [SøknadFormField.harPerioderMedFravær]: YesOrNo.YES,
-    [SøknadFormField.perioderMedFravær]: [
-        {
-            fom: moment()
-                .subtract(5, 'days')
-                .toDate(),
-            tom: new Date()
-        }
-        // mockPeriode
-    ],
-    // [SøknadFormField.harPerioderMedFravær]: YesOrNo.UNANSWERED,
-    // [SøknadFormField.perioderMedFravær]: [],
+    // [SøknadFormField.harPerioderMedFravær]: YesOrNo.YES,
+    // [SøknadFormField.perioderMedFravær]: [
+    //     {
+    //         fom: moment()
+    //             .subtract(5, 'days')
+    //             .toDate(),
+    //         tom: new Date()
+    //     }
+    //     // mockPeriode
+    // ],
+    [SøknadFormField.harPerioderMedFravær]: YesOrNo.UNANSWERED,
+    [SøknadFormField.perioderMedFravær]: [],
     [SøknadFormField.harDagerMedDelvisFravær]: YesOrNo.UNANSWERED,
     [SøknadFormField.dagerMedDelvisFravær]: [],
     [SøknadFormField.periode_har_vært_i_utlandet]: YesOrNo.UNANSWERED,
