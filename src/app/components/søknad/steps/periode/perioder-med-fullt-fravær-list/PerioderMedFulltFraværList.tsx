@@ -24,7 +24,7 @@ const PeriodeMedFulltFraværList: React.FunctionComponent<Props> = ({ perioderMe
                     />
                 ))}
             </div>
-            <FormBlock margin="l">
+            <FormBlock margin="l" paddingBottom={perioderMedFravær.length > 0 ? 'm' : undefined}>
                 <Knapp type="standard" htmlType={'button'} onClick={onCreateNew} mini={true}>
                     Legg til ny periode med fullt fravær
                 </Knapp>
