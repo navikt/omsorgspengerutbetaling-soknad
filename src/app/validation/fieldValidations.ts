@@ -7,7 +7,7 @@ import {
 } from 'common/utils/dateUtils';
 import { createFieldValidationError } from 'common/validation/fieldValidations';
 import { FieldValidationResult } from 'common/validation/types';
-import { Periode } from '../../@types/omsorgspengerutbetaling-schema';
+import { FraværDelerAvDag, Periode } from '../../@types/omsorgspengerutbetaling-schema';
 import { fødselsnummerIsValid, FødselsnummerValidationErrorReason } from './fødselsnummerValidator';
 
 export enum AppFieldValidationErrors {
@@ -27,6 +27,10 @@ export enum AppFieldValidationErrors {
     'fraværsperioder_mangler' = 'fieldvalidation.fraværsperioder_mangler',
     'fraværsperioder_overlapper' = 'fieldvalidation.fraværsperioder_overlapper',
     'fraværsperioder_utenfor_periode' = 'fieldvalidation.fraværsperioder_utenfor_periode',
+    'dager_med_fravær_ugyldig_dag' = 'fieldvalidation.dager_med_fravær_ugyldig_dag',
+    'dager_med_fravær_mangler' = 'fieldvalidation.dager_med_fravær_mangler',
+    'dager_med_fravær_like' = 'fieldvalidation.dager_med_fravær_like',
+    'dager_med_for_mange_timer' = 'fieldvalidation.dager_med_for_mange_timer',
     'utenlandsopphold_ikke_registrert' = 'fieldvalidation.utenlandsopphold_ikke_registrert',
     'utenlandsopphold_overlapper' = 'fieldvalidation.utenlandsopphold_overlapper',
     'utenlandsopphold_utenfor_periode' = 'fieldvalidation.utenlandsopphold_utenfor_periode',
@@ -171,18 +175,31 @@ export const validatePerioderMedFravær = (allePerioder: Periode[]): FieldValida
     }
     return undefined;
 };
-// export const validatePerioder = (perioder: Periode[]): FieldValidationResult => {
-//     if (perioder.length === 0) {
-//         return fieldValidationError(AppFieldValidationErrors.utenlandsopphold_ikke_registrert);
-//     }
-//
-//     const dateRanges: DateRange[] = perioder.map((periode: Periode) => ({ from: periode.fom, to: periode.tom }));
-//
-//     if (dateRangesCollide(dateRanges)) {
-//         return fieldValidationError(AppFieldValidationErrors.utenlandsopphold_overlapper);
-//     }
-//     if (dateRangesExceedsRange(dateRanges, { from: date1YearAgo, to: new Date() })) {
-//         return fieldValidationError(AppFieldValidationErrors.utenlandsopphold_utenfor_periode);
-//     }
-//     return undefined;
-// };
+
+const harLikeDager = (dag: FraværDelerAvDag, alleDager: FraværDelerAvDag[]): boolean => {
+    return alleDager.filter((d) => d !== dag).some((d) => d.dato);
+};
+
+const MAKS_ANTALL_TIMER_MED_FRAVÆR_EN_DAG = 7.5;
+
+export const validateDagerMedFravær = (alleDager: FraværDelerAvDag[]): FieldValidationResult => {
+    const dager = alleDager.filter((d) => d.dato !== undefined && d.timer !== undefined && isNaN(d.timer) === false);
+
+    if (dager.length !== alleDager.length) {
+        return fieldValidationError(AppFieldValidationErrors.dager_med_fravær_ugyldig_dag);
+    }
+    if (dager.length === 0) {
+        return fieldValidationError(AppFieldValidationErrors.dager_med_fravær_mangler);
+    }
+    const dagerMedSammeDato = dager.some((d) => harLikeDager(d, dager));
+    if (dagerMedSammeDato) {
+        return fieldValidationError(AppFieldValidationErrors.dager_med_fravær_like);
+    }
+
+    const dagerMedFormMangeTimer = dager.filter((d) => d.timer >= MAKS_ANTALL_TIMER_MED_FRAVÆR_EN_DAG);
+    if (dagerMedFormMangeTimer.length > 0) {
+        return fieldValidationError(AppFieldValidationErrors.dager_med_for_mange_timer);
+    }
+
+    return undefined;
+};

@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { useIntl } from 'react-intl';
-import { validateYesOrNoIsAnswered } from '@navikt/sif-common-core/lib/validation/fieldValidations';
+import {
+    validateRequiredList, validateYesOrNoIsAnswered
+} from '@navikt/sif-common-core/lib/validation/fieldValidations';
 import { FormikYesOrNoQuestion } from '@navikt/sif-common-formik';
 import { FieldArray, useFormikContext } from 'formik';
 import CounsellorPanel from 'common/components/counsellor-panel/CounsellorPanel';
@@ -9,6 +11,7 @@ import BostedUtlandListAndDialog from 'common/forms/bosted-utland/BostedUtlandLi
 import { YesOrNo } from 'common/types/YesOrNo';
 import { date1YearAgo, dateToday } from 'common/utils/dateUtils';
 import intlHelper from 'common/utils/intlUtils';
+import { FraværDelerAvDag, Periode } from '../../../../../@types/omsorgspengerutbetaling-schema';
 import { StepConfigProps, StepID } from '../../../../config/stepConfig';
 import { SøknadFormData, SøknadFormField } from '../../../../types/SøknadFormData';
 import FormikStep from '../../formik-step/FormikStep';
@@ -43,12 +46,14 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                             return (
                                 <PeriodeMedFulltFraværList
                                     perioderMedFravær={perioderMedFravær}
-                                    onCreateNew={() =>
-                                        arrayHelpers.insert(perioderMedFravær.length, {
+                                    onCreateNew={() => {
+                                        const emptyPeriodeMedFravær: Partial<Periode> = {
                                             fom: undefined,
                                             tom: undefined
-                                        })
-                                    }
+                                        };
+
+                                        arrayHelpers.insert(perioderMedFravær.length, emptyPeriodeMedFravær);
+                                    }}
                                     onRemove={(idx) => arrayHelpers.remove(idx)}
                                 />
                             );
@@ -74,12 +79,13 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                             return (
                                 <DagerMedDelvisFraværList
                                     dagerMedDelvisFravær={dagerMedDelvisFravær}
-                                    onCreateNew={() =>
-                                        arrayHelpers.insert(dagerMedDelvisFravær.length, {
-                                            fom: undefined,
-                                            tom: undefined
-                                        })
-                                    }
+                                    onCreateNew={() => {
+                                        const emptyDagMedFravær: Partial<FraværDelerAvDag> = {
+                                            dato: undefined,
+                                            timer: undefined
+                                        };
+                                        arrayHelpers.insert(dagerMedDelvisFravær.length, emptyDagMedFravær);
+                                    }}
                                     onRemove={(idx) => arrayHelpers.remove(idx)}
                                 />
                             );
@@ -106,6 +112,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                             addLabel: 'Legg til nytt utenlandsopphold',
                             modalTitle: 'Utenlandsopphold siste 12 måneder'
                         }}
+                        validate={validateRequiredList}
                     />
                 </FormBlock>
             )}

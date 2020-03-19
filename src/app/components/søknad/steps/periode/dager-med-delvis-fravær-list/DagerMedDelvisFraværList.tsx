@@ -3,7 +3,7 @@ import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlo
 import { Knapp } from 'nav-frontend-knapper';
 import { FraværDelerAvDag } from '../../../../../../@types/omsorgspengerutbetaling-schema';
 import { SøknadFormField } from '../../../../../types/SøknadFormData';
-import { validatePerioderMedFravær } from '../../../../../validation/fieldValidations';
+import { validateDagerMedFravær } from '../../../../../validation/fieldValidations';
 import TypedFormComponents from '../../../typed-form-components/TypedFormComponents';
 import DagerMedDelvisFraværListItem from './DagerMedDelvisFraværListItem';
 
@@ -19,8 +19,8 @@ const DagerMedDelvisFraværList: React.FunctionComponent<Props> = ({ dagerMedDel
         <>
             <TypedFormComponents.InputGroup
                 legend={tomListe ? undefined : 'Dager med delvis fravær'}
-                name={SøknadFormField.perioderMedFravær}
-                validate={validatePerioderMedFravær}>
+                name={SøknadFormField.dagerMedDelvisFravær}
+                validate={validateDagerMedFravær}>
                 {dagerMedDelvisFravær.map((dag, index) => (
                     <DagerMedDelvisFraværListItem
                         key={index}

@@ -1,10 +1,11 @@
 import React from 'react';
 import bemUtils from '@navikt/sif-common-core/lib/utils/bemUtils';
-import { date3YearsAgo } from '@navikt/sif-common-core/lib/utils/dateUtils';
+import { dateToday } from '@navikt/sif-common-core/lib/utils/dateUtils';
 import { FormikDatepicker, FormikInput } from '@navikt/sif-common-formik';
 import { Knapp } from 'nav-frontend-knapper';
 import { FraværDelerAvDag } from '../../../../../../@types/omsorgspengerutbetaling-schema';
 import { SøknadFormField } from '../../../../../types/SøknadFormData';
+import { date3MonthsAgo } from '../../../../../utils/dates';
 
 interface Props {
     index: number;
@@ -30,8 +31,8 @@ const DagerMedDelvisFraværListItem: React.FunctionComponent<Props> = ({ index, 
                     validate={() => null}
                     name={`${SøknadFormField.dagerMedDelvisFravær}.${index}.dato`}
                     dateLimitations={{
-                        minDato: date3YearsAgo,
-                        maksDato: undefined,
+                        minDato: date3MonthsAgo,
+                        maksDato: dateToday,
                         ugyldigeTidsperioder
                     }}
                 />
