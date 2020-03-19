@@ -1,4 +1,5 @@
 import { Attachment } from '@navikt/sif-common-core/lib/types/Attachment';
+import moment from 'moment';
 import { Virksomhet } from 'common/forms';
 import { Utenlandsopphold } from 'common/forms/utenlandsopphold/types';
 import { YesOrNo } from 'common/types/YesOrNo';
@@ -96,6 +97,7 @@ export interface SøknadFormData {
     [SøknadFormField.skalBoUtenforNorgeNeste12Mnd]: YesOrNo;
     [SøknadFormField.utenlandsoppholdNeste12Mnd]: Utenlandsopphold[];
 }
+// const mockPeriode = { fom: undefined, tom: undefined } as any;
 
 export const initialValues: SøknadFormData = {
     [SøknadFormField.harForståttRettigheterOgPlikter]: false,
@@ -116,8 +118,18 @@ export const initialValues: SøknadFormData = {
     [SøknadFormField.nettop_startet_selvstendig_frilanser]: YesOrNo.UNANSWERED,
 
     // STEG 3: Periode
-    [SøknadFormField.harPerioderMedFravær]: YesOrNo.UNANSWERED,
-    [SøknadFormField.perioderMedFravær]: [],
+    [SøknadFormField.harPerioderMedFravær]: YesOrNo.YES,
+    [SøknadFormField.perioderMedFravær]: [
+        {
+            fom: moment()
+                .subtract(5, 'days')
+                .toDate(),
+            tom: new Date()
+        }
+        // mockPeriode
+    ],
+    // [SøknadFormField.harPerioderMedFravær]: YesOrNo.UNANSWERED,
+    // [SøknadFormField.perioderMedFravær]: [],
     [SøknadFormField.harDagerMedDelvisFravær]: YesOrNo.UNANSWERED,
     [SøknadFormField.dagerMedDelvisFravær]: [],
     [SøknadFormField.periode_har_vært_i_utlandet]: YesOrNo.UNANSWERED,
