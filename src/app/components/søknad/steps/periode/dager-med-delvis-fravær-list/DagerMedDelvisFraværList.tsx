@@ -24,7 +24,7 @@ const DagerMedDelvisFraværList: React.FunctionComponent<Props> = ({ dagerMedDel
                     />
                 ))}
             </div>
-            <FormBlock margin="l">
+            <FormBlock margin="l" paddingBottom={dagerMedDelvisFravær.length > 0 ? 'm' : undefined}>
                 <Knapp type="standard" htmlType={'button'} onClick={onCreateNew} mini={true}>
                     Legg til ny dag med delvis fravær
                 </Knapp>
