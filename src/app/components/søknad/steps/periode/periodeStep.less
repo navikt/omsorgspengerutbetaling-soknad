@@ -1,4 +1,4 @@
-.perioderMedFulltFravarListItem {
+.fravarFormItem() {
     display: flex;
     flex-direction: row;
     align-items: flex-end;
@@ -6,35 +6,70 @@
     padding: 1rem;
     border-radius: 0.5rem;
     margin: 2px 0;
+}
+
+.hideLabels() {
+    label {
+        position: absolute;
+        left: -2000px;
+    }
+}
+.deleteButtonWrapper() {
+    padding-left: 1rem;
+    text-align: right;
+    justify-self: flex-end;
+    padding-bottom: 0.25rem;
+}
+
+.firstRow() {
+    label {
+        position: relative;
+        left: initial;
+    }
+    label {
+        margin-bottom: 0.5rem;
+    }
+    border: none;
+}
+
+.dagerMedDelvisFravarListItem {
+    .fravarFormItem();
+    &__dateWrapper {
+        .hideLabels();
+    }
+    &__hoursWrapper {
+        .skjemaelement {
+            margin-bottom: 0;
+        }
+        .hideLabels();
+        padding-left: 1rem;
+    }
+    &__deleteButtonWrapper {
+        .deleteButtonWrapper();
+    }
+    &--firstRow {
+        .firstRow();
+    }
+}
+
+.perioderMedFulltFravarListItem {
+    .fravarFormItem();
 
     .dateIntervalPicker {
         margin: 0;
     }
     &__rangeWrapper {
         flex: 2 1 100%;
-        label {
-            position: absolute;
-            left: -2000px;
-        }
+        .hideLabels();
     }
     &__deleteButtonWrapper {
-        padding-left: 1rem;
-        text-align: right;
-        justify-self: flex-end;
-        padding-bottom: 0.2rem;
+        .deleteButtonWrapper();
     }
     &:first-child:last-child {
         padding-bottom: 1.5rem;
     }
     &--firstRow {
-        label {
-            position: relative;
-            left: initial;
-        }
-        label  {
-            margin-bottom: 0.5rem;
-        }
-        border: none;
+        .firstRow();
     }
 
     @media (max-width: 736px) {

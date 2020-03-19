@@ -2,7 +2,7 @@ import React from 'react';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
 import { Knapp } from 'nav-frontend-knapper';
 import { Periode } from '../../../../../../@types/omsorgspengerutbetaling-schema';
-import PerioderMedFulltFraværListItem from './PeriodeListItem';
+import PerioderMedFulltFraværListItem from './PerioderMedFulltFraværListItem';
 
 interface Props {
     perioderMedFravær: Periode[];
@@ -10,11 +10,7 @@ interface Props {
     onCreateNew: () => void;
 }
 
-const PeriodeMedFulltFraværPart: React.FunctionComponent<Props> = ({
-    perioderMedFravær,
-    onCreateNew: onAdd,
-    onRemove
-}) => {
+const PeriodeMedFulltFraværList: React.FunctionComponent<Props> = ({ perioderMedFravær, onCreateNew, onRemove }) => {
     return (
         <>
             <div>
@@ -29,7 +25,7 @@ const PeriodeMedFulltFraværPart: React.FunctionComponent<Props> = ({
                 ))}
             </div>
             <FormBlock margin="l">
-                <Knapp type="standard" htmlType={'button'} onClick={onAdd} mini={true}>
+                <Knapp type="standard" htmlType={'button'} onClick={onCreateNew} mini={true}>
                     Legg til ny periode med fullt fravær
                 </Knapp>
             </FormBlock>
@@ -37,4 +33,4 @@ const PeriodeMedFulltFraværPart: React.FunctionComponent<Props> = ({
     );
 };
 
-export default PeriodeMedFulltFraværPart;
+export default PeriodeMedFulltFraværList;
