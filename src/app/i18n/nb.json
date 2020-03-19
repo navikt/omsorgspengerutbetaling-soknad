@@ -269,5 +269,13 @@
     "fieldvalidation.samværsavtale.forMangeFiler": "Du kan maksimalt laste opp 3 bilder",
     "fieldvalidation.utenlandsopphold_ikke_registrert": "Du har ikke registrert noen utenlandsopphold for perioden",
     "fieldvalidation.utenlandsopphold_overlapper": "Ett eller flere av utenlandsoppholdene har datoer som overlapper",
-    "fieldvalidation.utenlandsopphold_utenfor_periode": "Ett eller flere av utenlandsoppholdene er utenfor tillatt tidsrom"
+    "fieldvalidation.utenlandsopphold_utenfor_periode": "Ett eller flere av utenlandsoppholdene er utenfor tillatt tidsrom",
+
+    "fieldvalidation.fraværsperioder_mangler": "Du har ikke lagt til perioder med fullt fravær",
+    "fieldvalidation.fraværsperioder_overlapper": "Ett eller flere av periodene har datoer som overlapper",
+    "fieldvalidation.fraværsperioder_utenfor_periode": "Ett eller flere av periodene er utenfor tillatt tidsrom",
+    "fieldvalidation.dager_med_fravær_ugyldig_dag": "En eller flere av dagene har ugyldige verdier",
+    "fieldvalidation.dager_med_fravær_mangler": "Du har ikke lagt til dager med delvis fravær",
+    "fieldvalidation.dager_med_fravær_like": "En eller flere dager har samme dato",
+    "fieldvalidation.dager_med_for_mange_timer": "En eller flere dager har for mange timer. 7,5 timer er det meste som er gyldig"
 }

@@ -21,8 +21,6 @@
         "paths": {
             "common/forms": ["../node_modules/@navikt/sif-common-forms"],
             "common/forms*": ["../node_modules/@navikt/sif-common-forms/lib*"],
-            "common/formik": ["../node_modules/@navikt/sif-common-formik"],
-            "common/formik*": ["../node_modules/@navikt/sif-common-formik/lib*"],
             "common*": ["../node_modules/@navikt/sif-common-core/lib*"]
         },
 

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useIntl } from 'react-intl';
 import Box from '@navikt/sif-common-core/lib/components/box/Box';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
-import { FormikValidationErrorSummary } from '@navikt/sif-common-formik/lib';
+import { FormikValidationErrorSummary } from '@navikt/sif-common-formik';
 import { History } from 'history';
 import { Systemtittel } from 'nav-frontend-typografi';
 import BackLink from 'common/components/back-link/BackLink';

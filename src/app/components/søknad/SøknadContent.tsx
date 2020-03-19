@@ -14,7 +14,7 @@ import GeneralErrorPage from '../pages/general-error-page/GeneralErrorPage';
 import WelcomingPage from '../pages/welcoming-page/WelcomingPage';
 import HarUtbetaltDeFørsteTiDageneStep from './steps/har-utbetalt-de-første-ti-dagene/HarUtbetaltDeFørsteTiDageneStep';
 import InntektStep from './steps/inntekt/InntektStep';
-import LegeerklæringStep from './steps/legeerklæring/LegeerklæringStep';
+// import LegeerklæringStep from './steps/legeerklæring/LegeerklæringStep';
 import MedlemsskapStep from './steps/medlemskap/MedlemsskapStep';
 import NårKanManFåUtbetaltOmsorgspengerStep from './steps/når-kan-man-få-utbetalt-omsorgspenger/NårKanManFåUtbetaltOmsorgspengerStep';
 import PeriodeStep from './steps/periode/PeriodeStep';
@@ -94,12 +94,12 @@ const SøknadContent: React.FunctionComponent = () => {
                 />
             )}
 
-            {isAvailable(StepID.LEGEERKLÆRING, values) && (
+            {/* {isAvailable(StepID.LEGEERKLÆRING, values) && (
                 <Route
                     path={getSøknadRoute(StepID.LEGEERKLÆRING)}
                     render={() => <LegeerklæringStep onValidSubmit={() => navigateToNextStep(StepID.LEGEERKLÆRING)} />}
                 />
-            )}
+            )} */}
 
             {isAvailable(StepID.INNTEKT, values) && (
                 <Route

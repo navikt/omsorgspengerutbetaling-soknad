@@ -1,6 +1,6 @@
+import { SøknadFormData } from '../types/SøknadFormData';
 import { getSøknadRoute } from '../utils/routeUtils';
 import routeConfig from './routeConfig';
-import {SøknadFormData} from "../types/SøknadFormData";
 
 export enum StepID {
     'NÅR_KAN_MAN_FÅ_UTBETALT_OMSORGSPENGER' = 'når-kan-man-få-utbetalt-omsorgspenger',
@@ -59,20 +59,20 @@ export const getStepConfig = (formData?: SøknadFormData): StepConfigInterface =
         [StepID.PERIODE]: {
             ...getStepConfigItemTextKeys(StepID.PERIODE),
             index: idx++,
-            nextStep: StepID.LEGEERKLÆRING,
+            nextStep: StepID.INNTEKT,
             backLinkHref: getSøknadRoute(StepID.HAR_UTBETALT_DE_FØRST_TI_DAGENE)
         },
-        [StepID.LEGEERKLÆRING]: {
-            ...getStepConfigItemTextKeys(StepID.LEGEERKLÆRING),
-            index: idx++,
-            nextStep: StepID.INNTEKT,
-            backLinkHref: getSøknadRoute(StepID.PERIODE)
-        },
+        // [StepID.LEGEERKLÆRING]: {
+        //     ...getStepConfigItemTextKeys(StepID.LEGEERKLÆRING),
+        //     index: idx++,
+        //     nextStep: StepID.INNTEKT,
+        //     backLinkHref: getSøknadRoute(StepID.PERIODE)
+        // },
         [StepID.INNTEKT]: {
             ...getStepConfigItemTextKeys(StepID.INNTEKT),
             index: idx++,
             nextStep: StepID.MEDLEMSKAP,
-            backLinkHref: getSøknadRoute(StepID.LEGEERKLÆRING)
+            backLinkHref: getSøknadRoute(StepID.PERIODE)
         },
         [StepID.MEDLEMSKAP]: {
             ...getStepConfigItemTextKeys(StepID.MEDLEMSKAP),

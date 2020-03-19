@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FormikValidateFunction } from '@navikt/sif-common-formik/lib';
+import { FormikValidateFunction } from '@navikt/sif-common-formik';
 import { ArrayHelpers, useFormikContext } from 'formik';
 import { Attachment, PersistedFile } from 'common/types/Attachment';
 import {
