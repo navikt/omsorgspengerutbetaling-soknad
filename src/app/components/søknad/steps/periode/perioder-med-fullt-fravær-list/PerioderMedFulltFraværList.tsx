@@ -14,11 +14,12 @@ interface Props {
 }
 
 const PeriodeMedFulltFraværList: React.FunctionComponent<Props> = ({ perioderMedFravær, onCreateNew, onRemove }) => {
-    const tomListe = perioderMedFravær.length === 0;
+    // const tomListe = perioderMedFravær.length === 0;
     return (
         <>
             <TypedFormComponents.InputGroup
-                legend={tomListe ? undefined : 'Perioder med fullt fravær'}
+                className="periodelistGroup"
+                // legend={tomListe ? undefined : 'Perioder med fullt fravær'}
                 name={SøknadFormField.perioderMedFravær}
                 validate={validatePerioderMedFravær}>
                 {perioderMedFravær.map((periode, index) => (
@@ -31,7 +32,7 @@ const PeriodeMedFulltFraværList: React.FunctionComponent<Props> = ({ perioderMe
                     />
                 ))}
             </TypedFormComponents.InputGroup>
-            <FormBlock margin={tomListe ? 'm' : 'l'} paddingBottom={tomListe ? undefined : 'm'}>
+            <FormBlock margin="m">
                 <Knapp type="standard" htmlType={'button'} onClick={onCreateNew} mini={true}>
                     Legg til ny periode med fullt fravær
                 </Knapp>

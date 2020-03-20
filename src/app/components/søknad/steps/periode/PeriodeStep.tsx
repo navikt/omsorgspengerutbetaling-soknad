@@ -39,7 +39,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
 
             {/* DAGER MED FULLT FRAVÆR*/}
             {values.harPerioderMedFravær === YesOrNo.YES && (
-                <FormBlock margin="l">
+                <FormBlock margin={perioderMedFravær.length > 0 ? 'l' : 'none'}>
                     <FieldArray
                         name={SøknadFormField.perioderMedFravær}
                         render={(arrayHelpers) => {
@@ -103,7 +103,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
             </FormBlock>
 
             {values[SøknadFormField.periode_har_vært_i_utlandet] === YesOrNo.YES && (
-                <FormBlock margin="m">
+                <FormBlock margin="l">
                     <BostedUtlandListAndDialog<SøknadFormField>
                         name={SøknadFormField.periode_utenlandsopphold}
                         minDate={date1YearAgo}
