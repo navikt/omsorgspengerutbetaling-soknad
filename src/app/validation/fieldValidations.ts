@@ -1,5 +1,5 @@
+import { Utenlandsopphold } from '@navikt/sif-common-forms/lib//utenlandsopphold/types';
 import moment from 'moment';
-import { Utenlandsopphold } from 'common/forms/utenlandsopphold/types';
 import { Attachment } from 'common/types/Attachment';
 import { attachmentHasBeenUploaded } from 'common/utils/attachmentUtils';
 import {
