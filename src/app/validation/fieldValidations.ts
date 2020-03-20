@@ -133,23 +133,6 @@ export const fieldValidationError = (
         : undefined;
 };
 
-export const validateUtenlandsoppholdIPerioden = (
-    periode: DateRange,
-    utenlandsopphold: Utenlandsopphold[]
-): FieldValidationResult => {
-    if (utenlandsopphold.length === 0) {
-        return fieldValidationError(AppFieldValidationErrors.utenlandsopphold_ikke_registrert);
-    }
-    const dateRanges = utenlandsopphold.map((u) => ({ from: u.fom, to: u.tom }));
-    if (dateRangesCollide(dateRanges)) {
-        return fieldValidationError(AppFieldValidationErrors.utenlandsopphold_overlapper);
-    }
-    if (dateRangesExceedsRange(dateRanges, periode)) {
-        return fieldValidationError(AppFieldValidationErrors.utenlandsopphold_utenfor_periode);
-    }
-    return undefined;
-};
-
 export const validateFødselsdato = (date: Date): FieldValidationResult => {
     if (!hasValue(date)) {
         return fieldIsRequiredError();
