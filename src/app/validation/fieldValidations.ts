@@ -8,7 +8,9 @@ import {
 import { createFieldValidationError } from 'common/validation/fieldValidations';
 import { FieldValidationResult } from 'common/validation/types';
 import { FraværDelerAvDag, Periode } from '../../@types/omsorgspengerutbetaling-schema';
-import { GYLDIG_TIDSROM, MAKS_ANTALL_TIMER_MED_FRAVÆR_EN_DAG } from './constants';
+import {
+    GYLDIG_TIDSROM, MAKS_ANTALL_TIMER_MED_FRAVÆR_EN_DAG, MIN_ANTALL_TIMER_MED_FRAVÆR_EN_DAG
+} from './constants';
 import { fødselsnummerIsValid, FødselsnummerValidationErrorReason } from './fødselsnummerValidator';
 
 export enum AppFieldValidationErrors {
@@ -36,7 +38,9 @@ export enum AppFieldValidationErrors {
     'utenlandsopphold_ikke_registrert' = 'fieldvalidation.utenlandsopphold_ikke_registrert',
     'utenlandsopphold_overlapper' = 'fieldvalidation.utenlandsopphold_overlapper',
     'utenlandsopphold_utenfor_periode' = 'fieldvalidation.utenlandsopphold_utenfor_periode',
-    'periode_ikke_registrert' = 'fieldvalidation.periode_ikke_registrert'
+    'periode_ikke_registrert' = 'fieldvalidation.periode_ikke_registrert',
+    'timer_ikke_tall' = 'fieldvalidation.timer_ikke_tall',
+    'timer_for_mange_timer' = 'fieldvalidation.timer_for_mange_timer'
 }
 
 export const hasValue = (v: any) => v !== '' && v !== undefined && v !== null;
@@ -155,14 +159,20 @@ export const validatePerioderMedFravær = (allePerioder: Periode[]): FieldValida
     if (dateRangesCollide(dateRanges)) {
         return fieldValidationError(AppFieldValidationErrors.fraværsperioder_overlapper);
     }
-    if (dateRangesExceedsRange(dateRanges, { from: GYLDIG_TIDSROM.fom, to: GYLDIG_TIDSROM.tom })) {
+    if (dateRangesExceedsRange(dateRanges, { from: GYLDIG_TIDSROM.from, to: GYLDIG_TIDSROM.to })) {
         return fieldValidationError(AppFieldValidationErrors.fraværsperioder_utenfor_periode);
     }
     return undefined;
 };
 
-const harLikeDager = (dag: FraværDelerAvDag, alleDager: FraværDelerAvDag[]): boolean => {
-    return alleDager.filter((d) => d !== dag).some((d) => d.dato);
+export const harLikeDager = (dager: FraværDelerAvDag[]): boolean => {
+    return dager.some((dag, dagIdx) => {
+        return dager.some((d, dIdx) => dIdx !== dagIdx && moment(d.dato).isSame(dag.dato, 'day'));
+    });
+};
+
+const datoErInnenforTidsrom = (dag: FraværDelerAvDag, range: DateRange): boolean => {
+    return moment(dag.dato).isBetween(GYLDIG_TIDSROM.from, GYLDIG_TIDSROM.to, 'days', '[]');
 };
 
 export const validateDagerMedFravær = (alleDager: FraværDelerAvDag[]): FieldValidationResult => {
@@ -174,12 +184,11 @@ export const validateDagerMedFravær = (alleDager: FraværDelerAvDag[]): FieldVa
     if (dager.length === 0) {
         return fieldValidationError(AppFieldValidationErrors.dager_med_fravær_mangler);
     }
-    const dagerMedSammeDato = dager.some((d) => harLikeDager(d, dager));
-    if (dagerMedSammeDato) {
+    if (harLikeDager(dager)) {
         return fieldValidationError(AppFieldValidationErrors.dager_med_fravær_like);
     }
 
-    if (dager.some((d) => moment(d.dato).isBetween(GYLDIG_TIDSROM.fom, GYLDIG_TIDSROM.tom, 'days', '[]')) === false) {
+    if (dager.some((d) => !datoErInnenforTidsrom(d, GYLDIG_TIDSROM))) {
         return fieldValidationError(AppFieldValidationErrors.dager_med_fravær_utenfor_periode);
     }
 
@@ -188,5 +197,29 @@ export const validateDagerMedFravær = (alleDager: FraværDelerAvDag[]): FieldVa
         return fieldValidationError(AppFieldValidationErrors.dager_med_for_mange_timer);
     }
 
+    return undefined;
+};
+
+export const validateDateInRange = ({ from, to }: DateRange, isRequired?: boolean) => (
+    value: any
+): FieldValidationResult => {
+    if (isRequired && !hasValue(value)) {
+        return fieldIsRequiredError();
+    }
+
+    return undefined;
+};
+
+export const validateDelvisFraværTimer = (timer: any): FieldValidationResult => {
+    if (!hasValue(timer)) {
+        return fieldIsRequiredError();
+    }
+    const num = parseFloat(timer);
+    if (isNaN(num)) {
+        return fieldValidationError(AppFieldValidationErrors.timer_ikke_tall);
+    }
+    if (num < MIN_ANTALL_TIMER_MED_FRAVÆR_EN_DAG || num > MAKS_ANTALL_TIMER_MED_FRAVÆR_EN_DAG) {
+        return fieldValidationError(AppFieldValidationErrors.timer_for_mange_timer);
+    }
     return undefined;
 };

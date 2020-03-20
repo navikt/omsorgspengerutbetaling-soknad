@@ -4,7 +4,12 @@ import { FormikDatepicker, FormikInput } from '@navikt/sif-common-formik';
 import { Knapp } from 'nav-frontend-knapper';
 import { FraværDelerAvDag } from '../../../../../../@types/omsorgspengerutbetaling-schema';
 import { SøknadFormField } from '../../../../../types/SøknadFormData';
-import { GYLDIG_TIDSROM } from '../../../../../validation/constants';
+import {
+    GYLDIG_TIDSROM, MAKS_ANTALL_TIMER_MED_FRAVÆR_EN_DAG, MIN_ANTALL_TIMER_MED_FRAVÆR_EN_DAG
+} from '../../../../../validation/constants';
+import {
+    validateDateInRange, validateDelvisFraværTimer
+} from '../../../../../validation/fieldValidations';
 
 interface Props {
     index: number;
@@ -27,11 +32,11 @@ const DagerMedDelvisFraværListItem: React.FunctionComponent<Props> = ({ index, 
             <div className={bem.element('dateWrapper')}>
                 <FormikDatepicker
                     label="Dato"
-                    validate={() => null}
+                    validate={validateDateInRange(GYLDIG_TIDSROM, true)}
                     name={`${SøknadFormField.dagerMedDelvisFravær}.${index}.dato`}
                     dateLimitations={{
-                        minDato: GYLDIG_TIDSROM.fom,
-                        maksDato: GYLDIG_TIDSROM.tom,
+                        minDato: GYLDIG_TIDSROM.from,
+                        maksDato: GYLDIG_TIDSROM.to,
                         ugyldigeTidsperioder
                     }}
                 />
@@ -42,6 +47,9 @@ const DagerMedDelvisFraværListItem: React.FunctionComponent<Props> = ({ index, 
                     label={'Timer'}
                     name={`${SøknadFormField.dagerMedDelvisFravær}.${index}.timer`}
                     bredde="XS"
+                    min={MIN_ANTALL_TIMER_MED_FRAVÆR_EN_DAG}
+                    max={MAKS_ANTALL_TIMER_MED_FRAVÆR_EN_DAG}
+                    validate={validateDelvisFraværTimer}
                 />
             </div>
             {onRemove && (

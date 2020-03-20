@@ -10,7 +10,7 @@
     flex-direction: row;
     background-color: #efefef;
     padding: 1rem;
-    border-radius: 0.5rem;
+    border-radius: 0.25rem;
     margin: 2px 0;
     align-items: flex-start;
 }
@@ -29,7 +29,7 @@
 }
 
 .firstRow() {
-    align-items: flex-end;
+    align-items: flex-start;
     label {
         position: relative;
         left: initial;
@@ -44,8 +44,10 @@
     .fravarFormItem();
     &__dateWrapper {
         .hideLabels();
+        flex-basis: 40%;
     }
     &__hoursWrapper {
+        flex-basis: 40%;
         .skjemaelement {
             margin-bottom: 0;
         }
@@ -53,12 +55,14 @@
         padding-left: 1rem;
     }
     &__deleteButtonWrapper {
+        flex-basis: 20%;
         .deleteButtonWrapper();
+        justify-self: flex-end;
     }
     &--firstRow {
         .firstRow();
         .dagerMedDelvisFravarListItem__deleteButtonWrapper {
-            padding-bottom: 0.25rem;
+            padding-top: 1.875rem;
         }
     }
 }
@@ -82,7 +86,7 @@
     &--firstRow {
         .firstRow();
         .perioderMedFulltFravarListItem__deleteButtonWrapper {
-            padding-bottom: 0.25rem;
+            padding-top: 1.875rem;
         }
     }
 
@@ -99,7 +103,7 @@
         display: block;
         &__deleteButtonWrapper {
             text-align: left;
-            padding: 1rem 0 0 0;
+            padding: 1rem 0 0 0 !important;
         }
     }
 }
