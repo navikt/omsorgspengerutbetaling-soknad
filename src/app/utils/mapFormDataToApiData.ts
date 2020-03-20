@@ -162,8 +162,9 @@ export const mapFormDataToApiData = (
             periode_har_vært_i_utlandet,
             periode_utenlandsopphold,
             intl.locale
-        ) // periode siden, har du oppholdt
-
+        ), // periode siden, har du oppholdt
+        frilans: undefined,
+        selvstendigVirksomheter: []
     };
 
     return apiData;
