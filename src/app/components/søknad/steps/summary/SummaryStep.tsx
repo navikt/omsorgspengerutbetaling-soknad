@@ -22,7 +22,6 @@ import { navigateTo, navigateToLoginPage } from '../../../../utils/navigationUti
 import FormikStep from '../../formik-step/FormikStep';
 import TypedFormComponents from '../../typed-form-components/TypedFormComponents';
 import './summary.less';
-// import ReactJson from "react-json-view";
 
 interface Props {
     onApplicationSent: (apiValues: SøknadApiData, søkerdata: Søkerdata) => void;
@@ -70,7 +69,6 @@ const SummaryStep: React.StatelessComponent<Props> = ({ onApplicationSent }) => 
             useValidationErrorSummary={false}
             buttonDisabled={sendingInProgress}
             showButtonSpinner={sendingInProgress}>
-            {/*<ReactJson src={apiValues} />*/}
             <CounsellorPanel>
                 <FormattedMessage id="steg.oppsummering.info" />
             </CounsellorPanel>

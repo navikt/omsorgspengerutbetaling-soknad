@@ -45,6 +45,13 @@ export interface UtbetalingsperiodeMedVedlegg {
     legeerklæringer: string[];
 }
 
+export interface BostedUtlandApiData {
+    fra_og_med: ApiStringDate;
+    til_og_med: ApiStringDate;
+    landkode: string;
+    landnavn: string;
+}
+
 // TODO: Legge til frilans og selvstendig næringsdrivende når de er klare på backend.
 export interface SøknadApiData {
     språk: Locale;
