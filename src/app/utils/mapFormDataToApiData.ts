@@ -65,19 +65,6 @@ export const mapFormDataToApiData = (
     }: SøknadFormData,
     intl: IntlShape
 ): SøknadApiData => {
-    // TODO: Disse skal bli flyttet. Se oppdatering i api'et
-    // const todo = [
-    //     {
-    //         id: SpørsmålId.HarForståttRettigheterOgPlikter,
-    //         spørsmål: intl.formatMessage({ id: 'welcomingPage.samtykke.harForståttLabel' }),
-    //         svar: harForståttRettigheterOgPlikter ? Svar.Ja : Svar.Nei
-    //     },
-    //     {
-    //         id: SpørsmålId.HarBekreftetOpplysninger,
-    //         spørsmål: intl.formatMessage({ id: 'steg.oppsummering.bekrefterOpplysninger' }),
-    //         svar: harBekreftetOpplysninger ? Svar.Ja : Svar.Nei
-    //     }
-    // ];
 
     const stegEn: SpørsmålOgSvar[] = [
         {
@@ -152,6 +139,10 @@ export const mapFormDataToApiData = (
 
     const apiData: SøknadApiData = {
         språk: (intl.locale as any) === 'en' ? 'nn' : (intl.locale as Locale),
+        bekreftelser: {
+            harForståttRettigheterOgPlikter,
+            harBekreftetOpplysninger
+        },
         spørsmål: [...stegEn, ...stegTo],
         utbetalingsperioder: mapPeriodeTilUtbetalingsperiode(perioderMedFravær, dagerMedDelvisFravær),
         bosteder: settInnBosteder(

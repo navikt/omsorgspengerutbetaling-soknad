@@ -18,11 +18,6 @@ export interface UtenlandsoppholdApiData {
     landnavn: string;
 }
 
-export enum SpørsmålId {
-    HarBekreftetOpplysninger = "HarBekreftetOpplysninger",
-    HarForståttRettigheterOgPlikter = "HarForståttRettigheterOgPlikter"
-}
-
 export enum Svar {
     Ja = "Ja",
     Nei = "Nei",
@@ -30,13 +25,10 @@ export enum Svar {
 }
 
 export type Spørsmål = string
-export type Fritekst = string
 
 export interface SpørsmålOgSvar {
-    id?: SpørsmålId;
     spørsmål: Spørsmål;
     svar: Svar;
-    fritekst?: Fritekst;
 }
 
 export interface UtbetalingsperiodeMedVedlegg {
@@ -46,44 +38,10 @@ export interface UtbetalingsperiodeMedVedlegg {
     legeerklæringer: string[];
 }
 
-export interface BostedUtlandApiData {
-    fra_og_med: ApiStringDate;
-    til_og_med: ApiStringDate;
-    landkode: string;
-    landnavn: string;
-}
-
-// data class Frilans(
-// @JsonFormat(pattern = "yyyy-MM-dd")
-// val startdato: LocalDate,
-//     val jobberFortsattSomFrilans: Boolean
-// )
-
 export interface Frilans {
     startdato: string;
     jobberFortsattSomFrilans: boolean
 }
-
-
-// val naringstype: List<Naringstype>,
-// val fiskerErPåBladB: Boolean? = null,
-// @JsonFormat(pattern = "yyyy-MM-dd")
-// val fraOgMed: LocalDate,
-// val tilOgMed: LocalDate? = null,
-// val erPagaende: Boolean,
-// val naringsinntekt: Int? = null,
-// val navnPaVirksomheten: String,
-// val organisasjonsnummer: String? = null,
-// val registrertINorge: Boolean,
-// val registrertILand: String? = null,
-// val harBlittYrkesaktivSisteTreFerdigliknendeArene: Boolean? = null,
-// val yrkesaktivSisteTreFerdigliknedeArene: YrkesaktivSisteTreFerdigliknedeArene? = null,
-// val harVarigEndringAvInntektSiste4Kalenderar: Boolean? = null,
-// val varigEndring: VarigEndring? = null,
-// val harRegnskapsforer: Boolean,
-// val regnskapsforer: Regnskapsforer? = null,
-// val harRevisor: Boolean? = null,
-// val revisor: Revisor? = null
 
 export interface VirksomhetApiData {
     naringstype: Næringstype[];
@@ -123,6 +81,10 @@ export interface VirksomhetApiData {
 
 export interface SøknadApiData {
     språk: Locale;
+    bekreftelser: {
+        harBekreftetOpplysninger: boolean,
+        harForståttRettigheterOgPlikter: boolean
+    },
     spørsmål: SpørsmålOgSvar[];
     utbetalingsperioder: UtbetalingsperiodeMedVedlegg[]; // perioder
     opphold: UtenlandsoppholdApiData[]; // hvis ja på har oppholdt seg i utlandet
