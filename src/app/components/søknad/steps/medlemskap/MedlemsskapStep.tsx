@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { useIntl } from 'react-intl';
 import { validateYesOrNoIsAnswered } from '@navikt/sif-common-core/lib/validation/fieldValidations';
+import BostedUtlandListAndDialog from '@navikt/sif-common-forms/lib//bosted-utland/BostedUtlandListAndDialog';
 import { useFormikContext } from 'formik';
 import Lenke from 'nav-frontend-lenker';
 import CounsellorPanel from 'common/components/counsellor-panel/CounsellorPanel';
 import FormBlock from 'common/components/form-block/FormBlock';
-import BostedUtlandListAndDialog from 'common/forms/bosted-utland/BostedUtlandListAndDialog';
 import { YesOrNo } from 'common/types/YesOrNo';
 import { date1YearAgo, date1YearFromNow, dateToday } from 'common/utils/dateUtils';
 import intlHelper from 'common/utils/intlUtils';

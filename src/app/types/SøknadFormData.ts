@@ -1,6 +1,6 @@
 import { Attachment } from '@navikt/sif-common-core/lib/types/Attachment';
-import { Virksomhet } from 'common/forms';
-import { Utenlandsopphold } from 'common/forms/utenlandsopphold/types';
+import { Utenlandsopphold } from '@navikt/sif-common-forms/lib//utenlandsopphold/types';
+import { Virksomhet } from '@navikt/sif-common-forms/lib/virksomhet/types';
 import { YesOrNo } from 'common/types/YesOrNo';
 import { FraværDelerAvDag, Periode } from '../../@types/omsorgspengerutbetaling-schema';
 
@@ -117,6 +117,8 @@ export const initialValues: SøknadFormData = {
     [SøknadFormField.nettop_startet_selvstendig_frilanser]: YesOrNo.UNANSWERED,
 
     // STEG 3: Periode
+    [SøknadFormField.harPerioderMedFravær]: YesOrNo.UNANSWERED,
+    [SøknadFormField.perioderMedFravær]: [],
     // [SøknadFormField.harPerioderMedFravær]: YesOrNo.YES,
     // [SøknadFormField.perioderMedFravær]: [
     //     {
@@ -124,11 +126,15 @@ export const initialValues: SøknadFormData = {
     //             .subtract(5, 'days')
     //             .toDate(),
     //         tom: new Date()
+    //     },
+    //     {
+    //         fom: new Date(),
+    //         tom: moment()
+    //             .add(1, 'days')
+    //             .toDate()
     //     }
     //     // mockPeriode
     // ],
-    [SøknadFormField.harPerioderMedFravær]: YesOrNo.UNANSWERED,
-    [SøknadFormField.perioderMedFravær]: [],
     [SøknadFormField.harDagerMedDelvisFravær]: YesOrNo.UNANSWERED,
     [SøknadFormField.dagerMedDelvisFravær]: [],
     [SøknadFormField.periode_har_vært_i_utlandet]: YesOrNo.UNANSWERED,

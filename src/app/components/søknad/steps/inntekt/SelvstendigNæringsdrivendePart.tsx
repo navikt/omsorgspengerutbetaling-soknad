@@ -1,8 +1,8 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
+import VirksomhetListAndDialog from '@navikt/sif-common-forms/lib/virksomhet/VirksomhetListAndDialog';
 import { Panel } from 'nav-frontend-paneler';
 import Box from 'common/components/box/Box';
-import VirksomhetListAndDialog from 'common/forms/virksomhet/VirksomhetListAndDialog';
 import { YesOrNo } from 'common/types/YesOrNo';
 import intlHelper from 'common/utils/intlUtils';
 import {
