@@ -40,7 +40,8 @@ export enum AppFieldValidationErrors {
     'utenlandsopphold_utenfor_periode' = 'fieldvalidation.utenlandsopphold_utenfor_periode',
     'periode_ikke_registrert' = 'fieldvalidation.periode_ikke_registrert',
     'timer_ikke_tall' = 'fieldvalidation.timer_ikke_tall',
-    'timer_for_mange_timer' = 'fieldvalidation.timer_for_mange_timer'
+    'timer_for_mange_timer' = 'fieldvalidation.timer_for_mange_timer',
+    'dato_utenfor_gyldig_tidsrom' = 'fieldvalidation.dato_utenfor_gyldig_tidsrom'
 }
 
 export const hasValue = (v: any) => v !== '' && v !== undefined && v !== null;
@@ -171,42 +172,29 @@ export const harLikeDager = (dager: FraværDelerAvDag[]): boolean => {
     });
 };
 
-const datoErInnenforTidsrom = (dag: FraværDelerAvDag, range: DateRange): boolean => {
-    return moment(dag.dato).isBetween(GYLDIG_TIDSROM.from, GYLDIG_TIDSROM.to, 'days', '[]');
+const datoErInnenforTidsrom = (dato: Date, range: DateRange): boolean => {
+    return moment(dato).isBetween(range.from, range.to, 'days', '[]');
 };
 
 export const validateDagerMedFravær = (alleDager: FraværDelerAvDag[]): FieldValidationResult => {
     const dager = alleDager.filter((d) => d.dato !== undefined && d.timer !== undefined && isNaN(d.timer) === false);
 
-    if (dager.length !== alleDager.length) {
-        return fieldValidationError(AppFieldValidationErrors.dager_med_fravær_ugyldig_dag);
-    }
     if (dager.length === 0) {
         return fieldValidationError(AppFieldValidationErrors.dager_med_fravær_mangler);
     }
     if (harLikeDager(dager)) {
         return fieldValidationError(AppFieldValidationErrors.dager_med_fravær_like);
     }
-
-    if (dager.some((d) => !datoErInnenforTidsrom(d, GYLDIG_TIDSROM))) {
-        return fieldValidationError(AppFieldValidationErrors.dager_med_fravær_utenfor_periode);
-    }
-
-    const dagerMedFormMangeTimer = dager.filter((d) => d.timer >= MAKS_ANTALL_TIMER_MED_FRAVÆR_EN_DAG);
-    if (dagerMedFormMangeTimer.length > 0) {
-        return fieldValidationError(AppFieldValidationErrors.dager_med_for_mange_timer);
-    }
-
     return undefined;
 };
 
-export const validateDateInRange = ({ from, to }: DateRange, isRequired?: boolean) => (
-    value: any
-): FieldValidationResult => {
-    if (isRequired && !hasValue(value)) {
+export const validateDateInRange = (tidsrom: DateRange, isRequired?: boolean) => (date: any): FieldValidationResult => {
+    if (isRequired && !hasValue(date)) {
         return fieldIsRequiredError();
     }
-
+    if (!datoErInnenforTidsrom(date, tidsrom)) {
+        return fieldValidationError(AppFieldValidationErrors.dato_utenfor_gyldig_tidsrom);
+    }
     return undefined;
 };
 

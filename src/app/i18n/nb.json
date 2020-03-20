@@ -280,5 +280,6 @@
     "fieldvalidation.dager_med_for_mange_timer": "En eller flere dager har for mange timer. 7,5 timer er det meste som er gyldig",
     "fieldvalidation.dager_med_fravær_utenfor_periode": "En eller flere dager er utenfor gyldig tidsperiode",
     "fieldvalidation.timer_ikke_tall": "Verdien må være mellom 0,5 og 7,5 timer",
-    "fieldvalidation.timer_for_mange_timer": "Verdien må være mellom 0,5 og 7,5 timer"
+    "fieldvalidation.timer_for_mange_timer": "Verdien må være mellom 0,5 og 7,5 timer",
+    "fieldvalidation.dato_utenfor_gyldig_tidsrom": "Dato er utenfor gyldig tidsperiode"
 }
