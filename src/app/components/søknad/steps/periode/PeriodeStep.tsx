@@ -22,13 +22,15 @@ import './periodeStep.less';
 
 const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) => {
     const { values } = useFormikContext<SøknadFormData>();
-    const { perioderMedFravær, dagerMedDelvisFravær } = values;
+    const { perioderMedFravær, dagerMedDelvisFravær, harPerioderMedFravær, harDagerMedDelvisFravær } = values;
     const intl = useIntl();
 
-    return (
-        <FormikStep id={StepID.PERIODE} onValidFormSubmit={onValidSubmit}>
-            <CounsellorPanel>TODO: PERIODE</CounsellorPanel>
+    const kanIkkeFortsette = harPerioderMedFravær === YesOrNo.NO && harDagerMedDelvisFravær === YesOrNo.NO;
 
+    console.log(kanIkkeFortsette);
+
+    return (
+        <FormikStep id={StepID.PERIODE} onValidFormSubmit={onValidSubmit} showSubmitButton={kanIkkeFortsette === false}>
             <FormBlock>
                 <TypedFormComponents.YesOrNoQuestion
                     name={SøknadFormField.harPerioderMedFravær}
@@ -114,6 +116,12 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                         }}
                         validate={validateRequiredList}
                     />
+                </FormBlock>
+            )}
+
+            {kanIkkeFortsette && (
+                <FormBlock margin="xxl">
+                    <CounsellorPanel>Du må velge noen dager</CounsellorPanel>
                 </FormBlock>
             )}
         </FormikStep>

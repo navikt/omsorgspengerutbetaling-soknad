@@ -179,7 +179,7 @@ export const validateDagerMedFravær = (alleDager: FraværDelerAvDag[]): FieldVa
         return fieldValidationError(AppFieldValidationErrors.dager_med_fravær_like);
     }
 
-    if (dager.some((d) => moment(d.dato).isBetween(GYLDIG_TIDSROM.fom, GYLDIG_TIDSROM.tom, 'days', '[]'))) {
+    if (dager.some((d) => moment(d.dato).isBetween(GYLDIG_TIDSROM.fom, GYLDIG_TIDSROM.tom, 'days', '[]')) === false) {
         return fieldValidationError(AppFieldValidationErrors.dager_med_fravær_utenfor_periode);
     }
 

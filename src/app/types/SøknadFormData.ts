@@ -135,8 +135,15 @@ export const initialValues: SøknadFormData = {
     //     }
     //     // mockPeriode
     // ],
-    [SøknadFormField.harDagerMedDelvisFravær]: YesOrNo.UNANSWERED,
-    [SøknadFormField.dagerMedDelvisFravær]: [],
+    [SøknadFormField.harDagerMedDelvisFravær]: YesOrNo.YES,
+    [SøknadFormField.dagerMedDelvisFravær]: [
+        {
+            dato: new Date(),
+            timer: 2
+        }
+    ],
+    // [SøknadFormField.harDagerMedDelvisFravær]: YesOrNo.UNANSWERED,
+    // [SøknadFormField.dagerMedDelvisFravær]: [],
     [SøknadFormField.periode_har_vært_i_utlandet]: YesOrNo.UNANSWERED,
     [SøknadFormField.periode_utenlandsopphold]: [],
 

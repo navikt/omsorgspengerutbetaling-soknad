@@ -36,17 +36,19 @@ const FormikStep: React.FunctionComponent<Props> = (props) => {
                 runDelayedFormValidation={true}
                 fieldErrorRenderer={(error) => commonFieldErrorRenderer(intl, error)}>
                 {children}
-                <FormBlock>
-                    <Knapp
-                        type="hoved"
-                        htmlType="submit"
-                        className={'step__button'}
-                        spinner={showButtonSpinner || false}
-                        disabled={buttonDisabled || false}
-                        aria-label={texts.nextButtonAriaLabel}>
-                        {texts.nextButtonLabel}
-                    </Knapp>
-                </FormBlock>
+                {props.showSubmitButton !== false && (
+                    <FormBlock>
+                        <Knapp
+                            type="hoved"
+                            htmlType="submit"
+                            className={'step__button'}
+                            spinner={showButtonSpinner || false}
+                            disabled={buttonDisabled || false}
+                            aria-label={texts.nextButtonAriaLabel}>
+                            {texts.nextButtonLabel}
+                        </Knapp>
+                    </FormBlock>
+                )}
             </TypedFormComponents.Form>
         </Step>
     );
