@@ -1,5 +1,5 @@
+import { QuestionConfig, Questions } from '@navikt/sif-common-question-config';
 import { SøknadFormData, SøknadFormField } from '../../../../types/SøknadFormData';
-import { QuestionConfig, Questions } from '../../../../utils/visibility/questions/Questions';
 import { yesOrNoIsAnswered } from '../../../../utils/yesOrNoIsAnswered';
 
 const Q = SøknadFormField;
