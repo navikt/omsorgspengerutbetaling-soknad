@@ -13,10 +13,10 @@ import ConfirmationPage from '../pages/confirmation-page/ConfirmationPage';
 import GeneralErrorPage from '../pages/general-error-page/GeneralErrorPage';
 import WelcomingPage from '../pages/welcoming-page/WelcomingPage';
 import HarUtbetaltDeFørsteTiDageneStep from './steps/har-utbetalt-de-første-ti-dagene/HarUtbetaltDeFørsteTiDageneStep';
+import HvaErDinSituasjon from './steps/hva-er-din-situasjon/HvaErDinSituasjon';
 import InntektStep from './steps/inntekt/InntektStep';
 // import LegeerklæringStep from './steps/legeerklæring/LegeerklæringStep';
 import MedlemsskapStep from './steps/medlemskap/MedlemsskapStep';
-import NårKanManFåUtbetaltOmsorgspengerStep from './steps/når-kan-man-få-utbetalt-omsorgspenger/NårKanManFåUtbetaltOmsorgspengerStep';
 import PeriodeStep from './steps/periode/PeriodeStep';
 import SummaryStep from './steps/summary/SummaryStep';
 
@@ -55,24 +55,17 @@ const SøknadContent: React.FunctionComponent = () => {
                     <WelcomingPage
                         onValidSubmit={() =>
                             setTimeout(() => {
-                                navigateTo(
-                                    `${RouteConfig.SØKNAD_ROUTE_PREFIX}/${StepID.NÅR_KAN_MAN_FÅ_UTBETALT_OMSORGSPENGER}`,
-                                    history
-                                );
+                                navigateTo(`${RouteConfig.SØKNAD_ROUTE_PREFIX}/${StepID.SITUASJON}`, history);
                             })
                         }
                     />
                 )}
             />
 
-            {isAvailable(StepID.NÅR_KAN_MAN_FÅ_UTBETALT_OMSORGSPENGER, values) && (
+            {isAvailable(StepID.SITUASJON, values) && (
                 <Route
-                    path={getSøknadRoute(StepID.NÅR_KAN_MAN_FÅ_UTBETALT_OMSORGSPENGER)}
-                    render={() => (
-                        <NårKanManFåUtbetaltOmsorgspengerStep
-                            onValidSubmit={() => navigateToNextStep(StepID.NÅR_KAN_MAN_FÅ_UTBETALT_OMSORGSPENGER)}
-                        />
-                    )}
+                    path={getSøknadRoute(StepID.SITUASJON)}
+                    render={() => <HvaErDinSituasjon onValidSubmit={() => navigateToNextStep(StepID.SITUASJON)} />}
                 />
             )}
 

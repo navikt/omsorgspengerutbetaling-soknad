@@ -22,7 +22,7 @@ export const getNextStepRoute = (stepId: StepID, formData?: SøknadFormData): st
 export const isAvailable = (path: StepID | RouteConfig, values: SøknadFormData) => {
     if (!appIsRunningInDevEnvironment()) {
         switch (path) {
-            case StepID.NÅR_KAN_MAN_FÅ_UTBETALT_OMSORGSPENGER:
+            case StepID.SITUASJON:
                 return nårKanManFåUtbetaltOmsorgspengerAvailable(values);
             case StepID.HAR_UTBETALT_DE_FØRST_TI_DAGENE:
                 return harUtbetaltDeFørsteTiDagene(values);

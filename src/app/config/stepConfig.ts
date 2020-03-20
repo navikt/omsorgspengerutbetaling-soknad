@@ -3,7 +3,7 @@ import { getSøknadRoute } from '../utils/routeUtils';
 import routeConfig from './routeConfig';
 
 export enum StepID {
-    'NÅR_KAN_MAN_FÅ_UTBETALT_OMSORGSPENGER' = 'når-kan-man-få-utbetalt-omsorgspenger',
+    'SITUASJON' = 'hva-er-din-situasjon',
     'HAR_UTBETALT_DE_FØRST_TI_DAGENE' = 'har-utbetalt-de-første-ti-dagene',
     'PERIODE' = 'periode',
     'LEGEERKLÆRING' = 'legeerklaering',
@@ -44,8 +44,8 @@ export const getStepConfig = (formData?: SøknadFormData): StepConfigInterface =
     let idx = 0;
 
     const config = {
-        [StepID.NÅR_KAN_MAN_FÅ_UTBETALT_OMSORGSPENGER]: {
-            ...getStepConfigItemTextKeys(StepID.NÅR_KAN_MAN_FÅ_UTBETALT_OMSORGSPENGER),
+        [StepID.SITUASJON]: {
+            ...getStepConfigItemTextKeys(StepID.SITUASJON),
             index: idx++,
             nextStep: StepID.HAR_UTBETALT_DE_FØRST_TI_DAGENE,
             backLinkHref: routeConfig.WELCOMING_PAGE_ROUTE
@@ -54,7 +54,7 @@ export const getStepConfig = (formData?: SøknadFormData): StepConfigInterface =
             ...getStepConfigItemTextKeys(StepID.HAR_UTBETALT_DE_FØRST_TI_DAGENE),
             index: idx++,
             nextStep: StepID.PERIODE,
-            backLinkHref: getSøknadRoute(StepID.NÅR_KAN_MAN_FÅ_UTBETALT_OMSORGSPENGER)
+            backLinkHref: getSøknadRoute(StepID.SITUASJON)
         },
         [StepID.PERIODE]: {
             ...getStepConfigItemTextKeys(StepID.PERIODE),

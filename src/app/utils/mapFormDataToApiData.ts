@@ -1,19 +1,15 @@
+import { IntlShape } from 'react-intl';
 import { Locale } from '@navikt/sif-common-core/lib/types/Locale';
+import { Utenlandsopphold, Virksomhet } from '@navikt/sif-common-forms/lib';
+import { YesOrNo } from 'common/types/YesOrNo';
+import { formatDateToApiFormat } from 'common/utils/dateUtils';
+import { decimalTimeToTime, timeToIso8601Duration } from 'common/utils/timeUtils';
+import { FraværDelerAvDag, Periode } from '../../@types/omsorgspengerutbetaling-schema';
 import {
-    SpørsmålOgSvar,
-    Svar,
-    SøknadApiData,
-    UtbetalingsperiodeMedVedlegg,
-    UtenlandsoppholdApiData,
+    SpørsmålOgSvar, Svar, SøknadApiData, UtbetalingsperiodeMedVedlegg, UtenlandsoppholdApiData,
     VirksomhetApiData
 } from '../types/SøknadApiData';
 import { SøknadFormData } from '../types/SøknadFormData';
-import { IntlShape } from 'react-intl';
-import { YesOrNo } from 'common/types/YesOrNo';
-import { FraværDelerAvDag, Periode } from '../../@types/omsorgspengerutbetaling-schema';
-import { formatDateToApiFormat } from 'common/utils/dateUtils';
-import { decimalTimeToTime, timeToIso8601Duration } from 'common/utils/timeUtils';
-import { Utenlandsopphold, Virksomhet } from '@navikt/sif-common-forms/lib';
 import { mapBostedUtlandToApiData } from './formToApiMaps/mapBostedUtlandToApiData';
 import { mapFrilansToApiData } from './formToApiMaps/mapFrilansToApiData';
 import { mapVirksomhetToVirksomhetApiData } from './formToApiMaps/mapVirksomhetToApiData';
@@ -68,31 +64,31 @@ export const mapFormDataToApiData = (
 
     const stegEn: SpørsmålOgSvar[] = [
         {
-            spørsmål: intl.formatMessage({ id: 'step.når-kan-man-få-utbetalt-omsorgspenger.tre_eller_fler_barn.spm' }),
+            spørsmål: intl.formatMessage({ id: 'step.hva-er-din-situasjon.tre_eller_fler_barn.spm' }),
             svar: mapYesOrNoToSvar(tre_eller_fler_barn)
         },
         {
             spørsmål: intl.formatMessage({
-                id: 'step.når-kan-man-få-utbetalt-omsorgspenger.alene_om_omsorg_for_barn.spm'
+                id: 'step.hva-er-din-situasjon.alene_om_omsorg_for_barn.spm'
             }),
             svar: mapYesOrNoToSvar(alene_om_omsorg_for_barn)
         },
         {
             spørsmål: intl.formatMessage({
-                id: 'step.når-kan-man-få-utbetalt-omsorgspenger.rett_til_mer_enn_ti_dager_totalt.spm'
+                id: 'step.hva-er-din-situasjon.rett_til_mer_enn_ti_dager_totalt.spm'
             }),
             svar: mapYesOrNoToSvar(rett_til_mer_enn_ti_dager_totalt)
         },
         {
             spørsmål: intl.formatMessage({
-                id: 'step.når-kan-man-få-utbetalt-omsorgspenger.den_andre_forelderen_ikke_kan_ta_seg_av_barnet.spm'
+                id: 'step.hva-er-din-situasjon.den_andre_forelderen_ikke_kan_ta_seg_av_barnet.spm'
             }),
             svar: mapYesOrNoToSvar(den_andre_forelderen_ikke_kan_ta_seg_av_barnet)
         },
         {
             spørsmål: intl.formatMessage({
                 id:
-                    'step.når-kan-man-få-utbetalt-omsorgspenger.har_barn_som_har_kronisk_sykdom_eller_funksjonshemming.spm'
+                    'step.hva-er-din-situasjon.har_barn_som_har_kronisk_sykdom_eller_funksjonshemming.spm'
             }),
             svar: mapYesOrNoToSvar(har_barn_som_har_kronisk_sykdom_eller_funksjonshemming)
         }
