@@ -20,7 +20,7 @@ const renderWrappedInMemoryRouter = (child: React.ReactNode) =>
     );
 
 describe('<Step>', () => {
-    const stepID: StepID = StepID.NÅR_KAN_MAN_FÅ_UTBETALT_OMSORGSPENGER;
+    const stepID: StepID = StepID.SITUASJON;
     let renderResult: RenderResult;
 
     beforeAll(() => {
@@ -29,7 +29,9 @@ describe('<Step>', () => {
 
     it('should render common <Step> content', () => {
         const { getByText } = renderResult;
-        expect(getByText('Søknad om utbetaling av omsorgspenger til selvstendig næringsdrivende eller frilansere')).toBeTruthy();
-        expect(getByText('Når kan man få utbetalt omsorgspenger fra NAV?')).toBeTruthy();
+        expect(
+            getByText('Søknad om utbetaling av omsorgspenger til selvstendig næringsdrivende eller frilansere')
+        ).toBeTruthy();
+        expect(getByText('Hva er din situasjon?')).toBeTruthy();
     });
 });
