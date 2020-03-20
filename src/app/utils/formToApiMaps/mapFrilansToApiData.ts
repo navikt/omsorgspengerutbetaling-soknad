@@ -1,20 +1,15 @@
 import {formatDateToApiFormat} from "common/utils/dateUtils";
 import {YesOrNo} from "common/types/YesOrNo";
-import {ApiStringDate} from "common/types/ApiStringDate";
+import {Frilans} from "../../types/SøknadApiData";
 
-export interface FrilansApiData {
-    startdato: ApiStringDate;
-    jobber_fortsatt_som_frilans: boolean;
-}
+export const mapFrilansToApiData = (jobberFortsattSomFrilans: YesOrNo | undefined, startdato: Date | undefined): Frilans | undefined => {
 
-export const mapFrilansToApiData = (frilans_jobberFortsattSomFrilans: YesOrNo, frilans_startdato: Date): FrilansApiData | undefined => {
-
-    if (frilans_jobberFortsattSomFrilans && frilans_startdato) {
-        const data: FrilansApiData = {
-            startdato: formatDateToApiFormat(frilans_startdato),
-            jobber_fortsatt_som_frilans: frilans_jobberFortsattSomFrilans === YesOrNo.YES
+    if (jobberFortsattSomFrilans && startdato) {
+        const frilans: Frilans = {
+            startdato: formatDateToApiFormat(startdato),
+            jobberFortsattSomFrilans: jobberFortsattSomFrilans === YesOrNo.YES
         };
-        return data;
+        return frilans;
     }
     return undefined;
 };

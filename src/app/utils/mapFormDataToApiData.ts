@@ -1,19 +1,22 @@
-import {Locale} from '@navikt/sif-common-core/lib/types/Locale';
+import { Locale } from '@navikt/sif-common-core/lib/types/Locale';
 import {
     SpørsmålOgSvar,
     Svar,
     SøknadApiData,
     UtbetalingsperiodeMedVedlegg,
-    UtenlandsoppholdApiData
+    UtenlandsoppholdApiData,
+    VirksomhetApiData
 } from '../types/SøknadApiData';
-import {SøknadFormData} from '../types/SøknadFormData';
-import {IntlShape} from 'react-intl';
-import {YesOrNo} from 'common/types/YesOrNo';
-import {FraværDelerAvDag, Periode} from '../../@types/omsorgspengerutbetaling-schema';
-import {formatDateToApiFormat} from 'common/utils/dateUtils';
-import {decimalTimeToTime, timeToIso8601Duration} from 'common/utils/timeUtils';
-import {Utenlandsopphold} from "@navikt/sif-common-forms/lib";
-import {mapBostedUtlandToApiData} from "./formToApiMaps/mapBostedUtlandToApiData";
+import { SøknadFormData } from '../types/SøknadFormData';
+import { IntlShape } from 'react-intl';
+import { YesOrNo } from 'common/types/YesOrNo';
+import { FraværDelerAvDag, Periode } from '../../@types/omsorgspengerutbetaling-schema';
+import { formatDateToApiFormat } from 'common/utils/dateUtils';
+import { decimalTimeToTime, timeToIso8601Duration } from 'common/utils/timeUtils';
+import { Utenlandsopphold, Virksomhet } from '@navikt/sif-common-forms/lib';
+import { mapBostedUtlandToApiData } from './formToApiMaps/mapBostedUtlandToApiData';
+import { mapFrilansToApiData } from './formToApiMaps/mapFrilansToApiData';
+import { mapVirksomhetToVirksomhetApiData } from './formToApiMaps/mapVirksomhetToApiData';
 
 // TODO: FIX MAPPING!!!
 export const mapFormDataToApiData = (
@@ -158,13 +161,9 @@ export const mapFormDataToApiData = (
             utenlandsoppholdNeste12Mnd,
             intl.locale
         ), // medlemskap siden
-        opphold: settInnOpphold(
-            periode_har_vært_i_utlandet,
-            periode_utenlandsopphold,
-            intl.locale
-        ), // periode siden, har du oppholdt
-        frilans: undefined,
-        selvstendigVirksomheter: []
+        opphold: settInnOpphold(periode_har_vært_i_utlandet, periode_utenlandsopphold, intl.locale), // periode siden, har du oppholdt
+        frilans: mapFrilansToApiData(frilans_jobberFortsattSomFrilans, frilans_startdato),
+        selvstendigVirksomheter: settInnVirksomheter(selvstendig_harHattInntektSomSN, selvstendig_virksomheter)
     };
 
     return apiData;
@@ -219,21 +218,21 @@ const settInnBosteder = (
     utenlandsoppholdNeste12Mnd: Utenlandsopphold[],
     locale: string
 ): UtenlandsoppholdApiData[] => {
+    const mappedSiste12Mnd =
+        harBoddUtenforNorgeSiste12Mnd === YesOrNo.YES
+            ? utenlandsoppholdSiste12Mnd.map((utenlandsopphold: Utenlandsopphold) => {
+                  return mapBostedUtlandToApiData(utenlandsopphold, locale);
+              })
+            : [];
 
-    const mappedSiste12Mnd = (harBoddUtenforNorgeSiste12Mnd === YesOrNo.YES) ?
-        utenlandsoppholdSiste12Mnd.map((utenlandsopphold: Utenlandsopphold) => {
-            return mapBostedUtlandToApiData(utenlandsopphold, locale);
-        }) : [];
+    const mappedNeste12Mnd =
+        skalBoUtenforNorgeNeste12Mnd === YesOrNo.YES
+            ? utenlandsoppholdNeste12Mnd.map((utenlandsopphold: Utenlandsopphold) => {
+                  return mapBostedUtlandToApiData(utenlandsopphold, locale);
+              })
+            : [];
 
-    const mappedNeste12Mnd = (skalBoUtenforNorgeNeste12Mnd === YesOrNo.YES) ?
-        utenlandsoppholdNeste12Mnd.map((utenlandsopphold: Utenlandsopphold) => {
-            return mapBostedUtlandToApiData(utenlandsopphold, locale);
-        }) : [];
-
-    return [
-        ...mappedSiste12Mnd,
-        ...mappedNeste12Mnd
-    ];
+    return [...mappedSiste12Mnd, ...mappedNeste12Mnd];
 };
 
 const settInnOpphold = (
@@ -241,8 +240,15 @@ const settInnOpphold = (
     periodeUtenlandsopphold: Utenlandsopphold[],
     locale: string
 ) => {
-    return periodeHarVærtIUtlandet === YesOrNo.YES ?
-        periodeUtenlandsopphold.map((utenlandsopphold: Utenlandsopphold) => {
-            return mapBostedUtlandToApiData(utenlandsopphold, locale);
-        }): [];
+    return periodeHarVærtIUtlandet === YesOrNo.YES
+        ? periodeUtenlandsopphold.map((utenlandsopphold: Utenlandsopphold) => {
+              return mapBostedUtlandToApiData(utenlandsopphold, locale);
+          })
+        : [];
+};
+
+const settInnVirksomheter = (harHattInntektSomSN?: YesOrNo, virksomheter?: Virksomhet[]): VirksomhetApiData[] => {
+    return harHattInntektSomSN && harHattInntektSomSN === YesOrNo.YES && virksomheter
+        ? virksomheter.map((virksomhet: Virksomhet) => mapVirksomhetToVirksomhetApiData(virksomhet))
+        : [];
 };
