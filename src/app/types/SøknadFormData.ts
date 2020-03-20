@@ -1,7 +1,7 @@
 import { Attachment } from '@navikt/sif-common-core/lib/types/Attachment';
 import { Utenlandsopphold } from '@navikt/sif-common-forms/lib//utenlandsopphold/types';
 import { Virksomhet } from '@navikt/sif-common-forms/lib/virksomhet/types';
-import moment from 'moment';
+// import moment from 'moment';
 import { YesOrNo } from 'common/types/YesOrNo';
 import { FraværDelerAvDag, Periode } from '../../@types/omsorgspengerutbetaling-schema';
 
@@ -26,8 +26,10 @@ export enum SøknadFormField {
     // STEG 3: Periode
     harPerioderMedFravær = 'harPerioderMedFravær',
     perioderMedFravær = 'perioderMedFravær',
+    perioderMedFraværGroup = 'perioderMedFraværGroup',
     harDagerMedDelvisFravær = 'harDagerMedDelvisFravær',
     dagerMedDelvisFravær = 'dagerMedDelvisFravær',
+    dagerMedDelvisFraværGroup = 'dagerMedDelvisFraværGroup',
     periode_har_vært_i_utlandet = 'periode_har_vært_i_utlandet',
     periode_utenlandsopphold = 'periode_utenlandsopphold',
 
@@ -119,31 +121,31 @@ export const initialValues: SøknadFormData = {
     [SøknadFormField.nettop_startet_selvstendig_frilanser]: YesOrNo.UNANSWERED,
 
     // STEG 3: Periode
-    // [SøknadFormField.harPerioderMedFravær]: YesOrNo.UNANSWERED,
-    // [SøknadFormField.perioderMedFravær]: [],
-    [SøknadFormField.harPerioderMedFravær]: YesOrNo.YES,
-    [SøknadFormField.perioderMedFravær]: [
-        {
-            fom: moment()
-                .subtract(5, 'days')
-                .toDate(),
-            tom: new Date()
-        },
-        {
-            fom: new Date(),
-            tom: moment()
-                .add(1, 'days')
-                .toDate()
-        }
-        // mockPeriode
-    ],
+    [SøknadFormField.harPerioderMedFravær]: YesOrNo.NO,
+    [SøknadFormField.perioderMedFravær]: [],
+    // [SøknadFormField.harPerioderMedFravær]: YesOrNo.YES,
+    // [SøknadFormField.perioderMedFravær]: [
+    //     {
+    //         fom: moment()
+    //             .subtract(5, 'days')
+    //             .toDate(),
+    //         tom: new Date()
+    //     },
+    //     {
+    //         fom: new Date(),
+    //         tom: moment()
+    //             .add(1, 'days')
+    //             .toDate()
+    //     }
+    //     // mockPeriode
+    // ],
     // [SøknadFormField.harDagerMedDelvisFravær]: YesOrNo.UNANSWERED,
     // [SøknadFormField.dagerMedDelvisFravær]: [],
     [SøknadFormField.harDagerMedDelvisFravær]: YesOrNo.YES,
     [SøknadFormField.dagerMedDelvisFravær]: [
         {
             dato: new Date(),
-            timer: 3
+            timer: 9
         }
         // {
         //     dato: new Date(),

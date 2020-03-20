@@ -3,7 +3,6 @@ import { useIntl } from 'react-intl';
 import {
     validateRequiredList, validateYesOrNoIsAnswered
 } from '@navikt/sif-common-core/lib/validation/fieldValidations';
-import { FormikYesOrNoQuestion } from '@navikt/sif-common-formik';
 import BostedUtlandListAndDialog from '@navikt/sif-common-forms/lib/bosted-utland/BostedUtlandListAndDialog';
 import { FieldArray, useFormikContext } from 'formik';
 import CounsellorPanel from 'common/components/counsellor-panel/CounsellorPanel';
@@ -123,7 +122,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
             {kanIkkeFortsette === false && (
                 <>
                     <FormBlock margin={'xl'}>
-                        <FormikYesOrNoQuestion
+                        <TypedFormComponents.YesOrNoQuestion
                             name={SøknadFormField.periode_har_vært_i_utlandet}
                             legend={intlHelper(
                                 intl,

@@ -1,5 +1,5 @@
 import { formatDateToApiFormat } from '@navikt/sif-common-core/lib/utils/dateUtils';
-import { YesOrNo } from '@navikt/sif-common-formik/lib';
+import { YesOrNo } from '@navikt/sif-common-formik';
 import { Næringstype, Virksomhet } from '@navikt/sif-common-forms/lib';
 import { VirksomhetApiData } from '../../types/SøknadApiData';
 
