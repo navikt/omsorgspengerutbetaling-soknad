@@ -22,13 +22,13 @@ import './periodeStep.less';
 
 const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) => {
     const { values } = useFormikContext<SøknadFormData>();
-    const { perioderMedFravær, dagerMedDelvisFravær } = values;
+    const { perioderMedFravær, dagerMedDelvisFravær, harPerioderMedFravær, harDagerMedDelvisFravær } = values;
     const intl = useIntl();
 
-    return (
-        <FormikStep id={StepID.PERIODE} onValidFormSubmit={onValidSubmit}>
-            <CounsellorPanel>TODO: PERIODE</CounsellorPanel>
+    const kanIkkeFortsette = harPerioderMedFravær === YesOrNo.NO && harDagerMedDelvisFravær === YesOrNo.NO;
 
+    return (
+        <FormikStep id={StepID.PERIODE} onValidFormSubmit={onValidSubmit} showSubmitButton={kanIkkeFortsette === false}>
             <FormBlock>
                 <TypedFormComponents.YesOrNoQuestion
                     name={SøknadFormField.harPerioderMedFravær}
@@ -39,7 +39,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
 
             {/* DAGER MED FULLT FRAVÆR*/}
             {values.harPerioderMedFravær === YesOrNo.YES && (
-                <FormBlock margin="l">
+                <FormBlock margin={perioderMedFravær.length > 0 ? 'l' : 'none'}>
                     <FieldArray
                         name={SøknadFormField.perioderMedFravær}
                         render={(arrayHelpers) => {
@@ -103,7 +103,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
             </FormBlock>
 
             {values[SøknadFormField.periode_har_vært_i_utlandet] === YesOrNo.YES && (
-                <FormBlock margin="m">
+                <FormBlock margin="l">
                     <BostedUtlandListAndDialog<SøknadFormField>
                         name={SøknadFormField.periode_utenlandsopphold}
                         minDate={date1YearAgo}
@@ -114,6 +114,12 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                         }}
                         validate={validateRequiredList}
                     />
+                </FormBlock>
+            )}
+
+            {kanIkkeFortsette && (
+                <FormBlock margin="xxl">
+                    <CounsellorPanel>Du må velge noen dager</CounsellorPanel>
                 </FormBlock>
             )}
         </FormikStep>

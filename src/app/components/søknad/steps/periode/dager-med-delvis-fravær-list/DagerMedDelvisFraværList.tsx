@@ -14,11 +14,12 @@ interface Props {
 }
 
 const DagerMedDelvisFraværList: React.FunctionComponent<Props> = ({ dagerMedDelvisFravær, onRemove, onCreateNew }) => {
-    const tomListe = dagerMedDelvisFravær.length === 0;
+    // const tomListe = dagerMedDelvisFravær.length === 0;
     return (
         <>
             <TypedFormComponents.InputGroup
-                legend={tomListe ? undefined : 'Dager med delvis fravær'}
+                className={'periodelistGroup'}
+                // legend={tomListe ? undefined : 'Dager med delvis fravær'}
                 name={SøknadFormField.dagerMedDelvisFravær}
                 validate={validateDagerMedFravær}>
                 {dagerMedDelvisFravær.map((dag, index) => (
@@ -31,7 +32,7 @@ const DagerMedDelvisFraværList: React.FunctionComponent<Props> = ({ dagerMedDel
                     />
                 ))}
             </TypedFormComponents.InputGroup>
-            <FormBlock margin={tomListe ? 'm' : 'l'} paddingBottom={tomListe ? undefined : 'm'}>
+            <FormBlock margin="m">
                 <Knapp type="standard" htmlType={'button'} onClick={onCreateNew} mini={true}>
                     Legg til ny dag med delvis fravær
                 </Knapp>
