@@ -17,6 +17,7 @@ export interface FormikStepProps {
     buttonDisabled?: boolean;
     onValidFormSubmit?: () => void;
     skipValidation?: boolean;
+    cleanupStep?: (values: SøknadFormData) => SøknadFormData;
 }
 
 type Props = FormikStepProps & StepProps;
@@ -24,13 +25,14 @@ type Props = FormikStepProps & StepProps;
 const FormikStep: React.FunctionComponent<Props> = (props) => {
     const formik = useFormikContext<SøknadFormData>();
     const intl = useIntl();
-    const { children, onValidFormSubmit, showButtonSpinner, buttonDisabled, id } = props;
+    const { children, onValidFormSubmit, showButtonSpinner, buttonDisabled, id, cleanupStep } = props;
     const stepConfig = getStepConfig(formik.values);
     const texts = getStepTexts(intl, id, stepConfig);
     return (
         <Step stepConfig={stepConfig} {...props}>
             <TypedFormComponents.Form
                 onValidSubmit={onValidFormSubmit}
+                cleanup={cleanupStep}
                 includeButtons={false}
                 includeValidationSummary={true}
                 runDelayedFormValidation={true}

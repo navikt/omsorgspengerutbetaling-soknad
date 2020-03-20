@@ -33,8 +33,25 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
 
     const kanIkkeFortsette = harPerioderMedFravær === YesOrNo.NO && harDagerMedDelvisFravær === YesOrNo.NO;
 
+    const cleanupStep = (valuesToBeCleaned: SøknadFormData): SøknadFormData => {
+        const cleanedValues = { ...valuesToBeCleaned };
+        if (harDagerMedDelvisFravær === YesOrNo.NO) {
+            cleanedValues.dagerMedDelvisFravær = [];
+        }
+        if (harPerioderMedFravær === YesOrNo.NO) {
+            cleanedValues.perioderMedFravær = [];
+        }
+        return cleanedValues;
+    };
+
     return (
-        <FormikStep id={StepID.PERIODE} onValidFormSubmit={onValidSubmit} showSubmitButton={kanIkkeFortsette === false}>
+        <FormikStep
+            id={StepID.PERIODE}
+            onValidFormSubmit={() => {
+                onValidSubmit();
+            }}
+            cleanupStep={cleanupStep}
+            showSubmitButton={kanIkkeFortsette === false}>
             <FormBlock>
                 <TypedFormComponents.YesOrNoQuestion
                     name={SøknadFormField.harPerioderMedFravær}

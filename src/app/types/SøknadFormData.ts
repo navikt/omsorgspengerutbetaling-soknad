@@ -99,7 +99,7 @@ export interface SøknadFormData {
 }
 // const mockPeriode = { fom: undefined, tom: undefined } as any;
 
-const ugyldigTimer: any = 'x';
+// const ugyldigTimer: any = 'x';
 export const initialValues: SøknadFormData = {
     [SøknadFormField.harForståttRettigheterOgPlikter]: false,
     [SøknadFormField.harBekreftetOpplysninger]: false,
@@ -143,14 +143,14 @@ export const initialValues: SøknadFormData = {
     [SøknadFormField.dagerMedDelvisFravær]: [
         {
             dato: new Date(),
-            timer: ugyldigTimer
-        },
-        {
-            dato: new Date(),
-            timer: 2
+            timer: 3
         }
+        // {
+        //     dato: new Date(),
+        //     timer: 2
+        // }
     ],
-    [SøknadFormField.periode_har_vært_i_utlandet]: YesOrNo.UNANSWERED,
+    [SøknadFormField.periode_har_vært_i_utlandet]: YesOrNo.NO,
     [SøknadFormField.periode_utenlandsopphold]: [],
 
     // STEG 4: Conditional perioder i utlandet
