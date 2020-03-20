@@ -1,10 +1,19 @@
-import { Locale } from '@navikt/sif-common-core/lib/types/Locale';
-import { SpørsmålId, SpørsmålOgSvar, Svar, SøknadApiData, UtbetalingsperiodeMedVedlegg } from '../types/SøknadApiData';
-import { SøknadFormData } from '../types/SøknadFormData';
-import { IntlShape } from 'react-intl';
-import { YesOrNo } from 'common/types/YesOrNo';
-import { FraværDelerAvDag, Periode } from '../../@types/omsorgspengerutbetaling-schema';
-import { formatDateToApiFormat } from 'common/utils/dateUtils';
+import {Locale} from '@navikt/sif-common-core/lib/types/Locale';
+import {
+    SpørsmålOgSvar,
+    Svar,
+    SøknadApiData,
+    UtbetalingsperiodeMedVedlegg,
+    UtenlandsoppholdApiData
+} from '../types/SøknadApiData';
+import {SøknadFormData} from '../types/SøknadFormData';
+import {IntlShape} from 'react-intl';
+import {YesOrNo} from 'common/types/YesOrNo';
+import {FraværDelerAvDag, Periode} from '../../@types/omsorgspengerutbetaling-schema';
+import {formatDateToApiFormat} from 'common/utils/dateUtils';
+import {decimalTimeToTime, timeToIso8601Duration} from 'common/utils/timeUtils';
+import {Utenlandsopphold} from "@navikt/sif-common-forms/lib";
+import {mapBostedUtlandToApiData} from "./formToApiMaps/mapBostedUtlandToApiData";
 
 // TODO: FIX MAPPING!!!
 export const mapFormDataToApiData = (
@@ -53,12 +62,53 @@ export const mapFormDataToApiData = (
     }: SøknadFormData,
     intl: IntlShape
 ): SøknadApiData => {
-    // innvilget_rett_og_ingen_andre_barn_under_tolv,
-    //     fisker_på_blad_B,
-    //     frivillig_forsikring,
-    //     nettop_startet_selvstendig_frilanser,
+    // TODO: Disse skal bli flyttet. Se oppdatering i api'et
+    // const todo = [
+    //     {
+    //         id: SpørsmålId.HarForståttRettigheterOgPlikter,
+    //         spørsmål: intl.formatMessage({ id: 'welcomingPage.samtykke.harForståttLabel' }),
+    //         svar: harForståttRettigheterOgPlikter ? Svar.Ja : Svar.Nei
+    //     },
+    //     {
+    //         id: SpørsmålId.HarBekreftetOpplysninger,
+    //         spørsmål: intl.formatMessage({ id: 'steg.oppsummering.bekrefterOpplysninger' }),
+    //         svar: harBekreftetOpplysninger ? Svar.Ja : Svar.Nei
+    //     }
+    // ];
 
-    const leggTilHvis = (yesOrNo: YesOrNo): SpørsmålOgSvar[] => {
+    const stegEn: SpørsmålOgSvar[] = [
+        {
+            spørsmål: intl.formatMessage({ id: 'step.når-kan-man-få-utbetalt-omsorgspenger.tre_eller_fler_barn.spm' }),
+            svar: mapYesOrNoToSvar(tre_eller_fler_barn)
+        },
+        {
+            spørsmål: intl.formatMessage({
+                id: 'step.når-kan-man-få-utbetalt-omsorgspenger.alene_om_omsorg_for_barn.spm'
+            }),
+            svar: mapYesOrNoToSvar(alene_om_omsorg_for_barn)
+        },
+        {
+            spørsmål: intl.formatMessage({
+                id: 'step.når-kan-man-få-utbetalt-omsorgspenger.rett_til_mer_enn_ti_dager_totalt.spm'
+            }),
+            svar: mapYesOrNoToSvar(rett_til_mer_enn_ti_dager_totalt)
+        },
+        {
+            spørsmål: intl.formatMessage({
+                id: 'step.når-kan-man-få-utbetalt-omsorgspenger.den_andre_forelderen_ikke_kan_ta_seg_av_barnet.spm'
+            }),
+            svar: mapYesOrNoToSvar(den_andre_forelderen_ikke_kan_ta_seg_av_barnet)
+        },
+        {
+            spørsmål: intl.formatMessage({
+                id:
+                    'step.når-kan-man-få-utbetalt-omsorgspenger.har_barn_som_har_kronisk_sykdom_eller_funksjonshemming.spm'
+            }),
+            svar: mapYesOrNoToSvar(har_barn_som_har_kronisk_sykdom_eller_funksjonshemming)
+        }
+    ];
+
+    const leggTilDisseHvis = (yesOrNo: YesOrNo): SpørsmålOgSvar[] => {
         return yesOrNo === YesOrNo.NO
             ? [
                   {
@@ -94,79 +144,26 @@ export const mapFormDataToApiData = (
             spørsmål: intl.formatMessage({ id: 'step.har-utbetalt-de-første-ti-dagene.ja_nei_spm.legend' }),
             svar: mapYesOrNoToSvar(har_utbetalt_ti_dager)
         },
-        ...leggTilHvis(har_utbetalt_ti_dager)
-    ];
-
-    const sporsmålOgSvar: SpørsmålOgSvar[] = [
-        {
-            id: SpørsmålId.HarForståttRettigheterOgPlikter,
-            spørsmål: intl.formatMessage({ id: 'welcomingPage.samtykke.harForståttLabel' }),
-            svar: harForståttRettigheterOgPlikter ? Svar.Ja : Svar.Nei
-        },
-        {
-            id: SpørsmålId.HarBekreftetOpplysninger,
-            spørsmål: intl.formatMessage({ id: 'steg.oppsummering.bekrefterOpplysninger' }),
-            svar: harBekreftetOpplysninger ? Svar.Ja : Svar.Nei
-        },
-
-        // STEG 1: Kvalifisering
-        {
-            spørsmål: intl.formatMessage({ id: 'step.når-kan-man-få-utbetalt-omsorgspenger.tre_eller_fler_barn.spm' }),
-            svar: mapYesOrNoToSvar(tre_eller_fler_barn)
-        },
-        {
-            spørsmål: intl.formatMessage({
-                id: 'step.når-kan-man-få-utbetalt-omsorgspenger.alene_om_omsorg_for_barn.spm'
-            }),
-            svar: mapYesOrNoToSvar(alene_om_omsorg_for_barn)
-        },
-        {
-            spørsmål: intl.formatMessage({
-                id: 'step.når-kan-man-få-utbetalt-omsorgspenger.rett_til_mer_enn_ti_dager_totalt.spm'
-            }),
-            svar: mapYesOrNoToSvar(rett_til_mer_enn_ti_dager_totalt)
-        },
-        {
-            spørsmål: intl.formatMessage({
-                id: 'step.når-kan-man-få-utbetalt-omsorgspenger.den_andre_forelderen_ikke_kan_ta_seg_av_barnet.spm'
-            }),
-            svar: mapYesOrNoToSvar(den_andre_forelderen_ikke_kan_ta_seg_av_barnet)
-        },
-        {
-            spørsmål: intl.formatMessage({
-                id:
-                    'step.når-kan-man-få-utbetalt-omsorgspenger.har_barn_som_har_kronisk_sykdom_eller_funksjonshemming.spm'
-            }),
-            svar: mapYesOrNoToSvar(har_barn_som_har_kronisk_sykdom_eller_funksjonshemming)
-        },
-
-        // STEG 2:
-        ...stegTo
+        ...leggTilDisseHvis(har_utbetalt_ti_dager)
     ];
 
     const apiData: SøknadApiData = {
         språk: (intl.locale as any) === 'en' ? 'nn' : (intl.locale as Locale),
-        spørsmål: sporsmålOgSvar,
+        spørsmål: [...stegEn, ...stegTo],
         utbetalingsperioder: mapPeriodeTilUtbetalingsperiode(perioderMedFravær, dagerMedDelvisFravær),
-        bosteder: [],
-        opphold: []
+        bosteder: settInnBosteder(
+            harBoddUtenforNorgeSiste12Mnd,
+            utenlandsoppholdSiste12Mnd,
+            skalBoUtenforNorgeNeste12Mnd,
+            utenlandsoppholdNeste12Mnd,
+            intl.locale
+        ), // medlemskap siden
+        opphold: settInnOpphold(
+            periode_har_vært_i_utlandet,
+            periode_utenlandsopphold,
+            intl.locale
+        ) // periode siden, har du oppholdt
 
-        // medlemskap: {
-        //     harBoddIUtlandetSiste12Mnd: harBoddUtenforNorgeSiste12Mnd === YesOrNo.YES,
-        //     skalBoIUtlandetNeste12Mnd: skalBoUtenforNorgeNeste12Mnd === YesOrNo.YES,
-        //     utenlandsoppholdSiste12Mnd:
-        //         harBoddUtenforNorgeSiste12Mnd === YesOrNo.YES
-        //             ? utenlandsoppholdSiste12Mnd.map((o) => mapUtenlandsoppholdTilApiData(o, sprak))
-        //             : [],
-        //     utenlandsoppholdNeste12Mnd:
-        //         skalBoUtenforNorgeNeste12Mnd === YesOrNo.YES
-        //             ? utenlandsoppholdNeste12Mnd.map((o) => mapUtenlandsoppholdTilApiData(o, sprak))
-        //             : []
-        // },
-
-        // legeerklæring: legeerklæring
-        //     .filter((attachment) => !attachmentUploadHasFailed(attachment))
-        //     .map(({ url }) => url!),
     };
 
     return apiData;
@@ -176,24 +173,27 @@ export const mapPeriodeTilUtbetalingsperiode = (
     perioderMedFravær: Periode[],
     dagerMedDelvisFravær: FraværDelerAvDag[]
 ): UtbetalingsperiodeMedVedlegg[] => {
-    const periodeMappedTilUtbetalingsperiodeMedVedlegg: UtbetalingsperiodeMedVedlegg[] = perioderMedFravær
-        .map((periode: Periode) => {
+    const periodeMappedTilUtbetalingsperiodeMedVedlegg: UtbetalingsperiodeMedVedlegg[] = perioderMedFravær.map(
+        (periode: Periode) => {
             return {
                 fraOgMed: formatDateToApiFormat(periode.fom),
                 tilOgMed: formatDateToApiFormat(periode.tom),
                 legeerklæringer: [] as string[] // TODO: Legge til vedlegg adresse
             };
-        });
+        }
+    );
 
-    const fraværDeleravDagMappedTilUtbetalingsperiodeMedVedlegg: UtbetalingsperiodeMedVedlegg[] = dagerMedDelvisFravær
-        .map((fravær: FraværDelerAvDag) => {
+    const fraværDeleravDagMappedTilUtbetalingsperiodeMedVedlegg: UtbetalingsperiodeMedVedlegg[] = dagerMedDelvisFravær.map(
+        (fravær: FraværDelerAvDag) => {
+            const duration: string = timeToIso8601Duration(decimalTimeToTime(fravær.timer));
             return {
                 fraOgMed: formatDateToApiFormat(fravær.dato),
                 tilOgMed: formatDateToApiFormat(fravær.dato),
-                lengde: (fravær.timer as number).toString(), // TODO: Her trengs det nok noe mer mapping for å få type Duration som backend trenger
+                lengde: duration,
                 legeerklæringer: [] // TODO: legge til vedlegg adresse
             };
-        });
+        }
+    );
 
     return [...periodeMappedTilUtbetalingsperiodeMedVedlegg, ...fraværDeleravDagMappedTilUtbetalingsperiodeMedVedlegg];
 };
@@ -211,9 +211,37 @@ export const mapYesOrNoToSvar = (input: YesOrNo): Svar => {
     }
 };
 
-// const mapUtenlandsoppholdTilApiData = (opphold: Utenlandsopphold, locale: string): UtenlandsoppholdApiData => ({
-//     landnavn: getCountryName(opphold.landkode, locale),
-//     landkode: opphold.landkode,
-//     fraOgMed: formatDateToApiFormat(opphold.fom),
-//     tilOgMed: formatDateToApiFormat(opphold.tom)
-// });
+const settInnBosteder = (
+    harBoddUtenforNorgeSiste12Mnd: YesOrNo,
+    utenlandsoppholdSiste12Mnd: Utenlandsopphold[],
+    skalBoUtenforNorgeNeste12Mnd: YesOrNo,
+    utenlandsoppholdNeste12Mnd: Utenlandsopphold[],
+    locale: string
+): UtenlandsoppholdApiData[] => {
+
+    const mappedSiste12Mnd = (harBoddUtenforNorgeSiste12Mnd === YesOrNo.YES) ?
+        utenlandsoppholdSiste12Mnd.map((utenlandsopphold: Utenlandsopphold) => {
+            return mapBostedUtlandToApiData(utenlandsopphold, locale);
+        }) : [];
+
+    const mappedNeste12Mnd = (skalBoUtenforNorgeNeste12Mnd === YesOrNo.YES) ?
+        utenlandsoppholdNeste12Mnd.map((utenlandsopphold: Utenlandsopphold) => {
+            return mapBostedUtlandToApiData(utenlandsopphold, locale);
+        }) : [];
+
+    return [
+        ...mappedSiste12Mnd,
+        ...mappedNeste12Mnd
+    ];
+};
+
+const settInnOpphold = (
+    periodeHarVærtIUtlandet: YesOrNo,
+    periodeUtenlandsopphold: Utenlandsopphold[],
+    locale: string
+) => {
+    return periodeHarVærtIUtlandet === YesOrNo.YES ?
+        periodeUtenlandsopphold.map((utenlandsopphold: Utenlandsopphold) => {
+            return mapBostedUtlandToApiData(utenlandsopphold, locale);
+        }): [];
+};
