@@ -3,7 +3,6 @@ import { useIntl } from 'react-intl';
 import {
     validateRequiredList, validateYesOrNoIsAnswered
 } from '@navikt/sif-common-core/lib/validation/fieldValidations';
-import { FormikYesOrNoQuestion } from '@navikt/sif-common-formik';
 import BostedUtlandListAndDialog from '@navikt/sif-common-forms/lib/bosted-utland/BostedUtlandListAndDialog';
 import { FieldArray, useFormikContext } from 'formik';
 import CounsellorPanel from 'common/components/counsellor-panel/CounsellorPanel';
@@ -22,13 +21,36 @@ import './periodeStep.less';
 
 const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) => {
     const { values } = useFormikContext<SøknadFormData>();
-    const { perioderMedFravær, dagerMedDelvisFravær, harPerioderMedFravær, harDagerMedDelvisFravær } = values;
+    const {
+        perioderMedFravær,
+        dagerMedDelvisFravær,
+        harPerioderMedFravær,
+        harDagerMedDelvisFravær,
+        periode_har_vært_i_utlandet
+    } = values;
     const intl = useIntl();
 
     const kanIkkeFortsette = harPerioderMedFravær === YesOrNo.NO && harDagerMedDelvisFravær === YesOrNo.NO;
 
+    const cleanupStep = (valuesToBeCleaned: SøknadFormData): SøknadFormData => {
+        const cleanedValues = { ...valuesToBeCleaned };
+        if (harDagerMedDelvisFravær === YesOrNo.NO) {
+            cleanedValues.dagerMedDelvisFravær = [];
+        }
+        if (harPerioderMedFravær === YesOrNo.NO) {
+            cleanedValues.perioderMedFravær = [];
+        }
+        return cleanedValues;
+    };
+
     return (
-        <FormikStep id={StepID.PERIODE} onValidFormSubmit={onValidSubmit} showSubmitButton={kanIkkeFortsette === false}>
+        <FormikStep
+            id={StepID.PERIODE}
+            onValidFormSubmit={() => {
+                onValidSubmit();
+            }}
+            cleanupStep={cleanupStep}
+            showSubmitButton={kanIkkeFortsette === false}>
             <FormBlock>
                 <TypedFormComponents.YesOrNoQuestion
                     name={SøknadFormField.harPerioderMedFravær}
@@ -36,9 +58,8 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                     validate={validateYesOrNoIsAnswered}
                 />
             </FormBlock>
-
             {/* DAGER MED FULLT FRAVÆR*/}
-            {values.harPerioderMedFravær === YesOrNo.YES && (
+            {harPerioderMedFravær === YesOrNo.YES && (
                 <FormBlock margin={perioderMedFravær.length > 0 ? 'l' : 'none'}>
                     <FieldArray
                         name={SøknadFormField.perioderMedFravær}
@@ -61,7 +82,6 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                     />
                 </FormBlock>
             )}
-
             <FormBlock>
                 <TypedFormComponents.YesOrNoQuestion
                     name={SøknadFormField.harDagerMedDelvisFravær}
@@ -69,9 +89,8 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                     validate={validateYesOrNoIsAnswered}
                 />
             </FormBlock>
-
             {/* DAGER MED DELVIS FRAVÆR*/}
-            {values.harDagerMedDelvisFravær === YesOrNo.YES && (
+            {harDagerMedDelvisFravær === YesOrNo.YES && (
                 <FormBlock margin={dagerMedDelvisFravær.length > 0 ? 'l' : 'none'}>
                     <FieldArray
                         name={SøknadFormField.dagerMedDelvisFravær}
@@ -94,33 +113,39 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                 </FormBlock>
             )}
 
-            <FormBlock margin={'xl'}>
-                <FormikYesOrNoQuestion
-                    name={SøknadFormField.periode_har_vært_i_utlandet}
-                    legend={intlHelper(intl, 'step.periode.har_dy_oppholdt_deg_i_utlandet_for_dager_du_soker_ok.spm')}
-                    validate={validateYesOrNoIsAnswered}
-                />
-            </FormBlock>
-
-            {values[SøknadFormField.periode_har_vært_i_utlandet] === YesOrNo.YES && (
-                <FormBlock margin="l">
-                    <BostedUtlandListAndDialog<SøknadFormField>
-                        name={SøknadFormField.periode_utenlandsopphold}
-                        minDate={date1YearAgo}
-                        maxDate={dateToday}
-                        labels={{
-                            addLabel: 'Legg til nytt utenlandsopphold',
-                            modalTitle: 'Utenlandsopphold siste 12 måneder'
-                        }}
-                        validate={validateRequiredList}
-                    />
-                </FormBlock>
-            )}
-
             {kanIkkeFortsette && (
                 <FormBlock margin="xxl">
                     <CounsellorPanel>Du må velge noen dager</CounsellorPanel>
                 </FormBlock>
+            )}
+
+            {kanIkkeFortsette === false && (
+                <>
+                    <FormBlock margin={'xl'}>
+                        <TypedFormComponents.YesOrNoQuestion
+                            name={SøknadFormField.periode_har_vært_i_utlandet}
+                            legend={intlHelper(
+                                intl,
+                                'step.periode.har_dy_oppholdt_deg_i_utlandet_for_dager_du_soker_ok.spm'
+                            )}
+                            validate={validateYesOrNoIsAnswered}
+                        />
+                    </FormBlock>
+                    {periode_har_vært_i_utlandet === YesOrNo.YES && (
+                        <FormBlock margin="l">
+                            <BostedUtlandListAndDialog<SøknadFormField>
+                                name={SøknadFormField.periode_utenlandsopphold}
+                                minDate={date1YearAgo}
+                                maxDate={dateToday}
+                                labels={{
+                                    addLabel: 'Legg til nytt utenlandsopphold',
+                                    modalTitle: 'Utenlandsopphold siste 12 måneder'
+                                }}
+                                validate={validateRequiredList}
+                            />
+                        </FormBlock>
+                    )}
+                </>
             )}
         </FormikStep>
     );

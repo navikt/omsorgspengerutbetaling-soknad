@@ -20,8 +20,8 @@ const DagerMedDelvisFraværList: React.FunctionComponent<Props> = ({ dagerMedDel
             <TypedFormComponents.InputGroup
                 className={'periodelistGroup'}
                 // legend={tomListe ? undefined : 'Dager med delvis fravær'}
-                name={SøknadFormField.dagerMedDelvisFravær}
-                validate={validateDagerMedFravær}>
+                name={SøknadFormField.dagerMedDelvisFraværGroup}
+                validate={() => validateDagerMedFravær(dagerMedDelvisFravær)}>
                 {dagerMedDelvisFravær.map((dag, index) => (
                     <DagerMedDelvisFraværListItem
                         key={index}

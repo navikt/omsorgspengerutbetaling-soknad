@@ -1,4 +1,4 @@
-import { getTypedFormComponents } from '@navikt/sif-common-formik';
+import { getTypedFormComponents } from '@navikt/sif-common-formik/lib';
 import { SøknadFormData, SøknadFormField } from '../../../types/SøknadFormData';
 
 const TypedFormComponents = getTypedFormComponents<SøknadFormField, SøknadFormData>();

@@ -25,8 +25,10 @@ export enum SøknadFormField {
     // STEG 3: Periode
     harPerioderMedFravær = 'harPerioderMedFravær',
     perioderMedFravær = 'perioderMedFravær',
+    perioderMedFraværGroup = 'perioderMedFraværGroup',
     harDagerMedDelvisFravær = 'harDagerMedDelvisFravær',
     dagerMedDelvisFravær = 'dagerMedDelvisFravær',
+    dagerMedDelvisFraværGroup = 'dagerMedDelvisFraværGroup',
     periode_har_vært_i_utlandet = 'periode_har_vært_i_utlandet',
     periode_utenlandsopphold = 'periode_utenlandsopphold',
 
@@ -98,6 +100,7 @@ export interface SøknadFormData {
 }
 // const mockPeriode = { fom: undefined, tom: undefined } as any;
 
+// const ugyldigTimer: any = 'x';
 export const initialValues: SøknadFormData = {
     [SøknadFormField.harForståttRettigheterOgPlikter]: false,
     [SøknadFormField.harBekreftetOpplysninger]: false,
@@ -119,31 +122,8 @@ export const initialValues: SøknadFormData = {
     // STEG 3: Periode
     [SøknadFormField.harPerioderMedFravær]: YesOrNo.UNANSWERED,
     [SøknadFormField.perioderMedFravær]: [],
-    // [SøknadFormField.harPerioderMedFravær]: YesOrNo.YES,
-    // [SøknadFormField.perioderMedFravær]: [
-    //     {
-    //         fom: moment()
-    //             .subtract(5, 'days')
-    //             .toDate(),
-    //         tom: new Date()
-    //     },
-    //     {
-    //         fom: new Date(),
-    //         tom: moment()
-    //             .add(1, 'days')
-    //             .toDate()
-    //     }
-    //     // mockPeriode
-    // ],
     [SøknadFormField.harDagerMedDelvisFravær]: YesOrNo.UNANSWERED,
     [SøknadFormField.dagerMedDelvisFravær]: [],
-    // [SøknadFormField.harDagerMedDelvisFravær]: YesOrNo.YES,
-    // [SøknadFormField.dagerMedDelvisFravær]: [
-    //     {
-    //         dato: new Date(),
-    //         timer: 2
-    //     }
-    // ],
     [SøknadFormField.periode_har_vært_i_utlandet]: YesOrNo.UNANSWERED,
     [SøknadFormField.periode_utenlandsopphold]: [],
 

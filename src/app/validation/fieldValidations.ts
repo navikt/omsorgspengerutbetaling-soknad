@@ -8,7 +8,9 @@ import {
 import { createFieldValidationError } from 'common/validation/fieldValidations';
 import { FieldValidationResult } from 'common/validation/types';
 import { FraværDelerAvDag, Periode } from '../../@types/omsorgspengerutbetaling-schema';
-import { GYLDIG_TIDSROM, MAKS_ANTALL_TIMER_MED_FRAVÆR_EN_DAG } from './constants';
+import {
+    GYLDIG_TIDSROM, MAKS_ANTALL_TIMER_MED_FRAVÆR_EN_DAG, MIN_ANTALL_TIMER_MED_FRAVÆR_EN_DAG
+} from './constants';
 import { fødselsnummerIsValid, FødselsnummerValidationErrorReason } from './fødselsnummerValidator';
 
 export enum AppFieldValidationErrors {
@@ -36,7 +38,10 @@ export enum AppFieldValidationErrors {
     'utenlandsopphold_ikke_registrert' = 'fieldvalidation.utenlandsopphold_ikke_registrert',
     'utenlandsopphold_overlapper' = 'fieldvalidation.utenlandsopphold_overlapper',
     'utenlandsopphold_utenfor_periode' = 'fieldvalidation.utenlandsopphold_utenfor_periode',
-    'periode_ikke_registrert' = 'fieldvalidation.periode_ikke_registrert'
+    'periode_ikke_registrert' = 'fieldvalidation.periode_ikke_registrert',
+    'timer_ikke_tall' = 'fieldvalidation.timer_ikke_tall',
+    'timer_for_mange_timer' = 'fieldvalidation.timer_for_mange_timer',
+    'dato_utenfor_gyldig_tidsrom' = 'fieldvalidation.dato_utenfor_gyldig_tidsrom'
 }
 
 export const hasValue = (v: any) => v !== '' && v !== undefined && v !== null;
@@ -155,38 +160,54 @@ export const validatePerioderMedFravær = (allePerioder: Periode[]): FieldValida
     if (dateRangesCollide(dateRanges)) {
         return fieldValidationError(AppFieldValidationErrors.fraværsperioder_overlapper);
     }
-    if (dateRangesExceedsRange(dateRanges, { from: GYLDIG_TIDSROM.fom, to: GYLDIG_TIDSROM.tom })) {
+    if (dateRangesExceedsRange(dateRanges, { from: GYLDIG_TIDSROM.from, to: GYLDIG_TIDSROM.to })) {
         return fieldValidationError(AppFieldValidationErrors.fraværsperioder_utenfor_periode);
     }
     return undefined;
 };
 
-const harLikeDager = (dag: FraværDelerAvDag, alleDager: FraværDelerAvDag[]): boolean => {
-    return alleDager.filter((d) => d !== dag).some((d) => d.dato);
+export const harLikeDager = (dager: FraværDelerAvDag[]): boolean => {
+    return dager.some((dag, dagIdx) => {
+        return dager.some((d, dIdx) => dIdx !== dagIdx && moment(d.dato).isSame(dag.dato, 'day'));
+    });
+};
+
+const datoErInnenforTidsrom = (dato: Date, range: DateRange): boolean => {
+    return moment(dato).isBetween(range.from, range.to, 'days', '[]');
 };
 
 export const validateDagerMedFravær = (alleDager: FraværDelerAvDag[]): FieldValidationResult => {
     const dager = alleDager.filter((d) => d.dato !== undefined && d.timer !== undefined && isNaN(d.timer) === false);
 
-    if (dager.length !== alleDager.length) {
-        return fieldValidationError(AppFieldValidationErrors.dager_med_fravær_ugyldig_dag);
-    }
     if (dager.length === 0) {
         return fieldValidationError(AppFieldValidationErrors.dager_med_fravær_mangler);
     }
-    const dagerMedSammeDato = dager.some((d) => harLikeDager(d, dager));
-    if (dagerMedSammeDato) {
+    if (harLikeDager(dager)) {
         return fieldValidationError(AppFieldValidationErrors.dager_med_fravær_like);
     }
+    return undefined;
+};
 
-    if (dager.some((d) => moment(d.dato).isBetween(GYLDIG_TIDSROM.fom, GYLDIG_TIDSROM.tom, 'days', '[]')) === false) {
-        return fieldValidationError(AppFieldValidationErrors.dager_med_fravær_utenfor_periode);
+export const validateDateInRange = (tidsrom: DateRange, isRequired?: boolean) => (date: any): FieldValidationResult => {
+    if (isRequired && !hasValue(date)) {
+        return fieldIsRequiredError();
     }
-
-    const dagerMedFormMangeTimer = dager.filter((d) => d.timer >= MAKS_ANTALL_TIMER_MED_FRAVÆR_EN_DAG);
-    if (dagerMedFormMangeTimer.length > 0) {
-        return fieldValidationError(AppFieldValidationErrors.dager_med_for_mange_timer);
+    if (!datoErInnenforTidsrom(date, tidsrom)) {
+        return fieldValidationError(AppFieldValidationErrors.dato_utenfor_gyldig_tidsrom);
     }
+    return undefined;
+};
 
+export const validateDelvisFraværTimer = (timer: any): FieldValidationResult => {
+    if (!hasValue(timer)) {
+        return fieldIsRequiredError();
+    }
+    const num = parseFloat(timer);
+    if (isNaN(num)) {
+        return fieldValidationError(AppFieldValidationErrors.timer_ikke_tall);
+    }
+    if (num < MIN_ANTALL_TIMER_MED_FRAVÆR_EN_DAG || num > MAKS_ANTALL_TIMER_MED_FRAVÆR_EN_DAG) {
+        return fieldValidationError(AppFieldValidationErrors.timer_for_mange_timer);
+    }
     return undefined;
 };

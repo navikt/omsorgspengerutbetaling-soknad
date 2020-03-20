@@ -1,10 +1,10 @@
 import React from 'react';
 import bemUtils from '@navikt/sif-common-core/lib/utils/bemUtils';
-import { validateRequiredField } from '@navikt/sif-common-core/lib/validation/fieldValidations';
 import { Knapp } from 'nav-frontend-knapper';
 import { Periode } from '../../../../../../@types/omsorgspengerutbetaling-schema';
 import { SøknadFormField } from '../../../../../types/SøknadFormData';
 import { GYLDIG_TIDSROM } from '../../../../../validation/constants';
+import { validateDateInRange } from '../../../../../validation/fieldValidations';
 import TypedFormComponents from '../../../typed-form-components/TypedFormComponents';
 
 interface Props {
@@ -27,22 +27,22 @@ const PerioderMedFulltFraværListItem: React.FunctionComponent<Props> = ({
             <div className={bem.element('rangeWrapper')}>
                 <TypedFormComponents.DateIntervalPicker
                     fromDatepickerProps={{
-                        validate: validateRequiredField,
+                        validate: validateDateInRange(GYLDIG_TIDSROM, true),
                         label: 'Fra og med',
                         name: `${SøknadFormField.perioderMedFravær}.${index}.fom` as SøknadFormField,
                         dateLimitations: {
-                            minDato: GYLDIG_TIDSROM.fom,
-                            maksDato: GYLDIG_TIDSROM.tom,
+                            minDato: GYLDIG_TIDSROM.from,
+                            maksDato: GYLDIG_TIDSROM.to,
                             ugyldigeTidsperioder: disabledPerioder || []
                         }
                     }}
                     toDatepickerProps={{
-                        validate: validateRequiredField,
+                        validate: validateDateInRange(GYLDIG_TIDSROM, true),
                         label: 'Til og med',
                         name: `${SøknadFormField.perioderMedFravær}.${index}.tom` as SøknadFormField,
                         dateLimitations: {
-                            minDato: periode?.fom ? periode.fom : GYLDIG_TIDSROM.fom,
-                            maksDato: GYLDIG_TIDSROM.tom,
+                            minDato: periode?.fom ? periode.fom : GYLDIG_TIDSROM.from,
+                            maksDato: GYLDIG_TIDSROM.to,
                             ugyldigeTidsperioder: disabledPerioder || []
                         }
                     }}

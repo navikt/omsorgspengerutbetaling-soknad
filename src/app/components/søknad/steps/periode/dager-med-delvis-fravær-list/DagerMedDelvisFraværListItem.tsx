@@ -1,10 +1,15 @@
 import React from 'react';
 import bemUtils from '@navikt/sif-common-core/lib/utils/bemUtils';
-import { FormikDatepicker, FormikInput } from '@navikt/sif-common-formik';
 import { Knapp } from 'nav-frontend-knapper';
 import { FraværDelerAvDag } from '../../../../../../@types/omsorgspengerutbetaling-schema';
 import { SøknadFormField } from '../../../../../types/SøknadFormData';
-import { GYLDIG_TIDSROM } from '../../../../../validation/constants';
+import {
+    GYLDIG_TIDSROM, MAKS_ANTALL_TIMER_MED_FRAVÆR_EN_DAG, MIN_ANTALL_TIMER_MED_FRAVÆR_EN_DAG
+} from '../../../../../validation/constants';
+import {
+    validateDateInRange, validateDelvisFraværTimer
+} from '../../../../../validation/fieldValidations';
+import TypedFormComponents from '../../../typed-form-components/TypedFormComponents';
 
 interface Props {
     index: number;
@@ -25,23 +30,26 @@ const DagerMedDelvisFraværListItem: React.FunctionComponent<Props> = ({ index, 
     return (
         <div className={bem.classNames(bem.block, bem.modifierConditional('firstRow', index === 0))}>
             <div className={bem.element('dateWrapper')}>
-                <FormikDatepicker
+                <TypedFormComponents.DatePicker
                     label="Dato"
-                    validate={() => null}
-                    name={`${SøknadFormField.dagerMedDelvisFravær}.${index}.dato`}
+                    validate={validateDateInRange(GYLDIG_TIDSROM, true)}
+                    name={`${SøknadFormField.dagerMedDelvisFravær}.${index}.dato` as SøknadFormField}
                     dateLimitations={{
-                        minDato: GYLDIG_TIDSROM.fom,
-                        maksDato: GYLDIG_TIDSROM.tom,
+                        minDato: GYLDIG_TIDSROM.from,
+                        maksDato: GYLDIG_TIDSROM.to,
                         ugyldigeTidsperioder
                     }}
                 />
             </div>
             <div className={bem.element('hoursWrapper')}>
-                <FormikInput
+                <TypedFormComponents.Input
                     inputMode="decimal"
                     label={'Timer'}
-                    name={`${SøknadFormField.dagerMedDelvisFravær}.${index}.timer`}
+                    name={`${SøknadFormField.dagerMedDelvisFravær}.${index}.timer` as SøknadFormField}
                     bredde="XS"
+                    min={MIN_ANTALL_TIMER_MED_FRAVÆR_EN_DAG}
+                    max={MAKS_ANTALL_TIMER_MED_FRAVÆR_EN_DAG}
+                    validate={validateDelvisFraværTimer}
                 />
             </div>
             {onRemove && (
