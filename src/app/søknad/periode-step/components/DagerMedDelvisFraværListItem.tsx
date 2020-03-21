@@ -1,16 +1,14 @@
 import React from 'react';
 import bemUtils from '@navikt/sif-common-core/lib/utils/bemUtils';
+import { prettifyDate } from '@navikt/sif-common-core/lib/utils/dateUtils';
 import { validateRequiredField } from '@navikt/sif-common-core/lib/validation/fieldValidations';
 import { Knapp } from 'nav-frontend-knapper';
 import { FraværDelerAvDag, Periode } from '../../../../@types/omsorgspengerutbetaling-schema';
 import { SøknadFormField } from '../../../types/SøknadFormData';
-import {
-    GYLDIG_TIDSROM, MAKS_ANTALL_TIMER_MED_FRAVÆR_EN_DAG, MIN_ANTALL_TIMER_MED_FRAVÆR_EN_DAG
-} from '../../../validation/constants';
-import {
-    validateAll, validateDateInRange, validateHours
-} from '../../../validation/fieldValidations';
+import { GYLDIG_TIDSROM } from '../../../validation/constants';
+import { validateAll, validateDateInRange } from '../../../validation/fieldValidations';
 import SøknadFormComponents from '../../SøknadFormComponents';
+import FraværTimerSelect from './FraværTimerSelect';
 
 interface Props {
     index: number;
@@ -21,6 +19,25 @@ interface Props {
 }
 
 const bem = bemUtils('dagerMedDelvisFravarListItem');
+
+export const pluralize = (count: number, single: string, other: string) => (count === 1 ? single : other);
+
+const getFjernLabel = (dato?: Date, timer?: number): string => {
+    const timerTekst: string | undefined = timer
+        ? `${timer} ${pluralize(timer === 1 ? 1 : 2, 'time', 'timer')}`
+        : undefined;
+
+    if (dato && timerTekst) {
+        return `Fjern dag med delvis fravær (${prettifyDate(dato)}, ${timerTekst})`;
+    }
+    if (dato) {
+        return `Fjern dag med delvis fravær (${prettifyDate(dato)}, antall timer ikke valgt)`;
+    }
+    if (timerTekst) {
+        return `Fjern dag med delvis fravær (dato ikke valgt, ${timerTekst} valgt)`;
+    }
+    return 'Fjern dag med delvis fravær (dato og antall timer ikke valgt)';
+};
 
 const DagerMedDelvisFraværListItem: React.FunctionComponent<Props> = ({ index, dag, disabledDager, onRemove }) => {
     const ugyldigeTidsperioder = disabledDager
@@ -44,25 +61,16 @@ const DagerMedDelvisFraværListItem: React.FunctionComponent<Props> = ({ index, 
                 />
             </div>
             <div className={bem.element('hoursWrapper')}>
-                <SøknadFormComponents.Input
-                    inputMode="decimal"
-                    label={'Timer'}
-                    name={`${SøknadFormField.dagerMedDelvisFravær}.${index}.timer` as SøknadFormField}
-                    bredde="XS"
-                    min={MIN_ANTALL_TIMER_MED_FRAVÆR_EN_DAG}
-                    max={MAKS_ANTALL_TIMER_MED_FRAVÆR_EN_DAG}
-                    validate={validateAll([
-                        validateRequiredField,
-                        validateHours({
-                            min: MIN_ANTALL_TIMER_MED_FRAVÆR_EN_DAG,
-                            max: MAKS_ANTALL_TIMER_MED_FRAVÆR_EN_DAG
-                        })
-                    ])}
-                />
+                <FraværTimerSelect index={index} />
             </div>
             {onRemove && (
                 <div className={bem.element('deleteButtonWrapper')}>
-                    <Knapp mini={true} htmlType="button" onClick={() => onRemove(index)} form="kompakt">
+                    <Knapp
+                        mini={true}
+                        htmlType="button"
+                        onClick={() => onRemove(index)}
+                        form="kompakt"
+                        aria-label={getFjernLabel(dag.dato, dag.timer)}>
                         Fjern
                     </Knapp>
                 </div>

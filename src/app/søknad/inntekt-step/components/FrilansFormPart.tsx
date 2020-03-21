@@ -2,6 +2,7 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
 import Panel from 'nav-frontend-paneler';
+import { PopoverOrientering } from 'nav-frontend-popover';
 import Box from 'common/components/box/Box';
 import { YesOrNo } from 'common/types/YesOrNo';
 import { dateToday } from 'common/utils/dateUtils';
@@ -26,6 +27,7 @@ const FrilansFormPart: React.FunctionComponent<Props> = ({ formValues }) => {
                 name={SøknadFormField.frilans_harHattInntektSomFrilanser}
                 legend={intlHelper(intl, 'frilanser.harDuHattInntekt.spm')}
                 info={<FrilansEksempeltHtml />}
+                infoPlassering={PopoverOrientering.Under}
                 validate={validateYesOrNoIsAnswered}
             />
             {harHattInntektSomFrilanser && (
