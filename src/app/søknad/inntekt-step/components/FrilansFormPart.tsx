@@ -1,5 +1,6 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
+import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
 import Panel from 'nav-frontend-paneler';
 import Box from 'common/components/box/Box';
 import { YesOrNo } from 'common/types/YesOrNo';
@@ -28,24 +29,26 @@ const FrilansFormPart: React.FunctionComponent<Props> = ({ formValues }) => {
                 validate={validateYesOrNoIsAnswered}
             />
             {harHattInntektSomFrilanser && (
-                <Panel>
-                    <Box>
-                        <SøknadFormComponents.DatePicker
-                            name={SøknadFormField.frilans_startdato}
-                            label={intlHelper(intl, 'frilanser.nårStartet.spm')}
-                            showYearSelector={true}
-                            dateLimitations={{ maksDato: dateToday }}
-                            validate={validateRequiredField}
-                        />
-                    </Box>
-                    <Box margin="xl">
-                        <SøknadFormComponents.YesOrNoQuestion
-                            name={SøknadFormField.frilans_jobberFortsattSomFrilans}
-                            legend={intlHelper(intl, 'frilanser.jobberFortsatt.spm')}
-                            validate={validateYesOrNoIsAnswered}
-                        />
-                    </Box>
-                </Panel>
+                <FormBlock margin="l">
+                    <Panel>
+                        <Box>
+                            <SøknadFormComponents.DatePicker
+                                name={SøknadFormField.frilans_startdato}
+                                label={intlHelper(intl, 'frilanser.nårStartet.spm')}
+                                showYearSelector={true}
+                                dateLimitations={{ maksDato: dateToday }}
+                                validate={validateRequiredField}
+                            />
+                        </Box>
+                        <Box margin="xl">
+                            <SøknadFormComponents.YesOrNoQuestion
+                                name={SøknadFormField.frilans_jobberFortsattSomFrilans}
+                                legend={intlHelper(intl, 'frilanser.jobberFortsatt.spm')}
+                                validate={validateYesOrNoIsAnswered}
+                            />
+                        </Box>
+                    </Panel>
+                </FormBlock>
             )}
         </>
     );

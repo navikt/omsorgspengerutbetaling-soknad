@@ -24,7 +24,7 @@ const PerioderMedFulltFraværListItem: React.FunctionComponent<Props> = ({
     disabledPerioder,
     onRemove
 }) => {
-    const tomDateRange: DateRange = {
+    const tomDateRange: Partial<DateRange> = {
         from: periode?.fom ? periode.fom : GYLDIG_TIDSROM.from,
         to: GYLDIG_TIDSROM.to
     };

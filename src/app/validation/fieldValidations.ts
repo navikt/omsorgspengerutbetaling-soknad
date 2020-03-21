@@ -90,8 +90,17 @@ export const validateUtenlandsoppholdNeste12Mnd = (utenlandsopphold: Utenlandsop
 // PeriodeStep
 // -------------------------------------------------
 
-const datoErInnenforTidsrom = (dato: Date, range: DateRange): boolean => {
-    return moment(dato).isBetween(range.from, range.to, 'days', '[]');
+const datoErInnenforTidsrom = (dato: Date, range: Partial<DateRange>): boolean => {
+    if (range.from && range.to) {
+        return moment(dato).isBetween(range.from, range.to, 'days', '[]');
+    }
+    if (range.from) {
+        return moment(dato).isSameOrAfter(range.from);
+    }
+    if (range.to) {
+        return moment(dato).isSameOrBefore(range.to);
+    }
+    return false;
 };
 
 const isPeriodeMedFomTom = (periode: Periode): boolean => {
@@ -126,7 +135,7 @@ export const validateDagerMedFravær = (alleDager: FraværDelerAvDag[]): FieldVa
     return undefined;
 };
 
-export const validateDateInRange = (tidsrom: DateRange) => (date: any): FieldValidationResult => {
+export const validateDateInRange = (tidsrom: Partial<DateRange>) => (date: any): FieldValidationResult => {
     if (!datoErInnenforTidsrom(date, tidsrom)) {
         return createFieldValidationError(AppFieldValidationErrors.dato_utenfor_gyldig_tidsrom);
     }
