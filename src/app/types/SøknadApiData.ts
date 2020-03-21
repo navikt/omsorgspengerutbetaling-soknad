@@ -44,38 +44,31 @@ export interface Frilans {
 }
 
 export interface VirksomhetApiData {
-    naringstype: Næringstype[];
+    næringstyper: Næringstype[];
     fiskerErPåBladB?: boolean;
     fraOgMed: ApiStringDate;
     tilOgMed?: ApiStringDate | null;
-    erPagaende?: boolean;
-    naringsinntekt?: number;
-    navnPaVirksomheten: string;
+    næringsinntekt?: number;
+    navnPåVirksomheten: string;
     organisasjonsnummer?: string;
     registrertINorge: boolean;
     registrertILand?: string;
-    harBlittYrkesaktivSisteTreFerdigliknendeArene?: boolean;
-    yrkesaktivSisteTreFerdigliknedeArene?: {
+    yrkesaktivSisteTreFerdigliknedeÅrene?: {
         oppstartsdato: ApiStringDate;
     };
-    harVarigEndringAvInntektSiste4Kalenderar?: boolean;
     varigEndring?: {
         dato?: ApiStringDate | null;
         inntektEtterEndring?: number;
         forklaring?: string;
     };
-    harRegnskapsforer: boolean;
-    regnskapsforer?: {
+    regnskapsfører?: {
         navn: string;
         telefon: string;
-        erNarVennFamilie: boolean;
     };
-    harRevisor?: boolean;
     revisor?: {
         navn: string;
         telefon: string;
         kanInnhenteOpplysninger?: boolean;
-        erNarVennFamilie: boolean;
     };
 }
 

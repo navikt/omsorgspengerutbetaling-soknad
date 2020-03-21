@@ -11,8 +11,8 @@ export const mapVirksomhetToVirksomhetApiData = (virksomhet: Virksomhet): Virkso
     const harRegnskapsfører = virksomhet.harRegnskapsfører === YesOrNo.YES;
 
     const data: VirksomhetApiData = {
-        naringstype: [...virksomhet.næringstyper],
-        navnPaVirksomheten: virksomhet.navnPåVirksomheten,
+        næringstyper: [...virksomhet.næringstyper],
+        navnPåVirksomheten: virksomhet.navnPåVirksomheten,
         registrertINorge,
         ...(registrertINorge
             ? {
@@ -23,14 +23,11 @@ export const mapVirksomhetToVirksomhetApiData = (virksomhet: Virksomhet): Virkso
               }),
         fraOgMed: formatDateToApiFormat(virksomhet.fom),
         tilOgMed: virksomhet.erPågående || virksomhet.tom === undefined ? null : formatDateToApiFormat(virksomhet.tom),
-        erPagaende: virksomhet.erPågående,
-        naringsinntekt: virksomhet.næringsinntekt,
-        harRegnskapsforer: harRegnskapsfører
+        næringsinntekt: virksomhet.næringsinntekt
     };
 
     if (virksomhet.hattVarigEndringAvNæringsinntektSiste4Kalenderår) {
         const harHatt = virksomhet.hattVarigEndringAvNæringsinntektSiste4Kalenderår === YesOrNo.YES;
-        data.harVarigEndringAvInntektSiste4Kalenderar = harHatt;
         const {
             varigEndringINæringsinntekt_dato,
             varigEndringINæringsinntekt_forklaring,
@@ -56,30 +53,26 @@ export const mapVirksomhetToVirksomhetApiData = (virksomhet: Virksomhet): Virkso
 
     if (virksomhet.harBlittYrkesaktivILøpetAvDeTreSisteFerdigliknedeÅrene) {
         const harBlittAktiv = virksomhet.harBlittYrkesaktivILøpetAvDeTreSisteFerdigliknedeÅrene === YesOrNo.YES;
-        data.harBlittYrkesaktivSisteTreFerdigliknendeArene = harBlittAktiv;
         if (harBlittAktiv && virksomhet.oppstartsdato) {
-            data.yrkesaktivSisteTreFerdigliknedeArene = {
+            data.yrkesaktivSisteTreFerdigliknedeÅrene = {
                 oppstartsdato: formatDateToApiFormat(virksomhet.oppstartsdato)
             };
         }
     }
 
     if (harRegnskapsfører) {
-        data.regnskapsforer = {
+        data.regnskapsfører = {
             navn: virksomhet.regnskapsfører_navn!,
-            telefon: virksomhet.regnskapsfører_telefon!,
-            erNarVennFamilie: false // TODO: Må legges til i komponenten som spørsmål?
+            telefon: virksomhet.regnskapsfører_telefon!
         };
     }
 
     if (!harRegnskapsfører) {
-        data.harRevisor = virksomhet.harRevisor === YesOrNo.YES;
         if (virksomhet.harRevisor === YesOrNo.YES) {
             data.revisor = {
                 navn: virksomhet.revisor_navn!,
                 telefon: virksomhet.revisor_telefon!,
-                kanInnhenteOpplysninger: virksomhet.kanInnhenteOpplsyningerFraRevisor === YesOrNo.YES,
-                erNarVennFamilie: false // TODO: Må legges til i komponenten som spørsmål?
+                kanInnhenteOpplysninger: virksomhet.kanInnhenteOpplsyningerFraRevisor === YesOrNo.YES
             };
         }
     }
