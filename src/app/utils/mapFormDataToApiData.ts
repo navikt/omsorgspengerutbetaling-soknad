@@ -61,34 +61,32 @@ export const mapFormDataToApiData = (
     }: SøknadFormData,
     intl: IntlShape
 ): SøknadApiData => {
-
     const stegEn: SpørsmålOgSvar[] = [
         {
-            spørsmål: intl.formatMessage({ id: 'step.hva-er-din-situasjon.tre_eller_fler_barn.spm' }),
+            spørsmål: intl.formatMessage({ id: 'step.situasjon.tre_eller_fler_barn.spm' }),
             svar: mapYesOrNoToSvar(tre_eller_fler_barn)
         },
         {
             spørsmål: intl.formatMessage({
-                id: 'step.hva-er-din-situasjon.alene_om_omsorg_for_barn.spm'
+                id: 'step.situasjon.alene_om_omsorg_for_barn.spm'
             }),
             svar: mapYesOrNoToSvar(alene_om_omsorg_for_barn)
         },
         {
             spørsmål: intl.formatMessage({
-                id: 'step.hva-er-din-situasjon.rett_til_mer_enn_ti_dager_totalt.spm'
+                id: 'step.situasjon.rett_til_mer_enn_ti_dager_totalt.spm'
             }),
             svar: mapYesOrNoToSvar(rett_til_mer_enn_ti_dager_totalt)
         },
         {
             spørsmål: intl.formatMessage({
-                id: 'step.hva-er-din-situasjon.den_andre_forelderen_ikke_kan_ta_seg_av_barnet.spm'
+                id: 'step.situasjon.den_andre_forelderen_ikke_kan_ta_seg_av_barnet.spm'
             }),
             svar: mapYesOrNoToSvar(den_andre_forelderen_ikke_kan_ta_seg_av_barnet)
         },
         {
             spørsmål: intl.formatMessage({
-                id:
-                    'step.hva-er-din-situasjon.har_barn_som_har_kronisk_sykdom_eller_funksjonshemming.spm'
+                id: 'step.situasjon.har_barn_som_har_kronisk_sykdom_eller_funksjonshemming.spm'
             }),
             svar: mapYesOrNoToSvar(har_barn_som_har_kronisk_sykdom_eller_funksjonshemming)
         }
@@ -127,7 +125,7 @@ export const mapFormDataToApiData = (
 
     const stegTo: SpørsmålOgSvar[] = [
         {
-            spørsmål: intl.formatMessage({ id: 'step.har-utbetalt-de-første-ti-dagene.ja_nei_spm.legend' }),
+            spørsmål: intl.formatMessage({ id: 'step.egenutbetaling.ja_nei_spm.legend' }),
             svar: mapYesOrNoToSvar(har_utbetalt_ti_dager)
         },
         ...leggTilDisseHvis(har_utbetalt_ti_dager)

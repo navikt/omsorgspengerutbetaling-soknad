@@ -21,13 +21,11 @@ const EgenutbetalingStep = ({ onValidSubmit }: StepConfigProps) => {
             id={StepID.EGENUTBETALING}
             onValidFormSubmit={onValidSubmit}
             showSubmitButton={visibility.areAllQuestionsAnswered()}>
-            <CounsellorPanel>
-                {intlHelper(intl, 'step.har-utbetalt-de-første-ti-dagene.counsellorpanel.content')}
-            </CounsellorPanel>
+            <CounsellorPanel>{intlHelper(intl, 'step.egenutbetaling.counsellorpanel.content')}</CounsellorPanel>
             <FormBlock>
                 <TypedFormComponents.YesOrNoQuestion
                     name={SøknadFormField.har_utbetalt_ti_dager}
-                    legend={intlHelper(intl, 'step.har-utbetalt-de-første-ti-dagene.ja_nei_spm.legend')}
+                    legend={intlHelper(intl, 'step.egenutbetaling.ja_nei_spm.legend')}
                     validate={validateYesOrNoIsAnswered}
                 />
             </FormBlock>

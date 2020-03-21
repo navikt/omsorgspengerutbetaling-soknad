@@ -3,8 +3,8 @@ import { getSøknadRoute } from '../utils/routeUtils';
 import routeConfig from './routeConfig';
 
 export enum StepID {
-    'SITUASJON' = 'hva-er-din-situasjon',
-    'EGENUTBETALING' = 'har-utbetalt-de-første-ti-dagene',
+    'SITUASJON' = 'situasjon',
+    'EGENUTBETALING' = 'egenutbetaling',
     'PERIODE' = 'periode',
     'LEGEERKLÆRING' = 'legeerklaering',
     'INNTEKT' = 'inntekt',
