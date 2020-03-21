@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage, IntlShape, useIntl } from 'react-intl';
 import { useHistory } from 'react-router-dom';
 import Box from '@navikt/sif-common-core/lib/components/box/Box';
 import ContentWithHeader from '@navikt/sif-common-core/lib/components/content-with-header/ContentWithHeader';
@@ -14,17 +14,110 @@ import RouteConfig from '../../config/routeConfig';
 import { StepID } from '../../config/stepConfig';
 import { SøkerdataContext } from '../../context/SøkerdataContext';
 import { Søkerdata } from '../../types/Søkerdata';
-import { SøknadApiData } from '../../types/SøknadApiData';
+import {
+    SøknadApiData,
+    Utbetalingsperiode,
+    UtbetalingsperiodeMedVedlegg,
+    YesNoSpørsmålOgSvar
+} from '../../types/SøknadApiData';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import * as apiUtils from '../../utils/apiUtils';
-import { mapFormDataToApiData } from '../../utils/mapFormDataToApiData';
 import { navigateTo, navigateToLoginPage } from '../../utils/navigationUtils';
 import SøknadFormComponents from '../SøknadFormComponents';
 import FormikStep from '../SøknadStep';
+import { iso8601DurationToTime, timeToString } from 'common/utils/timeUtils';
+import { Time } from 'common/types/Time';
+import { apiStringDateToDate, prettifyDate } from 'common/utils/dateUtils';
+import SummaryList from 'common/components/summary-list/SummaryList';
+import { renderUtenlandsoppholdIPeriodenSummary } from './components/renderUtenlandsoppholdSummary';
+import FrilansSummary from './components/FrilansSummary';
+import { mapFormDataToApiData } from '../../utils/mapFormDataToApiData';
 
 interface Props {
     onApplicationSent: (apiValues: SøknadApiData, søkerdata: Søkerdata) => void;
 }
+
+const spørsmålOgSvarView = (yesNoSpørsmålOgSvar: YesNoSpørsmålOgSvar[]) => (
+    <Box margin={'xl'}>
+        <ContentWithHeader header={'Spørsmål og svar'}>
+            <div>
+                {yesNoSpørsmålOgSvar.map((sporsmål: YesNoSpørsmålOgSvar, index: number) => {
+                    return (
+                        <Box margin={'s'} key={`spørsmålOgSvarView${index}`}>
+                            <span>{sporsmål.spørsmål}:</span>
+                            <b> {sporsmål.svar}</b>
+                        </Box>
+                    );
+                })}
+            </div>
+        </ContentWithHeader>
+    </Box>
+);
+
+const partialTimeIsTime = (partialTime: Partial<Time>): partialTime is Time => {
+    return true;
+};
+
+const utbetalingsperioderView = (utbetalingsperioder: Utbetalingsperiode[], intl: IntlShape) => {
+    return (
+        <Box margin={'xl'}>
+            <ContentWithHeader header={'Perioder som det søkes om utbetaling for'}>
+                <div>
+                    {utbetalingsperioder.length === 0 && <div>Ingen perioder oppgitt.</div> // TODO: Det skal ikke være mulig å komme til oppsummeringen uten å ha spesifisert noen utbetalingsperioder.
+                    }
+                    {utbetalingsperioder.map((utbetalingsperiode: UtbetalingsperiodeMedVedlegg, index: number) => {
+                        const duration = utbetalingsperiode.lengde;
+
+                        const maybeTime: Partial<Time> | undefined = duration
+                            ? iso8601DurationToTime(duration)
+                            : undefined;
+
+                        return (
+                            <Box margin={'s'} key={`utbetalingsperioderView${index}`}>
+                                {maybeTime && partialTimeIsTime(maybeTime) ? (
+                                    <>
+                                        Dato: {prettifyDate(apiStringDateToDate(utbetalingsperiode.fraOgMed))}. Antall
+                                        timer: {timeToString(maybeTime, intl)}.
+                                    </>
+                                ) : (
+                                    <>
+                                        Fra og med {prettifyDate(apiStringDateToDate(utbetalingsperiode.fraOgMed))}, til
+                                        og med {prettifyDate(apiStringDateToDate(utbetalingsperiode.tilOgMed))}.
+                                    </>
+                                )}
+                            </Box>
+                        );
+                    })}
+                </div>
+            </ContentWithHeader>
+        </Box>
+    );
+};
+
+const utenlandsopphold = (intl: IntlShape, apiValues: SøknadApiData) => (
+    <Box margin="l">
+        <ContentWithHeader header={intlHelper(intl, 'steg.oppsummering.utenlandsoppholdIPerioden.listetittel')}>
+            <SummaryList items={apiValues.opphold} itemRenderer={renderUtenlandsoppholdIPeriodenSummary} />
+        </ContentWithHeader>
+    </Box>
+);
+
+const navnOgFødselsenummer = (
+    intl: IntlShape,
+    fornavn: string,
+    etternavn: string,
+    mellomnavn: string,
+    fødselsnummer: string
+) => (
+    <Box margin={'xl'}>
+        <ContentWithHeader header={intlHelper(intl, 'steg.oppsummering.søker.header')}>
+            <Normaltekst>{formatName(fornavn, etternavn, mellomnavn)}</Normaltekst>
+            <Normaltekst>
+                <FormattedMessage id="steg.oppsummering.søker.fnr" values={{ fødselsnummer }} />
+            </Normaltekst>
+        </ContentWithHeader>
+    </Box>
+);
 
 const OppsummeringStep: React.StatelessComponent<Props> = ({ onApplicationSent }) => {
     const intl = useIntl();
@@ -55,7 +148,9 @@ const OppsummeringStep: React.StatelessComponent<Props> = ({ onApplicationSent }
     const {
         person: { fornavn, mellomnavn, etternavn, fødselsnummer }
     } = søkerdata;
+
     const apiValues: SøknadApiData = mapFormDataToApiData(values, intl);
+    // const apiValues: SøknadApiData = mock1;
 
     return (
         <FormikStep
@@ -73,12 +168,15 @@ const OppsummeringStep: React.StatelessComponent<Props> = ({ onApplicationSent }
             </CounsellorPanel>
             <Box margin="xl">
                 <Panel border={true}>
-                    <ContentWithHeader header={intlHelper(intl, 'steg.oppsummering.søker.header')}>
-                        <Normaltekst>{formatName(fornavn, etternavn, mellomnavn)}</Normaltekst>
-                        <Normaltekst>
-                            <FormattedMessage id="steg.oppsummering.søker.fnr" values={{ fødselsnummer }} />
-                        </Normaltekst>
-                    </ContentWithHeader>
+                    {navnOgFødselsenummer(intl, fornavn, etternavn, mellomnavn, fødselsnummer)}
+
+                    {spørsmålOgSvarView(apiValues.spørsmål)}
+
+                    {utbetalingsperioderView(apiValues.utbetalingsperioder, intl)}
+
+                    {utenlandsopphold(intl, apiValues)}
+
+                    <FrilansSummary apiValues={apiValues} />
                 </Panel>
             </Box>
 
