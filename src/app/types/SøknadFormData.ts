@@ -122,13 +122,8 @@ export const initialValues: SøknadFormData = {
     // STEG 3: Periode
     [SøknadFormField.harPerioderMedFravær]: YesOrNo.UNANSWERED,
     [SøknadFormField.perioderMedFravær]: [],
-    [SøknadFormField.harDagerMedDelvisFravær]: YesOrNo.YES,
-    [SøknadFormField.dagerMedDelvisFravær]: [
-        {
-            dato: new Date(),
-            timer: 4
-        }
-    ],
+    [SøknadFormField.harDagerMedDelvisFravær]: YesOrNo.UNANSWERED,
+    [SøknadFormField.dagerMedDelvisFravær]: [],
     [SøknadFormField.perioder_harVærtIUtlandet]: YesOrNo.UNANSWERED,
     [SøknadFormField.perioder_utenlandsopphold]: [],
 
