@@ -1,5 +1,6 @@
 import React from 'react';
 import bemUtils from '@navikt/sif-common-core/lib/utils/bemUtils';
+import { validateRequiredField } from '@navikt/sif-common-core/lib/validation/fieldValidations';
 import { Knapp } from 'nav-frontend-knapper';
 import { FraværDelerAvDag, Periode } from '../../../../@types/omsorgspengerutbetaling-schema';
 import { SøknadFormField } from '../../../types/SøknadFormData';
@@ -7,7 +8,7 @@ import {
     GYLDIG_TIDSROM, MAKS_ANTALL_TIMER_MED_FRAVÆR_EN_DAG, MIN_ANTALL_TIMER_MED_FRAVÆR_EN_DAG
 } from '../../../validation/constants';
 import {
-    validateDateInRange, validateDelvisFraværTimer
+    validateAll, validateDateInRange, validateHours
 } from '../../../validation/fieldValidations';
 import SøknadFormComponents from '../../SøknadFormComponents';
 
@@ -33,7 +34,7 @@ const DagerMedDelvisFraværListItem: React.FunctionComponent<Props> = ({ index, 
             <div className={bem.element('dateWrapper')}>
                 <SøknadFormComponents.DatePicker
                     label="Dato"
-                    validate={validateDateInRange(GYLDIG_TIDSROM, true)}
+                    validate={validateAll([validateRequiredField, validateDateInRange(GYLDIG_TIDSROM)])}
                     name={`${SøknadFormField.dagerMedDelvisFravær}.${index}.dato` as SøknadFormField}
                     dateLimitations={{
                         minDato: GYLDIG_TIDSROM.from,
@@ -50,7 +51,13 @@ const DagerMedDelvisFraværListItem: React.FunctionComponent<Props> = ({ index, 
                     bredde="XS"
                     min={MIN_ANTALL_TIMER_MED_FRAVÆR_EN_DAG}
                     max={MAKS_ANTALL_TIMER_MED_FRAVÆR_EN_DAG}
-                    validate={validateDelvisFraværTimer}
+                    validate={validateAll([
+                        validateRequiredField,
+                        validateHours({
+                            min: MIN_ANTALL_TIMER_MED_FRAVÆR_EN_DAG,
+                            max: MAKS_ANTALL_TIMER_MED_FRAVÆR_EN_DAG
+                        })
+                    ])}
                 />
             </div>
             {onRemove && (

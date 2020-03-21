@@ -7,9 +7,6 @@ import {
 import { createFieldValidationError } from 'common/validation/fieldValidations';
 import { FieldValidationResult } from 'common/validation/types';
 import { FraværDelerAvDag, Periode } from '../../@types/omsorgspengerutbetaling-schema';
-import {
-    GYLDIG_TIDSROM, MAKS_ANTALL_TIMER_MED_FRAVÆR_EN_DAG, MIN_ANTALL_TIMER_MED_FRAVÆR_EN_DAG
-} from './constants';
 import { datesCollide } from './dateValidationUtils';
 
 export const hasValue = (v: any) => v !== '' && v !== undefined && v !== null;
@@ -34,8 +31,6 @@ export enum AppFieldValidationErrors {
     'dato_utenfor_gyldig_tidsrom' = 'fieldvalidation.dato_utenfor_gyldig_tidsrom'
 }
 
-const fieldIsRequiredError = () => createFieldValidationError(AppFieldValidationErrors.påkrevd);
-
 export const createAppFieldValidationError = (
     error: AppFieldValidationErrors | AppFieldValidationErrors,
     values?: any
@@ -43,14 +38,17 @@ export const createAppFieldValidationError = (
     return createFieldValidationError<AppFieldValidationErrors | AppFieldValidationErrors>(error, values);
 };
 
-export const validateAll = (validations: FormikValidateFunction[]) => (value: any): FieldValidationResult => {
+export const validateAll: FieldValidationArray = (validations: FormikValidateFunction[]) => (
+    value: any
+): FieldValidationResult => {
     let result: FieldValidationResult;
     validations.some((validate) => {
         const r = validate(value);
         if (r) {
             result = r;
+            return true;
         }
-        return true;
+        return false;
     });
     return result;
 };
@@ -92,8 +90,16 @@ export const validateUtenlandsoppholdNeste12Mnd = (utenlandsopphold: Utenlandsop
 // PeriodeStep
 // -------------------------------------------------
 
+const datoErInnenforTidsrom = (dato: Date, range: DateRange): boolean => {
+    return moment(dato).isBetween(range.from, range.to, 'days', '[]');
+};
+
 const isPeriodeMedFomTom = (periode: Periode): boolean => {
     return periode.fom !== undefined && periode.tom !== undefined;
+};
+
+export const harLikeDager = (dager: FraværDelerAvDag[]): boolean => {
+    return datesCollide(dager.map((d) => d.dato));
 };
 
 export const validatePerioderMedFravær = (allePerioder: Periode[]): FieldValidationResult => {
@@ -105,18 +111,7 @@ export const validatePerioderMedFravær = (allePerioder: Periode[]): FieldValida
     if (dateRangesCollide(dateRanges)) {
         return createFieldValidationError(AppFieldValidationErrors.fraværsperioder_overlapper);
     }
-    if (dateRangesExceedsRange(dateRanges, { from: GYLDIG_TIDSROM.from, to: GYLDIG_TIDSROM.to })) {
-        return createFieldValidationError(AppFieldValidationErrors.fraværsperioder_utenfor_periode);
-    }
     return undefined;
-};
-
-export const harLikeDager = (dager: FraværDelerAvDag[]): boolean => {
-    return datesCollide(dager.map((d) => d.dato));
-};
-
-const datoErInnenforTidsrom = (dato: Date, range: DateRange): boolean => {
-    return moment(dato).isBetween(range.from, range.to, 'days', '[]');
 };
 
 export const validateDagerMedFravær = (alleDager: FraværDelerAvDag[]): FieldValidationResult => {
@@ -131,25 +126,19 @@ export const validateDagerMedFravær = (alleDager: FraværDelerAvDag[]): FieldVa
     return undefined;
 };
 
-export const validateDateInRange = (tidsrom: DateRange, isRequired?: boolean) => (date: any): FieldValidationResult => {
-    if (isRequired && !hasValue(date)) {
-        return fieldIsRequiredError();
-    }
+export const validateDateInRange = (tidsrom: DateRange) => (date: any): FieldValidationResult => {
     if (!datoErInnenforTidsrom(date, tidsrom)) {
         return createFieldValidationError(AppFieldValidationErrors.dato_utenfor_gyldig_tidsrom);
     }
     return undefined;
 };
 
-export const validateDelvisFraværTimer = (timer: any): FieldValidationResult => {
-    if (!hasValue(timer)) {
-        return fieldIsRequiredError();
-    }
-    const num = parseFloat(timer);
+export const validateHours = ({ min, max }: { min?: number; max?: number }) => (value: any): FieldValidationResult => {
+    const num = parseFloat(value);
     if (isNaN(num)) {
         return createFieldValidationError(AppFieldValidationErrors.timer_ikke_tall);
     }
-    if (num < MIN_ANTALL_TIMER_MED_FRAVÆR_EN_DAG || num > MAKS_ANTALL_TIMER_MED_FRAVÆR_EN_DAG) {
+    if ((min !== undefined && num < min) || (max !== undefined && value > max)) {
         return createFieldValidationError(AppFieldValidationErrors.timer_for_mange_timer);
     }
     return undefined;

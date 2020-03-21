@@ -1,11 +1,12 @@
 import React from 'react';
 import bemUtils from '@navikt/sif-common-core/lib/utils/bemUtils';
 import { DateRange } from '@navikt/sif-common-core/lib/utils/dateUtils';
+import { validateRequiredField } from '@navikt/sif-common-core/lib/validation/fieldValidations';
 import { Knapp } from 'nav-frontend-knapper';
 import { Periode } from '../../../../@types/omsorgspengerutbetaling-schema';
 import { SøknadFormField } from '../../../types/SøknadFormData';
 import { GYLDIG_TIDSROM } from '../../../validation/constants';
-import { validateDateInRange } from '../../../validation/fieldValidations';
+import { validateAll, validateDateInRange } from '../../../validation/fieldValidations';
 import SøknadFormComponents from '../../SøknadFormComponents';
 
 interface Props {
@@ -32,8 +33,8 @@ const PerioderMedFulltFraværListItem: React.FunctionComponent<Props> = ({
             <div className={bem.element('rangeWrapper')}>
                 <SøknadFormComponents.DateIntervalPicker
                     fromDatepickerProps={{
-                        validate: validateDateInRange(GYLDIG_TIDSROM, true),
                         label: 'Fra og med',
+                        validate: validateAll([validateRequiredField, validateDateInRange(GYLDIG_TIDSROM)]),
                         name: `${SøknadFormField.perioderMedFravær}.${index}.fom` as SøknadFormField,
                         dateLimitations: {
                             minDato: GYLDIG_TIDSROM.from,
@@ -42,7 +43,7 @@ const PerioderMedFulltFraværListItem: React.FunctionComponent<Props> = ({
                         }
                     }}
                     toDatepickerProps={{
-                        validate: validateDateInRange(tomDateRange, true),
+                        validate: validateAll([validateRequiredField, validateDateInRange(tomDateRange)]),
                         label: 'Til og med',
                         name: `${SøknadFormField.perioderMedFravær}.${index}.tom` as SøknadFormField,
                         dateLimitations: {

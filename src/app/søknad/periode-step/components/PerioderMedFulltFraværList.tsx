@@ -14,12 +14,10 @@ interface Props {
 }
 
 const PeriodeMedFulltFraværList: React.FunctionComponent<Props> = ({ perioderMedFravær, onCreateNew, onRemove }) => {
-    // const tomListe = perioderMedFravær.length === 0;
     return (
         <>
             <SøknadFormComponents.InputGroup
                 className="periodelistGroup"
-                // legend={tomListe ? undefined : 'Perioder med fullt fravær'}
                 name={SøknadFormField.perioderMedFraværGroup}
                 validate={() => validatePerioderMedFravær(perioderMedFravær)}>
                 {perioderMedFravær.map((periode, index) => (
