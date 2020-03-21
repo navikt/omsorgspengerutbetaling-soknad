@@ -6,7 +6,7 @@ import { formatDateToApiFormat } from 'common/utils/dateUtils';
 import { decimalTimeToTime, timeToIso8601Duration } from 'common/utils/timeUtils';
 import { FraværDelerAvDag, Periode } from '../../@types/omsorgspengerutbetaling-schema';
 import {
-    SøknadApiData, UtbetalingsperiodeMedVedlegg, UtenlandsoppholdApiData, VirksomhetApiData,
+    SøknadApiData, Utbetalingsperiode, UtenlandsoppholdApiData, VirksomhetApiData,
     YesNoSpørsmålOgSvar, YesNoSvar
 } from '../types/SøknadApiData';
 import { SøknadFormData } from '../types/SøknadFormData';
@@ -41,14 +41,7 @@ export const mapFormDataToApiData = (
         perioder_harVærtIUtlandet,
         perioder_utenlandsopphold,
 
-        // STEG 4: Conditional perioder i utlandet
-        hvis_utenlandsopphold_en_test_verdi,
-
-        // STEG 5: Legeerklæring
-        legeerklæring,
-
         // STEG 6: Inntekt
-        frilans_harHattInntektSomFrilanser,
         frilans_startdato,
         frilans_jobberFortsattSomFrilans,
         selvstendig_harHattInntektSomSN,
@@ -164,30 +157,28 @@ export const mapFormDataToApiData = (
 export const mapPeriodeTilUtbetalingsperiode = (
     perioderMedFravær: Periode[],
     dagerMedDelvisFravær: FraværDelerAvDag[]
-): UtbetalingsperiodeMedVedlegg[] => {
-    const periodeMappedTilUtbetalingsperiodeMedVedlegg: UtbetalingsperiodeMedVedlegg[] = perioderMedFravær.map(
-        (periode: Periode) => {
+): Utbetalingsperiode[] => {
+    const periodeMappedTilUtbetalingsperiode: Utbetalingsperiode[] = perioderMedFravær.map(
+        (periode: Periode): Utbetalingsperiode => {
             return {
                 fraOgMed: formatDateToApiFormat(periode.fom),
-                tilOgMed: formatDateToApiFormat(periode.tom),
-                legeerklæringer: [] as string[] // TODO: Legge til vedlegg adresse
+                tilOgMed: formatDateToApiFormat(periode.tom)
             };
         }
     );
 
-    const fraværDeleravDagMappedTilUtbetalingsperiodeMedVedlegg: UtbetalingsperiodeMedVedlegg[] = dagerMedDelvisFravær.map(
-        (fravær: FraværDelerAvDag) => {
+    const fraværDeleravDagMappedTilUtbetalingsperiode: Utbetalingsperiode[] = dagerMedDelvisFravær.map(
+        (fravær: FraværDelerAvDag): Utbetalingsperiode => {
             const duration: string = timeToIso8601Duration(decimalTimeToTime(fravær.timer));
             return {
                 fraOgMed: formatDateToApiFormat(fravær.dato),
                 tilOgMed: formatDateToApiFormat(fravær.dato),
-                lengde: duration,
-                legeerklæringer: [] // TODO: legge til vedlegg adresse
+                lengde: duration
             };
         }
     );
 
-    return [...periodeMappedTilUtbetalingsperiodeMedVedlegg, ...fraværDeleravDagMappedTilUtbetalingsperiodeMedVedlegg];
+    return [...periodeMappedTilUtbetalingsperiode, ...fraværDeleravDagMappedTilUtbetalingsperiode];
 };
 
 export const mapYesOrNoToSvar = (input: YesOrNo): YesNoSvar => {
