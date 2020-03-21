@@ -37,8 +37,8 @@ export const mapFormDataToApiData = (
         // STEG 3: Periode
         perioderMedFravær,
         dagerMedDelvisFravær,
-        periode_har_vært_i_utlandet,
-        periode_utenlandsopphold,
+        perioder_harVærtIUtlandet,
+        perioder_utenlandsopphold,
 
         // STEG 4: Conditional perioder i utlandet
         hvis_utenlandsopphold_en_test_verdi,
@@ -146,7 +146,7 @@ export const mapFormDataToApiData = (
             utenlandsoppholdNeste12Mnd,
             intl.locale
         ), // medlemskap siden
-        opphold: settInnOpphold(periode_har_vært_i_utlandet, periode_utenlandsopphold, intl.locale), // periode siden, har du oppholdt
+        opphold: settInnOpphold(perioder_harVærtIUtlandet, perioder_utenlandsopphold, intl.locale), // periode siden, har du oppholdt
         frilans: mapFrilansToApiData(frilans_jobberFortsattSomFrilans, frilans_startdato),
         selvstendigVirksomheter: settInnVirksomheter(selvstendig_harHattInntektSomSN, selvstendig_virksomheter)
     };

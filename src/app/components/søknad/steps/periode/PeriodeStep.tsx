@@ -26,7 +26,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
         dagerMedDelvisFravær,
         harPerioderMedFravær,
         harDagerMedDelvisFravær,
-        periode_har_vært_i_utlandet
+        perioder_harVærtIUtlandet
     } = values;
     const intl = useIntl();
 
@@ -123,7 +123,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                 <>
                     <FormBlock margin={'xl'}>
                         <TypedFormComponents.YesOrNoQuestion
-                            name={SøknadFormField.periode_har_vært_i_utlandet}
+                            name={SøknadFormField.perioder_harVærtIUtlandet}
                             legend={intlHelper(
                                 intl,
                                 'step.periode.har_dy_oppholdt_deg_i_utlandet_for_dager_du_soker_ok.spm'
@@ -131,10 +131,10 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                             validate={validateYesOrNoIsAnswered}
                         />
                     </FormBlock>
-                    {periode_har_vært_i_utlandet === YesOrNo.YES && (
+                    {perioder_harVærtIUtlandet === YesOrNo.YES && (
                         <FormBlock margin="l">
                             <BostedUtlandListAndDialog<SøknadFormField>
-                                name={SøknadFormField.periode_utenlandsopphold}
+                                name={SøknadFormField.perioder_utenlandsopphold}
                                 minDate={date1YearAgo}
                                 maxDate={dateToday}
                                 labels={{
