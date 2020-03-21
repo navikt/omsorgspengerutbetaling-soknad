@@ -9,14 +9,17 @@ const HarUtbetaltFørsteTiDagerConfig: QuestionConfig<SøknadFormData, SøknadFo
     [Q.har_utbetalt_ti_dager]: {
         isAnswered: ({ har_utbetalt_ti_dager }) => yesOrNoIsAnswered(har_utbetalt_ti_dager)
     },
-    [Q.innvilget_rett_og_ingen_andre_barn_under_tolv]: {
+    [Q.innvilget_utvidet_rett]: {
         parentQuestion: Q.har_utbetalt_ti_dager,
         isIncluded: ({ har_utbetalt_ti_dager }) => har_utbetalt_ti_dager === YesOrNo.NO,
-        isAnswered: ({ innvilget_rett_og_ingen_andre_barn_under_tolv }) =>
-            yesOrNoIsAnswered(innvilget_rett_og_ingen_andre_barn_under_tolv)
+        isAnswered: ({ innvilget_utvidet_rett }) => yesOrNoIsAnswered(innvilget_utvidet_rett)
+    },
+    [Q.ingen_andre_barn_under_tolv]: {
+        parentQuestion: Q.innvilget_utvidet_rett,
+        isAnswered: ({ ingen_andre_barn_under_tolv }) => yesOrNoIsAnswered(ingen_andre_barn_under_tolv)
     },
     [Q.fisker_på_blad_B]: {
-        parentQuestion: Q.innvilget_rett_og_ingen_andre_barn_under_tolv,
+        parentQuestion: Q.ingen_andre_barn_under_tolv,
         isAnswered: ({ fisker_på_blad_B }) => yesOrNoIsAnswered(fisker_på_blad_B)
     },
     [Q.frivillig_forsikring]: {

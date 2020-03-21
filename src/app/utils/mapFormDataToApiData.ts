@@ -29,7 +29,8 @@ export const mapFormDataToApiData = (
 
         // STEG 2: Har betalt ut 10 første dager
         har_utbetalt_ti_dager,
-        innvilget_rett_og_ingen_andre_barn_under_tolv,
+        innvilget_utvidet_rett,
+        ingen_andre_barn_under_tolv,
         fisker_på_blad_B,
         frivillig_forsikring,
         nettop_startet_selvstendig_frilanser,
@@ -97,9 +98,15 @@ export const mapFormDataToApiData = (
             ? [
                   {
                       spørsmål: intl.formatMessage({
-                          id: 'step.har_utbetalt_de_første_ti_dagene.innvilget_rett_og_ingen_andre_barn_under_tolv.spm'
+                          id: 'step.har_utbetalt_de_første_ti_dagene.innvilget_utvidet_rett.spm'
                       }),
-                      svar: mapYesOrNoToSvar(innvilget_rett_og_ingen_andre_barn_under_tolv)
+                      svar: mapYesOrNoToSvar(innvilget_utvidet_rett)
+                  },
+                  {
+                      spørsmål: intl.formatMessage({
+                          id: 'step.har_utbetalt_de_første_ti_dagene.ingen_andre_barn_under_tolv.spm'
+                      }),
+                      svar: mapYesOrNoToSvar(ingen_andre_barn_under_tolv)
                   },
                   {
                       spørsmål: intl.formatMessage({

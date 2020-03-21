@@ -16,7 +16,8 @@ export const situasjonStepIsValid = ({
 
 export const harUtbetaltDeFørsteTiDagenePageIsValid = ({
     har_utbetalt_ti_dager,
-    innvilget_rett_og_ingen_andre_barn_under_tolv,
+    innvilget_utvidet_rett,
+    ingen_andre_barn_under_tolv,
     fisker_på_blad_B,
     frivillig_forsikring,
     nettop_startet_selvstendig_frilanser

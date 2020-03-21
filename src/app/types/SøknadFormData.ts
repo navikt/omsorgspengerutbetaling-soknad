@@ -17,7 +17,8 @@ export enum SøknadFormField {
 
     // STEG 2: Har betalt ut 10 første dager
     har_utbetalt_ti_dager = 'har_utbetalt_ti_dager',
-    innvilget_rett_og_ingen_andre_barn_under_tolv = 'innvilget_rett_og_ingen_andre_barn_under_tolv',
+    innvilget_utvidet_rett = 'innvilget_utvidet_rett',
+    ingen_andre_barn_under_tolv = 'ingen_andre_barn_under_tolv',
     fisker_på_blad_B = 'fisker_på_blad_B',
     frivillig_forsikring = 'frivillig_forsikring',
     nettop_startet_selvstendig_frilanser = 'nettop_startet_selvstendig_frilanser',
@@ -65,7 +66,8 @@ export interface SøknadFormData {
 
     // STEG 2: Har betalt ut 10 første dager
     [SøknadFormField.har_utbetalt_ti_dager]: YesOrNo;
-    [SøknadFormField.innvilget_rett_og_ingen_andre_barn_under_tolv]: YesOrNo;
+    [SøknadFormField.innvilget_utvidet_rett]: YesOrNo;
+    [SøknadFormField.ingen_andre_barn_under_tolv]: YesOrNo;
     [SøknadFormField.fisker_på_blad_B]: YesOrNo;
     [SøknadFormField.frivillig_forsikring]: YesOrNo;
     [SøknadFormField.nettop_startet_selvstendig_frilanser]: YesOrNo;
@@ -114,7 +116,8 @@ export const initialValues: SøknadFormData = {
 
     // STEG 2: Har betalt ut 10 første dager
     [SøknadFormField.har_utbetalt_ti_dager]: YesOrNo.UNANSWERED,
-    [SøknadFormField.innvilget_rett_og_ingen_andre_barn_under_tolv]: YesOrNo.UNANSWERED,
+    [SøknadFormField.innvilget_utvidet_rett]: YesOrNo.UNANSWERED,
+    [SøknadFormField.ingen_andre_barn_under_tolv]: YesOrNo.UNANSWERED,
     [SøknadFormField.fisker_på_blad_B]: YesOrNo.UNANSWERED,
     [SøknadFormField.frivillig_forsikring]: YesOrNo.UNANSWERED,
     [SøknadFormField.nettop_startet_selvstendig_frilanser]: YesOrNo.UNANSWERED,
