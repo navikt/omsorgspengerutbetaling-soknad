@@ -1,10 +1,10 @@
 import React from 'react';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
 import { Knapp } from 'nav-frontend-knapper';
-import { FraværDelerAvDag } from '../../../../../../@types/omsorgspengerutbetaling-schema';
-import { SøknadFormField } from '../../../../../types/SøknadFormData';
-import { validateDagerMedFravær } from '../../../../../validation/fieldValidations';
-import TypedFormComponents from '../../../typed-form-components/TypedFormComponents';
+import { FraværDelerAvDag } from '../../../../../../../@types/omsorgspengerutbetaling-schema';
+import { SøknadFormField } from '../../../../../../types/SøknadFormData';
+import { validateDagerMedFravær } from '../../../../../../validation/fieldValidations';
+import TypedFormComponents from '../../../../typed-form-components/TypedFormComponents';
 import DagerMedDelvisFraværListItem from './DagerMedDelvisFraværListItem';
 
 interface Props {
@@ -14,12 +14,10 @@ interface Props {
 }
 
 const DagerMedDelvisFraværList: React.FunctionComponent<Props> = ({ dagerMedDelvisFravær, onRemove, onCreateNew }) => {
-    // const tomListe = dagerMedDelvisFravær.length === 0;
     return (
         <>
             <TypedFormComponents.InputGroup
                 className={'periodelistGroup'}
-                // legend={tomListe ? undefined : 'Dager med delvis fravær'}
                 name={SøknadFormField.dagerMedDelvisFraværGroup}
                 validate={() => validateDagerMedFravær(dagerMedDelvisFravær)}>
                 {dagerMedDelvisFravær.map((dag, index) => (

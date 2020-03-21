@@ -4,12 +4,12 @@ import routeConfig from './routeConfig';
 
 export enum StepID {
     'SITUASJON' = 'hva-er-din-situasjon',
-    'HAR_UTBETALT_DE_FØRST_TI_DAGENE' = 'har-utbetalt-de-første-ti-dagene',
+    'EGENUTBETALING' = 'har-utbetalt-de-første-ti-dagene',
     'PERIODE' = 'periode',
     'LEGEERKLÆRING' = 'legeerklaering',
     'INNTEKT' = 'inntekt',
     'MEDLEMSKAP' = 'medlemskap',
-    'SUMMARY' = 'oppsummering'
+    'OPPSUMMERING' = 'oppsummering'
 }
 
 export interface StepConfigItemTexts {
@@ -47,11 +47,11 @@ export const getStepConfig = (formData?: SøknadFormData): StepConfigInterface =
         [StepID.SITUASJON]: {
             ...getStepConfigItemTextKeys(StepID.SITUASJON),
             index: idx++,
-            nextStep: StepID.HAR_UTBETALT_DE_FØRST_TI_DAGENE,
+            nextStep: StepID.EGENUTBETALING,
             backLinkHref: routeConfig.WELCOMING_PAGE_ROUTE
         },
-        [StepID.HAR_UTBETALT_DE_FØRST_TI_DAGENE]: {
-            ...getStepConfigItemTextKeys(StepID.HAR_UTBETALT_DE_FØRST_TI_DAGENE),
+        [StepID.EGENUTBETALING]: {
+            ...getStepConfigItemTextKeys(StepID.EGENUTBETALING),
             index: idx++,
             nextStep: StepID.PERIODE,
             backLinkHref: getSøknadRoute(StepID.SITUASJON)
@@ -60,7 +60,7 @@ export const getStepConfig = (formData?: SøknadFormData): StepConfigInterface =
             ...getStepConfigItemTextKeys(StepID.PERIODE),
             index: idx++,
             nextStep: StepID.INNTEKT,
-            backLinkHref: getSøknadRoute(StepID.HAR_UTBETALT_DE_FØRST_TI_DAGENE)
+            backLinkHref: getSøknadRoute(StepID.EGENUTBETALING)
         },
         // [StepID.LEGEERKLÆRING]: {
         //     ...getStepConfigItemTextKeys(StepID.LEGEERKLÆRING),
@@ -77,11 +77,11 @@ export const getStepConfig = (formData?: SøknadFormData): StepConfigInterface =
         [StepID.MEDLEMSKAP]: {
             ...getStepConfigItemTextKeys(StepID.MEDLEMSKAP),
             index: idx++,
-            nextStep: StepID.SUMMARY,
+            nextStep: StepID.OPPSUMMERING,
             backLinkHref: getSøknadRoute(StepID.INNTEKT)
         },
-        [StepID.SUMMARY]: {
-            ...getStepConfigItemTextKeys(StepID.SUMMARY),
+        [StepID.OPPSUMMERING]: {
+            ...getStepConfigItemTextKeys(StepID.OPPSUMMERING),
             index: idx++,
             backLinkHref: getSøknadRoute(StepID.MEDLEMSKAP),
             nextButtonLabel: 'step.sendButtonLabel',

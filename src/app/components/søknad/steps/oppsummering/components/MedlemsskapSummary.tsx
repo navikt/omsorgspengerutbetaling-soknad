@@ -4,8 +4,8 @@ import Box from '@navikt/sif-common-core/lib/components/box/Box';
 import ContentWithHeader from '@navikt/sif-common-core/lib/components/content-with-header/ContentWithHeader';
 import SummaryList from '@navikt/sif-common-core/lib/components/summary-list/SummaryList';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
-import { MedlemskapApiData } from '../../../../types/SøknadApiData';
-import { renderUtenlandsoppholdSummary } from './summary-renderers/renderUtenlandsoppholdSummary';
+import { MedlemskapApiData } from '../../../../../types/SøknadApiData';
+import { renderUtenlandsoppholdSummary } from './renderUtenlandsoppholdSummary';
 
 interface Props {
     medlemskap: MedlemskapApiData;

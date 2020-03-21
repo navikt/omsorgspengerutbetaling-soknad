@@ -21,13 +21,12 @@ import { mapFormDataToApiData } from '../../../../utils/mapFormDataToApiData';
 import { navigateTo, navigateToLoginPage } from '../../../../utils/navigationUtils';
 import FormikStep from '../../formik-step/FormikStep';
 import TypedFormComponents from '../../typed-form-components/TypedFormComponents';
-import './summary.less';
 
 interface Props {
     onApplicationSent: (apiValues: SøknadApiData, søkerdata: Søkerdata) => void;
 }
 
-const SummaryStep: React.StatelessComponent<Props> = ({ onApplicationSent }) => {
+const OppsummeringStep: React.StatelessComponent<Props> = ({ onApplicationSent }) => {
     const intl = useIntl();
     const { values } = useFormikContext<SøknadFormData>();
     const søkerdata = React.useContext(SøkerdataContext);
@@ -60,7 +59,7 @@ const SummaryStep: React.StatelessComponent<Props> = ({ onApplicationSent }) => 
 
     return (
         <FormikStep
-            id={StepID.SUMMARY}
+            id={StepID.OPPSUMMERING}
             onValidFormSubmit={() => {
                 setTimeout(() => {
                     navigate(apiValues, søkerdata); // La view oppdatere seg først
@@ -102,4 +101,4 @@ const SummaryStep: React.StatelessComponent<Props> = ({ onApplicationSent }) => 
     );
 };
 
-export default SummaryStep;
+export default OppsummeringStep;

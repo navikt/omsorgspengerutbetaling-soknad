@@ -1,20 +1,23 @@
 import React from 'react';
 import bemUtils from '@navikt/sif-common-core/lib/utils/bemUtils';
 import { Knapp } from 'nav-frontend-knapper';
-import { FraværDelerAvDag } from '../../../../../../@types/omsorgspengerutbetaling-schema';
-import { SøknadFormField } from '../../../../../types/SøknadFormData';
+import {
+    FraværDelerAvDag, Periode
+} from '../../../../../../../@types/omsorgspengerutbetaling-schema';
+import { SøknadFormField } from '../../../../../../types/SøknadFormData';
 import {
     GYLDIG_TIDSROM, MAKS_ANTALL_TIMER_MED_FRAVÆR_EN_DAG, MIN_ANTALL_TIMER_MED_FRAVÆR_EN_DAG
-} from '../../../../../validation/constants';
+} from '../../../../../../validation/constants';
 import {
     validateDateInRange, validateDelvisFraværTimer
-} from '../../../../../validation/fieldValidations';
-import TypedFormComponents from '../../../typed-form-components/TypedFormComponents';
+} from '../../../../../../validation/fieldValidations';
+import TypedFormComponents from '../../../../typed-form-components/TypedFormComponents';
 
 interface Props {
     index: number;
     dag: FraværDelerAvDag;
     disabledDager?: FraværDelerAvDag[];
+    disabledPerioder?: Periode[];
     onRemove?: (index: number) => void;
 }
 

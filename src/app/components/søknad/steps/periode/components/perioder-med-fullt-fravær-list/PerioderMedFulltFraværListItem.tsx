@@ -2,11 +2,11 @@ import React from 'react';
 import bemUtils from '@navikt/sif-common-core/lib/utils/bemUtils';
 import { DateRange } from '@navikt/sif-common-core/lib/utils/dateUtils';
 import { Knapp } from 'nav-frontend-knapper';
-import { Periode } from '../../../../../../@types/omsorgspengerutbetaling-schema';
-import { SøknadFormField } from '../../../../../types/SøknadFormData';
-import { GYLDIG_TIDSROM } from '../../../../../validation/constants';
-import { validateDateInRange } from '../../../../../validation/fieldValidations';
-import TypedFormComponents from '../../../typed-form-components/TypedFormComponents';
+import { Periode } from '../../../../../../../@types/omsorgspengerutbetaling-schema';
+import { SøknadFormField } from '../../../../../../types/SøknadFormData';
+import { GYLDIG_TIDSROM } from '../../../../../../validation/constants';
+import { validateDateInRange } from '../../../../../../validation/fieldValidations';
+import TypedFormComponents from '../../../../typed-form-components/TypedFormComponents';
 
 interface Props {
     index: number;

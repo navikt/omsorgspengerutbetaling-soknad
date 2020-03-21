@@ -7,11 +7,10 @@ import intlHelper from 'common/utils/intlUtils';
 import { StepConfigProps, StepID } from '../../../../config/stepConfig';
 import { SøknadFormData, SøknadFormField } from '../../../../types/SøknadFormData';
 import { navigateToLoginPage } from '../../../../utils/navigationUtils';
-import { validateLegeerklæring } from '../../../../validation/fieldValidations';
 import FileUploadErrors from '../../../file-upload-errors/FileUploadErrors';
 import FormikFileUploader from '../../../formik-file-uploader/FormikFileUploader';
 import FormikStep from '../../formik-step/FormikStep';
-import LegeerklæringFileList from './legeerklæring-attachment-list/LegeerklæringAttachmentList';
+import LegeerklæringFileList from './components/LegeerklæringAttachmentList';
 
 const LegeerklæringStep = ({ onValidSubmit }: StepConfigProps) => {
     const intl = useIntl();
@@ -36,7 +35,6 @@ const LegeerklæringStep = ({ onValidSubmit }: StepConfigProps) => {
                     onFileInputClick={() => {
                         setFilesThatDidntGetUploaded([]);
                     }}
-                    validate={validateLegeerklæring}
                     onUnauthorizedOrForbiddenUpload={navigateToLoginPage}
                 />
             </Box>

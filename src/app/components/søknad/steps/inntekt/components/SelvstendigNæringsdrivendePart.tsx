@@ -8,8 +8,8 @@ import intlHelper from 'common/utils/intlUtils';
 import {
     validateRequiredList, validateYesOrNoIsAnswered
 } from 'common/validation/fieldValidations';
-import { SøknadFormData, SøknadFormField } from '../../../../types/SøknadFormData';
-import TypedFormComponents from '../../typed-form-components/TypedFormComponents';
+import { SøknadFormData, SøknadFormField } from '../../../../../types/SøknadFormData';
+import TypedFormComponents from '../../../typed-form-components/TypedFormComponents';
 
 interface Props {
     formValues: SøknadFormData;

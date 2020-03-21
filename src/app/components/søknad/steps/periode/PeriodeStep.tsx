@@ -15,8 +15,8 @@ import { StepConfigProps, StepID } from '../../../../config/stepConfig';
 import { SøknadFormData, SøknadFormField } from '../../../../types/SøknadFormData';
 import FormikStep from '../../formik-step/FormikStep';
 import TypedFormComponents from '../../typed-form-components/TypedFormComponents';
-import DagerMedDelvisFraværList from './dager-med-delvis-fravær-list/DagerMedDelvisFraværList';
-import PeriodeMedFulltFraværList from './perioder-med-fullt-fravær-list/PerioderMedFulltFraværList';
+import DagerMedDelvisFraværList from './components/dager-med-delvis-fravær-list/DagerMedDelvisFraværList';
+import PeriodeMedFulltFraværList from './components/perioder-med-fullt-fravær-list/PerioderMedFulltFraværList';
 import './periodeStep.less';
 
 const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) => {

@@ -4,7 +4,7 @@ import { yesOrNoIsAnswered } from '../../../../utils/yesOrNoIsAnswered';
 
 const Q = SøknadFormField;
 
-const NårKanManFåStepConfig: QuestionConfig<SøknadFormData, SøknadFormField> = {
+const SituasjonStepConfig: QuestionConfig<SøknadFormData, SøknadFormField> = {
     [Q.tre_eller_fler_barn]: {
         isAnswered: ({ tre_eller_fler_barn }) => yesOrNoIsAnswered(tre_eller_fler_barn)
     },
@@ -28,4 +28,4 @@ const NårKanManFåStepConfig: QuestionConfig<SøknadFormData, SøknadFormField>
     }
 };
 
-export const NårKanManFåStepQuestions = Questions<SøknadFormData, SøknadFormField>(NårKanManFåStepConfig);
+export const SituasjonStepQuestions = Questions<SøknadFormData, SøknadFormField>(SituasjonStepConfig);

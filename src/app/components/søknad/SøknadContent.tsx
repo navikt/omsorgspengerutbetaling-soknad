@@ -12,13 +12,13 @@ import { getNextStepRoute, getSøknadRoute, isAvailable } from '../../utils/rout
 import ConfirmationPage from '../pages/confirmation-page/ConfirmationPage';
 import GeneralErrorPage from '../pages/general-error-page/GeneralErrorPage';
 import WelcomingPage from '../pages/welcoming-page/WelcomingPage';
-import HarUtbetaltDeFørsteTiDageneStep from './steps/har-utbetalt-de-første-ti-dagene/HarUtbetaltDeFørsteTiDageneStep';
-import HvaErDinSituasjon from './steps/hva-er-din-situasjon/HvaErDinSituasjon';
+import EgenutbetalingStep from './steps/egenutbetaling/EgenutbetalingStep';
 import InntektStep from './steps/inntekt/InntektStep';
 // import LegeerklæringStep from './steps/legeerklæring/LegeerklæringStep';
 import MedlemsskapStep from './steps/medlemskap/MedlemsskapStep';
+import OppsummeringStep from './steps/oppsummering/OppsummeringStep';
 import PeriodeStep from './steps/periode/PeriodeStep';
-import SummaryStep from './steps/summary/SummaryStep';
+import HvaErDinSituasjon from './steps/situasjon/SituasjonStep';
 
 export interface KvitteringInfo {
     søkernavn: string;
@@ -69,13 +69,11 @@ const SøknadContent: React.FunctionComponent = () => {
                 />
             )}
 
-            {isAvailable(StepID.HAR_UTBETALT_DE_FØRST_TI_DAGENE, values) && (
+            {isAvailable(StepID.EGENUTBETALING, values) && (
                 <Route
-                    path={getSøknadRoute(StepID.HAR_UTBETALT_DE_FØRST_TI_DAGENE)}
+                    path={getSøknadRoute(StepID.EGENUTBETALING)}
                     render={() => (
-                        <HarUtbetaltDeFørsteTiDageneStep
-                            onValidSubmit={() => navigateToNextStep(StepID.HAR_UTBETALT_DE_FØRST_TI_DAGENE)}
-                        />
+                        <EgenutbetalingStep onValidSubmit={() => navigateToNextStep(StepID.EGENUTBETALING)} />
                     )}
                 />
             )}
@@ -108,11 +106,11 @@ const SøknadContent: React.FunctionComponent = () => {
                 />
             )}
 
-            {isAvailable(StepID.SUMMARY, values) && (
+            {isAvailable(StepID.OPPSUMMERING, values) && (
                 <Route
-                    path={getSøknadRoute(StepID.SUMMARY)}
+                    path={getSøknadRoute(StepID.OPPSUMMERING)}
                     render={() => (
-                        <SummaryStep
+                        <OppsummeringStep
                             onApplicationSent={(apiData: SøknadApiData, søkerdata: Søkerdata) => {
                                 const info = getKvitteringInfoFromApiData(søkerdata);
                                 setKvitteringInfo(info);

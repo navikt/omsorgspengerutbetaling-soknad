@@ -1,10 +1,10 @@
 import React from 'react';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
 import { Knapp } from 'nav-frontend-knapper';
-import { Periode } from '../../../../../../@types/omsorgspengerutbetaling-schema';
-import { SøknadFormField } from '../../../../../types/SøknadFormData';
-import { validatePerioderMedFravær } from '../../../../../validation/fieldValidations';
-import TypedFormComponents from '../../../typed-form-components/TypedFormComponents';
+import { Periode } from '../../../../../../../@types/omsorgspengerutbetaling-schema';
+import { SøknadFormField } from '../../../../../../types/SøknadFormData';
+import { validatePerioderMedFravær } from '../../../../../../validation/fieldValidations';
+import TypedFormComponents from '../../../../typed-form-components/TypedFormComponents';
 import PerioderMedFulltFraværListItem from './PerioderMedFulltFraværListItem';
 
 interface Props {

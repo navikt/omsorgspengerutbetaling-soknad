@@ -9,65 +9,63 @@ import { StepConfigProps, StepID } from '../../../../config/stepConfig';
 import { SøknadFormData, SøknadFormField } from '../../../../types/SøknadFormData';
 import FormikStep from '../../formik-step/FormikStep';
 import TypedFormComponents from '../../typed-form-components/TypedFormComponents';
-import { HarUtbetaltFørsteTiDagerConfiguestions } from './config';
+import { SituasjonStepQuestions } from './config';
 
-const HarUtbetaltDeFørsteTiDageneStep = ({ onValidSubmit }: StepConfigProps) => {
+const HvaErDinSituasjon = ({ onValidSubmit }: StepConfigProps) => {
     const intl = useIntl();
     const { values } = useFormikContext<SøknadFormData>();
-
-    const visibility = HarUtbetaltFørsteTiDagerConfiguestions.getVisbility(values);
+    const visibility = SituasjonStepQuestions.getVisbility(values);
     return (
         <FormikStep
-            id={StepID.HAR_UTBETALT_DE_FØRST_TI_DAGENE}
+            id={StepID.SITUASJON}
             onValidFormSubmit={onValidSubmit}
             showSubmitButton={visibility.areAllQuestionsAnswered()}>
-            <CounsellorPanel>
-                {intlHelper(intl, 'step.har-utbetalt-de-første-ti-dagene.counsellorpanel.content')}
-            </CounsellorPanel>
+            <CounsellorPanel>{intlHelper(intl, 'step.hva-er-din-situasjon.counsellorpanel.content')}</CounsellorPanel>
+
             <FormBlock>
                 <TypedFormComponents.YesOrNoQuestion
-                    name={SøknadFormField.har_utbetalt_ti_dager}
-                    legend={intlHelper(intl, 'step.har-utbetalt-de-første-ti-dagene.ja_nei_spm.legend')}
+                    name={SøknadFormField.tre_eller_fler_barn}
+                    legend={intlHelper(intl, 'step.hva-er-din-situasjon.tre_eller_fler_barn.spm')}
                     validate={validateYesOrNoIsAnswered}
                 />
             </FormBlock>
-            {visibility.isVisible(SøknadFormField.innvilget_rett_og_ingen_andre_barn_under_tolv) && (
+            {visibility.isVisible(SøknadFormField.alene_om_omsorg_for_barn) && (
                 <FormBlock>
                     <TypedFormComponents.YesOrNoQuestion
-                        name={SøknadFormField.innvilget_rett_og_ingen_andre_barn_under_tolv}
-                        legend={intlHelper(
-                            intl,
-                            'step.har_utbetalt_de_første_ti_dagene.innvilget_rett_og_ingen_andre_barn_under_tolv.spm'
-                        )}
-                        validate={validateYesOrNoIsAnswered}
-                    />
-                </FormBlock>
-            )}{' '}
-            {visibility.isVisible(SøknadFormField.fisker_på_blad_B) && (
-                <FormBlock>
-                    <TypedFormComponents.YesOrNoQuestion
-                        name={SøknadFormField.fisker_på_blad_B}
-                        legend={intlHelper(intl, 'step.har_utbetalt_de_første_ti_dagene.fisker_på_blad_B.spm')}
+                        name={SøknadFormField.alene_om_omsorg_for_barn}
+                        legend={intlHelper(intl, 'step.hva-er-din-situasjon.alene_om_omsorg_for_barn.spm')}
                         validate={validateYesOrNoIsAnswered}
                     />
                 </FormBlock>
             )}
-            {visibility.isVisible(SøknadFormField.frivillig_forsikring) && (
+            {visibility.isVisible(SøknadFormField.rett_til_mer_enn_ti_dager_totalt) && (
                 <FormBlock>
                     <TypedFormComponents.YesOrNoQuestion
-                        name={SøknadFormField.frivillig_forsikring}
-                        legend={intlHelper(intl, 'step.har_utbetalt_de_første_ti_dagene.frivillig_forsikring.spm')}
+                        name={SøknadFormField.rett_til_mer_enn_ti_dager_totalt}
+                        legend={intlHelper(intl, 'step.hva-er-din-situasjon.rett_til_mer_enn_ti_dager_totalt.spm')}
                         validate={validateYesOrNoIsAnswered}
                     />
                 </FormBlock>
-            )}{' '}
-            {visibility.isVisible(SøknadFormField.nettop_startet_selvstendig_frilanser) && (
+            )}
+            {visibility.isVisible(SøknadFormField.den_andre_forelderen_ikke_kan_ta_seg_av_barnet) && (
                 <FormBlock>
                     <TypedFormComponents.YesOrNoQuestion
-                        name={SøknadFormField.nettop_startet_selvstendig_frilanser}
+                        name={SøknadFormField.den_andre_forelderen_ikke_kan_ta_seg_av_barnet}
                         legend={intlHelper(
                             intl,
-                            'step.har_utbetalt_de_første_ti_dagene.nettop_startet_selvstendig_frilanser.spm'
+                            'step.hva-er-din-situasjon.den_andre_forelderen_ikke_kan_ta_seg_av_barnet.spm'
+                        )}
+                        validate={validateYesOrNoIsAnswered}
+                    />
+                </FormBlock>
+            )}
+            {visibility.isVisible(SøknadFormField.har_barn_som_har_kronisk_sykdom_eller_funksjonshemming) && (
+                <FormBlock>
+                    <TypedFormComponents.YesOrNoQuestion
+                        name={SøknadFormField.har_barn_som_har_kronisk_sykdom_eller_funksjonshemming}
+                        legend={intlHelper(
+                            intl,
+                            'step.hva-er-din-situasjon.har_barn_som_har_kronisk_sykdom_eller_funksjonshemming.spm'
                         )}
                         validate={validateYesOrNoIsAnswered}
                     />
@@ -77,4 +75,4 @@ const HarUtbetaltDeFørsteTiDageneStep = ({ onValidSubmit }: StepConfigProps) =>
     );
 };
 
-export default HarUtbetaltDeFørsteTiDageneStep;
+export default HvaErDinSituasjon;

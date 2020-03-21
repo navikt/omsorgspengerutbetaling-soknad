@@ -25,7 +25,7 @@ describe('routeUtils', () => {
     describe('getSøknadRoute', () => {
         it('should prefix provided string with a common prefix for routes', () => {
             const s1 = StepID.LEGEERKLÆRING;
-            const s2 = StepID.SUMMARY;
+            const s2 = StepID.OPPSUMMERING;
             expect(getSøknadRoute(s1)).toEqual(`${RouteConfig.SØKNAD_ROUTE_PREFIX}/${s1}`);
             expect(getSøknadRoute(s2)).toEqual(`${RouteConfig.SØKNAD_ROUTE_PREFIX}/${s2}`);
         });
@@ -45,7 +45,7 @@ describe('routeUtils', () => {
         });
 
         it('should return result from calling summaryStepAvailable if route=StepID.SUMMARY', () => {
-            const result = isAvailable(StepID.SUMMARY, formValues);
+            const result = isAvailable(StepID.OPPSUMMERING, formValues);
             expect(stepUtils.summaryStepAvailable).toHaveBeenCalledWith(formValues);
             expect(result).toEqual(stepUtils.summaryStepAvailable(formValues));
         });

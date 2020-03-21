@@ -4,7 +4,7 @@ import { SøknadFormData } from '../types/SøknadFormData';
 export const welcomingPageIsValid = ({ harForståttRettigheterOgPlikter }: SøknadFormData): boolean =>
     harForståttRettigheterOgPlikter === true;
 
-export const nårKanManFåUtbetaltOmsorgspengerPageIsValid = ({
+export const situasjonStepIsValid = ({
     tre_eller_fler_barn,
     alene_om_omsorg_for_barn,
     rett_til_mer_enn_ti_dager_totalt,

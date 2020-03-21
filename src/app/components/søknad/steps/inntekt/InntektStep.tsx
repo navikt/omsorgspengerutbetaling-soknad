@@ -4,8 +4,8 @@ import Box from 'common/components/box/Box';
 import { StepConfigProps, StepID } from '../../../../config/stepConfig';
 import { SøknadFormData } from '../../../../types/SøknadFormData';
 import FormikStep from '../../formik-step/FormikStep';
-import FrilansFormPart from './FrilansFormPart';
-import SelvstendigNæringsdrivendeFormPart from './SelvstendigNæringsdrivendePart';
+import FrilansFormPart from './components/FrilansFormPart';
+import SelvstendigNæringsdrivendeFormPart from './components/SelvstendigNæringsdrivendePart';
 
 const InntektStep = ({ onValidSubmit }: StepConfigProps) => {
     const { values } = useFormikContext<SøknadFormData>();
