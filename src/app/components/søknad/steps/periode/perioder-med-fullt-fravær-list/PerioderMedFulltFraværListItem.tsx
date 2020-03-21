@@ -1,5 +1,6 @@
 import React from 'react';
 import bemUtils from '@navikt/sif-common-core/lib/utils/bemUtils';
+import { DateRange } from '@navikt/sif-common-core/lib/utils/dateUtils';
 import { Knapp } from 'nav-frontend-knapper';
 import { Periode } from '../../../../../../@types/omsorgspengerutbetaling-schema';
 import { SøknadFormField } from '../../../../../types/SøknadFormData';
@@ -22,6 +23,10 @@ const PerioderMedFulltFraværListItem: React.FunctionComponent<Props> = ({
     disabledPerioder,
     onRemove
 }) => {
+    const tomDateRange: DateRange = {
+        from: periode?.fom ? periode.fom : GYLDIG_TIDSROM.from,
+        to: GYLDIG_TIDSROM.to
+    };
     return (
         <div className={bem.classNames(bem.block, bem.modifierConditional('firstRow', index === 0))}>
             <div className={bem.element('rangeWrapper')}>
@@ -37,12 +42,12 @@ const PerioderMedFulltFraværListItem: React.FunctionComponent<Props> = ({
                         }
                     }}
                     toDatepickerProps={{
-                        validate: validateDateInRange(GYLDIG_TIDSROM, true),
+                        validate: validateDateInRange(tomDateRange, true),
                         label: 'Til og med',
                         name: `${SøknadFormField.perioderMedFravær}.${index}.tom` as SøknadFormField,
                         dateLimitations: {
-                            minDato: periode?.fom ? periode.fom : GYLDIG_TIDSROM.from,
-                            maksDato: GYLDIG_TIDSROM.to,
+                            minDato: tomDateRange.from,
+                            maksDato: tomDateRange.to,
                             ugyldigeTidsperioder: disabledPerioder || []
                         }
                     }}
