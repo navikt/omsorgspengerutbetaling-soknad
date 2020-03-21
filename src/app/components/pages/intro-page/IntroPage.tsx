@@ -59,7 +59,7 @@ const IntroPage: React.StatelessComponent = () => {
                                     <AlertStripeInfo>
                                         <p style={{ marginTop: 0, marginBottom: 0 }}>
                                             Søknaden kan brukes av dem som er selvstendig næringsdrivende eller
-                                            frilanser.
+                                            frilansere.
                                         </p>
                                     </AlertStripeInfo>
                                 </Box>
