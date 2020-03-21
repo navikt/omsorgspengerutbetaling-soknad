@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useIntl } from 'react-intl';
 import { validateYesOrNoIsAnswered } from '@navikt/sif-common-core/lib/validation/fieldValidations';
 import { useFormikContext } from 'formik';
+import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import CounsellorPanel from 'common/components/counsellor-panel/CounsellorPanel';
 import FormBlock from 'common/components/form-block/FormBlock';
 import intlHelper from 'common/utils/intlUtils';
@@ -30,13 +31,26 @@ const EgenutbetalingStep = ({ onValidSubmit }: StepConfigProps) => {
                 />
             </FormBlock>
             {visibility.isVisible(SøknadFormField.innvilget_utvidet_rett) && (
-                <FormBlock>
-                    <SøknadFormComponents.YesOrNoQuestion
-                        name={SøknadFormField.innvilget_utvidet_rett}
-                        legend={intlHelper(intl, 'step.har_utbetalt_de_første_ti_dagene.innvilget_utvidet_rett.spm')}
-                        validate={validateYesOrNoIsAnswered}
-                    />
-                </FormBlock>
+                <>
+                    <FormBlock>
+                        <AlertStripeInfo>
+                            Som hovedregel må selvstendig næringsdrivende og frilansere dekke de 3 første omsorgsdagene
+                            selv. I noen tilfeller kan du få utbetaling fra 1. dag. Hvis du skal få utbetalt fra 1. dag
+                            må en av de neste punktene gjelde deg.{' '}
+                        </AlertStripeInfo>
+                    </FormBlock>
+                    <FormBlock>
+                        <SøknadFormComponents.YesOrNoQuestion
+                            name={SøknadFormField.innvilget_utvidet_rett}
+                            legend={intlHelper(
+                                intl,
+                                'step.har_utbetalt_de_første_ti_dagene.innvilget_utvidet_rett.spm'
+                            )}
+                            validate={validateYesOrNoIsAnswered}
+                            info="Som hovedregel må selvstendig næringsdrivende og frilansere dekke de 3 første omsorgsdagene selv. I noen tilfeller kan du få utbetaling fra 1. dag. Hvis du skal få utbetalt fra 1. dag må en av de neste punktene gjelde deg."
+                        />
+                    </FormBlock>
+                </>
             )}
             {visibility.isVisible(SøknadFormField.ingen_andre_barn_under_tolv) && (
                 <FormBlock>

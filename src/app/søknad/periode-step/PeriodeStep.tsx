@@ -5,6 +5,7 @@ import {
 } from '@navikt/sif-common-core/lib/validation/fieldValidations';
 import BostedUtlandListAndDialog from '@navikt/sif-common-forms/lib/bosted-utland/BostedUtlandListAndDialog';
 import { FieldArray, useFormikContext } from 'formik';
+import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import CounsellorPanel from 'common/components/counsellor-panel/CounsellorPanel';
 import FormBlock from 'common/components/form-block/FormBlock';
 import { YesOrNo } from 'common/types/YesOrNo';
@@ -52,9 +53,18 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
             cleanupStep={cleanupStep}
             showSubmitButton={kanIkkeFortsette === false}>
             <FormBlock>
+                <CounsellorPanel>
+                    Du kan søke utbetaling for
+                    <ul>
+                        <li>hele dager med fravær fra jobb, som tilsvarer maks 7.5 timer eller</li>
+                        <li>dager hvor du bare har delvis fravær fra jobb</li>
+                    </ul>
+                </CounsellorPanel>
+            </FormBlock>
+            <FormBlock>
                 <SøknadFormComponents.YesOrNoQuestion
                     name={SøknadFormField.harPerioderMedFravær}
-                    legend="Søker du om dager med fullt fravær?"
+                    legend="Søker du om utbetaling for hele dager med fravær fra jobb?"
                     validate={validateYesOrNoIsAnswered}
                 />
             </FormBlock>
@@ -88,7 +98,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
             <FormBlock>
                 <SøknadFormComponents.YesOrNoQuestion
                     name={SøknadFormField.harDagerMedDelvisFravær}
-                    legend="Søker du om dager med delvis fravær?"
+                    legend="Søker du om utbetaling for dager med delvis fravær fra jobb?"
                     validate={validateYesOrNoIsAnswered}
                 />
             </FormBlock>
@@ -118,7 +128,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
 
             {kanIkkeFortsette && (
                 <FormBlock margin="xxl">
-                    <CounsellorPanel>Du må velge noen dager</CounsellorPanel>
+                    <AlertStripeAdvarsel>Du må velge én av situasjonene over. </AlertStripeAdvarsel>
                 </FormBlock>
             )}
 
@@ -129,7 +139,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                             name={SøknadFormField.perioder_harVærtIUtlandet}
                             legend={intlHelper(
                                 intl,
-                                'step.periode.har_dy_oppholdt_deg_i_utlandet_for_dager_du_soker_ok.spm'
+                                'step.periode.har_du_oppholdt_deg_i_utlandet_for_dager_du_soker_ok.spm'
                             )}
                             validate={validateYesOrNoIsAnswered}
                         />
