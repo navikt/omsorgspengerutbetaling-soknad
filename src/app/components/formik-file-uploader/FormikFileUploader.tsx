@@ -7,9 +7,9 @@ import {
     getPendingAttachmentFromFile, isFileObject, VALID_EXTENSIONS
 } from 'common/utils/attachmentUtils';
 import { uploadFile } from '../../api/api';
+import TypedFormComponents from '../../søknad/typed-form-components/TypedFormComponents';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import * as apiUtils from '../../utils/apiUtils';
-import TypedFormComponents from '../søknad/typed-form-components/TypedFormComponents';
 
 export type FieldArrayReplaceFn = (index: number, value: any) => void;
 export type FieldArrayPushFn = (obj: any) => void;
