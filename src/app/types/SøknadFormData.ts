@@ -1,7 +1,6 @@
 import { Attachment } from '@navikt/sif-common-core/lib/types/Attachment';
 import { Utenlandsopphold } from '@navikt/sif-common-forms/lib//utenlandsopphold/types';
 import { Virksomhet } from '@navikt/sif-common-forms/lib/virksomhet/types';
-import moment from 'moment';
 import { YesOrNo } from 'common/types/YesOrNo';
 import { FraværDelerAvDag, Periode } from '../../@types/omsorgspengerutbetaling-schema';
 
