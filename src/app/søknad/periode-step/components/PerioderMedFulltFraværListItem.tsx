@@ -6,7 +6,9 @@ import { Knapp } from 'nav-frontend-knapper';
 import { Periode } from '../../../../@types/omsorgspengerutbetaling-schema';
 import { SøknadFormField } from '../../../types/SøknadFormData';
 import { GYLDIG_TIDSROM } from '../../../validation/constants';
-import { validateAll, validateDateInRange } from '../../../validation/fieldValidations';
+import {
+    validateAll, validateDateInRange, validateTomAfterFom
+} from '../../../validation/fieldValidations';
 import SøknadFormComponents from '../../SøknadFormComponents';
 
 interface Props {
@@ -28,6 +30,7 @@ const PerioderMedFulltFraværListItem: React.FunctionComponent<Props> = ({
         from: periode?.fom ? periode.fom : GYLDIG_TIDSROM.from,
         to: GYLDIG_TIDSROM.to
     };
+
     return (
         <div className={bem.classNames(bem.block, bem.modifierConditional('firstRow', index === 0))}>
             <div className={bem.element('rangeWrapper')}>
@@ -43,7 +46,11 @@ const PerioderMedFulltFraværListItem: React.FunctionComponent<Props> = ({
                         }
                     }}
                     toDatepickerProps={{
-                        validate: validateAll([validateRequiredField, validateDateInRange(tomDateRange)]),
+                        validate: validateAll([
+                            validateRequiredField,
+                            ...(periode?.fom ? [validateTomAfterFom(periode.fom)] : []),
+                            validateDateInRange(tomDateRange)
+                        ]),
                         label: 'Til og med',
                         name: `${SøknadFormField.perioderMedFravær}.${index}.tom` as SøknadFormField,
                         dateLimitations: {

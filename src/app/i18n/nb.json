@@ -281,5 +281,6 @@
     "fieldvalidation.dager_med_fravær_utenfor_periode": "En eller flere dager er utenfor gyldig tidsperiode",
     "fieldvalidation.timer_ikke_tall": "Verdien må være mellom 0,5 og 7,5 timer",
     "fieldvalidation.timer_for_mange_timer": "Verdien må være mellom 0,5 og 7,5 timer",
-    "fieldvalidation.dato_utenfor_gyldig_tidsrom": "Dato er utenfor gyldig tidsperiode"
+    "fieldvalidation.dato_utenfor_gyldig_tidsrom": "Dato er utenfor gyldig tidsperiode",
+    "fieldvalidation.tom_er_før_fom": "Til dato kan ikke være før fra dato"
 }
