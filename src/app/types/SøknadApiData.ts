@@ -16,6 +16,7 @@ export interface UtenlandsoppholdApiData {
     tilOgMed: ApiStringDate;
     landkode: string;
     landnavn: string;
+    erEØSLand: boolean;
 }
 
 export type YesNoSvar = boolean;
