@@ -1,6 +1,6 @@
+import { Næringstype } from '@navikt/sif-common-forms/lib';
 import { ApiStringDate } from 'common/types/ApiStringDate';
 import { Locale } from 'common/types/Locale';
-import {Næringstype} from "@navikt/sif-common-forms/lib";
 
 export type ISO8601Duration = string;
 
@@ -16,31 +16,31 @@ export interface UtenlandsoppholdApiData {
     tilOgMed: ApiStringDate;
     landkode: string;
     landnavn: string;
+    erEØSLand: boolean;
 }
 
-export enum Svar {
-    Ja = "Ja",
-    Nei = "Nei",
-    VetIkke = "VetIkke"
-}
+export type YesNoSvar = boolean;
 
-export type Spørsmål = string
+export type Spørsmål = string;
 
-export interface SpørsmålOgSvar {
+export interface YesNoSpørsmålOgSvar {
     spørsmål: Spørsmål;
-    svar: Svar;
+    svar: YesNoSvar;
 }
 
-export interface UtbetalingsperiodeMedVedlegg {
+export interface Utbetalingsperiode {
     fraOgMed: ApiStringDate; // @JsonFormat(pattern = "yyyy-MM-dd")
     tilOgMed: ApiStringDate; // @JsonFormat(pattern = "yyyy-MM-dd")
     lengde?: string; // f eks PT5H30M | "null" (type Duration)
+}
+
+export interface UtbetalingsperiodeMedVedlegg extends Utbetalingsperiode {
     legeerklæringer: string[];
 }
 
 export interface Frilans {
     startdato: string;
-    jobberFortsattSomFrilans: boolean
+    jobberFortsattSomFrilans: boolean;
 }
 
 export interface VirksomhetApiData {
@@ -75,20 +75,20 @@ export interface VirksomhetApiData {
         navn: string;
         telefon: string;
         kanInnhenteOpplysninger?: boolean;
-        erNarVennFamilie: boolean
+        erNarVennFamilie: boolean;
     };
 }
 
 export interface SøknadApiData {
     språk: Locale;
     bekreftelser: {
-        harBekreftetOpplysninger: boolean,
-        harForståttRettigheterOgPlikter: boolean
-    },
-    spørsmål: SpørsmålOgSvar[];
-    utbetalingsperioder: UtbetalingsperiodeMedVedlegg[]; // perioder
+        harBekreftetOpplysninger: boolean;
+        harForståttRettigheterOgPlikter: boolean;
+    };
+    spørsmål: YesNoSpørsmålOgSvar[];
+    utbetalingsperioder: Utbetalingsperiode[]; // perioder
     opphold: UtenlandsoppholdApiData[]; // hvis ja på har oppholdt seg i utlandet
     bosteder: UtenlandsoppholdApiData[]; // medlemskap-siden
     frilans?: Frilans;
-    selvstendigVirksomheter: VirksomhetApiData[]
+    selvstendigVirksomheter: VirksomhetApiData[];
 }
