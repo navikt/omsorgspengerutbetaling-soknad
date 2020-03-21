@@ -9,29 +9,26 @@ import { formatName } from '@navikt/sif-common-core/lib/utils/personUtils';
 import { useFormikContext } from 'formik';
 import Panel from 'nav-frontend-paneler';
 import { Normaltekst } from 'nav-frontend-typografi';
+import SummaryList from 'common/components/summary-list/SummaryList';
+import { Time } from 'common/types/Time';
+import { apiStringDateToDate, prettifyDate } from 'common/utils/dateUtils';
+import { iso8601DurationToTime, timeToString } from 'common/utils/timeUtils';
 import { sendApplication } from '../../api/api';
 import RouteConfig from '../../config/routeConfig';
 import { StepID } from '../../config/stepConfig';
 import { SøkerdataContext } from '../../context/SøkerdataContext';
 import { Søkerdata } from '../../types/Søkerdata';
 import {
-    SøknadApiData,
-    Utbetalingsperiode,
-    UtbetalingsperiodeMedVedlegg,
-    YesNoSpørsmålOgSvar
+    SøknadApiData, Utbetalingsperiode, UtbetalingsperiodeMedVedlegg, YesNoSpørsmålOgSvar
 } from '../../types/SøknadApiData';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import * as apiUtils from '../../utils/apiUtils';
+import { mapFormDataToApiData } from '../../utils/mapFormDataToApiData';
 import { navigateTo, navigateToLoginPage } from '../../utils/navigationUtils';
 import SøknadFormComponents from '../SøknadFormComponents';
 import FormikStep from '../SøknadStep';
-import { iso8601DurationToTime, timeToString } from 'common/utils/timeUtils';
-import { Time } from 'common/types/Time';
-import { apiStringDateToDate, prettifyDate } from 'common/utils/dateUtils';
-import SummaryList from 'common/components/summary-list/SummaryList';
-import { renderUtenlandsoppholdIPeriodenSummary } from './components/renderUtenlandsoppholdSummary';
 import FrilansSummary from './components/FrilansSummary';
-import { mapFormDataToApiData } from '../../utils/mapFormDataToApiData';
+import { renderUtenlandsoppholdIPeriodenSummary } from './components/renderUtenlandsoppholdSummary';
 
 interface Props {
     onApplicationSent: (apiValues: SøknadApiData, søkerdata: Søkerdata) => void;
