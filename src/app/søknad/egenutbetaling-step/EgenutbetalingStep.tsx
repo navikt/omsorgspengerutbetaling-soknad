@@ -29,18 +29,27 @@ const EgenutbetalingStep = ({ onValidSubmit }: StepConfigProps) => {
                     validate={validateYesOrNoIsAnswered}
                 />
             </FormBlock>
-            {visibility.isVisible(SøknadFormField.innvilget_rett_og_ingen_andre_barn_under_tolv) && (
+            {visibility.isVisible(SøknadFormField.innvilget_utvidet_rett) && (
                 <FormBlock>
                     <SøknadFormComponents.YesOrNoQuestion
-                        name={SøknadFormField.innvilget_rett_og_ingen_andre_barn_under_tolv}
+                        name={SøknadFormField.innvilget_utvidet_rett}
+                        legend={intlHelper(intl, 'step.har_utbetalt_de_første_ti_dagene.innvilget_utvidet_rett.spm')}
+                        validate={validateYesOrNoIsAnswered}
+                    />
+                </FormBlock>
+            )}
+            {visibility.isVisible(SøknadFormField.ingen_andre_barn_under_tolv) && (
+                <FormBlock>
+                    <SøknadFormComponents.YesOrNoQuestion
+                        name={SøknadFormField.ingen_andre_barn_under_tolv}
                         legend={intlHelper(
                             intl,
-                            'step.har_utbetalt_de_første_ti_dagene.innvilget_rett_og_ingen_andre_barn_under_tolv.spm'
+                            'step.har_utbetalt_de_første_ti_dagene.ingen_andre_barn_under_tolv.spm'
                         )}
                         validate={validateYesOrNoIsAnswered}
                     />
                 </FormBlock>
-            )}{' '}
+            )}
             {visibility.isVisible(SøknadFormField.fisker_på_blad_B) && (
                 <FormBlock>
                     <SøknadFormComponents.YesOrNoQuestion

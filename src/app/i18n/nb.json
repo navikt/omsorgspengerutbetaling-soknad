@@ -75,7 +75,8 @@
 
     "step.egenutbetaling.ja_nei_spm.legend": "Har du utbetalt 10 dager for deg selv i dette kalenderåret?",
 
-    "step.har_utbetalt_de_første_ti_dagene.innvilget_rett_og_ingen_andre_barn_under_tolv.spm": "Jeg har innvilget utvidet rett for et kronisk sykt barn/funksjonshemmet og har ingen andre barn under 12 år",
+    "step.har_utbetalt_de_første_ti_dagene.innvilget_utvidet_rett.spm": "Jeg har innvilget utvidet rett for et kronisk sykt barn/funksjonshemmet",
+    "step.har_utbetalt_de_første_ti_dagene.ingen_andre_barn_under_tolv.spm": "Jeg har ingen andre barn under 12 år",
     "step.har_utbetalt_de_første_ti_dagene.fisker_på_blad_B.spm": "Jeg er fisker på blad B",
     "step.har_utbetalt_de_første_ti_dagene.frivillig_forsikring.spm": "Jeg har frivillig forsikring for tilleggssykepenger fra 1. dag",
     "step.har_utbetalt_de_første_ti_dagene.nettop_startet_selvstendig_frilanser.spm": "Jeg har nettopp startet å jobbe som selvstendig/frilanser og jobbet under 4 uker",
