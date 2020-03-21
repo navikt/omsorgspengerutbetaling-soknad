@@ -1,8 +1,8 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
+import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
 import VirksomhetListAndDialog from '@navikt/sif-common-forms/lib/virksomhet/VirksomhetListAndDialog';
 import { Panel } from 'nav-frontend-paneler';
-import Box from 'common/components/box/Box';
 import { YesOrNo } from 'common/types/YesOrNo';
 import intlHelper from 'common/utils/intlUtils';
 import {
@@ -19,15 +19,13 @@ const SelvstendigNæringsdrivendeFormPart: React.FunctionComponent<Props> = ({ f
     const intl = useIntl();
     return (
         <>
-            <Box margin="l">
-                <SøknadFormComponents.YesOrNoQuestion
-                    name={SøknadFormField.selvstendig_harHattInntektSomSN}
-                    legend={intlHelper(intl, 'selvstendig.harDuHattInntekt.spm')}
-                    validate={validateYesOrNoIsAnswered}
-                />
-            </Box>
+            <SøknadFormComponents.YesOrNoQuestion
+                name={SøknadFormField.selvstendig_harHattInntektSomSN}
+                legend={intlHelper(intl, 'selvstendig.harDuHattInntekt.spm')}
+                validate={validateYesOrNoIsAnswered}
+            />
             {formValues.selvstendig_harHattInntektSomSN === YesOrNo.YES && (
-                <Box margin="l">
+                <FormBlock margin="l">
                     <Panel>
                         <VirksomhetListAndDialog
                             name={SøknadFormField.selvstendig_virksomheter}
@@ -39,7 +37,7 @@ const SelvstendigNæringsdrivendeFormPart: React.FunctionComponent<Props> = ({ f
                             validate={validateRequiredList}
                         />
                     </Panel>
-                </Box>
+                </FormBlock>
             )}
         </>
     );

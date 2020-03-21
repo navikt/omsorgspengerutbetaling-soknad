@@ -28,7 +28,8 @@ export enum AppFieldValidationErrors {
     'utenlandsopphold_utenfor_periode' = 'fieldvalidation.utenlandsopphold_utenfor_periode',
     'timer_ikke_tall' = 'fieldvalidation.timer_ikke_tall',
     'timer_for_mange_timer' = 'fieldvalidation.timer_for_mange_timer',
-    'dato_utenfor_gyldig_tidsrom' = 'fieldvalidation.dato_utenfor_gyldig_tidsrom'
+    'dato_utenfor_gyldig_tidsrom' = 'fieldvalidation.dato_utenfor_gyldig_tidsrom',
+    'tom_er_før_fom' = 'fieldvalidation.tom_er_før_fom'
 }
 
 export const createAppFieldValidationError = (
@@ -90,8 +91,17 @@ export const validateUtenlandsoppholdNeste12Mnd = (utenlandsopphold: Utenlandsop
 // PeriodeStep
 // -------------------------------------------------
 
-const datoErInnenforTidsrom = (dato: Date, range: DateRange): boolean => {
-    return moment(dato).isBetween(range.from, range.to, 'days', '[]');
+const datoErInnenforTidsrom = (dato: Date, range: Partial<DateRange>): boolean => {
+    if (range.from && range.to) {
+        return moment(dato).isBetween(range.from, range.to, 'days', '[]');
+    }
+    if (range.from) {
+        return moment(dato).isSameOrAfter(range.from);
+    }
+    if (range.to) {
+        return moment(dato).isSameOrBefore(range.to);
+    }
+    return false;
 };
 
 const isPeriodeMedFomTom = (periode: Periode): boolean => {
@@ -102,11 +112,17 @@ export const harLikeDager = (dager: FraværDelerAvDag[]): boolean => {
     return datesCollide(dager.map((d) => d.dato));
 };
 
+export const validateTomAfterFom = (fom: Date) => (date: Date) => {
+    if (moment(date).isBefore(fom)) {
+        return createFieldValidationError(AppFieldValidationErrors.tom_er_før_fom);
+    }
+};
+
 export const validatePerioderMedFravær = (allePerioder: Periode[]): FieldValidationResult => {
-    const perioder = allePerioder.filter(isPeriodeMedFomTom);
-    if (perioder.length === 0) {
+    if (allePerioder.length === 0) {
         return createFieldValidationError(AppFieldValidationErrors.fraværsperioder_mangler);
     }
+    const perioder = allePerioder.filter(isPeriodeMedFomTom);
     const dateRanges: DateRange[] = perioder.map((periode: Periode) => ({ from: periode.fom, to: periode.tom }));
     if (dateRangesCollide(dateRanges)) {
         return createFieldValidationError(AppFieldValidationErrors.fraværsperioder_overlapper);
@@ -115,18 +131,18 @@ export const validatePerioderMedFravær = (allePerioder: Periode[]): FieldValida
 };
 
 export const validateDagerMedFravær = (alleDager: FraværDelerAvDag[]): FieldValidationResult => {
-    const dager = alleDager.filter((d) => d.dato !== undefined && d.timer !== undefined && isNaN(d.timer) === false);
-
-    if (dager.length === 0) {
+    if (alleDager.length === 0) {
         return createFieldValidationError(AppFieldValidationErrors.dager_med_fravær_mangler);
     }
+    const dager = alleDager.filter((d) => d.dato !== undefined && d.timer !== undefined && isNaN(d.timer) === false);
+
     if (harLikeDager(dager)) {
         return createFieldValidationError(AppFieldValidationErrors.dager_med_fravær_like);
     }
     return undefined;
 };
 
-export const validateDateInRange = (tidsrom: DateRange) => (date: any): FieldValidationResult => {
+export const validateDateInRange = (tidsrom: Partial<DateRange>) => (date: any): FieldValidationResult => {
     if (!datoErInnenforTidsrom(date, tidsrom)) {
         return createFieldValidationError(AppFieldValidationErrors.dato_utenfor_gyldig_tidsrom);
     }

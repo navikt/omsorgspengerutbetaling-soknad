@@ -20,7 +20,7 @@ import PeriodeMedFulltFraværList from './components/PerioderMedFulltFraværList
 import './periodeStep.less';
 
 const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) => {
-    const { values } = useFormikContext<SøknadFormData>();
+    const { values, validateField } = useFormikContext<SøknadFormData>();
     const {
         perioderMedFravær,
         dagerMedDelvisFravær,
@@ -74,6 +74,9 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                                         };
 
                                         arrayHelpers.insert(perioderMedFravær.length, emptyPeriodeMedFravær);
+                                        setTimeout(() => {
+                                            validateField(SøknadFormField.perioderMedFraværGroup);
+                                        });
                                     }}
                                     onRemove={(idx) => arrayHelpers.remove(idx)}
                                 />
