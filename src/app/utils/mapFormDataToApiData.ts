@@ -6,8 +6,8 @@ import { formatDateToApiFormat } from 'common/utils/dateUtils';
 import { decimalTimeToTime, timeToIso8601Duration } from 'common/utils/timeUtils';
 import { FraværDelerAvDag, Periode } from '../../@types/omsorgspengerutbetaling-schema';
 import {
-    SpørsmålOgSvar, Svar, SøknadApiData, UtbetalingsperiodeMedVedlegg, UtenlandsoppholdApiData,
-    VirksomhetApiData
+    SøknadApiData, UtbetalingsperiodeMedVedlegg, UtenlandsoppholdApiData, VirksomhetApiData,
+    YesNoSpørsmålOgSvar, YesNoSvar
 } from '../types/SøknadApiData';
 import { SøknadFormData } from '../types/SøknadFormData';
 import { mapBostedUtlandToApiData } from './formToApiMaps/mapBostedUtlandToApiData';
@@ -62,7 +62,7 @@ export const mapFormDataToApiData = (
     }: SøknadFormData,
     intl: IntlShape
 ): SøknadApiData => {
-    const stegEn: SpørsmålOgSvar[] = [
+    const stegEn: YesNoSpørsmålOgSvar[] = [
         {
             spørsmål: intl.formatMessage({ id: 'step.situasjon.tre_eller_fler_barn.spm' }),
             svar: mapYesOrNoToSvar(tre_eller_fler_barn)
@@ -93,7 +93,7 @@ export const mapFormDataToApiData = (
         }
     ];
 
-    const leggTilDisseHvis = (yesOrNo: YesOrNo): SpørsmålOgSvar[] => {
+    const leggTilDisseHvis = (yesOrNo: YesOrNo): YesNoSpørsmålOgSvar[] => {
         return yesOrNo === YesOrNo.NO
             ? [
                   {
@@ -130,7 +130,7 @@ export const mapFormDataToApiData = (
             : [];
     };
 
-    const stegTo: SpørsmålOgSvar[] = [
+    const stegTo: YesNoSpørsmålOgSvar[] = [
         {
             spørsmål: intl.formatMessage({ id: 'step.egenutbetaling.ja_nei_spm.legend' }),
             svar: mapYesOrNoToSvar(har_utbetalt_ti_dager)
@@ -190,17 +190,8 @@ export const mapPeriodeTilUtbetalingsperiode = (
     return [...periodeMappedTilUtbetalingsperiodeMedVedlegg, ...fraværDeleravDagMappedTilUtbetalingsperiodeMedVedlegg];
 };
 
-export const mapYesOrNoToSvar = (input: YesOrNo): Svar => {
-    switch (input) {
-        case YesOrNo.YES:
-            return Svar.Ja;
-        case YesOrNo.NO:
-            return Svar.Nei;
-        case YesOrNo.DO_NOT_KNOW:
-            return Svar.VetIkke;
-        case YesOrNo.UNANSWERED:
-            return Svar.VetIkke;
-    }
+export const mapYesOrNoToSvar = (input: YesOrNo): YesNoSvar => {
+    return input === YesOrNo.YES;
 };
 
 const settInnBosteder = (
