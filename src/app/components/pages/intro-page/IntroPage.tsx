@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FormattedHTMLMessage, FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
 import {
     commonFieldErrorRenderer
@@ -39,7 +39,17 @@ const IntroPage: React.StatelessComponent = () => {
             {/*topContentRenderer={() => <StepBanner text={intlHelper(intl, 'introPage.stegTittel')} />}>*/}
             <Box margin="xxxl">
                 <InformationPoster>
-                    <FormattedHTMLMessage id={`introPage.intro.html`} />
+                    <p>
+                        Når du er selvstendig næringsdrivende eller frilanser kan du søke om utbetaling av
+                        omsorgspenger. Som selvstendig næringsdrivende eller frilanser må du som hovedregel dekke de 3
+                        første dagene selv. Du kan søke om utbetaling av omsorgspenger fra den 4. dagen du er hjemme med
+                        omsorgsdager.
+                    </p>
+                    <p>
+                        Denne søknaden gjelder kun for selvstendig næringsdrivende og frilansere. Hvis du er
+                        arbeidstaker og skal ha utbetalt omsorgspenger må du be arbeidsgiveren din om å sende
+                        inntektsmelding til NAV.
+                    </p>
                 </InformationPoster>
             </Box>
             <FormBlock>

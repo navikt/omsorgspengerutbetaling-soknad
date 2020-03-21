@@ -16,18 +16,19 @@ const HarUtbetaltFørsteTiDagerConfig: QuestionConfig<SøknadFormData, SøknadFo
     },
     [Q.ingen_andre_barn_under_tolv]: {
         parentQuestion: Q.innvilget_utvidet_rett,
+        visibilityFilter: ({ innvilget_utvidet_rett }) => innvilget_utvidet_rett === YesOrNo.YES,
         isAnswered: ({ ingen_andre_barn_under_tolv }) => yesOrNoIsAnswered(ingen_andre_barn_under_tolv)
     },
     [Q.fisker_på_blad_B]: {
-        parentQuestion: Q.ingen_andre_barn_under_tolv,
+        visibilityFilter: ({ har_utbetalt_ti_dager }) => har_utbetalt_ti_dager === YesOrNo.NO,
         isAnswered: ({ fisker_på_blad_B }) => yesOrNoIsAnswered(fisker_på_blad_B)
     },
     [Q.frivillig_forsikring]: {
-        parentQuestion: Q.fisker_på_blad_B,
+        visibilityFilter: ({ har_utbetalt_ti_dager }) => har_utbetalt_ti_dager === YesOrNo.NO,
         isAnswered: ({ frivillig_forsikring }) => yesOrNoIsAnswered(frivillig_forsikring)
     },
     [Q.nettop_startet_selvstendig_frilanser]: {
-        parentQuestion: Q.frivillig_forsikring,
+        visibilityFilter: ({ har_utbetalt_ti_dager }) => har_utbetalt_ti_dager === YesOrNo.NO,
         isAnswered: ({ nettop_startet_selvstendig_frilanser }) =>
             yesOrNoIsAnswered(nettop_startet_selvstendig_frilanser)
     }
