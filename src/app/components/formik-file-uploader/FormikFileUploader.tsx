@@ -7,7 +7,7 @@ import {
     getPendingAttachmentFromFile, isFileObject, VALID_EXTENSIONS
 } from 'common/utils/attachmentUtils';
 import { uploadFile } from '../../api/api';
-import TypedFormComponents from '../../søknad/typed-form-components/TypedFormComponents';
+import SøknadFormComponents from '../../søknad/SøknadFormComponents';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import * as apiUtils from '../../utils/apiUtils';
 
@@ -109,7 +109,7 @@ const FormikFileUploader: React.FunctionComponent<Props> = ({
     }
 
     return (
-        <TypedFormComponents.FileInput
+        <SøknadFormComponents.FileInput
             name={name}
             acceptedExtensions={VALID_EXTENSIONS.join(', ')}
             onFilesSelect={async (files: File[], { push, replace }: ArrayHelpers) => {

@@ -1,9 +1,9 @@
 import * as React from 'react';
 import IkkeMyndigPage from '../components/pages/ikke-myndig-page/IkkeMyndigPage';
 import { initialValues } from '../types/SøknadFormData';
-import SøknadContent from './SøknadContent';
 import SøknadEssentialsLoader from './SøknadEssentialsLoader';
-import TypedFormComponents from './typed-form-components/TypedFormComponents';
+import SøknadFormComponents from './SøknadFormComponents';
+import SøknadRoutes from './SøknadRoutes';
 
 const Søknad = () => (
     <SøknadEssentialsLoader
@@ -15,10 +15,10 @@ const Søknad = () => (
                 }
             }
             return (
-                <TypedFormComponents.FormikWrapper
+                <SøknadFormComponents.FormikWrapper
                     initialValues={initialValues}
                     onSubmit={() => null}
-                    renderForm={() => <SøknadContent />}
+                    renderForm={() => <SøknadRoutes />}
                 />
             );
         }}
