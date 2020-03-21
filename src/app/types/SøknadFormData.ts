@@ -29,8 +29,8 @@ export enum SøknadFormField {
     harDagerMedDelvisFravær = 'harDagerMedDelvisFravær',
     dagerMedDelvisFravær = 'dagerMedDelvisFravær',
     dagerMedDelvisFraværGroup = 'dagerMedDelvisFraværGroup',
-    periode_har_vært_i_utlandet = 'periode_har_vært_i_utlandet',
-    periode_utenlandsopphold = 'periode_utenlandsopphold',
+    perioder_harVærtIUtlandet = 'perioder_harVærtIUtlandet',
+    perioder_utenlandsopphold = 'perioder_utenlandsopphold',
 
     // STEG 4: Conditional perioder i utlandet
     hvis_utenlandsopphold_en_test_verdi = 'hvis_utenlandsopphold_en_test_verdi',
@@ -76,8 +76,8 @@ export interface SøknadFormData {
     [SøknadFormField.perioderMedFravær]: Periode[];
     [SøknadFormField.harDagerMedDelvisFravær]: YesOrNo;
     [SøknadFormField.dagerMedDelvisFravær]: FraværDelerAvDag[];
-    [SøknadFormField.periode_har_vært_i_utlandet]: YesOrNo;
-    [SøknadFormField.periode_utenlandsopphold]: Utenlandsopphold[];
+    [SøknadFormField.perioder_harVærtIUtlandet]: YesOrNo;
+    [SøknadFormField.perioder_utenlandsopphold]: Utenlandsopphold[];
 
     // STEG 4: Conditional perioder i utlandet
     [SøknadFormField.hvis_utenlandsopphold_en_test_verdi]: YesOrNo;
@@ -124,8 +124,8 @@ export const initialValues: SøknadFormData = {
     [SøknadFormField.perioderMedFravær]: [],
     [SøknadFormField.harDagerMedDelvisFravær]: YesOrNo.UNANSWERED,
     [SøknadFormField.dagerMedDelvisFravær]: [],
-    [SøknadFormField.periode_har_vært_i_utlandet]: YesOrNo.UNANSWERED,
-    [SøknadFormField.periode_utenlandsopphold]: [],
+    [SøknadFormField.perioder_harVærtIUtlandet]: YesOrNo.UNANSWERED,
+    [SøknadFormField.perioder_utenlandsopphold]: [],
 
     // STEG 4: Conditional perioder i utlandet
     [SøknadFormField.hvis_utenlandsopphold_en_test_verdi]: YesOrNo.UNANSWERED,

@@ -7,7 +7,7 @@ import Page from 'common/components/page/Page';
 import bemUtils from 'common/utils/bemUtils';
 import intlHelper from 'common/utils/intlUtils';
 import getLenker from 'app/lenker';
-import { KvitteringInfo } from '../../søknad/SøknadContent';
+import { KvitteringInfo } from '../../../søknad/SøknadRoutes';
 import './confirmationPage.less';
 
 const bem = bemUtils('confirmationPage');

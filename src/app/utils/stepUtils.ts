@@ -4,8 +4,7 @@ import { StepConfigInterface, StepConfigItemTexts, StepID } from 'app/config/ste
 import { SøknadFormData } from '../types/SøknadFormData';
 import {
     harUtbetaltDeFørsteTiDagenePageIsValid, inntektStepIsValid, legeerklæringStepIsValid,
-    medlemskapStepIsValid, nårKanManFåUtbetaltOmsorgspengerPageIsValid, periodeStepIsValid,
-    welcomingPageIsValid
+    medlemskapStepIsValid, periodeStepIsValid, situasjonStepIsValid, welcomingPageIsValid
 } from '../validation/stepValidations';
 
 export const getStepTexts = (intl: IntlShape, stepId: StepID, stepConfig: StepConfigInterface): StepConfigItemTexts => {
@@ -19,10 +18,9 @@ export const getStepTexts = (intl: IntlShape, stepId: StepID, stepConfig: StepCo
     };
 };
 
-export const nårKanManFåUtbetaltOmsorgspengerAvailable = (formData: SøknadFormData) => welcomingPageIsValid(formData);
+export const situasjonStepIsAvailable = (formData: SøknadFormData) => welcomingPageIsValid(formData);
 
-export const harUtbetaltDeFørsteTiDagene = (formData: SøknadFormData) =>
-    nårKanManFåUtbetaltOmsorgspengerPageIsValid(formData);
+export const harUtbetaltDeFørsteTiDagene = (formData: SøknadFormData) => situasjonStepIsValid(formData);
 
 export const periodeAvailable = (formData: SøknadFormData) => harUtbetaltDeFørsteTiDagenePageIsValid(formData);
 
