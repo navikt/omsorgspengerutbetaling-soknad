@@ -57,9 +57,9 @@ export interface VirksomhetApiData {
         oppstartsdato: ApiStringDate;
     };
     varigEndring?: {
-        dato?: ApiStringDate | null;
-        inntektEtterEndring?: number;
-        forklaring?: string;
+        dato: ApiStringDate;
+        inntektEtterEndring: number;
+        forklaring: string;
     };
     regnskapsfører?: {
         navn: string;
