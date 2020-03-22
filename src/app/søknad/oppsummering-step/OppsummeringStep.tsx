@@ -29,6 +29,7 @@ import SøknadFormComponents from '../SøknadFormComponents';
 import FormikStep from '../SøknadStep';
 import FrilansSummary from './components/FrilansSummary';
 import { renderUtenlandsoppholdIPeriodenSummary } from './components/renderUtenlandsoppholdSummary';
+import SelvstendigSummary from "./components/SelvstendigSummary";
 
 interface Props {
     onApplicationSent: (apiValues: SøknadApiData, søkerdata: Søkerdata) => void;
@@ -116,6 +117,30 @@ const navnOgFødselsenummer = (
     </Box>
 );
 
+const medlemskap = (intl: IntlShape, apiValues: SøknadApiData) => {
+
+    const {bosteder} = apiValues;
+
+    return (
+        <div>
+            {bosteder.length > 0 && (
+                <Box margin="l">
+                    <ContentWithHeader
+                        header={intlHelper(
+                            intl,
+                            'steg.oppsummering.utlandetSiste12.liste.header'
+                        )}>
+                        <SummaryList
+                            items={bosteder}
+                            itemRenderer={renderUtenlandsoppholdIPeriodenSummary}
+                        />
+                    </ContentWithHeader>
+                </Box>
+            )}
+        </div>
+    )
+};
+
 const OppsummeringStep: React.StatelessComponent<Props> = ({ onApplicationSent }) => {
     const intl = useIntl();
     const { values } = useFormikContext<SøknadFormData>();
@@ -174,6 +199,10 @@ const OppsummeringStep: React.StatelessComponent<Props> = ({ onApplicationSent }
                     {utenlandsopphold(intl, apiValues)}
 
                     <FrilansSummary apiValues={apiValues} />
+
+                    <SelvstendigSummary apiValues={apiValues}/>
+
+                    {medlemskap(intl, apiValues)}
                 </Panel>
             </Box>
 
