@@ -15,7 +15,7 @@ spec:
         periodSeconds: 5
         failureThreshold: 10
     readiness:
-        path: {{ rootpath }}{{ path }}/health/isReady
+        # path: {{ rootpath }}{{ path }}/health/isReady
         initialDelay: 20
         timeout: 1
     resources:
