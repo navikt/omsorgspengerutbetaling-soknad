@@ -19,7 +19,10 @@ import { StepID } from '../../config/stepConfig';
 import { SøkerdataContext } from '../../context/SøkerdataContext';
 import { Søkerdata } from '../../types/Søkerdata';
 import {
-    SøknadApiData, Utbetalingsperiode, UtbetalingsperiodeMedVedlegg, YesNoSpørsmålOgSvar
+    SøknadApiData,
+    Utbetalingsperiode,
+    UtbetalingsperiodeMedVedlegg,
+    YesNoSpørsmålOgSvar
 } from '../../types/SøknadApiData';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import * as apiUtils from '../../utils/apiUtils';
@@ -29,11 +32,21 @@ import SøknadFormComponents from '../SøknadFormComponents';
 import FormikStep from '../SøknadStep';
 import FrilansSummary from './components/FrilansSummary';
 import { renderUtenlandsoppholdIPeriodenSummary } from './components/renderUtenlandsoppholdSummary';
-import SelvstendigSummary from "./components/SelvstendigSummary";
+import SelvstendigSummary from './components/SelvstendigSummary';
+import bemUtils from 'common/utils/bemUtils';
 
 interface Props {
     onApplicationSent: (apiValues: SøknadApiData, søkerdata: Søkerdata) => void;
 }
+
+const booleanToSvarString = (bool: boolean): string => {
+    switch (bool) {
+        case true:
+            return 'Ja';
+        case false:
+            return 'Nei';
+    }
+};
 
 const spørsmålOgSvarView = (yesNoSpørsmålOgSvar: YesNoSpørsmålOgSvar[]) => (
     <Box margin={'xl'}>
@@ -43,7 +56,7 @@ const spørsmålOgSvarView = (yesNoSpørsmålOgSvar: YesNoSpørsmålOgSvar[]) =>
                     return (
                         <Box margin={'s'} key={`spørsmålOgSvarView${index}`}>
                             <span>{sporsmål.spørsmål}:</span>
-                            <b> {sporsmål.svar}</b>
+                            <b> {booleanToSvarString(sporsmål.svar)} </b>
                         </Box>
                     );
                 })}
@@ -57,35 +70,39 @@ const partialTimeIsTime = (partialTime: Partial<Time>): partialTime is Time => {
 };
 
 const utbetalingsperioderView = (utbetalingsperioder: Utbetalingsperiode[], intl: IntlShape) => {
+    const bem = bemUtils('summaryList');
+
     return (
         <Box margin={'xl'}>
             <ContentWithHeader header={'Perioder som det søkes om utbetaling for'}>
                 <div>
-                    {utbetalingsperioder.length === 0 && <div>Ingen perioder oppgitt.</div> // TODO: Det skal ikke være mulig å komme til oppsummeringen uten å ha spesifisert noen utbetalingsperioder.
-                    }
-                    {utbetalingsperioder.map((utbetalingsperiode: UtbetalingsperiodeMedVedlegg, index: number) => {
-                        const duration = utbetalingsperiode.lengde;
+                    <ul className={bem.classNames(bem.block)}>
+                        {utbetalingsperioder.length === 0 && <div>Ingen perioder oppgitt.</div> // TODO: Det skal ikke være mulig å komme til oppsummeringen uten å ha spesifisert noen utbetalingsperioder.
+                        }
+                        {utbetalingsperioder.map((utbetalingsperiode: UtbetalingsperiodeMedVedlegg, index: number) => {
+                            const duration = utbetalingsperiode.lengde;
 
-                        const maybeTime: Partial<Time> | undefined = duration
-                            ? iso8601DurationToTime(duration)
-                            : undefined;
+                            const maybeTime: Partial<Time> | undefined = duration
+                                ? iso8601DurationToTime(duration)
+                                : undefined;
 
-                        return (
-                            <Box margin={'s'} key={`utbetalingsperioderView${index}`}>
-                                {maybeTime && partialTimeIsTime(maybeTime) ? (
-                                    <>
-                                        Dato: {prettifyDate(apiStringDateToDate(utbetalingsperiode.fraOgMed))}. Antall
-                                        timer: {timeToString(maybeTime, intl)}.
-                                    </>
-                                ) : (
-                                    <>
-                                        Fra og med {prettifyDate(apiStringDateToDate(utbetalingsperiode.fraOgMed))}, til
-                                        og med {prettifyDate(apiStringDateToDate(utbetalingsperiode.tilOgMed))}.
-                                    </>
-                                )}
-                            </Box>
-                        );
-                    })}
+                            return (
+                                <li className={bem.element('item')} key={`utbetalingsperioderView${index}`}>
+                                    {maybeTime && partialTimeIsTime(maybeTime) ? (
+                                        <>
+                                            Dato: {prettifyDate(apiStringDateToDate(utbetalingsperiode.fraOgMed))}.
+                                            Antall timer: {timeToString(maybeTime, intl)}.
+                                        </>
+                                    ) : (
+                                        <>
+                                            Fra og med {prettifyDate(apiStringDateToDate(utbetalingsperiode.fraOgMed))},
+                                            til og med {prettifyDate(apiStringDateToDate(utbetalingsperiode.tilOgMed))}.
+                                        </>
+                                    )}
+                                </li>
+                            );
+                        })}
+                    </ul>
                 </div>
             </ContentWithHeader>
         </Box>
@@ -118,27 +135,20 @@ const navnOgFødselsenummer = (
 );
 
 const medlemskap = (intl: IntlShape, apiValues: SøknadApiData) => {
-
-    const {bosteder} = apiValues;
+    const { bosteder } = apiValues;
 
     return (
         <div>
             {bosteder.length > 0 && (
                 <Box margin="l">
                     <ContentWithHeader
-                        header={intlHelper(
-                            intl,
-                            'steg.oppsummering.utlandetSiste12.liste.header'
-                        )}>
-                        <SummaryList
-                            items={bosteder}
-                            itemRenderer={renderUtenlandsoppholdIPeriodenSummary}
-                        />
+                        header={intlHelper(intl, 'steg.medlemsskap.annetLandSisteOgNeste12.listeTittel')}>
+                        <SummaryList items={bosteder} itemRenderer={renderUtenlandsoppholdIPeriodenSummary} />
                     </ContentWithHeader>
                 </Box>
             )}
         </div>
-    )
+    );
 };
 
 const OppsummeringStep: React.StatelessComponent<Props> = ({ onApplicationSent }) => {
@@ -200,7 +210,7 @@ const OppsummeringStep: React.StatelessComponent<Props> = ({ onApplicationSent }
 
                     <FrilansSummary apiValues={apiValues} />
 
-                    <SelvstendigSummary apiValues={apiValues}/>
+                    <SelvstendigSummary apiValues={apiValues} />
 
                     {medlemskap(intl, apiValues)}
                 </Panel>
