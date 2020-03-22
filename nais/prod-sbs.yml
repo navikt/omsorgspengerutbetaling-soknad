@@ -15,7 +15,7 @@ spec:
         periodSeconds: 5
         failureThreshold: 10
     readiness:
-        # path: {{ rootpath }}{{ path }}/health/isReady
+        path: {{ rootpath }}{{ path }}/health/isReady
         initialDelay: 20
         timeout: 1
     resources:
@@ -26,7 +26,7 @@ spec:
             cpu: 50m
             memory: 128Mi
     ingresses:
-        - https://www.nav.no{{ rootpath }}{{ path }}
+        # - https://www.nav.no{{ rootpath }}{{ path }}
         - https://{{ path }}.nais.oera.no
     replicas:
         min: 1
