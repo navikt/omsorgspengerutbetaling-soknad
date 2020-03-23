@@ -5,14 +5,14 @@ import DatoSvar, { prettifyApiDate } from './DatoSvar';
 import IntlLabelValue from './IntlLabelValue';
 import JaNeiSvar from './JaNeiSvar';
 import SummaryBlock from './SummaryBlock';
-import {SøknadApiData, VirksomhetApiData} from "../../../types/SøknadApiData";
-import {getCountryName} from "common/utils/countryUtils";
-import intlHelper from "common/utils/intlUtils";
-import {harFiskerNæringstype} from "../../../utils/formToApiMaps/mapVirksomhetToApiData";
-import TextareaSummary from "common/components/textarea-summary/TextareaSummary";
-import SummaryList from "common/components/summary-list/SummaryList";
-import TallSvar from "./TallSvar";
-import Sitat from "./Sitat";
+import { SøknadApiData, VirksomhetApiData } from '../../../types/SøknadApiData';
+import { getCountryName } from 'common/utils/countryUtils';
+import intlHelper from 'common/utils/intlUtils';
+import { harFiskerNæringstype } from '../../../utils/formToApiMaps/mapVirksomhetToApiData';
+import TextareaSummary from 'common/components/textarea-summary/TextareaSummary';
+import SummaryList from 'common/components/summary-list/SummaryList';
+import TallSvar from './TallSvar';
+import Sitat from './Sitat';
 
 interface Props {
     apiValues: SøknadApiData;
@@ -40,8 +40,7 @@ const renderVirksomhetSummary = (virksomhet: VirksomhetApiData, intl: IntlShape)
             )}
             <p>
                 Registrert i {land}
-                {virksomhet.registrertINorge ? ` (organisasjonsnummer ${virksomhet.organisasjonsnummer})` : ``}.{' '}
-                <br />
+                {virksomhet.registrertINorge ? ` (organisasjonsnummer ${virksomhet.organisasjonsnummer})` : ``}. <br />
                 {tidsinfo}
             </p>
             {virksomhet.varigEndring?.dato && (
@@ -57,8 +56,7 @@ const renderVirksomhetSummary = (virksomhet: VirksomhetApiData, intl: IntlShape)
             )}
             {virksomhet.yrkesaktivSisteTreFerdigliknedeÅrene?.oppstartsdato !== undefined && (
                 <p>
-                    Ble yrkesaktiv{' '}
-                    <DatoSvar apiDato={virksomhet.yrkesaktivSisteTreFerdigliknedeÅrene?.oppstartsdato} />
+                    Ble yrkesaktiv <DatoSvar apiDato={virksomhet.yrkesaktivSisteTreFerdigliknedeÅrene?.oppstartsdato} />
                 </p>
             )}
 
@@ -74,7 +72,7 @@ const renderVirksomhetSummary = (virksomhet: VirksomhetApiData, intl: IntlShape)
                 </p>
             )}
             {/* Revisor */}
-            { virksomhet.revisor && (
+            {virksomhet.revisor && (
                 <p>
                     Revisor er
                     <FormattedMessage
@@ -91,17 +89,13 @@ const renderVirksomhetSummary = (virksomhet: VirksomhetApiData, intl: IntlShape)
                 </p>
             )}
             {/** Har hverken revisor eller regnskapsfører */}
-            {!virksomhet.regnskapsfører && !virksomhet.revisor && (
-                <p>Har ikke regnskapsfører eller revisor.</p>
-            )}
+            {!virksomhet.regnskapsfører && !virksomhet.revisor && <p>Har ikke regnskapsfører eller revisor.</p>}
         </SummaryBlock>
     );
 };
 
 const SelvstendigSummary: React.FunctionComponent<Props> = (props) => {
-    const {
-        selvstendigVirksomheter
-    } = props.apiValues;
+    const { selvstendigVirksomheter } = props.apiValues;
     const intl = useIntl();
     const harSelvstendigVirksomheter = selvstendigVirksomheter.length > 0;
     return (
