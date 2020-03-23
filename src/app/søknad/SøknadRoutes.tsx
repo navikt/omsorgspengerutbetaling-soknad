@@ -43,10 +43,12 @@ function SøknadRoutes({ lastStepID }: SøknadRoutes) {
 
     const history = useHistory();
 
-    if (location.pathname === RouteConfig.WELCOMING_PAGE_ROUTE && lastStepID) {
+    if (history.location.pathname === RouteConfig.WELCOMING_PAGE_ROUTE && lastStepID) {
         const nextStepRoute = getNextStepRoute(lastStepID, values);
         if (nextStepRoute) {
-            navigateTo(nextStepRoute, history);
+            setTimeout(() => {
+                navigateTo(nextStepRoute, history);
+            });
         }
     }
 

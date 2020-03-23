@@ -1,6 +1,7 @@
 import { Næringstype } from '@navikt/sif-common-forms/lib';
 import { ApiStringDate } from 'common/types/ApiStringDate';
 import { Locale } from 'common/types/Locale';
+import { Fosterbarn } from './SøknadFormData';
 
 export type ISO8601Duration = string;
 
@@ -79,6 +80,7 @@ export interface SøknadApiData {
         harForståttRettigheterOgPlikter: boolean;
     };
     spørsmål: YesNoSpørsmålOgSvar[];
+    fosterbarn?: Fosterbarn[];
     utbetalingsperioder: Utbetalingsperiode[]; // perioder
     opphold: UtenlandsoppholdApiData[]; // hvis ja på har oppholdt seg i utlandet
     bosteder: UtenlandsoppholdApiData[]; // medlemskap-siden

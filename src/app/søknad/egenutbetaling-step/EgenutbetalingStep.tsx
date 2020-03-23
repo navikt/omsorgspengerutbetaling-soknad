@@ -30,7 +30,7 @@ const EgenutbetalingStep = ({ onValidSubmit }: StepConfigProps) => {
                     validate={validateYesOrNoIsAnswered}
                 />
             </FormBlock>
-            {visibility.isVisible(SøknadFormField.innvilget_utvidet_rett) && (
+            {visibility.isVisible(SøknadFormField.fisker_på_blad_B) && (
                 <>
                     <FormBlock>
                         <AlertStripeInfo>
@@ -41,37 +41,12 @@ const EgenutbetalingStep = ({ onValidSubmit }: StepConfigProps) => {
                     </FormBlock>
                     <FormBlock>
                         <SøknadFormComponents.YesOrNoQuestion
-                            name={SøknadFormField.innvilget_utvidet_rett}
-                            legend={intlHelper(
-                                intl,
-                                'step.har_utbetalt_de_første_ti_dagene.innvilget_utvidet_rett.spm'
-                            )}
+                            name={SøknadFormField.fisker_på_blad_B}
+                            legend={intlHelper(intl, 'step.har_utbetalt_de_første_ti_dagene.fisker_på_blad_B.spm')}
                             validate={validateYesOrNoIsAnswered}
-                            info="Som hovedregel må selvstendig næringsdrivende og frilansere dekke de 3 første omsorgsdagene selv. I noen tilfeller kan du få utbetaling fra 1. dag. Hvis du skal få utbetalt fra 1. dag må en av de neste punktene gjelde deg."
                         />
                     </FormBlock>
                 </>
-            )}
-            {visibility.isVisible(SøknadFormField.ingen_andre_barn_under_tolv) && (
-                <FormBlock>
-                    <SøknadFormComponents.YesOrNoQuestion
-                        name={SøknadFormField.ingen_andre_barn_under_tolv}
-                        legend={intlHelper(
-                            intl,
-                            'step.har_utbetalt_de_første_ti_dagene.ingen_andre_barn_under_tolv.spm'
-                        )}
-                        validate={validateYesOrNoIsAnswered}
-                    />
-                </FormBlock>
-            )}
-            {visibility.isVisible(SøknadFormField.fisker_på_blad_B) && (
-                <FormBlock>
-                    <SøknadFormComponents.YesOrNoQuestion
-                        name={SøknadFormField.fisker_på_blad_B}
-                        legend={intlHelper(intl, 'step.har_utbetalt_de_første_ti_dagene.fisker_på_blad_B.spm')}
-                        validate={validateYesOrNoIsAnswered}
-                    />
-                </FormBlock>
             )}
             {visibility.isVisible(SøknadFormField.frivillig_forsikring) && (
                 <FormBlock>
@@ -89,6 +64,28 @@ const EgenutbetalingStep = ({ onValidSubmit }: StepConfigProps) => {
                         legend={intlHelper(
                             intl,
                             'step.har_utbetalt_de_første_ti_dagene.nettop_startet_selvstendig_frilanser.spm'
+                        )}
+                        validate={validateYesOrNoIsAnswered}
+                    />
+                </FormBlock>
+            )}
+            {visibility.isVisible(SøknadFormField.innvilget_utvidet_rett) && (
+                <FormBlock>
+                    <SøknadFormComponents.YesOrNoQuestion
+                        name={SøknadFormField.innvilget_utvidet_rett}
+                        legend={intlHelper(intl, 'step.har_utbetalt_de_første_ti_dagene.innvilget_utvidet_rett.spm')}
+                        validate={validateYesOrNoIsAnswered}
+                        info="Som hovedregel må selvstendig næringsdrivende og frilansere dekke de 3 første omsorgsdagene selv. I noen tilfeller kan du få utbetaling fra 1. dag. Hvis du skal få utbetalt fra 1. dag må en av de neste punktene gjelde deg."
+                    />
+                </FormBlock>
+            )}
+            {visibility.isVisible(SøknadFormField.ingen_andre_barn_under_tolv) && (
+                <FormBlock>
+                    <SøknadFormComponents.YesOrNoQuestion
+                        name={SøknadFormField.ingen_andre_barn_under_tolv}
+                        legend={intlHelper(
+                            intl,
+                            'step.har_utbetalt_de_første_ti_dagene.ingen_andre_barn_under_tolv.spm'
                         )}
                         validate={validateYesOrNoIsAnswered}
                     />

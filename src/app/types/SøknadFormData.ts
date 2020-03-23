@@ -4,16 +4,20 @@ import { Virksomhet } from '@navikt/sif-common-forms/lib/virksomhet/types';
 import { YesOrNo } from 'common/types/YesOrNo';
 import { FraværDelerAvDag, Periode } from '../../@types/omsorgspengerutbetaling-schema';
 
+export interface Fosterbarn {
+    id?: string;
+    fødselsnummer: string;
+    fornavn: string;
+    etternavn: string;
+}
+
 export enum SøknadFormField {
     harForståttRettigheterOgPlikter = 'harForståttRettigheterOgPlikter',
     harBekreftetOpplysninger = 'harBekreftetOpplysninger',
 
     // STEG 1: Kvalifisering
-    tre_eller_fler_barn = 'tre_eller_fler_barn',
-    alene_om_omsorg_for_barn = 'alene_om_omsorg_for_barn',
-    rett_til_mer_enn_ti_dager_totalt = 'rett_til_mer_enn_ti_dager_totalt',
-    den_andre_forelderen_ikke_kan_ta_seg_av_barnet = 'den_andre_forelderen_ikke_kan_ta_seg_av_barnet',
-    har_barn_som_har_kronisk_sykdom_eller_funksjonshemming = 'har_barn_som_har_kronisk_sykdom_eller_funksjonshemming',
+    har_fosterbarn = 'har_fosterbarn',
+    fosterbarn = 'fosterbarn',
 
     // STEG 2: Har betalt ut 10 første dager
     har_utbetalt_ti_dager = 'har_utbetalt_ti_dager',
@@ -58,11 +62,8 @@ export interface SøknadFormData {
     [SøknadFormField.harBekreftetOpplysninger]: boolean;
 
     // STEG 1: Kvalifisering
-    [SøknadFormField.tre_eller_fler_barn]: YesOrNo;
-    [SøknadFormField.alene_om_omsorg_for_barn]: YesOrNo;
-    [SøknadFormField.rett_til_mer_enn_ti_dager_totalt]: YesOrNo;
-    [SøknadFormField.den_andre_forelderen_ikke_kan_ta_seg_av_barnet]: YesOrNo;
-    [SøknadFormField.har_barn_som_har_kronisk_sykdom_eller_funksjonshemming]: YesOrNo;
+    [SøknadFormField.har_fosterbarn]: YesOrNo;
+    [SøknadFormField.fosterbarn]?: Fosterbarn[];
 
     // STEG 2: Har betalt ut 10 første dager
     [SøknadFormField.har_utbetalt_ti_dager]: YesOrNo;
@@ -108,11 +109,8 @@ export const initialValues: SøknadFormData = {
     [SøknadFormField.harBekreftetOpplysninger]: false,
 
     // STEG 1: Kvalifisering
-    [SøknadFormField.tre_eller_fler_barn]: YesOrNo.UNANSWERED,
-    [SøknadFormField.alene_om_omsorg_for_barn]: YesOrNo.UNANSWERED,
-    [SøknadFormField.rett_til_mer_enn_ti_dager_totalt]: YesOrNo.UNANSWERED,
-    [SøknadFormField.den_andre_forelderen_ikke_kan_ta_seg_av_barnet]: YesOrNo.UNANSWERED,
-    [SøknadFormField.har_barn_som_har_kronisk_sykdom_eller_funksjonshemming]: YesOrNo.UNANSWERED,
+    [SøknadFormField.har_fosterbarn]: YesOrNo.UNANSWERED,
+    [SøknadFormField.fosterbarn]: [],
 
     // STEG 2: Har betalt ut 10 første dager
     [SøknadFormField.har_utbetalt_ti_dager]: YesOrNo.UNANSWERED,
