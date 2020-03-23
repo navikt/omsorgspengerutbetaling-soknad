@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { useIntl } from 'react-intl';
+import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
 import { validateYesOrNoIsAnswered } from '@navikt/sif-common-core/lib/validation/fieldValidations';
 import { useFormikContext } from 'formik';
-import { AlertStripeInfo } from 'nav-frontend-alertstriper';
+import { AlertStripeAdvarsel, AlertStripeInfo } from 'nav-frontend-alertstriper';
 import CounsellorPanel from 'common/components/counsellor-panel/CounsellorPanel';
 import FormBlock from 'common/components/form-block/FormBlock';
 import intlHelper from 'common/utils/intlUtils';
@@ -17,11 +18,17 @@ const EgenutbetalingStep = ({ onValidSubmit }: StepConfigProps) => {
     const { values } = useFormikContext<SøknadFormData>();
 
     const visibility = HarUtbetaltFørsteTiDagerConfiguestions.getVisbility(values);
+
+    const harBareSvartNei =
+        values.fisker_på_blad_B === YesOrNo.NO &&
+        values.frivillig_forsikring === YesOrNo.NO &&
+        values.nettop_startet_selvstendig_frilanser === YesOrNo.NO &&
+        values.innvilget_utvidet_rett === YesOrNo.NO;
+
+    const showSubmitButton = visibility.areAllQuestionsAnswered() && harBareSvartNei === false;
+
     return (
-        <SøknadStep
-            id={StepID.EGENUTBETALING}
-            onValidFormSubmit={onValidSubmit}
-            showSubmitButton={visibility.areAllQuestionsAnswered()}>
+        <SøknadStep id={StepID.EGENUTBETALING} onValidFormSubmit={onValidSubmit} showSubmitButton={showSubmitButton}>
             <CounsellorPanel>{intlHelper(intl, 'step.egenutbetaling.counsellorpanel.content')}</CounsellorPanel>
             <FormBlock>
                 <SøknadFormComponents.YesOrNoQuestion
@@ -88,6 +95,13 @@ const EgenutbetalingStep = ({ onValidSubmit }: StepConfigProps) => {
                         )}
                         validate={validateYesOrNoIsAnswered}
                     />
+                </FormBlock>
+            )}
+            {harBareSvartNei && (
+                <FormBlock>
+                    <AlertStripeAdvarsel>
+                        Hvis du skal få utbetalt fra 1. dag må en av punktene over gjelde for deg.
+                    </AlertStripeAdvarsel>
                 </FormBlock>
             )}
         </SøknadStep>
