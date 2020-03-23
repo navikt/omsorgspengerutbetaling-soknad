@@ -9,7 +9,7 @@ import intlHelper from 'common/utils/intlUtils';
 import { StepConfigProps, StepID } from '../../config/stepConfig';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import SøknadFormComponents from '../SøknadFormComponents';
-import FormikStep from '../SøknadStep';
+import SøknadStep from '../SøknadStep';
 import { HarUtbetaltFørsteTiDagerConfiguestions } from './config';
 
 const EgenutbetalingStep = ({ onValidSubmit }: StepConfigProps) => {
@@ -18,7 +18,7 @@ const EgenutbetalingStep = ({ onValidSubmit }: StepConfigProps) => {
 
     const visibility = HarUtbetaltFørsteTiDagerConfiguestions.getVisbility(values);
     return (
-        <FormikStep
+        <SøknadStep
             id={StepID.EGENUTBETALING}
             onValidFormSubmit={onValidSubmit}
             showSubmitButton={visibility.areAllQuestionsAnswered()}>
@@ -94,7 +94,7 @@ const EgenutbetalingStep = ({ onValidSubmit }: StepConfigProps) => {
                     />
                 </FormBlock>
             )}
-        </FormikStep>
+        </SøknadStep>
     );
 };
 

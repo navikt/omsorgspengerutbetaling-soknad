@@ -16,13 +16,13 @@ import { StepConfigProps, StepID } from '../../config/stepConfig';
 import getLenker from '../../lenker';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import SøknadFormComponents from '../SøknadFormComponents';
-import FormikStep from '../SøknadStep';
+import SøknadStep from '../SøknadStep';
 
 const MedlemsskapStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) => {
     const intl = useIntl();
     const { values } = useFormikContext<SøknadFormData>();
     return (
-        <FormikStep id={StepID.MEDLEMSKAP} onValidFormSubmit={onValidSubmit}>
+        <SøknadStep id={StepID.MEDLEMSKAP} onValidFormSubmit={onValidSubmit}>
             <CounsellorPanel>
                 Medlemskap i folketrygden er nøkkelen til rettigheter fra NAV. Hvis du bor eller jobber i Norge er du
                 vanligvis medlem. Du kan lese mer om medlemskap på{' '}
@@ -75,7 +75,7 @@ const MedlemsskapStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubm
                     />
                 </FormBlock>
             )}
-        </FormikStep>
+        </SøknadStep>
     );
 };
 

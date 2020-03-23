@@ -9,7 +9,7 @@ import FormikFileUploader from '../../components/formik-file-uploader/FormikFile
 import { StepConfigProps, StepID } from '../../config/stepConfig';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import { navigateToLoginPage } from '../../utils/navigationUtils';
-import FormikStep from '../SøknadStep';
+import SøknadStep from '../SøknadStep';
 import LegeerklæringFileList from './components/LegeerklæringAttachmentList';
 
 const LegeerklæringStep = ({ onValidSubmit }: StepConfigProps) => {
@@ -19,7 +19,7 @@ const LegeerklæringStep = ({ onValidSubmit }: StepConfigProps) => {
     const hasPendingUploads: boolean = (values.legeerklæring || []).find((a) => a.pending === true) !== undefined;
 
     return (
-        <FormikStep
+        <SøknadStep
             id={StepID.LEGEERKLÆRING}
             onValidFormSubmit={onValidSubmit}
             useValidationErrorSummary={false}
@@ -40,7 +40,7 @@ const LegeerklæringStep = ({ onValidSubmit }: StepConfigProps) => {
             </Box>
             <FileUploadErrors filesThatDidntGetUploaded={filesThatDidntGetUploaded} />
             <LegeerklæringFileList wrapNoAttachmentsInBox={true} includeDeletionFunctionality={true} />
-        </FormikStep>
+        </SøknadStep>
     );
 };
 

@@ -11,6 +11,7 @@ import Panel from 'nav-frontend-paneler';
 import { Normaltekst } from 'nav-frontend-typografi';
 import SummaryList from 'common/components/summary-list/SummaryList';
 import { Time } from 'common/types/Time';
+import bemUtils from 'common/utils/bemUtils';
 import { apiStringDateToDate, prettifyDate } from 'common/utils/dateUtils';
 import { iso8601DurationToTime, timeToString } from 'common/utils/timeUtils';
 import { sendApplication } from '../../api/api';
@@ -19,21 +20,17 @@ import { StepID } from '../../config/stepConfig';
 import { SøkerdataContext } from '../../context/SøkerdataContext';
 import { Søkerdata } from '../../types/Søkerdata';
 import {
-    SøknadApiData,
-    Utbetalingsperiode,
-    UtbetalingsperiodeMedVedlegg,
-    YesNoSpørsmålOgSvar
+    SøknadApiData, Utbetalingsperiode, UtbetalingsperiodeMedVedlegg, YesNoSpørsmålOgSvar
 } from '../../types/SøknadApiData';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import * as apiUtils from '../../utils/apiUtils';
 import { mapFormDataToApiData } from '../../utils/mapFormDataToApiData';
 import { navigateTo, navigateToLoginPage } from '../../utils/navigationUtils';
 import SøknadFormComponents from '../SøknadFormComponents';
-import FormikStep from '../SøknadStep';
+import SøknadStep from '../SøknadStep';
 import FrilansSummary from './components/FrilansSummary';
 import { renderUtenlandsoppholdIPeriodenSummary } from './components/renderUtenlandsoppholdSummary';
 import SelvstendigSummary from './components/SelvstendigSummary';
-import bemUtils from 'common/utils/bemUtils';
 
 interface Props {
     onApplicationSent: (apiValues: SøknadApiData, søkerdata: Søkerdata) => void;
@@ -182,10 +179,9 @@ const OppsummeringStep: React.StatelessComponent<Props> = ({ onApplicationSent }
     } = søkerdata;
 
     const apiValues: SøknadApiData = mapFormDataToApiData(values, intl);
-    // const apiValues: SøknadApiData = mock1;
 
     return (
-        <FormikStep
+        <SøknadStep
             id={StepID.OPPSUMMERING}
             onValidFormSubmit={() => {
                 setTimeout(() => {
@@ -231,7 +227,7 @@ const OppsummeringStep: React.StatelessComponent<Props> = ({ onApplicationSent }
                     }}
                 />
             </Box>
-        </FormikStep>
+        </SøknadStep>
     );
 };
 

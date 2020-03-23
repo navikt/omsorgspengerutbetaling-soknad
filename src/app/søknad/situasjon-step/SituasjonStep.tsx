@@ -8,7 +8,7 @@ import intlHelper from 'common/utils/intlUtils';
 import { StepConfigProps, StepID } from '../../config/stepConfig';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import SøknadFormComponents from '../SøknadFormComponents';
-import FormikStep from '../SøknadStep';
+import SøknadStep from '../SøknadStep';
 import { SituasjonStepQuestions } from './config';
 
 const HvaErDinSituasjon = ({ onValidSubmit }: StepConfigProps) => {
@@ -16,7 +16,7 @@ const HvaErDinSituasjon = ({ onValidSubmit }: StepConfigProps) => {
     const { values } = useFormikContext<SøknadFormData>();
     const visibility = SituasjonStepQuestions.getVisbility(values);
     return (
-        <FormikStep
+        <SøknadStep
             id={StepID.SITUASJON}
             onValidFormSubmit={onValidSubmit}
             showSubmitButton={visibility.areAllQuestionsAnswered()}>
@@ -68,7 +68,7 @@ const HvaErDinSituasjon = ({ onValidSubmit }: StepConfigProps) => {
                     />
                 </FormBlock>
             )}
-        </FormikStep>
+        </SøknadStep>
     );
 };
 

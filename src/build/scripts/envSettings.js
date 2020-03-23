@@ -8,7 +8,8 @@ function createEnvSettingsFile(settingsFile) {
                 API_URL: '${process.env.API_URL}',
                 LOGIN_URL: '${process.env.LOGIN_URL}',
                 PUBLIC_PATH: '${process.env.PUBLIC_PATH}',
-                UTILGJENGELIG: '${process.env.UTILGJENGELIG}'
+                UTILGJENGELIG: '${process.env.UTILGJENGELIG}',
+                MELLOMLAGRING: '${process.env.MELLOMLAGRING}',
             };`
         );
     });
