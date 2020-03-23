@@ -69,3 +69,16 @@ jobs:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-sbs
           RESOURCE: nais/dev-sbs.yml
+
+  deploy-prod:
+    name: deploy-prod
+    if: startsWith(github.ref, 'refs/heads/master')
+    needs: build-code-and-push-docker # Depends on build-code-and-push-docker job
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: nais/deploy/actions/deploy@v1
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: prod-sbs
+          RESOURCE: nais/prod-sbs.yml
