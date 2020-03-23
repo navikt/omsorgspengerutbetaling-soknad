@@ -10,13 +10,13 @@ import { StepConfigProps, StepID } from '../../config/stepConfig';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import SøknadFormComponents from '../SøknadFormComponents';
 import SøknadStep from '../SøknadStep';
-import { HarUtbetaltFørsteTiDagerConfiguestions } from './config';
+import { EgenutbetalingQuestions } from './config';
 
 const EgenutbetalingStep = ({ onValidSubmit }: StepConfigProps) => {
     const intl = useIntl();
     const { values } = useFormikContext<SøknadFormData>();
 
-    const visibility = HarUtbetaltFørsteTiDagerConfiguestions.getVisbility(values);
+    const visibility = EgenutbetalingQuestions.getVisbility(values);
 
     const showSubmitButton = visibility.areAllQuestionsAnswered();
 

@@ -5,7 +5,7 @@ import { yesOrNoIsAnswered } from '../../utils/yesOrNoIsAnswered';
 
 const Q = SøknadFormField;
 
-const HarUtbetaltFørsteTiDagerConfig: QuestionConfig<SøknadFormData, SøknadFormField> = {
+const EgenutbetalingConfig: QuestionConfig<SøknadFormData, SøknadFormField> = {
     [Q.fisker_på_blad_B]: {
         visibilityFilter: ({ har_utbetalt_ti_dager }) => har_utbetalt_ti_dager === YesOrNo.NO,
         isAnswered: ({ fisker_på_blad_B }) => yesOrNoIsAnswered(fisker_på_blad_B)
@@ -35,6 +35,4 @@ const HarUtbetaltFørsteTiDagerConfig: QuestionConfig<SøknadFormData, SøknadFo
     }
 };
 
-export const HarUtbetaltFørsteTiDagerConfiguestions = Questions<SøknadFormData, SøknadFormField>(
-    HarUtbetaltFørsteTiDagerConfig
-);
+export const EgenutbetalingQuestions = Questions<SøknadFormData, SøknadFormField>(EgenutbetalingConfig);

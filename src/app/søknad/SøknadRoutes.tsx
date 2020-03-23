@@ -69,7 +69,13 @@ function SøknadRoutes({ lastStepID }: SøknadRoutes) {
                     <WelcomingPage
                         onValidSubmit={() =>
                             setTimeout(() => {
-                                navigateTo(`${RouteConfig.SØKNAD_ROUTE_PREFIX}/${StepID.SITUASJON}`, history);
+                                if (isFeatureEnabled(Feature.MELLOMLAGRING)) {
+                                    SøknadTempStorage.persist(values, StepID.SITUASJON).then(() => {
+                                        navigateTo(`${RouteConfig.SØKNAD_ROUTE_PREFIX}/${StepID.SITUASJON}`, history);
+                                    });
+                                } else {
+                                    navigateTo(`${RouteConfig.SØKNAD_ROUTE_PREFIX}/${StepID.SITUASJON}`, history);
+                                }
                             })
                         }
                     />

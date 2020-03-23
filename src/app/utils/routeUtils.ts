@@ -1,9 +1,8 @@
 import RouteConfig from '../config/routeConfig';
 import { getStepConfig, StepID } from '../config/stepConfig';
 import { SøknadFormData, SøknadFormField } from '../types/SøknadFormData';
-import { appIsRunningInDevEnvironment } from './envUtils';
 import {
-    harUtbetaltDeFørsteTiDagene, inntektStepAvailable, medlemskapStepAvailable, periodeAvailable,
+    egenutbetalingIsAvailable, inntektStepAvailable, medlemskapStepAvailable, periodeAvailable,
     situasjonStepIsAvailable, summaryStepAvailable
 } from './stepUtils';
 
@@ -20,25 +19,21 @@ export const getNextStepRoute = (stepId: StepID, formData?: SøknadFormData): st
 };
 
 export const isAvailable = (path: StepID | RouteConfig, values: SøknadFormData) => {
-    if (!appIsRunningInDevEnvironment()) {
-        switch (path) {
-            case StepID.SITUASJON:
-                return situasjonStepIsAvailable(values);
-            case StepID.EGENUTBETALING:
-                return harUtbetaltDeFørsteTiDagene(values);
-            case StepID.PERIODE:
-                return periodeAvailable(values);
-            // case StepID.LEGEERKLÆRING:
-            //     return legeerklæringStepAvailable(values);
-            case StepID.INNTEKT:
-                return inntektStepAvailable(values);
-            case StepID.MEDLEMSKAP:
-                return medlemskapStepAvailable(values);
-            case StepID.OPPSUMMERING:
-                return summaryStepAvailable(values);
-            case RouteConfig.SØKNAD_SENDT_ROUTE:
-                return values[SøknadFormField.harBekreftetOpplysninger];
-        }
+    switch (path) {
+        case StepID.SITUASJON:
+            return situasjonStepIsAvailable(values);
+        case StepID.EGENUTBETALING:
+            return egenutbetalingIsAvailable(values);
+        case StepID.PERIODE:
+            return periodeAvailable(values);
+        case StepID.INNTEKT:
+            return inntektStepAvailable(values);
+        case StepID.MEDLEMSKAP:
+            return medlemskapStepAvailable(values);
+        case StepID.OPPSUMMERING:
+            return summaryStepAvailable(values);
+        case RouteConfig.SØKNAD_SENDT_ROUTE:
+            return values[SøknadFormField.harBekreftetOpplysninger];
     }
     return true;
 };
