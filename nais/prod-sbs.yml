@@ -1,21 +1,21 @@
 apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
-    name: {{ name }}
+    name: omsorgspengerutbetaling-soknad
     namespace: default
     labels:
-        team: {{ team }}
+        team: dusseldorf
 spec:
-    image: {{ image }}:{{ tag }}
+    image: {{ image }}
     port: 8080
     liveness:
-        path: {{ rootpath }}{{ path }}/health/isAlive
+        path: /familie/sykdom-i-familien/soknad/omsorgspengerutbetaling/health/isAlive
         initialDelay: 20
         timeout: 1
         periodSeconds: 5
         failureThreshold: 10
     readiness:
-        path: {{ rootpath }}{{ path }}/health/isReady
+        path: /familie/sykdom-i-familien/soknad/omsorgspengerutbetaling/health/isReady
         initialDelay: 20
         timeout: 1
     resources:
@@ -26,8 +26,8 @@ spec:
             cpu: 50m
             memory: 128Mi
     ingresses:
-        # - https://www.nav.no{{ rootpath }}{{ path }}
-        - https://{{ path }}.nais.oera.no
+        # - https://www.nav.no/familie/sykdom-i-familien/soknad/omsorgspengerutbetaling
+        - https://omsorgspengerutbetaling.nais.oera.no
     replicas:
         min: 1
         max: 1
@@ -41,11 +41,11 @@ spec:
         - name: APPRES_CMS_URL
           value: http://appres.nav.no
         - name: API_URL
-          value: https://{{ path }}-api.nav.no
+          value: https://omsorgspengerutbetalingsoknad-api.nav.no
         - name: PUBLIC_PATH
-          value: {{ rootpath }}{{ path }}
+          value: /familie/sykdom-i-familien/soknad/omsorgspengerutbetaling
         - name: LOGIN_URL
-          value: https://loginservice.nav.no/login?redirect=https://www.nav.no{{ rootpath }}{{ path }}/soknad
+          value: https://loginservice.nav.no/login?redirect=https://www.nav.no/familie/sykdom-i-familien/soknad/omsorgspengerutbetaling/soknad
         - name: TOGGLE_LANGUAGE
           value: "on"
         - name: UTILGJENGELIG
