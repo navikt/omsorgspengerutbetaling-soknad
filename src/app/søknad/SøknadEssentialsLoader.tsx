@@ -3,24 +3,35 @@ import { AxiosError, AxiosResponse } from 'axios';
 import { getSøker } from '../api/api';
 import LoadingPage from '../components/pages/loading-page/LoadingPage';
 import routeConfig, { getRouteUrl } from '../config/routeConfig';
+import { StepID } from '../config/stepConfig';
 import { SøkerdataContextProvider } from '../context/SøkerdataContext';
 import { Søkerdata } from '../types/Søkerdata';
+import { initialValues, SøknadFormData } from '../types/SøknadFormData';
+import { TemporaryStorage } from '../types/TemporaryStorage';
 import * as apiUtils from '../utils/apiUtils';
+import { Feature, isFeatureEnabled } from '../utils/featureToggleUtils';
 import { navigateToLoginPage, userIsCurrentlyOnErrorPage } from '../utils/navigationUtils';
+import SøknadTempStorage from './SøknadTempStorage';
 
 interface Props {
-    contentLoadedRenderer: (søkerdata?: Søkerdata) => React.ReactNode;
+    contentLoadedRenderer: (
+        søkerdata: Søkerdata | undefined,
+        formData: SøknadFormData | undefined,
+        lastStepID: StepID | undefined
+    ) => React.ReactNode;
 }
 
 interface State {
     isLoading: boolean;
+    lastStepID?: StepID;
+    formData: SøknadFormData;
     søkerdata?: Søkerdata;
 }
 
 class SøknadEssentialsLoader extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
-        this.state = { isLoading: true };
+        this.state = { isLoading: true, lastStepID: undefined, formData: initialValues };
 
         this.updateSøkerdata = this.updateSøkerdata.bind(this);
         this.stopLoading = this.stopLoading.bind(this);
@@ -32,15 +43,26 @@ class SøknadEssentialsLoader extends React.Component<Props, State> {
 
     async loadAppEssentials() {
         try {
-            const [søkerResponse] = await Promise.all([getSøker()]);
-            this.handleSøkerdataFetchSuccess(søkerResponse);
+            if (isFeatureEnabled(Feature.MELLOMLAGRING)) {
+                const [søkerResponse, tempStorage] = await Promise.all([getSøker(), SøknadTempStorage.rehydrate()]);
+                this.handleSøkerdataFetchSuccess(søkerResponse, tempStorage);
+            } else {
+                const søkerResponse = await getSøker();
+                this.handleSøkerdataFetchSuccess(søkerResponse);
+            }
         } catch (response) {
             this.handleSøkerdataFetchError(response);
         }
     }
 
-    handleSøkerdataFetchSuccess(søkerResponse: AxiosResponse) {
+    handleSøkerdataFetchSuccess(søkerResponse: AxiosResponse, tempStorageResponse?: AxiosResponse) {
+        const tempStorage: TemporaryStorage | undefined = tempStorageResponse?.data;
+        const formData = tempStorage?.formData;
+        const lastStepID = tempStorage?.metadata?.lastStepID;
+
         this.updateSøkerdata(
+            formData || { ...initialValues },
+            lastStepID,
             {
                 person: søkerResponse.data
             },
@@ -53,10 +75,17 @@ class SøknadEssentialsLoader extends React.Component<Props, State> {
         );
     }
 
-    updateSøkerdata(søkerdata: Søkerdata, callback?: () => void) {
+    updateSøkerdata(
+        formData: SøknadFormData,
+        lastStepID: StepID | undefined,
+        søkerdata: Søkerdata,
+        callback?: () => void
+    ) {
         this.setState(
             {
                 isLoading: false,
+                lastStepID,
+                formData,
                 søkerdata: søkerdata ? søkerdata : this.state.søkerdata
             },
             callback
@@ -83,7 +112,7 @@ class SøknadEssentialsLoader extends React.Component<Props, State> {
 
     render() {
         const { contentLoadedRenderer } = this.props;
-        const { isLoading, søkerdata } = this.state;
+        const { isLoading, søkerdata, formData, lastStepID } = this.state;
 
         if (isLoading) {
             return <LoadingPage />;
@@ -92,7 +121,7 @@ class SøknadEssentialsLoader extends React.Component<Props, State> {
         return (
             <>
                 <SøkerdataContextProvider value={søkerdata}>
-                    {contentLoadedRenderer(søkerdata)}
+                    {contentLoadedRenderer(søkerdata, formData, lastStepID)}
                 </SøkerdataContextProvider>
             </>
         );

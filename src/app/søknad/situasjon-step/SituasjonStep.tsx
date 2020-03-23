@@ -1,6 +1,9 @@
 import * as React from 'react';
 import { useIntl } from 'react-intl';
-import { validateYesOrNoIsAnswered } from '@navikt/sif-common-core/lib/validation/fieldValidations';
+import {
+    validateRequiredList, validateYesOrNoIsAnswered
+} from '@navikt/sif-common-core/lib/validation/fieldValidations';
+import { YesOrNo } from '@navikt/sif-common-formik/lib';
 import { useFormikContext } from 'formik';
 import CounsellorPanel from 'common/components/counsellor-panel/CounsellorPanel';
 import FormBlock from 'common/components/form-block/FormBlock';
@@ -8,67 +11,54 @@ import intlHelper from 'common/utils/intlUtils';
 import { StepConfigProps, StepID } from '../../config/stepConfig';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import SøknadFormComponents from '../SøknadFormComponents';
-import FormikStep from '../SøknadStep';
+import SøknadStep from '../SøknadStep';
 import { SituasjonStepQuestions } from './config';
+import FosterbarnListAndDialog from './fosterbarn-list-and-dialog/FosterbarnListAndDialog';
 
 const HvaErDinSituasjon = ({ onValidSubmit }: StepConfigProps) => {
     const intl = useIntl();
     const { values } = useFormikContext<SøknadFormData>();
     const visibility = SituasjonStepQuestions.getVisbility(values);
+
+    const cleanupStep = (valuesToBeCleaned: SøknadFormData): SøknadFormData => {
+        const { har_fosterbarn } = values;
+        const cleanedValues = { ...valuesToBeCleaned };
+        if (har_fosterbarn === YesOrNo.NO) {
+            cleanedValues.fosterbarn = [];
+        }
+        return cleanedValues;
+    };
+
     return (
-        <FormikStep
+        <SøknadStep
             id={StepID.SITUASJON}
             onValidFormSubmit={onValidSubmit}
+            cleanupStep={cleanupStep}
             showSubmitButton={visibility.areAllQuestionsAnswered()}>
             <CounsellorPanel>{intlHelper(intl, 'step.situasjon.counsellorpanel.content')}</CounsellorPanel>
 
             <FormBlock>
                 <SøknadFormComponents.YesOrNoQuestion
-                    name={SøknadFormField.tre_eller_fler_barn}
-                    legend={intlHelper(intl, 'step.situasjon.tre_eller_fler_barn.spm')}
+                    name={SøknadFormField.har_fosterbarn}
+                    legend="Har du fosterbarn?"
                     validate={validateYesOrNoIsAnswered}
                 />
             </FormBlock>
-            {visibility.isVisible(SøknadFormField.alene_om_omsorg_for_barn) && (
+
+            {visibility.isVisible(SøknadFormField.fosterbarn) && (
                 <FormBlock>
-                    <SøknadFormComponents.YesOrNoQuestion
-                        name={SøknadFormField.alene_om_omsorg_for_barn}
-                        legend={intlHelper(intl, 'step.situasjon.alene_om_omsorg_for_barn.spm')}
-                        validate={validateYesOrNoIsAnswered}
+                    <FosterbarnListAndDialog
+                        labels={{
+                            addLabel: 'Legg til fosterbarn',
+                            listTitle: 'Fosterbarn du har lagt til',
+                            modalTitle: 'Fosterbarn'
+                        }}
+                        name={SøknadFormField.fosterbarn}
+                        validate={validateRequiredList}
                     />
                 </FormBlock>
             )}
-            {visibility.isVisible(SøknadFormField.rett_til_mer_enn_ti_dager_totalt) && (
-                <FormBlock>
-                    <SøknadFormComponents.YesOrNoQuestion
-                        name={SøknadFormField.rett_til_mer_enn_ti_dager_totalt}
-                        legend={intlHelper(intl, 'step.situasjon.rett_til_mer_enn_ti_dager_totalt.spm')}
-                        validate={validateYesOrNoIsAnswered}
-                    />
-                </FormBlock>
-            )}
-            {visibility.isVisible(SøknadFormField.den_andre_forelderen_ikke_kan_ta_seg_av_barnet) && (
-                <FormBlock>
-                    <SøknadFormComponents.YesOrNoQuestion
-                        name={SøknadFormField.den_andre_forelderen_ikke_kan_ta_seg_av_barnet}
-                        legend={intlHelper(intl, 'step.situasjon.den_andre_forelderen_ikke_kan_ta_seg_av_barnet.spm')}
-                        validate={validateYesOrNoIsAnswered}
-                    />
-                </FormBlock>
-            )}
-            {visibility.isVisible(SøknadFormField.har_barn_som_har_kronisk_sykdom_eller_funksjonshemming) && (
-                <FormBlock>
-                    <SøknadFormComponents.YesOrNoQuestion
-                        name={SøknadFormField.har_barn_som_har_kronisk_sykdom_eller_funksjonshemming}
-                        legend={intlHelper(
-                            intl,
-                            'step.situasjon.har_barn_som_har_kronisk_sykdom_eller_funksjonshemming.spm'
-                        )}
-                        validate={validateYesOrNoIsAnswered}
-                    />
-                </FormBlock>
-            )}
-        </FormikStep>
+        </SøknadStep>
     );
 };
 

@@ -1,15 +1,16 @@
 import * as React from 'react';
 import { useIntl } from 'react-intl';
+import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
 import { validateYesOrNoIsAnswered } from '@navikt/sif-common-core/lib/validation/fieldValidations';
 import { useFormikContext } from 'formik';
-import { AlertStripeInfo } from 'nav-frontend-alertstriper';
+import { AlertStripeAdvarsel, AlertStripeInfo } from 'nav-frontend-alertstriper';
 import CounsellorPanel from 'common/components/counsellor-panel/CounsellorPanel';
 import FormBlock from 'common/components/form-block/FormBlock';
 import intlHelper from 'common/utils/intlUtils';
 import { StepConfigProps, StepID } from '../../config/stepConfig';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import SøknadFormComponents from '../SøknadFormComponents';
-import FormikStep from '../SøknadStep';
+import SøknadStep from '../SøknadStep';
 import { HarUtbetaltFørsteTiDagerConfiguestions } from './config';
 
 const EgenutbetalingStep = ({ onValidSubmit }: StepConfigProps) => {
@@ -17,11 +18,17 @@ const EgenutbetalingStep = ({ onValidSubmit }: StepConfigProps) => {
     const { values } = useFormikContext<SøknadFormData>();
 
     const visibility = HarUtbetaltFørsteTiDagerConfiguestions.getVisbility(values);
+
+    const harBareSvartNei =
+        values.fisker_på_blad_B === YesOrNo.NO &&
+        values.frivillig_forsikring === YesOrNo.NO &&
+        values.nettop_startet_selvstendig_frilanser === YesOrNo.NO &&
+        values.innvilget_utvidet_rett === YesOrNo.NO;
+
+    const showSubmitButton = visibility.areAllQuestionsAnswered() && harBareSvartNei === false;
+
     return (
-        <FormikStep
-            id={StepID.EGENUTBETALING}
-            onValidFormSubmit={onValidSubmit}
-            showSubmitButton={visibility.areAllQuestionsAnswered()}>
+        <SøknadStep id={StepID.EGENUTBETALING} onValidFormSubmit={onValidSubmit} showSubmitButton={showSubmitButton}>
             <CounsellorPanel>{intlHelper(intl, 'step.egenutbetaling.counsellorpanel.content')}</CounsellorPanel>
             <FormBlock>
                 <SøknadFormComponents.YesOrNoQuestion
@@ -30,7 +37,7 @@ const EgenutbetalingStep = ({ onValidSubmit }: StepConfigProps) => {
                     validate={validateYesOrNoIsAnswered}
                 />
             </FormBlock>
-            {visibility.isVisible(SøknadFormField.innvilget_utvidet_rett) && (
+            {visibility.isVisible(SøknadFormField.fisker_på_blad_B) && (
                 <>
                     <FormBlock>
                         <AlertStripeInfo>
@@ -41,37 +48,12 @@ const EgenutbetalingStep = ({ onValidSubmit }: StepConfigProps) => {
                     </FormBlock>
                     <FormBlock>
                         <SøknadFormComponents.YesOrNoQuestion
-                            name={SøknadFormField.innvilget_utvidet_rett}
-                            legend={intlHelper(
-                                intl,
-                                'step.har_utbetalt_de_første_ti_dagene.innvilget_utvidet_rett.spm'
-                            )}
+                            name={SøknadFormField.fisker_på_blad_B}
+                            legend={intlHelper(intl, 'step.har_utbetalt_de_første_ti_dagene.fisker_på_blad_B.spm')}
                             validate={validateYesOrNoIsAnswered}
-                            info="Som hovedregel må selvstendig næringsdrivende og frilansere dekke de 3 første omsorgsdagene selv. I noen tilfeller kan du få utbetaling fra 1. dag. Hvis du skal få utbetalt fra 1. dag må en av de neste punktene gjelde deg."
                         />
                     </FormBlock>
                 </>
-            )}
-            {visibility.isVisible(SøknadFormField.ingen_andre_barn_under_tolv) && (
-                <FormBlock>
-                    <SøknadFormComponents.YesOrNoQuestion
-                        name={SøknadFormField.ingen_andre_barn_under_tolv}
-                        legend={intlHelper(
-                            intl,
-                            'step.har_utbetalt_de_første_ti_dagene.ingen_andre_barn_under_tolv.spm'
-                        )}
-                        validate={validateYesOrNoIsAnswered}
-                    />
-                </FormBlock>
-            )}
-            {visibility.isVisible(SøknadFormField.fisker_på_blad_B) && (
-                <FormBlock>
-                    <SøknadFormComponents.YesOrNoQuestion
-                        name={SøknadFormField.fisker_på_blad_B}
-                        legend={intlHelper(intl, 'step.har_utbetalt_de_første_ti_dagene.fisker_på_blad_B.spm')}
-                        validate={validateYesOrNoIsAnswered}
-                    />
-                </FormBlock>
             )}
             {visibility.isVisible(SøknadFormField.frivillig_forsikring) && (
                 <FormBlock>
@@ -94,7 +76,35 @@ const EgenutbetalingStep = ({ onValidSubmit }: StepConfigProps) => {
                     />
                 </FormBlock>
             )}
-        </FormikStep>
+            {visibility.isVisible(SøknadFormField.innvilget_utvidet_rett) && (
+                <FormBlock>
+                    <SøknadFormComponents.YesOrNoQuestion
+                        name={SøknadFormField.innvilget_utvidet_rett}
+                        legend={intlHelper(intl, 'step.har_utbetalt_de_første_ti_dagene.innvilget_utvidet_rett.spm')}
+                        validate={validateYesOrNoIsAnswered}
+                    />
+                </FormBlock>
+            )}
+            {visibility.isVisible(SøknadFormField.ingen_andre_barn_under_tolv) && (
+                <FormBlock>
+                    <SøknadFormComponents.YesOrNoQuestion
+                        name={SøknadFormField.ingen_andre_barn_under_tolv}
+                        legend={intlHelper(
+                            intl,
+                            'step.har_utbetalt_de_første_ti_dagene.ingen_andre_barn_under_tolv.spm'
+                        )}
+                        validate={validateYesOrNoIsAnswered}
+                    />
+                </FormBlock>
+            )}
+            {harBareSvartNei && (
+                <FormBlock>
+                    <AlertStripeAdvarsel>
+                        Hvis du skal få utbetalt fra 1. dag må en av punktene over gjelde for deg.
+                    </AlertStripeAdvarsel>
+                </FormBlock>
+            )}
+        </SøknadStep>
     );
 };
 

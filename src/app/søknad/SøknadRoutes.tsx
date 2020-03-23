@@ -10,15 +10,16 @@ import { StepID } from '../config/stepConfig';
 import { Søkerdata } from '../types/Søkerdata';
 import { SøknadApiData } from '../types/SøknadApiData';
 import { SøknadFormData } from '../types/SøknadFormData';
+import { Feature, isFeatureEnabled } from '../utils/featureToggleUtils';
 import { navigateTo } from '../utils/navigationUtils';
 import { getNextStepRoute, getSøknadRoute, isAvailable } from '../utils/routeUtils';
 import EgenutbetalingStep from './egenutbetaling-step/EgenutbetalingStep';
 import InntektStep from './inntekt-step/InntektStep';
-// import LegeerklæringStep from './steps/legeerklæring/LegeerklæringStep';
 import MedlemsskapStep from './medlemskap-step/MedlemsskapStep';
 import OppsummeringStep from './oppsummering-step/OppsummeringStep';
 import PeriodeStep from './periode-step/PeriodeStep';
 import HvaErDinSituasjon from './situasjon-step/SituasjonStep';
+import SøknadTempStorage from './SøknadTempStorage';
 
 export interface KvitteringInfo {
     søkernavn: string;
@@ -31,21 +32,37 @@ const getKvitteringInfoFromApiData = (søkerdata: Søkerdata): KvitteringInfo | 
     };
 };
 
-const SøknadRoutes: React.FunctionComponent = () => {
+interface SøknadRoutes {
+    lastStepID?: StepID;
+}
+
+function SøknadRoutes({ lastStepID }: SøknadRoutes) {
     const [søknadHasBeenSent, setSøknadHasBeenSent] = React.useState(false);
     const [kvitteringInfo, setKvitteringInfo] = React.useState<KvitteringInfo | undefined>(undefined);
     const { values, resetForm } = useFormikContext<SøknadFormData>();
 
     const history = useHistory();
 
-    const navigateToNextStep = (stepId: StepID) => {
+    if (history.location.pathname === RouteConfig.WELCOMING_PAGE_ROUTE && lastStepID) {
+        const nextStepRoute = getNextStepRoute(lastStepID, values);
+        if (nextStepRoute) {
+            setTimeout(() => {
+                navigateTo(nextStepRoute, history);
+            });
+        }
+    }
+
+    async function navigateToNextStepFrom(stepID: StepID) {
+        if (isFeatureEnabled(Feature.MELLOMLAGRING)) {
+            await SøknadTempStorage.persist(values, stepID);
+        }
         setTimeout(() => {
-            const nextStepRoute = getNextStepRoute(stepId, values);
+            const nextStepRoute = getNextStepRoute(stepID, values);
             if (nextStepRoute) {
                 navigateTo(nextStepRoute, history);
             }
         });
-    };
+    }
 
     return (
         <Switch>
@@ -65,7 +82,7 @@ const SøknadRoutes: React.FunctionComponent = () => {
             {isAvailable(StepID.SITUASJON, values) && (
                 <Route
                     path={getSøknadRoute(StepID.SITUASJON)}
-                    render={() => <HvaErDinSituasjon onValidSubmit={() => navigateToNextStep(StepID.SITUASJON)} />}
+                    render={() => <HvaErDinSituasjon onValidSubmit={() => navigateToNextStepFrom(StepID.SITUASJON)} />}
                 />
             )}
 
@@ -73,7 +90,7 @@ const SøknadRoutes: React.FunctionComponent = () => {
                 <Route
                     path={getSøknadRoute(StepID.EGENUTBETALING)}
                     render={() => (
-                        <EgenutbetalingStep onValidSubmit={() => navigateToNextStep(StepID.EGENUTBETALING)} />
+                        <EgenutbetalingStep onValidSubmit={() => navigateToNextStepFrom(StepID.EGENUTBETALING)} />
                     )}
                 />
             )}
@@ -81,7 +98,7 @@ const SøknadRoutes: React.FunctionComponent = () => {
             {isAvailable(StepID.PERIODE, values) && (
                 <Route
                     path={getSøknadRoute(StepID.PERIODE)}
-                    render={() => <PeriodeStep onValidSubmit={() => navigateToNextStep(StepID.PERIODE)} />}
+                    render={() => <PeriodeStep onValidSubmit={() => navigateToNextStepFrom(StepID.PERIODE)} />}
                 />
             )}
 
@@ -95,14 +112,14 @@ const SøknadRoutes: React.FunctionComponent = () => {
             {isAvailable(StepID.INNTEKT, values) && (
                 <Route
                     path={getSøknadRoute(StepID.INNTEKT)}
-                    render={() => <InntektStep onValidSubmit={() => navigateToNextStep(StepID.INNTEKT)} />}
+                    render={() => <InntektStep onValidSubmit={() => navigateToNextStepFrom(StepID.INNTEKT)} />}
                 />
             )}
 
             {isAvailable(StepID.MEDLEMSKAP, values) && (
                 <Route
                     path={getSøknadRoute(StepID.MEDLEMSKAP)}
-                    render={() => <MedlemsskapStep onValidSubmit={() => navigateToNextStep(StepID.MEDLEMSKAP)} />}
+                    render={() => <MedlemsskapStep onValidSubmit={() => navigateToNextStepFrom(StepID.MEDLEMSKAP)} />}
                 />
             )}
 
@@ -116,6 +133,9 @@ const SøknadRoutes: React.FunctionComponent = () => {
                                 setKvitteringInfo(info);
                                 setSøknadHasBeenSent(true);
                                 resetForm();
+                                if (isFeatureEnabled(Feature.MELLOMLAGRING)) {
+                                    SøknadTempStorage.purge();
+                                }
                                 navigateTo(RouteConfig.SØKNAD_SENDT_ROUTE, history);
                             }}
                         />
@@ -135,6 +155,6 @@ const SøknadRoutes: React.FunctionComponent = () => {
             <Redirect to={RouteConfig.WELCOMING_PAGE_ROUTE} />
         </Switch>
     );
-};
+}
 
 export default SøknadRoutes;

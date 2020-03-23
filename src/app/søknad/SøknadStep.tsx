@@ -22,7 +22,7 @@ export interface FormikStepProps {
 
 type Props = FormikStepProps & StepProps;
 
-const FormikStep: React.FunctionComponent<Props> = (props) => {
+const SøknadStep: React.FunctionComponent<Props> = (props) => {
     const formik = useFormikContext<SøknadFormData>();
     const intl = useIntl();
     const { children, onValidFormSubmit, showButtonSpinner, buttonDisabled, id, cleanupStep } = props;
@@ -56,4 +56,4 @@ const FormikStep: React.FunctionComponent<Props> = (props) => {
     );
 };
 
-export default FormikStep;
+export default SøknadStep;

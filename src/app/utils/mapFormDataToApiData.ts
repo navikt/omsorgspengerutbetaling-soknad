@@ -21,11 +21,8 @@ export const mapFormDataToApiData = (
         harBekreftetOpplysninger,
 
         // STEG 1: Kvalifisering
-        tre_eller_fler_barn,
-        alene_om_omsorg_for_barn,
-        rett_til_mer_enn_ti_dager_totalt,
-        den_andre_forelderen_ikke_kan_ta_seg_av_barnet,
-        har_barn_som_har_kronisk_sykdom_eller_funksjonshemming,
+        har_fosterbarn,
+        fosterbarn,
 
         // STEG 2: Har betalt ut 10 første dager
         har_utbetalt_ti_dager,
@@ -55,37 +52,6 @@ export const mapFormDataToApiData = (
     }: SøknadFormData,
     intl: IntlShape
 ): SøknadApiData => {
-    const stegEn: YesNoSpørsmålOgSvar[] = [
-        {
-            spørsmål: intl.formatMessage({ id: 'step.situasjon.tre_eller_fler_barn.spm' }),
-            svar: mapYesOrNoToSvar(tre_eller_fler_barn)
-        },
-        {
-            spørsmål: intl.formatMessage({
-                id: 'step.situasjon.alene_om_omsorg_for_barn.spm'
-            }),
-            svar: mapYesOrNoToSvar(alene_om_omsorg_for_barn)
-        },
-        {
-            spørsmål: intl.formatMessage({
-                id: 'step.situasjon.rett_til_mer_enn_ti_dager_totalt.spm'
-            }),
-            svar: mapYesOrNoToSvar(rett_til_mer_enn_ti_dager_totalt)
-        },
-        {
-            spørsmål: intl.formatMessage({
-                id: 'step.situasjon.den_andre_forelderen_ikke_kan_ta_seg_av_barnet.spm'
-            }),
-            svar: mapYesOrNoToSvar(den_andre_forelderen_ikke_kan_ta_seg_av_barnet)
-        },
-        {
-            spørsmål: intl.formatMessage({
-                id: 'step.situasjon.har_barn_som_har_kronisk_sykdom_eller_funksjonshemming.spm'
-            }),
-            svar: mapYesOrNoToSvar(har_barn_som_har_kronisk_sykdom_eller_funksjonshemming)
-        }
-    ];
-
     const leggTilDisseHvis = (yesOrNo: YesOrNo): YesNoSpørsmålOgSvar[] => {
         return yesOrNo === YesOrNo.NO
             ? [
@@ -137,7 +103,7 @@ export const mapFormDataToApiData = (
             harForståttRettigheterOgPlikter,
             harBekreftetOpplysninger
         },
-        spørsmål: [...stegEn, ...stegTo],
+        spørsmål: [...stegTo],
         utbetalingsperioder: mapPeriodeTilUtbetalingsperiode(perioderMedFravær, dagerMedDelvisFravær),
         bosteder: settInnBosteder(
             harBoddUtenforNorgeSiste12Mnd,

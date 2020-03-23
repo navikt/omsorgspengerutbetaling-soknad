@@ -15,7 +15,7 @@ import { FraværDelerAvDag, Periode } from '../../../@types/omsorgspengerutbetal
 import { StepConfigProps, StepID } from '../../config/stepConfig';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import SøknadFormComponents from '../SøknadFormComponents';
-import FormikStep from '../SøknadStep';
+import SøknadStep from '../SøknadStep';
 import DagerMedDelvisFraværList from './components/DagerMedDelvisFraværList';
 import PeriodeMedFulltFraværList from './components/PerioderMedFulltFraværList';
 import './periodeStep.less';
@@ -45,7 +45,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
     };
 
     return (
-        <FormikStep
+        <SøknadStep
             id={StepID.PERIODE}
             onValidFormSubmit={() => {
                 onValidSubmit();
@@ -56,7 +56,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                 <CounsellorPanel>
                     Du kan søke utbetaling for
                     <ul>
-                        <li>hele dager med fravær fra jobb, som tilsvarer maks 7.5 timer eller</li>
+                        <li>hele dager med fravær fra jobb, som tilsvarer maks 7.5 timer og / eller</li>
                         <li>dager hvor du bare har delvis fravær fra jobb</li>
                     </ul>
                 </CounsellorPanel>
@@ -160,7 +160,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                     )}
                 </>
             )}
-        </FormikStep>
+        </SøknadStep>
     );
 };
 

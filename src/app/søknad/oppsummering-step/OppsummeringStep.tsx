@@ -14,17 +14,17 @@ import { Søkerdata } from '../../types/Søkerdata';
 import { SøknadApiData } from '../../types/SøknadApiData';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import * as apiUtils from '../../utils/apiUtils';
+import { mapFormDataToApiData } from '../../utils/mapFormDataToApiData';
 import { navigateTo, navigateToLoginPage } from '../../utils/navigationUtils';
 import SøknadFormComponents from '../SøknadFormComponents';
-import FormikStep from '../SøknadStep';
+import SøknadStep from '../SøknadStep';
 import FrilansSummary from './components/FrilansSummary';
-import SelvstendigSummary from './components/SelvstendigSummary';
+import MedlemskapSummaryView from './components/MedlemskapSummaryView';
 import NavnOgFodselsnummerSummaryView from './components/NavnOgFodselsnummerSummaryView';
+import SelvstendigSummary from './components/SelvstendigSummary';
 import { SpørsmålOgSvarSummaryView } from './components/SporsmalOgSvarSummaryView';
 import UtbetalingsperioderSummaryView from './components/UtbetalingsperioderSummaryView';
 import UtenlandsoppholdSummaryView from './components/UtenlandsoppholdSummaryView';
-import MedlemskapSummaryView from './components/MedlemskapSummaryView';
-import { mapFormDataToApiData } from '../../utils/mapFormDataToApiData';
 
 interface Props {
     onApplicationSent: (apiValues: SøknadApiData, søkerdata: Søkerdata) => void;
@@ -61,10 +61,9 @@ const OppsummeringStep: React.StatelessComponent<Props> = ({ onApplicationSent }
     } = søkerdata;
 
     const apiValues: SøknadApiData = mapFormDataToApiData(values, intl);
-    // const apiValues: SøknadApiData = mock1;
 
     return (
-        <FormikStep
+        <SøknadStep
             id={StepID.OPPSUMMERING}
             onValidFormSubmit={() => {
                 setTimeout(() => {
@@ -108,7 +107,7 @@ const OppsummeringStep: React.StatelessComponent<Props> = ({ onApplicationSent }
                     }}
                 />
             </Box>
-        </FormikStep>
+        </SøknadStep>
     );
 };
 
