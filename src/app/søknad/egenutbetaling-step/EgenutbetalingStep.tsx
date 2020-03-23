@@ -75,7 +75,6 @@ const EgenutbetalingStep = ({ onValidSubmit }: StepConfigProps) => {
                         name={SøknadFormField.innvilget_utvidet_rett}
                         legend={intlHelper(intl, 'step.har_utbetalt_de_første_ti_dagene.innvilget_utvidet_rett.spm')}
                         validate={validateYesOrNoIsAnswered}
-                        info="Som hovedregel må selvstendig næringsdrivende og frilansere dekke de 3 første omsorgsdagene selv. I noen tilfeller kan du få utbetaling fra 1. dag. Hvis du skal få utbetalt fra 1. dag må en av de neste punktene gjelde deg."
                     />
                 </FormBlock>
             )}
