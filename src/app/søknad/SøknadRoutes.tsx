@@ -44,12 +44,9 @@ function SøknadRoutes({ lastStepID }: SøknadRoutes) {
     const history = useHistory();
 
     if (history.location.pathname === RouteConfig.WELCOMING_PAGE_ROUTE && lastStepID) {
-        const nextStepRoute = getNextStepRoute(lastStepID, values);
-        if (nextStepRoute) {
-            setTimeout(() => {
-                navigateTo(nextStepRoute, history);
-            });
-        }
+        setTimeout(() => {
+            navigateTo(lastStepID, history);
+        });
     }
 
     async function navigateToNextStepFrom(stepID: StepID) {
