@@ -44,12 +44,9 @@ function SøknadRoutes({ lastStepID }: SøknadRoutes) {
     const history = useHistory();
 
     if (history.location.pathname === RouteConfig.WELCOMING_PAGE_ROUTE && lastStepID) {
-        const nextStepRoute = getNextStepRoute(lastStepID, values);
-        if (nextStepRoute) {
-            setTimeout(() => {
-                navigateTo(nextStepRoute, history);
-            });
-        }
+        setTimeout(() => {
+            navigateTo(lastStepID, history);
+        });
     }
 
     async function navigateToNextStepFrom(stepID: StepID) {
@@ -72,7 +69,13 @@ function SøknadRoutes({ lastStepID }: SøknadRoutes) {
                     <WelcomingPage
                         onValidSubmit={() =>
                             setTimeout(() => {
-                                navigateTo(`${RouteConfig.SØKNAD_ROUTE_PREFIX}/${StepID.SITUASJON}`, history);
+                                if (isFeatureEnabled(Feature.MELLOMLAGRING)) {
+                                    SøknadTempStorage.persist(values, StepID.SITUASJON).then(() => {
+                                        navigateTo(`${RouteConfig.SØKNAD_ROUTE_PREFIX}/${StepID.SITUASJON}`, history);
+                                    });
+                                } else {
+                                    navigateTo(`${RouteConfig.SØKNAD_ROUTE_PREFIX}/${StepID.SITUASJON}`, history);
+                                }
                             })
                         }
                     />

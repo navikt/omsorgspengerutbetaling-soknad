@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useIntl } from 'react-intl';
 import {
     validateRequiredList, validateYesOrNoIsAnswered
 } from '@navikt/sif-common-core/lib/validation/fieldValidations';
@@ -7,7 +6,6 @@ import { YesOrNo } from '@navikt/sif-common-formik/lib';
 import { useFormikContext } from 'formik';
 import CounsellorPanel from 'common/components/counsellor-panel/CounsellorPanel';
 import FormBlock from 'common/components/form-block/FormBlock';
-import intlHelper from 'common/utils/intlUtils';
 import { StepConfigProps, StepID } from '../../config/stepConfig';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import SøknadFormComponents from '../SøknadFormComponents';
@@ -16,7 +14,6 @@ import { SituasjonStepQuestions } from './config';
 import FosterbarnListAndDialog from './fosterbarn-list-and-dialog/FosterbarnListAndDialog';
 
 const HvaErDinSituasjon = ({ onValidSubmit }: StepConfigProps) => {
-    const intl = useIntl();
     const { values } = useFormikContext<SøknadFormData>();
     const visibility = SituasjonStepQuestions.getVisbility(values);
 
@@ -35,7 +32,7 @@ const HvaErDinSituasjon = ({ onValidSubmit }: StepConfigProps) => {
             onValidFormSubmit={onValidSubmit}
             cleanupStep={cleanupStep}
             showSubmitButton={visibility.areAllQuestionsAnswered()}>
-            <CounsellorPanel>{intlHelper(intl, 'step.situasjon.counsellorpanel.content')}</CounsellorPanel>
+            <CounsellorPanel>Hvis du har fosterbarn legger du dem inn i søknaden.</CounsellorPanel>
 
             <FormBlock>
                 <SøknadFormComponents.YesOrNoQuestion
@@ -46,7 +43,7 @@ const HvaErDinSituasjon = ({ onValidSubmit }: StepConfigProps) => {
             </FormBlock>
 
             {visibility.isVisible(SøknadFormField.fosterbarn) && (
-                <FormBlock>
+                <FormBlock margin="l">
                     <FosterbarnListAndDialog
                         labels={{
                             addLabel: 'Legg til fosterbarn',

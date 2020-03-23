@@ -1,15 +1,17 @@
 import { YesOrNo } from 'common/types/YesOrNo';
+import { EgenutbetalingQuestions } from '../søknad/egenutbetaling-step/config';
+import { SituasjonStepQuestions } from '../søknad/situasjon-step/config';
 import { SøknadFormData } from '../types/SøknadFormData';
 
 export const welcomingPageIsValid = ({ harForståttRettigheterOgPlikter }: SøknadFormData): boolean =>
     harForståttRettigheterOgPlikter === true;
 
-export const situasjonStepIsValid = ({}: SøknadFormData): boolean => {
-    return true; // TODO: Har vi noen valideringskrav?
+export const situasjonStepIsValid = (values: SøknadFormData): boolean => {
+    return SituasjonStepQuestions.getVisbility(values).areAllQuestionsAnswered();
 };
 
-export const harUtbetaltDeFørsteTiDagenePageIsValid = ({}: SøknadFormData) => {
-    return true; // TODO: Spesifisere valideringsregler
+export const egenutbetalingIsValid = (values: SøknadFormData) => {
+    return EgenutbetalingQuestions.getVisbility(values).areAllQuestionsAnswered();
 };
 
 export const periodeStepIsValid = ({}: SøknadFormData) => {

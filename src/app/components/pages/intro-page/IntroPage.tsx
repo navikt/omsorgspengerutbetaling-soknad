@@ -40,15 +40,8 @@ const IntroPage: React.StatelessComponent = () => {
             <Box margin="xxxl">
                 <InformationPoster>
                     <p>
-                        Når du er selvstendig næringsdrivende eller frilanser kan du søke om utbetaling av
-                        omsorgspenger. Som selvstendig næringsdrivende eller frilanser må du som hovedregel dekke de 3
-                        første dagene selv. Du kan søke om utbetaling av omsorgspenger fra den 4. dagen du er hjemme med
-                        omsorgsdager.
-                    </p>
-                    <p>
-                        Denne søknaden gjelder kun for selvstendig næringsdrivende og frilansere. Hvis du er
-                        arbeidstaker og skal ha utbetalt omsorgspenger må du be arbeidsgiveren din om å sende
-                        inntektsmelding til NAV.
+                        Som selvstendig næringsdrivende eller frilanser må du som hovedregel dekke de 3 første dagene
+                        selv. Du kan søke om utbetaling av omsorgspenger fra den 4. dagen du er hjemme med omsorgsdager.
                     </p>
                 </InformationPoster>
             </Box>
@@ -68,8 +61,15 @@ const IntroPage: React.StatelessComponent = () => {
                                 <Box margin="xl">
                                     <AlertStripeInfo>
                                         <p style={{ marginTop: 0, marginBottom: 0 }}>
-                                            Søknaden kan brukes av dem som er selvstendig næringsdrivende eller
-                                            frilansere.
+                                            Denne søknaden gjelder kun for selvstendig næringsdrivende og frilansere som
+                                            skal søke om utbetaling av omsorgspenger. Hvis du er arbeidstaker, skal du
+                                            ikke selv søke om utbetaling av omsorgspenger. Arbeidsgiveren din må sende
+                                            et refusjonskrav til NAV for dagene du har hatt omsorgsdager, dette gjør
+                                            arbeidsgiver ved å sende{' '}
+                                            <Lenke href="https://www.nav.no/no/bedrift/tjenester-og-skjemaer/nav-og-altinn-tjenester/inntektsmelding">
+                                                inntektsmelding
+                                            </Lenke>
+                                            .
                                         </p>
                                     </AlertStripeInfo>
                                 </Box>
