@@ -32,10 +32,7 @@ const HvaErDinSituasjon = ({ onValidSubmit }: StepConfigProps) => {
             onValidFormSubmit={onValidSubmit}
             cleanupStep={cleanupStep}
             showSubmitButton={visibility.areAllQuestionsAnswered()}>
-            <CounsellorPanel>
-                Vi henter som regel opplysninger om dine barn fra Folkeregisteret, men vi har fortsatt behov for å
-                spørre deg om fosterbarn.
-            </CounsellorPanel>
+            <CounsellorPanel>Hvis du har fosterbarn legger du dem inn i søknaden.</CounsellorPanel>
 
             <FormBlock>
                 <SøknadFormComponents.YesOrNoQuestion
@@ -46,7 +43,7 @@ const HvaErDinSituasjon = ({ onValidSubmit }: StepConfigProps) => {
             </FormBlock>
 
             {visibility.isVisible(SøknadFormField.fosterbarn) && (
-                <FormBlock>
+                <FormBlock margin="l">
                     <FosterbarnListAndDialog
                         labels={{
                             addLabel: 'Legg til fosterbarn',

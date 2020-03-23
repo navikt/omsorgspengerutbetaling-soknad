@@ -1,12 +1,12 @@
-import { Time } from 'common/types/Time';
-import { Utbetalingsperiode, UtbetalingsperiodeMedVedlegg } from '../../../types/SøknadApiData';
+import React from 'react';
 import { IntlShape } from 'react-intl';
-import bemUtils from 'common/utils/bemUtils';
 import Box from 'common/components/box/Box';
 import ContentWithHeader from 'common/components/content-with-header/ContentWithHeader';
-import { iso8601DurationToTime, timeToString } from 'common/utils/timeUtils';
+import { Time } from 'common/types/Time';
+import bemUtils from 'common/utils/bemUtils';
 import { apiStringDateToDate, prettifyDate } from 'common/utils/dateUtils';
-import React from 'react';
+import { iso8601DurationToTime, timeToString } from 'common/utils/timeUtils';
+import { Utbetalingsperiode, UtbetalingsperiodeMedVedlegg } from '../../../types/SøknadApiData';
 
 export interface Props {
     intl: IntlShape;
@@ -24,7 +24,7 @@ const UtbetalingsperioderSummaryView = (props: Props) => {
 
     return (
         <Box margin={'xl'}>
-            <ContentWithHeader header={'Perioder som det søkes om utbetaling for'}>
+            <ContentWithHeader header={'Perioder det søkes utbetaling for'}>
                 <div>
                     <ul className={bem.classNames(bem.block)}>
                         {utbetalingsperioder.length === 0 && <div>Ingen perioder oppgitt.</div> // TODO: Det skal ikke være mulig å komme til oppsummeringen uten å ha spesifisert noen utbetalingsperioder.

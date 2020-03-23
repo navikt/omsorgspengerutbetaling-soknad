@@ -5,6 +5,7 @@ import { Knapp } from 'nav-frontend-knapper';
 import FormBlock from 'common/components/form-block/FormBlock';
 import { commonFieldErrorRenderer } from 'common/utils/commonFieldErrorRenderer';
 import Step, { StepProps } from '../components/step/Step';
+import StepFooter from '../components/stepFooter/StepFooter';
 import { getStepConfig } from '../config/stepConfig';
 import { SøknadFormData } from '../types/SøknadFormData';
 import { getStepTexts } from '../utils/stepUtils';
@@ -52,6 +53,7 @@ const SøknadStep: React.FunctionComponent<Props> = (props) => {
                     </FormBlock>
                 )}
             </SøknadFormComponents.Form>
+            <StepFooter />
         </Step>
     );
 };
