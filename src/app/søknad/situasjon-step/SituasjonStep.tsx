@@ -3,6 +3,7 @@ import {
     validateRequiredList, validateYesOrNoIsAnswered
 } from '@navikt/sif-common-core/lib/validation/fieldValidations';
 import { YesOrNo } from '@navikt/sif-common-formik/lib';
+import FosterbarnListAndDialog from '@navikt/sif-common-forms/lib/fosterbarn/FosterbarnListAndDialog';
 import { useFormikContext } from 'formik';
 import CounsellorPanel from 'common/components/counsellor-panel/CounsellorPanel';
 import FormBlock from 'common/components/form-block/FormBlock';
@@ -11,7 +12,6 @@ import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import SøknadFormComponents from '../SøknadFormComponents';
 import SøknadStep from '../SøknadStep';
 import { SituasjonStepQuestions } from './config';
-import FosterbarnListAndDialog from './fosterbarn-list-and-dialog/FosterbarnListAndDialog';
 
 const HvaErDinSituasjon = ({ onValidSubmit }: StepConfigProps) => {
     const { values } = useFormikContext<SøknadFormData>();
@@ -44,15 +44,7 @@ const HvaErDinSituasjon = ({ onValidSubmit }: StepConfigProps) => {
 
             {visibility.isVisible(SøknadFormField.fosterbarn) && (
                 <FormBlock margin="l">
-                    <FosterbarnListAndDialog
-                        labels={{
-                            addLabel: 'Legg til fosterbarn',
-                            listTitle: 'Fosterbarn du har lagt til',
-                            modalTitle: 'Fosterbarn'
-                        }}
-                        name={SøknadFormField.fosterbarn}
-                        validate={validateRequiredList}
-                    />
+                    <FosterbarnListAndDialog name={SøknadFormField.fosterbarn} validate={validateRequiredList} />
                 </FormBlock>
             )}
         </SøknadStep>
