@@ -48,5 +48,5 @@ spec:
           value: https://loginservice-q.nav.no/login?redirect=https://www-q0.nav.no/familie/sykdom-i-familien/soknad/omsorgspengerutbetaling/soknad
         - name: UTILGJENGELIG
           value: "off"
-        - name: TOGGLE_MELLOMLAGRING
+        - name: MELLOMLAGRING
           value: "on"
