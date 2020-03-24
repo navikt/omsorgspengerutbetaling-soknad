@@ -28,14 +28,10 @@ export interface YesNoSpørsmålOgSvar {
     svar: YesNoSvar;
 }
 
-export interface Utbetalingsperiode {
+export interface UtbetalingsperiodeApi {
     fraOgMed: ApiStringDate; // @JsonFormat(pattern = "yyyy-MM-dd")
     tilOgMed: ApiStringDate; // @JsonFormat(pattern = "yyyy-MM-dd")
     lengde?: string; // f eks PT5H30M | "null" (type Duration)
-}
-
-export interface UtbetalingsperiodeMedVedlegg extends Utbetalingsperiode {
-    legeerklæringer: string[];
 }
 
 export interface Frilans {
@@ -86,7 +82,7 @@ export interface SøknadApiData {
     };
     spørsmål: YesNoSpørsmålOgSvar[];
     fosterbarn?: FosterbarnApi[];
-    utbetalingsperioder: Utbetalingsperiode[]; // perioder
+    utbetalingsperioder: UtbetalingsperiodeApi[]; // perioder
     opphold: UtenlandsoppholdApiData[]; // hvis ja på har oppholdt seg i utlandet
     bosteder: UtenlandsoppholdApiData[]; // medlemskap-siden
     frilans?: Frilans;

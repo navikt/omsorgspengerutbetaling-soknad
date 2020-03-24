@@ -1,21 +1,21 @@
 import React from 'react';
 import { FormattedMessage, IntlShape, useIntl } from 'react-intl';
 import Box from 'common/components/box/Box';
+import SummaryList from 'common/components/summary-list/SummaryList';
+import TextareaSummary from 'common/components/textarea-summary/TextareaSummary';
+import { getCountryName } from 'common/utils/countryUtils';
+import intlHelper from 'common/utils/intlUtils';
+import { VirksomhetApiData } from '../../../types/SøknadApiData';
+import { harFiskerNæringstype } from '../../../utils/formToApiMaps/mapVirksomhetToApiData';
 import DatoSvar, { prettifyApiDate } from './DatoSvar';
 import IntlLabelValue from './IntlLabelValue';
 import JaNeiSvar from './JaNeiSvar';
-import SummaryBlock from './SummaryBlock';
-import { SøknadApiData, VirksomhetApiData } from '../../../types/SøknadApiData';
-import { getCountryName } from 'common/utils/countryUtils';
-import intlHelper from 'common/utils/intlUtils';
-import { harFiskerNæringstype } from '../../../utils/formToApiMaps/mapVirksomhetToApiData';
-import TextareaSummary from 'common/components/textarea-summary/TextareaSummary';
-import SummaryList from 'common/components/summary-list/SummaryList';
-import TallSvar from './TallSvar';
 import Sitat from './Sitat';
+import SummaryBlock from './SummaryBlock';
+import TallSvar from './TallSvar';
 
 interface Props {
-    apiValues: SøknadApiData;
+    selvstendigVirksomheter?: VirksomhetApiData[];
 }
 
 const renderVirksomhetSummary = (virksomhet: VirksomhetApiData, intl: IntlShape) => {
@@ -94,25 +94,24 @@ const renderVirksomhetSummary = (virksomhet: VirksomhetApiData, intl: IntlShape)
     );
 };
 
-const SelvstendigSummary: React.FunctionComponent<Props> = (props) => {
-    const { selvstendigVirksomheter } = props.apiValues;
+function SelvstendigSummary({ selvstendigVirksomheter = [] }: Props) {
     const intl = useIntl();
     const harSelvstendigVirksomheter = selvstendigVirksomheter.length > 0;
     return (
         <>
-            <Box margin="l">
-                <SummaryBlock header={intlHelper(intl, 'selvstendig.summary.harDuHattInntekt.header')}>
-                    <JaNeiSvar harSvartJa={harSelvstendigVirksomheter} />
-                </SummaryBlock>
-            </Box>
+            <SummaryBlock header={intlHelper(intl, 'selvstendig.summary.harDuHattInntekt.header')}>
+                <JaNeiSvar harSvartJa={harSelvstendigVirksomheter} />
+            </SummaryBlock>
             {harSelvstendigVirksomheter && (
-                <SummaryList
-                    items={selvstendigVirksomheter}
-                    itemRenderer={(virksomhet) => renderVirksomhetSummary(virksomhet, intl)}
-                />
+                <SummaryBlock header="Virksomheter:">
+                    <SummaryList
+                        items={selvstendigVirksomheter}
+                        itemRenderer={(virksomhet) => renderVirksomhetSummary(virksomhet, intl)}
+                    />
+                </SummaryBlock>
             )}
         </>
     );
-};
+}
 
 export default SelvstendigSummary;

@@ -6,7 +6,7 @@ import { formatDateToApiFormat } from 'common/utils/dateUtils';
 import { decimalTimeToTime, timeToIso8601Duration } from 'common/utils/timeUtils';
 import { FraværDelerAvDag, Periode } from '../../@types/omsorgspengerutbetaling-schema';
 import {
-    SøknadApiData, Utbetalingsperiode, UtenlandsoppholdApiData, VirksomhetApiData,
+    SøknadApiData, UtbetalingsperiodeApi, UtenlandsoppholdApiData, VirksomhetApiData,
     YesNoSpørsmålOgSvar, YesNoSvar
 } from '../types/SøknadApiData';
 import { SøknadFormData } from '../types/SøknadFormData';
@@ -123,9 +123,9 @@ export const mapFormDataToApiData = (
 export const mapPeriodeTilUtbetalingsperiode = (
     perioderMedFravær: Periode[],
     dagerMedDelvisFravær: FraværDelerAvDag[]
-): Utbetalingsperiode[] => {
-    const periodeMappedTilUtbetalingsperiode: Utbetalingsperiode[] = perioderMedFravær.map(
-        (periode: Periode): Utbetalingsperiode => {
+): UtbetalingsperiodeApi[] => {
+    const periodeMappedTilUtbetalingsperiode: UtbetalingsperiodeApi[] = perioderMedFravær.map(
+        (periode: Periode): UtbetalingsperiodeApi => {
             return {
                 fraOgMed: formatDateToApiFormat(periode.fom),
                 tilOgMed: formatDateToApiFormat(periode.tom)
@@ -133,8 +133,8 @@ export const mapPeriodeTilUtbetalingsperiode = (
         }
     );
 
-    const fraværDeleravDagMappedTilUtbetalingsperiode: Utbetalingsperiode[] = dagerMedDelvisFravær.map(
-        (fravær: FraværDelerAvDag): Utbetalingsperiode => {
+    const fraværDeleravDagMappedTilUtbetalingsperiode: UtbetalingsperiodeApi[] = dagerMedDelvisFravær.map(
+        (fravær: FraværDelerAvDag): UtbetalingsperiodeApi => {
             const duration: string = timeToIso8601Duration(decimalTimeToTime(fravær.timer));
             return {
                 fraOgMed: formatDateToApiFormat(fravær.dato),

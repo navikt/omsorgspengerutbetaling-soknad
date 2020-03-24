@@ -1,31 +1,36 @@
-import { IntlShape } from 'react-intl';
-import { UtenlandsoppholdApiData } from '../../../types/SøknadApiData';
-import Box from 'common/components/box/Box';
-import ContentWithHeader from 'common/components/content-with-header/ContentWithHeader';
-import intlHelper from 'common/utils/intlUtils';
-import SummaryList from 'common/components/summary-list/SummaryList';
-import { renderUtenlandsoppholdIPeriodenSummary } from './renderUtenlandsoppholdSummary';
 import React from 'react';
+import { apiStringDateToDate, dateToday } from '@navikt/sif-common-core/lib/utils/dateUtils';
+import moment from 'moment';
+import SummaryList from 'common/components/summary-list/SummaryList';
+import { UtenlandsoppholdApiData } from '../../../types/SøknadApiData';
+import { renderUtenlandsoppholdIPeriodenSummary } from './renderUtenlandsoppholdSummary';
+import SummaryBlock from './SummaryBlock';
 
 export interface Props {
-    intl: IntlShape;
     bosteder: UtenlandsoppholdApiData[];
 }
 
 const MedlemskapSummaryView = (props: Props) => {
-    const { intl, bosteder } = props;
+    const { bosteder } = props;
 
+    if (bosteder.length === 0) {
+        return null;
+    }
+    const bostederSiste12 = bosteder.filter((b) => moment(apiStringDateToDate(b.tilOgMed)).isSameOrBefore(dateToday));
+    const bostederNeste12 = bosteder.filter((b) => moment(apiStringDateToDate(b.tilOgMed)).isSameOrAfter(dateToday));
     return (
-        <div>
-            {bosteder.length > 0 && (
-                <Box margin="l">
-                    <ContentWithHeader
-                        header={intlHelper(intl, 'steg.medlemsskap.annetLandSisteOgNeste12.listeTittel')}>
-                        <SummaryList items={bosteder} itemRenderer={renderUtenlandsoppholdIPeriodenSummary} />
-                    </ContentWithHeader>
-                </Box>
+        <>
+            {bostederSiste12.length > 0 && (
+                <SummaryBlock header="Utenlandsopphold siste 12 måneder">
+                    <SummaryList items={bostederSiste12} itemRenderer={renderUtenlandsoppholdIPeriodenSummary} />
+                </SummaryBlock>
             )}
-        </div>
+            {bostederNeste12.length > 0 && (
+                <SummaryBlock header="Utenlandsopphold neste 12 måneder">
+                    <SummaryList items={bostederNeste12} itemRenderer={renderUtenlandsoppholdIPeriodenSummary} />
+                </SummaryBlock>
+            )}
+        </>
     );
 };
 
