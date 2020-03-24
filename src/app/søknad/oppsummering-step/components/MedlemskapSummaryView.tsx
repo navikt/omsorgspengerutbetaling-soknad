@@ -21,12 +21,12 @@ const MedlemskapSummaryView = (props: Props) => {
     return (
         <>
             {bostederSiste12.length > 0 && (
-                <SummaryBlock header="Utenlandsopphold siste 12 måneder">
+                <SummaryBlock header="Bosteder i utlandet siste 12 måneder">
                     <SummaryList items={bostederSiste12} itemRenderer={renderUtenlandsoppholdIPeriodenSummary} />
                 </SummaryBlock>
             )}
             {bostederNeste12.length > 0 && (
-                <SummaryBlock header="Utenlandsopphold neste 12 måneder">
+                <SummaryBlock header="Bosteder i utlandet neste 12 måneder">
                     <SummaryList items={bostederNeste12} itemRenderer={renderUtenlandsoppholdIPeriodenSummary} />
                 </SummaryBlock>
             )}

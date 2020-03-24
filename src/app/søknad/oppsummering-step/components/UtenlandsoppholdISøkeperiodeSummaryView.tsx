@@ -10,7 +10,7 @@ export interface Props {
     utenlandsopphold: UtenlandsoppholdApiData[];
 }
 
-const UtenlandsoppholdSummaryView = ({ utenlandsopphold }: Props) => {
+const UtenlandsoppholdISøkeperiodeSummaryView = ({ utenlandsopphold }: Props) => {
     const intl = useIntl();
     return utenlandsopphold && utenlandsopphold.length > 0 ? (
         <SummaryBlock header={intlHelper(intl, 'steg.oppsummering.utenlandsoppholdIPerioden.listetittel')}>
@@ -19,4 +19,4 @@ const UtenlandsoppholdSummaryView = ({ utenlandsopphold }: Props) => {
     ) : null;
 };
 
-export default UtenlandsoppholdSummaryView;
+export default UtenlandsoppholdISøkeperiodeSummaryView;

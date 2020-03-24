@@ -24,7 +24,7 @@ import NavnOgFodselsnummerSummaryView from './components/NavnOgFodselsnummerSumm
 import SelvstendigSummary from './components/SelvstendigSummary';
 import { SpørsmålOgSvarSummaryView } from './components/SporsmalOgSvarSummaryView';
 import UtbetalingsperioderSummaryView from './components/UtbetalingsperioderSummaryView';
-import UtenlandsoppholdSummaryView from './components/UtenlandsoppholdSummaryView';
+import UtenlandsoppholdISøkeperiodeSummaryView from './components/UtenlandsoppholdISøkeperiodeSummaryView';
 
 interface Props {
     onApplicationSent: (apiValues: SøknadApiData, søkerdata: Søkerdata) => void;
@@ -87,7 +87,7 @@ const OppsummeringStep: React.StatelessComponent<Props> = ({ onApplicationSent }
                     />
                     <SpørsmålOgSvarSummaryView yesNoSpørsmålOgSvar={apiValues.spørsmål} />
                     <UtbetalingsperioderSummaryView utbetalingsperioder={apiValues.utbetalingsperioder} />
-                    <UtenlandsoppholdSummaryView utenlandsopphold={apiValues.opphold} />
+                    <UtenlandsoppholdISøkeperiodeSummaryView utenlandsopphold={apiValues.opphold} />
                     <FrilansSummary frilans={apiValues.frilans} />
                     <SelvstendigSummary selvstendigVirksomheter={apiValues.selvstendigVirksomheter} />
                     <MedlemskapSummaryView bosteder={apiValues.bosteder} />
