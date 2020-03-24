@@ -21,7 +21,7 @@ import PeriodeMedFulltFraværList from './components/PerioderMedFulltFraværList
 import './periodeStep.less';
 
 const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) => {
-    const { values, validateField } = useFormikContext<SøknadFormData>();
+    const { values, validateField, validateForm } = useFormikContext<SøknadFormData>();
     const {
         perioderMedFravær,
         dagerMedDelvisFravær,
@@ -77,6 +77,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                             return (
                                 <PeriodeMedFulltFraværList
                                     perioderMedFravær={perioderMedFravær}
+                                    dagerMedGradvisFravær={dagerMedDelvisFravær}
                                     onCreateNew={() => {
                                         const emptyPeriodeMedFravær: Partial<Periode> = {
                                             fom: undefined,
@@ -88,7 +89,12 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                                             validateField(SøknadFormField.perioderMedFraværGroup);
                                         });
                                     }}
-                                    onRemove={(idx) => arrayHelpers.remove(idx)}
+                                    onRemove={(idx) => {
+                                        arrayHelpers.remove(idx);
+                                        setTimeout(() => {
+                                            validateForm();
+                                        });
+                                    }}
                                 />
                             );
                         }}
@@ -111,6 +117,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                             return (
                                 <DagerMedDelvisFraværList
                                     dagerMedDelvisFravær={dagerMedDelvisFravær}
+                                    perioderMedFravær={perioderMedFravær}
                                     onCreateNew={() => {
                                         const emptyDagMedFravær: Partial<FraværDelerAvDag> = {
                                             dato: undefined,
@@ -118,7 +125,12 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                                         };
                                         arrayHelpers.insert(dagerMedDelvisFravær.length, emptyDagMedFravær);
                                     }}
-                                    onRemove={(idx) => arrayHelpers.remove(idx)}
+                                    onRemove={(idx) => {
+                                        arrayHelpers.remove(idx);
+                                        setTimeout(() => {
+                                            validateForm();
+                                        });
+                                    }}
                                 />
                             );
                         }}
