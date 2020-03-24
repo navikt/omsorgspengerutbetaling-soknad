@@ -3,7 +3,9 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { useHistory } from 'react-router-dom';
 import Box from '@navikt/sif-common-core/lib/components/box/Box';
 import CounsellorPanel from '@navikt/sif-common-core/lib/components/counsellor-panel/CounsellorPanel';
+import SummaryList from '@navikt/sif-common-core/lib/components/summary-list/SummaryList';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
+import { formatName } from '@navikt/sif-common-core/lib/utils/personUtils';
 import { useFormikContext } from 'formik';
 import Panel from 'nav-frontend-paneler';
 import { sendApplication } from '../../api/api';
@@ -11,7 +13,7 @@ import RouteConfig from '../../config/routeConfig';
 import { StepID } from '../../config/stepConfig';
 import { SøkerdataContext } from '../../context/SøkerdataContext';
 import { Søkerdata } from '../../types/Søkerdata';
-import { SøknadApiData } from '../../types/SøknadApiData';
+import { FosterbarnApi, SøknadApiData } from '../../types/SøknadApiData';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import * as apiUtils from '../../utils/apiUtils';
 import { mapFormDataToApiData } from '../../utils/mapFormDataToApiData';
@@ -23,6 +25,7 @@ import MedlemskapSummaryView from './components/MedlemskapSummaryView';
 import NavnOgFodselsnummerSummaryView from './components/NavnOgFodselsnummerSummaryView';
 import SelvstendigSummary from './components/SelvstendigSummary';
 import { SpørsmålOgSvarSummaryView } from './components/SporsmalOgSvarSummaryView';
+import SummaryBlock from './components/SummaryBlock';
 import UtbetalingsperioderSummaryView from './components/UtbetalingsperioderSummaryView';
 import UtenlandsoppholdISøkeperiodeSummaryView from './components/UtenlandsoppholdISøkeperiodeSummaryView';
 
@@ -61,7 +64,7 @@ const OppsummeringStep: React.StatelessComponent<Props> = ({ onApplicationSent }
     } = søkerdata;
 
     const apiValues: SøknadApiData = mapFormDataToApiData(values, intl);
-
+    const fosterbarn = apiValues.fosterbarn || [];
     return (
         <SøknadStep
             id={StepID.OPPSUMMERING}
@@ -86,6 +89,18 @@ const OppsummeringStep: React.StatelessComponent<Props> = ({ onApplicationSent }
                         fødselsnummer={fødselsnummer}
                     />
                     <SpørsmålOgSvarSummaryView yesNoSpørsmålOgSvar={apiValues.spørsmål} />
+                    {fosterbarn.length > 0 && (
+                        <SummaryBlock header="Fosterbarn">
+                            <SummaryList
+                                items={fosterbarn}
+                                itemRenderer={(barn: FosterbarnApi) => (
+                                    <>
+                                        {barn.fødselsnummer} - {formatName(barn.fornavn, barn.etternavn)}
+                                    </>
+                                )}
+                            />
+                        </SummaryBlock>
+                    )}
                     <UtbetalingsperioderSummaryView utbetalingsperioder={apiValues.utbetalingsperioder} />
                     <UtenlandsoppholdISøkeperiodeSummaryView utenlandsopphold={apiValues.opphold} />
                     <FrilansSummary frilans={apiValues.frilans} />

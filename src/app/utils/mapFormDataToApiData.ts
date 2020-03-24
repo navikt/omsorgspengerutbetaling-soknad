@@ -117,6 +117,13 @@ export const mapFormDataToApiData = (
         selvstendigVirksomheter: settInnVirksomheter(selvstendig_harHattInntektSomSN, selvstendig_virksomheter)
     };
 
+    if (har_fosterbarn === YesOrNo.YES && har_fosterbarn.length > 0) {
+        apiData.fosterbarn = fosterbarn.map((barn) => {
+            const { id, ...rest } = barn;
+            return rest;
+        });
+    }
+
     return apiData;
 };
 
