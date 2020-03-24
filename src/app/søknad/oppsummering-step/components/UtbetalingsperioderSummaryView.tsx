@@ -41,7 +41,7 @@ const UtbetalingsperioderSummaryView = (props: Props) => {
                                     {maybeTime && partialTimeIsTime(maybeTime) ? (
                                         <>
                                             Dato: {prettifyDate(apiStringDateToDate(utbetalingsperiode.fraOgMed))}.
-                                            Antall timer: {timeToString(maybeTime, intl)}.
+                                            Antall timer: {timeToString(maybeTime, intl, true)}.
                                         </>
                                     ) : (
                                         <>
