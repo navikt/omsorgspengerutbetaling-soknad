@@ -27,7 +27,7 @@ import SelvstendigSummary from './components/SelvstendigSummary';
 import { SpørsmålOgSvarSummaryView } from './components/SporsmalOgSvarSummaryView';
 import SummaryBlock from './components/SummaryBlock';
 import UtbetalingsperioderSummaryView from './components/UtbetalingsperioderSummaryView';
-import UtenlandsoppholdSummaryView from './components/UtenlandsoppholdSummaryView';
+import UtenlandsoppholdISøkeperiodeSummaryView from './components/UtenlandsoppholdISøkeperiodeSummaryView';
 
 interface Props {
     onApplicationSent: (apiValues: SøknadApiData, søkerdata: Søkerdata) => void;
@@ -89,7 +89,6 @@ const OppsummeringStep: React.StatelessComponent<Props> = ({ onApplicationSent }
                         fødselsnummer={fødselsnummer}
                     />
                     <SpørsmålOgSvarSummaryView yesNoSpørsmålOgSvar={apiValues.spørsmål} />
-
                     {fosterbarn.length > 0 && (
                         <SummaryBlock header="Fosterbarn">
                             <SummaryList
@@ -102,12 +101,11 @@ const OppsummeringStep: React.StatelessComponent<Props> = ({ onApplicationSent }
                             />
                         </SummaryBlock>
                     )}
-
-                    <UtbetalingsperioderSummaryView intl={intl} utbetalingsperioder={apiValues.utbetalingsperioder} />
-                    <UtenlandsoppholdSummaryView intl={intl} utenlandsopphold={apiValues.opphold} />
-                    <FrilansSummary apiValues={apiValues} />
-                    <SelvstendigSummary apiValues={apiValues} />
-                    <MedlemskapSummaryView intl={intl} bosteder={apiValues.bosteder} />
+                    <UtbetalingsperioderSummaryView utbetalingsperioder={apiValues.utbetalingsperioder} />
+                    <UtenlandsoppholdISøkeperiodeSummaryView utenlandsopphold={apiValues.opphold} />
+                    <FrilansSummary frilans={apiValues.frilans} />
+                    <SelvstendigSummary selvstendigVirksomheter={apiValues.selvstendigVirksomheter} />
+                    <MedlemskapSummaryView bosteder={apiValues.bosteder} />
                 </Panel>
             </Box>
 

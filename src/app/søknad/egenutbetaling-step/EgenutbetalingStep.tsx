@@ -36,7 +36,7 @@ const EgenutbetalingStep = ({ onValidSubmit }: StepConfigProps) => {
                         <AlertStripeInfo>
                             Som hovedregel må selvstendig næringsdrivende og frilansere dekke de 3 første omsorgsdagene
                             selv. I noen tilfeller kan du få utbetaling fra 1. dag. Hvis du skal få utbetalt fra 1. dag
-                            må én av de neste punktene gjelde for deg.
+                            må minst én av de neste punktene gjelde for deg.
                         </AlertStripeInfo>
                     </FormBlock>
                     <FormBlock>

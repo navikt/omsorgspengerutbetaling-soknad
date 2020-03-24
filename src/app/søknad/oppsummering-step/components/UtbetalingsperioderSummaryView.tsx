@@ -1,62 +1,64 @@
 import React from 'react';
-import { IntlShape } from 'react-intl';
-import Box from 'common/components/box/Box';
-import ContentWithHeader from 'common/components/content-with-header/ContentWithHeader';
+import { useIntl } from 'react-intl';
+import SummaryList from '@navikt/sif-common-core/lib/components/summary-list/SummaryList';
 import { Time } from 'common/types/Time';
-import bemUtils from 'common/utils/bemUtils';
 import { apiStringDateToDate, prettifyDate } from 'common/utils/dateUtils';
 import { iso8601DurationToTime, timeToString } from 'common/utils/timeUtils';
-import { Utbetalingsperiode, UtbetalingsperiodeMedVedlegg } from '../../../types/SøknadApiData';
+import { UtbetalingsperiodeApi } from '../../../types/SøknadApiData';
+import SummaryBlock from './SummaryBlock';
 
 export interface Props {
-    intl: IntlShape;
-    utbetalingsperioder: Utbetalingsperiode[];
+    utbetalingsperioder: UtbetalingsperiodeApi[];
 }
 
-const partialTimeIsTime = (partialTime: Partial<Time>): partialTime is Time => {
-    return true;
-};
+interface UtbetalingsperiodeDag {
+    dato: string;
+    time: Time;
+}
 
-const UtbetalingsperioderSummaryView = (props: Props) => {
-    const bem = bemUtils('summaryList');
+function UtbetalingsperioderSummaryView({ utbetalingsperioder = [] }: Props) {
+    const intl = useIntl();
 
-    const { intl, utbetalingsperioder } = props;
+    const perioder = utbetalingsperioder.filter((p) => p.tilOgMed !== undefined);
+    const dager: UtbetalingsperiodeDag[] = utbetalingsperioder
+        .filter((p) => p.lengde !== undefined)
+        .map((dag) => {
+            const time: Time = iso8601DurationToTime(dag.lengde!) as Time;
+            return {
+                dato: dag.fraOgMed,
+                time
+            };
+        });
 
     return (
-        <Box margin={'xl'}>
-            <ContentWithHeader header={'Perioder det søkes utbetaling for'}>
-                <div>
-                    <ul className={bem.classNames(bem.block)}>
-                        {utbetalingsperioder.length === 0 && <div>Ingen perioder oppgitt.</div> // TODO: Det skal ikke være mulig å komme til oppsummeringen uten å ha spesifisert noen utbetalingsperioder.
-                        }
-                        {utbetalingsperioder.map((utbetalingsperiode: UtbetalingsperiodeMedVedlegg, index: number) => {
-                            const duration = utbetalingsperiode.lengde;
-
-                            const maybeTime: Partial<Time> | undefined = duration
-                                ? iso8601DurationToTime(duration)
-                                : undefined;
-
-                            return (
-                                <li className={bem.element('item')} key={`utbetalingsperioderView${index}`}>
-                                    {maybeTime && partialTimeIsTime(maybeTime) ? (
-                                        <>
-                                            Dato: {prettifyDate(apiStringDateToDate(utbetalingsperiode.fraOgMed))}.
-                                            Antall timer: {timeToString(maybeTime, intl)}.
-                                        </>
-                                    ) : (
-                                        <>
-                                            Fra og med {prettifyDate(apiStringDateToDate(utbetalingsperiode.fraOgMed))},
-                                            til og med {prettifyDate(apiStringDateToDate(utbetalingsperiode.tilOgMed))}.
-                                        </>
-                                    )}
-                                </li>
-                            );
-                        })}
-                    </ul>
-                </div>
-            </ContentWithHeader>
-        </Box>
+        <>
+            {perioder.length > 0 && (
+                <SummaryBlock header={'Perioder det søkes utbetaling for'}>
+                    <SummaryList
+                        items={perioder}
+                        itemRenderer={(periode: UtbetalingsperiodeApi) => (
+                            <span>
+                                Fra og med {prettifyDate(apiStringDateToDate(periode.fraOgMed))}, til og med{' '}
+                                {prettifyDate(apiStringDateToDate(periode.tilOgMed))}
+                            </span>
+                        )}
+                    />
+                </SummaryBlock>
+            )}
+            {dager.length > 0 && (
+                <SummaryBlock header={'Dager med delvis fravær det søkes utbetaling for'}>
+                    <SummaryList
+                        items={dager}
+                        itemRenderer={(dag: UtbetalingsperiodeDag) => (
+                            <span>
+                                {prettifyDate(apiStringDateToDate(dag.dato))}: {timeToString(dag.time, intl, true)}
+                            </span>
+                        )}
+                    />
+                </SummaryBlock>
+            )}
+        </>
     );
-};
+}
 
 export default UtbetalingsperioderSummaryView;

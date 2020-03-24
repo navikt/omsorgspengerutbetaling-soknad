@@ -50,11 +50,5 @@ spec:
           value: "on"
         - name: UTILGJENGELIG
           value: "off"
-        - name: TOGGLE_UTENLANDSOPPHOLD_I_PERIODEN
-          value: "off"
-        - name: TOGGLE_FERIEUTTAK
-          value: "off"
-        - name: TOGGLE_FRILANS
-          value: "off"
-        - name: TOGGLE_SELVSTENDIG
-          value: "off"
+        - name: MELLOMLAGRING
+          value: "on"

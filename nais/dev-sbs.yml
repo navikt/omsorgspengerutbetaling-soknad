@@ -48,11 +48,5 @@ spec:
           value: https://loginservice-q.nav.no/login?redirect=https://www-q0.nav.no/familie/sykdom-i-familien/soknad/omsorgspengerutbetaling/soknad
         - name: UTILGJENGELIG
           value: "off"
-        - name: TOGGLE_UTENLANDSOPPHOLD_I_PERIODEN
-          value: "off"
-        - name: TOGGLE_FERIEUTTAK
-          value: "off"
-        - name: TOGGLE_FRILANS
-          value: "off"
-        - name: TOGGLE_SELVSTENDIG
-          value: "off"
+        - name: MELLOMLAGRING
+          value: "on"

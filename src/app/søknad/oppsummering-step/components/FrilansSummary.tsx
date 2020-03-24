@@ -1,39 +1,26 @@
 import React from 'react';
-import { useIntl } from 'react-intl';
-import Box from 'common/components/box/Box';
+import { Frilans } from '../../../types/SøknadApiData';
 import DatoSvar from './DatoSvar';
-import JaNeiSvar from './JaNeiSvar';
 import SummaryBlock from './SummaryBlock';
-import { Frilans, SøknadApiData } from '../../../types/SøknadApiData';
-import intlHelper from 'common/utils/intlUtils';
 
 interface Props {
-    apiValues: SøknadApiData;
+    frilans?: Frilans;
 }
 
-const FrilansSummary: React.FunctionComponent<Props> = (props: Props) => {
-    const intl = useIntl();
-
-    const frilans: Frilans | undefined = props.apiValues.frilans;
-
+const FrilansSummary: React.FunctionComponent<Props> = ({ frilans }) => {
     if (frilans) {
         return (
             <>
-                <Box margin="l">
-                    <SummaryBlock header={intlHelper(intl, 'frilanser.summary.harDuHattInntekt.header')}>
-                        <JaNeiSvar harSvartJa={true} />
-                    </SummaryBlock>
-                </Box>
-                <SummaryBlock header={intlHelper(intl, 'frilanser.summary.nårStartet.header')}>
-                    <DatoSvar apiDato={frilans.startdato} />
-                </SummaryBlock>
-                <SummaryBlock header={intlHelper(intl, 'frilanser.summary.jobberFortsatt.header')}>
-                    <JaNeiSvar harSvartJa={frilans.jobberFortsattSomFrilans} />
+                <SummaryBlock header="Frilanser">
+                    Startet som frilanser <DatoSvar apiDato={frilans.startdato} />.{' '}
+                    {frilans.jobberFortsattSomFrilans
+                        ? 'Jobber fortsatt som frilanser'
+                        : 'Jobber ikke som frilanser nå'}
+                    .
                 </SummaryBlock>
             </>
         );
     }
-
     return null;
 };
 
