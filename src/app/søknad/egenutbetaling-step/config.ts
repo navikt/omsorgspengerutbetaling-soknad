@@ -6,6 +6,9 @@ import { yesOrNoIsAnswered } from '../../utils/yesOrNoIsAnswered';
 const Q = SøknadFormField;
 
 const EgenutbetalingConfig: QuestionConfig<SøknadFormData, SøknadFormField> = {
+    [Q.har_utbetalt_ti_dager]: {
+        isAnswered: ({ har_utbetalt_ti_dager }) => yesOrNoIsAnswered(har_utbetalt_ti_dager)
+    },
     [Q.fisker_på_blad_B]: {
         visibilityFilter: ({ har_utbetalt_ti_dager }) => har_utbetalt_ti_dager === YesOrNo.NO,
         isAnswered: ({ fisker_på_blad_B }) => yesOrNoIsAnswered(fisker_på_blad_B)
@@ -18,10 +21,6 @@ const EgenutbetalingConfig: QuestionConfig<SøknadFormData, SøknadFormField> = 
         visibilityFilter: ({ har_utbetalt_ti_dager }) => har_utbetalt_ti_dager === YesOrNo.NO,
         isAnswered: ({ nettop_startet_selvstendig_frilanser }) =>
             yesOrNoIsAnswered(nettop_startet_selvstendig_frilanser)
-    },
-    [Q.har_utbetalt_ti_dager]: {
-        visibilityFilter: ({ har_utbetalt_ti_dager }) => har_utbetalt_ti_dager === YesOrNo.NO,
-        isAnswered: ({ har_utbetalt_ti_dager }) => yesOrNoIsAnswered(har_utbetalt_ti_dager)
     },
     [Q.innvilget_utvidet_rett]: {
         parentQuestion: Q.har_utbetalt_ti_dager,
