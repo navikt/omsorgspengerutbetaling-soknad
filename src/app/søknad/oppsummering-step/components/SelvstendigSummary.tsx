@@ -63,7 +63,7 @@ const renderVirksomhetSummary = (virksomhet: VirksomhetApiData, intl: IntlShape)
             {/* Regnskapsfører */}
             {virksomhet.regnskapsfører && (
                 <p>
-                    Regnskapsfører er
+                    Regnskapsfører er{' '}
                     <FormattedMessage
                         tagName="span"
                         id="summary.virksomhet.revisorEllerRegnskapsførerDetaljer"
@@ -74,7 +74,7 @@ const renderVirksomhetSummary = (virksomhet: VirksomhetApiData, intl: IntlShape)
             {/* Revisor */}
             {virksomhet.revisor && (
                 <p>
-                    Revisor er
+                    Revisor er{' '}
                     <FormattedMessage
                         tagName="span"
                         id="summary.virksomhet.revisorEllerRegnskapsførerDetaljer"
