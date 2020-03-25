@@ -36,15 +36,11 @@ const IntroPage: React.StatelessComponent = () => {
             className={bem.block}
             title={intlHelper(intl, 'introPage.tittel')}
             topContentRenderer={() => <StepBanner text={intlHelper(intl, 'introPage.stegTittel')} />}>
-            {/*topContentRenderer={() => <StepBanner text={intlHelper(intl, 'introPage.stegTittel')} />}>*/}
             <Box margin="xxxl">
                 <InformationPoster>
                     <p>
                         Som selvstendig næringsdrivende eller frilanser må du som hovedregel dekke de 3 første dagene
                         selv. Du kan søke om utbetaling av omsorgspenger fra den 4. dagen du er hjemme med omsorgsdager.
-                    </p>
-                    <p>
-                        Du kan søke om utbetaling for omsorgsdager <strong>du allerede har brukt</strong>.
                     </p>
                 </InformationPoster>
             </Box>
