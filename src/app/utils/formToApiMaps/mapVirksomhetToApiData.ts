@@ -6,7 +6,10 @@ import { VirksomhetApiData } from '../../types/SøknadApiData';
 export const harFiskerNæringstype = (næringstyper: Næringstype[]): boolean =>
     næringstyper.find((n) => n === Næringstype.FISKER) !== undefined;
 
-export const mapVirksomhetToVirksomhetApiData = (virksomhet: Virksomhet): VirksomhetApiData => {
+export const mapVirksomhetToVirksomhetApiData = (
+    virksomhet: Virksomhet,
+    harBesvartFikserPåBladB?: boolean
+): VirksomhetApiData => {
     const registrertINorge = virksomhet.registrertINorge === YesOrNo.YES;
     const harRegnskapsfører = virksomhet.harRegnskapsfører === YesOrNo.YES;
 
@@ -47,7 +50,7 @@ export const mapVirksomhetToVirksomhetApiData = (virksomhet: Virksomhet): Virkso
         }
     }
 
-    if (harFiskerNæringstype(virksomhet.næringstyper)) {
+    if (harFiskerNæringstype(virksomhet.næringstyper) && harBesvartFikserPåBladB !== true) {
         data.fiskerErPåBladB = virksomhet.fiskerErPåBladB === YesOrNo.YES;
     }
 

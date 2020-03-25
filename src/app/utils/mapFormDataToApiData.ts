@@ -13,6 +13,7 @@ import { SøknadFormData } from '../types/SøknadFormData';
 import { mapBostedUtlandToApiData } from './formToApiMaps/mapBostedUtlandToApiData';
 import { mapFrilansToApiData } from './formToApiMaps/mapFrilansToApiData';
 import { mapVirksomhetToVirksomhetApiData } from './formToApiMaps/mapVirksomhetToApiData';
+import { yesOrNoIsAnswered } from './yesOrNoIsAnswered';
 
 // TODO: FIX MAPPING!!!
 export const mapFormDataToApiData = (
@@ -97,6 +98,8 @@ export const mapFormDataToApiData = (
         ...leggTilDisseHvis(har_utbetalt_ti_dager)
     ];
 
+    const harBesvartFiskerPåBladB = yesOrNoIsAnswered(fisker_på_blad_B);
+
     const apiData: SøknadApiData = {
         språk: (intl.locale as any) === 'en' ? 'nn' : (intl.locale as Locale),
         bekreftelser: {
@@ -114,7 +117,11 @@ export const mapFormDataToApiData = (
         ), // medlemskap siden
         opphold: settInnOpphold(perioder_harVærtIUtlandet, perioder_utenlandsopphold, intl.locale), // periode siden, har du oppholdt
         frilans: mapFrilansToApiData(frilans_jobberFortsattSomFrilans, frilans_startdato),
-        selvstendigVirksomheter: settInnVirksomheter(selvstendig_harHattInntektSomSN, selvstendig_virksomheter)
+        selvstendigVirksomheter: settInnVirksomheter(
+            selvstendig_harHattInntektSomSN,
+            selvstendig_virksomheter,
+            harBesvartFiskerPåBladB
+        )
     };
 
     if (har_fosterbarn === YesOrNo.YES && har_fosterbarn.length > 0) {
@@ -194,8 +201,14 @@ const settInnOpphold = (
         : [];
 };
 
-const settInnVirksomheter = (harHattInntektSomSN?: YesOrNo, virksomheter?: Virksomhet[]): VirksomhetApiData[] => {
+const settInnVirksomheter = (
+    harHattInntektSomSN?: YesOrNo,
+    virksomheter?: Virksomhet[],
+    harBesvartFiskerPåBladB?: boolean
+): VirksomhetApiData[] => {
     return harHattInntektSomSN && harHattInntektSomSN === YesOrNo.YES && virksomheter
-        ? virksomheter.map((virksomhet: Virksomhet) => mapVirksomhetToVirksomhetApiData(virksomhet))
+        ? virksomheter.map((virksomhet: Virksomhet) =>
+              mapVirksomhetToVirksomhetApiData(virksomhet, harBesvartFiskerPåBladB)
+          )
         : [];
 };
