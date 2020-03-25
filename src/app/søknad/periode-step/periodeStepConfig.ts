@@ -37,7 +37,7 @@ export const oppholdIsValid = (
     perioderHarVærtIUtlandet === YesOrNo.NO ||
     (perioderHarVærtIUtlandet === YesOrNo.YES && perioderUtenlandsopphold.length > 0);
 
-export const harSpesifisertMinimumEnPeriode = (
+export const minimumEnUtbetalingsperiode = (
     perioderMedFravær: Periode[],
     dagerMedDelvisFravær: FraværDelerAvDag[]
 ): boolean => perioderMedFravær.length > 0 || dagerMedDelvisFravær.length > 0;

@@ -24,15 +24,18 @@ export const getStepTexts = (intl: IntlShape, stepId: StepID, stepConfig: StepCo
 
 export const situasjonStepIsAvailable = (formData: SøknadFormData) => welcomingPageIsValid(formData);
 
-export const egenutbetalingIsAvailable = (formData: SøknadFormData) =>
+export const egenutbetalingStepIsAvailable = (formData: SøknadFormData) =>
     situasjonStepIsAvailable(formData) && situasjonStepIsValid(formData);
 
-export const periodeAvailable = (formData: SøknadFormData) => egenutbetalingIsValid(formData);
+export const periodeStepIsAvailable = (formData: SøknadFormData) =>
+    egenutbetalingStepIsAvailable(formData) && egenutbetalingIsValid(formData);
 
 export const legeerklæringStepAvailable = (formData: SøknadFormData) => periodeStepIsValid(formData);
 
-export const inntektStepAvailable = (formData: SøknadFormData) => periodeStepIsValid(formData);
+export const inntektStepIsAvailable = (formData: SøknadFormData) =>
+    periodeStepIsAvailable(formData) && periodeStepIsValid(formData);
 
-export const medlemskapStepAvailable = (formData: SøknadFormData) => inntektStepIsValid(formData);
+export const medlemskapStepIsAvailable = (formData: SøknadFormData) =>
+    inntektStepIsAvailable(formData) && inntektStepIsValid(formData);
 
 export const summaryStepAvailable = (formData: SøknadFormData) => medlemskapStepIsValid(formData);
