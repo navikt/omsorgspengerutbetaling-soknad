@@ -88,7 +88,6 @@ const OppsummeringStep: React.StatelessComponent<Props> = ({ onApplicationSent }
                         mellomnavn={mellomnavn}
                         fødselsnummer={fødselsnummer}
                     />
-                    <SpørsmålOgSvarSummaryView yesNoSpørsmålOgSvar={apiValues.spørsmål} />
                     {fosterbarn.length > 0 && (
                         <SummaryBlock header="Fosterbarn">
                             <SummaryList
@@ -101,6 +100,7 @@ const OppsummeringStep: React.StatelessComponent<Props> = ({ onApplicationSent }
                             />
                         </SummaryBlock>
                     )}
+                    <SpørsmålOgSvarSummaryView yesNoSpørsmålOgSvar={apiValues.spørsmål} />
                     <UtbetalingsperioderSummaryView utbetalingsperioder={apiValues.utbetalingsperioder} />
                     <UtenlandsoppholdISøkeperiodeSummaryView utenlandsopphold={apiValues.opphold} />
                     <FrilansSummary frilans={apiValues.frilans} />
