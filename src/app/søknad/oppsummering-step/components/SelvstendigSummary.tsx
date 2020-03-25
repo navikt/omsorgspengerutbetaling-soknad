@@ -32,16 +32,18 @@ const renderVirksomhetSummary = (virksomhet: VirksomhetApiData, intl: IntlShape)
 
     return (
         <SummaryBlock header={virksomhet.navnPåVirksomheten}>
-            <IntlLabelValue labelKey="summary.virksomhet.næringstype">{næringstyper}</IntlLabelValue>
-            {fiskerinfo && (
-                <IntlLabelValue labelKey="summary.virksomhet.fiskerErPåBladB">
-                    <JaNeiSvar harSvartJa={fiskerinfo.erPåPlaneB} />
-                </IntlLabelValue>
-            )}
+            <IntlLabelValue labelKey="summary.virksomhet.næringstype">{næringstyper}. </IntlLabelValue>
+            {fiskerinfo && <>Fisker er {fiskerinfo.erPåPlaneB === false ? 'ikke' : ''} på Blad B.</>}
             <p>
                 Registrert i {land}
                 {virksomhet.registrertINorge ? ` (organisasjonsnummer ${virksomhet.organisasjonsnummer})` : ``}. <br />
                 {tidsinfo}
+                {virksomhet.næringsinntekt !== undefined && (
+                    <>
+                        <br />
+                        Næringsinntekt: {virksomhet.næringsinntekt}
+                    </>
+                )}
             </p>
             {virksomhet.varigEndring?.dato && (
                 <Box padBottom="l">
