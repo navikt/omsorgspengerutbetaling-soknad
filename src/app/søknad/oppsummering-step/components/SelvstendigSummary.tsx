@@ -3,7 +3,6 @@ import { FormattedMessage, IntlShape, useIntl } from 'react-intl';
 import Box from 'common/components/box/Box';
 import SummaryList from 'common/components/summary-list/SummaryList';
 import TextareaSummary from 'common/components/textarea-summary/TextareaSummary';
-import { getCountryName } from 'common/utils/countryUtils';
 import intlHelper from 'common/utils/intlUtils';
 import { VirksomhetApiData } from '../../../types/SøknadApiData';
 import { harFiskerNæringstype } from '../../../utils/formToApiMaps/mapVirksomhetToApiData';
@@ -19,7 +18,7 @@ interface Props {
 }
 
 const renderVirksomhetSummary = (virksomhet: VirksomhetApiData, intl: IntlShape) => {
-    const land = getCountryName(virksomhet.registrertILand || 'NO', intl.locale);
+    const land = virksomhet.registrertILand || 'Norge';
     const næringstyper = virksomhet.næringstyper.map((næring) => intlHelper(intl, `næringstype.${næring}`)).join(', ');
     const fiskerinfo = harFiskerNæringstype(virksomhet.næringstyper)
         ? {
