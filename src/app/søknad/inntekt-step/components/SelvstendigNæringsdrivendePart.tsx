@@ -12,6 +12,7 @@ import {
 import { StepID } from '../../../config/stepConfig';
 import { SøknadFormData, SøknadFormField } from '../../../types/SøknadFormData';
 import { Feature, isFeatureEnabled } from '../../../utils/featureToggleUtils';
+import { yesOrNoIsAnswered } from '../../../utils/yesOrNoIsAnswered';
 import SøknadFormComponents from '../../SøknadFormComponents';
 import SøknadTempStorage from '../../SøknadTempStorage';
 
@@ -39,6 +40,7 @@ const SelvstendigNæringsdrivendeFormPart: React.FunctionComponent<Props> = ({ f
                                 addLabel: intlHelper(intl, 'selvstendig.list.leggTilLabel'),
                                 modalTitle: intlHelper(intl, 'selvstendig.dialog.tittel')
                             }}
+                            hideFormFields={{ fiskerErPåBladB: yesOrNoIsAnswered(values.fisker_på_blad_B) }}
                             validate={validateRequiredList}
                             onAfterChange={
                                 isFeatureEnabled(Feature.MELLOMLAGRING)
