@@ -43,6 +43,9 @@ const IntroPage: React.StatelessComponent = () => {
                         Som selvstendig næringsdrivende eller frilanser må du som hovedregel dekke de 3 første dagene
                         selv. Du kan søke om utbetaling av omsorgspenger fra den 4. dagen du er hjemme med omsorgsdager.
                     </p>
+                    <p>
+                        Du kan søke om utbetaling for omsorgsdager <strong>du allerede har brukt</strong>.
+                    </p>
                 </InformationPoster>
             </Box>
             <FormBlock>
@@ -61,15 +64,13 @@ const IntroPage: React.StatelessComponent = () => {
                                 <Box margin="xl">
                                     <AlertStripeInfo>
                                         <p style={{ marginTop: 0, marginBottom: 0 }}>
-                                            Denne søknaden gjelder kun for selvstendig næringsdrivende og frilansere som
-                                            skal søke om utbetaling av omsorgspenger. Hvis du er arbeidstaker, skal du
-                                            ikke selv søke om utbetaling av omsorgspenger. Arbeidsgiveren din må sende
-                                            et refusjonskrav til NAV for dagene du har hatt omsorgsdager, dette gjør
-                                            arbeidsgiver ved å sende{' '}
-                                            <Lenke href="https://www.nav.no/no/bedrift/tjenester-og-skjemaer/nav-og-altinn-tjenester/inntektsmelding">
-                                                inntektsmelding
-                                            </Lenke>
-                                            .
+                                            Denne søknaden gjelder <strong>kun</strong> for selvstendig næringsdrivende
+                                            og frilansere som skal søke om utbetaling av omsorgspenger.
+                                        </p>
+                                        <p>
+                                            Hvis du er arbeidstaker, skal du ikke søke om utbetaling av omsorgspenger.
+                                            Arbeidsgiveren din skal utbetale deg lønn som vanlig de dagene du tar ut
+                                            omsorgsdager.
                                         </p>
                                     </AlertStripeInfo>
                                 </Box>
