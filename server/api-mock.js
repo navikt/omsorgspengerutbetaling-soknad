@@ -1,35 +1,18 @@
-const os = require('os');
 const fs = require('fs');
+const os = require('os');
 const express = require('express');
 const Busboy = require('busboy');
-const _ = require('lodash');
-
-
-const platformNIC = () => {
-    const interfaces = os.networkInterfaces();
-    switch (process.platform) {
-        case 'darwin':
-            return interfaces.lo0;
-        case 'linux':
-            if (interfaces.ens192) return interfaces.ens192;
-            if (interfaces.eno16780032) return interfaces.eno16780032;
-            return interfaces.lo;
-        default:
-            return interfaces.Ethernet0 ? interfaces.Ethernet0 : interfaces['Wi-Fi']
-
-    }
-};
-const getIpAdress = () => {
-    const nic = platformNIC();
-    const ipv4 = _.find(nic, item => item.family === 'IPv4');
-    return ipv4.address;
-};
 
 const server = express();
 
 server.use(express.json());
 server.use((req, res, next) => {
-    const allowedOrigins = ['https://pleiepengesoknad-mock.nais.oera.no', 'http://localhost:8083'];
+    const allowedOrigins = [
+        'http://host.docker.internal:8083',
+        'https://pleiepengesoknad-mock.nais.oera.no',
+        'http://localhost:8083',
+        'http://web:8083'
+    ];
     const requestOrigin = req.headers.origin;
     if (allowedOrigins.indexOf(requestOrigin) >= 0) {
         res.set('Access-Control-Allow-Origin', requestOrigin);
@@ -91,7 +74,7 @@ const readFileSync = (path) => {
 };
 const existsSync = (path) => fs.existsSync(path);
 
-const startServer = () => {
+const startExpressServer = () => {
     const port = process.env.PORT || 8082;
 
     server.get('/health/isAlive', (req, res) => res.sendStatus(200));
@@ -144,10 +127,9 @@ const startServer = () => {
     });
 
     server.listen(port, () => {
-        console.log(`App listening on port: ${port}`);
-        console.log('nic ipv4=', getIpAdress());
+        console.log(`Express mock-api server listening on port: ${port}`);
     });
 };
 
-startServer();
+startExpressServer();
 
