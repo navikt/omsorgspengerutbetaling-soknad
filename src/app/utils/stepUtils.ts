@@ -3,8 +3,12 @@ import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import { StepConfigInterface, StepConfigItemTexts, StepID } from 'app/config/stepConfig';
 import { SøknadFormData } from '../types/SøknadFormData';
 import {
-    egenutbetalingIsValid, inntektStepIsValid, legeerklæringStepIsValid, medlemskapStepIsValid,
-    periodeStepIsValid, situasjonStepIsValid, welcomingPageIsValid
+    egenutbetalingIsValid,
+    inntektStepIsValid,
+    medlemskapStepIsValid,
+    periodeStepIsValid,
+    situasjonStepIsValid,
+    welcomingPageIsValid
 } from '../validation/stepValidations';
 
 export const getStepTexts = (intl: IntlShape, stepId: StepID, stepConfig: StepConfigInterface): StepConfigItemTexts => {
@@ -27,7 +31,7 @@ export const periodeAvailable = (formData: SøknadFormData) => egenutbetalingIsV
 
 export const legeerklæringStepAvailable = (formData: SøknadFormData) => periodeStepIsValid(formData);
 
-export const inntektStepAvailable = (formData: SøknadFormData) => legeerklæringStepIsValid();
+export const inntektStepAvailable = (formData: SøknadFormData) => periodeStepIsValid(formData);
 
 export const medlemskapStepAvailable = (formData: SøknadFormData) => inntektStepIsValid(formData);
 
