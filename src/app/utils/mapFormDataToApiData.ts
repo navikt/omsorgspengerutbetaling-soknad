@@ -118,6 +118,7 @@ export const mapFormDataToApiData = (
         opphold: settInnOpphold(perioder_harVærtIUtlandet, perioder_utenlandsopphold, intl.locale), // periode siden, har du oppholdt
         frilans: mapFrilansToApiData(frilans_jobberFortsattSomFrilans, frilans_startdato),
         selvstendigVirksomheter: settInnVirksomheter(
+            intl.locale,
             selvstendig_harHattInntektSomSN,
             selvstendig_virksomheter,
             harBesvartFiskerPåBladB
@@ -202,13 +203,14 @@ const settInnOpphold = (
 };
 
 const settInnVirksomheter = (
+    locale: string,
     harHattInntektSomSN?: YesOrNo,
     virksomheter?: Virksomhet[],
     harBesvartFiskerPåBladB?: boolean
 ): VirksomhetApiData[] => {
     return harHattInntektSomSN && harHattInntektSomSN === YesOrNo.YES && virksomheter
         ? virksomheter.map((virksomhet: Virksomhet) =>
-              mapVirksomhetToVirksomhetApiData(virksomhet, harBesvartFiskerPåBladB)
+              mapVirksomhetToVirksomhetApiData(locale, virksomhet, harBesvartFiskerPåBladB)
           )
         : [];
 };
