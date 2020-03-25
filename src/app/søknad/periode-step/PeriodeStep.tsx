@@ -9,7 +9,7 @@ import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import CounsellorPanel from 'common/components/counsellor-panel/CounsellorPanel';
 import FormBlock from 'common/components/form-block/FormBlock';
 import { YesOrNo } from 'common/types/YesOrNo';
-import { date1YearAgo, dateToday } from 'common/utils/dateUtils';
+import { date1YearAgo, date1YearFromNow } from 'common/utils/dateUtils';
 import intlHelper from 'common/utils/intlUtils';
 import { FraværDelerAvDag, Periode } from '../../../@types/omsorgspengerutbetaling-schema';
 import { StepConfigProps, StepID } from '../../config/stepConfig';
@@ -161,7 +161,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                             <BostedUtlandListAndDialog<SøknadFormField>
                                 name={SøknadFormField.perioder_utenlandsopphold}
                                 minDate={date1YearAgo}
-                                maxDate={dateToday}
+                                maxDate={date1YearFromNow}
                                 labels={{
                                     addLabel: 'Legg til nytt utenlandsopphold',
                                     modalTitle: 'Utenlandsopphold siste 12 måneder'
