@@ -18,11 +18,13 @@ export enum AppFieldValidationErrors {
     'fraværsperioder_mangler' = 'fieldvalidation.fraværsperioder_mangler',
     'fraværsperioder_overlapper' = 'fieldvalidation.fraværsperioder_overlapper',
     'fraværsperioder_utenfor_periode' = 'fieldvalidation.fraværsperioder_utenfor_periode',
+    'fraværsperioder_overlapper_med_fraværsdager' = 'fieldvalidation.fraværsperioder_overlapper_med_fraværsdager',
     'dager_med_fravær_ugyldig_dag' = 'fieldvalidation.dager_med_fravær_ugyldig_dag',
     'dager_med_fravær_mangler' = 'fieldvalidation.dager_med_fravær_mangler',
     'dager_med_fravær_like' = 'fieldvalidation.dager_med_fravær_like',
     'dager_med_fravær_utenfor_periode' = 'fieldvalidation.dager_med_fravær_utenfor_periode',
     'dager_med_for_mange_timer' = 'fieldvalidation.dager_med_for_mange_timer',
+    'dager_med_fravær_overlapper_perioder' = 'fieldvalidation.dager_med_fravær_overlapper_perioder',
     'utenlandsopphold_ikke_registrert' = 'fieldvalidation.utenlandsopphold_ikke_registrert',
     'utenlandsopphold_overlapper' = 'fieldvalidation.utenlandsopphold_overlapper',
     'utenlandsopphold_utenfor_periode' = 'fieldvalidation.utenlandsopphold_utenfor_periode',
@@ -118,27 +120,65 @@ export const validateTomAfterFom = (fom: Date) => (date: Date) => {
     }
 };
 
-export const validatePerioderMedFravær = (allePerioder: Periode[]): FieldValidationResult => {
+const perioderMedFraværToDateRanges = (perioder: Periode[]): DateRange[] =>
+    perioder.map((periode: Periode) => ({ from: periode.fom, to: periode.tom }));
+
+export const validatePerioderMedFravær = (
+    allePerioder: Periode[],
+    dagerMedGradvisFravær: FraværDelerAvDag[]
+): FieldValidationResult => {
     if (allePerioder.length === 0) {
         return createFieldValidationError(AppFieldValidationErrors.fraværsperioder_mangler);
     }
     const perioder = allePerioder.filter(isPeriodeMedFomTom);
-    const dateRanges: DateRange[] = perioder.map((periode: Periode) => ({ from: periode.fom, to: periode.tom }));
+    const dateRanges: DateRange[] = perioderMedFraværToDateRanges(perioder);
     if (dateRangesCollide(dateRanges)) {
         return createFieldValidationError(AppFieldValidationErrors.fraværsperioder_overlapper);
+    }
+    if (
+        datesCollideWithDateRanges(
+            dagerMedGradvisFravær.map((d) => d.dato),
+            dateRanges
+        )
+    ) {
+        return createFieldValidationError(AppFieldValidationErrors.fraværsperioder_overlapper_med_fraværsdager);
     }
     return undefined;
 };
 
-export const validateDagerMedFravær = (alleDager: FraværDelerAvDag[]): FieldValidationResult => {
-    if (alleDager.length === 0) {
+export const datesCollideWithDateRanges = (dates: Date[], ranges: DateRange[]): boolean => {
+    if (ranges.length > 0 && dates.length > 0) {
+        return dates.some((d) => {
+            return ranges.some((range) => moment(d).isSameOrAfter(range.from) && moment(d).isSameOrBefore(range.to));
+        });
+    }
+    return false;
+};
+
+export const validateDagerMedFravær = (
+    dagerMedGradvisFravær: FraværDelerAvDag[],
+    perioderMedFravær: Periode[]
+): FieldValidationResult => {
+    if (dagerMedGradvisFravær.length === 0) {
         return createFieldValidationError(AppFieldValidationErrors.dager_med_fravær_mangler);
     }
-    const dager = alleDager.filter((d) => d.dato !== undefined && d.timer !== undefined && isNaN(d.timer) === false);
+    const dager = dagerMedGradvisFravær.filter(
+        (d) => d.dato !== undefined && d.timer !== undefined && isNaN(d.timer) === false
+    );
 
     if (harLikeDager(dager)) {
         return createFieldValidationError(AppFieldValidationErrors.dager_med_fravær_like);
     }
+    const dateRanges: DateRange[] = perioderMedFraværToDateRanges(perioderMedFravær);
+    if (
+        datesCollideWithDateRanges(
+            dagerMedGradvisFravær.map((d) => d.dato),
+            dateRanges
+        )
+    ) {
+        return createFieldValidationError(AppFieldValidationErrors.dager_med_fravær_overlapper_perioder);
+    }
+
     return undefined;
 };
 
