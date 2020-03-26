@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useIntl } from 'react-intl';
+import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
 import { validateYesOrNoIsAnswered } from '@navikt/sif-common-core/lib/validation/fieldValidations';
 import { useFormikContext } from 'formik';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
@@ -20,8 +21,26 @@ const EgenutbetalingStep = ({ onValidSubmit }: StepConfigProps) => {
 
     const showSubmitButton = visibility.areAllQuestionsAnswered();
 
+    const cleanupEgenbetaling = (v: SøknadFormData): SøknadFormData => {
+        if (v.har_utbetalt_ti_dager === YesOrNo.YES) {
+            return {
+                ...v,
+                fisker_på_blad_B: YesOrNo.UNANSWERED,
+                frivillig_forsikring: YesOrNo.UNANSWERED,
+                nettop_startet_selvstendig_frilanser: YesOrNo.UNANSWERED,
+                innvilget_utvidet_rett: YesOrNo.UNANSWERED,
+                ingen_andre_barn_under_tolv: YesOrNo.UNANSWERED
+            };
+        }
+        return v;
+    };
+
     return (
-        <SøknadStep id={StepID.EGENUTBETALING} onValidFormSubmit={onValidSubmit} showSubmitButton={showSubmitButton}>
+        <SøknadStep
+            id={StepID.EGENUTBETALING}
+            onValidFormSubmit={onValidSubmit}
+            showSubmitButton={showSubmitButton}
+            cleanupStep={cleanupEgenbetaling}>
             <CounsellorPanel>{intlHelper(intl, 'step.egenutbetaling.counsellorpanel.content')}</CounsellorPanel>
             <FormBlock>
                 <SøknadFormComponents.YesOrNoQuestion
