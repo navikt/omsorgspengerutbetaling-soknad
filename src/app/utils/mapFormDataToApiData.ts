@@ -14,6 +14,7 @@ import { fiskerHarBesvartPåBladBSpørsmål } from './fiskerUtils';
 import { mapBostedUtlandToApiData } from './formToApiMaps/mapBostedUtlandToApiData';
 import { mapFrilansToApiData } from './formToApiMaps/mapFrilansToApiData';
 import { mapVirksomhetToVirksomhetApiData } from './formToApiMaps/mapVirksomhetToApiData';
+import { yesOrNoIsAnswered } from './yesOrNoIsAnswered';
 
 // TODO: FIX MAPPING!!!
 export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShape): SøknadApiData => {
@@ -52,40 +53,44 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
         utenlandsoppholdNeste12Mnd
     } = formValues;
     const leggTilDisseHvis = (yesOrNo: YesOrNo): YesNoSpørsmålOgSvar[] => {
-        return yesOrNo === YesOrNo.NO
-            ? [
-                  {
-                      spørsmål: intl.formatMessage({
-                          id: 'step.har_utbetalt_de_første_ti_dagene.innvilget_utvidet_rett.spm'
-                      }),
-                      svar: mapYesOrNoToSvar(innvilget_utvidet_rett)
-                  },
-                  {
-                      spørsmål: intl.formatMessage({
-                          id: 'step.har_utbetalt_de_første_ti_dagene.ingen_andre_barn_under_tolv.spm'
-                      }),
-                      svar: mapYesOrNoToSvar(ingen_andre_barn_under_tolv)
-                  },
-                  {
-                      spørsmål: intl.formatMessage({
-                          id: 'step.har_utbetalt_de_første_ti_dagene.fisker_på_blad_B.spm'
-                      }),
-                      svar: mapYesOrNoToSvar(fisker_på_blad_B)
-                  },
-                  {
-                      spørsmål: intl.formatMessage({
-                          id: 'step.har_utbetalt_de_første_ti_dagene.frivillig_forsikring.spm'
-                      }),
-                      svar: mapYesOrNoToSvar(frivillig_forsikring)
-                  },
-                  {
-                      spørsmål: intl.formatMessage({
-                          id: 'step.har_utbetalt_de_første_ti_dagene.nettop_startet_selvstendig_frilanser.spm'
-                      }),
-                      svar: mapYesOrNoToSvar(nettop_startet_selvstendig_frilanser)
-                  }
-              ]
-            : [];
+        const answers =
+            yesOrNo === YesOrNo.NO
+                ? [
+                      {
+                          spørsmål: intl.formatMessage({
+                              id: 'step.har_utbetalt_de_første_ti_dagene.fisker_på_blad_B.spm'
+                          }),
+                          svar: mapYesOrNoToSvar(fisker_på_blad_B)
+                      },
+                      {
+                          spørsmål: intl.formatMessage({
+                              id: 'step.har_utbetalt_de_første_ti_dagene.frivillig_forsikring.spm'
+                          }),
+                          svar: mapYesOrNoToSvar(frivillig_forsikring)
+                      },
+                      {
+                          spørsmål: intl.formatMessage({
+                              id: 'step.har_utbetalt_de_første_ti_dagene.nettop_startet_selvstendig_frilanser.spm'
+                          }),
+                          svar: mapYesOrNoToSvar(nettop_startet_selvstendig_frilanser)
+                      },
+                      {
+                          spørsmål: intl.formatMessage({
+                              id: 'step.har_utbetalt_de_første_ti_dagene.innvilget_utvidet_rett.spm'
+                          }),
+                          svar: mapYesOrNoToSvar(innvilget_utvidet_rett)
+                      }
+                  ]
+                : [];
+        if (innvilget_utvidet_rett === YesOrNo.YES && yesOrNoIsAnswered(ingen_andre_barn_under_tolv)) {
+            answers.push({
+                spørsmål: intl.formatMessage({
+                    id: 'step.har_utbetalt_de_første_ti_dagene.ingen_andre_barn_under_tolv.spm'
+                }),
+                svar: mapYesOrNoToSvar(ingen_andre_barn_under_tolv)
+            });
+        }
+        return answers;
     };
 
     const stegTo: YesNoSpørsmålOgSvar[] = [
