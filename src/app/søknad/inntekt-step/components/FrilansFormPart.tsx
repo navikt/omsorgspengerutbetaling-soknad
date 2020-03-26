@@ -1,9 +1,9 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
-import Panel from 'nav-frontend-paneler';
 import { PopoverOrientering } from 'nav-frontend-popover';
 import Box from 'common/components/box/Box';
+import ResponsivePanel from 'common/components/responsive-panel/ResponsivePanel';
 import { YesOrNo } from 'common/types/YesOrNo';
 import { dateToday } from 'common/utils/dateUtils';
 import intlHelper from 'common/utils/intlUtils';
@@ -32,7 +32,7 @@ const FrilansFormPart: React.FunctionComponent<Props> = ({ formValues }) => {
             />
             {harHattInntektSomFrilanser && (
                 <FormBlock margin="l">
-                    <Panel>
+                    <ResponsivePanel className={'responsivePanel'}>
                         <Box>
                             <SøknadFormComponents.DatePicker
                                 name={SøknadFormField.frilans_startdato}
@@ -49,7 +49,7 @@ const FrilansFormPart: React.FunctionComponent<Props> = ({ formValues }) => {
                                 validate={validateYesOrNoIsAnswered}
                             />
                         </Box>
-                    </Panel>
+                    </ResponsivePanel>
                 </FormBlock>
             )}
         </>
