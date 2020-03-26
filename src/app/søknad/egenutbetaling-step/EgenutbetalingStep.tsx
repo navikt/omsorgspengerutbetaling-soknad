@@ -32,6 +32,12 @@ const EgenutbetalingStep = ({ onValidSubmit }: StepConfigProps) => {
                 ingen_andre_barn_under_tolv: YesOrNo.UNANSWERED
             };
         }
+        if (v.har_utbetalt_ti_dager === YesOrNo.NO && v.innvilget_utvidet_rett === YesOrNo.NO) {
+            return {
+                ...v,
+                ingen_andre_barn_under_tolv: YesOrNo.UNANSWERED
+            };
+        }
         return v;
     };
 
