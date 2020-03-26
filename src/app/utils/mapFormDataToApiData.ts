@@ -10,14 +10,14 @@ import {
     YesNoSpørsmålOgSvar, YesNoSvar
 } from '../types/SøknadApiData';
 import { SøknadFormData } from '../types/SøknadFormData';
+import { fiskerHarBesvartPåBladBSpørsmål } from './fiskerUtils';
 import { mapBostedUtlandToApiData } from './formToApiMaps/mapBostedUtlandToApiData';
 import { mapFrilansToApiData } from './formToApiMaps/mapFrilansToApiData';
 import { mapVirksomhetToVirksomhetApiData } from './formToApiMaps/mapVirksomhetToApiData';
-import { yesOrNoIsAnswered } from './yesOrNoIsAnswered';
 
 // TODO: FIX MAPPING!!!
-export const mapFormDataToApiData = (
-    {
+export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShape): SøknadApiData => {
+    const {
         harForståttRettigheterOgPlikter,
         harBekreftetOpplysninger,
 
@@ -50,9 +50,7 @@ export const mapFormDataToApiData = (
         utenlandsoppholdSiste12Mnd,
         skalBoUtenforNorgeNeste12Mnd,
         utenlandsoppholdNeste12Mnd
-    }: SøknadFormData,
-    intl: IntlShape
-): SøknadApiData => {
+    } = formValues;
     const leggTilDisseHvis = (yesOrNo: YesOrNo): YesNoSpørsmålOgSvar[] => {
         return yesOrNo === YesOrNo.NO
             ? [
@@ -98,8 +96,6 @@ export const mapFormDataToApiData = (
         ...leggTilDisseHvis(har_utbetalt_ti_dager)
     ];
 
-    const harBesvartFiskerPåBladB = yesOrNoIsAnswered(fisker_på_blad_B);
-
     const apiData: SøknadApiData = {
         språk: (intl.locale as any) === 'en' ? 'nn' : (intl.locale as Locale),
         bekreftelser: {
@@ -121,7 +117,7 @@ export const mapFormDataToApiData = (
             intl.locale,
             selvstendig_harHattInntektSomSN,
             selvstendig_virksomheter,
-            harBesvartFiskerPåBladB
+            fiskerHarBesvartPåBladBSpørsmål(formValues)
         )
     };
 
