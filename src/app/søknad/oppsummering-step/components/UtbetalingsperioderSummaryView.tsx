@@ -19,7 +19,7 @@ interface UtbetalingsperiodeDag {
 function UtbetalingsperioderSummaryView({ utbetalingsperioder = [] }: Props) {
     const intl = useIntl();
 
-    const perioder = utbetalingsperioder.filter((p) => p.tilOgMed !== undefined);
+    const perioder = utbetalingsperioder.filter((p) => p.tilOgMed !== undefined && p.lengde === undefined);
     const dager: UtbetalingsperiodeDag[] = utbetalingsperioder
         .filter((p) => p.lengde !== undefined)
         .map((dag) => {

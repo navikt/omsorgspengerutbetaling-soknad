@@ -1,12 +1,16 @@
 import { formatDateToApiFormat } from '@navikt/sif-common-core/lib/utils/dateUtils';
-import { YesOrNo } from '@navikt/sif-common-formik';
+import { getCountryName, YesOrNo } from '@navikt/sif-common-formik';
 import { Næringstype, Virksomhet } from '@navikt/sif-common-forms/lib';
 import { VirksomhetApiData } from '../../types/SøknadApiData';
 
 export const harFiskerNæringstype = (næringstyper: Næringstype[]): boolean =>
     næringstyper.find((n) => n === Næringstype.FISKER) !== undefined;
 
-export const mapVirksomhetToVirksomhetApiData = (virksomhet: Virksomhet): VirksomhetApiData => {
+export const mapVirksomhetToVirksomhetApiData = (
+    locale: string,
+    virksomhet: Virksomhet,
+    harBesvartFikserPåBladB?: boolean
+): VirksomhetApiData => {
     const registrertINorge = virksomhet.registrertINorge === YesOrNo.YES;
     const harRegnskapsfører = virksomhet.harRegnskapsfører === YesOrNo.YES;
 
@@ -20,6 +24,8 @@ export const mapVirksomhetToVirksomhetApiData = (virksomhet: Virksomhet): Virkso
               }
             : {
                   registrertILand: virksomhet.registrertILand
+                      ? getCountryName(virksomhet.registrertILand, locale)
+                      : undefined
               }),
         fraOgMed: formatDateToApiFormat(virksomhet.fom),
         tilOgMed: virksomhet.erPågående || virksomhet.tom === undefined ? null : formatDateToApiFormat(virksomhet.tom),
@@ -47,7 +53,7 @@ export const mapVirksomhetToVirksomhetApiData = (virksomhet: Virksomhet): Virkso
         }
     }
 
-    if (harFiskerNæringstype(virksomhet.næringstyper)) {
+    if (harFiskerNæringstype(virksomhet.næringstyper) && harBesvartFikserPåBladB !== true) {
         data.fiskerErPåBladB = virksomhet.fiskerErPåBladB === YesOrNo.YES;
     }
 

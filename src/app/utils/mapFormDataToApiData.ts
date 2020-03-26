@@ -10,13 +10,14 @@ import {
     YesNoSpørsmålOgSvar, YesNoSvar
 } from '../types/SøknadApiData';
 import { SøknadFormData } from '../types/SøknadFormData';
+import { fiskerHarBesvartPåBladBSpørsmål } from './fiskerUtils';
 import { mapBostedUtlandToApiData } from './formToApiMaps/mapBostedUtlandToApiData';
 import { mapFrilansToApiData } from './formToApiMaps/mapFrilansToApiData';
 import { mapVirksomhetToVirksomhetApiData } from './formToApiMaps/mapVirksomhetToApiData';
 
 // TODO: FIX MAPPING!!!
-export const mapFormDataToApiData = (
-    {
+export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShape): SøknadApiData => {
+    const {
         harForståttRettigheterOgPlikter,
         harBekreftetOpplysninger,
 
@@ -49,9 +50,7 @@ export const mapFormDataToApiData = (
         utenlandsoppholdSiste12Mnd,
         skalBoUtenforNorgeNeste12Mnd,
         utenlandsoppholdNeste12Mnd
-    }: SøknadFormData,
-    intl: IntlShape
-): SøknadApiData => {
+    } = formValues;
     const leggTilDisseHvis = (yesOrNo: YesOrNo): YesNoSpørsmålOgSvar[] => {
         return yesOrNo === YesOrNo.NO
             ? [
@@ -114,7 +113,12 @@ export const mapFormDataToApiData = (
         ), // medlemskap siden
         opphold: settInnOpphold(perioder_harVærtIUtlandet, perioder_utenlandsopphold, intl.locale), // periode siden, har du oppholdt
         frilans: mapFrilansToApiData(frilans_jobberFortsattSomFrilans, frilans_startdato),
-        selvstendigVirksomheter: settInnVirksomheter(selvstendig_harHattInntektSomSN, selvstendig_virksomheter)
+        selvstendigVirksomheter: settInnVirksomheter(
+            intl.locale,
+            selvstendig_harHattInntektSomSN,
+            selvstendig_virksomheter,
+            fiskerHarBesvartPåBladBSpørsmål(formValues)
+        )
     };
 
     if (har_fosterbarn === YesOrNo.YES && har_fosterbarn.length > 0) {
@@ -194,8 +198,15 @@ const settInnOpphold = (
         : [];
 };
 
-const settInnVirksomheter = (harHattInntektSomSN?: YesOrNo, virksomheter?: Virksomhet[]): VirksomhetApiData[] => {
+const settInnVirksomheter = (
+    locale: string,
+    harHattInntektSomSN?: YesOrNo,
+    virksomheter?: Virksomhet[],
+    harBesvartFiskerPåBladB?: boolean
+): VirksomhetApiData[] => {
     return harHattInntektSomSN && harHattInntektSomSN === YesOrNo.YES && virksomheter
-        ? virksomheter.map((virksomhet: Virksomhet) => mapVirksomhetToVirksomhetApiData(virksomhet))
+        ? virksomheter.map((virksomhet: Virksomhet) =>
+              mapVirksomhetToVirksomhetApiData(locale, virksomhet, harBesvartFiskerPåBladB)
+          )
         : [];
 };

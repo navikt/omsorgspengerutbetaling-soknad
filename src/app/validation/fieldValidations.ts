@@ -103,7 +103,7 @@ const datoErInnenforTidsrom = (dato: Date, range: Partial<DateRange>): boolean =
     if (range.to) {
         return moment(dato).isSameOrBefore(range.to);
     }
-    return false;
+    return true;
 };
 
 const isPeriodeMedFomTom = (periode: Periode): boolean => {

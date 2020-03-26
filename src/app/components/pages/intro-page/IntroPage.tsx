@@ -36,7 +36,6 @@ const IntroPage: React.StatelessComponent = () => {
             className={bem.block}
             title={intlHelper(intl, 'introPage.tittel')}
             topContentRenderer={() => <StepBanner text={intlHelper(intl, 'introPage.stegTittel')} />}>
-            {/*topContentRenderer={() => <StepBanner text={intlHelper(intl, 'introPage.stegTittel')} />}>*/}
             <Box margin="xxxl">
                 <InformationPoster>
                     <p>
@@ -61,15 +60,13 @@ const IntroPage: React.StatelessComponent = () => {
                                 <Box margin="xl">
                                     <AlertStripeInfo>
                                         <p data-cy="infopanel-data-cy" style={{ marginTop: 0, marginBottom: 0 }}>
-                                            Denne søknaden gjelder kun for selvstendig næringsdrivende og frilansere som
-                                            skal søke om utbetaling av omsorgspenger. Hvis du er arbeidstaker, skal du
-                                            ikke selv søke om utbetaling av omsorgspenger. Arbeidsgiveren din må sende
-                                            et refusjonskrav til NAV for dagene du har hatt omsorgsdager, dette gjør
-                                            arbeidsgiver ved å sende{' '}
-                                            <Lenke href="https://www.nav.no/no/bedrift/tjenester-og-skjemaer/nav-og-altinn-tjenester/inntektsmelding">
-                                                inntektsmelding
-                                            </Lenke>
-                                            .
+                                            Denne søknaden gjelder <strong>kun</strong> for selvstendig næringsdrivende
+                                            og frilansere som skal søke om utbetaling av omsorgspenger.
+                                        </p>
+                                        <p>
+                                            Hvis du er arbeidstaker, skal du ikke søke om utbetaling av omsorgspenger.
+                                            Arbeidsgiveren din skal utbetale deg lønn som vanlig de dagene du tar ut
+                                            omsorgsdager.
                                         </p>
                                     </AlertStripeInfo>
                                 </Box>

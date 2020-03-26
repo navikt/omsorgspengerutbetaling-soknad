@@ -3,7 +3,6 @@ import { FormattedMessage, IntlShape, useIntl } from 'react-intl';
 import Box from 'common/components/box/Box';
 import SummaryList from 'common/components/summary-list/SummaryList';
 import TextareaSummary from 'common/components/textarea-summary/TextareaSummary';
-import { getCountryName } from 'common/utils/countryUtils';
 import intlHelper from 'common/utils/intlUtils';
 import { VirksomhetApiData } from '../../../types/SøknadApiData';
 import { harFiskerNæringstype } from '../../../utils/formToApiMaps/mapVirksomhetToApiData';
@@ -19,13 +18,14 @@ interface Props {
 }
 
 const renderVirksomhetSummary = (virksomhet: VirksomhetApiData, intl: IntlShape) => {
-    const land = getCountryName(virksomhet.registrertILand || 'NO', intl.locale);
+    const land = virksomhet.registrertILand || 'Norge';
     const næringstyper = virksomhet.næringstyper.map((næring) => intlHelper(intl, `næringstype.${næring}`)).join(', ');
-    const fiskerinfo = harFiskerNæringstype(virksomhet.næringstyper)
-        ? {
-              erPåPlaneB: virksomhet.fiskerErPåBladB === true
-          }
-        : undefined;
+    const fiskerinfo =
+        harFiskerNæringstype(virksomhet.næringstyper) && virksomhet.fiskerErPåBladB !== undefined
+            ? {
+                  erPåBladB: virksomhet.fiskerErPåBladB !== undefined && virksomhet.fiskerErPåBladB === true
+              }
+            : undefined;
     const tidsinfo = `Startet ${prettifyApiDate(virksomhet.fraOgMed)}${
         virksomhet.tilOgMed ? `, avsluttet ${prettifyApiDate(virksomhet.fraOgMed)}.` : ' (pågående).'
     }`;
@@ -33,7 +33,7 @@ const renderVirksomhetSummary = (virksomhet: VirksomhetApiData, intl: IntlShape)
     return (
         <SummaryBlock header={virksomhet.navnPåVirksomheten}>
             <IntlLabelValue labelKey="summary.virksomhet.næringstype">{næringstyper}. </IntlLabelValue>
-            {fiskerinfo && <>Fisker er {fiskerinfo.erPåPlaneB === false ? 'ikke' : ''} på Blad B.</>}
+            {fiskerinfo && <>Fisker er {fiskerinfo.erPåBladB === false ? 'ikke' : ''} på Blad B.</>}
             <p>
                 Registrert i {land}
                 {virksomhet.registrertINorge ? ` (organisasjonsnummer ${virksomhet.organisasjonsnummer})` : ``}. <br />
