@@ -56,7 +56,7 @@ class SøknadEssentialsLoader extends React.Component<Props, State> {
     }
 
     getValidTemporaryStorage = (data?: TemporaryStorage): TemporaryStorage | undefined => {
-        if (data?.metadata?.version === STORAGE_VERSION || data?.metadata !== undefined) {
+        if (data?.metadata?.version === STORAGE_VERSION) {
             return data;
         }
         return undefined;
