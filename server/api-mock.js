@@ -1,5 +1,6 @@
 const fs = require('fs');
 const os = require('os');
+const process = require('process');
 const express = require('express');
 const Busboy = require('busboy');
 
@@ -8,10 +9,10 @@ const server = express();
 server.use(express.json());
 server.use((req, res, next) => {
     const allowedOrigins = [
-        'http://host.docker.internal:8083',
+        'http://host.docker.internal:8080',
         'https://pleiepengesoknad-mock.nais.oera.no',
-        'http://localhost:8083',
-        'http://web:8083'
+        'http://localhost:8080',
+        'http://web:8080'
     ];
     const requestOrigin = req.headers.origin;
     if (allowedOrigins.indexOf(requestOrigin) >= 0) {
@@ -75,7 +76,7 @@ const readFileSync = (path) => {
 const existsSync = (path) => fs.existsSync(path);
 
 const startExpressServer = () => {
-    const port = process.env.PORT || 8082;
+    const port = process.env.PORT || 8083;
 
     server.get('/health/isAlive', (req, res) => res.sendStatus(200));
     server.get('/health/isReady', (req, res) => res.sendStatus(200));

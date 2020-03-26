@@ -4,9 +4,9 @@ services:
   api-mock:
     build: ../server
     environment:
-      - "PORT=8082"
+      - "PORT=8083"
     ports:
-      - 8082:8082
+      - 8083:8083
   web:
     build:
       context: ../

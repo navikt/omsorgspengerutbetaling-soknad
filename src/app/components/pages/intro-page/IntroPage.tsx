@@ -60,7 +60,7 @@ const IntroPage: React.StatelessComponent = () => {
                             {erSelvstendigEllerFrilanser === YesOrNo.NO && (
                                 <Box margin="xl">
                                     <AlertStripeInfo>
-                                        <p style={{ marginTop: 0, marginBottom: 0 }}>
+                                        <p data-cy="infopanel-data-cy" style={{ marginTop: 0, marginBottom: 0 }}>
                                             Denne søknaden gjelder kun for selvstendig næringsdrivende og frilansere som
                                             skal søke om utbetaling av omsorgspenger. Hvis du er arbeidstaker, skal du
                                             ikke selv søke om utbetaling av omsorgspenger. Arbeidsgiveren din må sende

@@ -7,5 +7,5 @@ COPY package-lock.json .
 RUN npm ci
 #RUN apk update && apk add bash && apk add curl
 ENV PUBLIC_PATH '/familie/sykdom-i-familien/soknad/omsorgspengerutbetaling'
-EXPOSE 8082
+EXPOSE 8083
 CMD ["npm", "run", "start-api-mock"]
