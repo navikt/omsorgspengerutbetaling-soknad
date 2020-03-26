@@ -3,6 +3,7 @@ import { SøknadFormData } from './SøknadFormData';
 
 interface TemporaryStorageMetadata {
     lastStepID: StepID;
+    version: string;
 }
 
 export interface TemporaryStorage {

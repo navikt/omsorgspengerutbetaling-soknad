@@ -11,7 +11,7 @@ import { TemporaryStorage } from '../types/TemporaryStorage';
 import * as apiUtils from '../utils/apiUtils';
 import { Feature, isFeatureEnabled } from '../utils/featureToggleUtils';
 import { navigateToLoginPage, userIsCurrentlyOnErrorPage } from '../utils/navigationUtils';
-import SøknadTempStorage from './SøknadTempStorage';
+import SøknadTempStorage, { STORAGE_VERSION } from './SøknadTempStorage';
 
 interface Props {
     contentLoadedRenderer: (
@@ -55,8 +55,15 @@ class SøknadEssentialsLoader extends React.Component<Props, State> {
         }
     }
 
+    getValidTemporaryStorage = (data?: TemporaryStorage): TemporaryStorage | undefined => {
+        if (data && data.metadata.version === STORAGE_VERSION) {
+            return data;
+        }
+        return undefined;
+    };
+
     handleSøkerdataFetchSuccess(søkerResponse: AxiosResponse, tempStorageResponse?: AxiosResponse) {
-        const tempStorage: TemporaryStorage | undefined = tempStorageResponse?.data;
+        const tempStorage = this.getValidTemporaryStorage(tempStorageResponse?.data);
         const formData = tempStorage?.formData;
         const lastStepID = tempStorage?.metadata?.lastStepID;
 
