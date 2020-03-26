@@ -29,8 +29,8 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
         harDagerMedDelvisFravær,
         perioder_harVærtIUtlandet
     } = values;
-    const intl = useIntl();
 
+    const intl = useIntl();
     const kanIkkeFortsette = harPerioderMedFravær === YesOrNo.NO && harDagerMedDelvisFravær === YesOrNo.NO;
 
     const cleanupStep = (valuesToBeCleaned: SøknadFormData): SøknadFormData => {
@@ -77,7 +77,9 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                             return (
                                 <PeriodeMedFulltFraværList
                                     perioderMedFravær={perioderMedFravær}
-                                    dagerMedGradvisFravær={dagerMedDelvisFravær}
+                                    dagerMedGradvisFravær={
+                                        harDagerMedDelvisFravær === YesOrNo.YES ? dagerMedDelvisFravær : []
+                                    }
                                     onCreateNew={() => {
                                         const emptyPeriodeMedFravær: Partial<Periode> = {
                                             fom: undefined,
@@ -117,7 +119,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                             return (
                                 <DagerMedDelvisFraværList
                                     dagerMedDelvisFravær={dagerMedDelvisFravær}
-                                    perioderMedFravær={perioderMedFravær}
+                                    perioderMedFravær={harPerioderMedFravær === YesOrNo.YES ? perioderMedFravær : []}
                                     onCreateNew={() => {
                                         const emptyDagMedFravær: Partial<FraværDelerAvDag> = {
                                             dato: undefined,

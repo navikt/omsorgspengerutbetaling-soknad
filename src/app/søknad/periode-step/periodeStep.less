@@ -69,6 +69,25 @@
             padding-top: 1.875rem;
         }
     }
+    @media (max-width: 736px) {
+        display: block;
+        .singleInputWrapper:first-child {
+            margin-bottom: 1rem;
+        }
+        &__dateWrapper {
+            label {
+                position: relative;
+                left: initial;
+            }
+        }
+        &__hoursWrapper {
+            padding: 0;
+        }
+        &__deleteButtonWrapper {
+            text-align: left;
+            padding: 1rem 0 0 0 !important;
+        }
+    }
 }
 
 .perioderMedFulltFravarListItem {
@@ -95,6 +114,7 @@
     }
 
     @media (max-width: 736px) {
+        display: block;
         .singleInputWrapper:first-child {
             margin-bottom: 1rem;
         }
@@ -104,7 +124,6 @@
                 left: initial;
             }
         }
-        display: block;
         &__deleteButtonWrapper {
             text-align: left;
             padding: 1rem 0 0 0 !important;

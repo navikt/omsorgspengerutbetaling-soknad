@@ -3,11 +3,11 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { useHistory } from 'react-router-dom';
 import Box from '@navikt/sif-common-core/lib/components/box/Box';
 import CounsellorPanel from '@navikt/sif-common-core/lib/components/counsellor-panel/CounsellorPanel';
+import ResponsivePanel from '@navikt/sif-common-core/lib/components/responsive-panel/ResponsivePanel';
 import SummaryList from '@navikt/sif-common-core/lib/components/summary-list/SummaryList';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import { formatName } from '@navikt/sif-common-core/lib/utils/personUtils';
 import { useFormikContext } from 'formik';
-import Panel from 'nav-frontend-paneler';
 import { sendApplication } from '../../api/api';
 import RouteConfig from '../../config/routeConfig';
 import { StepID } from '../../config/stepConfig';
@@ -80,7 +80,7 @@ const OppsummeringStep: React.StatelessComponent<Props> = ({ onApplicationSent }
                 <FormattedMessage id="steg.oppsummering.info" />
             </CounsellorPanel>
             <Box margin="xl">
-                <Panel border={true}>
+                <ResponsivePanel border={true}>
                     <NavnOgFodselsnummerSummaryView
                         intl={intl}
                         fornavn={fornavn}
@@ -106,7 +106,7 @@ const OppsummeringStep: React.StatelessComponent<Props> = ({ onApplicationSent }
                     <FrilansSummary frilans={apiValues.frilans} />
                     <SelvstendigSummary selvstendigVirksomheter={apiValues.selvstendigVirksomheter} />
                     <MedlemskapSummaryView bosteder={apiValues.bosteder} />
-                </Panel>
+                </ResponsivePanel>
             </Box>
 
             <Box margin="l">

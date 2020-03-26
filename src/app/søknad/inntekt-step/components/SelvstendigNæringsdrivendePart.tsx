@@ -1,9 +1,9 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
+import ResponsivePanel from '@navikt/sif-common-core/lib/components/responsive-panel/ResponsivePanel';
 import VirksomhetListAndDialog from '@navikt/sif-common-forms/lib/virksomhet/VirksomhetListAndDialog';
 import { useFormikContext } from 'formik';
-import { Panel } from 'nav-frontend-paneler';
 import { YesOrNo } from 'common/types/YesOrNo';
 import intlHelper from 'common/utils/intlUtils';
 import {
@@ -32,7 +32,7 @@ const SelvstendigNæringsdrivendeFormPart: React.FunctionComponent<Props> = ({ f
             />
             {formValues.selvstendig_harHattInntektSomSN === YesOrNo.YES && (
                 <FormBlock margin="l">
-                    <Panel>
+                    <ResponsivePanel>
                         <VirksomhetListAndDialog
                             name={SøknadFormField.selvstendig_virksomheter}
                             labels={{
@@ -50,7 +50,7 @@ const SelvstendigNæringsdrivendeFormPart: React.FunctionComponent<Props> = ({ f
                                     : undefined
                             }
                         />
-                    </Panel>
+                    </ResponsivePanel>
                 </FormBlock>
             )}
         </>
