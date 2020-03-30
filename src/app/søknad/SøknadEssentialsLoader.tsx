@@ -4,19 +4,22 @@ import { AxiosResponse } from 'axios';
 import { getSøker } from '../api/api';
 import LoadWrapper from '../components/load-wrapper/LoadWrapper';
 import { SøkerdataContextProvider } from '../context/SøkerdataContext';
-import { Søkerdata } from '../types/Søkerdata';
+import { Person, Søkerdata } from '../types/Søkerdata';
 import { initialValues, SøknadFormData } from '../types/SøknadFormData';
 import { TemporaryStorage } from '../types/TemporaryStorage';
 import * as apiUtils from '../utils/apiUtils';
 import { Feature, isFeatureEnabled } from '../utils/featureToggleUtils';
 import {
     navigateTo, navigateToErrorPage, navigateToLoginPage, navigateToWelcomePage,
-    userIsCurrentlyOnErrorPage
+    userIsCurrentlyOnErrorPage, userIsOnStep
 } from '../utils/navigationUtils';
 import SøknadTempStorage, { STORAGE_VERSION } from './SøknadTempStorage';
 
 interface Props {
-    contentLoadedRenderer: (søkerdata: Søkerdata | undefined, formData: SøknadFormData | undefined) => React.ReactNode;
+    contentLoadedRenderer: (
+        søkerdata?: Søkerdata | undefined,
+        formData?: SøknadFormData | undefined
+    ) => React.ReactNode;
 }
 
 interface LoadState {
@@ -30,11 +33,11 @@ interface Essentials {
 }
 
 const SøknadEssentialsLoader = ({ contentLoadedRenderer }: Props) => {
+    const history = useHistory();
     const [loadState, setLoadState] = useState<LoadState>({ isLoading: true });
     const [essentials, setEssentials] = useState<Essentials | undefined>();
-    const history = useHistory();
 
-    async function loadApplicationEssentials() {
+    async function loadEssentials() {
         if (essentials?.søkerdata === undefined && loadState.error === undefined) {
             try {
                 if (isFeatureEnabled(Feature.MELLOMLAGRING)) {
@@ -50,10 +53,7 @@ const SøknadEssentialsLoader = ({ contentLoadedRenderer }: Props) => {
                 } else if (!userIsCurrentlyOnErrorPage()) {
                     navigateToErrorPage(history);
                 }
-                // this timeout is set because if isLoading is updated in the state too soon,
-                // the contentLoadedRenderer() will be called while the user is still on the wrong route,
-                // because the redirect to routeConfig.ERROR_PAGE_ROUTE will not have happened yet.
-                setTimeout(() => setLoadState({ isLoading: false, error: true }), 200);
+                setLoadState({ isLoading: false, error: true });
             }
         }
     }
@@ -65,12 +65,14 @@ const SøknadEssentialsLoader = ({ contentLoadedRenderer }: Props) => {
         return undefined;
     };
 
-    const handleEssentialsFetchSuccess = (søkerResponse: AxiosResponse, tempStorageResponse?: AxiosResponse) => {
+    const handleEssentialsFetchSuccess = (
+        søkerResponse: AxiosResponse<Person>,
+        tempStorageResponse?: AxiosResponse
+    ) => {
         const tempStorage = getValidTemporaryStorage(tempStorageResponse?.data);
         const formData = tempStorage?.formData;
         const lastStepID = tempStorage?.metadata?.lastStepID;
-
-        setEssentials({ søkerdata: søkerResponse.data, formData: formData || { ...initialValues } });
+        setEssentials({ søkerdata: { person: søkerResponse.data }, formData: formData || { ...initialValues } });
         setLoadState({ isLoading: false, error: undefined });
 
         if (userIsCurrentlyOnErrorPage()) {
@@ -79,11 +81,13 @@ const SøknadEssentialsLoader = ({ contentLoadedRenderer }: Props) => {
             } else {
                 navigateToWelcomePage();
             }
+        } else if (lastStepID && !userIsOnStep(lastStepID, history)) {
+            navigateTo(lastStepID, history);
         }
     };
 
     useEffect(() => {
-        loadApplicationEssentials();
+        loadEssentials();
     }, [essentials, loadState]);
 
     const { isLoading, error } = loadState;
