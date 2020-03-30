@@ -1,138 +1,102 @@
-import * as React from 'react';
-import { AxiosError, AxiosResponse } from 'axios';
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { AxiosResponse } from 'axios';
 import { getSøker } from '../api/api';
-import LoadingPage from '../components/pages/loading-page/LoadingPage';
-import routeConfig, { getRouteUrl } from '../config/routeConfig';
-import { StepID } from '../config/stepConfig';
+import LoadWrapper from '../components/load-wrapper/LoadWrapper';
 import { SøkerdataContextProvider } from '../context/SøkerdataContext';
 import { Søkerdata } from '../types/Søkerdata';
 import { initialValues, SøknadFormData } from '../types/SøknadFormData';
 import { TemporaryStorage } from '../types/TemporaryStorage';
 import * as apiUtils from '../utils/apiUtils';
 import { Feature, isFeatureEnabled } from '../utils/featureToggleUtils';
-import { navigateToLoginPage, userIsCurrentlyOnErrorPage } from '../utils/navigationUtils';
+import {
+    navigateTo, navigateToErrorPage, navigateToLoginPage, navigateToWelcomePage,
+    userIsCurrentlyOnErrorPage
+} from '../utils/navigationUtils';
 import SøknadTempStorage, { STORAGE_VERSION } from './SøknadTempStorage';
 
 interface Props {
-    contentLoadedRenderer: (
-        søkerdata: Søkerdata | undefined,
-        formData: SøknadFormData | undefined,
-        lastStepID: StepID | undefined
-    ) => React.ReactNode;
+    contentLoadedRenderer: (søkerdata: Søkerdata | undefined, formData: SøknadFormData | undefined) => React.ReactNode;
 }
 
-interface State {
+interface LoadState {
     isLoading: boolean;
-    lastStepID?: StepID;
-    formData: SøknadFormData;
-    søkerdata?: Søkerdata;
+    error?: boolean;
 }
 
-class SøknadEssentialsLoader extends React.Component<Props, State> {
-    constructor(props: Props) {
-        super(props);
-        this.state = { isLoading: true, lastStepID: undefined, formData: initialValues };
+interface Essentials {
+    søkerdata: Søkerdata | undefined;
+    formData: SøknadFormData | undefined;
+}
 
-        this.updateSøkerdata = this.updateSøkerdata.bind(this);
-        this.stopLoading = this.stopLoading.bind(this);
-        this.handleSøkerdataFetchSuccess = this.handleSøkerdataFetchSuccess.bind(this);
-        this.handleSøkerdataFetchError = this.handleSøkerdataFetchError.bind(this);
+const SøknadEssentialsLoader = ({ contentLoadedRenderer }: Props) => {
+    const [loadState, setLoadState] = useState<LoadState>({ isLoading: true });
+    const [essentials, setEssentials] = useState<Essentials | undefined>();
+    const history = useHistory();
 
-        this.loadAppEssentials();
-    }
-
-    async loadAppEssentials() {
-        try {
-            if (isFeatureEnabled(Feature.MELLOMLAGRING)) {
-                const [søkerResponse, tempStorage] = await Promise.all([getSøker(), SøknadTempStorage.rehydrate()]);
-                this.handleSøkerdataFetchSuccess(søkerResponse, tempStorage);
-            } else {
-                const søkerResponse = await getSøker();
-                this.handleSøkerdataFetchSuccess(søkerResponse);
+    async function loadApplicationEssentials() {
+        if (essentials?.søkerdata === undefined && loadState.error === undefined) {
+            try {
+                if (isFeatureEnabled(Feature.MELLOMLAGRING)) {
+                    const [søkerResponse, tempStorage] = await Promise.all([getSøker(), SøknadTempStorage.rehydrate()]);
+                    handleEssentialsFetchSuccess(søkerResponse, tempStorage);
+                } else {
+                    const søkerResponse = await getSøker();
+                    handleEssentialsFetchSuccess(søkerResponse);
+                }
+            } catch (response) {
+                if (apiUtils.isForbidden(response) || apiUtils.isUnauthorized(response)) {
+                    navigateToLoginPage();
+                } else if (!userIsCurrentlyOnErrorPage()) {
+                    navigateToErrorPage(history);
+                }
+                // this timeout is set because if isLoading is updated in the state too soon,
+                // the contentLoadedRenderer() will be called while the user is still on the wrong route,
+                // because the redirect to routeConfig.ERROR_PAGE_ROUTE will not have happened yet.
+                setTimeout(() => setLoadState({ isLoading: false, error: true }), 200);
             }
-        } catch (response) {
-            this.handleSøkerdataFetchError(response);
         }
     }
 
-    getValidTemporaryStorage = (data?: TemporaryStorage): TemporaryStorage | undefined => {
+    const getValidTemporaryStorage = (data?: TemporaryStorage): TemporaryStorage | undefined => {
         if (data?.metadata?.version === STORAGE_VERSION) {
             return data;
         }
         return undefined;
     };
 
-    handleSøkerdataFetchSuccess(søkerResponse: AxiosResponse, tempStorageResponse?: AxiosResponse) {
-        const tempStorage = this.getValidTemporaryStorage(tempStorageResponse?.data);
+    const handleEssentialsFetchSuccess = (søkerResponse: AxiosResponse, tempStorageResponse?: AxiosResponse) => {
+        const tempStorage = getValidTemporaryStorage(tempStorageResponse?.data);
         const formData = tempStorage?.formData;
         const lastStepID = tempStorage?.metadata?.lastStepID;
 
-        this.updateSøkerdata(
-            formData || { ...initialValues },
-            lastStepID,
-            {
-                person: søkerResponse.data
-            },
-            () => {
-                this.stopLoading();
-                if (userIsCurrentlyOnErrorPage()) {
-                    window.location.assign(getRouteUrl(routeConfig.WELCOMING_PAGE_ROUTE));
-                }
+        setEssentials({ søkerdata: søkerResponse.data, formData: formData || { ...initialValues } });
+        setLoadState({ isLoading: false, error: undefined });
+
+        if (userIsCurrentlyOnErrorPage()) {
+            if (lastStepID) {
+                navigateTo(lastStepID, history);
+            } else {
+                navigateToWelcomePage();
             }
-        );
-    }
-
-    updateSøkerdata(
-        formData: SøknadFormData,
-        lastStepID: StepID | undefined,
-        søkerdata: Søkerdata,
-        callback?: () => void
-    ) {
-        this.setState(
-            {
-                isLoading: false,
-                lastStepID,
-                formData,
-                søkerdata: søkerdata ? søkerdata : this.state.søkerdata
-            },
-            callback
-        );
-    }
-
-    stopLoading() {
-        this.setState({
-            isLoading: false
-        });
-    }
-
-    handleSøkerdataFetchError(response: AxiosError) {
-        if (apiUtils.isForbidden(response) || apiUtils.isUnauthorized(response)) {
-            navigateToLoginPage();
-        } else if (!userIsCurrentlyOnErrorPage()) {
-            window.location.assign(getRouteUrl(routeConfig.ERROR_PAGE_ROUTE));
         }
-        // this timeout is set because if isLoading is updated in the state too soon,
-        // the contentLoadedRenderer() will be called while the user is still on the wrong route,
-        // because the redirect to routeConfig.ERROR_PAGE_ROUTE will not have happened yet.
-        setTimeout(this.stopLoading, 200);
-    }
+    };
 
-    render() {
-        const { contentLoadedRenderer } = this.props;
-        const { isLoading, søkerdata, formData, lastStepID } = this.state;
+    useEffect(() => {
+        loadApplicationEssentials();
+    }, [essentials, loadState]);
 
-        if (isLoading) {
-            return <LoadingPage />;
-        }
+    const { isLoading, error } = loadState;
 
-        return (
-            <>
-                <SøkerdataContextProvider value={søkerdata}>
-                    {contentLoadedRenderer(søkerdata, formData, lastStepID)}
+    return (
+        <LoadWrapper
+            isLoading={isLoading && error === undefined}
+            contentRenderer={() => (
+                <SøkerdataContextProvider value={essentials?.søkerdata}>
+                    {contentLoadedRenderer(essentials?.søkerdata, essentials?.formData)}
                 </SøkerdataContextProvider>
-            </>
-        );
-    }
-}
-
+            )}
+        />
+    );
+};
 export default SøknadEssentialsLoader;
