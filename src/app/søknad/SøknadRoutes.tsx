@@ -35,7 +35,7 @@ const getKvitteringInfoFromApiData = (søkerdata: Søkerdata): KvitteringInfo | 
 
 interface SøknadRoutes {}
 
-function SøknadRoutes() {
+const SøknadRoutes = () => {
     const [søknadHasBeenSent, setSøknadHasBeenSent] = React.useState(false);
     const [kvitteringInfo, setKvitteringInfo] = React.useState<KvitteringInfo | undefined>(undefined);
     const { values, resetForm } = useFormikContext<SøknadFormData>();
@@ -152,6 +152,6 @@ function SøknadRoutes() {
             <Redirect to={RouteConfig.WELCOMING_PAGE_ROUTE} />
         </Switch>
     );
-}
+};
 
 export default SøknadRoutes;
