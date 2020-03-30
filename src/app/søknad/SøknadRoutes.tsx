@@ -106,13 +106,6 @@ function SøknadRoutes() {
                 />
             )}
 
-            {/* {isAvailable(StepID.LEGEERKLÆRING, values) && (
-                <Route
-                    path={getSøknadRoute(StepID.LEGEERKLÆRING)}
-                    render={() => <LegeerklæringStep onValidSubmit={() => navigateToNextStep(StepID.LEGEERKLÆRING)} />}
-                />
-            )} */}
-
             {isAvailable(StepID.INNTEKT, values) && (
                 <Route
                     path={getSøknadRoute(StepID.INNTEKT)}

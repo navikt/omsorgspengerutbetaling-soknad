@@ -8,7 +8,6 @@ import SøknadRoutes from './SøknadRoutes';
 const Søknad = () => (
     <SøknadEssentialsLoader
         contentLoadedRenderer={(søkerdata, formData) => {
-            console.log(søkerdata);
             if (søkerdata) {
                 const { person } = søkerdata;
                 if (!person.myndig) {
