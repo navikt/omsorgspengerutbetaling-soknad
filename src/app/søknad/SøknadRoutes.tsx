@@ -44,7 +44,7 @@ function SøknadRoutes({ lastStepID }: SøknadRoutes) {
 
     const history = useHistory();
 
-    if (history.location.pathname === RouteConfig.WELCOMING_PAGE_ROUTE && lastStepID && !søknadHasBeenSent)  {
+    if (history.location.pathname === RouteConfig.WELCOMING_PAGE_ROUTE && lastStepID && !søknadHasBeenSent) {
         setTimeout(() => {
             navigateTo(lastStepID, history);
         });
