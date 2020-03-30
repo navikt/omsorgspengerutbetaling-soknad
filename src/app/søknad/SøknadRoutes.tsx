@@ -11,7 +11,7 @@ import { Søkerdata } from '../types/Søkerdata';
 import { SøknadApiData } from '../types/SøknadApiData';
 import { SøknadFormData } from '../types/SøknadFormData';
 import { Feature, isFeatureEnabled } from '../utils/featureToggleUtils';
-import {navigateTo, navigateToLoginPage} from '../utils/navigationUtils';
+import { navigateTo, navigateToLoginPage } from '../utils/navigationUtils';
 import { getNextStepRoute, getSøknadRoute, isAvailable } from '../utils/routeUtils';
 import EgenutbetalingStep from './egenutbetaling-step/EgenutbetalingStep';
 import InntektStep from './inntekt-step/InntektStep';
@@ -20,7 +20,7 @@ import OppsummeringStep from './oppsummering-step/OppsummeringStep';
 import PeriodeStep from './periode-step/PeriodeStep';
 import HvaErDinSituasjon from './situasjon-step/SituasjonStep';
 import SøknadTempStorage from './SøknadTempStorage';
-import * as apiUtils from "../utils/apiUtils";
+import * as apiUtils from '../utils/apiUtils';
 
 export interface KvitteringInfo {
     søkernavn: string;
@@ -44,17 +44,17 @@ function SøknadRoutes({ lastStepID }: SøknadRoutes) {
 
     const history = useHistory();
 
-    if (history.location.pathname === RouteConfig.WELCOMING_PAGE_ROUTE && lastStepID) {
-        setTimeout(() => {
-            navigateTo(lastStepID, history);
-        });
-    }
+    // if (history.location.pathname === RouteConfig.WELCOMING_PAGE_ROUTE && lastStepID) {
+    //     setTimeout(() => {
+    //         navigateTo(lastStepID, history);
+    //     });
+    // }
 
     async function navigateToNextStepFrom(stepID: StepID) {
         if (isFeatureEnabled(Feature.MELLOMLAGRING)) {
             try {
                 await SøknadTempStorage.persist(values, stepID);
-            } catch (error){
+            } catch (error) {
                 if (apiUtils.isForbidden(error) || apiUtils.isUnauthorized(error)) {
                     navigateToLoginPage();
                 } else {
