@@ -6,7 +6,6 @@ import {
 import { YesOrNo } from '@navikt/sif-common-formik/lib';
 import FosterbarnListAndDialog from '@navikt/sif-common-forms/lib/fosterbarn/FosterbarnListAndDialog';
 import { useFormikContext } from 'formik';
-import CounsellorPanel from 'common/components/counsellor-panel/CounsellorPanel';
 import FormBlock from 'common/components/form-block/FormBlock';
 import { StepConfigProps, StepID } from '../../config/stepConfig';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
@@ -28,13 +27,19 @@ const BarnStep = ({ onValidSubmit }: StepConfigProps) => {
     };
 
     return (
-        <SøknadStep
-            id={StepID.BARN}
-            onValidFormSubmit={onValidSubmit}
-            cleanupStep={cleanupStep}
-            showSubmitButton={visibility.areAllQuestionsAnswered()}>
-            <CounsellorPanel>Hvis du har fosterbarn legger du dem inn i søknaden.</CounsellorPanel>
-
+        <SøknadStep id={StepID.BARN} onValidFormSubmit={onValidSubmit} cleanupStep={cleanupStep}>
+            <FormBlock>
+                <SøknadFormComponents.YesOrNoQuestion
+                    name={SøknadFormField.har_fosterbarn}
+                    legend="Har du fosterbarn?"
+                    validate={validateYesOrNoIsAnswered}
+                />
+            </FormBlock>
+            {visibility.isVisible(SøknadFormField.fosterbarn) && (
+                <FormBlock margin="l">
+                    <FosterbarnListAndDialog name={SøknadFormField.fosterbarn} validate={validateRequiredList} />
+                </FormBlock>
+            )}
             <FormBlock>
                 <SøknadFormComponents.YesOrNoQuestion
                     name={SøknadFormField.har_fått_ekstra_omsorgsdager}
@@ -42,22 +47,6 @@ const BarnStep = ({ onValidSubmit }: StepConfigProps) => {
                     validate={validateYesOrNoIsAnswered}
                 />
             </FormBlock>
-
-            {visibility.isVisible(SøknadFormField.har_fosterbarn) && (
-                <FormBlock>
-                    <SøknadFormComponents.YesOrNoQuestion
-                        name={SøknadFormField.har_fosterbarn}
-                        legend="Har du fosterbarn?"
-                        validate={validateYesOrNoIsAnswered}
-                    />
-                </FormBlock>
-            )}
-
-            {visibility.isVisible(SøknadFormField.fosterbarn) && (
-                <FormBlock margin="l">
-                    <FosterbarnListAndDialog name={SøknadFormField.fosterbarn} validate={validateRequiredList} />
-                </FormBlock>
-            )}
         </SøknadStep>
     );
 };
