@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {
-    validateRequiredList, validateYesOrNoIsAnswered
+    validateRequiredList,
+    validateYesOrNoIsAnswered
 } from '@navikt/sif-common-core/lib/validation/fieldValidations';
 import { YesOrNo } from '@navikt/sif-common-formik/lib';
 import FosterbarnListAndDialog from '@navikt/sif-common-forms/lib/fosterbarn/FosterbarnListAndDialog';
@@ -11,11 +12,11 @@ import { StepConfigProps, StepID } from '../../config/stepConfig';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import SøknadFormComponents from '../SøknadFormComponents';
 import SøknadStep from '../SøknadStep';
-import { SituasjonStepQuestions } from './config';
+import { BarnStepQuestions } from './config';
 
-const HvaErDinSituasjon = ({ onValidSubmit }: StepConfigProps) => {
+const BarnStep = ({ onValidSubmit }: StepConfigProps) => {
     const { values } = useFormikContext<SøknadFormData>();
-    const visibility = SituasjonStepQuestions.getVisbility(values);
+    const visibility = BarnStepQuestions.getVisbility(values);
 
     const cleanupStep = (valuesToBeCleaned: SøknadFormData): SøknadFormData => {
         const { har_fosterbarn } = values;
@@ -28,7 +29,7 @@ const HvaErDinSituasjon = ({ onValidSubmit }: StepConfigProps) => {
 
     return (
         <SøknadStep
-            id={StepID.SITUASJON}
+            id={StepID.BARN}
             onValidFormSubmit={onValidSubmit}
             cleanupStep={cleanupStep}
             showSubmitButton={visibility.areAllQuestionsAnswered()}>
@@ -51,4 +52,4 @@ const HvaErDinSituasjon = ({ onValidSubmit }: StepConfigProps) => {
     );
 };
 
-export default HvaErDinSituasjon;
+export default BarnStep;

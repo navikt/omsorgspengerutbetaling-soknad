@@ -61,19 +61,10 @@
     "step.situasjon.pageTitle": "Hva er din situasjon?",
     "step.situasjon.stepTitle": "Hva er din situasjon?",
     "step.situasjon.stepIndicatorLabel": "Hva er din situasjon?",
-    "step.situasjon.counsellorpanel.content": "For å kunne få utbetalt omsorgspenger fra NAV må du totalt ha rett til mer enn 3 dager i kalenderåret",
-    "step.situasjon.tre_eller_fler_barn.spm": "Jeg har 3 eller flere barn",
-    "step.situasjon.alene_om_omsorg_for_barn.spm": "Jeg er alene om omsorg for barn",
-    "step.situasjon.rett_til_mer_enn_ti_dager_totalt.spm": "Jeg har fått overført dager og rett til mer enn 3 dager totalt",
-    "step.situasjon.den_andre_forelderen_ikke_kan_ta_seg_av_barnet.spm": "Jeg har innvilget ekstra dager fordi den andre forelderen ikke kan ta seg av barnet",
-    "step.situasjon.har_barn_som_har_kronisk_sykdom_eller_funksjonshemming.spm": "Jeg har innvilget ekstra dager fordi jeg har barn som har kronisk sykdom/funksjonshemming",
 
-    "step.egenutbetaling.pageTitle": "Omsorgsdager du dekker selv",
-    "step.egenutbetaling.stepTitle": "Omsorgsdager du dekker selv",
-    "step.egenutbetaling.stepIndicatorLabel": "Omsorgsdager du dekker selv",
-    "step.egenutbetaling.counsellorpanel.content": "Som selvstendig næringsdrivende eller frilanser må du som hovedregel dekke de 3 første omsorgsdagene selv.",
-
-    "step.egenutbetaling.ja_nei_spm.legend": "Har du utbetalt minst 3 omsorgsdager til deg selv i år?",
+    "step.barn.pageTitle": "Barn",
+    "step.barn.stepTitle": "Barn",
+    "step.barn.stepIndicatorLabel": "Barn",
 
     "step.har_utbetalt_de_første_ti_dagene.innvilget_utvidet_rett.spm": "Jeg er innvilget ekstra dager for barn som er sykt eller funksjonshemmet",
     "step.har_utbetalt_de_første_ti_dagene.ingen_andre_barn_under_tolv.spm": "Har du andre barn under 12 år i husstanden din?",

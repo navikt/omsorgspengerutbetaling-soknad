@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
+import { /*Redirect,*/ Route, Switch, useHistory } from 'react-router-dom';
 import { formatName } from '@navikt/sif-common-core/lib/utils/personUtils';
 import { useFormikContext } from 'formik';
 import ConfirmationPage from '../components/pages/confirmation-page/ConfirmationPage';
@@ -13,12 +13,11 @@ import { SøknadFormData } from '../types/SøknadFormData';
 import { Feature, isFeatureEnabled } from '../utils/featureToggleUtils';
 import { navigateTo, navigateToLoginPage } from '../utils/navigationUtils';
 import { getNextStepRoute, getSøknadRoute, isAvailable } from '../utils/routeUtils';
-import EgenutbetalingStep from './egenutbetaling-step/EgenutbetalingStep';
 import InntektStep from './inntekt-step/InntektStep';
 import MedlemsskapStep from './medlemskap-step/MedlemsskapStep';
 import OppsummeringStep from './oppsummering-step/OppsummeringStep';
 import PeriodeStep from './periode-step/PeriodeStep';
-import HvaErDinSituasjon from './situasjon-step/SituasjonStep';
+import BarnStep from './barn-step/BarnStep';
 import SøknadTempStorage from './SøknadTempStorage';
 import * as apiUtils from '../utils/apiUtils';
 
@@ -79,33 +78,17 @@ function SøknadRoutes({ lastStepID }: SøknadRoutes) {
                         onValidSubmit={() =>
                             setTimeout(() => {
                                 if (isFeatureEnabled(Feature.MELLOMLAGRING)) {
-                                    SøknadTempStorage.persist(values, StepID.SITUASJON).then(() => {
-                                        navigateTo(`${RouteConfig.SØKNAD_ROUTE_PREFIX}/${StepID.SITUASJON}`, history);
+                                    SøknadTempStorage.persist(values, StepID.PERIODE).then(() => {
+                                        navigateTo(`${RouteConfig.SØKNAD_ROUTE_PREFIX}/${StepID.PERIODE}`, history);
                                     });
                                 } else {
-                                    navigateTo(`${RouteConfig.SØKNAD_ROUTE_PREFIX}/${StepID.SITUASJON}`, history);
+                                    navigateTo(`${RouteConfig.SØKNAD_ROUTE_PREFIX}/${StepID.PERIODE}`, history);
                                 }
                             })
                         }
                     />
                 )}
             />
-
-            {isAvailable(StepID.SITUASJON, values) && (
-                <Route
-                    path={getSøknadRoute(StepID.SITUASJON)}
-                    render={() => <HvaErDinSituasjon onValidSubmit={() => navigateToNextStepFrom(StepID.SITUASJON)} />}
-                />
-            )}
-
-            {isAvailable(StepID.EGENUTBETALING, values) && (
-                <Route
-                    path={getSøknadRoute(StepID.EGENUTBETALING)}
-                    render={() => (
-                        <EgenutbetalingStep onValidSubmit={() => navigateToNextStepFrom(StepID.EGENUTBETALING)} />
-                    )}
-                />
-            )}
 
             {isAvailable(StepID.PERIODE, values) && (
                 <Route
@@ -114,17 +97,16 @@ function SøknadRoutes({ lastStepID }: SøknadRoutes) {
                 />
             )}
 
-            {/* {isAvailable(StepID.LEGEERKLÆRING, values) && (
-                <Route
-                    path={getSøknadRoute(StepID.LEGEERKLÆRING)}
-                    render={() => <LegeerklæringStep onValidSubmit={() => navigateToNextStep(StepID.LEGEERKLÆRING)} />}
-                />
-            )} */}
-
             {isAvailable(StepID.INNTEKT, values) && (
                 <Route
                     path={getSøknadRoute(StepID.INNTEKT)}
                     render={() => <InntektStep onValidSubmit={() => navigateToNextStepFrom(StepID.INNTEKT)} />}
+                />
+            )}
+            {isAvailable(StepID.BARN, values) && (
+                <Route
+                    path={getSøknadRoute(StepID.BARN)}
+                    render={() => <BarnStep onValidSubmit={() => navigateToNextStepFrom(StepID.BARN)} />}
                 />
             )}
 
@@ -164,7 +146,7 @@ function SøknadRoutes({ lastStepID }: SøknadRoutes) {
 
             <Route path={RouteConfig.ERROR_PAGE_ROUTE} component={GeneralErrorPage} />
 
-            <Redirect to={RouteConfig.WELCOMING_PAGE_ROUTE} />
+            {/* <Redirect to={RouteConfig.WELCOMING_PAGE_ROUTE} /> */}
         </Switch>
     );
 }

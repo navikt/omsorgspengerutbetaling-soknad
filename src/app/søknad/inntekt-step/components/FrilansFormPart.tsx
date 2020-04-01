@@ -7,9 +7,7 @@ import ResponsivePanel from 'common/components/responsive-panel/ResponsivePanel'
 import { YesOrNo } from 'common/types/YesOrNo';
 import { dateToday } from 'common/utils/dateUtils';
 import intlHelper from 'common/utils/intlUtils';
-import {
-    validateRequiredField, validateYesOrNoIsAnswered
-} from 'common/validation/fieldValidations';
+import { validateRequiredField, validateYesOrNoIsAnswered } from 'common/validation/fieldValidations';
 import { SøknadFormData, SøknadFormField } from '../../../types/SøknadFormData';
 import SøknadFormComponents from '../../SøknadFormComponents';
 import FrilansEksempeltHtml from './FrilansEksempelHtml';

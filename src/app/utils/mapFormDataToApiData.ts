@@ -6,15 +6,17 @@ import { formatDateToApiFormat } from 'common/utils/dateUtils';
 import { decimalTimeToTime, timeToIso8601Duration } from 'common/utils/timeUtils';
 import { FraværDelerAvDag, Periode } from '../../@types/omsorgspengerutbetaling-schema';
 import {
-    SøknadApiData, UtbetalingsperiodeApi, UtenlandsoppholdApiData, VirksomhetApiData,
-    YesNoSpørsmålOgSvar, YesNoSvar
+    SøknadApiData,
+    UtbetalingsperiodeApi,
+    UtenlandsoppholdApiData,
+    VirksomhetApiData,
+    YesNoSvar,
+    YesNoSpørsmålOgSvar
 } from '../types/SøknadApiData';
 import { SøknadFormData } from '../types/SøknadFormData';
-import { fiskerHarBesvartPåBladBSpørsmål } from './fiskerUtils';
 import { mapBostedUtlandToApiData } from './formToApiMaps/mapBostedUtlandToApiData';
 import { mapFrilansToApiData } from './formToApiMaps/mapFrilansToApiData';
 import { mapVirksomhetToVirksomhetApiData } from './formToApiMaps/mapVirksomhetToApiData';
-import { yesOrNoIsAnswered } from './yesOrNoIsAnswered';
 
 // TODO: FIX MAPPING!!!
 export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShape): SøknadApiData => {
@@ -22,83 +24,35 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
         harForståttRettigheterOgPlikter,
         harBekreftetOpplysninger,
 
-        // STEG 1: Kvalifisering
-        har_fosterbarn,
-        fosterbarn,
-
-        // STEG 2: Har betalt ut 10 første dager
-        har_utbetalt_ti_dager,
-        innvilget_utvidet_rett,
-        ingen_andre_barn_under_tolv,
-        fisker_på_blad_B,
-        frivillig_forsikring,
-        nettop_startet_selvstendig_frilanser,
-
-        // STEG 3: Periode
+        // Periode
         perioderMedFravær,
         dagerMedDelvisFravær,
         perioder_harVærtIUtlandet,
         perioder_utenlandsopphold,
 
-        // STEG 6: Inntekt
+        // Inntekt
         frilans_startdato,
         frilans_jobberFortsattSomFrilans,
         selvstendig_harHattInntektSomSN,
         selvstendig_virksomheter,
 
-        // STEG 7: Medlemskap
+        // Barn
+        har_fosterbarn,
+        fosterbarn,
+        har_fått_ekstra_omsorgsdager,
+
+        // Medlemskap
         harBoddUtenforNorgeSiste12Mnd,
         utenlandsoppholdSiste12Mnd,
         skalBoUtenforNorgeNeste12Mnd,
         utenlandsoppholdNeste12Mnd
     } = formValues;
-    const leggTilDisseHvis = (yesOrNo: YesOrNo): YesNoSpørsmålOgSvar[] => {
-        const answers =
-            yesOrNo === YesOrNo.NO
-                ? [
-                      {
-                          spørsmål: intl.formatMessage({
-                              id: 'step.har_utbetalt_de_første_ti_dagene.fisker_på_blad_B.spm'
-                          }),
-                          svar: mapYesOrNoToSvar(fisker_på_blad_B)
-                      },
-                      {
-                          spørsmål: intl.formatMessage({
-                              id: 'step.har_utbetalt_de_første_ti_dagene.frivillig_forsikring.spm'
-                          }),
-                          svar: mapYesOrNoToSvar(frivillig_forsikring)
-                      },
-                      {
-                          spørsmål: intl.formatMessage({
-                              id: 'step.har_utbetalt_de_første_ti_dagene.nettop_startet_selvstendig_frilanser.spm'
-                          }),
-                          svar: mapYesOrNoToSvar(nettop_startet_selvstendig_frilanser)
-                      },
-                      {
-                          spørsmål: intl.formatMessage({
-                              id: 'step.har_utbetalt_de_første_ti_dagene.innvilget_utvidet_rett.spm'
-                          }),
-                          svar: mapYesOrNoToSvar(innvilget_utvidet_rett)
-                      }
-                  ]
-                : [];
-        if (innvilget_utvidet_rett === YesOrNo.YES && yesOrNoIsAnswered(ingen_andre_barn_under_tolv)) {
-            answers.push({
-                spørsmål: intl.formatMessage({
-                    id: 'step.har_utbetalt_de_første_ti_dagene.ingen_andre_barn_under_tolv.spm'
-                }),
-                svar: mapYesOrNoToSvar(ingen_andre_barn_under_tolv)
-            });
-        }
-        return answers;
-    };
 
-    const stegTo: YesNoSpørsmålOgSvar[] = [
+    const yesOrNoQuestions: YesNoSpørsmålOgSvar[] = [
         {
-            spørsmål: intl.formatMessage({ id: 'step.egenutbetaling.ja_nei_spm.legend' }),
-            svar: mapYesOrNoToSvar(har_utbetalt_ti_dager)
-        },
-        ...leggTilDisseHvis(har_utbetalt_ti_dager)
+            spørsmål: intl.formatMessage({ id: 'step.barn.har_fått_ekstra_omsorgsdager' }),
+            svar: mapYesOrNoToSvar(har_fått_ekstra_omsorgsdager)
+        }
     ];
 
     const apiData: SøknadApiData = {
@@ -107,7 +61,7 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
             harForståttRettigheterOgPlikter,
             harBekreftetOpplysninger
         },
-        spørsmål: [...stegTo],
+        spørsmål: [...yesOrNoQuestions],
         utbetalingsperioder: mapPeriodeTilUtbetalingsperiode(perioderMedFravær, dagerMedDelvisFravær),
         bosteder: settInnBosteder(
             harBoddUtenforNorgeSiste12Mnd,
@@ -115,17 +69,15 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
             skalBoUtenforNorgeNeste12Mnd,
             utenlandsoppholdNeste12Mnd,
             intl.locale
-        ), // medlemskap siden
+        ),
         opphold: settInnOpphold(perioder_harVærtIUtlandet, perioder_utenlandsopphold, intl.locale), // periode siden, har du oppholdt
         frilans: mapFrilansToApiData(frilans_jobberFortsattSomFrilans, frilans_startdato),
         selvstendigVirksomheter: settInnVirksomheter(
             intl.locale,
             selvstendig_harHattInntektSomSN,
-            selvstendig_virksomheter,
-            fiskerHarBesvartPåBladBSpørsmål(formValues)
+            selvstendig_virksomheter
         )
     };
-
     if (har_fosterbarn === YesOrNo.YES && har_fosterbarn.length > 0) {
         apiData.fosterbarn = fosterbarn.map((barn) => {
             const { id, ...rest } = barn;

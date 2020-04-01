@@ -67,11 +67,6 @@
     "step.situasjon.den_andre_forelderen_ikke_kan_ta_seg_av_barnet.spm": "Jeg har innvilget ekstra dager fordi den andre forelderen ikke kan ta seg av barnet",
     "step.situasjon.har_barn_som_har_kronisk_sykdom_eller_funksjonshemming.spm": "Jeg har innvilget ekstra dager fordi jeg har barn som har kronisk sykdom/funksjonshemming",
 
-    "step.egenutbetaling.pageTitle": "TODO",
-    "step.egenutbetaling.stepTitle": "Har du utbetalt 10 dager for deg selv i dette kalenderåret?",
-    "step.egenutbetaling.stepIndicatorLabel": "TODO",
-    "step.egenutbetaling.counsellorpanel.content": "I de fleste tilfeller må man som selvstendig næringsdrivende og frilanser betale de 10 første dager med omsorgspenger i året selv.",
-
     "step.opplysninger-om-barnet.pageTitle": "Omsorgspengesøknad - opplysninger om barnet",
     "step.opplysninger-om-barnet.stepTitle": "Barn",
     "step.opplysninger-om-barnet.stepIndicatorLabel": "Om barnet",

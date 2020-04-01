@@ -20,7 +20,7 @@ const renderWrappedInMemoryRouter = (child: React.ReactNode) =>
     );
 
 describe('<Step>', () => {
-    const stepID: StepID = StepID.SITUASJON;
+    const stepID: StepID = StepID.BARN;
     let renderResult: RenderResult;
 
     beforeAll(() => {

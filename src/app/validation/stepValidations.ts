@@ -1,6 +1,5 @@
 import { YesOrNo } from 'common/types/YesOrNo';
-import { EgenutbetalingQuestions } from '../søknad/egenutbetaling-step/config';
-import { SituasjonStepQuestions } from '../søknad/situasjon-step/config';
+import { BarnStepQuestions } from '../søknad/barn-step/config';
 import { SøknadFormData, SøknadFormField } from '../types/SøknadFormData';
 import { FraværDelerAvDag, Periode } from '../../@types/omsorgspengerutbetaling-schema';
 import { Utenlandsopphold, Virksomhet } from '@navikt/sif-common-forms/lib';
@@ -14,14 +13,6 @@ import { frilansIsValid, selvstendigIsValid } from '../søknad/inntekt-step/innt
 
 export const welcomingPageIsValid = ({ harForståttRettigheterOgPlikter }: SøknadFormData): boolean =>
     harForståttRettigheterOgPlikter === true;
-
-export const situasjonStepIsValid = (values: SøknadFormData): boolean => {
-    return SituasjonStepQuestions.getVisbility(values).areAllQuestionsAnswered();
-};
-
-export const egenutbetalingIsValid = (values: SøknadFormData) => {
-    return EgenutbetalingQuestions.getVisbility(values).areAllQuestionsAnswered();
-};
 
 export const periodeStepIsValid = (formData: SøknadFormData) => {
     const harPerioderMedFravær: YesOrNo = formData[SøknadFormField.harPerioderMedFravær];
@@ -52,8 +43,12 @@ export const inntektStepIsValid = (formData: SøknadFormData) => {
     const isValid: boolean =
         frilansIsValid(frilansHarHattInntektSomFrilanser, frilansStartdato, frilansJobberFortsattSomFrilans) &&
         selvstendigIsValid(selvstendigHarHattInntektSomSN, selvstendigVirksomheter);
-        // && minimumEnVirksomhet(frilansJobberFortsattSomFrilans, selvstendigVirksomheter)
+    // && minimumEnVirksomhet(frilansJobberFortsattSomFrilans, selvstendigVirksomheter)
     return isValid;
+};
+
+export const barnStepIsValid = (values: SøknadFormData): boolean => {
+    return BarnStepQuestions.getVisbility(values).areAllQuestionsAnswered();
 };
 
 export const medlemskapStepIsValid = ({

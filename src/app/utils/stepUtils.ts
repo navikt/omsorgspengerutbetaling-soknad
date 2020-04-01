@@ -3,11 +3,10 @@ import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import { StepConfigInterface, StepConfigItemTexts, StepID } from 'app/config/stepConfig';
 import { SøknadFormData } from '../types/SøknadFormData';
 import {
-    egenutbetalingIsValid,
+    barnStepIsValid,
     inntektStepIsValid,
     medlemskapStepIsValid,
     periodeStepIsValid,
-    situasjonStepIsValid,
     welcomingPageIsValid
 } from '../validation/stepValidations';
 
@@ -22,20 +21,15 @@ export const getStepTexts = (intl: IntlShape, stepId: StepID, stepConfig: StepCo
     };
 };
 
-export const situasjonStepIsAvailable = (formData: SøknadFormData) => welcomingPageIsValid(formData);
-
-export const egenutbetalingStepIsAvailable = (formData: SøknadFormData) =>
-    situasjonStepIsAvailable(formData) && situasjonStepIsValid(formData);
-
-export const periodeStepIsAvailable = (formData: SøknadFormData) =>
-    egenutbetalingStepIsAvailable(formData) && egenutbetalingIsValid(formData);
-
-export const legeerklæringStepAvailable = (formData: SøknadFormData) => periodeStepIsValid(formData);
+export const periodeStepIsAvailable = (formData: SøknadFormData) => welcomingPageIsValid(formData);
 
 export const inntektStepIsAvailable = (formData: SøknadFormData) =>
     periodeStepIsAvailable(formData) && periodeStepIsValid(formData);
 
-export const medlemskapStepIsAvailable = (formData: SøknadFormData) =>
+export const barnStepIsAvailable = (formData: SøknadFormData) =>
     inntektStepIsAvailable(formData) && inntektStepIsValid(formData);
+
+export const medlemskapStepIsAvailable = (formData: SøknadFormData) =>
+    barnStepIsAvailable(formData) && barnStepIsValid(formData);
 
 export const summaryStepAvailable = (formData: SøknadFormData) => medlemskapStepIsValid(formData);
