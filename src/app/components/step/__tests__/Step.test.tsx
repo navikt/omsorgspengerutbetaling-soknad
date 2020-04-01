@@ -32,6 +32,6 @@ describe('<Step>', () => {
         expect(
             getByText('Søknad om utbetaling av omsorgspenger til selvstendig næringsdrivende eller frilansere')
         ).toBeTruthy();
-        expect(getByText('Hva er din situasjon?')).toBeTruthy();
+        expect(getByText('Barn')).toBeTruthy();
     });
 });
