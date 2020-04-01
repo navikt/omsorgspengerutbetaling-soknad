@@ -7,7 +7,7 @@ import SøknadRoutes from './SøknadRoutes';
 
 const Søknad = () => (
     <SøknadEssentialsLoader
-        contentLoadedRenderer={(søkerdata, formData, lastStepID) => {
+        contentLoadedRenderer={(søkerdata, formData) => {
             if (søkerdata) {
                 const { person } = søkerdata;
                 if (!person.myndig) {
@@ -18,7 +18,7 @@ const Søknad = () => (
                 <SøknadFormComponents.FormikWrapper
                     initialValues={formData || initialValues}
                     onSubmit={() => null}
-                    renderForm={() => <SøknadRoutes lastStepID={lastStepID} />}
+                    renderForm={() => <SøknadRoutes />}
                 />
             );
         }}
