@@ -67,12 +67,6 @@
     "step.barn.stepIndicatorLabel": "Barn",
     "step.barn.har_fått_ekstra_omsorgsdager": "Har du fått ekstra omsorgsdager fordi du har et kronisk sykt eller funksjonshemmet barn?",
 
-    "step.har_utbetalt_de_første_ti_dagene.innvilget_utvidet_rett.spm": "Jeg er innvilget ekstra dager for barn som er sykt eller funksjonshemmet",
-    "step.har_utbetalt_de_første_ti_dagene.ingen_andre_barn_under_tolv.spm": "Har du andre barn under 12 år i husstanden din?",
-    "step.har_utbetalt_de_første_ti_dagene.fisker_på_blad_B.spm": "Jeg er fisker på blad B",
-    "step.har_utbetalt_de_første_ti_dagene.frivillig_forsikring.spm": "Jeg har frivillig forsikring for tilleggssykepenger som gjelder fra 1. dag",
-    "step.har_utbetalt_de_første_ti_dagene.nettop_startet_selvstendig_frilanser.spm": "Jeg har jobbet som selvstendig næringsdrivende/frilanser i mindre enn 4 uker",
-
     "step.periode.pageTitle": "Hvilke dager søker du utbetaling for?",
     "step.periode.stepTitle": "Hvilke dager søker du utbetaling for?",
     "step.periode.stepIndicatorLabel": "Hvilke dager søker du utbetaling for?",
@@ -91,13 +85,10 @@
 
     "step.inntekt.pageTitle": "Inntekt",
     "step.inntekt.stepTitle": "Inntekt",
-    "step.inntekt.stepIndicatorLabel": "Om ditt arbeidsforhold",
-
-    "steg.inntekt.væreBorteFra.spm": "Kva jobb må du vere borte frå for å pleie barnet?",
-    "steg.inntekt.aktivtArbeidsforhold.spm": "Vel arbeidsforholda du har i perioden du søkjer pleiepengar for.",
-    "steg.inntekt.aktivtArbeidsforhold.info.html": "<p>For å ha rett til pleiepengar må du ha minst 20 prosent inntektstap mens du pleier barnet ditt. Dagpengar, sjukepengar, foreldrepengar, pleiepengar og opplæringspengar blir også rekna som inntekt.</p><p>Vi har funne desse arbeidsforholda registrerte på deg.</p>",
-    "steg.inntekt.ingenOpplysninger": "Vi har ikkje nokon opplysningar om arbeidsgivar.",
-    "steg.inntekt.manglesOpplysninger": "Manglar det ein arbeidsgivar her? Be arbeidsgivaren din sende ny A-melding, anten via lønns- og personalsystemet eller gjennom Altinn.",
+    "step.inntekt.stepIndicatorLabel": "Inntekt",
+    "step.inntekt.er_arbeidstaker.frilanser": "Er du arbeidstaker i tillegg til å være frilanser?",
+    "step.inntekt.er_arbeidstaker.selvstendig": "Er du arbeidstaker i tillegg til å være selvstendig næringdrivende?",
+    "step.inntekt.er_arbeidstaker.begge": "Er du arbeidstaker i tillegg til å være selvstendig næringdrivende og frilanser?",
 
     "step.opplysninger-om-barnet.pageTitle": "Omsorgspengesøknad - opplysninger om barnet",
     "step.opplysninger-om-barnet.stepTitle": "Barn",
@@ -110,10 +101,6 @@
     "step.medlemskap.pageTitle": "Omsorgspengesøknad - medlemskap",
     "step.medlemskap.stepTitle": "Medlemskap",
     "step.medlemskap.stepIndicatorLabel": "Om medlemskap i folketrygden",
-
-    "step.legeerklaering.pageTitle": "Omsorgspengesøknad - legeerklæring",
-    "step.legeerklaering.stepTitle": "Legeerklæring",
-    "step.legeerklaering.stepIndicatorLabel": "Last opp din legeerklæring",
 
     "step.samværsavtale.pageTitle": "Omsorgspengesøknad - avtale om delt bosted",
     "step.samværsavtale.stepTitle": "Avtale om delt bosted",
@@ -174,17 +161,6 @@
     "modal.minePlikter.part2a": "Jeg har lest og forstått det som står på",
     "modal.minePlikter.part2b": "nav.no/rettogplikt",
 
-    "steg.omBarnet.hvilketBarn.spm": "Hvilket barn gjelder søknaden for?",
-    "steg.omBarnet.hvilketBarn.info": "Hvis du skal søke for flere barn, må du sende én søknad for hvert barn.",
-    "steg.omBarnet.hvilketBarn.født": "Født {dato}",
-    "steg.omBarnet.gjelderAnnetBarn": "Søknaden gjelder et annet barn",
-    "steg.omBarnet.fnr.spm": "Barnets fødselsnummer/D-nummer",
-    "steg.omBarnet.fnr.ikkeFnrEnda": "Barnet har ikke fått fødselsnummer/D-nummer ennå",
-    "steg.omBarnet.fødselsdato": "Barnets fødselsdato",
-    "steg.omBarnet.navn": "Barnets navn",
-    "steg.omBarnet.relasjon": "Min relasjon til barnet",
-    "steg.omBarnet.veileder.samværsavtale": "Senere i søknaden laster du opp avtale om delt bosted for barnet.",
-
     "steg.arbeid.spm": "Hva er din arbeidssituasjon? Du kan velge flere.",
 
     "steg.medlemsskap.annetLandSiste12.spm": "Har du bodd i andre land enn Norge i hele eller deler av de siste 12 månedene?",
@@ -194,14 +170,6 @@
     "steg.medlemsskap.annetLandNeste12.hjelp": "Du svarer ja bare hvis du planlegger å oppholde deg fast i et annet land enn Norge. Korte utlandsturer i forbindelse med for eksempel ferie regnes ikke med.",
     "steg.medlemsskap.annetLandNeste12.listeTittel": "Utenlandsopphold neste 12 måneder",
     "steg.medlemsskap.annetLandSisteOgNeste12.listeTittel": "Utenlandsopphold siste 12 måneder og neste 12 måneder",
-
-    "steg.lege.info.html": "Ta bilde av feltene i papirsøknaden som legen har fylt ut om barnet. Vær nøye med at <strong>all tekst</strong> er med på bildet, inkludert legens signatur.",
-    "steg.lege.vedlegg": "Last opp bilde av legeerklæringen (maks 3 bilder)",
-    "steg.lege.intro.1.html": "For de første 8 ukene må legeerklæringen skrives av en sykehuslege. Etter de første 8 ukene kan legeerklæringen skrives av alle leger i spesialisthelsetjenesten.",
-    "steg.lege.intro.2.html": "Disse yrkesgruppene kan <strong>ikke</strong> undertegne legeerklæringen: Sosionom, legesekretær, psykolog, psykologspesialist, fysioterapeut, fastlege og spesialist i allmennmedisin.",
-
-    "steg.samværsavtale.info.html": "<p>Ta bilde av avtalen om delt bosted og last opp.</p>Vær nøye med:<ul><li>å få all tekst med på bildet</li><li>at signaturen fra begge parter er synlig på bildet</li><li>at bildet er leselig</li></ul>",
-    "steg.samværsavtale.vedlegg": "Last opp bilde av avtalen (maks 3 bilder)",
 
     "steg.oppsummering.info": "Les gjennom oppsummeringen før du sender inn søknaden. Hvis du vil gjøre endringer, kan du gå tilbake.",
     "steg.oppsummering.søker.header": "Navn på søker",

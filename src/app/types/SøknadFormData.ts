@@ -27,6 +27,7 @@ export enum SøknadFormField {
     frilans_jobberFortsattSomFrilans = 'frilans_jobberFortsattSomFrilans',
     selvstendig_harHattInntektSomSN = 'selvstendig_harHattInntektSomSN',
     selvstendig_virksomheter = 'selvstendig_virksomheter',
+    er_arbeidstaker = 'er_arbeidstaker',
 
     // Barn
     har_fosterbarn = 'har_fosterbarn',
@@ -59,8 +60,9 @@ export interface SøknadFormData {
     [SøknadFormField.frilans_harHattInntektSomFrilanser]: YesOrNo;
     [SøknadFormField.frilans_startdato]?: Date;
     [SøknadFormField.frilans_jobberFortsattSomFrilans]?: YesOrNo;
-    [SøknadFormField.selvstendig_harHattInntektSomSN]?: YesOrNo;
+    [SøknadFormField.selvstendig_harHattInntektSomSN]: YesOrNo;
     [SøknadFormField.selvstendig_virksomheter]?: Virksomhet[];
+    [SøknadFormField.er_arbeidstaker]: YesOrNo;
 
     // Barn
     [SøknadFormField.har_fosterbarn]: YesOrNo;
@@ -91,6 +93,9 @@ export const initialValues: SøknadFormData = {
 
     // Inntekt
     [SøknadFormField.frilans_harHattInntektSomFrilanser]: YesOrNo.UNANSWERED,
+    [SøknadFormField.selvstendig_harHattInntektSomSN]: YesOrNo.UNANSWERED,
+    [SøknadFormField.selvstendig_harHattInntektSomSN]: YesOrNo.UNANSWERED,
+    [SøknadFormField.er_arbeidstaker]: YesOrNo.UNANSWERED,
 
     // Kvalifisering
     [SøknadFormField.har_fosterbarn]: YesOrNo.UNANSWERED,

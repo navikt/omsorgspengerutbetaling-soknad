@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { /*Redirect,*/ Route, Switch, useHistory } from 'react-router-dom';
+import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
 import { formatName } from '@navikt/sif-common-core/lib/utils/personUtils';
 import { useFormikContext } from 'formik';
 import ConfirmationPage from '../components/pages/confirmation-page/ConfirmationPage';
@@ -146,7 +146,7 @@ function SøknadRoutes({ lastStepID }: SøknadRoutes) {
 
             <Route path={RouteConfig.ERROR_PAGE_ROUTE} component={GeneralErrorPage} />
 
-            {/* <Redirect to={RouteConfig.WELCOMING_PAGE_ROUTE} /> */}
+            <Redirect to={RouteConfig.WELCOMING_PAGE_ROUTE} />
         </Switch>
     );
 }

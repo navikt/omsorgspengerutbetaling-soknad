@@ -17,6 +17,7 @@ import { SøknadFormData } from '../types/SøknadFormData';
 import { mapBostedUtlandToApiData } from './formToApiMaps/mapBostedUtlandToApiData';
 import { mapFrilansToApiData } from './formToApiMaps/mapFrilansToApiData';
 import { mapVirksomhetToVirksomhetApiData } from './formToApiMaps/mapVirksomhetToApiData';
+import { getInntektArbeidstakerTekst } from '../søknad/inntekt-step/InntektStep';
 
 // TODO: FIX MAPPING!!!
 export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShape): SøknadApiData => {
@@ -32,9 +33,11 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
 
         // Inntekt
         frilans_startdato,
+        frilans_harHattInntektSomFrilanser,
         frilans_jobberFortsattSomFrilans,
         selvstendig_harHattInntektSomSN,
         selvstendig_virksomheter,
+        er_arbeidstaker,
 
         // Barn
         har_fosterbarn,
@@ -52,6 +55,14 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
         {
             spørsmål: intl.formatMessage({ id: 'step.barn.har_fått_ekstra_omsorgsdager' }),
             svar: mapYesOrNoToSvar(har_fått_ekstra_omsorgsdager)
+        },
+        {
+            spørsmål: getInntektArbeidstakerTekst(
+                intl,
+                frilans_harHattInntektSomFrilanser,
+                selvstendig_harHattInntektSomSN
+            ),
+            svar: mapYesOrNoToSvar(er_arbeidstaker)
         }
     ];
 
