@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { useIntl } from 'react-intl';
 import {
-    validateRequiredList, validateYesOrNoIsAnswered
+    validateRequiredList,
+    validateYesOrNoIsAnswered
 } from '@navikt/sif-common-core/lib/validation/fieldValidations';
 import BostedUtlandListAndDialog from '@navikt/sif-common-forms/lib/bosted-utland/BostedUtlandListAndDialog';
 import { FieldArray, useFormikContext } from 'formik';
@@ -54,11 +55,16 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
             showSubmitButton={kanIkkeFortsette === false}>
             <FormBlock>
                 <CounsellorPanel>
-                    Du kan søke utbetaling for
-                    <ul>
-                        <li>hele dager med fravær fra jobb, som tilsvarer maks 7.5 timer og / eller</li>
-                        <li>dager hvor du bare har delvis fravær fra jobb</li>
-                    </ul>
+                    <p>
+                        Per i dag er det bestemt at barnehagen/skolen skal være stengt på grunn av koronaviruset frem
+                        til <strong>8. april 2020</strong>. Du kan søke om utbetaling av omsorgspenger frem til denne datoen.
+                    </p>
+                    <p>
+                        I påsken vil barnehagen/skolen uansett være stengt på røde dager. For de røde dagene kan du kun
+                        få omsorgspenger hvis du ikke kunne vært på jobb fordi barnet eller barnepasser er blitt syk.
+                        Hvis du kommer i denne situasjonen, kan du søke om utbetaling av omsorgspenger for de røde
+                        dagene etter påsken.
+                    </p>
                 </CounsellorPanel>
             </FormBlock>
             <FormBlock>

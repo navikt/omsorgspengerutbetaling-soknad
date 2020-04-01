@@ -6,9 +6,7 @@ import { Knapp } from 'nav-frontend-knapper';
 import { Periode } from '../../../../@types/omsorgspengerutbetaling-schema';
 import { SøknadFormField } from '../../../types/SøknadFormData';
 import { GYLDIG_TIDSROM } from '../../../validation/constants';
-import {
-    validateAll, validateDateInRange, validateTomAfterFom
-} from '../../../validation/fieldValidations';
+import { validateAll, validateDateInRange, validateTomAfterFom } from '../../../validation/fieldValidations';
 import SøknadFormComponents from '../../SøknadFormComponents';
 
 interface Props {
