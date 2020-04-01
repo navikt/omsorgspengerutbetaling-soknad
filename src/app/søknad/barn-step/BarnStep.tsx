@@ -37,11 +37,21 @@ const BarnStep = ({ onValidSubmit }: StepConfigProps) => {
 
             <FormBlock>
                 <SøknadFormComponents.YesOrNoQuestion
-                    name={SøknadFormField.har_fosterbarn}
-                    legend="Har du fosterbarn?"
+                    name={SøknadFormField.har_fått_ekstra_omsorgsdager}
+                    legend="Har du fått ekstra omsorgsdager fordi du har et kronisk sykt eller funksjonshemmet barn?"
                     validate={validateYesOrNoIsAnswered}
                 />
             </FormBlock>
+
+            {visibility.isVisible(SøknadFormField.har_fosterbarn) && (
+                <FormBlock>
+                    <SøknadFormComponents.YesOrNoQuestion
+                        name={SøknadFormField.har_fosterbarn}
+                        legend="Har du fosterbarn?"
+                        validate={validateYesOrNoIsAnswered}
+                    />
+                </FormBlock>
+            )}
 
             {visibility.isVisible(SøknadFormField.fosterbarn) && (
                 <FormBlock margin="l">

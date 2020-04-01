@@ -6,7 +6,11 @@ import { yesOrNoIsAnswered } from '../../utils/yesOrNoIsAnswered';
 const Q = SøknadFormField;
 
 const BarnStepConfig: QuestionConfig<SøknadFormData, SøknadFormField> = {
+    [Q.har_fått_ekstra_omsorgsdager]: {
+        isAnswered: ({ har_fått_ekstra_omsorgsdager }) => yesOrNoIsAnswered(har_fått_ekstra_omsorgsdager)
+    },
     [Q.har_fosterbarn]: {
+        parentQuestion: Q.har_fått_ekstra_omsorgsdager,
         isAnswered: ({ har_fosterbarn }) => yesOrNoIsAnswered(har_fosterbarn)
     },
     [Q.fosterbarn]: {
