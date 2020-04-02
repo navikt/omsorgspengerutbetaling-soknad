@@ -52,12 +52,16 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
 
     const yesOrNoQuestions: YesNoSpørsmålOgSvar[] = [
         {
-            spørsmål: intl.formatMessage({ id: 'step.barn.har_fått_ekstra_omsorgsdager' }),
+            spørsmål: intlHelper(intl, 'step.inntekt.er_arbeidstaker'),
+            svar: mapYesOrNoToSvar(er_arbeidstaker)
+        },
+        {
+            spørsmål: intl.formatMessage({ id: 'steg.barn.har_fått_ekstra_omsorgsdager.spm' }),
             svar: mapYesOrNoToSvar(har_fått_ekstra_omsorgsdager)
         },
         {
-            spørsmål: intlHelper(intl, 'step.inntekt.er_arbeidstaker'),
-            svar: mapYesOrNoToSvar(er_arbeidstaker)
+            spørsmål: intlHelper(intl, 'steg.barn.fosterbarn.spm'),
+            svar: mapYesOrNoToSvar(har_fosterbarn)
         }
     ];
 

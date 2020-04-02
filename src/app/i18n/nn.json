@@ -65,11 +65,10 @@
     "step.barn.pageTitle": "Barn",
     "step.barn.stepTitle": "Barn",
     "step.barn.stepIndicatorLabel": "Barn",
-    "step.barn.har_fått_ekstra_omsorgsdager": "Har du fått ekstra omsorgsdager fordi du har et kronisk sykt eller funksjonshemmet barn?",
 
-    "step.periode.pageTitle": "Hvilke dager søker du utbetaling for?",
-    "step.periode.stepTitle": "Hvilke dager søker du utbetaling for?",
-    "step.periode.stepIndicatorLabel": "Hvilke dager søker du utbetaling for?",
+    "step.periode.pageTitle": "Hvilke dager har du vært hjemme med barn?",
+    "step.periode.stepTitle": "Hvilke dager har du vært hjemme med barn?",
+    "step.periode.stepIndicatorLabel": "Hvilke dager har du vært hjemme med barn?",
     "step.periode.counsellorpanel.content": "I de fleste tilfeller må man som selvstendig næringsdrivende og frilanser betale de 10 første dager med omsorgspenger i året selv.",
     "step.periode.dager_med_fullt_fravært.label": "Dager med fullt fravær",
     "step.periode.dager_med_fullt_fravært.info": "TODO",
@@ -86,9 +85,7 @@
     "step.inntekt.pageTitle": "Inntekt",
     "step.inntekt.stepTitle": "Inntekt",
     "step.inntekt.stepIndicatorLabel": "Inntekt",
-    "step.inntekt.er_arbeidstaker.frilanser": "Er du arbeidstaker i tillegg til å være frilanser?",
-    "step.inntekt.er_arbeidstaker.selvstendig": "Er du arbeidstaker i tillegg til å være selvstendig næringdrivende?",
-    "step.inntekt.er_arbeidstaker.begge": "Er du arbeidstaker i tillegg til å være selvstendig næringdrivende og frilanser?",
+    "step.inntekt.er_arbeidstaker": "Er du arbeidstaker i tillegg til at du er selvstendig næringsdrivende og/eller frilanser?",
 
     "step.opplysninger-om-barnet.pageTitle": "Omsorgspengesøknad - opplysninger om barnet",
     "step.opplysninger-om-barnet.stepTitle": "Barn",
@@ -162,6 +159,9 @@
     "modal.minePlikter.part2b": "nav.no/rettogplikt",
 
     "steg.arbeid.spm": "Hva er din arbeidssituasjon? Du kan velge flere.",
+
+    "steg.barn.fosterbarn.spm": "Har du fosterbarn?",
+    "steg.barn.har_fått_ekstra_omsorgsdager.smp": "Har du fått ekstra omsorgsdager fordi du har et kronisk sykt eller funksjonshemmet barn?",
 
     "steg.medlemsskap.annetLandSiste12.spm": "Har du bodd i andre land enn Norge i hele eller deler av de siste 12 månedene?",
     "steg.medlemsskap.annetLandSiste12.hjelp": "Du svarer ja bare hvis du har oppholdt deg fast i et annet land enn Norge. Korte utlandsturer i forbindelse med for eksempel ferie regnes ikke med.",

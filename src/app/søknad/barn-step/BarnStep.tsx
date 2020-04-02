@@ -12,8 +12,11 @@ import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import SøknadFormComponents from '../SøknadFormComponents';
 import SøknadStep from '../SøknadStep';
 import { BarnStepQuestions } from './config';
+import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
+import { useIntl } from 'react-intl';
 
 const BarnStep = ({ onValidSubmit }: StepConfigProps) => {
+    const intl = useIntl();
     const { values } = useFormikContext<SøknadFormData>();
     const visibility = BarnStepQuestions.getVisbility(values);
 
@@ -31,7 +34,7 @@ const BarnStep = ({ onValidSubmit }: StepConfigProps) => {
             <FormBlock>
                 <SøknadFormComponents.YesOrNoQuestion
                     name={SøknadFormField.har_fosterbarn}
-                    legend="Har du fosterbarn?"
+                    legend={intlHelper(intl, 'steg.barn.fosterbarn.spm')}
                     validate={validateYesOrNoIsAnswered}
                 />
             </FormBlock>
@@ -43,7 +46,7 @@ const BarnStep = ({ onValidSubmit }: StepConfigProps) => {
             <FormBlock>
                 <SøknadFormComponents.YesOrNoQuestion
                     name={SøknadFormField.har_fått_ekstra_omsorgsdager}
-                    legend="Har du fått ekstra omsorgsdager fordi du har et kronisk sykt eller funksjonshemmet barn?"
+                    legend={intlHelper(intl, 'steg.barn.har_fått_ekstra_omsorgsdager.spm')}
                     validate={validateYesOrNoIsAnswered}
                 />
             </FormBlock>
