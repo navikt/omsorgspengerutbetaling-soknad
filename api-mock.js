@@ -4,7 +4,6 @@ const express = require('express');
 const Busboy = require('busboy');
 const _ = require('lodash');
 
-
 const platformNIC = () => {
     const interfaces = os.networkInterfaces();
     switch (process.platform) {
@@ -15,13 +14,13 @@ const platformNIC = () => {
             if (interfaces.eno16780032) return interfaces.eno16780032;
             return interfaces.lo;
         default:
-            return interfaces.Ethernet0 ? interfaces.Ethernet0 : interfaces['Wi-Fi']
-
+            return interfaces.Ethernet0 ? interfaces.Ethernet0 : interfaces['Wi-Fi'];
     }
 };
+
 const getIpAdress = () => {
     const nic = platformNIC();
-    const ipv4 = _.find(nic, item => item.family === 'IPv4');
+    const ipv4 = _.find(nic, (item) => item.family === 'IPv4');
     return ipv4.address;
 };
 
@@ -40,7 +39,7 @@ server.use((req, res, next) => {
     res.set('X-XSS-Protection', '1; mode=block');
     res.set('X-Content-Type-Options', 'nosniff');
     res.set('Access-Control-Allow-Headers', 'content-type');
-    res.set('Access-Control-Allow-Methods', ['GET','POST','DELETE']);
+    res.set('Access-Control-Allow-Methods', ['GET', 'POST', 'DELETE']);
     res.set('Access-Control-Allow-Credentials', true);
     next();
 });
@@ -70,7 +69,7 @@ const MELLOMLAGRING_JSON = `${os.tmpdir()}/mellomlagring.json`;
 
 const isJSON = (str) => {
     try {
-        return (JSON.parse(str) && !!str);
+        return JSON.parse(str) && !!str;
     } catch (e) {
         return false;
     }
@@ -80,7 +79,7 @@ const writeFileSync = (path, text) => {
 };
 const writeFileAsync = async (path, text) => {
     return new Promise((resolve, reject) => {
-        fs.writeFile(path, text, 'utf8', err => {
+        fs.writeFile(path, text, 'utf8', (err) => {
             if (err) reject(err);
             else resolve();
         });
@@ -126,8 +125,7 @@ const startServer = () => {
         if (existsSync(MELLOMLAGRING_JSON)) {
             const body = readFileSync(MELLOMLAGRING_JSON);
             res.send(JSON.parse(body));
-        }
-        else {
+        } else {
             res.send({});
         }
     });
@@ -136,7 +134,6 @@ const startServer = () => {
         const jsBody = isJSON(body) ? JSON.parse(body) : body;
         writeFileAsync(MELLOMLAGRING_JSON, JSON.stringify(jsBody, null, 2));
         res.sendStatus(200);
-
     });
     server.delete('/mellomlagring', (req, res) => {
         writeFileAsync(MELLOMLAGRING_JSON, JSON.stringify({}, null, 2));
@@ -150,4 +147,3 @@ const startServer = () => {
 };
 
 startServer();
-

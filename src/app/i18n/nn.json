@@ -24,7 +24,7 @@
     "Torsdag": "Torsdag",
     "Fredag": "Fredag",
 
-    "banner.title": "Søknad om ekstra omsorgsdager",
+    "banner.title": "Søknad om utbetaling av omsorgspenger til selvstendig næringsdrivende eller frilansere",
 
     "page.loadingPage.tekst": "Laster ...",
     "gotoApplicationLink.lenketekst": "Gå til den digitale søknaden",
@@ -58,14 +58,37 @@
     "step.sendButtonLabel": "Send inn søknaden",
     "step.sendButtonAriaLabel": "Send inn søknaden",
 
-    "step.situasjon.pageTitle": "TODOO",
-    "step.situasjon.stepTitle": "TODO",
-    "step.situasjon.stepIndicatorLabel": "TODO",
-    "step.situasjon.tre_eller_fler_barn.spm": "Jeg har 3 eller flere barn",
-    "step.situasjon.alene_om_omsorg_for_barn.spm": "Jeg er alene om omsorg for barn",
-    "step.situasjon.rett_til_mer_enn_ti_dager_totalt.spm": "Jeg har fått overført dager og rett til mer enn 10 dager totalt",
-    "step.situasjon.den_andre_forelderen_ikke_kan_ta_seg_av_barnet.spm": "Jeg har innvilget ekstra dager fordi den andre forelderen ikke kan ta seg av barnet",
-    "step.situasjon.har_barn_som_har_kronisk_sykdom_eller_funksjonshemming.spm": "Jeg har innvilget ekstra dager fordi jeg har barn som har kronisk sykdom/funksjonshemming",
+    "step.situasjon.pageTitle": "Hva er din situasjon?",
+    "step.situasjon.stepTitle": "Hva er din situasjon?",
+    "step.situasjon.stepIndicatorLabel": "Hva er din situasjon?",
+
+    "step.barn.pageTitle": "Barn",
+    "step.barn.stepTitle": "Barn",
+    "step.barn.stepIndicatorLabel": "Barn",
+    "step.barn.har_fått_ekstra_omsorgsdager": "Har du fått ekstra omsorgsdager fordi du har et kronisk sykt eller funksjonshemmet barn?",
+
+    "step.periode.pageTitle": "Hvilke dager søker du utbetaling for?",
+    "step.periode.stepTitle": "Hvilke dager søker du utbetaling for?",
+    "step.periode.stepIndicatorLabel": "Hvilke dager søker du utbetaling for?",
+    "step.periode.counsellorpanel.content": "I de fleste tilfeller må man som selvstendig næringsdrivende og frilanser betale de 10 første dager med omsorgspenger i året selv.",
+    "step.periode.dager_med_fullt_fravært.label": "Dager med fullt fravær",
+    "step.periode.dager_med_fullt_fravært.info": "TODO",
+    "step.periode.dager_med_delvis_fravært.label": "Dager med delvis fravær",
+    "step.periode.dager_med_delvis_fravært.info": "TODO",
+    "step.periode.har_du_oppholdt_deg_i_utlandet_for_dager_du_soker_ok.spm": "Har du vært i utlandet noen av dagene du søker omsorgspenger for?",
+
+    "step.hvis-utenlandsopphold.pageTitle": "Opphold i utlandet",
+    "step.hvis-utenlandsopphold.stepTitle": "Spesifiser hvilke perioder du har oppholdt deg i utlandet",
+    "step.hvis-utenlandsopphold.stepIndicatorLabel": "Opphold i utlandet",
+    "step.hvis-utenlandsopphold.counsellorpanel.content": "I de fleste tilfeller må man som selvstendig næringsdrivende og frilanser betale de 10 første dager med omsorgspenger i året selv.",
+    "step.hvis_utenlandsopphold.en_test_verdi.spm": "Dette er en test verdi som skal bli tømt hvis bruker velger å gå tilbake å trykke nei på at personen har vært i utlandet etter å først ha sagt ja og så lagt inn data på det ekstra steget som dukker opp om å spesifisere perioder i utlandet.",
+
+    "step.inntekt.pageTitle": "Inntekt",
+    "step.inntekt.stepTitle": "Inntekt",
+    "step.inntekt.stepIndicatorLabel": "Inntekt",
+    "step.inntekt.er_arbeidstaker.frilanser": "Er du arbeidstaker i tillegg til å være frilanser?",
+    "step.inntekt.er_arbeidstaker.selvstendig": "Er du arbeidstaker i tillegg til å være selvstendig næringdrivende?",
+    "step.inntekt.er_arbeidstaker.begge": "Er du arbeidstaker i tillegg til å være selvstendig næringdrivende og frilanser?",
 
     "step.opplysninger-om-barnet.pageTitle": "Omsorgspengesøknad - opplysninger om barnet",
     "step.opplysninger-om-barnet.stepTitle": "Barn",
@@ -79,10 +102,6 @@
     "step.medlemskap.stepTitle": "Medlemskap",
     "step.medlemskap.stepIndicatorLabel": "Om medlemskap i folketrygden",
 
-    "step.legeerklaering.pageTitle": "Omsorgspengesøknad - legeerklæring",
-    "step.legeerklaering.stepTitle": "Legeerklæring",
-    "step.legeerklaering.stepIndicatorLabel": "Last opp din legeerklæring",
-
     "step.samværsavtale.pageTitle": "Omsorgspengesøknad - avtale om delt bosted",
     "step.samværsavtale.stepTitle": "Avtale om delt bosted",
     "step.samværsavtale.stepIndicatorLabel": "Last opp din avtale om delt bosted",
@@ -92,8 +111,8 @@
     "step.oppsummering.stepIndicatorLabel": "Oppsummering",
 
     "introPage.tittel": "Søknad om ekstra omsorgsdager",
-    "introPage.stegTittel": "Kan jeg bruke den digitale omsorgspengesøknaden?",
-    "introPage.intro.html": "<div>TODO NYNORSK</div>",
+    "introPage.stegTittel": "Kan jeg søke om utbetaling av omsorgspenger?",
+    "introPage.intro.html": "<p>Hvis du er selvstendig næringsdrivende eller frilanser kan du søke om å få utbetalt omsorgspenger fra NAV. Du må i de fleste tilfeller betale de 10 første dagene selv, men det er unntak fra dette hvis du har innvilget utvidet rett og ikke har andre barn under 12 år.</p><p>Hvis du er arbeidstaker og skal ha utbetalt omsorgspenger skal du ikke søke her, din arbeidsgiver må sende innteksmelding til NAV.</p>",
     "introPage.legeerklæring.html": "<p>Har du legeerklæringen klar? Du trenger den når du skal fylle ut søknaden. Da tar du bare et bilde av den og laster den opp.</p><p>Hvis du ikke bor på samme folkeregistrerte adresse som barnet, men har en avtale om delt bosted, må du også laste opp denne.</p>",
     "introPage.spm.kroniskEllerFunksjonshemmende": "Har du et barn som har en kronisk sykdom eller funksjonshemming?",
     "introPage.infoIkkeKroniskEllerFunksjonshemmende.html": "<p>Du må foreløpig bruke <a href=\"{url}\" class=\"lenke\">papirsøknaden</a> hvis du skal<ol><li>søke om å ta over dager fra en annen omsorgsperson</li><li>fordele dager med en annen omsorgsperson</li><li>overføre dager til en ny samlivspartner</li></ol></p>",
@@ -101,7 +120,8 @@
     "welcomingPage.sidetittel": "Søknad om ekstra omsorgsdager",
     "welcomingPage.banner.tittel": "Hei,",
     "welcomingPage.banner.tekst": "jeg vil hjelpe deg med å fylle ut søknaden!",
-    "welcomingPage.introtittel": "Søknad om ekstra omsorgsdager",
+    "welcomingPage.introtittel": "Søknad om utbetaling av omsorgspenger til selvstendig næringsdrivende eller frilansere",
+    "welcomingPage.legeerklæring": "Har du legeerklæringen klar? Du trenger den senere i søknaden. Da tar du bare et bilde av den og laster opp.",
     "welcomingPage.samtykke.tekst": "Jeg bekrefter at jeg har lest og forstått",
     "welcomingPage.samtykke.harIkkeGodkjentVilkår": "Du må godkjenne vilkårene",
     "welcomingPage.samtykke.harForståttLabel": "For å gå videre med søknaden må du bekrefte at du har lest og forstått {plikterLink}.",
@@ -141,17 +161,6 @@
     "modal.minePlikter.part2a": "Jeg har lest og forstått det som står på",
     "modal.minePlikter.part2b": "nav.no/rettogplikt",
 
-    "steg.omBarnet.hvilketBarn.spm": "Hvilket barn gjelder søknaden for?",
-    "steg.omBarnet.hvilketBarn.info": "Hvis du skal søke for flere barn, må du sende én søknad for hvert barn.",
-    "steg.omBarnet.hvilketBarn.født": "Født {dato}",
-    "steg.omBarnet.gjelderAnnetBarn": "Søknaden gjelder et annet barn",
-    "steg.omBarnet.fnr.spm": "Barnets fødselsnummer/D-nummer",
-    "steg.omBarnet.fnr.ikkeFnrEnda": "Barnet har ikke fått fødselsnummer/D-nummer ennå",
-    "steg.omBarnet.fødselsdato": "Barnets fødselsdato",
-    "steg.omBarnet.navn": "Barnets navn",
-    "steg.omBarnet.relasjon": "Min relasjon til barnet",
-    "steg.omBarnet.veileder.samværsavtale": "Senere i søknaden laster du opp avtale om delt bosted for barnet.",
-
     "steg.arbeid.spm": "Hva er din arbeidssituasjon? Du kan velge flere.",
 
     "steg.medlemsskap.annetLandSiste12.spm": "Har du bodd i andre land enn Norge i hele eller deler av de siste 12 månedene?",
@@ -160,14 +169,7 @@
     "steg.medlemsskap.annetLandSiste12.listeTittel": "Utenlandsopphold siste 12 måneder",
     "steg.medlemsskap.annetLandNeste12.hjelp": "Du svarer ja bare hvis du planlegger å oppholde deg fast i et annet land enn Norge. Korte utlandsturer i forbindelse med for eksempel ferie regnes ikke med.",
     "steg.medlemsskap.annetLandNeste12.listeTittel": "Utenlandsopphold neste 12 måneder",
-
-    "steg.lege.info.html": "Ta bilde av feltene i papirsøknaden som legen har fylt ut om barnet. Vær nøye med at <strong>all tekst</strong> er med på bildet, inkludert legens signatur.",
-    "steg.lege.vedlegg": "Last opp bilde av legeerklæringen (maks 3 bilder)",
-    "steg.lege.intro.1.html": "For de første 8 ukene må legeerklæringen skrives av en sykehuslege. Etter de første 8 ukene kan legeerklæringen skrives av alle leger i spesialisthelsetjenesten.",
-    "steg.lege.intro.2.html": "Disse yrkesgruppene kan <strong>ikke</strong> undertegne legeerklæringen: Sosionom, legesekretær, psykolog, psykologspesialist, fysioterapeut, fastlege og spesialist i allmennmedisin.",
-
-    "steg.samværsavtale.info.html": "<p>Ta bilde av avtalen om delt bosted og last opp.</p>Vær nøye med:<ul><li>å få all tekst med på bildet</li><li>at signaturen fra begge parter er synlig på bildet</li><li>at bildet er leselig</li></ul>",
-    "steg.samværsavtale.vedlegg": "Last opp bilde av avtalen (maks 3 bilder)",
+    "steg.medlemsskap.annetLandSisteOgNeste12.listeTittel": "Utenlandsopphold siste 12 måneder og neste 12 måneder",
 
     "steg.oppsummering.info": "Les gjennom oppsummeringen før du sender inn søknaden. Hvis du vil gjøre endringer, kan du gå tilbake.",
     "steg.oppsummering.søker.header": "Navn på søker",
@@ -193,8 +195,10 @@
     "steg.oppsummering.bekrefterOpplysninger": "Jeg bekrefter at opplysningene jeg har gitt er riktige, og at jeg ikke har holdt tilbake opplysninger som har betydning for min rett til omsorgspenger.",
     "steg.oppsummering.bekrefterOpplysninger.ikkeBekreftet": "Du må bekrefte opplysningene",
 
+    "steg.oppsummering.utenlandsoppholdIPerioden.listetittel": "Utenlandsopphold i perioden",
+
     "page.confirmation.sidetittel": "Vi har mottatt søknaden din",
-    "page.confirmation.tittel": "Vi har mottatt søknad fra deg om omsorgspenger",
+    "page.confirmation.tittel": "Vi har mottatt søknad fra deg om utbetaling av omsorgspenger",
     "page.confirmation.undertittel": "Hva skjer videre nå?",
     "page.confirmation.hvaSkjer1": "Søknaden din vil bli synlig på Ditt NAV etter omkring en uke. Da vil du også kunne se hva slags dokumentasjon vi har fått fra deg.",
     "page.confirmation.hvaSkjer2": "Vi starter behandlingen av søknaden din når vi har mottatt all nødvendig dokumentasjon. Vi kontakter deg hvis vi trenger flere opplysninger i saken din.",
@@ -229,5 +233,35 @@
     "fieldvalidation.samværsavtale.forMangeFiler": "Du kan maksimalt laste opp 3 bilder",
     "fieldvalidation.utenlandsopphold_ikke_registrert": "Du har ikke registrert noen utenlandsopphold for perioden",
     "fieldvalidation.utenlandsopphold_overlapper": "Ett eller flere av utenlandsoppholdene har datoer som overlapper",
-    "fieldvalidation.utenlandsopphold_utenfor_periode": "Ett eller flere av utenlandsoppholdene er utenfor tillatt tidsrom"
+    "fieldvalidation.utenlandsopphold_utenfor_periode": "Ett eller flere av utenlandsoppholdene er utenfor tillatt tidsrom",
+
+    "fieldvalidation.fraværsperioder_mangler": "Du har ikke lagt til dager med fullt fravær",
+    "fieldvalidation.fraværsperioder_overlapper": "Ett eller flere av periodene har datoer som overlapper",
+    "fieldvalidation.fraværsperioder_utenfor_periode": "En eller flere av periodene er utenfor tillatt tidsrom",
+    "fieldvalidation.fraværsperioder_overlapper_med_fraværsdager": "En eller flere perioder overlapper med registrerte dager med delvis fravær",
+    "fieldvalidation.dager_med_fravær_ugyldig_dag": "En eller flere av dagene har ugyldige verdier",
+    "fieldvalidation.dager_med_fravær_mangler": "Du har ikke lagt til dager med delvis fravær",
+    "fieldvalidation.dager_med_fravær_like": "En eller flere dager har samme dato",
+    "fieldvalidation.dager_med_for_mange_timer": "En eller flere dager har for mange timer. 7,5 timer er det meste som er gyldig",
+    "fieldvalidation.dager_med_fravær_utenfor_periode": "En eller flere dager er utenfor gyldig tidsperiode",
+    "fieldvalidation.dager_med_fravær_overlapper_perioder": "En eller flere dager overlapper med registrerte perioder",
+    "fieldvalidation.timer_ikke_tall": "Verdien må være mellom 0,5 og 7,5 timer",
+    "fieldvalidation.timer_for_mange_timer": "Verdien må være mellom 0,5 og 7,5 timer",
+    "fieldvalidation.dato_utenfor_gyldig_tidsrom": "Dato er utenfor gyldig tidsperiode",
+    "fieldvalidation.tom_er_før_fom": "Til dato kan ikke være før fra dato",
+
+    "avbrytSøknadDialog.avbrytSøknadLabel": "Ja, avbryt søknad",
+    "avbrytSøknadDialog.fortsettSøknadLabel": "Nei",
+    "avbrytSøknadDialog.intro": "Det du har fylt ut i søknaden blir slettet, og du kommer tilbake til velkomstsiden.",
+    "avbrytSøknadDialog.spørsmål": "Ønsker du å slette søknaden?",
+    "avbrytSøknadDialog.tittel": "Avbryt og slett søknad",
+
+    "fortsettSøknadSenereDialog.avbrytSøknadLabel": "Ja, fortsett senere",
+    "fortsettSøknadSenereDialog.fortsettSøknadLabel": "Nei",
+    "fortsettSøknadSenereDialog.intro": "Vi lagrer søknaden din for deg i 24 timer.",
+    "fortsettSøknadSenereDialog.spørsmål": "Vil du avslutte nå og fortsette senere?",
+    "fortsettSøknadSenereDialog.tittel": "Avslutt og fortsett senere",
+
+    "steg.footer.avbryt": "Avbryt og slett søknad",
+    "steg.footer.fortsettSenere": "Avslutt og fortsett senere"
 }
