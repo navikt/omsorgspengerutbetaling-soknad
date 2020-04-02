@@ -89,6 +89,16 @@ const OppsummeringStep: React.StatelessComponent<Props> = ({ onApplicationSent }
                         fødselsnummer={fødselsnummer}
                     />
                     <UtbetalingsperioderSummaryView utbetalingsperioder={apiValues.utbetalingsperioder} />
+                    {apiValues.andreUtbetalinger.length > 0 && (
+                        <SummaryBlock header={intlHelper(intl, 'steg.oppsummering.søkt_om_andre_utbetalinger')}>
+                            <SummaryList
+                                items={apiValues.andreUtbetalinger}
+                                itemRenderer={(utbetaling) => (
+                                    <span>{intlHelper(intl, `andre_utbetalinger.${utbetaling}`)}</span>
+                                )}
+                            />
+                        </SummaryBlock>
+                    )}
                     <UtenlandsoppholdISøkeperiodeSummaryView utenlandsopphold={apiValues.opphold} />
                     <SpørsmålOgSvarSummaryView yesNoSpørsmålOgSvar={apiValues.spørsmål} />
                     {fosterbarn.length > 0 && (

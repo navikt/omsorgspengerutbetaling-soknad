@@ -3,6 +3,7 @@ import { Fosterbarn } from '@navikt/sif-common-forms/lib/fosterbarn/types';
 import { Virksomhet } from '@navikt/sif-common-forms/lib/virksomhet/types';
 import { YesOrNo } from 'common/types/YesOrNo';
 import { FraværDelerAvDag, Periode } from '../../@types/omsorgspengerutbetaling-schema';
+import { AndreUtbetalinger } from './AndreUtbetalinger';
 
 export enum SøknadFormField {
     harForståttRettigheterOgPlikter = 'harForståttRettigheterOgPlikter',
@@ -17,6 +18,8 @@ export enum SøknadFormField {
     dagerMedDelvisFraværGroup = 'dagerMedDelvisFraværGroup',
     perioder_harVærtIUtlandet = 'perioder_harVærtIUtlandet',
     perioder_utenlandsopphold = 'perioder_utenlandsopphold',
+    har_søkt_andre_utbetalinger = 'har_søkt_andre_utbetalinger',
+    andre_utbetalinger = 'andre_utbetalinger',
 
     // Conditional perioder i utlandet
     hvis_utenlandsopphold_en_test_verdi = 'hvis_utenlandsopphold_en_test_verdi',
@@ -52,6 +55,8 @@ export interface SøknadFormData {
     [SøknadFormField.dagerMedDelvisFravær]: FraværDelerAvDag[];
     [SøknadFormField.perioder_harVærtIUtlandet]: YesOrNo;
     [SøknadFormField.perioder_utenlandsopphold]: Utenlandsopphold[];
+    [SøknadFormField.har_søkt_andre_utbetalinger]: YesOrNo;
+    [SøknadFormField.andre_utbetalinger]: AndreUtbetalinger[];
 
     // Conditional perioder i utlandet
     [SøknadFormField.hvis_utenlandsopphold_en_test_verdi]: YesOrNo;
@@ -87,6 +92,8 @@ export const initialValues: SøknadFormData = {
     [SøknadFormField.dagerMedDelvisFravær]: [],
     [SøknadFormField.perioder_harVærtIUtlandet]: YesOrNo.UNANSWERED,
     [SøknadFormField.perioder_utenlandsopphold]: [],
+    [SøknadFormField.har_søkt_andre_utbetalinger]: YesOrNo.UNANSWERED,
+    [SøknadFormField.andre_utbetalinger]: [],
 
     // Conditional perioder i utlandet
     [SøknadFormField.hvis_utenlandsopphold_en_test_verdi]: YesOrNo.UNANSWERED,

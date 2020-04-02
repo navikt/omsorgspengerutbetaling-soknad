@@ -30,6 +30,8 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
         dagerMedDelvisFravær,
         perioder_harVærtIUtlandet,
         perioder_utenlandsopphold,
+        har_søkt_andre_utbetalinger,
+        andre_utbetalinger,
 
         // Inntekt
         frilans_startdato,
@@ -65,6 +67,13 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
         }
     ];
 
+    if (har_søkt_andre_utbetalinger === YesOrNo.NO) {
+        yesOrNoQuestions.push({
+            spørsmål: intlHelper(intl, 'step.periode.har_søkt_andre_utbetalinger.spm'),
+            svar: mapYesOrNoToSvar(har_søkt_andre_utbetalinger)
+        });
+    }
+
     const apiData: SøknadApiData = {
         språk: (intl.locale as any) === 'en' ? 'nn' : (intl.locale as Locale),
         bekreftelser: {
@@ -72,6 +81,7 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
             harBekreftetOpplysninger
         },
         spørsmål: [...yesOrNoQuestions],
+        andreUtbetalinger: har_søkt_andre_utbetalinger === YesOrNo.YES ? [...andre_utbetalinger] : [],
         utbetalingsperioder: mapPeriodeTilUtbetalingsperiode(perioderMedFravær, dagerMedDelvisFravær),
         bosteder: settInnBosteder(
             harBoddUtenforNorgeSiste12Mnd,
