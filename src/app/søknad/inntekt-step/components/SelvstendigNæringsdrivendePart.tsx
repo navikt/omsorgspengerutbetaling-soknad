@@ -6,13 +6,10 @@ import VirksomhetListAndDialog from '@navikt/sif-common-forms/lib/virksomhet/Vir
 import { useFormikContext } from 'formik';
 import { YesOrNo } from 'common/types/YesOrNo';
 import intlHelper from 'common/utils/intlUtils';
-import {
-    validateRequiredList, validateYesOrNoIsAnswered
-} from 'common/validation/fieldValidations';
+import { validateRequiredList, validateYesOrNoIsAnswered } from 'common/validation/fieldValidations';
 import { StepID } from '../../../config/stepConfig';
 import { SøknadFormData, SøknadFormField } from '../../../types/SøknadFormData';
 import { Feature, isFeatureEnabled } from '../../../utils/featureToggleUtils';
-import { fiskerHarBesvartPåBladBSpørsmål } from '../../../utils/fiskerUtils';
 import SøknadFormComponents from '../../SøknadFormComponents';
 import SøknadTempStorage from '../../SøknadTempStorage';
 
@@ -40,7 +37,6 @@ const SelvstendigNæringsdrivendeFormPart: React.FunctionComponent<Props> = ({ f
                                 addLabel: intlHelper(intl, 'selvstendig.list.leggTilLabel'),
                                 modalTitle: intlHelper(intl, 'selvstendig.dialog.tittel')
                             }}
-                            hideFormFields={{ fiskerErPåBladB: fiskerHarBesvartPåBladBSpørsmål(values) }}
                             validate={validateRequiredList}
                             onAfterChange={
                                 isFeatureEnabled(Feature.MELLOMLAGRING)

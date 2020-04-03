@@ -16,6 +16,10 @@ For å kjøre enhetstester:
 
 1.  `npm install && npm test`.
 
+For å kjøre cypress tester:
+
+1.  `npm run cypress:run`.
+
 ## Henvendelser
 
 Spørsmål knyttet til koden eller prosjektet kan stilles som issues her på GitHub.

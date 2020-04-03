@@ -3,8 +3,7 @@ import { getSøknadRoute } from '../utils/routeUtils';
 import routeConfig from './routeConfig';
 
 export enum StepID {
-    'SITUASJON' = 'situasjon',
-    'EGENUTBETALING' = 'egenutbetaling',
+    'BARN' = 'barn',
     'PERIODE' = 'periode',
     'LEGEERKLÆRING' = 'legeerklaering',
     'INNTEKT' = 'inntekt',
@@ -44,41 +43,30 @@ export const getStepConfig = (formData?: SøknadFormData): StepConfigInterface =
     let idx = 0;
 
     const config = {
-        [StepID.SITUASJON]: {
-            ...getStepConfigItemTextKeys(StepID.SITUASJON),
-            index: idx++,
-            nextStep: StepID.EGENUTBETALING,
-            backLinkHref: routeConfig.WELCOMING_PAGE_ROUTE
-        },
-        [StepID.EGENUTBETALING]: {
-            ...getStepConfigItemTextKeys(StepID.EGENUTBETALING),
-            index: idx++,
-            nextStep: StepID.PERIODE,
-            backLinkHref: getSøknadRoute(StepID.SITUASJON)
-        },
         [StepID.PERIODE]: {
             ...getStepConfigItemTextKeys(StepID.PERIODE),
             index: idx++,
             nextStep: StepID.INNTEKT,
-            backLinkHref: getSøknadRoute(StepID.EGENUTBETALING)
+            backLinkHref: routeConfig.WELCOMING_PAGE_ROUTE
         },
-        // [StepID.LEGEERKLÆRING]: {
-        //     ...getStepConfigItemTextKeys(StepID.LEGEERKLÆRING),
-        //     index: idx++,
-        //     nextStep: StepID.INNTEKT,
-        //     backLinkHref: getSøknadRoute(StepID.PERIODE)
-        // },
         [StepID.INNTEKT]: {
             ...getStepConfigItemTextKeys(StepID.INNTEKT),
             index: idx++,
-            nextStep: StepID.MEDLEMSKAP,
+            nextStep: StepID.BARN,
             backLinkHref: getSøknadRoute(StepID.PERIODE)
         },
+        [StepID.BARN]: {
+            ...getStepConfigItemTextKeys(StepID.BARN),
+            index: idx++,
+            nextStep: StepID.MEDLEMSKAP,
+            backLinkHref: getSøknadRoute(StepID.INNTEKT)
+        },
+
         [StepID.MEDLEMSKAP]: {
             ...getStepConfigItemTextKeys(StepID.MEDLEMSKAP),
             index: idx++,
             nextStep: StepID.OPPSUMMERING,
-            backLinkHref: getSøknadRoute(StepID.INNTEKT)
+            backLinkHref: getSøknadRoute(StepID.BARN)
         },
         [StepID.OPPSUMMERING]: {
             ...getStepConfigItemTextKeys(StepID.OPPSUMMERING),

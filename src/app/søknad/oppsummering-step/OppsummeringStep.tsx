@@ -87,6 +87,19 @@ const OppsummeringStep: React.StatelessComponent<Props> = ({ onApplicationSent }
                         mellomnavn={mellomnavn}
                         fødselsnummer={fødselsnummer}
                     />
+                    <UtbetalingsperioderSummaryView utbetalingsperioder={apiValues.utbetalingsperioder} />
+                    {apiValues.andreUtbetalinger.length > 0 && (
+                        <SummaryBlock header={intlHelper(intl, 'steg.oppsummering.søkt_om_andre_utbetalinger')}>
+                            <SummaryList
+                                items={apiValues.andreUtbetalinger}
+                                itemRenderer={(utbetaling) => (
+                                    <span>{intlHelper(intl, `andre_utbetalinger.${utbetaling}`)}</span>
+                                )}
+                            />
+                        </SummaryBlock>
+                    )}
+                    <UtenlandsoppholdISøkeperiodeSummaryView utenlandsopphold={apiValues.opphold} />
+                    <SpørsmålOgSvarSummaryView yesNoSpørsmålOgSvar={apiValues.spørsmål} />
                     {fosterbarn.length > 0 && (
                         <SummaryBlock header="Fosterbarn">
                             <SummaryList
@@ -95,9 +108,6 @@ const OppsummeringStep: React.StatelessComponent<Props> = ({ onApplicationSent }
                             />
                         </SummaryBlock>
                     )}
-                    <SpørsmålOgSvarSummaryView yesNoSpørsmålOgSvar={apiValues.spørsmål} />
-                    <UtbetalingsperioderSummaryView utbetalingsperioder={apiValues.utbetalingsperioder} />
-                    <UtenlandsoppholdISøkeperiodeSummaryView utenlandsopphold={apiValues.opphold} />
                     <FrilansSummary frilans={apiValues.frilans} />
                     <SelvstendigSummary selvstendigVirksomheter={apiValues.selvstendigVirksomheter} />
                     <MedlemskapSummaryView bosteder={apiValues.bosteder} />

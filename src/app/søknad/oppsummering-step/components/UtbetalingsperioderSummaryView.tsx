@@ -33,7 +33,7 @@ function UtbetalingsperioderSummaryView({ utbetalingsperioder = [] }: Props) {
     return (
         <>
             {perioder.length > 0 && (
-                <SummaryBlock header={'Perioder det søkes utbetaling for'}>
+                <SummaryBlock header={'Hele dager med fravær'}>
                     <SummaryList
                         items={perioder}
                         itemRenderer={(periode: UtbetalingsperiodeApi) => (
@@ -46,7 +46,7 @@ function UtbetalingsperioderSummaryView({ utbetalingsperioder = [] }: Props) {
                 </SummaryBlock>
             )}
             {dager.length > 0 && (
-                <SummaryBlock header={'Dager med delvis fravær det søkes utbetaling for'}>
+                <SummaryBlock header={'Dager med delvis fravær'}>
                     <SummaryList
                         items={dager}
                         itemRenderer={(dag: UtbetalingsperiodeDag) => (

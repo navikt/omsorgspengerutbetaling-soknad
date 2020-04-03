@@ -5,7 +5,7 @@ import { yesOrNoIsAnswered } from '../../utils/yesOrNoIsAnswered';
 
 const Q = SøknadFormField;
 
-const SituasjonStepConfig: QuestionConfig<SøknadFormData, SøknadFormField> = {
+const BarnStepConfig: QuestionConfig<SøknadFormData, SøknadFormField> = {
     [Q.har_fosterbarn]: {
         isAnswered: ({ har_fosterbarn }) => yesOrNoIsAnswered(har_fosterbarn)
     },
@@ -13,7 +13,10 @@ const SituasjonStepConfig: QuestionConfig<SøknadFormData, SøknadFormField> = {
         parentQuestion: Q.har_fosterbarn,
         isIncluded: ({ har_fosterbarn }) => har_fosterbarn === YesOrNo.YES,
         isAnswered: ({ fosterbarn }) => fosterbarn !== undefined && fosterbarn.length > 0
+    },
+    [Q.har_fått_ekstra_omsorgsdager]: {
+        isAnswered: ({ har_fått_ekstra_omsorgsdager }) => yesOrNoIsAnswered(har_fått_ekstra_omsorgsdager)
     }
 };
 
-export const SituasjonStepQuestions = Questions<SøknadFormData, SøknadFormField>(SituasjonStepConfig);
+export const BarnStepQuestions = Questions<SøknadFormData, SøknadFormField>(BarnStepConfig);

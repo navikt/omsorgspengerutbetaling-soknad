@@ -1,6 +1,7 @@
 import { Næringstype } from '@navikt/sif-common-forms/lib';
 import { ApiStringDate } from 'common/types/ApiStringDate';
 import { Locale } from 'common/types/Locale';
+import { AndreUtbetalinger } from './AndreUtbetalinger';
 
 export type ISO8601Duration = string;
 
@@ -81,6 +82,7 @@ export interface SøknadApiData {
     spørsmål: YesNoSpørsmålOgSvar[];
     fosterbarn?: FosterbarnApi[];
     utbetalingsperioder: UtbetalingsperiodeApi[]; // perioder
+    andreUtbetalinger: AndreUtbetalinger[];
     opphold: UtenlandsoppholdApiData[]; // hvis ja på har oppholdt seg i utlandet
     bosteder: UtenlandsoppholdApiData[]; // medlemskap-siden
     frilans?: Frilans;

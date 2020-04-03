@@ -20,6 +20,7 @@ import SøknadStep from '../SøknadStep';
 import DagerMedDelvisFraværList from './components/DagerMedDelvisFraværList';
 import PeriodeMedFulltFraværList from './components/PerioderMedFulltFraværList';
 import './periodeStep.less';
+import { AndreUtbetalinger } from '../../types/AndreUtbetalinger';
 
 const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) => {
     const { values, validateField, validateForm } = useFormikContext<SøknadFormData>();
@@ -57,20 +58,19 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                 <CounsellorPanel>
                     <p>
                         Per i dag er det bestemt at barnehagen/skolen skal være stengt på grunn av koronaviruset frem
-                        til <strong>8. april 2020</strong>. Du kan søke om utbetaling av omsorgspenger frem til denne datoen.
+                        til <strong>8. april 2020</strong>. Du kan søke om utbetaling av omsorgspenger frem til denne
+                        datoen.
                     </p>
                     <p>
-                        I påsken vil barnehagen/skolen uansett være stengt på røde dager. For de røde dagene kan du kun
-                        få omsorgspenger hvis du ikke kunne vært på jobb fordi barnet eller barnepasser er blitt syk.
-                        Hvis du kommer i denne situasjonen, kan du søke om utbetaling av omsorgspenger for de røde
-                        dagene etter påsken.
+                        Her legger du inn dager du har hatt fravær fra jobb fordi du har vært hjemme med omsorgsdager.
+                        NAV utbetaler som hovedregel fra den 4. dagen du har vært hjemme.
                     </p>
                 </CounsellorPanel>
             </FormBlock>
             <FormBlock>
                 <SøknadFormComponents.YesOrNoQuestion
                     name={SøknadFormField.harPerioderMedFravær}
-                    legend="Søker du om utbetaling for hele dager med fravær fra jobb?"
+                    legend="Har du hatt hele dager med fravær fra jobb?"
                     validate={validateYesOrNoIsAnswered}
                 />
             </FormBlock>
@@ -112,7 +112,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
             <FormBlock>
                 <SøknadFormComponents.YesOrNoQuestion
                     name={SøknadFormField.harDagerMedDelvisFravær}
-                    legend="Søker du om utbetaling for dager med delvis fravær fra jobb?"
+                    legend="Har du hatt dager med delvis fravær fra jobb?"
                     validate={validateYesOrNoIsAnswered}
                 />
             </FormBlock>
@@ -178,6 +178,34 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                             />
                         </FormBlock>
                     )}
+                    <FormBlock>
+                        <SøknadFormComponents.YesOrNoQuestion
+                            name={SøknadFormField.har_søkt_andre_utbetalinger}
+                            legend={intlHelper(intl, 'step.periode.har_søkt_andre_utbetalinger.spm')}
+                            validate={validateYesOrNoIsAnswered}
+                        />
+                        {values.har_søkt_andre_utbetalinger === YesOrNo.YES && (
+                            <FormBlock>
+                                <SøknadFormComponents.CheckboxPanelGroup
+                                    name={SøknadFormField.andre_utbetalinger}
+                                    legend={intlHelper(intl, 'step.periode.hvilke_utbetalinger.spm')}
+                                    checkboxes={[
+                                        {
+                                            id: AndreUtbetalinger.dagpenger,
+                                            value: AndreUtbetalinger.dagpenger,
+                                            label: intlHelper(intl, 'andre_utbetalinger.dagpenger')
+                                        },
+                                        {
+                                            id: AndreUtbetalinger.sykepenger,
+                                            value: AndreUtbetalinger.sykepenger,
+                                            label: intlHelper(intl, 'andre_utbetalinger.sykepenger')
+                                        }
+                                    ]}
+                                    validate={validateRequiredList}
+                                />
+                            </FormBlock>
+                        )}
+                    </FormBlock>
                 </>
             )}
         </SøknadStep>
