@@ -10,7 +10,8 @@ import { YesOrNo } from 'common/types/YesOrNo';
 import { date1YearAgo, date1YearFromNow, dateToday } from 'common/utils/dateUtils';
 import intlHelper from 'common/utils/intlUtils';
 import {
-    validateUtenlandsoppholdNeste12Mnd, validateUtenlandsoppholdSiste12Mnd
+    validateUtenlandsoppholdNeste12Mnd,
+    validateUtenlandsoppholdSiste12Mnd
 } from 'app/validation/fieldValidations';
 import { StepConfigProps, StepID } from '../../config/stepConfig';
 import getLenker from '../../lenker';
@@ -21,6 +22,7 @@ import SøknadStep from '../SøknadStep';
 const MedlemsskapStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) => {
     const intl = useIntl();
     const { values } = useFormikContext<SøknadFormData>();
+
     return (
         <SøknadStep id={StepID.MEDLEMSKAP} onValidFormSubmit={onValidSubmit}>
             <CounsellorPanel>

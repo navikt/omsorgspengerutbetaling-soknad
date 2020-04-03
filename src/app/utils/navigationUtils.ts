@@ -1,5 +1,6 @@
 import { History } from 'history';
 import routeConfig, { getRouteUrl } from '../config/routeConfig';
+import { StepID } from '../config/stepConfig';
 import { getEnvironmentVariable } from './envUtils';
 
 const loginUrl = getEnvironmentVariable('LOGIN_URL');
@@ -11,4 +12,5 @@ export const navigateToErrorPage = (history: History) => history.push(routeConfi
 export const navigateToLoginPage = () => window.location.assign(loginUrl);
 export const navigateToNAVno = () => window.location.assign(navNoUrl);
 export const userIsCurrentlyOnErrorPage = () => window.location.pathname === getRouteUrl(routeConfig.ERROR_PAGE_ROUTE);
+export const userIsOnStep = (stepID: StepID, history: History) => history.location.pathname.indexOf(`/${stepID}`) >= 0;
 export const navigateToWelcomePage = () => window.location.assign(welcomePageUrl);

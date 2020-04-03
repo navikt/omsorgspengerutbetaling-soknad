@@ -6,7 +6,6 @@ import CounsellorPanel from '@navikt/sif-common-core/lib/components/counsellor-p
 import ResponsivePanel from '@navikt/sif-common-core/lib/components/responsive-panel/ResponsivePanel';
 import SummaryList from '@navikt/sif-common-core/lib/components/summary-list/SummaryList';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
-import { formatName } from '@navikt/sif-common-core/lib/utils/personUtils';
 import { useFormikContext } from 'formik';
 import { sendApplication } from '../../api/api';
 import RouteConfig from '../../config/routeConfig';
@@ -105,11 +104,7 @@ const OppsummeringStep: React.StatelessComponent<Props> = ({ onApplicationSent }
                         <SummaryBlock header="Fosterbarn">
                             <SummaryList
                                 items={fosterbarn}
-                                itemRenderer={(barn: FosterbarnApi) => (
-                                    <>
-                                        {barn.fødselsnummer} - {formatName(barn.fornavn, barn.etternavn)}
-                                    </>
-                                )}
+                                itemRenderer={(barn: FosterbarnApi) => <>{barn.fødselsnummer}</>}
                             />
                         </SummaryBlock>
                     )}

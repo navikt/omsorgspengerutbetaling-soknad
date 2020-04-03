@@ -100,8 +100,8 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
     };
     if (har_fosterbarn === YesOrNo.YES && har_fosterbarn.length > 0) {
         apiData.fosterbarn = fosterbarn.map((barn) => {
-            const { id, ...rest } = barn;
-            return rest;
+            const { fødselsnummer } = barn;
+            return {fødselsnummer };
         });
     }
 

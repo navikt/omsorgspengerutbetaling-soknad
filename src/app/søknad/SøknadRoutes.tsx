@@ -10,6 +10,7 @@ import { StepID } from '../config/stepConfig';
 import { Søkerdata } from '../types/Søkerdata';
 import { SøknadApiData } from '../types/SøknadApiData';
 import { SøknadFormData } from '../types/SøknadFormData';
+import * as apiUtils from '../utils/apiUtils';
 import { Feature, isFeatureEnabled } from '../utils/featureToggleUtils';
 import { navigateTo, navigateToLoginPage } from '../utils/navigationUtils';
 import { getNextStepRoute, getSøknadRoute, isAvailable } from '../utils/routeUtils';
@@ -19,7 +20,6 @@ import OppsummeringStep from './oppsummering-step/OppsummeringStep';
 import PeriodeStep from './periode-step/PeriodeStep';
 import BarnStep from './barn-step/BarnStep';
 import SøknadTempStorage from './SøknadTempStorage';
-import * as apiUtils from '../utils/apiUtils';
 
 export interface KvitteringInfo {
     søkernavn: string;
@@ -32,22 +32,14 @@ const getKvitteringInfoFromApiData = (søkerdata: Søkerdata): KvitteringInfo | 
     };
 };
 
-interface SøknadRoutes {
-    lastStepID?: StepID;
-}
+interface SøknadRoutes {}
 
-function SøknadRoutes({ lastStepID }: SøknadRoutes) {
+const SøknadRoutes = () => {
     const [søknadHasBeenSent, setSøknadHasBeenSent] = React.useState(false);
     const [kvitteringInfo, setKvitteringInfo] = React.useState<KvitteringInfo | undefined>(undefined);
     const { values, resetForm } = useFormikContext<SøknadFormData>();
 
     const history = useHistory();
-
-    if (history.location.pathname === RouteConfig.WELCOMING_PAGE_ROUTE && lastStepID && !søknadHasBeenSent) {
-        setTimeout(() => {
-            navigateTo(lastStepID, history);
-        });
-    }
 
     async function navigateToNextStepFrom(stepID: StepID) {
         if (isFeatureEnabled(Feature.MELLOMLAGRING)) {
@@ -149,6 +141,6 @@ function SøknadRoutes({ lastStepID }: SøknadRoutes) {
             <Redirect to={RouteConfig.WELCOMING_PAGE_ROUTE} />
         </Switch>
     );
-}
+};
 
 export default SøknadRoutes;
