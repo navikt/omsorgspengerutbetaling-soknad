@@ -14,6 +14,7 @@ const Søknad = () => (
                     return <IkkeMyndigPage />;
                 }
             }
+
             return (
                 <SøknadFormComponents.FormikWrapper
                     initialValues={formData || initialValues}
