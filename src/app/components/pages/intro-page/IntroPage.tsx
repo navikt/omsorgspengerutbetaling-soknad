@@ -42,7 +42,7 @@ const IntroPage: React.StatelessComponent = () => {
                 <InformationPoster>
                     <p>
                         Denne søknaden bruker du når du er <strong>selvstendig næringsdrivende eller frilanser</strong>{' '}
-                        og skal søke om utbetaling av omsorgspenger. Dette er i situasjoner du må være hjemme fra jobb
+                        og skal søke om utbetaling av omsorgspenger. Dette er i situasjoner du har vært hjemme fra jobb
                         fordi
                     </p>
                     <ul>

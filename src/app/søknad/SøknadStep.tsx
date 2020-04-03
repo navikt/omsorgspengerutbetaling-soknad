@@ -36,6 +36,7 @@ const SøknadStep: React.FunctionComponent<Props> = (props) => {
     const handleAvsluttOgFortsettSenere = () => {
         navigateToNAVno();
     };
+
     const handleAvbrytOgSlettSøknad = () => {
         SøknadTempStorage.purge().then(() => {
             navigateToWelcomePage();
