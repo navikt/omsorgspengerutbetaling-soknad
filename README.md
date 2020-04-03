@@ -5,7 +5,7 @@ søknad om utbetaling av omsorgsdager for selvstendige og frilansere.
 
 ## Komme i gang
 
-For å kjøre opp app-en i dev:
+For å kjøre opp app'en i dev:
 
 1.  `npm install`.
 2.  `npm run start`.
