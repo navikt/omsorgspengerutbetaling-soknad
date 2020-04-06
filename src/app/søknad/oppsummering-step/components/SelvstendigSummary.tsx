@@ -27,7 +27,7 @@ const renderVirksomhetSummary = (virksomhet: VirksomhetApiData, intl: IntlShape)
               }
             : undefined;
     const tidsinfo = `Startet ${prettifyApiDate(virksomhet.fraOgMed)}${
-        virksomhet.tilOgMed ? `, avsluttet ${prettifyApiDate(virksomhet.fraOgMed)}.` : ' (pågående).'
+        virksomhet.tilOgMed ? `, avsluttet ${prettifyApiDate(virksomhet.tilOgMed)}.` : ' (pågående).'
     }`;
 
     return (
