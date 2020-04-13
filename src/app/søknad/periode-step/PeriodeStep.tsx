@@ -63,7 +63,15 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                     </p>
                     <p>
                         Her legger du inn dager du har hatt fravær fra jobb fordi du har vært hjemme med omsorgsdager.
-                        NAV utbetaler som hovedregel fra den 4. dagen du har vært hjemme.
+                        NAV utbetaler som hovedregel fra den 4. dagen i du har vært hjemme i år.
+                    </p>
+                    <p>
+                        Du kan søke om utbetaling tilbake i tid, og fram til dagens dato. NAV kan utbetale omsorgspenger
+                        for opp til 3 måneder tilbake i tid.
+                    </p>
+                    <p>
+                        I påsken ville barnehagen/skolen uansett vært stengt på røde dager. For de røde dagene kan du
+                        kun få omsorgspenger hvis du ikke kunne vært på jobb fordi barnet eller barnepasser var syk.
                     </p>
                 </CounsellorPanel>
             </FormBlock>
