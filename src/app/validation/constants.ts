@@ -6,7 +6,7 @@ export const MIN_ANTALL_TIMER_MED_FRAVÆR_EN_DAG = 0.5;
 
 export const GYLDIG_TIDSROM: Partial<DateRange> = {
     from: undefined,
-    to: moment(new Date(2020, 3, 8))
+    to: moment()
         .endOf('day')
         .toDate()
 };

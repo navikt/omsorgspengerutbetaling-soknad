@@ -57,13 +57,16 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
             <FormBlock>
                 <CounsellorPanel>
                     <p>
-                        Per i dag er det bestemt at barnehagen/skolen skal være stengt på grunn av koronaviruset frem
-                        til <strong>8. april 2020</strong>. Du kan søke om utbetaling av omsorgspenger frem til denne
-                        datoen.
+                        Her legger du inn dager du har hatt fravær fra jobb fordi du har vært hjemme med omsorgsdager.
+                        NAV utbetaler som hovedregel fra den 4. dagen i du har vært hjemme i år.
                     </p>
                     <p>
-                        Her legger du inn dager du har hatt fravær fra jobb fordi du har vært hjemme med omsorgsdager.
-                        NAV utbetaler som hovedregel fra den 4. dagen du har vært hjemme.
+                        Du kan søke om utbetaling tilbake i tid, og fram til dagens dato. NAV kan utbetale omsorgspenger
+                        for opp til 3 måneder tilbake i tid.
+                    </p>
+                    <p>
+                        I påsken ville barnehagen/skolen uansett vært stengt på røde dager. For de røde dagene kan du
+                        kun få omsorgspenger hvis du ikke kunne vært på jobb fordi barnet eller barnepasser var syk.
                     </p>
                 </CounsellorPanel>
             </FormBlock>
