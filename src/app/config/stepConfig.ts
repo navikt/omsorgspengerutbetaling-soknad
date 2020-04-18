@@ -1,10 +1,12 @@
-import { SøknadFormData } from '../types/SøknadFormData';
+import { SøknadFormData, SøknadFormField } from '../types/SøknadFormData';
 import { getSøknadRoute } from '../utils/routeUtils';
 import routeConfig from './routeConfig';
+import { YesOrNo } from 'common/types/YesOrNo';
 
 export enum StepID {
     'BARN' = 'barn',
     'PERIODE' = 'periode',
+    'DOKUMENTER' = 'vedlegg',
     'LEGEERKLÆRING' = 'legeerklaering',
     'INNTEKT' = 'inntekt',
     'MEDLEMSKAP' = 'medlemskap',
@@ -42,18 +44,39 @@ const getStepConfigItemTextKeys = (stepId: StepID): StepConfigItemTexts => {
 export const getStepConfig = (formData?: SøknadFormData): StepConfigInterface => {
     let idx = 0;
 
-    const config = {
+    const skalViseDokumenterStep = formData ? formData[SøknadFormField.hemmeligJaNeiSporsmal] : undefined;
+
+    const configDelEn = {
         [StepID.PERIODE]: {
             ...getStepConfigItemTextKeys(StepID.PERIODE),
             index: idx++,
-            nextStep: StepID.INNTEKT,
+            nextStep:
+                skalViseDokumenterStep && skalViseDokumenterStep === YesOrNo.YES ? StepID.DOKUMENTER : StepID.INNTEKT,
             backLinkHref: routeConfig.WELCOMING_PAGE_ROUTE
-        },
+        }
+    };
+
+    let configMaybeSteg = {};
+    if (skalViseDokumenterStep && skalViseDokumenterStep === YesOrNo.YES) {
+        configMaybeSteg = {
+            [StepID.DOKUMENTER]: {
+                ...getStepConfigItemTextKeys(StepID.DOKUMENTER),
+                index: idx++,
+                nextStep: StepID.INNTEKT,
+                backLinkHref: getSøknadRoute(StepID.PERIODE)
+            }
+        };
+    }
+
+    const configDelTo = {
         [StepID.INNTEKT]: {
             ...getStepConfigItemTextKeys(StepID.INNTEKT),
             index: idx++,
             nextStep: StepID.BARN,
-            backLinkHref: getSøknadRoute(StepID.PERIODE)
+            backLinkHref:
+                skalViseDokumenterStep && skalViseDokumenterStep === YesOrNo.YES
+                    ? getSøknadRoute(StepID.DOKUMENTER)
+                    : getSøknadRoute(StepID.PERIODE)
         },
         [StepID.BARN]: {
             ...getStepConfigItemTextKeys(StepID.BARN),
@@ -61,7 +84,6 @@ export const getStepConfig = (formData?: SøknadFormData): StepConfigInterface =
             nextStep: StepID.MEDLEMSKAP,
             backLinkHref: getSøknadRoute(StepID.INNTEKT)
         },
-
         [StepID.MEDLEMSKAP]: {
             ...getStepConfigItemTextKeys(StepID.MEDLEMSKAP),
             index: idx++,
@@ -77,7 +99,11 @@ export const getStepConfig = (formData?: SøknadFormData): StepConfigInterface =
         }
     };
 
-    return config;
+    return {
+        ...configDelEn,
+        ...configMaybeSteg,
+        ...configDelTo
+    };
 };
 
 export interface StepConfigProps {

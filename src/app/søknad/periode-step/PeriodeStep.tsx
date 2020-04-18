@@ -154,6 +154,16 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
             )}
 
             {kanIkkeFortsette === false && (
+                <FormBlock>
+                    <SøknadFormComponents.YesOrNoQuestion
+                        name={SøknadFormField.hemmeligJaNeiSporsmal}
+                        legend="Har du vært hjemme med barn grunnet smittevernhensyn?"
+                        validate={validateYesOrNoIsAnswered}
+                    />
+                </FormBlock>
+            )}
+
+            {kanIkkeFortsette === false && (
                 <>
                     <FormBlock margin={'xl'}>
                         <SøknadFormComponents.YesOrNoQuestion

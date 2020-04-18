@@ -2,12 +2,17 @@ import { FormikValidateFunction } from '@navikt/sif-common-formik/lib';
 import { Utenlandsopphold } from '@navikt/sif-common-forms/lib//utenlandsopphold/types';
 import moment from 'moment';
 import {
-    date1YearAgo, date1YearFromNow, DateRange, dateRangesCollide, dateRangesExceedsRange
+    date1YearAgo,
+    date1YearFromNow,
+    DateRange,
+    dateRangesCollide,
+    dateRangesExceedsRange
 } from 'common/utils/dateUtils';
 import { createFieldValidationError } from 'common/validation/fieldValidations';
 import { FieldValidationResult } from 'common/validation/types';
 import { FraværDelerAvDag, Periode } from '../../@types/omsorgspengerutbetaling-schema';
 import { datesCollide } from './dateValidationUtils';
+import { Attachment } from 'common/types/Attachment';
 
 export const hasValue = (v: any) => v !== '' && v !== undefined && v !== null;
 
@@ -31,7 +36,9 @@ export enum AppFieldValidationErrors {
     'timer_ikke_tall' = 'fieldvalidation.timer_ikke_tall',
     'timer_for_mange_timer' = 'fieldvalidation.timer_for_mange_timer',
     'dato_utenfor_gyldig_tidsrom' = 'fieldvalidation.dato_utenfor_gyldig_tidsrom',
-    'tom_er_før_fom' = 'fieldvalidation.tom_er_før_fom'
+    'tom_er_før_fom' = 'fieldvalidation.tom_er_før_fom',
+    'ingen_dokumenter' = 'fieldvalidation.ingen_dokumenter',
+    'for_mange_dokumenter' = 'fieldvalidation.for_mange_dokumenter'
 }
 
 export const createAppFieldValidationError = (
@@ -199,3 +206,15 @@ export const validateHours = ({ min, max }: { min?: number; max?: number }) => (
     }
     return undefined;
 };
+
+export const validateDocuments = (attachments: Attachment[]): FieldValidationResult => undefined;
+// export const validateDocuments = (attachments: Attachment[]): FieldValidationResult => {
+//     const uploadedAttachments = attachments.filter((attachment) => attachmentHasBeenUploaded(attachment));
+//     if (uploadedAttachments.length === 0) {
+//         return createAppFieldValidationError(AppFieldValidationErrors.ingen_dokumenter);
+//     }
+//     if (uploadedAttachments.length > 3) {
+//         return createAppFieldValidationError(AppFieldValidationErrors.for_mange_dokumenter);
+//     }
+//     return undefined;
+// };
