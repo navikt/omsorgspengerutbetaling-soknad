@@ -108,6 +108,7 @@ const OppsummeringStep: React.StatelessComponent<Props> = ({ onApplicationSent }
                     </Box>
 
                     <UtenlandsoppholdISøkeperiodeSummaryView utenlandsopphold={apiValues.opphold} />
+
                     <SpørsmålOgSvarSummaryView yesNoSpørsmålOgSvar={apiValues.spørsmål} />
 
                     {fosterbarn.length > 0 && (

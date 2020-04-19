@@ -69,10 +69,6 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
             spørsmål: intlHelper(intl, 'steg.barn.fosterbarn.spm'),
             svar: mapYesOrNoToSvar(har_fosterbarn)
         }
-        // {
-        //     spørsmål: intlHelper(intl, 'steg.en.smittevern.sporsmal'),
-        //     svar: mapYesOrNoToSvar(hemmeligJaNeiSporsmal)
-        // }
     ];
 
     if (har_søkt_andre_utbetalinger === YesOrNo.NO) {
