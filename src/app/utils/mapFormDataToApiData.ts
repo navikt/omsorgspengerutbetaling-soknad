@@ -18,6 +18,7 @@ import { mapBostedUtlandToApiData } from './formToApiMaps/mapBostedUtlandToApiDa
 import { mapFrilansToApiData } from './formToApiMaps/mapFrilansToApiData';
 import { mapVirksomhetToVirksomhetApiData } from './formToApiMaps/mapVirksomhetToApiData';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
+import {attachmentUploadHasFailed} from "common/utils/attachmentUtils";
 
 // TODO: FIX MAPPING!!!
 export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShape): SøknadApiData => {
@@ -32,6 +33,9 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
         perioder_utenlandsopphold,
         har_søkt_andre_utbetalinger,
         andre_utbetalinger,
+
+        hemmeligJaNeiSporsmal,
+        dokumenter,
 
         // Inntekt
         frilans_startdato,
@@ -64,6 +68,10 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
         {
             spørsmål: intlHelper(intl, 'steg.barn.fosterbarn.spm'),
             svar: mapYesOrNoToSvar(har_fosterbarn)
+        },
+        {
+            spørsmål: intlHelper(intl, 'steg.en.smittevern.sporsmal'),
+            svar: mapYesOrNoToSvar(hemmeligJaNeiSporsmal)
         }
     ];
 
@@ -96,8 +104,10 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
             intl.locale,
             selvstendig_harHattInntektSomSN,
             selvstendig_virksomheter
-        )
+        ),
+        vedlegg: dokumenter.filter((attachment) => !attachmentUploadHasFailed(attachment)).map(({ url }) => url!)
     };
+
     if (har_fosterbarn === YesOrNo.YES && har_fosterbarn.length > 0) {
         apiData.fosterbarn = fosterbarn.map((barn) => {
             const { fødselsnummer } = barn;

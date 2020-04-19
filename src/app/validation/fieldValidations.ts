@@ -13,6 +13,7 @@ import { FieldValidationResult } from 'common/validation/types';
 import { FraværDelerAvDag, Periode } from '../../@types/omsorgspengerutbetaling-schema';
 import { datesCollide } from './dateValidationUtils';
 import { Attachment } from 'common/types/Attachment';
+import {attachmentHasBeenUploaded} from "common/utils/attachmentUtils";
 
 export const hasValue = (v: any) => v !== '' && v !== undefined && v !== null;
 
@@ -207,14 +208,11 @@ export const validateHours = ({ min, max }: { min?: number; max?: number }) => (
     return undefined;
 };
 
-export const validateDocuments = (attachments: Attachment[]): FieldValidationResult => undefined;
-// export const validateDocuments = (attachments: Attachment[]): FieldValidationResult => {
-//     const uploadedAttachments = attachments.filter((attachment) => attachmentHasBeenUploaded(attachment));
-//     if (uploadedAttachments.length === 0) {
-//         return createAppFieldValidationError(AppFieldValidationErrors.ingen_dokumenter);
-//     }
-//     if (uploadedAttachments.length > 3) {
-//         return createAppFieldValidationError(AppFieldValidationErrors.for_mange_dokumenter);
-//     }
-//     return undefined;
-// };
+// export const validateDocuments = (attachments: Attachment[]): FieldValidationResult => undefined;
+export const validateDocuments = (attachments: Attachment[]): FieldValidationResult => {
+    const uploadedAttachments = attachments.filter((attachment) => attachmentHasBeenUploaded(attachment));
+    if (uploadedAttachments.length > 3) {
+        return createAppFieldValidationError(AppFieldValidationErrors.for_mange_dokumenter);
+    }
+    return undefined;
+};

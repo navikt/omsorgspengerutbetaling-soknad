@@ -157,7 +157,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                 <FormBlock>
                     <SøknadFormComponents.YesOrNoQuestion
                         name={SøknadFormField.hemmeligJaNeiSporsmal}
-                        legend="Har du vært hjemme med barn grunnet smittevernhensyn?"
+                        legend={intlHelper(intl, 'steg.en.smittevern.sporsmal')}
                         validate={validateYesOrNoIsAnswered}
                     />
                 </FormBlock>

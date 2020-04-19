@@ -252,5 +252,10 @@
     "steg.footer.fortsettSenere": "Avslutt og fortsett senere",
 
     "step.vedlegg.stepTitle": "A: Hva skal det stå her?",
-    "steg.dokumenter.vedlegg": "Last opp bilde av dokumentene (maks 3 bilder)"
+    "steg.dokumenter.vedlegg": "Last opp bilde av dokumentene (maks 3 bilder)",
+    "steg.en.smittevern.sporsmal": "Har du vært hjemme med barn grunnet smittevernhensyn?",
+    "steg.oppsummering.dokumenter.header": "Dokumenter",
+    "step.vedlegg.stepIndicatorLabel": "Last opp dokumenter",
+    "step.vedlegg.pageTitle": "Last opp dokumenter",
+    "fieldvalidation.for_mange_dokumenter": "For mange dokumenter er lastet opp"
 }

@@ -27,6 +27,7 @@ import { SpørsmålOgSvarSummaryView } from './components/SporsmalOgSvarSummaryV
 import SummaryBlock from './components/SummaryBlock';
 import UtbetalingsperioderSummaryView from './components/UtbetalingsperioderSummaryView';
 import UtenlandsoppholdISøkeperiodeSummaryView from './components/UtenlandsoppholdISøkeperiodeSummaryView';
+import UploadedDocumentsList from "../../components/uploaded-documents-list/UploadedDocumentsList";
 
 interface Props {
     onApplicationSent: (apiValues: SøknadApiData, søkerdata: Søkerdata) => void;
@@ -111,6 +112,11 @@ const OppsummeringStep: React.StatelessComponent<Props> = ({ onApplicationSent }
                     <FrilansSummary frilans={apiValues.frilans} />
                     <SelvstendigSummary selvstendigVirksomheter={apiValues.selvstendigVirksomheter} />
                     <MedlemskapSummaryView bosteder={apiValues.bosteder} />
+                    {apiValues.vedlegg.length > 0 && (
+                        <SummaryBlock header={intlHelper(intl, 'steg.oppsummering.dokumenter.header')}>
+                            <UploadedDocumentsList includeDeletionFunctionality={false} />
+                        </SummaryBlock>
+                    )}
                 </ResponsivePanel>
             </Box>
 

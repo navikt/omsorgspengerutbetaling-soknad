@@ -87,4 +87,5 @@ export interface SøknadApiData {
     bosteder: UtenlandsoppholdApiData[]; // medlemskap-siden
     frilans?: Frilans;
     selvstendigVirksomheter: VirksomhetApiData[];
+    vedlegg: string[];
 }
