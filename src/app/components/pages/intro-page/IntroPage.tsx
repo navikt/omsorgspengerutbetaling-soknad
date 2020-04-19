@@ -53,7 +53,7 @@ const IntroPage: React.StatelessComponent = () => {
                         fordi
                     </p>
                     <ul>
-                        <li>barnet kan ikke gå i barnehage eller skole på grunn av særlige smittevernhensyn</li>
+                        <li>barnet ikke kan gå i barnehage eller skole på grunn av særlige smittevernhensyn</li>
                         <li>barnehagen eller skolen er stengt på grunn av koronaviruset</li>
                         <li>barnet eller barnepasser er syk</li>
                     </ul>
