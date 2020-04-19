@@ -73,6 +73,7 @@ export const mock1: SøknadApiData = {
             lengde: 'PT4H0M'
         }
     ],
+    hjemmePgaSmittevernhensyn: false,
     vedlegg: [],
     andreUtbetalinger: [],
     bosteder: [

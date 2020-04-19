@@ -1,22 +1,22 @@
-import { IntlShape } from 'react-intl';
-import { Locale } from '@navikt/sif-common-core/lib/types/Locale';
-import { Utenlandsopphold, Virksomhet } from '@navikt/sif-common-forms/lib';
-import { YesOrNo } from 'common/types/YesOrNo';
-import { formatDateToApiFormat } from 'common/utils/dateUtils';
-import { decimalTimeToTime, timeToIso8601Duration } from 'common/utils/timeUtils';
-import { FraværDelerAvDag, Periode } from '../../@types/omsorgspengerutbetaling-schema';
+import {IntlShape} from 'react-intl';
+import {Locale} from '@navikt/sif-common-core/lib/types/Locale';
+import {Utenlandsopphold, Virksomhet} from '@navikt/sif-common-forms/lib';
+import {YesOrNo} from 'common/types/YesOrNo';
+import {formatDateToApiFormat} from 'common/utils/dateUtils';
+import {decimalTimeToTime, timeToIso8601Duration} from 'common/utils/timeUtils';
+import {FraværDelerAvDag, Periode} from '../../@types/omsorgspengerutbetaling-schema';
 import {
     SøknadApiData,
     UtbetalingsperiodeApi,
     UtenlandsoppholdApiData,
     VirksomhetApiData,
-    YesNoSvar,
-    YesNoSpørsmålOgSvar
+    YesNoSpørsmålOgSvar,
+    YesNoSvar
 } from '../types/SøknadApiData';
-import { SøknadFormData } from '../types/SøknadFormData';
-import { mapBostedUtlandToApiData } from './formToApiMaps/mapBostedUtlandToApiData';
-import { mapFrilansToApiData } from './formToApiMaps/mapFrilansToApiData';
-import { mapVirksomhetToVirksomhetApiData } from './formToApiMaps/mapVirksomhetToApiData';
+import {SøknadFormData} from '../types/SøknadFormData';
+import {mapBostedUtlandToApiData} from './formToApiMaps/mapBostedUtlandToApiData';
+import {mapFrilansToApiData} from './formToApiMaps/mapFrilansToApiData';
+import {mapVirksomhetToVirksomhetApiData} from './formToApiMaps/mapVirksomhetToApiData';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import {attachmentUploadHasFailed} from "common/utils/attachmentUtils";
 
@@ -68,11 +68,11 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
         {
             spørsmål: intlHelper(intl, 'steg.barn.fosterbarn.spm'),
             svar: mapYesOrNoToSvar(har_fosterbarn)
-        },
-        {
-            spørsmål: intlHelper(intl, 'steg.en.smittevern.sporsmal'),
-            svar: mapYesOrNoToSvar(hemmeligJaNeiSporsmal)
         }
+        // {
+        //     spørsmål: intlHelper(intl, 'steg.en.smittevern.sporsmal'),
+        //     svar: mapYesOrNoToSvar(hemmeligJaNeiSporsmal)
+        // }
     ];
 
     if (har_søkt_andre_utbetalinger === YesOrNo.NO) {
@@ -105,6 +105,7 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
             selvstendig_harHattInntektSomSN,
             selvstendig_virksomheter
         ),
+        hjemmePgaSmittevernhensyn: hemmeligJaNeiSporsmal === YesOrNo.YES,
         vedlegg: dokumenter.filter((attachment) => !attachmentUploadHasFailed(attachment)).map(({ url }) => url!)
     };
 

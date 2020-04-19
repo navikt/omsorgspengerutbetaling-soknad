@@ -29,7 +29,12 @@ interface PageFormValues {
     [PageFormField.smittevernHensyn]: YesOrNo;
 }
 
-const initialValues = {};
+const initialValues = {
+    [PageFormField.erSelvstendigEllerFrilanser]: YesOrNo.UNANSWERED,
+    [PageFormField.hjemmePgaStengt]: YesOrNo.UNANSWERED,
+    [PageFormField.hjemmePgaSykdom]: YesOrNo.UNANSWERED,
+    [PageFormField.smittevernHensyn]: YesOrNo.UNANSWERED
+};
 const PageForm = getTypedFormComponents<PageFormField, PageFormValues>();
 
 const IntroPage: React.StatelessComponent = () => {
@@ -65,9 +70,16 @@ const IntroPage: React.StatelessComponent = () => {
                             erSelvstendigEllerFrilanser === YesOrNo.YES &&
                             (hjemmePgaStengt === YesOrNo.YES || hjemmePgaSykdom === YesOrNo.YES) &&
                             smittevernHensyn !== YesOrNo.UNANSWERED;
+
                         const kanIkkeBrukeSøknaden =
-                            erSelvstendigEllerFrilanser === YesOrNo.NO ||
-                            (hjemmePgaStengt === YesOrNo.NO && hjemmePgaSykdom === YesOrNo.NO);
+                            erSelvstendigEllerFrilanser === YesOrNo.NO || hjemmePgaStengt === YesOrNo.NO;
+
+                        const skalViseSpørsmål2 = erSelvstendigEllerFrilanser === YesOrNo.YES;
+
+                        const skalViseSpørsmål3 = skalViseSpørsmål2 && hjemmePgaStengt === YesOrNo.NO;
+
+                        const skalViseSpørsmål4 = skalViseSpørsmål3 && hjemmePgaSykdom !== YesOrNo.UNANSWERED;
+
                         return (
                             <PageForm.Form
                                 fieldErrorRenderer={(error) => commonFieldErrorRenderer(intl, error)}
@@ -76,59 +88,60 @@ const IntroPage: React.StatelessComponent = () => {
                                     name={PageFormField.erSelvstendigEllerFrilanser}
                                     legend="Er du selvstendig næringsdrivende eller frilanser?"
                                 />
-                                {erSelvstendigEllerFrilanser === YesOrNo.YES && (
-                                    <>
-                                        <FormBlock>
-                                            <PageForm.YesOrNoQuestion
-                                                name={PageFormField.hjemmePgaStengt}
-                                                legend="Er du hjemme fra jobb fordi skolen/barnehagen er stengt på grunn av koronaviruset?"
-                                            />
-                                        </FormBlock>
-                                        {hjemmePgaStengt === YesOrNo.NO && (
-                                            <FormBlock>
-                                                <PageForm.YesOrNoQuestion
-                                                    name={PageFormField.hjemmePgaSykdom}
-                                                    legend="Er du hjemme fra jobb fordi barnet eller barnepasser er blitt syk?"
-                                                />
-                                            </FormBlock>
-                                        )}
-                                        {(hjemmePgaStengt === YesOrNo.YES || hjemmePgaSykdom !== YesOrNo.UNANSWERED && !kanIkkeBrukeSøknaden) && (
-                                            <FormBlock>
-                                                <PageForm.YesOrNoQuestion
-                                                    name={PageFormField.smittevernHensyn}
-                                                    legend="Er du hjemme med barn grunnet smittevernhensyn?"
-                                                />
-                                            </FormBlock>
-                                        )}
-                                    </>
+
+                                {skalViseSpørsmål2 && (
+                                    <FormBlock>
+                                        <PageForm.YesOrNoQuestion
+                                            name={PageFormField.hjemmePgaStengt}
+                                            legend="Er du hjemme fra jobb fordi skolen/barnehagen er stengt på grunn av koronaviruset?"
+                                        />
+                                    </FormBlock>
+                                )}
+                                {skalViseSpørsmål3 && (
+                                    <FormBlock>
+                                        <PageForm.YesOrNoQuestion
+                                            name={PageFormField.hjemmePgaSykdom}
+                                            legend="Er du hjemme fra jobb fordi barnet eller barnepasser er blitt syk?"
+                                        />
+                                    </FormBlock>
                                 )}
 
-                                {kanIkkeBrukeSøknaden && (
+                                {skalViseSpørsmål4 && (
+                                    <FormBlock>
+                                        <PageForm.YesOrNoQuestion
+                                            name={PageFormField.smittevernHensyn}
+                                            legend="Er du hjemme med barn grunnet smittevernhensyn?"
+                                        />
+                                    </FormBlock>
+                                )}
+
+                                {kanIkkeBrukeSøknaden && erSelvstendigEllerFrilanser === YesOrNo.NO && (
                                     <Box margin="xl">
                                         <AlertStripeInfo>
-                                            {erSelvstendigEllerFrilanser === YesOrNo.NO && (
-                                                <>
-                                                    <p style={{ marginTop: 0, marginBottom: 0 }}>
-                                                        Denne søknaden gjelder{' '}
-                                                        <strong>
-                                                            kun for selvstendig næringsdrivende og frilansere
-                                                        </strong>{' '}
-                                                        som skal søke om utbetaling av omsorgspenger.
-                                                    </p>
-                                                    <p>
-                                                        Hvis du er <strong>arbeidstaker</strong>, skal du ikke søke om
-                                                        utbetaling av omsorgspenger. Arbeidsgiveren din skal utbetale
-                                                        deg lønn som vanlig de dagene du tar ut omsorgsdager.
-                                                    </p>
-                                                </>
-                                            )}
-                                            {erSelvstendigEllerFrilanser === YesOrNo.YES && (
+                                            <>
                                                 <p style={{ marginTop: 0, marginBottom: 0 }}>
-                                                    Du kan <strong>kun</strong> bruke denne søknaden når du må være
-                                                    hjemme fra jobb fordi barnehagen/skolen er stengt på grunn av
-                                                    koronaviruset, eller fordi barnet/barnepasser er blitt syk.
+                                                    Denne søknaden gjelder{' '}
+                                                    <strong>kun for selvstendig næringsdrivende og frilansere</strong>{' '}
+                                                    som skal søke om utbetaling av omsorgspenger.
                                                 </p>
-                                            )}
+                                                <p>
+                                                    Hvis du er <strong>arbeidstaker</strong>, skal du ikke søke om
+                                                    utbetaling av omsorgspenger. Arbeidsgiveren din skal utbetale deg
+                                                    lønn som vanlig de dagene du tar ut omsorgsdager.
+                                                </p>
+                                            </>
+                                        </AlertStripeInfo>
+                                    </Box>
+                                )}
+
+                                {kanIkkeBrukeSøknaden && erSelvstendigEllerFrilanser === YesOrNo.YES && (
+                                    <Box margin="xl">
+                                        <AlertStripeInfo>
+                                            <p style={{ marginTop: 0, marginBottom: 0 }}>
+                                                Du kan <strong>kun</strong> bruke denne søknaden når du må være hjemme
+                                                fra jobb fordi barnehagen/skolen er stengt på grunn av koronaviruset,
+                                                eller fordi barnet/barnepasser er blitt syk.
+                                            </p>
                                         </AlertStripeInfo>
                                     </Box>
                                 )}
