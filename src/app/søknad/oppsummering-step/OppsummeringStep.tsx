@@ -100,14 +100,16 @@ const OppsummeringStep: React.StatelessComponent<Props> = ({ onApplicationSent }
                             />
                         </SummaryBlock>
                     )}
-                    <UtenlandsoppholdISøkeperiodeSummaryView utenlandsopphold={apiValues.opphold} />
-                    <SpørsmålOgSvarSummaryView yesNoSpørsmålOgSvar={apiValues.spørsmål} />
 
                     <Box margin={'s'}>
                         <SummaryBlock header={intlHelper(intl, "steg.en.smittevern.sporsmal")}>
                             <JaNeiSvar harSvartJa={apiValues.hjemmePgaSmittevernhensyn} />
                         </SummaryBlock>
                     </Box>
+
+                    <UtenlandsoppholdISøkeperiodeSummaryView utenlandsopphold={apiValues.opphold} />
+                    <SpørsmålOgSvarSummaryView yesNoSpørsmålOgSvar={apiValues.spørsmål} />
+
 
                     {fosterbarn.length > 0 && (
                         <SummaryBlock header="Fosterbarn">
