@@ -170,7 +170,7 @@ const IntroPage: React.StatelessComponent = () => {
                                             <p>
                                                 Hvis du ikke har bekreftelse tilgjengelig når du søker, kan du
                                                 ettersende den. Vi kan ikke behandle søknaden før vi har mottatt
-                                                bekreftelsen fra legen.
+                                                bekreftelsen.
                                             </p>
                                         </AlertStripeInfo>
                                     </Box>
