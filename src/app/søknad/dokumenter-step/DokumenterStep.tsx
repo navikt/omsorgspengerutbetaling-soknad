@@ -1,20 +1,20 @@
 import * as React from 'react';
-import {useIntl} from 'react-intl';
+import { useIntl } from 'react-intl';
 import Box from '@navikt/sif-common-core/lib/components/box/Box';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
-import {useFormikContext} from 'formik';
+import { useFormikContext } from 'formik';
 import HelperTextPanel from 'common/components/helper-text-panel/HelperTextPanel';
 import intlHelper from 'common/utils/intlUtils';
 import FileUploadErrors from '../../components/file-upload-errors/FileUploadErrors';
 import FormikFileUploader from '../../components/formik-file-uploader/FormikFileUploader';
 import PictureScanningGuide from '../../components/picture-scanning-guide/PictureScanningGuide';
 import UploadedDocumentsList from '../../components/uploaded-documents-list/UploadedDocumentsList';
-import {StepConfigProps, StepID} from '../../config/stepConfig';
-import {navigateToLoginPage} from '../../utils/navigationUtils';
-import {validateDocuments} from '../../validation/fieldValidations';
-import {SøknadFormData, SøknadFormField} from "../../types/SøknadFormData";
-import SøknadStep from "../SøknadStep";
-import CounsellorPanel from "common/components/counsellor-panel/CounsellorPanel";
+import { StepConfigProps, StepID } from '../../config/stepConfig';
+import { navigateToLoginPage } from '../../utils/navigationUtils';
+import { validateDocuments } from '../../validation/fieldValidations';
+import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
+import SøknadStep from '../SøknadStep';
+import CounsellorPanel from 'common/components/counsellor-panel/CounsellorPanel';
 
 const DokumenterStep = ({ onValidSubmit }: StepConfigProps) => {
     const intl = useIntl();
@@ -27,12 +27,17 @@ const DokumenterStep = ({ onValidSubmit }: StepConfigProps) => {
             id={StepID.DOKUMENTER}
             onValidFormSubmit={onValidSubmit}
             useValidationErrorSummary={true}
-            buttonDisabled={hasPendingUploads}
-        >
-
+            buttonDisabled={hasPendingUploads}>
             <FormBlock>
                 <CounsellorPanel>
-                    B: Skal denne være her? Og i så fall, hva skal det stå her?
+                    <p>
+                        Du må laste opp en bekreftelse fra lege om at det er særlige smittevernhensyn som gjør at barnet
+                        ikke kan gå i barnehage eller skole.
+                    </p>
+                    <p>
+                        Hvis du ikke har bekreftelsen tilgjengelig nå, må du ettersende den til oss så snart du har den.
+                        Vi kan ikke behandle søknaden før vi har mottatt bekreftelsen.
+                    </p>
                 </CounsellorPanel>
             </FormBlock>
 

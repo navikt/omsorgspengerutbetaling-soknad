@@ -28,6 +28,7 @@ import SummaryBlock from './components/SummaryBlock';
 import UtbetalingsperioderSummaryView from './components/UtbetalingsperioderSummaryView';
 import UtenlandsoppholdISøkeperiodeSummaryView from './components/UtenlandsoppholdISøkeperiodeSummaryView';
 import UploadedDocumentsList from "../../components/uploaded-documents-list/UploadedDocumentsList";
+import JaNeiSvar from "./components/JaNeiSvar";
 
 interface Props {
     onApplicationSent: (apiValues: SøknadApiData, søkerdata: Søkerdata) => void;
@@ -101,6 +102,13 @@ const OppsummeringStep: React.StatelessComponent<Props> = ({ onApplicationSent }
                     )}
                     <UtenlandsoppholdISøkeperiodeSummaryView utenlandsopphold={apiValues.opphold} />
                     <SpørsmålOgSvarSummaryView yesNoSpørsmålOgSvar={apiValues.spørsmål} />
+
+                    <Box margin={'s'}>
+                        <SummaryBlock header={intlHelper(intl, "steg.en.smittevern.sporsmal")}>
+                            <JaNeiSvar harSvartJa={apiValues.hjemmePgaSmittevernhensyn} />
+                        </SummaryBlock>
+                    </Box>
+
                     {fosterbarn.length > 0 && (
                         <SummaryBlock header="Fosterbarn">
                             <SummaryList
