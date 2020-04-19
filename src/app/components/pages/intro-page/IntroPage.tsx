@@ -53,9 +53,9 @@ const IntroPage: React.StatelessComponent = () => {
                         fordi
                     </p>
                     <ul>
+                        <li>barnet kan ikke gå i barnehage eller skole på grunn av særlige smittevernhensyn</li>
                         <li>barnehagen eller skolen er stengt på grunn av koronaviruset</li>
                         <li>barnet eller barnepasser er syk</li>
-                        <li>barnet må være hjemme fra skole/barnehage på grunn av særlig smittevernhensyn</li>
                     </ul>
                 </InformationPoster>
             </Box>
@@ -67,18 +67,32 @@ const IntroPage: React.StatelessComponent = () => {
                         values: { erSelvstendigEllerFrilanser, hjemmePgaStengt, hjemmePgaSykdom, smittevernHensyn }
                     }) => {
                         const kanBrukeSøknaden =
+                            (erSelvstendigEllerFrilanser === YesOrNo.YES && smittevernHensyn === YesOrNo.YES) ||
+                            (erSelvstendigEllerFrilanser === YesOrNo.YES &&
+                                smittevernHensyn === YesOrNo.NO &&
+                                hjemmePgaStengt === YesOrNo.YES) ||
+                            (erSelvstendigEllerFrilanser === YesOrNo.YES &&
+                                smittevernHensyn === YesOrNo.NO &&
+                                hjemmePgaStengt === YesOrNo.NO &&
+                                hjemmePgaSykdom === YesOrNo.YES);
+
+                        const skalViseSmittevernSpørsmål = erSelvstendigEllerFrilanser === YesOrNo.YES;
+
+                        const skalViseStengtBarnehageSpørsmål =
+                            erSelvstendigEllerFrilanser === YesOrNo.YES && smittevernHensyn === YesOrNo.NO;
+
+                        const skalViseSykBarnepasserSpørsmål =
                             erSelvstendigEllerFrilanser === YesOrNo.YES &&
-                            (hjemmePgaStengt === YesOrNo.YES || hjemmePgaSykdom === YesOrNo.YES) &&
-                            smittevernHensyn !== YesOrNo.UNANSWERED;
+                            smittevernHensyn === YesOrNo.NO &&
+                            hjemmePgaStengt === YesOrNo.NO;
 
-                        const kanIkkeBrukeSøknaden =
-                            erSelvstendigEllerFrilanser === YesOrNo.NO || hjemmePgaStengt === YesOrNo.NO;
-
-                        const skalViseSpørsmål2 = erSelvstendigEllerFrilanser === YesOrNo.YES;
-
-                        const skalViseSpørsmål3 = skalViseSpørsmål2 && hjemmePgaStengt === YesOrNo.NO;
-
-                        const skalViseSpørsmål4 = skalViseSpørsmål3 && hjemmePgaSykdom !== YesOrNo.UNANSWERED;
+                        const skalViseSmittevernInfo = smittevernHensyn === YesOrNo.YES;
+                        const skalViseErIkkeFrilansEllerSelvstendigInfo = erSelvstendigEllerFrilanser === YesOrNo.NO;
+                        const skalViseKanIkkeBrukeSøknadenInfo =
+                            erSelvstendigEllerFrilanser === YesOrNo.YES &&
+                            smittevernHensyn === YesOrNo.NO &&
+                            hjemmePgaStengt === YesOrNo.NO &&
+                            hjemmePgaSykdom === YesOrNo.NO;
 
                         return (
                             <PageForm.Form
@@ -89,7 +103,16 @@ const IntroPage: React.StatelessComponent = () => {
                                     legend="Er du selvstendig næringsdrivende eller frilanser?"
                                 />
 
-                                {skalViseSpørsmål2 && (
+                                {skalViseSmittevernSpørsmål && (
+                                    <FormBlock>
+                                        <PageForm.YesOrNoQuestion
+                                            name={PageFormField.smittevernHensyn}
+                                            legend="Er du hjemme med barn på grunn av særlige smittevernhensyn?"
+                                        />
+                                    </FormBlock>
+                                )}
+
+                                {skalViseStengtBarnehageSpørsmål && (
                                     <FormBlock>
                                         <PageForm.YesOrNoQuestion
                                             name={PageFormField.hjemmePgaStengt}
@@ -97,7 +120,7 @@ const IntroPage: React.StatelessComponent = () => {
                                         />
                                     </FormBlock>
                                 )}
-                                {skalViseSpørsmål3 && (
+                                {skalViseSykBarnepasserSpørsmål && (
                                     <FormBlock>
                                         <PageForm.YesOrNoQuestion
                                             name={PageFormField.hjemmePgaSykdom}
@@ -106,16 +129,7 @@ const IntroPage: React.StatelessComponent = () => {
                                     </FormBlock>
                                 )}
 
-                                {skalViseSpørsmål4 && (
-                                    <FormBlock>
-                                        <PageForm.YesOrNoQuestion
-                                            name={PageFormField.smittevernHensyn}
-                                            legend="Er du hjemme med barn grunnet smittevernhensyn?"
-                                        />
-                                    </FormBlock>
-                                )}
-
-                                {kanIkkeBrukeSøknaden && erSelvstendigEllerFrilanser === YesOrNo.NO && (
+                                {skalViseErIkkeFrilansEllerSelvstendigInfo && (
                                     <Box margin="xl">
                                         <AlertStripeInfo>
                                             <>
@@ -134,25 +148,29 @@ const IntroPage: React.StatelessComponent = () => {
                                     </Box>
                                 )}
 
-                                {kanIkkeBrukeSøknaden && erSelvstendigEllerFrilanser === YesOrNo.YES && (
+                                {skalViseKanIkkeBrukeSøknadenInfo && (
                                     <Box margin="xl">
                                         <AlertStripeInfo>
                                             <p style={{ marginTop: 0, marginBottom: 0 }}>
-                                                Du kan <strong>kun</strong> bruke denne søknaden når du må være hjemme
-                                                fra jobb fordi barnehagen/skolen er stengt på grunn av koronaviruset,
-                                                eller fordi barnet/barnepasser er blitt syk.
+                                                Du kan <strong>kun</strong> bruke denne søknaden hvis du er hjemme fra
+                                                jobb på grunn av én av situasjonene beskrevet over.
                                             </p>
                                         </AlertStripeInfo>
                                     </Box>
                                 )}
 
-                                {!kanIkkeBrukeSøknaden && smittevernHensyn && (
+                                {skalViseSmittevernInfo && (
                                     <Box margin="xl">
                                         <AlertStripeInfo>
+                                            <p style={{ marginTop: 0, marginBottom: 0 }}>
+                                                I søknaden må du laste opp en bekreftelse fra lege om at det er særlige
+                                                smittevernhensyn som må ivaretas, og at det er grunnen til at barnet
+                                                ikke kan gå i barnehage eller skole.
+                                            </p>
                                             <p>
-                                                Bekreftelse fra lege på at særlig smittevernhensyn må ivaretas, og at
-                                                det er årsaken til at barnet ikke kan gå i barnehage eller skole, må
-                                                legges ved søknaden.
+                                                Hvis du ikke har bekreftelse tilgjengelig når du søker, kan du
+                                                ettersende den. Vi kan ikke behandle søknaden før vi har mottatt
+                                                bekreftelsen fra legen.
                                             </p>
                                         </AlertStripeInfo>
                                     </Box>
