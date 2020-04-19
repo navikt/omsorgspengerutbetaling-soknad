@@ -249,5 +249,8 @@
     "fortsettSøknadSenereDialog.tittel": "Avslutt og fortsett senere",
 
     "steg.footer.avbryt": "Avbryt og slett søknad",
-    "steg.footer.fortsettSenere": "Avslutt og fortsett senere"
+    "steg.footer.fortsettSenere": "Avslutt og fortsett senere",
+
+    "step.vedlegg.stepTitle": "A: Hva skal det stå her?",
+    "steg.dokumenter.vedlegg": "Last opp bilde av dokumentene (maks 3 bilder)"
 }
