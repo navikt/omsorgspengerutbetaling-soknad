@@ -18,13 +18,15 @@ const bem = bemUtils('introPage');
 enum PageFormField {
     'erSelvstendigEllerFrilanser' = 'erSelvstendigEllerFrilanser',
     'hjemmePgaStengt' = 'hjemmePgaStengt',
-    'hjemmePgaSykdom' = 'hjemmePgaSykdom'
+    'hjemmePgaSykdom' = 'hjemmePgaSykdom',
+    'smittevernHensyn' = 'smittevernHensyn'
 }
 
 interface PageFormValues {
     [PageFormField.erSelvstendigEllerFrilanser]: YesOrNo;
     [PageFormField.hjemmePgaStengt]: YesOrNo;
     [PageFormField.hjemmePgaSykdom]: YesOrNo;
+    [PageFormField.smittevernHensyn]: YesOrNo;
 }
 
 const initialValues = {};
@@ -48,6 +50,7 @@ const IntroPage: React.StatelessComponent = () => {
                     <ul>
                         <li>barnehagen eller skolen er stengt på grunn av koronaviruset</li>
                         <li>barnet eller barnepasser er syk</li>
+                        <li>barnet må være hjemme fra skole/barnehage på grunn av særlig smittevernhensyn</li>
                     </ul>
                 </InformationPoster>
             </Box>
@@ -55,10 +58,13 @@ const IntroPage: React.StatelessComponent = () => {
                 <PageForm.FormikWrapper
                     onSubmit={() => null}
                     initialValues={initialValues}
-                    renderForm={({ values: { erSelvstendigEllerFrilanser, hjemmePgaStengt, hjemmePgaSykdom } }) => {
+                    renderForm={({
+                        values: { erSelvstendigEllerFrilanser, hjemmePgaStengt, hjemmePgaSykdom, smittevernHensyn }
+                    }) => {
                         const kanBrukeSøknaden =
                             erSelvstendigEllerFrilanser === YesOrNo.YES &&
-                            (hjemmePgaStengt === YesOrNo.YES || hjemmePgaSykdom === YesOrNo.YES);
+                            (hjemmePgaStengt === YesOrNo.YES || hjemmePgaSykdom === YesOrNo.YES) &&
+                            smittevernHensyn !== YesOrNo.UNANSWERED;
                         const kanIkkeBrukeSøknaden =
                             erSelvstendigEllerFrilanser === YesOrNo.NO ||
                             (hjemmePgaStengt === YesOrNo.NO && hjemmePgaSykdom === YesOrNo.NO);
@@ -83,6 +89,14 @@ const IntroPage: React.StatelessComponent = () => {
                                                 <PageForm.YesOrNoQuestion
                                                     name={PageFormField.hjemmePgaSykdom}
                                                     legend="Er du hjemme fra jobb fordi barnet eller barnepasser er blitt syk?"
+                                                />
+                                            </FormBlock>
+                                        )}
+                                        {(hjemmePgaStengt === YesOrNo.YES || hjemmePgaSykdom !== YesOrNo.UNANSWERED && !kanIkkeBrukeSøknaden) && (
+                                            <FormBlock>
+                                                <PageForm.YesOrNoQuestion
+                                                    name={PageFormField.smittevernHensyn}
+                                                    legend="Er du hjemme med barn grunnet smittevernhensyn?"
                                                 />
                                             </FormBlock>
                                         )}
@@ -118,6 +132,19 @@ const IntroPage: React.StatelessComponent = () => {
                                         </AlertStripeInfo>
                                     </Box>
                                 )}
+
+                                {!kanIkkeBrukeSøknaden && smittevernHensyn && (
+                                    <Box margin="xl">
+                                        <AlertStripeInfo>
+                                            <p>
+                                                Bekreftelse fra lege på at særlig smittevernhensyn må ivaretas, og at
+                                                det er årsaken til at barnet ikke kan gå i barnehage eller skole, må
+                                                legges ved søknaden.
+                                            </p>
+                                        </AlertStripeInfo>
+                                    </Box>
+                                )}
+
                                 {kanBrukeSøknaden && (
                                     <>
                                         <Box margin="xl" textAlignCenter={true}>
