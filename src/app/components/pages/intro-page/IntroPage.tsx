@@ -86,7 +86,8 @@ const IntroPage: React.StatelessComponent = () => {
                             smittevernHensyn === YesOrNo.NO &&
                             hjemmePgaStengt === YesOrNo.NO;
 
-                        const skalViseSmittevernInfo = smittevernHensyn === YesOrNo.YES;
+                        const skalViseSmittevernInfo =
+                            erSelvstendigEllerFrilanser === YesOrNo.YES && smittevernHensyn === YesOrNo.YES;
                         const skalViseErIkkeFrilansEllerSelvstendigInfo = erSelvstendigEllerFrilanser === YesOrNo.NO;
                         const skalViseKanIkkeBrukeSøknadenInfo =
                             erSelvstendigEllerFrilanser === YesOrNo.YES &&
