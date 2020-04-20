@@ -1,23 +1,24 @@
-import { IntlShape } from 'react-intl';
-import { Locale } from '@navikt/sif-common-core/lib/types/Locale';
-import { Utenlandsopphold, Virksomhet } from '@navikt/sif-common-forms/lib';
-import { YesOrNo } from 'common/types/YesOrNo';
-import { formatDateToApiFormat } from 'common/utils/dateUtils';
-import { decimalTimeToTime, timeToIso8601Duration } from 'common/utils/timeUtils';
-import { FraværDelerAvDag, Periode } from '../../@types/omsorgspengerutbetaling-schema';
+import {IntlShape} from 'react-intl';
+import {Locale} from '@navikt/sif-common-core/lib/types/Locale';
+import {Utenlandsopphold, Virksomhet} from '@navikt/sif-common-forms/lib';
+import {YesOrNo} from 'common/types/YesOrNo';
+import {formatDateToApiFormat} from 'common/utils/dateUtils';
+import {decimalTimeToTime, timeToIso8601Duration} from 'common/utils/timeUtils';
+import {FraværDelerAvDag, Periode} from '../../@types/omsorgspengerutbetaling-schema';
 import {
     SøknadApiData,
     UtbetalingsperiodeApi,
     UtenlandsoppholdApiData,
     VirksomhetApiData,
-    YesNoSvar,
-    YesNoSpørsmålOgSvar
+    YesNoSpørsmålOgSvar,
+    YesNoSvar
 } from '../types/SøknadApiData';
-import { SøknadFormData } from '../types/SøknadFormData';
-import { mapBostedUtlandToApiData } from './formToApiMaps/mapBostedUtlandToApiData';
-import { mapFrilansToApiData } from './formToApiMaps/mapFrilansToApiData';
-import { mapVirksomhetToVirksomhetApiData } from './formToApiMaps/mapVirksomhetToApiData';
+import {SøknadFormData} from '../types/SøknadFormData';
+import {mapBostedUtlandToApiData} from './formToApiMaps/mapBostedUtlandToApiData';
+import {mapFrilansToApiData} from './formToApiMaps/mapFrilansToApiData';
+import {mapVirksomhetToVirksomhetApiData} from './formToApiMaps/mapVirksomhetToApiData';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
+import {attachmentUploadHasFailed} from "common/utils/attachmentUtils";
 
 // TODO: FIX MAPPING!!!
 export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShape): SøknadApiData => {
@@ -32,6 +33,9 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
         perioder_utenlandsopphold,
         har_søkt_andre_utbetalinger,
         andre_utbetalinger,
+
+        hemmeligJaNeiSporsmal,
+        dokumenter,
 
         // Inntekt
         frilans_startdato,
@@ -96,8 +100,11 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
             intl.locale,
             selvstendig_harHattInntektSomSN,
             selvstendig_virksomheter
-        )
+        ),
+        hjemmePgaSmittevernhensyn: hemmeligJaNeiSporsmal === YesOrNo.YES,
+        vedlegg: dokumenter.filter((attachment) => !attachmentUploadHasFailed(attachment)).map(({ url }) => url!)
     };
+
     if (har_fosterbarn === YesOrNo.YES && har_fosterbarn.length > 0) {
         apiData.fosterbarn = fosterbarn.map((barn) => {
             const { fødselsnummer } = barn;

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedHTMLMessage, FormattedMessage, useIntl } from 'react-intl';
 import { useHistory } from 'react-router-dom';
 import Box from '@navikt/sif-common-core/lib/components/box/Box';
 import CounsellorPanel from '@navikt/sif-common-core/lib/components/counsellor-panel/CounsellorPanel';
@@ -27,6 +27,8 @@ import { SpørsmålOgSvarSummaryView } from './components/SporsmalOgSvarSummaryV
 import SummaryBlock from './components/SummaryBlock';
 import UtbetalingsperioderSummaryView from './components/UtbetalingsperioderSummaryView';
 import UtenlandsoppholdISøkeperiodeSummaryView from './components/UtenlandsoppholdISøkeperiodeSummaryView';
+import UploadedDocumentsList from '../../components/uploaded-documents-list/UploadedDocumentsList';
+import JaNeiSvar from './components/JaNeiSvar';
 
 interface Props {
     onApplicationSent: (apiValues: SøknadApiData, søkerdata: Søkerdata) => void;
@@ -98,8 +100,17 @@ const OppsummeringStep: React.StatelessComponent<Props> = ({ onApplicationSent }
                             />
                         </SummaryBlock>
                     )}
+
+                    <Box margin={'s'}>
+                        <SummaryBlock header={intlHelper(intl, 'steg.en.smittevern.sporsmal')}>
+                            <JaNeiSvar harSvartJa={apiValues.hjemmePgaSmittevernhensyn} />
+                        </SummaryBlock>
+                    </Box>
+
                     <UtenlandsoppholdISøkeperiodeSummaryView utenlandsopphold={apiValues.opphold} />
+
                     <SpørsmålOgSvarSummaryView yesNoSpørsmålOgSvar={apiValues.spørsmål} />
+
                     {fosterbarn.length > 0 && (
                         <SummaryBlock header="Fosterbarn">
                             <SummaryList
@@ -111,6 +122,19 @@ const OppsummeringStep: React.StatelessComponent<Props> = ({ onApplicationSent }
                     <FrilansSummary frilans={apiValues.frilans} />
                     <SelvstendigSummary selvstendigVirksomheter={apiValues.selvstendigVirksomheter} />
                     <MedlemskapSummaryView bosteder={apiValues.bosteder} />
+
+                    {apiValues.vedlegg.length === 0 && apiValues.hjemmePgaSmittevernhensyn && (
+                        <Box margin={'s'}>
+                            <SummaryBlock header={intlHelper(intl, 'steg.oppsummering.dokumenter.header')}>
+                                <FormattedHTMLMessage id={'steg.oppsummering.dokumenter.ikkelastetopp'} />
+                            </SummaryBlock>
+                        </Box>
+                    )}
+                    {apiValues.vedlegg.length > 0 && (
+                        <SummaryBlock header={intlHelper(intl, 'steg.oppsummering.dokumenter.header')}>
+                            <UploadedDocumentsList includeDeletionFunctionality={false} />
+                        </SummaryBlock>
+                    )}
                 </ResponsivePanel>
             </Box>
 

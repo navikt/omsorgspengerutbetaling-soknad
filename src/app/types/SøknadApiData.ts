@@ -87,4 +87,6 @@ export interface SøknadApiData {
     bosteder: UtenlandsoppholdApiData[]; // medlemskap-siden
     frilans?: Frilans;
     selvstendigVirksomheter: VirksomhetApiData[];
+    hjemmePgaSmittevernhensyn: boolean;
+    vedlegg: string[];
 }
