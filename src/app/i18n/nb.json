@@ -258,5 +258,6 @@
     "step.vedlegg.stepIndicatorLabel": "Last opp dokumenter",
     "step.vedlegg.pageTitle": "Last opp dokumenter",
     "fieldvalidation.for_mange_dokumenter": "For mange dokumenter er lastet opp",
-    "steg.oppsummering.dokumenter.ikkelastetopp": "Ikke lastet opp, må ettersendes"
+    "steg.oppsummering.dokumenter.ikkelastetopp": "Ikke lastet opp, må ettersendes",
+    "steg.en.smittevern.info": "<div>Hvis barnehagen eller skolen som ditt barn går i åpner, men du må være hjemme med barnet på grunn av <strong>særlige smittevernhensyn</strong> kan du bruke omsorgsdager. Det kan være smittevernhensyn til barnet eller andre familiemedlemmer som barnet bor med. Dette gjelder i forbindelse med koronaviruset i perioden 20. april fram til og med 30. juni 2020.</div>"
 }

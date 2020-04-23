@@ -20,7 +20,6 @@ import {mapVirksomhetToVirksomhetApiData} from './formToApiMaps/mapVirksomhetToA
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import {attachmentUploadHasFailed} from "common/utils/attachmentUtils";
 
-// TODO: FIX MAPPING!!!
 export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShape): SøknadApiData => {
     const {
         harForståttRettigheterOgPlikter,

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import {FormattedHTMLMessage, FormattedMessage, useIntl} from 'react-intl';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
 import { commonFieldErrorRenderer } from '@navikt/sif-common-core/lib/utils/commonFieldErrorRenderer';
 import { getTypedFormComponents, YesOrNo } from '@navikt/sif-common-formik/lib';
@@ -53,7 +53,7 @@ const IntroPage: React.StatelessComponent = () => {
                         fordi
                     </p>
                     <ul>
-                        <li>barnet ikke kan gå i barnehage eller skole på grunn av særlige smittevernhensyn</li>
+                        <li>barnet ikke kan gå i barnehage eller skole når disse åpnes igjen, på grunn av særlige smittevernhensyn</li>
                         <li>barnehagen eller skolen er stengt på grunn av koronaviruset</li>
                         <li>barnet eller barnepasser er syk</li>
                     </ul>
@@ -109,6 +109,11 @@ const IntroPage: React.StatelessComponent = () => {
                                         <PageForm.YesOrNoQuestion
                                             name={PageFormField.smittevernHensyn}
                                             legend="Er du hjemme med barn på grunn av særlige smittevernhensyn?"
+                                            info={
+                                                <div className={'smittevern-info'}>
+                                                    <FormattedHTMLMessage id={'steg.en.smittevern.info'} />
+                                                </div>
+                                            }
                                         />
                                     </FormBlock>
                                 )}
@@ -164,13 +169,16 @@ const IntroPage: React.StatelessComponent = () => {
                                     <Box margin="xl">
                                         <AlertStripeInfo>
                                             <p style={{ marginTop: 0, marginBottom: 0 }}>
-                                                I søknaden må du laste opp en bekreftelse fra lege om at det er særlige
-                                                smittevernhensyn som må ivaretas, og at det er grunnen til at barnet
-                                                ikke kan gå i barnehage eller skole.
+                                                I søknaden må du laste opp en bekreftelse fra lege. Legen må bekrefte at
+                                                barnet ikke kan gå i barnehage eller skole fordi det er{' '}
+                                                <strong>særlige smittevernhensyn</strong> i forbindelse med
+                                                koronaviruset som må ivaretas for enten barnet eller et familiemedlem
+                                                som barnet bor sammen med. Legen skal ikke oppgi diagnose eller hvilket
+                                                familiemedlem det gjelder.
                                             </p>
                                             <p>
                                                 Hvis du ikke har bekreftelse tilgjengelig når du søker, kan du
-                                                ettersende den. Vi kan ikke behandle søknaden før vi har mottatt
+                                                ettersende den. Vi kan ikke behandle søknaden før vi mottar
                                                 bekreftelsen.
                                             </p>
                                         </AlertStripeInfo>
