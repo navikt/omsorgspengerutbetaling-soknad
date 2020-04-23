@@ -164,13 +164,16 @@ const IntroPage: React.StatelessComponent = () => {
                                     <Box margin="xl">
                                         <AlertStripeInfo>
                                             <p style={{ marginTop: 0, marginBottom: 0 }}>
-                                                I søknaden må du laste opp en bekreftelse fra lege om at det er særlige
-                                                smittevernhensyn som må ivaretas, og at det er grunnen til at barnet
-                                                ikke kan gå i barnehage eller skole.
+                                                I søknaden må du laste opp en bekreftelse fra lege. Legen må bekrefte at
+                                                barnet ikke kan gå i barnehage eller skole fordi det er{' '}
+                                                <strong>særlige smittevernhensyn</strong> i forbindelse med
+                                                koronaviruset som må ivaretas for enten barnet eller et familiemedlem
+                                                som barnet bor sammen med. Legen skal ikke oppgi diagnose eller hvilket
+                                                familiemedlem det gjelder.
                                             </p>
                                             <p>
                                                 Hvis du ikke har bekreftelse tilgjengelig når du søker, kan du
-                                                ettersende den. Vi kan ikke behandle søknaden før vi har mottatt
+                                                ettersende den. Vi kan ikke behandle søknaden før vi mottar
                                                 bekreftelsen.
                                             </p>
                                         </AlertStripeInfo>
