@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useIntl } from 'react-intl';
+import { FormattedHTMLMessage, useIntl } from 'react-intl';
 import {
     validateRequiredList,
     validateYesOrNoIsAnswered
@@ -159,6 +159,11 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                         name={SøknadFormField.hemmeligJaNeiSporsmal}
                         legend={intlHelper(intl, 'steg.en.smittevern.sporsmal')}
                         validate={validateYesOrNoIsAnswered}
+                        info={
+                            <div className={'smittevern-info'}>
+                                <FormattedHTMLMessage id={'steg.en.smittevern.info'} />
+                            </div>
+                        }
                     />
                 </FormBlock>
             )}
