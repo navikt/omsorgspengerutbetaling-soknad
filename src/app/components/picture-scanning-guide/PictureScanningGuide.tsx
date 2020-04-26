@@ -16,55 +16,55 @@ const PictureScanningGuide: React.FunctionComponent = () => {
     return (
         <div className={bem.block}>
             <Undertittel className={bem.element('title')}>
-                <FormattedMessage id="psg.section1.tittel" />
+                <FormattedMessage id="psg-temp.section1.tittel" />
             </Undertittel>
-            <FormattedHTMLMessage tagName="ul" id="psg.section1.liste" />
+            <FormattedHTMLMessage tagName="ul" id="psg-temp.section1.liste" />
 
             <Undertittel className={bem.element('title')}>
-                <FormattedMessage id="psg.section2.tittel" />
+                <FormattedMessage id="psg-temp.section2.tittel" />
             </Undertittel>
 
-            <FormattedHTMLMessage tagName="ul" id="psg.section2.liste" />
+            <FormattedHTMLMessage tagName="ul" id="psg-temp.section2.liste" />
             <div className={bem.element('examples')}>
                 <Undertittel tag="h3" className={bem.element('title')}>
-                    <FormattedMessage id="psg.icon.heading" />
+                    <FormattedMessage id="psg-temp.icon.heading" />
                 </Undertittel>
                 <div className={bem.element('body')}>
                     <div className={bem.element('cell')}>
                         <PictureScanningExample
                             image={<ScanningIcon status="good" height={svgIconHeight} />}
                             status="suksess"
-                            statusText={intlHelper(intl, 'psg.good')}
-                            description={intlHelper(intl, 'psg.icon.label.good')}
+                            statusText={intlHelper(intl, 'psg-temp.good')}
+                            description={intlHelper(intl, 'psg-temp.icon.label.good')}
                         />
                     </div>
                     <div className={bem.element('cell')}>
                         <PictureScanningExample
                             image={<ScanningIcon status="keystone" height={svgIconHeight} />}
                             status="feil"
-                            statusText={intlHelper(intl, 'psg.bad')}
-                            description={intlHelper(intl, 'psg.icon.label.keystone')}
+                            statusText={intlHelper(intl, 'psg-temp.bad')}
+                            description={intlHelper(intl, 'psg-temp.icon.label.keystone')}
                         />
                     </div>
                     <div className={bem.element('cell')}>
                         <PictureScanningExample
                             image={<ScanningIcon status="horizontal" height={svgIconHeight} />}
                             status="feil"
-                            statusText={intlHelper(intl, 'psg.bad')}
-                            description={intlHelper(intl, 'psg.icon.label.horizontal')}
+                            statusText={intlHelper(intl, 'psg-temp.bad')}
+                            description={intlHelper(intl, 'psg-temp.icon.label.horizontal')}
                         />
                     </div>
                     <div className={bem.element('cell')}>
                         <PictureScanningExample
                             image={<ScanningIcon status="shadow" height={svgIconHeight} />}
                             status="feil"
-                            statusText={intlHelper(intl, 'psg.bad')}
-                            description={intlHelper(intl, 'psg.icon.label.shadow')}
+                            statusText={intlHelper(intl, 'psg-temp.bad')}
+                            description={intlHelper(intl, 'psg-temp.icon.label.shadow')}
                         />
                     </div>
                 </div>
-                <Lenke target="_blank" href={intlHelper(intl, 'psg.lenkepanel.url')}>
-                    <FormattedMessage id="psg.lenkepanel.text" />
+                <Lenke target="_blank" href={intlHelper(intl, 'psg-temp.lenkepanel.url')}>
+                    <FormattedMessage id="psg-temp.lenkepanel.text" />
                 </Lenke>
             </div>
         </div>
