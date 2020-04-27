@@ -259,5 +259,20 @@
     "step.vedlegg.pageTitle": "Last opp dokumenter",
     "fieldvalidation.for_mange_dokumenter": "For mange dokumenter er lastet opp",
     "steg.oppsummering.dokumenter.ikkelastetopp": "Ikke lastet opp, må ettersendes",
-    "steg.en.smittevern.info": "<div>Hvis barnehagen eller skolen som ditt barn går i åpner, men du må være hjemme med barnet på grunn av <strong>særlige smittevernhensyn</strong> kan du bruke omsorgsdager. Det kan være smittevernhensyn til barnet eller andre familiemedlemmer som barnet bor med. Dette gjelder i forbindelse med koronaviruset i perioden 20. april fram til og med 30. juni 2020.</div>"
+    "steg.en.smittevern.info": "<div>Hvis barnehagen eller skolen som ditt barn går i åpner, men du må være hjemme med barnet på grunn av <strong>særlige smittevernhensyn</strong> kan du bruke omsorgsdager. Det kan være smittevernhensyn til barnet eller andre familiemedlemmer som barnet bor med. Dette gjelder i forbindelse med koronaviruset i perioden 20. april fram til og med 30. juni 2020.</div>",
+
+    "psg-temp.innholdstittel": "Ta bilde av dokumentene og last opp",
+    "psg-temp.section1.tittel": "Slik tar du et godt bilde:",
+    "psg-temp.section1.liste": "<li>Hold mobilen eller kameraet direkte over dokumentet.</li><li>Dokumentet skal fylle hele bildet. Bildet skal ikke ikke inneholde annen dokumentasjon eller gjenstander.</li><li>Bildet må inneholde all tekst i dokumentet. Hvis dokumentet er på mer enn én side, bør du laste opp flere bilder.</li>",
+    "psg-temp.section2.tittel": "Etter at du har tatt bildet, sjekk følgende før du laster opp:",
+    "psg-temp.section2.liste": "<li>Dokumentet har riktig retning.</li><li>Teksten til dokumentet er godt leselig.</li><li>Bildet er godt opplyst, uten skygger.</li>",
+    "psg-temp.icon.heading": "Bra og dårlige eksempler på bilder av dokumenter",
+    "psg-temp.good": "Bra",
+    "psg-temp.bad": "Dårlig",
+    "psg-temp.icon.label.good": "Dokumentet fyller hele bildet",
+    "psg-temp.icon.label.keystone": "Bildet er ikke tatt ovenfra",
+    "psg-temp.icon.label.horizontal": "Bildet har ikke riktig retning",
+    "psg-temp.icon.label.shadow": "Bildet har skygge på dokumentet",
+    "psg-temp.lenkepanel.url": "https://www.nav.no/no/nav-og-samfunn/kontakt-nav/relatert-informasjon/ta-bilde-av-vedleggene-med-mobilen",
+    "psg-temp.lenkepanel.text": "Mer hjelp til å laste opp vedlegg (åpnes i et nytt vindu)."
 }
