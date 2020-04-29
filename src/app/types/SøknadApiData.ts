@@ -41,6 +41,11 @@ export interface Frilans {
     jobberFortsattSomFrilans: boolean;
 }
 
+export interface Land {
+    landkode?: String;
+    landnavn?: String;
+}
+
 export interface VirksomhetApiData {
     næringstyper: Næringstype[];
     fiskerErPåBladB?: boolean;
@@ -51,6 +56,7 @@ export interface VirksomhetApiData {
     organisasjonsnummer?: string;
     registrertINorge: boolean;
     registrertILand?: string;
+    registrertIUtlandet?: Land | null;
     yrkesaktivSisteTreFerdigliknedeÅrene?: {
         oppstartsdato: ApiStringDate;
     };

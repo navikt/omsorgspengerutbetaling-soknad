@@ -1,6 +1,6 @@
 import { formatDateToApiFormat } from '@navikt/sif-common-core/lib/utils/dateUtils';
 import { getCountryName, YesOrNo } from '@navikt/sif-common-formik';
-import { Næringstype, Virksomhet } from '@navikt/sif-common-forms/lib';
+import { Næringstype, Virksomhet, VirksomhetFormField } from '@navikt/sif-common-forms/lib';
 import { VirksomhetApiData } from '../../types/SøknadApiData';
 
 export const harFiskerNæringstype = (næringstyper: Næringstype[]): boolean =>
@@ -25,7 +25,13 @@ export const mapVirksomhetToVirksomhetApiData = (
             : {
                   registrertILand: virksomhet.registrertILand
                       ? getCountryName(virksomhet.registrertILand, locale)
-                      : undefined
+                      : undefined,
+                  registrertIUtlandet: virksomhet.registrertILand
+                      ? {
+                            landkode: virksomhet[VirksomhetFormField.registrertILand],
+                            landnavn: getCountryName(virksomhet.registrertILand, locale)
+                        }
+                      : null
               }),
         fraOgMed: formatDateToApiFormat(virksomhet.fom),
         tilOgMed: virksomhet.erPågående || virksomhet.tom === undefined ? null : formatDateToApiFormat(virksomhet.tom),
