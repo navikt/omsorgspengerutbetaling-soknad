@@ -1,10 +1,10 @@
-import {IntlShape} from 'react-intl';
-import {Locale} from '@navikt/sif-common-core/lib/types/Locale';
-import {Utenlandsopphold, Virksomhet} from '@navikt/sif-common-forms/lib';
-import {YesOrNo} from 'common/types/YesOrNo';
-import {formatDateToApiFormat} from 'common/utils/dateUtils';
-import {decimalTimeToTime, timeToIso8601Duration} from 'common/utils/timeUtils';
-import {FraværDelerAvDag, Periode} from '../../@types/omsorgspengerutbetaling-schema';
+import { IntlShape } from 'react-intl';
+import { Locale } from '@navikt/sif-common-core/lib/types/Locale';
+import { Utenlandsopphold, Virksomhet } from '@navikt/sif-common-forms/lib';
+import { YesOrNo } from 'common/types/YesOrNo';
+import { formatDateToApiFormat } from 'common/utils/dateUtils';
+import { decimalTimeToTime, timeToIso8601Duration } from 'common/utils/timeUtils';
+import { FraværDelerAvDag, Periode } from '../../@types/omsorgspengerutbetaling-schema';
 import {
     SøknadApiData,
     UtbetalingsperiodeApi,
@@ -13,12 +13,12 @@ import {
     YesNoSpørsmålOgSvar,
     YesNoSvar
 } from '../types/SøknadApiData';
-import {SøknadFormData} from '../types/SøknadFormData';
-import {mapBostedUtlandToApiData} from './formToApiMaps/mapBostedUtlandToApiData';
-import {mapFrilansToApiData} from './formToApiMaps/mapFrilansToApiData';
-import {mapVirksomhetToVirksomhetApiData} from './formToApiMaps/mapVirksomhetToApiData';
+import { SøknadFormData } from '../types/SøknadFormData';
+import { mapBostedUtlandToApiData } from './formToApiMaps/mapBostedUtlandToApiData';
+import { mapFrilansToApiData } from './formToApiMaps/mapFrilansToApiData';
+import { mapVirksomhetToVirksomhetApiData } from './formToApiMaps/mapVirksomhetToApiData';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
-import {attachmentUploadHasFailed} from "common/utils/attachmentUtils";
+import { attachmentUploadHasFailed } from 'common/utils/attachmentUtils';
 
 export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShape): SøknadApiData => {
     const {
@@ -107,7 +107,7 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
     if (har_fosterbarn === YesOrNo.YES && har_fosterbarn.length > 0) {
         apiData.fosterbarn = fosterbarn.map((barn) => {
             const { fødselsnummer } = barn;
-            return {fødselsnummer };
+            return { fødselsnummer };
         });
     }
 
