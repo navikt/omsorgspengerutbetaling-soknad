@@ -29,10 +29,15 @@ import UtbetalingsperioderSummaryView from './components/UtbetalingsperioderSumm
 import UtenlandsoppholdISøkeperiodeSummaryView from './components/UtenlandsoppholdISøkeperiodeSummaryView';
 import UploadedDocumentsList from '../../components/uploaded-documents-list/UploadedDocumentsList';
 import JaNeiSvar from './components/JaNeiSvar';
+import { validateSoknadApiData } from '../../validation/soknadApiDataValidation';
+import { Feiloppsummering, FeiloppsummeringFeil } from 'nav-frontend-skjema';
+import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
 
 interface Props {
     onApplicationSent: (apiValues: SøknadApiData, søkerdata: Søkerdata) => void;
 }
+
+const renderApiDataFeil = (feil: FeiloppsummeringFeil) => <span>{feil.feilmelding}</span>;
 
 const OppsummeringStep: React.StatelessComponent<Props> = ({ onApplicationSent }) => {
     const intl = useIntl();
@@ -66,6 +71,9 @@ const OppsummeringStep: React.StatelessComponent<Props> = ({ onApplicationSent }
 
     const apiValues: SøknadApiData = mapFormDataToApiData(values, intl);
     const fosterbarn = apiValues.fosterbarn || [];
+
+    const apiValidationErrors = validateSoknadApiData(apiValues);
+
     return (
         <SøknadStep
             id={StepID.OPPSUMMERING}
@@ -75,7 +83,7 @@ const OppsummeringStep: React.StatelessComponent<Props> = ({ onApplicationSent }
                 });
             }}
             useValidationErrorSummary={false}
-            buttonDisabled={sendingInProgress}
+            buttonDisabled={sendingInProgress || apiValidationErrors.length > 0}
             showButtonSpinner={sendingInProgress}>
             <CounsellorPanel>
                 <FormattedMessage id="steg.oppsummering.info" />
@@ -138,19 +146,31 @@ const OppsummeringStep: React.StatelessComponent<Props> = ({ onApplicationSent }
                 </ResponsivePanel>
             </Box>
 
-            <Box margin="l">
-                <SøknadFormComponents.ConfirmationCheckbox
-                    label={intlHelper(intl, 'steg.oppsummering.bekrefterOpplysninger')}
-                    name={SøknadFormField.harBekreftetOpplysninger}
-                    validate={(value) => {
-                        let result;
-                        if (value !== true) {
-                            result = intlHelper(intl, 'steg.oppsummering.bekrefterOpplysninger.ikkeBekreftet');
-                        }
-                        return result;
-                    }}
-                />
-            </Box>
+            {apiValidationErrors.length > 0 && (
+                <FormBlock>
+                    <Feiloppsummering
+                        customFeilRender={(feil) => renderApiDataFeil(feil)}
+                        tittel={intlHelper(intl, 'steg.oppsummering.apiValideringFeil.tittel')}
+                        feil={apiValidationErrors}
+                    />
+                </FormBlock>
+            )}
+
+            {apiValidationErrors.length === 0 && (
+                <Box margin="l">
+                    <SøknadFormComponents.ConfirmationCheckbox
+                        label={intlHelper(intl, 'steg.oppsummering.bekrefterOpplysninger')}
+                        name={SøknadFormField.harBekreftetOpplysninger}
+                        validate={(value) => {
+                            let result;
+                            if (value !== true) {
+                                result = intlHelper(intl, 'steg.oppsummering.bekrefterOpplysninger.ikkeBekreftet');
+                            }
+                            return result;
+                        }}
+                    />
+                </Box>
+            )}
         </SøknadStep>
     );
 };

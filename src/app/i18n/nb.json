@@ -183,6 +183,8 @@
 
     "steg.oppsummering.utenlandsoppholdIPerioden.listetittel": "Utenlandsopphold i perioden",
 
+    "steg.oppsummering.apiValideringFeil.tittel": "Noe av informasjonen mangler",
+
     "page.confirmation.sidetittel": "Vi har mottatt søknaden din",
     "page.confirmation.tittel": "Vi har mottatt søknad fra deg om utbetaling av omsorgspenger",
     "page.confirmation.undertittel": "Hva skjer videre nå?",
