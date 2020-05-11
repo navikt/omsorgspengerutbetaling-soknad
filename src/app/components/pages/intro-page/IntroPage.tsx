@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {FormattedHTMLMessage, FormattedMessage, useIntl} from 'react-intl';
+import { FormattedHTMLMessage, FormattedMessage, useIntl } from 'react-intl';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
 import { commonFieldErrorRenderer } from '@navikt/sif-common-core/lib/utils/commonFieldErrorRenderer';
 import { getTypedFormComponents, YesOrNo } from '@navikt/sif-common-formik/lib';
@@ -49,11 +49,21 @@ const IntroPage: React.StatelessComponent = () => {
                 <InformationPoster>
                     <p>
                         Denne søknaden bruker du når du er <strong>selvstendig næringsdrivende eller frilanser</strong>{' '}
-                        og skal søke om utbetaling av omsorgspenger. Dette er i situasjoner du har vært hjemme fra jobb
-                        fordi
+                        og skal søke om utbetaling av omsorgspenger. Hvis du er ansatt i eget AS regnes du som
+                        arbeidstaker, da skal du eller din regnskapsfører{' '}
+                        <Lenke
+                            href="https://www.nav.no/no/bedrift/tjenester-og-skjemaer/nav-og-altinn-tjenester/inntektsmelding"
+                            target="_blank">
+                            sende inntektsmelding til NAV
+                        </Lenke>
+                        .
                     </p>
+                    <p>Du kan søke om omsorgspenger når du har vært hjemme fra jobb fordi</p>
                     <ul>
-                        <li>barnet ikke kan gå i barnehage eller skole når disse åpnes igjen, på grunn av særlige smittevernhensyn</li>
+                        <li>
+                            barnet ikke kan gå i barnehage eller skole når disse åpnes igjen, på grunn av særlige
+                            smittevernhensyn
+                        </li>
                         <li>barnehagen eller skolen er stengt på grunn av koronaviruset</li>
                         <li>barnet eller barnepasser er syk</li>
                     </ul>
