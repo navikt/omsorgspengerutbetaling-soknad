@@ -4,7 +4,7 @@ import { ArrayHelpers, useFormikContext } from 'formik';
 import { Attachment, PersistedFile } from 'common/types/Attachment';
 import {
     attachmentShouldBeProcessed, attachmentShouldBeUploaded, attachmentUploadHasFailed,
-    getPendingAttachmentFromFile, isFileObject, VALID_EXTENSIONS
+    getPendingAttachmentFromFile, isFileObject, mapFileToPersistedFile, VALID_EXTENSIONS
 } from 'common/utils/attachmentUtils';
 import { uploadFile } from '../../api/api';
 import SøknadFormComponents from '../../søknad/SøknadFormComponents';
@@ -94,7 +94,7 @@ const FormikFileUploader: React.FunctionComponent<Props> = ({
         attachment: Attachment,
         replaceFn: FieldArrayReplaceFn
     ) {
-        replaceFn(attachments.indexOf(attachment), attachment);
+        replaceFn(attachments.indexOf(attachment), { ...attachment, file: mapFileToPersistedFile(attachment.file) });
     }
 
     function setAttachmentPendingToFalse(attachment: Attachment) {
