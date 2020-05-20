@@ -28,7 +28,7 @@ const server = express();
 
 server.use(express.json());
 server.use((req, res, next) => {
-    const allowedOrigins = ['https://pleiepengesoknad-mock.nais.oera.no', 'http://localhost:8083'];
+    const allowedOrigins = ['https://pleiepengesoknad-mock.nais.oera.no', 'http://localhost:8080'];
     const requestOrigin = req.headers.origin;
     if (allowedOrigins.indexOf(requestOrigin) >= 0) {
         res.set('Access-Control-Allow-Origin', requestOrigin);
@@ -91,7 +91,7 @@ const readFileSync = (path) => {
 const existsSync = (path) => fs.existsSync(path);
 
 const startServer = () => {
-    const port = process.env.PORT || 8082;
+    const port = 8083;
 
     server.get('/health/isAlive', (req, res) => res.sendStatus(200));
     server.get('/health/isReady', (req, res) => res.sendStatus(200));

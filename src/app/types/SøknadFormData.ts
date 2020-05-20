@@ -1,10 +1,12 @@
 import { Utenlandsopphold } from '@navikt/sif-common-forms/lib//utenlandsopphold/types';
 import { Fosterbarn } from '@navikt/sif-common-forms/lib/fosterbarn/types';
 import { Virksomhet } from '@navikt/sif-common-forms/lib/virksomhet/types';
-import { Attachment } from 'common/types/Attachment';
 import { YesOrNo } from 'common/types/YesOrNo';
 import { FraværDelerAvDag, Periode } from '../../@types/omsorgspengerutbetaling-schema';
 import { AndreUtbetalinger } from './AndreUtbetalinger';
+import { Attachment } from 'common/types/Attachment';
+import { InntektsendringGruppe } from '../components/inntektsendring/types';
+import { initialInntektsendringGruppe } from '../components/inntektsendring/initialdata';
 
 export enum SøknadFormField {
     harForståttRettigheterOgPlikter = 'harForståttRettigheterOgPlikter',
@@ -47,7 +49,9 @@ export enum SøknadFormField {
     harBoddUtenforNorgeSiste12Mnd = 'harBoddUtenforNorgeSiste12Mnd',
     utenlandsoppholdSiste12Mnd = 'utenlandsoppholdSiste12Mnd',
     skalBoUtenforNorgeNeste12Mnd = 'skalBoUtenforNorgeNeste12Mnd',
-    utenlandsoppholdNeste12Mnd = 'utenlandsoppholdNeste12Mnd'
+    utenlandsoppholdNeste12Mnd = 'utenlandsoppholdNeste12Mnd',
+
+    inntektsendring = 'inntektsendring'
 }
 
 export interface SøknadFormData {
@@ -90,6 +94,8 @@ export interface SøknadFormData {
     [SøknadFormField.utenlandsoppholdSiste12Mnd]: Utenlandsopphold[];
     [SøknadFormField.skalBoUtenforNorgeNeste12Mnd]: YesOrNo;
     [SøknadFormField.utenlandsoppholdNeste12Mnd]: Utenlandsopphold[];
+
+    [SøknadFormField.inntektsendring]: InntektsendringGruppe;
 }
 
 export const initialValues: SøknadFormData = {
@@ -129,5 +135,7 @@ export const initialValues: SøknadFormData = {
     [SøknadFormField.harBoddUtenforNorgeSiste12Mnd]: YesOrNo.UNANSWERED,
     [SøknadFormField.utenlandsoppholdSiste12Mnd]: [],
     [SøknadFormField.skalBoUtenforNorgeNeste12Mnd]: YesOrNo.UNANSWERED,
-    [SøknadFormField.utenlandsoppholdNeste12Mnd]: []
+    [SøknadFormField.utenlandsoppholdNeste12Mnd]: [],
+
+    [SøknadFormField.inntektsendring]: initialInntektsendringGruppe
 };
