@@ -1,10 +1,10 @@
-import {Utenlandsopphold} from '@navikt/sif-common-forms/lib//utenlandsopphold/types';
-import {Fosterbarn} from '@navikt/sif-common-forms/lib/fosterbarn/types';
-import {Virksomhet} from '@navikt/sif-common-forms/lib/virksomhet/types';
-import {YesOrNo} from 'common/types/YesOrNo';
-import {FraværDelerAvDag, Periode} from '../../@types/omsorgspengerutbetaling-schema';
-import {AndreUtbetalinger} from './AndreUtbetalinger';
-import {Attachment} from "common/types/Attachment";
+import { Utenlandsopphold } from '@navikt/sif-common-forms/lib//utenlandsopphold/types';
+import { Fosterbarn } from '@navikt/sif-common-forms/lib/fosterbarn/types';
+import { Virksomhet } from '@navikt/sif-common-forms/lib/virksomhet/types';
+import { Attachment } from 'common/types/Attachment';
+import { YesOrNo } from 'common/types/YesOrNo';
+import { FraværDelerAvDag, Periode } from '../../@types/omsorgspengerutbetaling-schema';
+import { AndreUtbetalinger } from './AndreUtbetalinger';
 
 export enum SøknadFormField {
     harForståttRettigheterOgPlikter = 'harForståttRettigheterOgPlikter',

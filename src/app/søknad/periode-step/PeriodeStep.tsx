@@ -14,13 +14,13 @@ import { date1YearAgo, date1YearFromNow } from 'common/utils/dateUtils';
 import intlHelper from 'common/utils/intlUtils';
 import { FraværDelerAvDag, Periode } from '../../../@types/omsorgspengerutbetaling-schema';
 import { StepConfigProps, StepID } from '../../config/stepConfig';
+import { AndreUtbetalinger } from '../../types/AndreUtbetalinger';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import SøknadFormComponents from '../SøknadFormComponents';
 import SøknadStep from '../SøknadStep';
 import DagerMedDelvisFraværList from './components/DagerMedDelvisFraværList';
 import PeriodeMedFulltFraværList from './components/PerioderMedFulltFraværList';
 import './periodeStep.less';
-import { AndreUtbetalinger } from '../../types/AndreUtbetalinger';
 
 const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) => {
     const { values, validateField, validateForm } = useFormikContext<SøknadFormData>();
@@ -57,8 +57,9 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
             <FormBlock>
                 <CounsellorPanel>
                     <p>
-                        Her legger du inn dagene du har hatt fravær fra jobb fordi du har vært hjemme med omsorgsdager.
-                        NAV utbetaler omsorgspenger som hovedregel fra den 4. dagen du har vært hjemme i år.
+                        NAV utbetaler omsorgspenger som hovedregel fra den 4. dagen du har vært hjemme i år. Her skal du
+                        legge inn <strong>alle</strong> dagene du har hatt fravær fra jobb fordi du har vært hjemme med
+                        omsorgsdager, også de tre første dagene som du må dekke selv.
                     </p>
                     <p>Du kan søke om utbetaling for opptil 3 måneder tilbake i tid, og fram til dagens dato.</p>
                     <p>
@@ -215,6 +216,11 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                                             id: AndreUtbetalinger.sykepenger,
                                             value: AndreUtbetalinger.sykepenger,
                                             label: intlHelper(intl, 'andre_utbetalinger.sykepenger')
+                                        },
+                                        {
+                                            id: AndreUtbetalinger.midlertidigkompensasjonsnfri,
+                                            value: AndreUtbetalinger.midlertidigkompensasjonsnfri,
+                                            label: intlHelper(intl, 'andre_utbetalinger.midlertidigkompensasjonsnfri')
                                         }
                                     ]}
                                     validate={validateRequiredList}
