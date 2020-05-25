@@ -13,6 +13,8 @@ import SelvstendigNæringsdrivendeFormPart from './components/SelvstendigNæring
 import { validateYesOrNoIsAnswered } from '@navikt/sif-common-core/lib/validation/fieldValidations';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import { useIntl } from 'react-intl';
+import InntektsendringSkjemaView from '../../components/inntektsendring/components/InntektsendringSkjemaView';
+import { Arbeidstype } from '../../components/inntektsendring/types';
 
 const shouldShowSubmitButton = (søknadFormData: SøknadFormData) => {
     const harHattInntektSomFrilanser: YesOrNo = søknadFormData[SøknadFormField.frilans_harHattInntektSomFrilanser];
@@ -31,6 +33,15 @@ const InntektStep = ({ onValidSubmit }: StepConfigProps) => {
         <SøknadStep id={StepID.INNTEKT} onValidFormSubmit={onValidSubmit} showSubmitButton={showSubmitButton}>
             <Box margin="l" padBottom="l">
                 <FrilansFormPart formValues={values} />
+            </Box>
+            <Box margin={'l'} padBottom={'l'}>
+                <InntektsendringSkjemaView
+                    formikInntektsgruppeRootName={SøknadFormField.inntektsendring}
+                    inntektsendringGruppe={values[SøknadFormField.inntektsendring]}
+                    arbeidstype={Arbeidstype.frilans}
+                    perioderMedFravær={values[SøknadFormField.perioderMedFravær]}
+                    dagerMedDelvisFravær={values[SøknadFormField.dagerMedDelvisFravær]}
+                />
             </Box>
 
             <Box margin="l" padBottom="l">

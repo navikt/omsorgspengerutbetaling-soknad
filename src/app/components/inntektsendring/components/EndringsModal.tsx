@@ -1,9 +1,8 @@
-import * as React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Modal from 'nav-frontend-modal';
 import { Endring } from '../types';
 import { Textarea } from 'nav-frontend-skjema';
-import { Hovedknapp } from 'nav-frontend-knapper';
+import { Knapp } from 'nav-frontend-knapper';
 import { Datovelger, ISODateString } from 'nav-datovelger';
 import datepickerUtils from '@navikt/sif-common-formik/lib/components/formik-datepicker/datepickerUtils';
 import { isDate } from 'moment';
@@ -13,7 +12,7 @@ const setInitialDate = (maybeEndring: Endring | undefined): Date | undefined => 
 };
 
 const setInitialForklaring = (maybeEndring: Endring | undefined): string => {
-    return maybeEndring ? Object.assign<string, string>('', maybeEndring.forklaring) : '';
+    return maybeEndring ? maybeEndring.forklaring : '';
 };
 
 interface Props {
@@ -23,12 +22,7 @@ interface Props {
     onRequestClose: () => void;
 }
 
-const EndringsModal: React.FC<Props> = ({
-    maybeEndring,
-    isOpen,
-    saveEndring,
-    onRequestClose
-}: Props): JSX.Element | null => {
+const EndringsModal: React.FC<Props> = ({ maybeEndring, isOpen, saveEndring, onRequestClose }: Props): JSX.Element => {
     const [newDate, setNewDate] = useState<Date | undefined>(setInitialDate(maybeEndring));
     const [nyForklaring, setNyForklaring] = useState<string>(setInitialForklaring(maybeEndring));
 
@@ -59,7 +53,9 @@ const EndringsModal: React.FC<Props> = ({
                     }
                 }}
             />
-            <Hovedknapp disabled={isValidEndring} onClick={handleSaveEndring} type={'hoved'} title={'lagre endring'} />
+            <Knapp disabled={!isValidEndring} onClick={handleSaveEndring} title={'lagre endring'}>
+                Lagre endring
+            </Knapp>
         </Modal>
     );
 };

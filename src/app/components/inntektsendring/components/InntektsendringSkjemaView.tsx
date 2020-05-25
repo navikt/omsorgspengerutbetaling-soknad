@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useState } from 'react';
 import InntektsendringYesOrNoQuestion from './InntektsendringYesOrNoQuestion';
 import {
     Arbeidstype,
@@ -8,12 +7,13 @@ import {
     InntektsendringSkjema,
     InntektsendringSkjemaFields
 } from '../types';
-import {endringslisteFormikName, yesOrNoFormikName} from '../formikNameUtils';
+import { endringslisteFormikName, yesOrNoFormikName } from '../formikNameUtils';
 import { FraværDelerAvDag, Periode } from '../../../../@types/omsorgspengerutbetaling-schema';
-import EndringsModal from './EndringsModal';
 import { ArrayHelpers, FieldArray } from 'formik';
 import FormBlock from 'common/components/form-block/FormBlock';
 import { getInntektsendringSkjemaByArbeidstype } from '../utils';
+import EndringsradView from './EndringsradView';
+import NyEndringView from './NyEndringView';
 
 interface Props {
     formikInntektsgruppeRootName: string;
@@ -30,19 +30,10 @@ const InntektsendringSkjemaView: React.FC<Props> = ({
     perioderMedFravær,
     dagerMedDelvisFravær
 }: Props): JSX.Element | null => {
-    const [endringToEdit, setEndringToEdit] = useState<Endring | undefined>(undefined);
-    const [endringsmodalIsOpen, setEndringsmodalIsOpen] = useState<boolean>(false);
     const skjema: InntektsendringSkjema = getInntektsendringSkjemaByArbeidstype(inntektsendringGruppe, arbeidstype);
     const endringer = skjema[InntektsendringSkjemaFields.endringer];
 
-    const skalInkludereSkjema: boolean = true;
-
-    const handleModalClose = (): void => {
-        setEndringToEdit(undefined);
-        setEndringsmodalIsOpen(false);
-    };
-
-    const handleSaveEndring = (endring: Endring): void => {};
+    const skalInkludereSkjema: boolean = true; // TODO: Bruk perioder for å bestemme om det skal inkluderes
 
     return skalInkludereSkjema ? (
         <div>
@@ -52,25 +43,40 @@ const InntektsendringSkjemaView: React.FC<Props> = ({
                 <FieldArray
                     name={endringslisteFormikName(formikInntektsgruppeRootName, arbeidstype)}
                     render={(arrayHelpers: ArrayHelpers) => {
+                        const handleSaveEndring = (endring: Endring, index: number): void => {
+                            arrayHelpers.handleReplace(index, endring);
+                        };
+
+                        const handleDeleteEndring = (index: number): void => {
+                            arrayHelpers.remove<Endring>(index);
+                        };
+
                         return (
                             <div>
+                                Endringsliste:
                                 {endringer.map(
-                                    (endring: Endring): JSX.Element => {
-                                        return <div>asdf</div>;
+                                    (endring: Endring, index: number): JSX.Element => {
+                                        return (
+                                            <EndringsradView
+                                                key={`endringsrad-${index}`}
+                                                endring={endring}
+                                                onSaveEditedEndring={(endringToSave) => handleSaveEndring(endringToSave, index)}
+                                                onDeleteEndring={() => handleDeleteEndring(index)}
+                                            />
+                                        );
                                     }
                                 )}
+                                NyEndringView:
+                                <NyEndringView
+                                    onSaveNewEndring={(endring: Endring) => {
+                                        arrayHelpers.insert(endringer.length, endring);
+                                    }}
+                                />
                             </div>
                         );
                     }}
                 />
             </FormBlock>
-
-            <EndringsModal
-                saveEndring={(endring: Endring) => handleSaveEndring(endring)}
-                maybeEndring={endringToEdit}
-                isOpen={endringsmodalIsOpen}
-                onRequestClose={handleModalClose}
-            />
         </div>
     ) : null;
 };

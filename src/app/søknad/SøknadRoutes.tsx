@@ -89,7 +89,7 @@ const SøknadRoutes = () => {
             {isAvailable(StepID.PERIODE, values) && (
                 <Route
                     path={getSøknadRoute(StepID.PERIODE)}
-                    render={() => <PeriodeStep onValidSubmit={() => navigateToNextStepFrom(StepID.PERIODE)} />}
+                    render={() => <PeriodeStep onValidSubmit={() => navigateToNextStepFrom(StepID.PERIODE)}/>}
                 />
             )}
 
@@ -107,20 +107,22 @@ const SøknadRoutes = () => {
             {isAvailable(StepID.INNTEKT, values) && (
                 <Route
                     path={getSøknadRoute(StepID.INNTEKT)}
-                    render={() => <InntektStep onValidSubmit={() => navigateToNextStepFrom(StepID.INNTEKT)} />}
+                    render={() => <InntektStep onValidSubmit={() => {
+                        return navigateToNextStepFrom(StepID.INNTEKT);
+                    }}/>}
                 />
             )}
             {isAvailable(StepID.BARN, values) && (
                 <Route
                     path={getSøknadRoute(StepID.BARN)}
-                    render={() => <BarnStep onValidSubmit={() => navigateToNextStepFrom(StepID.BARN)} />}
+                    render={() => <BarnStep onValidSubmit={() => navigateToNextStepFrom(StepID.BARN)}/>}
                 />
             )}
 
             {isAvailable(StepID.MEDLEMSKAP, values) && (
                 <Route
                     path={getSøknadRoute(StepID.MEDLEMSKAP)}
-                    render={() => <MedlemsskapStep onValidSubmit={() => navigateToNextStepFrom(StepID.MEDLEMSKAP)} />}
+                    render={() => <MedlemsskapStep onValidSubmit={() => navigateToNextStepFrom(StepID.MEDLEMSKAP)}/>}
                 />
             )}
 
@@ -147,13 +149,13 @@ const SøknadRoutes = () => {
             {(isAvailable(RouteConfig.SØKNAD_SENDT_ROUTE, values) || søknadHasBeenSent) && (
                 <Route
                     path={RouteConfig.SØKNAD_SENDT_ROUTE}
-                    render={() => <ConfirmationPage kvitteringInfo={kvitteringInfo} />}
+                    render={() => <ConfirmationPage kvitteringInfo={kvitteringInfo}/>}
                 />
             )}
 
-            <Route path={RouteConfig.ERROR_PAGE_ROUTE} component={GeneralErrorPage} />
+            <Route path={RouteConfig.ERROR_PAGE_ROUTE} component={GeneralErrorPage}/>
 
-            <Redirect to={RouteConfig.WELCOMING_PAGE_ROUTE} />
+            <Redirect to={RouteConfig.WELCOMING_PAGE_ROUTE}/>
         </Switch>
     );
 };
