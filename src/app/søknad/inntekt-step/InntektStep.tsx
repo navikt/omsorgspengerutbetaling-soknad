@@ -15,6 +15,7 @@ import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import { useIntl } from 'react-intl';
 import InntektsendringSkjemaView from '../../components/inntektsendring/components/InntektsendringSkjemaView';
 import { Arbeidstype } from '../../components/inntektsendring/types';
+import CounsellorPanel from 'common/components/counsellor-panel/CounsellorPanel';
 
 const shouldShowSubmitButton = (søknadFormData: SøknadFormData) => {
     const harHattInntektSomFrilanser: YesOrNo = søknadFormData[SøknadFormField.frilans_harHattInntektSomFrilanser];
@@ -31,6 +32,24 @@ const InntektStep = ({ onValidSubmit }: StepConfigProps) => {
 
     return (
         <SøknadStep id={StepID.INNTEKT} onValidFormSubmit={onValidSubmit} showSubmitButton={showSubmitButton}>
+            <Box padBottom={'l'}>
+                <CounsellorPanel>
+                    <Box padBottom={'l'}>
+                        Når vi spør om de 4 siste ukene mener vi de 4 siste ukene før <strong>den første</strong> dagen
+                        du søker om utbetaling av omsorgspenger.
+                    </Box>
+                    <Box padBottom={'l'}>
+                        Hvis du søker om en periode som er i direkte sammenheng med en periode du har søkt om tidligere,
+                        menes det de 4 siste ukene før den første dagen i <strong>hele perioden</strong>
+                    </Box>
+                    <Box padBottom={'l'}>
+                        Hvis du ikke har vært i jobb de 4 siste ukene, men har hatt omsorgspenger, sykepenger,
+                        dagpenger, foreldrepenger, svangerskapspenger, pleiepenger eller opplæringspenger, er dette
+                        likestilt med jobb.
+                    </Box>
+                </CounsellorPanel>
+            </Box>
+
             <Box margin="l" padBottom="l">
                 <FrilansFormPart formValues={values} />
             </Box>
