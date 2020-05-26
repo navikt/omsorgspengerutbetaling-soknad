@@ -272,11 +272,11 @@
     "psg-temp.lenkepanel.url": "https://www.nav.no/no/nav-og-samfunn/kontakt-nav/relatert-informasjon/ta-bilde-av-vedleggene-med-mobilen",
     "psg-temp.lenkepanel.text": "Mer hjelp til å laste opp vedlegg (åpnes i et nytt vindu).",
 
-    "inntektsendring.liste.knapp.endre": "Endre",
+    "inntektsendring.liste.knapp.endre": "Rediger endring",
     "inntektsendring.liste.knapp.fjern": "Fjern",
     "inntektsendring.modal.textarea.label": "Forklar hva som har endret seg i arbeidssituasjonen din",
     "inntektsendring.modal.contantLabel": "Legg til endring i arbeidssituasjon",
     "inntektsendring.modal.lagre_knapp.tekst": "Lagre endring",
-    "inntektsendring.ny_endring.button_tekst": "Ny endring",
+    "inntektsendring.ny_endring.button_tekst": "Legg til endring",
     "inntektsendring.yesorno.spm": "Du har opphold mellom dager du søker utbetaling for. Har du hatt endring i din arbeidssituasjon mellom den første og den siste dagen du søker om utbetaling for?"
 }
