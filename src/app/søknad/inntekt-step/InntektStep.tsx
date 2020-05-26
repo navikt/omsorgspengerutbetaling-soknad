@@ -34,6 +34,7 @@ const InntektStep = ({ onValidSubmit }: StepConfigProps) => {
             <Box margin="l" padBottom="l">
                 <FrilansFormPart formValues={values} />
             </Box>
+
             <Box margin={'l'} padBottom={'l'}>
                 <InntektsendringSkjemaView
                     formikInntektsgruppeRootName={SøknadFormField.inntektsendring}

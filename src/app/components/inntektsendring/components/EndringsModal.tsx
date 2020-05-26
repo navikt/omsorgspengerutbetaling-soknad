@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import Modal from 'nav-frontend-modal';
 import { Endring } from '../types';
 import { Textarea } from 'nav-frontend-skjema';
@@ -6,6 +6,8 @@ import { Knapp } from 'nav-frontend-knapper';
 import { Datovelger, ISODateString } from 'nav-datovelger';
 import datepickerUtils from '@navikt/sif-common-formik/lib/components/formik-datepicker/datepickerUtils';
 import { isDate } from 'moment';
+import intlHelper from 'common/utils/intlUtils';
+import { useIntl } from 'react-intl';
 
 const setInitialDate = (maybeEndring: Endring | undefined): Date | undefined => {
     return maybeEndring ? new Date(maybeEndring.dato.getTime()) : undefined;
@@ -23,7 +25,7 @@ interface Props {
 }
 
 const EndringsModal: React.FC<Props> = ({ maybeEndring, isOpen, saveEndring, onRequestClose }: Props): JSX.Element => {
-
+    const intl = useIntl();
     const [newDate, setNewDate] = useState<Date | undefined>(setInitialDate(maybeEndring));
     const [nyForklaring, setNyForklaring] = useState<string>(setInitialForklaring(maybeEndring));
 
@@ -43,11 +45,14 @@ const EndringsModal: React.FC<Props> = ({ maybeEndring, isOpen, saveEndring, onR
     }, [maybeEndring, isOpen]);
 
     return (
-        <Modal isOpen={isOpen} onRequestClose={onRequestClose} contentLabel={'Legg til endring i arbeidssituasjon'}>
+        <Modal
+            isOpen={isOpen}
+            onRequestClose={onRequestClose}
+            contentLabel={intlHelper(intl, 'inntektsendring.modal.contantLabel')}>
             <Textarea
                 value={nyForklaring}
                 id={'inntektsendring.endringsmodal.textarea'}
-                label={'Forklar hva som har endret seg i arbeidssituasjonen din'}
+                label={intlHelper(intl, 'inntektsendring.modal.textarea.label')}
                 onChange={(evt) => setNyForklaring(evt.target.value)}
             />
             <Datovelger
@@ -61,8 +66,12 @@ const EndringsModal: React.FC<Props> = ({ maybeEndring, isOpen, saveEndring, onR
                     }
                 }}
             />
-            <Knapp disabled={!isValidEndring} onClick={handleSaveEndring} title={'lagre endring'}>
-                Lagre endring
+            <Knapp
+                htmlType={'button'}
+                disabled={!isValidEndring}
+                onClick={handleSaveEndring}
+                title={intlHelper(intl, 'inntektsendring.modal.lagre_knapp.tekst')}>
+                {intlHelper(intl, 'inntektsendring.modal.lagre_knapp.tekst')}
             </Knapp>
         </Modal>
     );
