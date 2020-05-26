@@ -20,7 +20,10 @@ const NyEndringView: React.FC<Props> = ({onSaveNewEndring}: Props): JSX.Element 
             <Knapp title={'Ny endring'} onClick={() => setNyEndringModalIsOpen(true)}>Ny Endring</Knapp>
 
             <EndringsModal
-                saveEndring={(endring: Endring) => handleSaveEndring(endring)}
+                saveEndring={(endring: Endring) => {
+                    setNyEndringModalIsOpen(false);
+                    return handleSaveEndring(endring);
+                }}
                 maybeEndring={undefined}
                 isOpen={nyEndringModalIsOpen}
                 onRequestClose={() => setNyEndringModalIsOpen(false)}

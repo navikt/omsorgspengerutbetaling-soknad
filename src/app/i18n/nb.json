@@ -270,5 +270,7 @@
     "psg-temp.icon.label.horizontal": "Bildet har ikke riktig retning",
     "psg-temp.icon.label.shadow": "Bildet har skygge på dokumentet",
     "psg-temp.lenkepanel.url": "https://www.nav.no/no/nav-og-samfunn/kontakt-nav/relatert-informasjon/ta-bilde-av-vedleggene-med-mobilen",
-    "psg-temp.lenkepanel.text": "Mer hjelp til å laste opp vedlegg (åpnes i et nytt vindu)."
+    "psg-temp.lenkepanel.text": "Mer hjelp til å laste opp vedlegg (åpnes i et nytt vindu).",
+
+    "inntektsendring.yesorno.spm": "Du har opphold mellom dager du søker utbetaling for. Har du hatt endring i din arbeidssituasjon mellom den første og den siste dagen du søker om utbetaling for?"
 }

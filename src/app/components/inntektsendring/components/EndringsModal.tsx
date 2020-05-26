@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import Modal from 'nav-frontend-modal';
 import { Endring } from '../types';
 import { Textarea } from 'nav-frontend-skjema';
@@ -23,6 +23,7 @@ interface Props {
 }
 
 const EndringsModal: React.FC<Props> = ({ maybeEndring, isOpen, saveEndring, onRequestClose }: Props): JSX.Element => {
+
     const [newDate, setNewDate] = useState<Date | undefined>(setInitialDate(maybeEndring));
     const [nyForklaring, setNyForklaring] = useState<string>(setInitialForklaring(maybeEndring));
 
@@ -31,8 +32,15 @@ const EndringsModal: React.FC<Props> = ({ maybeEndring, isOpen, saveEndring, onR
     const handleSaveEndring = (): void => {
         if (newDate) {
             saveEndring({ dato: newDate, forklaring: nyForklaring });
+            setNewDate(setInitialDate(maybeEndring));
+            setNyForklaring(setInitialForklaring(maybeEndring));
         }
     };
+
+    useEffect(() => {
+        setNewDate(setInitialDate(maybeEndring));
+        setNyForklaring(setInitialForklaring(maybeEndring));
+    }, [maybeEndring, isOpen]);
 
     return (
         <Modal isOpen={isOpen} onRequestClose={onRequestClose} contentLabel={'Legg til endring i arbeidssituasjon'}>

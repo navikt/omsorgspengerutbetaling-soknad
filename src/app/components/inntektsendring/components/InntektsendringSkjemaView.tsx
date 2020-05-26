@@ -44,7 +44,7 @@ const InntektsendringSkjemaView: React.FC<Props> = ({
                     name={endringslisteFormikName(formikInntektsgruppeRootName, arbeidstype)}
                     render={(arrayHelpers: ArrayHelpers) => {
                         const handleSaveEndring = (endring: Endring, index: number): void => {
-                            arrayHelpers.handleReplace(index, endring);
+                            arrayHelpers.replace(index, endring);
                         };
 
                         const handleDeleteEndring = (index: number): void => {
@@ -55,16 +55,16 @@ const InntektsendringSkjemaView: React.FC<Props> = ({
                             <div>
                                 Endringsliste:
                                 {endringer.map(
-                                    (endring: Endring, index: number): JSX.Element => {
-                                        return (
-                                            <EndringsradView
-                                                key={`endringsrad-${index}`}
-                                                endring={endring}
-                                                onSaveEditedEndring={(endringToSave) => handleSaveEndring(endringToSave, index)}
-                                                onDeleteEndring={() => handleDeleteEndring(index)}
-                                            />
-                                        );
-                                    }
+                                    (endring: Endring, index: number): JSX.Element => (
+                                        <EndringsradView
+                                            key={`endringsrad-${index}`}
+                                            endring={endring}
+                                            onSaveEditedEndring={(endringToSave) =>
+                                                handleSaveEndring(endringToSave, index)
+                                            }
+                                            onDeleteEndring={() => handleDeleteEndring(index)}
+                                        />
+                                    )
                                 )}
                                 NyEndringView:
                                 <NyEndringView

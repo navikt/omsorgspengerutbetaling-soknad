@@ -20,7 +20,10 @@ const EndringsradView: React.FC<Props> = ({ endring, onSaveEditedEndring, onDele
             <Knapp title={'Endre'} type={'flat'} onClick={() => setEndringsmodalIsOpen(true)}>Endre</Knapp>
             <Knapp title={'Fjern'} type={'flat'} onClick={onDeleteEndring}>Fjern</Knapp>
             <EndringsModal
-                saveEndring={(endringToSave: Endring) => onSaveEditedEndring(endringToSave)}
+                saveEndring={(endringToSave: Endring) => {
+                    setEndringsmodalIsOpen(false);
+                    return onSaveEditedEndring(endringToSave);
+                }}
                 maybeEndring={endring}
                 isOpen={endringsmodalIsOpen}
                 onRequestClose={() => setEndringsmodalIsOpen(false)}
