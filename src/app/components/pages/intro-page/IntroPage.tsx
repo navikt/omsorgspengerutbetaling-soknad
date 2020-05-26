@@ -67,6 +67,12 @@ const IntroPage: React.StatelessComponent = () => {
                         <li>barnehagen eller skolen er stengt på grunn av koronaviruset</li>
                         <li>barnet eller barnepasser er syk</li>
                     </ul>
+                    <p>
+                        Vær oppmerksom på at om du har søkt om <a href='https://www.nav.no/arbeid/inntektskompensasjon' target="_blank" rel="noopener noreferrer">kompensasjon for tapt inntekt som selvstendig næringsdrivende og/eller frilanser</a>, kan du ikke søke om omsorgspenger for samme periode.
+                    </p>
+                    <p>
+                        Hvis du har søkt om kompensasjon, men nå ønsker å søke om omsorgspenger, må du trekke din søknad om kompensasjon. Dette gjør du ved å <a href='https://www.nav.no/person/kontakt-oss/nb/skriv-til-oss' target='_blank' rel='noopener noreferrer'>skrive en beskjed til oss</a>. Under tema velger du jobbsøker (selv om du ikke er jobbsøker).
+                    </p>
                 </InformationPoster>
             </Box>
             <FormBlock margin="xxl">
@@ -118,7 +124,7 @@ const IntroPage: React.StatelessComponent = () => {
                                     <FormBlock>
                                         <PageForm.YesOrNoQuestion
                                             name={PageFormField.smittevernHensyn}
-                                            legend="Er du hjemme med barn på grunn av særlige smittevernhensyn?"
+                                            legend="Har du vært hjemme med barn på grunn av særlige smittevernhensyn?"
                                             info={
                                                 <div className={'smittevern-info'}>
                                                     <FormattedHTMLMessage id={'steg.en.smittevern.info'} />
@@ -132,7 +138,7 @@ const IntroPage: React.StatelessComponent = () => {
                                     <FormBlock>
                                         <PageForm.YesOrNoQuestion
                                             name={PageFormField.hjemmePgaStengt}
-                                            legend="Er du hjemme fra jobb fordi skolen/barnehagen er stengt på grunn av koronaviruset?"
+                                            legend="Har du vært hjemme fra jobb fordi skolen/barnehagen er stengt på grunn av koronaviruset?"
                                         />
                                     </FormBlock>
                                 )}
@@ -140,7 +146,7 @@ const IntroPage: React.StatelessComponent = () => {
                                     <FormBlock>
                                         <PageForm.YesOrNoQuestion
                                             name={PageFormField.hjemmePgaSykdom}
-                                            legend="Er du hjemme fra jobb fordi barnet eller barnepasser er blitt syk?"
+                                            legend="Har du vært hjemme fra jobb fordi barnet eller barnepasser er blitt syk?"
                                         />
                                     </FormBlock>
                                 )}
