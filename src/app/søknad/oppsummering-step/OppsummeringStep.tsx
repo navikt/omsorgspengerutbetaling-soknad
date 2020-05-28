@@ -32,6 +32,7 @@ import JaNeiSvar from './components/JaNeiSvar';
 import { validateSoknadApiData } from '../../validation/soknadApiDataValidation';
 import { Feiloppsummering, FeiloppsummeringFeil } from 'nav-frontend-skjema';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
+import EndringArbeidssituasjonSummary, { Arbeidstype } from './components/EndringArbeidssituasjonSummary';
 
 interface Props {
     onApplicationSent: (apiValues: SøknadApiData, søkerdata: Søkerdata) => void;
@@ -128,7 +129,15 @@ const OppsummeringStep: React.StatelessComponent<Props> = ({ onApplicationSent }
                         </SummaryBlock>
                     )}
                     <FrilansSummary frilans={apiValues.frilans} />
+                    <EndringArbeidssituasjonSummary
+                        type={Arbeidstype.frilans}
+                        endringArbeidssituasjon={apiValues.endringArbeidssituasjon}
+                    />
                     <SelvstendigSummary selvstendigVirksomheter={apiValues.selvstendigVirksomheter} />
+                    <EndringArbeidssituasjonSummary
+                        type={Arbeidstype.selvstendig}
+                        endringArbeidssituasjon={apiValues.endringArbeidssituasjon}
+                    />
                     <MedlemskapSummaryView bosteder={apiValues.bosteder} />
 
                     {apiValues.vedlegg.length === 0 && apiValues.hjemmePgaSmittevernhensyn && (

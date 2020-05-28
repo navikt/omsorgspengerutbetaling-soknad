@@ -96,7 +96,7 @@ const renderVirksomhetSummary = (virksomhet: VirksomhetApiData, intl: IntlShape)
     );
 };
 
-function SelvstendigSummary({ selvstendigVirksomheter = [] }: Props) {
+const SelvstendigSummary = ({ selvstendigVirksomheter = [] }: Props) => {
     const intl = useIntl();
     const harSelvstendigVirksomheter = selvstendigVirksomheter.length > 0;
     return (
@@ -114,6 +114,6 @@ function SelvstendigSummary({ selvstendigVirksomheter = [] }: Props) {
             )}
         </>
     );
-}
+};
 
 export default SelvstendigSummary;
