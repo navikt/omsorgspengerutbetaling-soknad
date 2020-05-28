@@ -1,20 +1,20 @@
 import * as React from 'react';
-import { useFormikContext } from 'formik';
-import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+import {useFormikContext} from 'formik';
+import {AlertStripeAdvarsel} from 'nav-frontend-alertstriper';
 import Box from 'common/components/box/Box';
 import FormBlock from 'common/components/form-block/FormBlock';
-import { YesOrNo } from 'common/types/YesOrNo';
-import { StepConfigProps, StepID } from '../../config/stepConfig';
-import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
+import {YesOrNo} from 'common/types/YesOrNo';
+import {StepConfigProps, StepID} from '../../config/stepConfig';
+import {SøknadFormData, SøknadFormField} from '../../types/SøknadFormData';
 import SøknadStep from '../SøknadStep';
 import FrilansFormPart from './components/FrilansFormPart';
 import SøknadFormComponents from '../SøknadFormComponents';
 import SelvstendigNæringsdrivendeFormPart from './components/SelvstendigNæringsdrivendePart';
-import { validateYesOrNoIsAnswered } from '@navikt/sif-common-core/lib/validation/fieldValidations';
+import {validateYesOrNoIsAnswered} from '@navikt/sif-common-core/lib/validation/fieldValidations';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
-import { useIntl } from 'react-intl';
+import {useIntl} from 'react-intl';
 import InntektsendringSkjemaView from '../../components/inntektsendring/components/InntektsendringSkjemaView';
-import { Arbeidstype } from '../../components/inntektsendring/types';
+import {Arbeidstype} from '../../components/inntektsendring/types';
 import CounsellorPanel from 'common/components/counsellor-panel/CounsellorPanel';
 
 const shouldShowSubmitButton = (søknadFormData: SøknadFormData) => {
@@ -54,7 +54,7 @@ const InntektStep = ({ onValidSubmit }: StepConfigProps) => {
                 <FrilansFormPart formValues={values} />
             </Box>
 
-            <Box margin={'l'} padBottom={'l'}>
+            { values[SøknadFormField.frilans_harHattInntektSomFrilanser] === YesOrNo.YES && (
                 <InntektsendringSkjemaView
                     formikInntektsgruppeRootName={SøknadFormField.inntektsendring}
                     inntektsendringGruppe={values[SøknadFormField.inntektsendring]}
@@ -62,11 +62,22 @@ const InntektStep = ({ onValidSubmit }: StepConfigProps) => {
                     perioderMedFravær={values[SøknadFormField.perioderMedFravær]}
                     dagerMedDelvisFravær={values[SøknadFormField.dagerMedDelvisFravær]}
                 />
-            </Box>
+            )}
 
             <Box margin="l" padBottom="l">
                 <SelvstendigNæringsdrivendeFormPart formValues={values} />
             </Box>
+
+            {  values.selvstendig_virksomheter && values.selvstendig_virksomheter.length > 0 && (
+                <InntektsendringSkjemaView
+                    formikInntektsgruppeRootName={SøknadFormField.inntektsendring}
+                    inntektsendringGruppe={values[SøknadFormField.inntektsendring]}
+                    arbeidstype={Arbeidstype.selvstendig}
+                    perioderMedFravær={values[SøknadFormField.perioderMedFravær]}
+                    dagerMedDelvisFravær={values[SøknadFormField.dagerMedDelvisFravær]}
+                />
+            )}
+
             {!showSubmitButton && (
                 <FormBlock margin="l">
                     <AlertStripeAdvarsel>Du må velge minst én av situasjonene over. </AlertStripeAdvarsel>

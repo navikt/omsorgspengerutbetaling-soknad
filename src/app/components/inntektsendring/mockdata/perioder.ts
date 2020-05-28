@@ -1,56 +1,88 @@
 import {FraværDelerAvDag, Periode} from "../../../../@types/omsorgspengerutbetaling-schema";
 
 
-const fraværDelerAvDag20200101Onsdag: FraværDelerAvDag = {
+export const fraværDelerAvDag20200101Onsdag: FraværDelerAvDag = {
     dato: new Date('2020-01-01'),
     timer: 1
 };
-const fraværDelerAvDag20200102Torsdag: FraværDelerAvDag = {
+export const fraværDelerAvDag20200102Torsdag: FraværDelerAvDag = {
     dato: new Date('2020-01-02'),
     timer: 1
 };
-const fraværDelerAvDag20200103Fredag: FraværDelerAvDag = {
+export const fraværDelerAvDag20200103Fredag: FraværDelerAvDag = {
     dato: new Date('2020-01-03'),
     timer: 1
 };
-const fraværDelerAvDag20200104Lørdag: FraværDelerAvDag = {
+export const fraværDelerAvDag20200104Lørdag: FraværDelerAvDag = {
     dato: new Date('2020-01-04'),
     timer: 1
 };
-const fraværDelerAvDag20200105Søndag: FraværDelerAvDag = {
+export const fraværDelerAvDag20200105Søndag: FraværDelerAvDag = {
     dato: new Date('2020-01-05'),
     timer: 1
 };
-const fraværDelerAvDag20200106Mandag: FraværDelerAvDag = {
+export const fraværDelerAvDag20200106Mandag: FraværDelerAvDag = {
     dato: new Date('2020-01-06'),
     timer: 1
 };
-const fraværDelerAvDag20200107Tirsdag: FraværDelerAvDag = {
+export const fraværDelerAvDag20200107Tirsdag: FraværDelerAvDag = {
     dato: new Date('2020-01-07'),
     timer: 1
 };
 
 
-const periodeFom20200101OnsdagTom20200101Onsdag: Periode = {
-    fom: new Date('2020-01-01'),
-    tom: new Date('2020-01-01')
+export const periode0501Fredag0505Tirsdag: Periode = {
+    fom: new Date('2020-05-01'),
+    tom: new Date('2020-05-05')
 };
-const periodeFom20200101OnsdagTom20200103Fredag: Periode = {
-    fom: new Date('2020-01-01'),
-    tom: new Date('2020-01-03')
+export const periode0506Onsdag0510Søndag: Periode = {
+    fom: new Date('2020-05-06'),
+    tom: new Date('2020-05-10')
 };
-const periodeFom20200101OnsdagTom20200106Mandag: Periode = {
-    fom: new Date('2020-01-01'),
-    tom: new Date('2020-01-03')
+export const periode0511Mandag0531Søndag: Periode = {
+    fom: new Date('2020-05-11'),
+    tom: new Date('2020-05-31')
 };
-const periodeFom20200101OnsdagTom20200107Tirsdag: Periode = {
-    fom: new Date('2020-01-01'),
-    tom: new Date('2020-01-03')
+export const periode0601Mandag0607Søndag: Periode = {
+    fom: new Date('2020-06-01'),
+    tom: new Date('2020-06-07')
 };
 
+export const periode0506Onsdag0508Fredag: Periode = {
+    fom: new Date('2020-05-06'),
+    tom: new Date('2020-05-08')
+};
 
-const tomListeAvFraværDelerAvDag: FraværDelerAvDag[] = [];
-const etEllementListeAvFraværDelerAvDag: FraværDelerAvDag[] = [fraværDelerAvDag20200101];
-const listeAvFraværDelerAvDag: FraværDelerAvDag[] = [];
+export const godBlandingPerioder: Periode[] = [
+    periode0501Fredag0505Tirsdag,
+    periode0506Onsdag0510Søndag,
+    periode0511Mandag0531Søndag,
+    periode0601Mandag0607Søndag
+];
+export const godBlandingDager: FraværDelerAvDag[] = [
+    {dato: new Date('2020-05-06'), timer: 1},
+    {dato: new Date('2020-05-07'), timer: 1},
+    {dato: new Date('2020-05-08'), timer: 1},
+    {dato: new Date('2020-05-09'), timer: 1},
+    {dato: new Date('2020-05-010'), timer: 1}
+];
 
-const listeAvPeriode: Periode[] = [];
+export const mangeConnectedPerioder: Periode[] = [
+    periode0501Fredag0505Tirsdag,
+    periode0506Onsdag0510Søndag,
+    periode0511Mandag0531Søndag,
+    periode0601Mandag0607Søndag
+];
+
+export const mangePerioderMedEtHull: Periode[] = [
+    periode0501Fredag0505Tirsdag,
+    periode0511Mandag0531Søndag,
+    periode0601Mandag0607Søndag
+];
+
+export const mangeConnectedPerioderMedHoppIEnHelg: Periode[] = [
+    periode0501Fredag0505Tirsdag,
+    periode0506Onsdag0508Fredag,
+    periode0511Mandag0531Søndag,
+    periode0601Mandag0607Søndag
+];

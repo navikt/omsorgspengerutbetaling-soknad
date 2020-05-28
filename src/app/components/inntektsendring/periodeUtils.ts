@@ -68,49 +68,71 @@ export const getFirstDateRange = (dateRanges: DateRange[]): [DateRange | undefin
     return [first, remaining];
 };
 
-export const dateInDateRange = (date: Date, dateRange: DateRange): boolean =>
-    (moment(date).isSame(dateRange.from) || moment(date).isAfter(dateRange.from)) &&
-    (moment(date).isSame(dateRange.to) || moment(date).isBefore(dateRange.to));
+export const isConnectingOrOverlappingDateRange = (date: Date, dateRange: DateRange): boolean => {
+    const tomorrow = new Date(date.getTime());
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    return (
+        (moment(tomorrow).isSame(dateRange.from) || moment(tomorrow).isAfter(dateRange.from)) &&
+        (moment(date).isSame(dateRange.to) || moment(date).isBefore(dateRange.to))
+    );
+};
+
+export const isFriday = (date: Date): boolean => {
+    return getWeekdayName(date) === Weekday.friday;
+};
 
 export const isSaturday = (date: Date): boolean => {
     return getWeekdayName(date) === Weekday.saturday;
 };
 
 export const isSunday = (date: Date): boolean => {
-    return getWeekdayName(date) === Weekday.saturday;
+    return getWeekdayName(date) === Weekday.sunday;
 };
 
-export const jumpOneDay = (date: Date): Date => new Date(date.getDate() + 1);
-export const jumpTwoDays = (date: Date): Date => jumpOneDay(jumpOneDay(date));
+export const jumpOneDay = (date: Date): Date => {
+    const tomorrow = new Date(date.getTime());
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    return tomorrow;
+};
 
-export const changeLane = (
-    currentDateRange: DateRange | undefined,
+export const jumpTwoDays = (date: Date): Date => jumpOneDay(jumpOneDay(date));
+export const jumpThreeDays = (date: Date): Date => jumpOneDay(jumpOneDay(jumpOneDay(date)));
+
+export const changeLaneIfPossible = (
+    currentLane: DateRange | undefined,
     remainingLanes: DateRange[]
 ): [DateRange | undefined, DateRange[]] => {
-    if (currentDateRange === undefined) {
+    if (currentLane === undefined) {
         return [undefined, remainingLanes];
     }
+    const date = currentLane.to;
     const maybeNextLaneIndex: number = remainingLanes.findIndex((lane: DateRange) =>
-        dateInDateRange(currentDateRange.to, lane)
+        isConnectingOrOverlappingDateRange(date, lane)
     );
-    if (maybeNextLaneIndex == -1) {
-        // Fant ingen passende lane å bytte til, men må sjekke etter lørdag og søndag.
-        if (isSaturday(currentDateRange.to)) {
-            changeLane({ ...currentDateRange, to: jumpTwoDays(currentDateRange.to) }, remainingLanes);
+    if (maybeNextLaneIndex === -1) {
+        // Fant ingen passende lane å bytte til, men må sjekke etter fredag, lørdag og søndag.
+        if (isFriday(date)) {
+            return changeLaneIfPossible({ ...currentLane, to: jumpThreeDays(date) }, remainingLanes);
         }
-        if (isSunday(currentDateRange.to)) {
-            changeLane({ ...currentDateRange, to: jumpOneDay(currentDateRange.to) }, remainingLanes);
+        if (isSaturday(date)) {
+            return changeLaneIfPossible({ ...currentLane, to: jumpTwoDays(date) }, remainingLanes);
+        }
+        if (isSunday(date)) {
+            return changeLaneIfPossible({ ...currentLane, to: jumpOneDay(date) }, remainingLanes);
         }
         return [undefined, remainingLanes];
     } else {
         return [
             remainingLanes[maybeNextLaneIndex],
-            remainingLanes.filter((lane, index) => {
-                return index === maybeNextLaneIndex;
-            })
+            remainingLanes.filter((lane, index) => index !== maybeNextLaneIndex)
         ];
     }
 };
+
+export const nextLaneToDateIsTheLatestDate = (nextLane: DateRange, remainingLanesUpdated: DateRange[]): boolean =>
+    remainingLanesUpdated.filter((lane: DateRange) => {
+        return moment(nextLane.to).isBefore(lane.to);
+    }).length === 0;
 
 export const digThroughTime = (drivingThroughTownStatus: DrivingThroughTownStatus): DrivingThroughTownStatus => {
     const { currentDateRange, remainingLanes, lanesInThePast, result } = drivingThroughTownStatus;
@@ -132,7 +154,16 @@ export const digThroughTime = (drivingThroughTownStatus: DrivingThroughTownStatu
         }
     } else {
         if (remainingLanes.length > 0) {
-            const [nextLane, remainingLanesUpdated] = changeLane(currentDateRange, remainingLanes);
+            const [nextLane, remainingLanesUpdated] = changeLaneIfPossible(currentDateRange, remainingLanes);
+
+            if (nextLane && nextLaneToDateIsTheLatestDate(nextLane, remainingLanesUpdated)) {
+                return {
+                    currentDateRange: nextLane,
+                    remainingLanes: remainingLanesUpdated,
+                    lanesInThePast: currentDateRange ? [...lanesInThePast, currentDateRange] : lanesInThePast,
+                    result: DrivingResult.noWeekdayJumps
+                };
+            }
 
             if (currentDateRange && nextLane) {
                 return remainingLanesUpdated.length > 0
@@ -163,15 +194,17 @@ export const digThroughTime = (drivingThroughTownStatus: DrivingThroughTownStatu
     }
 };
 
-export const harPerioderMedHopp = (perioderMedFravær: Periode[], dagerMedDelvisFravær: FraværDelerAvDag[]) => {
+export const harPerioderMedHopp = (perioderMedFravær: Periode[], dagerMedDelvisFravær: FraværDelerAvDag[]): boolean => {
     const ranges: DateRange[] = [...perioderMedFravær, ...dagerMedDelvisFravær.map(fraværDelerAvDagToPeriode)].map(
         periodeToDateRange
     );
 
-    return digThroughTime({
-        currentDateRange: undefined,
-        remainingLanes: ranges,
-        lanesInThePast: [],
-        result: DrivingResult.hasntStarted
-    });
+    return (
+        digThroughTime({
+            currentDateRange: undefined,
+            remainingLanes: ranges,
+            lanesInThePast: [],
+            result: DrivingResult.hasntStarted
+        }).result === DrivingResult.hasWeekdayJumps
+    );
 };
