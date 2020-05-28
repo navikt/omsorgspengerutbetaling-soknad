@@ -19,6 +19,7 @@ import { mapFrilansToApiData } from './formToApiMaps/mapFrilansToApiData';
 import { mapVirksomhetToVirksomhetApiData } from './formToApiMaps/mapVirksomhetToApiData';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import { attachmentUploadHasFailed } from 'common/utils/attachmentUtils';
+import { settInnEndringArbeidssituasjon } from './formToApiMaps/mapInntektsendringTilApiData';
 
 export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShape): SøknadApiData => {
     const {
@@ -37,6 +38,7 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
         dokumenter,
 
         // Inntekt
+        frilans_harHattInntektSomFrilanser,
         frilans_startdato,
         frilans_jobberFortsattSomFrilans,
         selvstendig_harHattInntektSomSN,
@@ -52,7 +54,9 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
         harBoddUtenforNorgeSiste12Mnd,
         utenlandsoppholdSiste12Mnd,
         skalBoUtenforNorgeNeste12Mnd,
-        utenlandsoppholdNeste12Mnd
+        utenlandsoppholdNeste12Mnd,
+
+        inntektsendring
     } = formValues;
 
     const yesOrNoQuestions: YesNoSpørsmålOgSvar[] = [
@@ -101,7 +105,14 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
             selvstendig_virksomheter
         ),
         hjemmePgaSmittevernhensyn: hemmeligJaNeiSporsmal === YesOrNo.YES,
-        vedlegg: dokumenter.filter((attachment) => !attachmentUploadHasFailed(attachment)).map(({ url }) => url!)
+        vedlegg: dokumenter.filter((attachment) => !attachmentUploadHasFailed(attachment)).map(({ url }) => url!),
+        endringArbeidssituasjon: settInnEndringArbeidssituasjon(
+            perioderMedFravær,
+            dagerMedDelvisFravær,
+            frilans_harHattInntektSomFrilanser,
+            selvstendig_virksomheter,
+            inntektsendring
+        )
     };
 
     if (har_fosterbarn === YesOrNo.YES && har_fosterbarn.length > 0) {

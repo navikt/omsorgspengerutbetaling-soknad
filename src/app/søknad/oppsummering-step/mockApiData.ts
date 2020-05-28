@@ -136,5 +136,6 @@ export const mock1: SøknadApiData = {
             næringsinntekt: 12345678,
             fiskerErPåBladB: false
         }
-    ]
+    ],
+    endringArbeidssituasjon: null
 };

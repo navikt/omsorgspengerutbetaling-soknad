@@ -79,6 +79,18 @@ export interface FosterbarnApi {
     fødselsnummer: string;
 }
 
+export interface EndringApiData {
+    dato: ApiStringDate;
+    forklaring: string;
+}
+
+export interface EndringArbeidssituasjon {
+    harEndringFrilans: boolean;
+    endringerFrilans: EndringApiData[];
+    harEndringSelvstendig: boolean;
+    endringerSelvstendig: EndringApiData[];
+}
+
 export interface SøknadApiData {
     språk: Locale;
     bekreftelser: {
@@ -95,4 +107,5 @@ export interface SøknadApiData {
     selvstendigVirksomheter: VirksomhetApiData[];
     hjemmePgaSmittevernhensyn: boolean;
     vedlegg: string[];
+    endringArbeidssituasjon: EndringArbeidssituasjon | null;
 }
