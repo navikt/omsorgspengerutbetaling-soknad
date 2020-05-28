@@ -61,7 +61,7 @@ const InntektsendringSkjemaView: React.FC<Props> = ({
                             return (
                                 <Panel>
                                     <Box padBottom={'l'}>
-                                        { endringer.length > 0 && (
+                                        {endringer.length > 0 && (
                                             <Box padBottom={'s'}>
                                                 <NavElement>Endringer</NavElement>
                                             </Box>
