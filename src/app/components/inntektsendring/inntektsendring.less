@@ -44,11 +44,11 @@
   margin-right: 3rem;
 }
 
-.itemList {
+.inntektsendring {
   margin: 0;
   padding: 0;
   list-style: none;
-  &__item {
+  &__row {
     padding: 0.5rem;
     border-bottom: 1px solid #B7B1A9;
     &:first-child {
@@ -56,6 +56,7 @@
     }
     display: flex;
     align-items: center;
+    justify-content: space-between;
     &__icon {
       flex: 1 1 2rem;
     }
@@ -63,6 +64,7 @@
       flex: 2 1 100%;
     }
     &__delete {
+      border: 1px dotted green;
       flex: 1 1 2rem;
     }
   }
@@ -70,5 +72,10 @@
 
 .dateMinWidth {
   min-width: 6rem;
-  border: 1px dotted red;
+}
+
+.inntektsendring-flex-wrapper {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }

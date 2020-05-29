@@ -24,14 +24,16 @@ const EndringsradView: React.FC<Props> = ({ endring, onSaveEditedEndring, onDele
     const [endringsmodalIsOpen, setEndringsmodalIsOpen] = useState<boolean>(false);
 
     return (
-        <li className={bemItem.block}>
-            <span className={"dateMinWidth"}>{prettifyDateExtended(endring.dato)}</span>
-            <span className={bemItem.element('label')}>
-                <ActionLink onClick={() => setEndringsmodalIsOpen(true)}>
-                    {forsteXTegnAv(endring.forklaring, 40)}
-                </ActionLink>
-            </span>
-            <span className={bemItem.element('delete')}>
+        <li className={'inntektsendring__row'}>
+            <div className={'inntektsendring-flex-wrapper'}>
+                <span className={"dateMinWidth"}>{prettifyDateExtended(endring.dato)}</span>
+                <span className={bemItem.element('label')}>
+                    <ActionLink onClick={() => setEndringsmodalIsOpen(true)}>
+                        {forsteXTegnAv(endring.forklaring, 40)}
+                    </ActionLink>
+                </span>
+            </div>
+            <span className={'inntektsendring__delete'}>
                 <DeleteButton ariaLabel={`Fjern endring`} onClick={onDeleteEndring} />
             </span>
             <EndringsModal
