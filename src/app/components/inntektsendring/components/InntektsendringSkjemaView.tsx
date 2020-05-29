@@ -44,7 +44,6 @@ const InntektsendringSkjemaView: React.FC<Props> = ({
     return skalInkludereSkjema ? (
         <Box margin={'l'} padBottom={'l'}>
             <InntektsendringYesOrNoQuestion formikName={yesOrNoFormikName(formikInntektsgruppeRootName, arbeidstype)} />
-
             {skjema[InntektsendringSkjemaFields.harHattEndring] === YesOrNo.YES && (
                 <FormBlock>
                     <FieldArray
