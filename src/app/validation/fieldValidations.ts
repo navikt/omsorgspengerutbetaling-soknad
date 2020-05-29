@@ -39,7 +39,8 @@ export enum AppFieldValidationErrors {
     'dato_utenfor_gyldig_tidsrom' = 'fieldvalidation.dato_utenfor_gyldig_tidsrom',
     'tom_er_før_fom' = 'fieldvalidation.tom_er_før_fom',
     'ingen_dokumenter' = 'fieldvalidation.ingen_dokumenter',
-    'for_mange_dokumenter' = 'fieldvalidation.for_mange_dokumenter'
+    'for_mange_dokumenter' = 'fieldvalidation.for_mange_dokumenter',
+    'ingen_endringer_spesifisert' = 'fieldvalidation.inntektsendring.ingen_endringer_spesifisert'
 }
 
 export const createAppFieldValidationError = (
