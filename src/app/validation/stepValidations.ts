@@ -10,6 +10,7 @@ import {
     perioderIsValid
 } from '../søknad/periode-step/periodeStepConfig';
 import { frilansIsValid, selvstendigIsValid } from '../søknad/inntekt-step/inntektStepConfig';
+import { inntektsendringGruppeIsValid } from '../components/inntektsendring/inntektsendringValidation';
 
 export const welcomingPageIsValid = ({ harForståttRettigheterOgPlikter }: SøknadFormData): boolean =>
     harForståttRettigheterOgPlikter === true;
@@ -42,7 +43,14 @@ export const inntektStepIsValid = (formData: SøknadFormData) => {
 
     const isValid: boolean =
         frilansIsValid(frilansHarHattInntektSomFrilanser, frilansStartdato, frilansJobberFortsattSomFrilans) &&
-        selvstendigIsValid(selvstendigHarHattInntektSomSN, selvstendigVirksomheter);
+        selvstendigIsValid(selvstendigHarHattInntektSomSN, selvstendigVirksomheter) &&
+        inntektsendringGruppeIsValid(
+            formData.inntektsendring,
+            formData.perioderMedFravær,
+            formData.dagerMedDelvisFravær,
+            frilansHarHattInntektSomFrilanser,
+            formData.selvstendig_virksomheter || []
+        );
     // && minimumEnVirksomhet(frilansJobberFortsattSomFrilans, selvstendigVirksomheter)
     return isValid;
 };
