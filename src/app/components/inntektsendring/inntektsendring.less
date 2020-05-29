@@ -43,3 +43,32 @@
 .inntektsendring-modal-tittel-wrapper {
   margin-right: 3rem;
 }
+
+.itemList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  &__item {
+    padding: 0.5rem;
+    border-bottom: 1px solid #B7B1A9;
+    &:first-child {
+      border-top: 1px solid #B7B1A9;
+    }
+    display: flex;
+    align-items: center;
+    &__icon {
+      flex: 1 1 2rem;
+    }
+    &__label {
+      flex: 2 1 100%;
+    }
+    &__delete {
+      flex: 1 1 2rem;
+    }
+  }
+}
+
+.dateMinWidth {
+  min-width: 6rem;
+  border: 1px dotted red;
+}

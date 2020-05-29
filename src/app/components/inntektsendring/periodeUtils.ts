@@ -135,6 +135,13 @@ export const nextLaneToDateIsTheLatestDate = (nextLane: DateRange, remainingLane
     }).length === 0;
 
 export const digThroughTime = (drivingThroughTownStatus: DrivingThroughTownStatus): DrivingThroughTownStatus => {
+    // Beklager på forhånd hvis du har tenkt å lese denne pga dårlige navn.
+    // Dette er en rekursiv funksjon som gjør følgende:
+    // 1. Finner frem tidligste dato blant alle periodene
+    // 2. Prøver å "kjøre" helt til siste dato
+    // 3. Stopper å returnerer en status hvis den finner hull mellom perioder
+    // 4. Hvis den kommer til enden (i.e. siste dato) så returnerer den "ingen hull funnet"
+    // 5. Lørdager og søndager regnes ikke som hull
     const { currentDateRange, remainingLanes, lanesInThePast, result } = drivingThroughTownStatus;
 
     if (result === DrivingResult.hasntStarted) {

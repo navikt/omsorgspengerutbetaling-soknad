@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { Endring } from '../types';
 import EndringsModal from './EndringsModal';
-import intlHelper from 'common/utils/intlUtils';
-import { useIntl } from 'react-intl';
-import Lenke from 'nav-frontend-lenker';
-import '../inntektsendring.less';
 import { prettifyDateExtended } from 'common/utils/dateUtils';
+import DeleteButton from 'common/components/delete-button/DeleteButton';
+import bemUtils from '@navikt/sif-common-formik/lib/utils/bemUtils';
+import '../inntektsendring.less';
+import ActionLink from 'common/components/action-link/ActionLink';
+
+const bem = bemUtils('itemList');
+const bemItem = bem.child('item');
 
 interface Props {
     endring: Endring;
@@ -18,24 +21,19 @@ const forsteXTegnAv = (tekst: string, x: number): string => {
 };
 
 const EndringsradView: React.FC<Props> = ({ endring, onSaveEditedEndring, onDeleteEndring }: Props): JSX.Element => {
-    const intl = useIntl();
     const [endringsmodalIsOpen, setEndringsmodalIsOpen] = useState<boolean>(false);
 
     return (
-        <li className={'inntektsendring-list__item'}>
-            <div>
-                <div>{prettifyDateExtended(endring.dato)}</div>
-                <div>{forsteXTegnAv(endring.forklaring, 40)}</div>
-            </div>
-            <div>
-                <Lenke className={'inntektsendring-knapp1'} href="#" onClick={() => setEndringsmodalIsOpen(true)}>
-                    {intlHelper(intl, 'inntektsendring.liste.knapp.endre')}
-                </Lenke>
-                <Lenke className={'inntektsendring-knapp2'} href="#" onClick={onDeleteEndring}>
-                    {intlHelper(intl, 'inntektsendring.liste.knapp.fjern')}
-                </Lenke>
-            </div>
-
+        <li className={bemItem.block}>
+            <span className={"dateMinWidth"}>{prettifyDateExtended(endring.dato)}</span>
+            <span className={bemItem.element('label')}>
+                <ActionLink onClick={() => setEndringsmodalIsOpen(true)}>
+                    {forsteXTegnAv(endring.forklaring, 40)}
+                </ActionLink>
+            </span>
+            <span className={bemItem.element('delete')}>
+                <DeleteButton ariaLabel={`Fjern endring`} onClick={onDeleteEndring} />
+            </span>
             <EndringsModal
                 saveEndring={(endringToSave: Endring) => {
                     setEndringsmodalIsOpen(false);
