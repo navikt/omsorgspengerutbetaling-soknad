@@ -95,7 +95,7 @@ export interface SøknadFormData {
     [SøknadFormField.skalBoUtenforNorgeNeste12Mnd]: YesOrNo;
     [SøknadFormField.utenlandsoppholdNeste12Mnd]: Utenlandsopphold[];
 
-    [SøknadFormField.inntektsendring]: InntektsendringGruppe;
+    [SøknadFormField.inntektsendring]?: InntektsendringGruppe; // Optional pga mellomlagring
 }
 
 export const initialValues: SøknadFormData = {

@@ -106,13 +106,13 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
         ),
         hjemmePgaSmittevernhensyn: hemmeligJaNeiSporsmal === YesOrNo.YES,
         vedlegg: dokumenter.filter((attachment) => !attachmentUploadHasFailed(attachment)).map(({ url }) => url!),
-        endringArbeidssituasjon: settInnEndringArbeidssituasjon(
+        endringArbeidssituasjon: inntektsendring ? settInnEndringArbeidssituasjon(
             perioderMedFravær,
             dagerMedDelvisFravær,
             frilans_harHattInntektSomFrilanser,
             selvstendig_virksomheter,
             inntektsendring
-        )
+        ) : null
     };
 
     if (har_fosterbarn === YesOrNo.YES && har_fosterbarn.length > 0) {

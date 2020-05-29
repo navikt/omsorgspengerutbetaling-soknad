@@ -54,10 +54,10 @@ const InntektStep = ({ onValidSubmit }: StepConfigProps) => {
                 <FrilansFormPart formValues={values} />
             </Box>
 
-            { values[SøknadFormField.frilans_harHattInntektSomFrilanser] === YesOrNo.YES && (
+            { values[SøknadFormField.frilans_harHattInntektSomFrilanser] === YesOrNo.YES && values.inntektsendring !== undefined && (
                 <InntektsendringSkjemaView
                     formikInntektsgruppeRootName={SøknadFormField.inntektsendring}
-                    inntektsendringGruppe={values[SøknadFormField.inntektsendring]}
+                    inntektsendringGruppe={values.inntektsendring}
                     arbeidstype={Arbeidstype.frilans}
                     perioderMedFravær={values[SøknadFormField.perioderMedFravær]}
                     dagerMedDelvisFravær={values[SøknadFormField.dagerMedDelvisFravær]}
@@ -68,10 +68,10 @@ const InntektStep = ({ onValidSubmit }: StepConfigProps) => {
                 <SelvstendigNæringsdrivendeFormPart formValues={values} />
             </Box>
 
-            {  values.selvstendig_virksomheter && values.selvstendig_virksomheter.length > 0 && (
+            {  values.selvstendig_virksomheter && values.inntektsendring !== undefined && values.selvstendig_virksomheter.length > 0 && (
                 <InntektsendringSkjemaView
                     formikInntektsgruppeRootName={SøknadFormField.inntektsendring}
-                    inntektsendringGruppe={values[SøknadFormField.inntektsendring]}
+                    inntektsendringGruppe={values.inntektsendring}
                     arbeidstype={Arbeidstype.selvstendig}
                     perioderMedFravær={values[SøknadFormField.perioderMedFravær]}
                     dagerMedDelvisFravær={values[SøknadFormField.dagerMedDelvisFravær]}
