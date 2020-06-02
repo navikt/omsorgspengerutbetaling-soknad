@@ -217,6 +217,8 @@
     "fieldvalidation.utenlandsopphold_overlapper": "Ett eller flere av utenlandsoppholdene har datoer som overlapper",
     "fieldvalidation.utenlandsopphold_utenfor_periode": "Ett eller flere av utenlandsoppholdene er utenfor tillatt tidsrom",
     "fieldvalidation.inntektsendring.ingen_endringer_spesifisert": "Du må legge til minst én endring under.",
+    "fieldvalidation.saturday_and_sunday_not_possible_periode": "Kan ikke velge lørdag eller søndag?",
+    "fieldvalidation.saturday_and_sunday_not_possible_dag": "Kan ikke velge lørdag eller søndag?",
 
     "fieldvalidation.fraværsperioder_mangler": "Du har ikke lagt til dager med fullt fravær",
     "fieldvalidation.fraværsperioder_overlapper": "Ett eller flere av periodene har datoer som overlapper",
