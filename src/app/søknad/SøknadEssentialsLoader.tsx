@@ -10,10 +10,15 @@ import { TemporaryStorage } from '../types/TemporaryStorage';
 import * as apiUtils from '../utils/apiUtils';
 import { Feature, isFeatureEnabled } from '../utils/featureToggleUtils';
 import {
-    navigateTo, navigateToErrorPage, navigateToLoginPage, navigateToWelcomePage,
-    userIsCurrentlyOnErrorPage, userIsOnStep
+    navigateTo,
+    navigateToErrorPage,
+    navigateToLoginPage,
+    navigateToWelcomePage,
+    userIsCurrentlyOnErrorPage,
+    userIsOnStep
 } from '../utils/navigationUtils';
 import SøknadTempStorage, { STORAGE_VERSION } from './SøknadTempStorage';
+import appSentryLogger from '../utils/appSentryLogger';
 
 interface Props {
     contentLoadedRenderer: (
@@ -47,10 +52,11 @@ const SøknadEssentialsLoader = ({ contentLoadedRenderer }: Props) => {
                     const søkerResponse = await getSøker();
                     handleEssentialsFetchSuccess(søkerResponse);
                 }
-            } catch (response) {
-                if (apiUtils.isForbidden(response) || apiUtils.isUnauthorized(response)) {
+            } catch (error) {
+                if (apiUtils.isForbidden(error) || apiUtils.isUnauthorized(error)) {
                     navigateToLoginPage();
                 } else if (!userIsCurrentlyOnErrorPage()) {
+                    appSentryLogger.logApiError(error);
                     navigateToErrorPage(history);
                 }
                 setLoadState({ isLoading: false, error: true });
