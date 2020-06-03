@@ -7,7 +7,7 @@ import HelperTextPanel from 'common/components/helper-text-panel/HelperTextPanel
 import intlHelper from 'common/utils/intlUtils';
 import FileUploadErrors from '../../components/file-upload-errors/FileUploadErrors';
 import FormikFileUploader from '../../components/formik-file-uploader/FormikFileUploader';
-import PictureScanningGuide from '../../components/picture-scanning-guide/PictureScanningGuide';
+import PictureScanningGuide from 'common/components/picture-scanning-guide/PictureScanningGuide';
 import UploadedDocumentsList from '../../components/uploaded-documents-list/UploadedDocumentsList';
 import { StepConfigProps, StepID } from '../../config/stepConfig';
 import { navigateToLoginPage } from '../../utils/navigationUtils';
