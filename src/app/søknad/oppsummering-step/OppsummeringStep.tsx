@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FormattedHTMLMessage, FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { useHistory } from 'react-router-dom';
 import Box from '@navikt/sif-common-core/lib/components/box/Box';
 import CounsellorPanel from '@navikt/sif-common-core/lib/components/counsellor-panel/CounsellorPanel';
@@ -134,7 +134,7 @@ const OppsummeringStep: React.StatelessComponent<Props> = ({ onApplicationSent }
                     {apiValues.vedlegg.length === 0 && apiValues.hjemmePgaSmittevernhensyn && (
                         <Box margin={'s'}>
                             <SummaryBlock header={intlHelper(intl, 'steg.oppsummering.dokumenter.header')}>
-                                <FormattedHTMLMessage id={'steg.oppsummering.dokumenter.ikkelastetopp'} />
+                                <FormattedMessage id={'steg.oppsummering.dokumenter.ikkelastetopp'} />
                             </SummaryBlock>
                         </Box>
                     )}

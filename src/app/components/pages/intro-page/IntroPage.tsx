@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FormattedHTMLMessage, FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
 import { commonFieldErrorRenderer } from '@navikt/sif-common-core/lib/utils/commonFieldErrorRenderer';
 import { getTypedFormComponents, YesOrNo } from '@navikt/sif-common-formik/lib';
@@ -68,10 +68,19 @@ const IntroPage: React.StatelessComponent = () => {
                         <li>barnet eller barnepasser er syk</li>
                     </ul>
                     <p>
-                        Vær oppmerksom på at om du har søkt om <a href='https://www.nav.no/arbeid/inntektskompensasjon' target="_blank" rel="noopener noreferrer">kompensasjon for tapt inntekt som selvstendig næringsdrivende og/eller frilanser</a>, kan du ikke søke om omsorgspenger for samme periode.
+                        Vær oppmerksom på at om du har søkt om{' '}
+                        <Lenke href="https://www.nav.no/arbeid/inntektskompensasjon" target="_blank">
+                            kompensasjon for tapt inntekt som selvstendig næringsdrivende og/eller frilanser
+                        </Lenke>
+                        , kan du ikke søke om omsorgspenger for samme periode.
                     </p>
                     <p>
-                        Hvis du har søkt om kompensasjon, men nå ønsker å søke om omsorgspenger, må du trekke din søknad om kompensasjon. Dette gjør du ved å <a href='https://www.nav.no/person/kontakt-oss/nb/skriv-til-oss' target='_blank' rel='noopener noreferrer'>skrive en beskjed til oss</a>. Under tema velger du jobbsøker (selv om du ikke er jobbsøker).
+                        Hvis du har søkt om kompensasjon, men nå ønsker å søke om omsorgspenger, må du trekke din søknad
+                        om kompensasjon. Dette gjør du ved å{' '}
+                        <Lenke href="https://www.nav.no/person/kontakt-oss/nb/skriv-til-oss" target="_blank">
+                            skrive en beskjed til oss
+                        </Lenke>
+                        . Under tema velger du jobbsøker (selv om du ikke er jobbsøker).
                     </p>
                 </InformationPoster>
             </Box>
@@ -127,7 +136,7 @@ const IntroPage: React.StatelessComponent = () => {
                                             legend="Har du vært hjemme med barn på grunn av særlige smittevernhensyn?"
                                             info={
                                                 <div className={'smittevern-info'}>
-                                                    <FormattedHTMLMessage id={'steg.en.smittevern.info'} />
+                                                    <FormattedMessage id={'steg.en.smittevern.info'} />
                                                 </div>
                                             }
                                         />

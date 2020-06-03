@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FormattedHTMLMessage, useIntl } from 'react-intl';
+import { useIntl, FormattedMessage } from 'react-intl';
 import {
     validateRequiredList,
     validateYesOrNoIsAnswered
@@ -162,7 +162,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                         validate={validateYesOrNoIsAnswered}
                         info={
                             <div className={'smittevern-info'}>
-                                <FormattedHTMLMessage id={'steg.en.smittevern.info'} />
+                                <FormattedMessage id={'steg.en.smittevern.info'} />
                             </div>
                         }
                     />

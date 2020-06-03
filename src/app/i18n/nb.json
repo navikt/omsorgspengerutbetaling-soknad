@@ -84,10 +84,6 @@
 
     "introPage.tittel": "Søknad om utbetaling av omsorgspenger",
     "introPage.stegTittel": "Kan jeg søke om utbetaling av omsorgspenger?",
-    "introPage.intro.html": "<p>Hvis du er selvstendig næringsdrivende eller frilanser kan du søke om å få utbetalt omsorgspenger fra NAV. Du må i de fleste tilfeller betale de 10 første dagene selv, men det er unntak fra dette hvis du har innvilget utvidet rett og ikke har andre barn under 12 år.</p><p>Hvis du er arbeidstaker og skal ha utbetalt omsorgspenger skal du ikke søke her, din arbeidsgiver må sende innteksmelding til NAV.</p>",
-    "introPage.legeerklæring.html": "<p>Har du legeerklæringen klar? Du trenger den når du skal fylle ut søknaden. Da tar du bare et bilde av den og laster den opp.</p><p>Hvis du ikke bor på samme folkeregistrerte adresse som barnet, men har en avtale om delt bosted, må du også laste opp denne.</p>",
-    "introPage.spm.kroniskEllerFunksjonshemmende": "Har du et barn som har en kronisk sykdom eller funksjonshemming?",
-    "introPage.infoIkkeKroniskEllerFunksjonshemmende.html": "<p>Du må foreløpig bruke <a href=\"{url}\" class=\"lenke\" target=\"_blank\" rel=\"noopener\">papirsøknaden</a> hvis du skal<ol><li>søke om å ta over dager fra en annen omsorgsperson</li><li>fordele dager med en annen omsorgsperson</li><li>overføre dager til en ny samlivspartner</li></ol></p>",
 
     "welcomingPage.sidetittel": "Søknad om utbetaling av omsorgspenger",
     "welcomingPage.banner.tittel": "Hei,",
@@ -189,9 +185,6 @@
     "page.confirmation.sidetittel": "Vi har mottatt søknaden din",
     "page.confirmation.tittel": "Vi har mottatt søknad fra deg om utbetaling av omsorgspenger",
     "page.confirmation.undertittel": "Hva skjer videre nå?",
-    "page.confirmation.hvaSkjer1": "Søknaden din vil bli synlig på Ditt NAV etter omkring en uke. Da vil du også kunne se hva slags dokumentasjon vi har fått fra deg.",
-    "page.confirmation.hvaSkjer2": "Vi starter behandlingen av søknaden din når vi har mottatt all nødvendig dokumentasjon. Vi kontakter deg hvis vi trenger flere opplysninger i saken din. Hvis du skal <a href=\"https://www.nav.no/soknader/nb/person/familie/omsorgspenger/NAV%2009-35.01/ettersendelse\" class=\"lenke\" target=\"_blank\" rel=\"noopener noreferrer\">ettersende dokumentasjon kan du gjøre det her</a>.",
-    "page.confirmation.hvaSkjer3": "Når søknaden er ferdig behandlet, får du et svarbrev fra oss. Du kan se <a href=\"{lenke}\" class=\"lenke\" target=\"_blank\" rel=\"noopener\">saksbehandlingstiden</a> for ditt fylke her.",
 
     "page.generalErrorPage.sidetittel": "Feil",
     "page.generalErrorPage.tittel": "Noe gikk galt...",
@@ -262,7 +255,7 @@
     "step.vedlegg.pageTitle": "Last opp dokumenter",
     "fieldvalidation.for_mange_dokumenter": "For mange dokumenter er lastet opp",
     "steg.oppsummering.dokumenter.ikkelastetopp": "Ikke lastet opp, må ettersendes",
-    "steg.en.smittevern.info": "<div>Hvis barnehagen eller skolen som ditt barn går i åpner, men du må være hjemme med barnet på grunn av <strong>særlige smittevernhensyn</strong> kan du bruke omsorgsdager. Det kan være smittevernhensyn til barnet eller andre familiemedlemmer som barnet bor med. Dette gjelder i forbindelse med koronaviruset i perioden 20. april fram til og med 31. desember 2020.</div>",
+    "steg.en.smittevern.info": "Hvis barnehagen eller skolen som ditt barn går i åpner, men du må være hjemme med barnet på grunn av <strong>særlige smittevernhensyn</strong> kan du bruke omsorgsdager. Det kan være smittevernhensyn til barnet eller andre familiemedlemmer som barnet bor med. Dette gjelder i forbindelse med koronaviruset i perioden 20. april fram til og med 31. desember 2020.",
 
     "psg-temp.innholdstittel": "Ta bilde av dokumentene og last opp",
     "psg-temp.section1.tittel": "Slik tar du et godt bilde:",
