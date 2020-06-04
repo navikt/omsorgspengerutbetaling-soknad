@@ -21,6 +21,7 @@ import SøknadStep from '../SøknadStep';
 import DagerMedDelvisFraværList from './components/DagerMedDelvisFraværList';
 import PeriodeMedFulltFraværList from './components/PerioderMedFulltFraværList';
 import './periodeStep.less';
+import SmittevernInfo from '../../components/information/SmittevernInfo';
 
 const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) => {
     const { values, validateField, validateForm } = useFormikContext<SøknadFormData>();
@@ -160,11 +161,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                         name={SøknadFormField.hemmeligJaNeiSporsmal}
                         legend={intlHelper(intl, 'steg.en.smittevern.sporsmal')}
                         validate={validateYesOrNoIsAnswered}
-                        info={
-                            <div className={'smittevern-info'}>
-                                <FormattedMessage id={'steg.en.smittevern.info'} />
-                            </div>
-                        }
+                        info={<SmittevernInfo />}
                     />
                 </FormBlock>
             )}
