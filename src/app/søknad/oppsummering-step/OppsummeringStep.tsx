@@ -32,6 +32,7 @@ import JaNeiSvar from './components/JaNeiSvar';
 import { validateSoknadApiData } from '../../validation/soknadApiDataValidation';
 import { Feiloppsummering, FeiloppsummeringFeil } from 'nav-frontend-skjema';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
+import appSentryLogger from '../../utils/appSentryLogger';
 
 interface Props {
     onApplicationSent: (apiValues: SøknadApiData, søkerdata: Søkerdata) => void;
@@ -56,6 +57,7 @@ const OppsummeringStep: React.StatelessComponent<Props> = ({ onApplicationSent }
             if (apiUtils.isForbidden(error) || apiUtils.isUnauthorized(error)) {
                 navigateToLoginPage();
             } else {
+                appSentryLogger.logApiError(error);
                 navigateTo(RouteConfig.ERROR_PAGE_ROUTE, history);
             }
         }

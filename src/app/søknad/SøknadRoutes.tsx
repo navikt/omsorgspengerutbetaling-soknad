@@ -1,27 +1,28 @@
 import * as React from 'react';
-import {Redirect, Route, Switch, useHistory} from 'react-router-dom';
-import {formatName} from '@navikt/sif-common-core/lib/utils/personUtils';
-import {useFormikContext} from 'formik';
+import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
+import { formatName } from '@navikt/sif-common-core/lib/utils/personUtils';
+import { useFormikContext } from 'formik';
 import ConfirmationPage from '../components/pages/confirmation-page/ConfirmationPage';
 import GeneralErrorPage from '../components/pages/general-error-page/GeneralErrorPage';
 import WelcomingPage from '../components/pages/welcoming-page/WelcomingPage';
 import RouteConfig from '../config/routeConfig';
-import {StepID} from '../config/stepConfig';
-import {Søkerdata} from '../types/Søkerdata';
-import {SøknadApiData} from '../types/SøknadApiData';
-import {SøknadFormData, SøknadFormField} from '../types/SøknadFormData';
+import { StepID } from '../config/stepConfig';
+import { Søkerdata } from '../types/Søkerdata';
+import { SøknadApiData } from '../types/SøknadApiData';
+import { SøknadFormData, SøknadFormField } from '../types/SøknadFormData';
 import * as apiUtils from '../utils/apiUtils';
-import {Feature, isFeatureEnabled} from '../utils/featureToggleUtils';
-import {navigateTo, navigateToLoginPage} from '../utils/navigationUtils';
-import {getNextStepRoute, getSøknadRoute, isAvailable} from '../utils/routeUtils';
+import { Feature, isFeatureEnabled } from '../utils/featureToggleUtils';
+import { navigateTo, navigateToLoginPage } from '../utils/navigationUtils';
+import { getNextStepRoute, getSøknadRoute, isAvailable } from '../utils/routeUtils';
 import InntektStep from './inntekt-step/InntektStep';
 import MedlemsskapStep from './medlemskap-step/MedlemsskapStep';
 import OppsummeringStep from './oppsummering-step/OppsummeringStep';
 import PeriodeStep from './periode-step/PeriodeStep';
 import BarnStep from './barn-step/BarnStep';
 import SøknadTempStorage from './SøknadTempStorage';
-import DokumenterStep from "./dokumenter-step/DokumenterStep";
-import {YesOrNo} from "common/types/YesOrNo";
+import DokumenterStep from './dokumenter-step/DokumenterStep';
+import { YesOrNo } from 'common/types/YesOrNo';
+import appSentryLogger from '../utils/appSentryLogger';
 
 export interface KvitteringInfo {
     søkernavn: string;
@@ -53,6 +54,7 @@ const SøknadRoutes = () => {
                 if (apiUtils.isForbidden(error) || apiUtils.isUnauthorized(error)) {
                     navigateToLoginPage();
                 } else {
+                    appSentryLogger.logApiError(error);
                     navigateTo(RouteConfig.ERROR_PAGE_ROUTE, history);
                 }
             }
@@ -96,11 +98,7 @@ const SøknadRoutes = () => {
             {isAvailable(StepID.DOKUMENTER, values) && skalViseVedleggSteg && (
                 <Route
                     path={getSøknadRoute(StepID.DOKUMENTER)}
-                    render={() =>
-                        <DokumenterStep
-                            onValidSubmit={() => navigateToNextStepFrom(StepID.DOKUMENTER)}
-                        />
-                    }
+                    render={() => <DokumenterStep onValidSubmit={() => navigateToNextStepFrom(StepID.DOKUMENTER)} />}
                 />
             )}
 

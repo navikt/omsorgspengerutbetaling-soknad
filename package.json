@@ -40,6 +40,8 @@
         "@navikt/sif-common-formik": "^7.1.7",
         "@navikt/sif-common-forms": "^7.0.0",
         "@navikt/sif-common-question-config": "0.0.2",
+        "@navikt/sif-common-sentry": "0.0.7",
+        "@sentry/browser": "^5.16.0",
         "@testing-library/react": "^9.4.0",
         "axios": "^0.19.2",
         "busboy": "^0.3.0",

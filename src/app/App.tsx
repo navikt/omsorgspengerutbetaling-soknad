@@ -9,10 +9,13 @@ import IntroPage from './components/pages/intro-page/IntroPage';
 import UnavailablePage from './components/pages/unavailable-page/UnavailablePage';
 import RouteConfig from './config/routeConfig';
 import Søknad from './søknad/Søknad';
+import appSentryLogger from './utils/appSentryLogger';
 import { Feature, isFeatureEnabled } from './utils/featureToggleUtils';
 import { getLocaleFromSessionStorage, setLocaleInSessionStorage } from './utils/localeUtils';
 import 'common/styles/globalStyles.less';
 import './styles/app.less';
+
+appSentryLogger.init();
 
 const localeFromSessionStorage = getLocaleFromSessionStorage();
 moment.locale(localeFromSessionStorage);
@@ -39,7 +42,6 @@ const App: React.FunctionComponent = () => {
         </ApplicationWrapper>
     );
 };
-
 
 const root = document.getElementById('app');
 Modal.setAppElement('#app');
