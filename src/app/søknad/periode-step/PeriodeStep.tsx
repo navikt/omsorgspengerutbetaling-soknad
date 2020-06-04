@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useIntl, FormattedMessage } from 'react-intl';
+import { useIntl } from 'react-intl';
 import {
     validateRequiredList,
     validateYesOrNoIsAnswered
@@ -13,6 +13,7 @@ import { YesOrNo } from 'common/types/YesOrNo';
 import { date1YearAgo, date1YearFromNow } from 'common/utils/dateUtils';
 import intlHelper from 'common/utils/intlUtils';
 import { FraværDelerAvDag, Periode } from '../../../@types/omsorgspengerutbetaling-schema';
+import SmittevernInfo from '../../components/information/SmittevernInfo';
 import { StepConfigProps, StepID } from '../../config/stepConfig';
 import { AndreUtbetalinger } from '../../types/AndreUtbetalinger';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
@@ -21,7 +22,6 @@ import SøknadStep from '../SøknadStep';
 import DagerMedDelvisFraværList from './components/DagerMedDelvisFraværList';
 import PeriodeMedFulltFraværList from './components/PerioderMedFulltFraværList';
 import './periodeStep.less';
-import SmittevernInfo from '../../components/information/SmittevernInfo';
 
 const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) => {
     const { values, validateField, validateForm } = useFormikContext<SøknadFormData>();
