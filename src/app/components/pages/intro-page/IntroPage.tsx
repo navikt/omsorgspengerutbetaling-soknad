@@ -12,6 +12,7 @@ import StepBanner from 'common/components/step-banner/StepBanner';
 import bemUtils from 'common/utils/bemUtils';
 import intlHelper from 'common/utils/intlUtils';
 import RouteConfig, { getRouteUrl } from '../../../config/routeConfig';
+import SmittevernInfo from '../../information/SmittevernInfo';
 
 const bem = bemUtils('introPage');
 
@@ -134,11 +135,7 @@ const IntroPage: React.StatelessComponent = () => {
                                         <PageForm.YesOrNoQuestion
                                             name={PageFormField.smittevernHensyn}
                                             legend="Har du vært hjemme med barn på grunn av særlige smittevernhensyn?"
-                                            info={
-                                                <div className={'smittevern-info'}>
-                                                    <FormattedMessage id={'steg.en.smittevern.info'} />
-                                                </div>
-                                            }
+                                            info={<SmittevernInfo />}
                                         />
                                     </FormBlock>
                                 )}
