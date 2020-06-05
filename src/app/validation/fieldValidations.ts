@@ -13,7 +13,7 @@ import { FieldValidationResult } from 'common/validation/types';
 import { FraværDelerAvDag, Periode } from '../../@types/omsorgspengerutbetaling-schema';
 import { datesCollide } from './dateValidationUtils';
 import { Attachment } from 'common/types/Attachment';
-import {attachmentHasBeenUploaded} from "common/utils/attachmentUtils";
+import { attachmentHasBeenUploaded } from 'common/utils/attachmentUtils';
 
 export const hasValue = (v: any) => v !== '' && v !== undefined && v !== null;
 
@@ -39,7 +39,10 @@ export enum AppFieldValidationErrors {
     'dato_utenfor_gyldig_tidsrom' = 'fieldvalidation.dato_utenfor_gyldig_tidsrom',
     'tom_er_før_fom' = 'fieldvalidation.tom_er_før_fom',
     'ingen_dokumenter' = 'fieldvalidation.ingen_dokumenter',
-    'for_mange_dokumenter' = 'fieldvalidation.for_mange_dokumenter'
+    'for_mange_dokumenter' = 'fieldvalidation.for_mange_dokumenter',
+    'ingen_endringer_spesifisert' = 'fieldvalidation.inntektsendring.ingen_endringer_spesifisert',
+    'ikke_lørdag_eller_søndag_periode' = 'fieldvalidation.saturday_and_sunday_not_possible_periode',
+    'ikke_lørdag_eller_søndag_dag' = 'fieldvalidation.saturday_and_sunday_not_possible_dag'
 }
 
 export const createAppFieldValidationError = (
