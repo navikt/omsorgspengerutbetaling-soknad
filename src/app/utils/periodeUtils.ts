@@ -27,40 +27,9 @@ export const getPeriodeBoundaries = (
     };
 };
 
-export enum Weekday {
-    monday = 'monday',
-    tuesday = 'tuesday',
-    wednesday = 'wednesday',
-    thursday = 'thursday',
-    friday = 'friday',
-    saturday = 'saturday',
-    sunday = 'sunday'
-}
-
-export const getWeekdayName = (date: Date): Weekday | undefined => {
-    switch (date.getDay()) {
-        case 0:
-            return Weekday.sunday;
-        case 1:
-            return Weekday.monday;
-        case 2:
-            return Weekday.tuesday;
-        case 3:
-            return Weekday.wednesday;
-        case 4:
-            return Weekday.thursday;
-        case 5:
-            return Weekday.friday;
-        case 6:
-            return Weekday.saturday;
-        default:
-            return undefined;
-    }
-};
-
 export const erHelg = (date: Date): boolean => {
-    const dayName = getWeekdayName(date);
-    return dayName === Weekday.saturday || dayName === Weekday.sunday;
+    const dayName = date.getDay();
+    return dayName === 0 || dayName === 6;
 };
 
 export const validatePeriodeNotWeekend = (date: Date): FieldValidationResult =>
