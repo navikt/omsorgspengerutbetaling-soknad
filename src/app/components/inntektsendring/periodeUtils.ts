@@ -2,7 +2,7 @@ import { DateRange, sortDateRange } from 'common/utils/dateUtils';
 import { FraværDelerAvDag, Periode } from '../../../@types/omsorgspengerutbetaling-schema';
 import moment from 'moment';
 
-export const enum Weekday {
+export enum Weekday {
     monday = 'monday',
     tuesday = 'tuesday',
     wednesday = 'wednesday',
