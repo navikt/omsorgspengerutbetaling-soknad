@@ -1,5 +1,8 @@
 import moment, { Moment } from 'moment';
 import { FraværDelerAvDag, Periode } from '../../@types/omsorgspengerutbetaling-schema';
+import {FieldValidationResult} from "common/validation/types";
+import {createFieldValidationError} from "common/validation/fieldValidations";
+import {AppFieldValidationErrors} from "../validation/fieldValidations";
 
 export const getPeriodeBoundaries = (
     perioderMedFravær: Periode[],
@@ -23,3 +26,15 @@ export const getPeriodeBoundaries = (
         max: max !== undefined ? max.toDate() : undefined
     };
 };
+
+export const erHelg = (date: Date): boolean => {
+    const dayName = date.getDay();
+    return dayName === 0 || dayName === 6;
+};
+
+export const validatePeriodeNotWeekend = (date: Date): FieldValidationResult =>
+    erHelg(date) ? createFieldValidationError(AppFieldValidationErrors.ikke_lørdag_eller_søndag_periode) : undefined;
+
+export const validateFraværDelerAvDagNotWeekend = (date: Date): FieldValidationResult =>
+    erHelg(date) ? createFieldValidationError(AppFieldValidationErrors.ikke_lørdag_eller_søndag_dag) : undefined;
+

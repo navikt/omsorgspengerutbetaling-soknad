@@ -6,8 +6,13 @@ import { Knapp } from 'nav-frontend-knapper';
 import { Periode } from '../../../../@types/omsorgspengerutbetaling-schema';
 import { SøknadFormField } from '../../../types/SøknadFormData';
 import { GYLDIG_TIDSROM } from '../../../validation/constants';
-import { validateAll, validateDateInRange, validateTomAfterFom } from '../../../validation/fieldValidations';
+import {
+    validateAll,
+    validateDateInRange,
+    validateTomAfterFom
+} from '../../../validation/fieldValidations';
 import SøknadFormComponents from '../../SøknadFormComponents';
+import {validatePeriodeNotWeekend} from "../../../utils/periodeUtils";
 
 interface Props {
     index: number;
@@ -35,26 +40,33 @@ const PerioderMedFulltFraværListItem: React.FunctionComponent<Props> = ({
                 <SøknadFormComponents.DateIntervalPicker
                     fromDatepickerProps={{
                         label: 'Fra og med',
-                        validate: validateAll([validateRequiredField, validateDateInRange(GYLDIG_TIDSROM)]),
+                        validate: validateAll([
+                            validateRequiredField,
+                            validateDateInRange(GYLDIG_TIDSROM),
+                            validatePeriodeNotWeekend
+                        ]),
                         name: `${SøknadFormField.perioderMedFravær}.${index}.fom` as SøknadFormField,
                         dateLimitations: {
                             minDato: GYLDIG_TIDSROM.from,
                             maksDato: GYLDIG_TIDSROM.to,
-                            ugyldigeTidsperioder: disabledPerioder || []
+                            ugyldigeTidsperioder: disabledPerioder || [],
+                            helgedagerIkkeTillatt: true
                         }
                     }}
                     toDatepickerProps={{
                         validate: validateAll([
                             validateRequiredField,
                             ...(periode?.fom ? [validateTomAfterFom(periode.fom)] : []),
-                            validateDateInRange(tomDateRange)
+                            validateDateInRange(tomDateRange),
+                            validatePeriodeNotWeekend
                         ]),
                         label: 'Til og med',
                         name: `${SøknadFormField.perioderMedFravær}.${index}.tom` as SøknadFormField,
                         dateLimitations: {
                             minDato: tomDateRange.from,
                             maksDato: tomDateRange.to,
-                            ugyldigeTidsperioder: disabledPerioder || []
+                            ugyldigeTidsperioder: disabledPerioder || [],
+                            helgedagerIkkeTillatt: true
                         }
                     }}
                 />
