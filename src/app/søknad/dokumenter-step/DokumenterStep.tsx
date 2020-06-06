@@ -5,7 +5,7 @@ import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlo
 import { useFormikContext } from 'formik';
 import HelperTextPanel from 'common/components/helper-text-panel/HelperTextPanel';
 import intlHelper from 'common/utils/intlUtils';
-import FileUploadErrors from '../../components/file-upload-errors/FileUploadErrors';
+import FileUploadErrors from 'common/components/file-upload-errors/FileUploadErrors';
 import FormikFileUploader from '../../components/formik-file-uploader/FormikFileUploader';
 import PictureScanningGuide from 'common/components/picture-scanning-guide/PictureScanningGuide';
 import UploadedDocumentsList from '../../components/uploaded-documents-list/UploadedDocumentsList';
