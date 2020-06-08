@@ -36,10 +36,10 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
     const cleanupStep = (valuesToBeCleaned: SøknadFormData): SøknadFormData => {
         const cleanedValues = { ...valuesToBeCleaned };
         if (harDagerMedDelvisFravær === YesOrNo.NO) {
-            cleanedValues.dagerMedDelvisFravær = [];
+            cleanedValues.fraværDager = [];
         }
         if (harPerioderMedFravær === YesOrNo.NO) {
-            cleanedValues.perioderMedFravær = [];
+            cleanedValues.fraværPerioder = [];
         }
         return cleanedValues;
     };
@@ -99,7 +99,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                             ]}
                             helgedagerIkkeTillat={true}
                         />
-                        <FormBlock margin={'m'}>
+                        <FormBlock margin={'l'}>
                             <ExpandableInfo title="Hvorfor kan jeg ikke velge lørdag eller søndag?">
                                 Du kan kun få utbetalt omsorgspenger for hverdager, selv om du jobber lørdag eller
                                 søndag. Derfor kan du ikke velge lørdag eller søndag som start- eller sluttdato i
@@ -119,7 +119,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
             {/* DAGER MED DELVIS FRAVÆR*/}
             {harDagerMedDelvisFravær === YesOrNo.YES && (
                 <>
-                    <FormBlock margin={'m'} paddingBottom={'l'}>
+                    <FormBlock margin={'l'} paddingBottom={'l'}>
                         <FraværDagerListAndDialog<SøknadFormField>
                             name={SøknadFormField.fraværDager}
                             minDate={GYLDIG_TIDSROM.from || date1YearAgo}
@@ -141,7 +141,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                             ]}
                             helgedagerIkkeTillatt={true}
                         />
-                        <FormBlock margin={'m'}>
+                        <FormBlock margin={'l'}>
                             <ExpandableInfo title="Hvorfor kan jeg ikke klikke på/velge lørdag eller søndag?">
                                 Du kan kun få utbetalt omsorgspenger for hverdager, selv om du jobber lørdag eller
                                 søndag. Derfor kan du ikke legge inn delvis fravær på lørdager eller søndager.
