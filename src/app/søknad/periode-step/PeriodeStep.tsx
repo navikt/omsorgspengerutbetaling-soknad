@@ -140,6 +140,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                                 ...values.fraværPerioder
                             ]}
                             helgedagerIkkeTillatt={true}
+                            maksArbeidstidPerDag={24}
                         />
                         <FormBlock margin={'l'}>
                             <ExpandableInfo title="Hvorfor kan jeg ikke klikke på/velge lørdag eller søndag?">
