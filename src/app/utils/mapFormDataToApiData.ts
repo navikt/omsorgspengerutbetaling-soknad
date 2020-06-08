@@ -4,7 +4,6 @@ import { Utenlandsopphold, Virksomhet } from '@navikt/sif-common-forms/lib';
 import { YesOrNo } from 'common/types/YesOrNo';
 import { formatDateToApiFormat } from 'common/utils/dateUtils';
 import { decimalTimeToTime, timeToIso8601Duration } from 'common/utils/timeUtils';
-import { FraværDelerAvDag, Periode } from '../../@types/omsorgspengerutbetaling-schema';
 import {
     SøknadApiData,
     UtbetalingsperiodeApi,
@@ -19,6 +18,7 @@ import { mapFrilansToApiData } from './formToApiMaps/mapFrilansToApiData';
 import { mapVirksomhetToVirksomhetApiData } from './formToApiMaps/mapVirksomhetToApiData';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import { attachmentUploadHasFailed } from 'common/utils/attachmentUtils';
+import { FraværDag, FraværPeriode } from '@navikt/sif-common-forms/lib/fravær';
 
 export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShape): SøknadApiData => {
     const {
@@ -26,8 +26,8 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
         harBekreftetOpplysninger,
 
         // Periode
-        perioderMedFravær,
-        dagerMedDelvisFravær,
+        fraværPerioder,
+        fraværDager,
         perioder_harVærtIUtlandet,
         perioder_utenlandsopphold,
         har_søkt_andre_utbetalinger,
@@ -85,7 +85,7 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
         },
         spørsmål: [...yesOrNoQuestions],
         andreUtbetalinger: har_søkt_andre_utbetalinger === YesOrNo.YES ? [...andre_utbetalinger] : [],
-        utbetalingsperioder: mapPeriodeTilUtbetalingsperiode(perioderMedFravær, dagerMedDelvisFravær),
+        utbetalingsperioder: mapPeriodeTilUtbetalingsperiode(fraværPerioder, fraværDager),
         bosteder: settInnBosteder(
             harBoddUtenforNorgeSiste12Mnd,
             utenlandsoppholdSiste12Mnd,
@@ -115,25 +115,27 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
 };
 
 export const mapPeriodeTilUtbetalingsperiode = (
-    perioderMedFravær: Periode[],
-    dagerMedDelvisFravær: FraværDelerAvDag[]
+    fraværPerioder: FraværPeriode[],
+    fraværDager: FraværDag[]
 ): UtbetalingsperiodeApi[] => {
-    const periodeMappedTilUtbetalingsperiode: UtbetalingsperiodeApi[] = perioderMedFravær.map(
-        (periode: Periode): UtbetalingsperiodeApi => {
+    const periodeMappedTilUtbetalingsperiode: UtbetalingsperiodeApi[] = fraværPerioder.map(
+        (periode: FraværPeriode): UtbetalingsperiodeApi => {
             return {
-                fraOgMed: formatDateToApiFormat(periode.fom),
-                tilOgMed: formatDateToApiFormat(periode.tom)
+                fraOgMed: formatDateToApiFormat(periode.from),
+                tilOgMed: formatDateToApiFormat(periode.to),
+                antallTimerPlanlagt: null,
+                antallTimerBorte: null
             };
         }
     );
 
-    const fraværDeleravDagMappedTilUtbetalingsperiode: UtbetalingsperiodeApi[] = dagerMedDelvisFravær.map(
-        (fravær: FraværDelerAvDag): UtbetalingsperiodeApi => {
-            const duration: string = timeToIso8601Duration(decimalTimeToTime(fravær.timer));
+    const fraværDeleravDagMappedTilUtbetalingsperiode: UtbetalingsperiodeApi[] = fraværDager.map(
+        (fraværDag: FraværDag): UtbetalingsperiodeApi => {
             return {
-                fraOgMed: formatDateToApiFormat(fravær.dato),
-                tilOgMed: formatDateToApiFormat(fravær.dato),
-                lengde: duration
+                fraOgMed: formatDateToApiFormat(fraværDag.dato),
+                tilOgMed: formatDateToApiFormat(fraværDag.dato),
+                antallTimerPlanlagt: timeToIso8601Duration(decimalTimeToTime(fraværDag.timerArbeidsdag)),
+                antallTimerBorte: timeToIso8601Duration(decimalTimeToTime(fraværDag.timerFravær))
             };
         }
     );

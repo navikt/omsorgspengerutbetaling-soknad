@@ -13,22 +13,43 @@ export interface Props {
 
 interface UtbetalingsperiodeDag {
     dato: string;
-    time: Time;
+    antallTimerPlanlagt: Time;
+    antallTimerBorte: Time;
 }
+
+export const isTime = (value: any): value is Time => {
+    return value && value.hours !== undefined && value.minutes !== undefined;
+};
+
+export const isUtbetalingsperiodeDag = (p: any): p is UtbetalingsperiodeDag =>
+    p && p.fraOgMed && p.antallTimerBorte !== null && p.antallTimerPlanlagt !== null;
+
+export const toMaybeUtbetalingsperiodeDag = (p: UtbetalingsperiodeApi): UtbetalingsperiodeDag | null => {
+    if (isUtbetalingsperiodeDag(p)) {
+        const antallTimerPlanlagtTime: Partial<Time> | undefined = iso8601DurationToTime(p.antallTimerPlanlagt);
+        const antallTimerBorteTime = iso8601DurationToTime(p.antallTimerBorte);
+        if (isTime(antallTimerPlanlagtTime) && isTime(antallTimerBorteTime)) {
+            return {
+                dato: p.fraOgMed,
+                antallTimerPlanlagt: antallTimerPlanlagtTime,
+                antallTimerBorte: antallTimerBorteTime
+            };
+        }
+    }
+    return null;
+};
+
+export const outNull = (
+    maybeUtbetalingsperiodeDag: UtbetalingsperiodeDag | null
+): maybeUtbetalingsperiodeDag is UtbetalingsperiodeDag => maybeUtbetalingsperiodeDag !== null;
 
 function UtbetalingsperioderSummaryView({ utbetalingsperioder = [] }: Props) {
     const intl = useIntl();
 
-    const perioder = utbetalingsperioder.filter((p) => p.tilOgMed !== undefined && p.lengde === undefined);
-    const dager: UtbetalingsperiodeDag[] = utbetalingsperioder
-        .filter((p) => p.lengde !== undefined)
-        .map((dag) => {
-            const time: Time = iso8601DurationToTime(dag.lengde!) as Time;
-            return {
-                dato: dag.fraOgMed,
-                time
-            };
-        });
+    const perioder: UtbetalingsperiodeApi[] = utbetalingsperioder.filter(
+        (p) => p.tilOgMed !== undefined && p.antallTimerBorte === null
+    );
+    const dager: UtbetalingsperiodeDag[] = utbetalingsperioder.map(toMaybeUtbetalingsperiodeDag).filter(outNull);
 
     return (
         <>
@@ -51,7 +72,9 @@ function UtbetalingsperioderSummaryView({ utbetalingsperioder = [] }: Props) {
                         items={dager}
                         itemRenderer={(dag: UtbetalingsperiodeDag) => (
                             <span>
-                                {prettifyDate(apiStringDateToDate(dag.dato))}: {timeToString(dag.time, intl, true)}
+                                {prettifyDate(apiStringDateToDate(dag.dato))}: Skulle jobbet:{' '}
+                                {timeToString(dag.antallTimerPlanlagt, intl, true)}. Borte fra jobb:{' '}
+                                {timeToString(dag.antallTimerPlanlagt, intl, true)}
                             </span>
                         )}
                     />

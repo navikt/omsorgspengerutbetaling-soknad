@@ -32,7 +32,8 @@ export interface YesNoSpørsmålOgSvar {
 export interface UtbetalingsperiodeApi {
     fraOgMed: ApiStringDate; // @JsonFormat(pattern = "yyyy-MM-dd")
     tilOgMed: ApiStringDate; // @JsonFormat(pattern = "yyyy-MM-dd")
-    lengde?: string; // f eks PT5H30M | "null" (type Duration)
+    antallTimerBorte: string | null; // f eks PT5H30M | "null" (type Duration)
+    antallTimerPlanlagt: string | null; // f eks PT5H30M | "null" (type Duration)
 }
 
 export interface Frilans {

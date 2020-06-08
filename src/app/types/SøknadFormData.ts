@@ -5,6 +5,7 @@ import { Attachment } from 'common/types/Attachment';
 import { YesOrNo } from 'common/types/YesOrNo';
 import { FraværDelerAvDag, Periode } from '../../@types/omsorgspengerutbetaling-schema';
 import { AndreUtbetalinger } from './AndreUtbetalinger';
+import { FraværDag, FraværPeriode } from '@navikt/sif-common-forms/lib/fravær';
 
 export enum SøknadFormField {
     harForståttRettigheterOgPlikter = 'harForståttRettigheterOgPlikter',
@@ -12,9 +13,11 @@ export enum SøknadFormField {
 
     // Periode
     harPerioderMedFravær = 'harPerioderMedFravær',
+    fraværPerioder = 'fraværPerioder',
     perioderMedFravær = 'perioderMedFravær',
     perioderMedFraværGroup = 'perioderMedFraværGroup',
     harDagerMedDelvisFravær = 'harDagerMedDelvisFravær',
+    fraværDager = 'fraværDager',
     dagerMedDelvisFravær = 'dagerMedDelvisFravær',
     dagerMedDelvisFraværGroup = 'dagerMedDelvisFraværGroup',
     perioder_harVærtIUtlandet = 'perioder_harVærtIUtlandet',
@@ -57,8 +60,10 @@ export interface SøknadFormData {
     // Periode
     [SøknadFormField.harPerioderMedFravær]: YesOrNo;
     [SøknadFormField.perioderMedFravær]: Periode[];
+    [SøknadFormField.fraværPerioder]: FraværPeriode[];
     [SøknadFormField.harDagerMedDelvisFravær]: YesOrNo;
     [SøknadFormField.dagerMedDelvisFravær]: FraværDelerAvDag[];
+    [SøknadFormField.fraværDager]: FraværDag[];
     [SøknadFormField.perioder_harVærtIUtlandet]: YesOrNo;
     [SøknadFormField.perioder_utenlandsopphold]: Utenlandsopphold[];
     [SøknadFormField.har_søkt_andre_utbetalinger]: YesOrNo;
@@ -99,8 +104,10 @@ export const initialValues: SøknadFormData = {
     // Periode
     [SøknadFormField.harPerioderMedFravær]: YesOrNo.UNANSWERED,
     [SøknadFormField.perioderMedFravær]: [],
+    [SøknadFormField.fraværPerioder]: [],
     [SøknadFormField.harDagerMedDelvisFravær]: YesOrNo.UNANSWERED,
     [SøknadFormField.dagerMedDelvisFravær]: [],
+    [SøknadFormField.fraværDager]: [],
     [SøknadFormField.perioder_harVærtIUtlandet]: YesOrNo.UNANSWERED,
     [SøknadFormField.perioder_utenlandsopphold]: [],
     [SøknadFormField.har_søkt_andre_utbetalinger]: YesOrNo.UNANSWERED,

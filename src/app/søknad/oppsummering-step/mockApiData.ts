@@ -56,21 +56,27 @@ export const mock1: SøknadApiData = {
     utbetalingsperioder: [
         {
             fraOgMed: '2020-03-02',
-            tilOgMed: '2020-03-03'
+            tilOgMed: '2020-03-03',
+            antallTimerPlanlagt: null,
+            antallTimerBorte: null,
         },
         {
             fraOgMed: '2020-03-04',
-            tilOgMed: '2020-03-05'
+            tilOgMed: '2020-03-05',
+            antallTimerPlanlagt: null,
+            antallTimerBorte: null,
         },
         {
             fraOgMed: '2020-03-09',
             tilOgMed: '2020-03-09',
-            lengde: 'PT5H0M'
+            antallTimerPlanlagt: 'PT5H0M',
+            antallTimerBorte: 'PT5H0M',
         },
         {
             fraOgMed: '2020-03-10',
             tilOgMed: '2020-03-10',
-            lengde: 'PT4H0M'
+            antallTimerPlanlagt: 'PT5H0M',
+            antallTimerBorte: 'PT5H0M',
         }
     ],
     hjemmePgaSmittevernhensyn: false,
