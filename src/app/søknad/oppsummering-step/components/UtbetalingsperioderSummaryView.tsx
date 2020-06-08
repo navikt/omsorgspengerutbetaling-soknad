@@ -74,7 +74,7 @@ function UtbetalingsperioderSummaryView({ utbetalingsperioder = [] }: Props) {
                             <span>
                                 {prettifyDate(apiStringDateToDate(dag.dato))}: Skulle jobbet:{' '}
                                 {timeToString(dag.antallTimerPlanlagt, intl, true)}. Borte fra jobb:{' '}
-                                {timeToString(dag.antallTimerPlanlagt, intl, true)}
+                                {timeToString(dag.antallTimerBorte, intl, true)}
                             </span>
                         )}
                     />
