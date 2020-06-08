@@ -134,8 +134,8 @@ export const mapPeriodeTilUtbetalingsperiode = (
             return {
                 fraOgMed: formatDateToApiFormat(fraværDag.dato),
                 tilOgMed: formatDateToApiFormat(fraværDag.dato),
-                antallTimerPlanlagt: timeToIso8601Duration(decimalTimeToTime(fraværDag.timerArbeidsdag)),
-                antallTimerBorte: timeToIso8601Duration(decimalTimeToTime(fraværDag.timerFravær))
+                antallTimerPlanlagt: timeToIso8601Duration(decimalTimeToTime(parseFloat(fraværDag.timerArbeidsdag))),
+                antallTimerBorte: timeToIso8601Duration(decimalTimeToTime(parseFloat(fraværDag.timerFravær)))
             };
         }
     );
