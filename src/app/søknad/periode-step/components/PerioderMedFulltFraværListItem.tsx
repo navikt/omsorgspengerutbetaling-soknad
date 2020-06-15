@@ -6,13 +6,9 @@ import { Knapp } from 'nav-frontend-knapper';
 import { Periode } from '../../../../@types/omsorgspengerutbetaling-schema';
 import { SøknadFormField } from '../../../types/SøknadFormData';
 import { GYLDIG_TIDSROM } from '../../../validation/constants';
-import {
-    validateAll,
-    validateDateInRange,
-    validateTomAfterFom
-} from '../../../validation/fieldValidations';
+import { validateAll, validateDateInRange, validateTomAfterFom } from '../../../validation/fieldValidations';
 import SøknadFormComponents from '../../SøknadFormComponents';
-import {validatePeriodeNotWeekend} from "../../../utils/periodeUtils";
+import { validatePeriodeNotWeekend } from '../../../utils/periodeUtils';
 
 interface Props {
     index: number;
@@ -46,12 +42,11 @@ const PerioderMedFulltFraværListItem: React.FunctionComponent<Props> = ({
                             validatePeriodeNotWeekend
                         ]),
                         name: `${SøknadFormField.perioderMedFravær}.${index}.fom` as SøknadFormField,
-                        dateLimitations: {
-                            minDato: GYLDIG_TIDSROM.from,
-                            maksDato: GYLDIG_TIDSROM.to,
-                            ugyldigeTidsperioder: disabledPerioder || [],
-                            helgedagerIkkeTillatt: true
-                        }
+
+                        minDate: GYLDIG_TIDSROM.from,
+                        maxDate: GYLDIG_TIDSROM.to,
+                        disabledDateRanges: (disabledPerioder || []).map((p) => ({ from: p.fom, to: p.tom })),
+                        disableWeekend: true
                     }}
                     toDatepickerProps={{
                         validate: validateAll([
@@ -62,12 +57,10 @@ const PerioderMedFulltFraværListItem: React.FunctionComponent<Props> = ({
                         ]),
                         label: 'Til og med',
                         name: `${SøknadFormField.perioderMedFravær}.${index}.tom` as SøknadFormField,
-                        dateLimitations: {
-                            minDato: tomDateRange.from,
-                            maksDato: tomDateRange.to,
-                            ugyldigeTidsperioder: disabledPerioder || [],
-                            helgedagerIkkeTillatt: true
-                        }
+                        minDate: tomDateRange.from,
+                        maxDate: tomDateRange.to,
+                        disabledDateRanges: (disabledPerioder || []).map((p) => ({ from: p.fom, to: p.tom })),
+                        disableWeekend: true
                     }}
                 />
             </div>
