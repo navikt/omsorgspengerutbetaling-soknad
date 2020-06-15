@@ -36,7 +36,7 @@ const FrilansFormPart: React.FunctionComponent<Props> = ({ formValues }) => {
                                 name={SøknadFormField.frilans_startdato}
                                 label={intlHelper(intl, 'frilanser.nårStartet.spm')}
                                 showYearSelector={true}
-                                dateLimitations={{ maksDato: dateToday }}
+                                maxDate={dateToday}
                                 validate={validateRequiredField}
                             />
                         </Box>
