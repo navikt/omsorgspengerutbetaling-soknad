@@ -29,6 +29,7 @@ interface Props {
 
 interface LoadState {
     isLoading: boolean;
+    doApiCalls: boolean;
     error?: boolean;
 }
 
@@ -39,7 +40,7 @@ interface Essentials {
 
 const SøknadEssentialsLoader = ({ contentLoadedRenderer }: Props) => {
     const history = useHistory();
-    const [loadState, setLoadState] = useState<LoadState>({ isLoading: true });
+    const [loadState, setLoadState] = useState<LoadState>({ isLoading: true, doApiCalls: true });
     const [essentials, setEssentials] = useState<Essentials | undefined>();
 
     async function loadEssentials() {
@@ -55,11 +56,14 @@ const SøknadEssentialsLoader = ({ contentLoadedRenderer }: Props) => {
             } catch (error) {
                 if (apiUtils.isForbidden(error) || apiUtils.isUnauthorized(error)) {
                     navigateToLoginPage();
+                    setLoadState({ isLoading: true, doApiCalls: false, error: undefined });
                 } else if (!userIsCurrentlyOnErrorPage()) {
                     appSentryLogger.logApiError(error);
                     navigateToErrorPage(history);
+                    setLoadState({ isLoading: false, doApiCalls: false, error: true });
+                } else {
+                    setLoadState({ isLoading: false, doApiCalls: false, error: true });
                 }
-                setLoadState({ isLoading: false, error: true });
             }
         }
     }
@@ -79,7 +83,7 @@ const SøknadEssentialsLoader = ({ contentLoadedRenderer }: Props) => {
         const formData = tempStorage?.formData;
         const lastStepID = tempStorage?.metadata?.lastStepID;
         setEssentials({ søkerdata: { person: søkerResponse.data }, formData: formData || { ...initialValues } });
-        setLoadState({ isLoading: false, error: undefined });
+        setLoadState({ isLoading: false, doApiCalls: false, error: undefined });
 
         if (userIsCurrentlyOnErrorPage()) {
             if (lastStepID) {
@@ -93,7 +97,9 @@ const SøknadEssentialsLoader = ({ contentLoadedRenderer }: Props) => {
     };
 
     useEffect(() => {
-        loadEssentials();
+        if (loadState.doApiCalls) {
+            loadEssentials();
+        }
     }, [essentials, loadState]);
 
     const { isLoading, error } = loadState;
