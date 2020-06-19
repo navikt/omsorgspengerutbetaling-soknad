@@ -20,7 +20,7 @@ describe('Kan jeg bruke den digitale pleiepengesøknaden', () => {
             it('Info panelet er synlig', ()=> {
                 cy.get('[type="radio"]')
                 .first()
-                .check({ force: true }); // Må, bruke force her, pga cypress tror radio-knappen har størrelse (0,0)
+                .check({ force: true }); // Må bruke force her, pga cypress tror radio-knappen har størrelse (0,0)
                 cy.dataCy('erSelvstendigEllerFrilanser'); // Custom command; <==> cy.get('[data-cy="erSelvstendigEllerFrilanser"');
             });
         });
