@@ -44,8 +44,8 @@ const DagerMedDelvisFraværListItem: React.FunctionComponent<Props> = ({ index, 
     const ugyldigeTidsperioder = disabledDager
         ?.filter((d) => d.dato)
         .map((d) => ({
-            fom: d.dato,
-            tom: d.dato
+            from: d.dato,
+            to: d.dato
         }));
     return (
         <div className={bem.classNames(bem.block, bem.modifierConditional('firstRow', index === 0))}>
@@ -58,12 +58,10 @@ const DagerMedDelvisFraværListItem: React.FunctionComponent<Props> = ({ index, 
                         validateFraværDelerAvDagNotWeekend
                     ])}
                     name={`${SøknadFormField.dagerMedDelvisFravær}.${index}.dato` as SøknadFormField}
-                    dateLimitations={{
-                        minDato: GYLDIG_TIDSROM.from,
-                        maksDato: GYLDIG_TIDSROM.to,
-                        ugyldigeTidsperioder,
-                        helgedagerIkkeTillatt: true
-                    }}
+                    minDate={GYLDIG_TIDSROM.from}
+                    maxDate={GYLDIG_TIDSROM.to}
+                    disabledDateRanges={ugyldigeTidsperioder}
+                    disableWeekend={true}
                 />
             </div>
             <div className={bem.element('hoursWrapper')}>

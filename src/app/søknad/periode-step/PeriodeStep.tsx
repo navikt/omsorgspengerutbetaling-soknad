@@ -55,10 +55,21 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
             <FormBlock>
                 <CounsellorPanel>
                     <p>
-                        NAV utbetaler omsorgspenger som hovedregel fra den 4. dagen du har vært hjemme i år. Her skal du
-                        legge inn <strong>alle</strong> dagene du har hatt fravær fra jobb fordi du har vært hjemme med
-                        omsorgsdager, også de tre første dagene som du må dekke selv.
+                        Nå skal du legge inn dagene du har hatt fravær fra jobb fordi du har vært hjemme med
+                        omsorgsdager.
                     </p>
+
+                    <p>
+                        <strong>Hvis du søker for første gang i år</strong>, kan du få utbetalt omsorgspenger fra den 4.
+                        dagen du har vært hjemme. De tre første dagene må du dekke selv. Når du legger inn dagene du har
+                        vært hjemme, skal du også legge inn de tre første dagene.
+                    </p>
+                    <p>
+                        <strong>Hvis du søker på nytt i år</strong>, og allerede har dekket de tre første dagene, skal
+                        du ikke dekke de igjen. Da legger du inn dagene du har vært hjemme med omsorgsdager i denne
+                        søknadsperioden.
+                    </p>
+
                     <p>Du kan søke om utbetaling for opptil 3 måneder tilbake i tid, og fram til dagens dato.</p>
                     <p>
                         Barnehagen eller skolen er alltid stengt på røde dager. Det vil si at for røde dager kan du kun
