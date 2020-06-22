@@ -5,33 +5,30 @@ import {
     validateYesOrNoIsAnswered
 } from '@navikt/sif-common-core/lib/validation/fieldValidations';
 import BostedUtlandListAndDialog from '@navikt/sif-common-forms/lib/bosted-utland/BostedUtlandListAndDialog';
-import { FieldArray, useFormikContext } from 'formik';
-import { AlertStripeAdvarsel, AlertStripeInfo } from 'nav-frontend-alertstriper';
+import { useFormikContext } from 'formik';
+import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import CounsellorPanel from 'common/components/counsellor-panel/CounsellorPanel';
 import FormBlock from 'common/components/form-block/FormBlock';
 import { YesOrNo } from 'common/types/YesOrNo';
-import { date1YearAgo, date1YearFromNow } from 'common/utils/dateUtils';
+import { date1YearAgo, date1YearFromNow, dateToday } from 'common/utils/dateUtils';
 import intlHelper from 'common/utils/intlUtils';
-import { FraværDelerAvDag, Periode } from '../../../@types/omsorgspengerutbetaling-schema';
 import SmittevernInfo from '../../components/information/SmittevernInfo';
 import { StepConfigProps, StepID } from '../../config/stepConfig';
 import { AndreUtbetalinger } from '../../types/AndreUtbetalinger';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import SøknadFormComponents from '../SøknadFormComponents';
 import SøknadStep from '../SøknadStep';
-import DagerMedDelvisFraværList from './components/DagerMedDelvisFraværList';
-import PeriodeMedFulltFraværList from './components/PerioderMedFulltFraværList';
+import FraværPerioderListAndDialog from '@navikt/sif-common-forms/lib/fravær/FraværPerioderListAndDialog';
+import { fraværDagToFraværDateRange, validateNoCollisions } from '@navikt/sif-common-forms/lib/fravær';
+import { validateAll } from '@navikt/sif-common-forms/lib/fravær/fraværValidationUtils';
+import FraværDagerListAndDialog from '@navikt/sif-common-forms/lib/fravær/FraværDagerListAndDialog';
+import { GYLDIG_TIDSROM } from '../../validation/constants';
 import './periodeStep.less';
+import ExpandableInfo from 'common/components/expandable-content/ExpandableInfo';
 
 const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) => {
-    const { values, validateField, validateForm } = useFormikContext<SøknadFormData>();
-    const {
-        perioderMedFravær,
-        dagerMedDelvisFravær,
-        harPerioderMedFravær,
-        harDagerMedDelvisFravær,
-        perioder_harVærtIUtlandet
-    } = values;
+    const { values } = useFormikContext<SøknadFormData>();
+    const { harPerioderMedFravær, harDagerMedDelvisFravær, perioder_harVærtIUtlandet } = values;
 
     const intl = useIntl();
     const kanIkkeFortsette = harPerioderMedFravær === YesOrNo.NO && harDagerMedDelvisFravær === YesOrNo.NO;
@@ -39,10 +36,10 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
     const cleanupStep = (valuesToBeCleaned: SøknadFormData): SøknadFormData => {
         const cleanedValues = { ...valuesToBeCleaned };
         if (harDagerMedDelvisFravær === YesOrNo.NO) {
-            cleanedValues.dagerMedDelvisFravær = [];
+            cleanedValues.fraværDager = [];
         }
         if (harPerioderMedFravær === YesOrNo.NO) {
-            cleanedValues.perioderMedFravær = [];
+            cleanedValues.fraværPerioder = [];
         }
         return cleanedValues;
     };
@@ -81,7 +78,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                     </p>
                 </CounsellorPanel>
             </FormBlock>
-            <FormBlock paddingBottom={'m'}>
+            <FormBlock>
                 <SøknadFormComponents.YesOrNoQuestion
                     name={SøknadFormField.harPerioderMedFravær}
                     legend="Har du hatt hele dager med fravær fra jobb?"
@@ -90,45 +87,40 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
             </FormBlock>
             {/* DAGER MED FULLT FRAVÆR*/}
             {harPerioderMedFravær === YesOrNo.YES && (
-                <FormBlock margin={'m'}>
-                    <AlertStripeInfo>
-                        Du kan kun få utbetalt omsorgspenger for hverdager, selv om du jobber lørdag eller søndag.
-                        Derfor kan du ikke velge lørdag eller søndag som start- eller sluttdato i perioden du legger
-                        inn.
-                    </AlertStripeInfo>
-                    <FieldArray
-                        name={SøknadFormField.perioderMedFravær}
-                        render={(arrayHelpers) => {
-                            return (
-                                <PeriodeMedFulltFraværList
-                                    perioderMedFravær={perioderMedFravær}
-                                    dagerMedGradvisFravær={
-                                        harDagerMedDelvisFravær === YesOrNo.YES ? dagerMedDelvisFravær : []
-                                    }
-                                    onCreateNew={() => {
-                                        const emptyPeriodeMedFravær: Partial<Periode> = {
-                                            fom: undefined,
-                                            tom: undefined
-                                        };
-
-                                        arrayHelpers.insert(perioderMedFravær.length, emptyPeriodeMedFravær);
-                                        setTimeout(() => {
-                                            validateField(SøknadFormField.perioderMedFraværGroup);
-                                        });
-                                    }}
-                                    onRemove={(idx) => {
-                                        arrayHelpers.remove(idx);
-                                        setTimeout(() => {
-                                            validateForm();
-                                        });
-                                    }}
-                                />
-                            );
-                        }}
-                    />
-                </FormBlock>
+                <>
+                    <FormBlock paddingBottom={'l'} margin={'l'}>
+                        <FraværPerioderListAndDialog<SøknadFormField>
+                            name={SøknadFormField.fraværPerioder}
+                            minDate={GYLDIG_TIDSROM.from || date1YearAgo}
+                            maxDate={GYLDIG_TIDSROM.to || dateToday}
+                            validate={validateAll([
+                                validateRequiredList,
+                                validateNoCollisions(
+                                    values[SøknadFormField.fraværDager],
+                                    values[SøknadFormField.fraværPerioder]
+                                )
+                            ])}
+                            labels={{
+                                addLabel: 'Legg til ny periode med fullt fravær',
+                                modalTitle: 'Fravær hele dager'
+                            }}
+                            dateRangesToDisable={[
+                                ...values.fraværPerioder,
+                                ...values.fraværDager.map(fraværDagToFraværDateRange)
+                            ]}
+                            helgedagerIkkeTillat={true}
+                        />
+                        <FormBlock margin={'l'}>
+                            <ExpandableInfo title="Hvorfor kan jeg ikke velge lørdag eller søndag?">
+                                Du kan kun få utbetalt omsorgspenger for hverdager, selv om du jobber lørdag eller
+                                søndag. Derfor kan du ikke velge lørdag eller søndag som start- eller sluttdato i
+                                perioden du legger inn.
+                            </ExpandableInfo>
+                        </FormBlock>
+                    </FormBlock>
+                </>
             )}
-            <FormBlock paddingBottom={'m'}>
+            <FormBlock>
                 <SøknadFormComponents.YesOrNoQuestion
                     name={SøknadFormField.harDagerMedDelvisFravær}
                     legend="Har du hatt dager med delvis fravær fra jobb?"
@@ -137,36 +129,38 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
             </FormBlock>
             {/* DAGER MED DELVIS FRAVÆR*/}
             {harDagerMedDelvisFravær === YesOrNo.YES && (
-                <FormBlock margin={'m'}>
-                    <AlertStripeInfo>
-                        Du kan kun få utbetalt omsorgspenger for hverdager, selv om du jobber lørdag eller søndag.
-                        Derfor kan du ikke legge inn delvis fravær på lørdager eller søndager.
-                    </AlertStripeInfo>
-                    <FieldArray
-                        name={SøknadFormField.dagerMedDelvisFravær}
-                        render={(arrayHelpers) => {
-                            return (
-                                <DagerMedDelvisFraværList
-                                    dagerMedDelvisFravær={dagerMedDelvisFravær}
-                                    perioderMedFravær={harPerioderMedFravær === YesOrNo.YES ? perioderMedFravær : []}
-                                    onCreateNew={() => {
-                                        const emptyDagMedFravær: Partial<FraværDelerAvDag> = {
-                                            dato: undefined,
-                                            timer: undefined
-                                        };
-                                        arrayHelpers.insert(dagerMedDelvisFravær.length, emptyDagMedFravær);
-                                    }}
-                                    onRemove={(idx) => {
-                                        arrayHelpers.remove(idx);
-                                        setTimeout(() => {
-                                            validateForm();
-                                        });
-                                    }}
-                                />
-                            );
-                        }}
-                    />
-                </FormBlock>
+                <>
+                    <FormBlock margin={'l'} paddingBottom={'l'}>
+                        <FraværDagerListAndDialog<SøknadFormField>
+                            name={SøknadFormField.fraværDager}
+                            minDate={GYLDIG_TIDSROM.from || date1YearAgo}
+                            maxDate={GYLDIG_TIDSROM.to || dateToday}
+                            validate={validateAll([
+                                validateRequiredList,
+                                validateNoCollisions(
+                                    values[SøknadFormField.fraværDager],
+                                    values[SøknadFormField.fraværPerioder]
+                                )
+                            ])}
+                            labels={{
+                                addLabel: 'Legg til ny dag med delvis fravær',
+                                modalTitle: 'Fravær deler av dag'
+                            }}
+                            dateRangesToDisable={[
+                                ...values.fraværDager.map(fraværDagToFraværDateRange),
+                                ...values.fraværPerioder
+                            ]}
+                            helgedagerIkkeTillatt={true}
+                            maksArbeidstidPerDag={24}
+                        />
+                        <FormBlock margin={'l'}>
+                            <ExpandableInfo title="Hvorfor kan jeg ikke klikke på/velge lørdag eller søndag?">
+                                Du kan kun få utbetalt omsorgspenger for hverdager, selv om du jobber lørdag eller
+                                søndag. Derfor kan du ikke legge inn delvis fravær på lørdager eller søndager.
+                            </ExpandableInfo>
+                        </FormBlock>
+                    </FormBlock>
+                </>
             )}
 
             {kanIkkeFortsette && (

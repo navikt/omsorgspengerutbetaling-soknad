@@ -1,32 +1,32 @@
-import { YesOrNo } from 'common/types/YesOrNo';
-import { BarnStepQuestions } from '../søknad/barn-step/config';
-import { SøknadFormData, SøknadFormField } from '../types/SøknadFormData';
-import { FraværDelerAvDag, Periode } from '../../@types/omsorgspengerutbetaling-schema';
-import { Utenlandsopphold, Virksomhet } from '@navikt/sif-common-forms/lib';
+import {YesOrNo} from 'common/types/YesOrNo';
+import {BarnStepQuestions} from '../søknad/barn-step/config';
+import {SøknadFormData, SøknadFormField} from '../types/SøknadFormData';
+import {Utenlandsopphold, Virksomhet} from '@navikt/sif-common-forms/lib';
 import {
     delvisFraværIsValid,
     minimumEnUtbetalingsperiode,
     oppholdIsValid,
     perioderIsValid
 } from '../søknad/periode-step/periodeStepConfig';
-import { frilansIsValid, selvstendigIsValid } from '../søknad/inntekt-step/inntektStepConfig';
+import {frilansIsValid, selvstendigIsValid} from '../søknad/inntekt-step/inntektStepConfig';
+import {FraværDag, FraværPeriode} from "@navikt/sif-common-forms/lib/fravær";
 
 export const welcomingPageIsValid = ({ harForståttRettigheterOgPlikter }: SøknadFormData): boolean =>
     harForståttRettigheterOgPlikter === true;
 
 export const periodeStepIsValid = (formData: SøknadFormData) => {
     const harPerioderMedFravær: YesOrNo = formData[SøknadFormField.harPerioderMedFravær];
-    const perioderMedFravær: Periode[] = formData[SøknadFormField.perioderMedFravær];
+    const fraværPerioder: FraværPeriode[] = formData.fraværPerioder;
     const harDagerMedDelvisFravær: YesOrNo = formData[SøknadFormField.harDagerMedDelvisFravær];
-    const dagerMedDelvisFravær: FraværDelerAvDag[] = formData[SøknadFormField.dagerMedDelvisFravær];
+    const fraværDager: FraværDag[] = formData.fraværDager;
     const perioderHarVærtIUtlandet: YesOrNo = formData[SøknadFormField.perioder_harVærtIUtlandet];
     const perioderUtenlandsopphold: Utenlandsopphold[] = formData[SøknadFormField.perioder_utenlandsopphold];
 
     const isValid: boolean = !!(
-        perioderIsValid(harPerioderMedFravær, perioderMedFravær) &&
-        delvisFraværIsValid(harDagerMedDelvisFravær, dagerMedDelvisFravær) &&
+        perioderIsValid(harPerioderMedFravær, fraværPerioder) &&
+        delvisFraværIsValid(harDagerMedDelvisFravær, fraværDager) &&
         oppholdIsValid(perioderHarVærtIUtlandet, perioderUtenlandsopphold) &&
-        minimumEnUtbetalingsperiode(perioderMedFravær, dagerMedDelvisFravær)
+        minimumEnUtbetalingsperiode(fraværPerioder, fraværDager)
     );
     return isValid;
 };
