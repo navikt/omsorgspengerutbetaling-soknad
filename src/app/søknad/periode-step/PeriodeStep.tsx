@@ -154,7 +154,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                             maksArbeidstidPerDag={24}
                         />
                         <FormBlock margin={'l'}>
-                            <ExpandableInfo title="Hvorfor kan jeg ikke klikke på/velge lørdag eller søndag?">
+                            <ExpandableInfo title="Hvorfor kan jeg ikke velge lørdag eller søndag?">
                                 Du kan kun få utbetalt omsorgspenger for hverdager, selv om du jobber lørdag eller
                                 søndag. Derfor kan du ikke legge inn delvis fravær på lørdager eller søndager.
                             </ExpandableInfo>
