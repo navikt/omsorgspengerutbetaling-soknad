@@ -1,11 +1,11 @@
 import React from 'react';
-import { useIntl } from 'react-intl';
 import SummaryList from '@navikt/sif-common-core/lib/components/summary-list/SummaryList';
 import { Time } from 'common/types/Time';
-import { apiStringDateToDate, prettifyDate } from 'common/utils/dateUtils';
-import { iso8601DurationToTime, timeToString } from 'common/utils/timeUtils';
+import { apiStringDateToDate, prettifyDate, prettifyDateExtended } from 'common/utils/dateUtils';
+import { iso8601DurationToTime, timeToDecimalTime } from 'common/utils/timeUtils';
 import { UtbetalingsperiodeApi } from '../../../types/SøknadApiData';
 import SummaryBlock from './SummaryBlock';
+import { timeText } from '@navikt/sif-common-forms/lib/fravær';
 
 export interface Props {
     utbetalingsperioder: UtbetalingsperiodeApi[];
@@ -43,9 +43,24 @@ export const outNull = (
     maybeUtbetalingsperiodeDag: UtbetalingsperiodeDag | null
 ): maybeUtbetalingsperiodeDag is UtbetalingsperiodeDag => maybeUtbetalingsperiodeDag !== null;
 
-function UtbetalingsperioderSummaryView({ utbetalingsperioder = [] }: Props) {
-    const intl = useIntl();
+export const utbetalingsperiodeDagToDagSummaryStringView = (dag: UtbetalingsperiodeDag): JSX.Element => {
+    const antallTimerSkulleJobbet = `${timeToDecimalTime(dag.antallTimerPlanlagt)} ${timeText(
+        `${timeToDecimalTime(dag.antallTimerPlanlagt)}`
+    )}`;
+    const antallTimerBorteFraJobb = `${timeToDecimalTime(dag.antallTimerBorte)} ${timeText(
+        `${timeToDecimalTime(dag.antallTimerBorte)}`
+    )}`;
+    return (
+        <>
+            <span>
+                {prettifyDateExtended(apiStringDateToDate(dag.dato))}: Skulle jobbet {antallTimerSkulleJobbet}. Borte
+                fra jobb {antallTimerBorteFraJobb}.
+            </span>
+        </>
+    );
+};
 
+function UtbetalingsperioderSummaryView({ utbetalingsperioder = [] }: Props) {
     const perioder: UtbetalingsperiodeApi[] = utbetalingsperioder.filter(
         (p) => p.tilOgMed !== undefined && p.antallTimerBorte === null
     );
@@ -71,11 +86,7 @@ function UtbetalingsperioderSummaryView({ utbetalingsperioder = [] }: Props) {
                     <SummaryList
                         items={dager}
                         itemRenderer={(dag: UtbetalingsperiodeDag) => (
-                            <span>
-                                {prettifyDate(apiStringDateToDate(dag.dato))}: Skulle jobbet:{' '}
-                                {timeToString(dag.antallTimerPlanlagt, intl, true)}. Borte fra jobb:{' '}
-                                {timeToString(dag.antallTimerBorte, intl, true)}.
-                            </span>
+                            <span>{utbetalingsperiodeDagToDagSummaryStringView(dag)}</span>
                         )}
                     />
                 </SummaryBlock>
