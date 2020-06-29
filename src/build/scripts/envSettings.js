@@ -10,6 +10,8 @@ function createEnvSettingsFile(settingsFile) {
                 PUBLIC_PATH: '${process.env.PUBLIC_PATH}',
                 UTILGJENGELIG: '${process.env.UTILGJENGELIG}',
                 MELLOMLAGRING: '${process.env.MELLOMLAGRING}',
+                APPSTATUS_PROJECT_ID: '${process.env.APPSTATUS_PROJECT_ID}',
+                APPSTATUS_DATASET: '${process.env.APPSTATUS_DATASET}',
             };`
         );
     });

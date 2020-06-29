@@ -60,21 +60,20 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                     </p>
 
                     <p>
-                        <strong>Hvis du søker for første gang i år</strong>, kan du få utbetalt omsorgspenger fra den 4.
-                        dagen du har vært hjemme. De tre første dagene må du dekke selv. Når du legger inn dagene du har
-                        vært hjemme, skal du også legge inn de tre første dagene.
+                        Reglene for hvor mange dager du selv må dekke, har endret seg flere ganger på grunn av
+                        koronasituasjonen:
+                    </p>
+                    <ul>
+                        <li>Frem til og med 30. juni 2020 må du dekke de tre første omsorgsdagene selv</li>
+                        <li>Fra 1. juli 2020 må du dekke de 10 første omsorgsdagene selv</li>
+                    </ul>
+                    <p>
+                        Dagene du selv skal dekke gjelder totalt for hele 2020. Det betyr at hvis du allerede har dekket
+                        3 dager, gjenstår det 7 dager for deg å dekke selv i år.
                     </p>
                     <p>
-                        <strong>Hvis du søker på nytt i år</strong>, og allerede har dekket de tre første dagene, skal
-                        du ikke dekke de igjen. Da legger du inn dagene du har vært hjemme med omsorgsdager i denne
-                        søknadsperioden.
-                    </p>
-
-                    <p>Du kan søke om utbetaling for opptil 3 måneder tilbake i tid, og fram til dagens dato.</p>
-                    <p>
-                        Barnehagen eller skolen er alltid stengt på røde dager. Det vil si at for røde dager kan du kun
-                        få utbetalt omsorgspenger hvis du har hatt fravær fra jobb fordi barnet eller barnepasser var
-                        syk.
+                        I søknaden legger du inn alle dagene du har vært hjemme med omsorgsdager i den perioden du nå
+                        søker for, inkludert dagene du selv dekker.
                     </p>
                 </CounsellorPanel>
             </FormBlock>
