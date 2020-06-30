@@ -174,7 +174,11 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                         name={SøknadFormField.hemmeligJaNeiSporsmal}
                         legend={intlHelper(intl, 'steg.en.smittevern.sporsmal')}
                         validate={validateYesOrNoIsAnswered}
-                        info={<SmittevernInfo />}
+                        description={
+                            <ExpandableInfo title="Hva menes med særlige smittevernhensyn?">
+                                <SmittevernInfo />
+                            </ExpandableInfo>
+                        }
                     />
                 </FormBlock>
             )}
