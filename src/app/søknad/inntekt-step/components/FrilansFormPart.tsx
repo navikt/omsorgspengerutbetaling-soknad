@@ -11,6 +11,7 @@ import { validateRequiredField, validateYesOrNoIsAnswered } from 'common/validat
 import { SøknadFormData, SøknadFormField } from '../../../types/SøknadFormData';
 import SøknadFormComponents from '../../SøknadFormComponents';
 import FrilansEksempeltHtml from './FrilansEksempelHtml';
+import ExpandableInfo from '@navikt/sif-common-core/lib/components/expandable-content/ExpandableInfo';
 
 interface Props {
     formValues: SøknadFormData;
@@ -24,7 +25,11 @@ const FrilansFormPart: React.FunctionComponent<Props> = ({ formValues }) => {
             <SøknadFormComponents.YesOrNoQuestion
                 name={SøknadFormField.frilans_harHattInntektSomFrilanser}
                 legend={intlHelper(intl, 'frilanser.harDuHattInntekt.spm')}
-                info={<FrilansEksempeltHtml />}
+                description={
+                    <ExpandableInfo title="Hva er en frilanser?">
+                        <FrilansEksempeltHtml />
+                    </ExpandableInfo>
+                }
                 infoPlassering={PopoverOrientering.Under}
                 validate={validateYesOrNoIsAnswered}
             />
