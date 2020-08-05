@@ -2,6 +2,7 @@ import * as React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import ExpandableInfo from '@navikt/sif-common-core/lib/components/expandable-content/ExpandableInfo';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
+import FormattedHtmlMessage from '@navikt/sif-common-core/lib/components/formatted-html-message/FormattedHtmlMessage';
 import { commonFieldErrorRenderer } from '@navikt/sif-common-core/lib/utils/commonFieldErrorRenderer';
 import { getTypedFormComponents, YesOrNo } from '@navikt/sif-common-formik/lib';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
@@ -50,39 +51,41 @@ const IntroPage: React.StatelessComponent = () => {
             <Box margin="xxxl">
                 <InformationPoster>
                     <p>
-                        Denne søknaden bruker du når du er <strong>selvstendig næringsdrivende eller frilanser</strong>{' '}
-                        og skal søke om utbetaling av omsorgspenger. Hvis du er ansatt i eget AS regnes du som
-                        arbeidstaker, da skal du eller din regnskapsfører{' '}
+                        <FormattedHtmlMessage id="steg.intro.info.1.html" />
                         <Lenke
                             href="https://www.nav.no/no/bedrift/tjenester-og-skjemaer/nav-og-altinn-tjenester/inntektsmelding"
                             target="_blank">
-                            sende inntektsmelding til NAV
+                            <FormattedHtmlMessage id="steg.intro.info.2" />
                         </Lenke>
                         .
                     </p>
-                    <p>Du kan søke om omsorgspenger når du har vært hjemme fra jobb fordi</p>
+                    <p>
+                        <FormattedHtmlMessage id="steg.intro.info.3" />
+                    </p>
                     <ul>
-                        <li>barnet eller barnepasser er syk</li>
-                        <li>barnehagen eller skolen er stengt på grunn av koronaviruset</li>
                         <li>
-                            barnet ikke kan gå i barnehage eller skole når disse åpnes igjen, på grunn av særlige
-                            smittevernhensyn
+                            <FormattedHtmlMessage id="steg.intro.info.4" />
+                        </li>
+                        <li>
+                            <FormattedHtmlMessage id="steg.intro.info.5" />
+                        </li>
+                        <li>
+                            <FormattedHtmlMessage id="steg.intro.info.6" />
                         </li>
                     </ul>
                     <p>
-                        Vær oppmerksom på at om du har søkt om{' '}
+                        <FormattedHtmlMessage id="steg.intro.info.7.1" />
                         <Lenke href="https://www.nav.no/arbeid/inntektskompensasjon" target="_blank">
-                            kompensasjon for tapt inntekt som selvstendig næringsdrivende og/eller frilanser
+                            <FormattedHtmlMessage id="steg.intro.info.7.2" />
                         </Lenke>
-                        , kan du ikke søke om omsorgspenger for samme periode.
+                        <FormattedHtmlMessage id="steg.intro.info.7.3" />
                     </p>
                     <p>
-                        Hvis du har søkt om kompensasjon, men nå ønsker å søke om omsorgspenger, må du trekke din søknad
-                        om kompensasjon. Dette gjør du ved å{' '}
+                        <FormattedHtmlMessage id="steg.intro.info.8.1" />
                         <Lenke href="https://www.nav.no/person/kontakt-oss/nb/skriv-til-oss" target="_blank">
-                            skrive en beskjed til oss
+                            <FormattedHtmlMessage id="steg.intro.info.8.2" />
                         </Lenke>
-                        . Under tema velger du jobbsøker (selv om du ikke er jobbsøker).
+                        <FormattedHtmlMessage id="steg.intro.info.8.3" />
                     </p>
                 </InformationPoster>
             </Box>
@@ -128,16 +131,16 @@ const IntroPage: React.StatelessComponent = () => {
                                 includeButtons={false}>
                                 <PageForm.YesOrNoQuestion
                                     name={PageFormField.erSelvstendigEllerFrilanser}
-                                    legend="Er du selvstendig næringsdrivende eller frilanser?"
+                                    legend={intlHelper(intl, 'steg.intro.form.spm.erSelvstendigEllerFrilanser')}
                                 />
 
                                 {skalViseSmittevernSpørsmål && (
                                     <FormBlock>
                                         <PageForm.YesOrNoQuestion
                                             name={PageFormField.smittevernHensyn}
-                                            legend="Har du vært hjemme med barn grunnet særlige smittevernhensyn?"
+                                            legend={intlHelper(intl, 'steg.intro.form.spm.smittevernhensyn')}
                                             description={
-                                                <ExpandableInfo title="Hva menes med særlige smittevernhensyn?">
+                                                <ExpandableInfo title={intlHelper(intl, 'info.smittevern.tittel')}>
                                                     <SmittevernInfo />
                                                 </ExpandableInfo>
                                             }
@@ -149,7 +152,7 @@ const IntroPage: React.StatelessComponent = () => {
                                     <FormBlock>
                                         <PageForm.YesOrNoQuestion
                                             name={PageFormField.hjemmePgaStengt}
-                                            legend="Har du vært hjemme fra jobb fordi skolen/barnehagen er stengt på grunn av koronaviruset?"
+                                            legend={intlHelper(intl, 'steg.intro.form.spm.hjemmePgaStengt')}
                                         />
                                     </FormBlock>
                                 )}
@@ -157,7 +160,7 @@ const IntroPage: React.StatelessComponent = () => {
                                     <FormBlock>
                                         <PageForm.YesOrNoQuestion
                                             name={PageFormField.hjemmePgaSykdom}
-                                            legend="Har du vært hjemme fra jobb fordi barnet eller barnepasser er blitt syk?"
+                                            legend={intlHelper(intl, 'steg.intro.form.spm.hjemmePgaSykdom')}
                                         />
                                     </FormBlock>
                                 )}
@@ -167,14 +170,10 @@ const IntroPage: React.StatelessComponent = () => {
                                         <AlertStripeInfo>
                                             <>
                                                 <p style={{ marginTop: 0, marginBottom: 0 }}>
-                                                    Denne søknaden gjelder{' '}
-                                                    <strong>kun for selvstendig næringsdrivende og frilansere</strong>{' '}
-                                                    som skal søke om utbetaling av omsorgspenger.
+                                                    <FormattedHtmlMessage id="steg.intro.søknadGjelderKunFor.1.html" />
                                                 </p>
                                                 <p>
-                                                    Hvis du er <strong>arbeidstaker</strong>, skal du ikke søke om
-                                                    utbetaling av omsorgspenger. Arbeidsgiveren din skal utbetale deg
-                                                    lønn som vanlig de dagene du tar ut omsorgsdager.
+                                                    <FormattedHtmlMessage id="steg.intro.søknadGjelderKunFor.2.html" />
                                                 </p>
                                             </>
                                         </AlertStripeInfo>
@@ -185,8 +184,7 @@ const IntroPage: React.StatelessComponent = () => {
                                     <Box margin="xl">
                                         <AlertStripeInfo>
                                             <p style={{ marginTop: 0, marginBottom: 0 }}>
-                                                Du kan <strong>kun</strong> bruke denne søknaden hvis du er hjemme fra
-                                                jobb på grunn av én av situasjonene beskrevet over.
+                                                <FormattedHtmlMessage id="steg.intro.kanIkkeBrukeSøknad.html" />
                                             </p>
                                         </AlertStripeInfo>
                                     </Box>
@@ -196,17 +194,10 @@ const IntroPage: React.StatelessComponent = () => {
                                     <Box margin="xl">
                                         <AlertStripeInfo>
                                             <p style={{ marginTop: 0, marginBottom: 0 }}>
-                                                I søknaden må du laste opp en bekreftelse fra lege. Legen må bekrefte at
-                                                barnet ikke kan gå i barnehage eller skole fordi det er{' '}
-                                                <strong>særlige smittevernhensyn</strong> i forbindelse med
-                                                koronaviruset som må ivaretas for enten barnet eller et familiemedlem
-                                                som barnet bor sammen med. Legen skal ikke oppgi diagnose eller hvilket
-                                                familiemedlem det gjelder.
+                                                <FormattedHtmlMessage id="steg.intro.smittevernInfo.1.html" />
                                             </p>
                                             <p>
-                                                Hvis du ikke har bekreftelse tilgjengelig når du søker, kan du
-                                                ettersende den. Vi kan ikke behandle søknaden før vi mottar
-                                                bekreftelsen.
+                                                <FormattedHtmlMessage id="steg.intro.smittevernInfo.2" />
                                             </p>
                                         </AlertStripeInfo>
                                     </Box>

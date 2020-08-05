@@ -8,23 +8,20 @@ import MessagesPreview from 'common/dev-utils/intl/messages-preview/MessagesPrev
 import { allCommonMessages } from 'common/i18n/allCommonMessages';
 import { Locale } from 'common/types/Locale';
 
-const selvstendigMessagesNb = require('../../i18n/selvstendigOgFrilans.nb.json');
-const selvstendigMessagesNn = require('../../i18n/selvstendigOgFrilans.nn.json');
-
-const appBokmålstekster = require('../../i18n/nb.json');
+export const appBokmålstekster = require('../../i18n/nb.json');
+export const appNynorsktekster = require('../../i18n/nn.json');
 
 const bokmålstekster = {
     ...allCommonMessages.nb,
-    ...appBokmålstekster,
-    ...selvstendigMessagesNb,
     ...bostedUtlandMessages.nb,
-    ...fraværMessages.nb
+    ...fraværMessages.nb,
+    ...appBokmålstekster
 };
 const nynorsktekster = {
     ...allCommonMessages.nn,
-    ...selvstendigMessagesNn,
     ...bostedUtlandMessages.nn,
-    ...fraværMessages.nn
+    ...fraværMessages.nn,
+    ...appNynorsktekster
 };
 
 export interface IntlProviderProps {

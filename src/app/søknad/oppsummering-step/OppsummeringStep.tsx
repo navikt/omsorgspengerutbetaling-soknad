@@ -112,7 +112,7 @@ const OppsummeringStep: React.StatelessComponent<Props> = ({ onApplicationSent }
                     )}
 
                     <Box margin={'s'}>
-                        <SummaryBlock header={intlHelper(intl, 'steg.en.smittevern.sporsmal')}>
+                        <SummaryBlock header={intlHelper(intl, 'steg.intro.form.spm.smittevernhensyn')}>
                             <JaNeiSvar harSvartJa={apiValues.hjemmePgaSmittevernhensyn} />
                         </SummaryBlock>
                     </Box>

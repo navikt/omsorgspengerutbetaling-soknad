@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useIntl } from 'react-intl';
+import { useIntl, FormattedMessage } from 'react-intl';
 import Box from '@navikt/sif-common-core/lib/components/box/Box';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
 import { useFormikContext } from 'formik';
@@ -31,12 +31,10 @@ const DokumenterStep = ({ onValidSubmit }: StepConfigProps) => {
             <FormBlock>
                 <CounsellorPanel>
                     <p>
-                        Du må laste opp en bekreftelse fra lege om at det er særlige smittevernhensyn som gjør at barnet
-                        ikke kan gå i barnehage eller skole.
+                        <FormattedMessage id="steg.dokumenter.info.1" />
                     </p>
                     <p>
-                        Hvis du ikke har bekreftelsen tilgjengelig nå, må du ettersende den til oss så snart du har den.
-                        Vi kan ikke behandle søknaden før vi har mottatt bekreftelsen.
+                        <FormattedMessage id="steg.dokumenter.info.2" />
                     </p>
                 </CounsellorPanel>
             </FormBlock>

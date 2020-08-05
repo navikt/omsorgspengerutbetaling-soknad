@@ -172,10 +172,10 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                 <FormBlock>
                     <SøknadFormComponents.YesOrNoQuestion
                         name={SøknadFormField.hemmeligJaNeiSporsmal}
-                        legend={intlHelper(intl, 'steg.en.smittevern.sporsmal')}
+                        legend={intlHelper(intl, 'steg.intro.form.spm.smittevernhensyn')}
                         validate={validateYesOrNoIsAnswered}
                         description={
-                            <ExpandableInfo title="Hva menes med særlige smittevernhensyn?">
+                            <ExpandableInfo title={intlHelper(intl, 'info.smittevern.tittel')}>
                                 <SmittevernInfo />
                             </ExpandableInfo>
                         }
