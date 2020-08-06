@@ -32,7 +32,7 @@ const renderVirksomhetSummary = (virksomhet: VirksomhetApiData, intl: IntlShape)
               fraOgMed: prettifyApiDate(virksomhet.fraOgMed),
               tilOgMed: prettifyApiDate(virksomhet.tilOgMed)
           })
-        : intlHelper(intl, 'summary.virksomhet.tidsinfo.avsluttet', {
+        : intlHelper(intl, 'summary.virksomhet.tidsinfo.pågående', {
               fraOgMed: prettifyApiDate(virksomhet.fraOgMed)
           });
 
@@ -72,7 +72,7 @@ const renderVirksomhetSummary = (virksomhet: VirksomhetApiData, intl: IntlShape)
             {virksomhet.varigEndring?.dato && (
                 <Box padBottom="l">
                     <FormattedMessage
-                        id="virksomhet.varigEndring"
+                        id="summary.virksomhet.varigEndring"
                         values={{
                             dato: prettifyApiDate(virksomhet.varigEndring.dato),
                             inntekt: intl.formatNumber(virksomhet.varigEndring.inntektEtterEndring)
@@ -87,7 +87,7 @@ const renderVirksomhetSummary = (virksomhet: VirksomhetApiData, intl: IntlShape)
             {virksomhet.yrkesaktivSisteTreFerdigliknedeÅrene?.oppstartsdato !== undefined && (
                 <FormattedMessage
                     tagName="p"
-                    id="virksomhet.yrkesaktivSisteTreFerdigliknedeÅrene"
+                    id="summary.virksomhet.yrkesaktivSisteTreFerdigliknedeÅrene"
                     values={{
                         dato: prettifyApiDate(virksomhet.yrkesaktivSisteTreFerdigliknedeÅrene.oppstartsdato)
                     }}
