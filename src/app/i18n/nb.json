@@ -227,6 +227,8 @@
     "steg.oppsummering.bekrefterOpplysninger.ikkeBekreftet": "Du må bekrefte opplysningene",
 
     "steg.oppsummering.utenlandsoppholdIPerioden.listetittel": "Utenlandsopphold i perioden",
+    "steg.oppsummering.bostederUtlandSiste12.listetittel": "Bosteder i utlandet siste 12 måneder",
+    "steg.oppsummering.bostederUtlandNeste12.listetittel": "Bosteder i utlandet neste 12 måneder",
 
     "steg.oppsummering.apiValideringFeil.tittel": "Noe av informasjonen mangler",
 
@@ -378,6 +380,8 @@
     "summary.virksomhet.revisor": "Revisor",
     "summary.virksomhet.revisorEllerRegnskapsførerDetaljer": "{navn}, telefon: {telefon}.",
     "summary.virksomhet.revisor.kanInnhenteOpplysninger": "Kan innhente opplysninger",
+    "summary.virksomhet.tidsinfo.avsluttet": "Startet {fraOgMed}, avsluttet {tilOgMed}.",
+    "summary.virksomhet.tidsinfo.pågående": "Startet {fraOgMed} (pågående).",
 
     "selvstendig.harDuHattInntekt.spm": "Har du hatt inntekt som selvstendig næringsdrivende siste 4 uker?",
     "selvstendig.list.tittel": "Registrerte virksomheter",

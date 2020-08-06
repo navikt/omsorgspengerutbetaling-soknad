@@ -26,9 +26,15 @@ const renderVirksomhetSummary = (virksomhet: VirksomhetApiData, intl: IntlShape)
                   erPåBladB: virksomhet.fiskerErPåBladB !== undefined && virksomhet.fiskerErPåBladB === true
               }
             : undefined;
-    const tidsinfo = `Startet ${prettifyApiDate(virksomhet.fraOgMed)}${
-        virksomhet.tilOgMed ? `, avsluttet ${prettifyApiDate(virksomhet.tilOgMed)}.` : ' (pågående).'
-    }`;
+
+    const tidsinfo = virksomhet.tilOgMed
+        ? intlHelper(intl, 'summary.virksomhet.tidsinfo.avsluttet', {
+              fraOgMed: prettifyApiDate(virksomhet.fraOgMed),
+              tilOgMed: prettifyApiDate(virksomhet.tilOgMed)
+          })
+        : intlHelper(intl, 'summary.virksomhet.tidsinfo.avsluttet', {
+              fraOgMed: prettifyApiDate(virksomhet.fraOgMed)
+          });
 
     return (
         <SummaryBlock header={virksomhet.navnPåVirksomheten}>
