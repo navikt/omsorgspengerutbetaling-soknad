@@ -69,6 +69,10 @@
     "step.inntekt.pageTitle": "Inntekt - Søknad om utbetaling av omsorgspenger",
     "step.inntekt.stepTitle": "Inntekt",
     "step.inntekt.stepIndicatorLabel": "Inntekt",
+    "step.inntekt.info.1": "Før du kan bruke av omsorgsdagene og ha rett til omsorgspenger, må du ha vært i jobb i minst 4 uker.",
+    "step.inntekt.info.2": "Når vi spør om de 4 siste ukene, mener vi de 4 siste ukene før den første dagen du søker utbetaling for.",
+    "step.inntekt.info.3": "Hvis du ikke har jobbet de 4 siste ukene, men mottatt en utbetaling fra NAV som er likestilt med jobb, skal du svare ja. Disse utbetalingene er: omsorgspenger, sykepenger, dagpenger, foreldrepenger, svangerskapspenger, pleiepenger eller opplæringspenger.",
+    "step.inntekt.advarsel.ingenSituasjonValgt": "Du må velge minst én av situasjonene over.",
 
     "step.barn.pageTitle": "Barn - Søknad om utbetaling av omsorgspenger",
     "step.barn.stepTitle": "Barn",
@@ -84,6 +88,9 @@
 
     "introPage.tittel": "Søknad om utbetaling av omsorgspenger",
     "introPage.stegTittel": "Kan jeg søke om utbetaling av omsorgspenger?",
+
+    "page.unavailable.1": "Den digitale søknaden dessverre ikke tilgjengelig på grunn av teknisk feil. Vi jobber med å løse feilen slik at du kan søke digitalt.",
+    "page.unavailable.2": "Vi beklager.",
 
     "welcomingPage.sidetittel": "Søknad om utbetaling av omsorgspenger",
     "welcomingPage.banner.tittel": "Hei,",
@@ -137,6 +144,25 @@
     "step.periode.har_du_oppholdt_deg_i_utlandet_for_dager_du_soker_ok.spm": "Har du vært i utlandet noen av dagene du søker omsorgspenger for?",
     "step.periode.har_søkt_andre_utbetalinger.spm": "Har du søkt om andre utbetalinger fra NAV i forbindelse med koronasituasjonen?",
     "step.periode.hvilke_utbetalinger.spm": "Hvilke andre utbetalinger fra NAV har du søkt om?",
+    "step.periode.info.1": "Nå skal du legge inn dagene du har hatt fravær fra jobb fordi du har vært hjemme med omsorgsdager.",
+    "step.periode.info.2": "Reglene for hvor mange dager du selv må dekke, har endret seg flere ganger på grunn av koronasituasjonen:",
+    "step.periode.info.2.1": "Frem til og med 30. juni 2020 må du dekke de tre første omsorgsdagene selv",
+    "step.periode.info.2.2": "Fra 1. juli 2020 må du dekke de 10 første omsorgsdagene selv",
+    "step.periode.info.3": "Dagene du selv skal dekke gjelder totalt for hele 2020. Det betyr at hvis du allerede har dekket 3 dager, gjenstår det 7 dager for deg å dekke selv i år.",
+    "step.periode.info.4": "I søknaden legger du inn alle dagene du har vært hjemme med omsorgsdager i den perioden du nå søker for, inkludert dagene du selv dekker.",
+    "step.periode.spm.harPerioderMedFravær": "Har du hatt hele dager med fravær fra jobb?",
+    "step.periode.harPerioderMedFravær.addLabel": "Legg til ny periode med fullt fravær",
+    "step.periode.harPerioderMedFravær.modalTitle": "Fravær hele dager",
+    "step.periode.harPerioderMedFravær.info.ikkeHelg.tittel": "Hvorfor kan jeg ikke velge lørdag eller søndag?",
+    "step.periode.harPerioderMedFravær.info.ikkeHelg.tekst": "Du kan kun få utbetalt omsorgspenger for hverdager, selv om du jobber lørdag eller søndag. Derfor kan du ikke velge lørdag eller søndag som start- eller sluttdato i perioden du legger inn.",
+    "step.periode.spm.harDagerMedDelvisFravær": "Har du hatt dager med delvis fravær fra jobb?",
+    "step.periode.harDagerMedDelvisFravær.addLabel": "Legg til ny dag med delvis fravær",
+    "step.periode.harDagerMedDelvisFravær.modalTitle": "Fravær deler av dag",
+    "step.periode.harDagerMedDelvisFravær.info.ikkeHelg.tittel": "Hvorfor kan jeg ikke velge lørdag eller søndag?",
+    "step.periode.harDagerMedDelvisFravær.info.ikkeHelg.tekst": "Du kan kun få utbetalt omsorgspenger for hverdager, selv om du jobber lørdag eller søndag. Derfor kan du ikke legge inn delvis fravær på lørdager eller søndager.",
+    "step.periode.måVelgeSituasjon": "Du må velge én av situasjonene over.",
+    "step.periode.utenlandsopphold.addLabel": "Legg til nytt utenlandsopphold",
+    "step.periode.utenlandsopphold.modalTitle": "Utenlandsopphold siste 12 måneder",
 
     "steg.arbeid.spm": "Hva er din arbeidssituasjon? Du kan velge flere.",
 
@@ -152,6 +178,10 @@
     "steg.medlemsskap.annetLandNeste12.hjelp": "Du svarer ja bare hvis du planlegger å oppholde deg fast i et annet land enn Norge. Korte utlandsturer i forbindelse med for eksempel ferie regnes ikke med.",
     "steg.medlemsskap.annetLandNeste12.listeTittel": "Utenlandsopphold neste 12 måneder",
     "steg.medlemsskap.annetLandSisteOgNeste12.listeTittel": "Utenlandsopphold siste 12 måneder og neste 12 måneder",
+    "steg.medlemsskap.info.1": "Medlemskap i folketrygden er nøkkelen til rettigheter fra NAV. Hvis du bor eller jobber i Norge er du vanligvis medlem. Du kan lese mer om medlemskap på ",
+    "steg.medlemsskap.info.2": "nav.no",
+    "steg.medlemsskap.hvaBetyrDette": "Hva betyr dette?",
+    "steg.medlemsskap.utenlandsopphold.leggTilLabel": "Legg til nytt utenlandsopphold",
 
     "steg.oppsummering.info": "Les gjennom oppsummeringen før du sender inn søknaden. Hvis du vil gjøre endringer, kan du gå tilbake.",
     "steg.oppsummering.søker.header": "Navn på søker",

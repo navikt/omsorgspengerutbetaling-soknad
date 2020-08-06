@@ -1,13 +1,18 @@
 import * as React from 'react';
-import { useIntl } from 'react-intl';
+import { useIntl, FormattedMessage } from 'react-intl';
 import {
     validateRequiredList,
     validateYesOrNoIsAnswered
 } from '@navikt/sif-common-core/lib/validation/fieldValidations';
 import BostedUtlandListAndDialog from '@navikt/sif-common-forms/lib/bosted-utland/BostedUtlandListAndDialog';
+import { fraværDagToFraværDateRange, validateNoCollisions } from '@navikt/sif-common-forms/lib/fravær';
+import FraværDagerListAndDialog from '@navikt/sif-common-forms/lib/fravær/FraværDagerListAndDialog';
+import FraværPerioderListAndDialog from '@navikt/sif-common-forms/lib/fravær/FraværPerioderListAndDialog';
+import { validateAll } from '@navikt/sif-common-forms/lib/fravær/fraværValidationUtils';
 import { useFormikContext } from 'formik';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import CounsellorPanel from 'common/components/counsellor-panel/CounsellorPanel';
+import ExpandableInfo from 'common/components/expandable-content/ExpandableInfo';
 import FormBlock from 'common/components/form-block/FormBlock';
 import { YesOrNo } from 'common/types/YesOrNo';
 import { date1YearAgo, date1YearFromNow, dateToday } from 'common/utils/dateUtils';
@@ -16,15 +21,10 @@ import SmittevernInfo from '../../components/information/SmittevernInfo';
 import { StepConfigProps, StepID } from '../../config/stepConfig';
 import { AndreUtbetalinger } from '../../types/AndreUtbetalinger';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
+import { GYLDIG_TIDSROM } from '../../validation/constants';
 import SøknadFormComponents from '../SøknadFormComponents';
 import SøknadStep from '../SøknadStep';
-import FraværPerioderListAndDialog from '@navikt/sif-common-forms/lib/fravær/FraværPerioderListAndDialog';
-import { fraværDagToFraværDateRange, validateNoCollisions } from '@navikt/sif-common-forms/lib/fravær';
-import { validateAll } from '@navikt/sif-common-forms/lib/fravær/fraværValidationUtils';
-import FraværDagerListAndDialog from '@navikt/sif-common-forms/lib/fravær/FraværDagerListAndDialog';
-import { GYLDIG_TIDSROM } from '../../validation/constants';
 import './periodeStep.less';
-import ExpandableInfo from 'common/components/expandable-content/ExpandableInfo';
 
 const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) => {
     const { values } = useFormikContext<SøknadFormData>();
@@ -55,32 +55,32 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
             <FormBlock>
                 <CounsellorPanel>
                     <p>
-                        Nå skal du legge inn dagene du har hatt fravær fra jobb fordi du har vært hjemme med
-                        omsorgsdager.
+                        <FormattedMessage id="step.periode.info.1" />
                     </p>
 
                     <p>
-                        Reglene for hvor mange dager du selv må dekke, har endret seg flere ganger på grunn av
-                        koronasituasjonen:
+                        <FormattedMessage id="step.periode.info.2" />
                     </p>
                     <ul>
-                        <li>Frem til og med 30. juni 2020 må du dekke de tre første omsorgsdagene selv</li>
-                        <li>Fra 1. juli 2020 må du dekke de 10 første omsorgsdagene selv</li>
+                        <li>
+                            <FormattedMessage id="step.periode.info.2.1" />
+                        </li>
+                        <li>
+                            <FormattedMessage id="step.periode.info.2.2" />
+                        </li>
                     </ul>
                     <p>
-                        Dagene du selv skal dekke gjelder totalt for hele 2020. Det betyr at hvis du allerede har dekket
-                        3 dager, gjenstår det 7 dager for deg å dekke selv i år.
+                        <FormattedMessage id="step.periode.info.3" />
                     </p>
                     <p>
-                        I søknaden legger du inn alle dagene du har vært hjemme med omsorgsdager i den perioden du nå
-                        søker for, inkludert dagene du selv dekker.
+                        <FormattedMessage id="step.periode.info.4" />
                     </p>
                 </CounsellorPanel>
             </FormBlock>
             <FormBlock>
                 <SøknadFormComponents.YesOrNoQuestion
                     name={SøknadFormField.harPerioderMedFravær}
-                    legend="Har du hatt hele dager med fravær fra jobb?"
+                    legend={intlHelper(intl, 'step.periode.spm.harPerioderMedFravær')}
                     validate={validateYesOrNoIsAnswered}
                 />
             </FormBlock>
@@ -100,8 +100,8 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                                 )
                             ])}
                             labels={{
-                                addLabel: 'Legg til ny periode med fullt fravær',
-                                modalTitle: 'Fravær hele dager'
+                                addLabel: intlHelper(intl, 'step.periode.harPerioderMedFravær.addLabel'),
+                                modalTitle: intlHelper(intl, 'step.periode.harPerioderMedFravær.modalTitle')
                             }}
                             dateRangesToDisable={[
                                 ...values.fraværPerioder,
@@ -110,10 +110,9 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                             helgedagerIkkeTillat={true}
                         />
                         <FormBlock margin={'l'}>
-                            <ExpandableInfo title="Hvorfor kan jeg ikke velge lørdag eller søndag?">
-                                Du kan kun få utbetalt omsorgspenger for hverdager, selv om du jobber lørdag eller
-                                søndag. Derfor kan du ikke velge lørdag eller søndag som start- eller sluttdato i
-                                perioden du legger inn.
+                            <ExpandableInfo
+                                title={intlHelper(intl, 'step.periode.harPerioderMedFravær.info.ikkeHelg.tittel')}>
+                                <FormattedMessage id="step.periode.harPerioderMedFravær.info.ikkeHelg.tekst" />
                             </ExpandableInfo>
                         </FormBlock>
                     </FormBlock>
@@ -122,7 +121,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
             <FormBlock>
                 <SøknadFormComponents.YesOrNoQuestion
                     name={SøknadFormField.harDagerMedDelvisFravær}
-                    legend="Har du hatt dager med delvis fravær fra jobb?"
+                    legend={intlHelper(intl, 'step.periode.spm.harDagerMedDelvisFravær')}
                     validate={validateYesOrNoIsAnswered}
                 />
             </FormBlock>
@@ -142,8 +141,8 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                                 )
                             ])}
                             labels={{
-                                addLabel: 'Legg til ny dag med delvis fravær',
-                                modalTitle: 'Fravær deler av dag'
+                                addLabel: intlHelper(intl, 'step.periode.harPerioderMedFravær.addLabel'),
+                                modalTitle: intlHelper(intl, 'step.periode.harPerioderMedFravær.modalTitle')
                             }}
                             dateRangesToDisable={[
                                 ...values.fraværDager.map(fraværDagToFraværDateRange),
@@ -153,9 +152,9 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                             maksArbeidstidPerDag={24}
                         />
                         <FormBlock margin={'l'}>
-                            <ExpandableInfo title="Hvorfor kan jeg ikke velge lørdag eller søndag?">
-                                Du kan kun få utbetalt omsorgspenger for hverdager, selv om du jobber lørdag eller
-                                søndag. Derfor kan du ikke legge inn delvis fravær på lørdager eller søndager.
+                            <ExpandableInfo
+                                title={intlHelper(intl, 'step.periode.harDagerMedDelvisFravær.info.ikkeHelg.tittel')}>
+                                <FormattedMessage id="step.periode.harDagerMedDelvisFravær.info.ikkeHelg.tekst" />
                             </ExpandableInfo>
                         </FormBlock>
                     </FormBlock>
@@ -164,7 +163,9 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
 
             {kanIkkeFortsette && (
                 <FormBlock margin="xxl">
-                    <AlertStripeAdvarsel>Du må velge én av situasjonene over. </AlertStripeAdvarsel>
+                    <AlertStripeAdvarsel>
+                        <FormattedMessage id="step.periode.måVelgeSituasjon" />
+                    </AlertStripeAdvarsel>
                 </FormBlock>
             )}
 
@@ -202,8 +203,8 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                                 minDate={date1YearAgo}
                                 maxDate={date1YearFromNow}
                                 labels={{
-                                    addLabel: 'Legg til nytt utenlandsopphold',
-                                    modalTitle: 'Utenlandsopphold siste 12 måneder'
+                                    addLabel: intlHelper(intl, 'step.periode.utenlandsopphold.addLabel'),
+                                    modalTitle: intlHelper(intl, 'step.periode.utenlandsopphold.modalTitle')
                                 }}
                                 validate={validateRequiredList}
                             />

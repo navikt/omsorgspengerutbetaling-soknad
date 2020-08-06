@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
+import ExpandableInfo from '@navikt/sif-common-core/lib/components/expandable-content/ExpandableInfo';
 import { validateYesOrNoIsAnswered } from '@navikt/sif-common-core/lib/validation/fieldValidations';
 import BostedUtlandListAndDialog from '@navikt/sif-common-forms/lib/bosted-utland/BostedUtlandListAndDialog';
 import { useFormikContext } from 'formik';
@@ -18,7 +19,6 @@ import getLenker from '../../lenker';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import SøknadFormComponents from '../SøknadFormComponents';
 import SøknadStep from '../SøknadStep';
-import ExpandableInfo from '@navikt/sif-common-core/lib/components/expandable-content/ExpandableInfo';
 
 const MedlemsskapStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) => {
     const intl = useIntl();
@@ -27,10 +27,9 @@ const MedlemsskapStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubm
     return (
         <SøknadStep id={StepID.MEDLEMSKAP} onValidFormSubmit={onValidSubmit}>
             <CounsellorPanel>
-                Medlemskap i folketrygden er nøkkelen til rettigheter fra NAV. Hvis du bor eller jobber i Norge er du
-                vanligvis medlem. Du kan lese mer om medlemskap på{' '}
+                <FormattedMessage id="steg.medlemsskap.info.1" />
                 <Lenke href={getLenker().medlemskap} target="_blank">
-                    nav.no
+                    <FormattedMessage id="steg.medlemsskap.info.2" />
                 </Lenke>
                 .
             </CounsellorPanel>
@@ -40,7 +39,7 @@ const MedlemsskapStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubm
                     name={SøknadFormField.harBoddUtenforNorgeSiste12Mnd}
                     validate={validateYesOrNoIsAnswered}
                     description={
-                        <ExpandableInfo title="Hva betyr dette?">
+                        <ExpandableInfo title={intlHelper(intl, 'steg.medlemsskap.hvaBetyrDette')}>
                             {intlHelper(intl, 'steg.medlemsskap.annetLandSiste12.hjelp')}
                         </ExpandableInfo>
                     }
@@ -54,8 +53,8 @@ const MedlemsskapStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubm
                         maxDate={dateToday}
                         validate={validateUtenlandsoppholdSiste12Mnd}
                         labels={{
-                            addLabel: 'Legg til nytt utenlandsopphold',
-                            modalTitle: 'Utenlandsopphold siste 12 måneder'
+                            addLabel: intlHelper(intl, 'steg.medlemsskap.utenlandsopphold.leggTilLabel'),
+                            modalTitle: intlHelper(intl, 'steg.medlemsskap.annetLandSiste12.listeTittel')
                         }}
                     />
                 </FormBlock>
@@ -66,7 +65,7 @@ const MedlemsskapStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubm
                     name={SøknadFormField.skalBoUtenforNorgeNeste12Mnd}
                     validate={validateYesOrNoIsAnswered}
                     description={
-                        <ExpandableInfo title="Hva betyr dette?">
+                        <ExpandableInfo title={intlHelper(intl, 'steg.medlemsskap.hvaBetyrDette')}>
                             {intlHelper(intl, 'steg.medlemsskap.annetLandNeste12.hjelp')}
                         </ExpandableInfo>
                     }
@@ -80,8 +79,8 @@ const MedlemsskapStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubm
                         name={SøknadFormField.utenlandsoppholdNeste12Mnd}
                         validate={validateUtenlandsoppholdNeste12Mnd}
                         labels={{
-                            addLabel: 'Legg til nytt utenlandsopphold',
-                            modalTitle: 'Utenlandsopphold neste 12 måneder'
+                            addLabel: intlHelper(intl, 'steg.medlemsskap.utenlandsopphold.leggTilLabel'),
+                            modalTitle: intlHelper(intl, 'steg.medlemsskap.annetLandNeste12.listeTittel')
                         }}
                     />
                 </FormBlock>

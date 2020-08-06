@@ -7,6 +7,8 @@ import fraværMessages from '@navikt/sif-common-forms/lib/fravær/fraværMessage
 import MessagesPreview from 'common/dev-utils/intl/messages-preview/MessagesPreview';
 import { allCommonMessages } from 'common/i18n/allCommonMessages';
 import { Locale } from 'common/types/Locale';
+import fosterbarnMessages from '@navikt/sif-common-forms/lib/fosterbarn/fosterbarnMessages';
+import virksomhetMessages from '@navikt/sif-common-forms/lib/virksomhet/virksomhetMessages';
 
 export const appBokmålstekster = require('../../i18n/nb.json');
 export const appNynorsktekster = require('../../i18n/nn.json');
@@ -15,12 +17,16 @@ const bokmålstekster = {
     ...allCommonMessages.nb,
     ...bostedUtlandMessages.nb,
     ...fraværMessages.nb,
+    ...fosterbarnMessages.nb,
+    ...virksomhetMessages.nb,
     ...appBokmålstekster
 };
 const nynorsktekster = {
     ...allCommonMessages.nn,
     ...bostedUtlandMessages.nn,
     ...fraværMessages.nn,
+    ...fosterbarnMessages.nn,
+    ...virksomhetMessages.nn,
     ...appNynorsktekster
 };
 
