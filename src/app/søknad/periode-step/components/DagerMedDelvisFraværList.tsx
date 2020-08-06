@@ -6,6 +6,7 @@ import { SøknadFormField } from '../../../types/SøknadFormData';
 import { validateDagerMedFravær } from '../../../validation/fieldValidations';
 import SøknadFormComponents from '../../SøknadFormComponents';
 import DagerMedDelvisFraværListItem from './DagerMedDelvisFraværListItem';
+import { FormattedMessage } from 'react-intl';
 
 interface Props {
     dagerMedDelvisFravær: FraværDelerAvDag[];
@@ -38,7 +39,7 @@ const DagerMedDelvisFraværList: React.FunctionComponent<Props> = ({
             </SøknadFormComponents.InputGroup>
             <FormBlock margin="m">
                 <Knapp type="standard" htmlType={'button'} onClick={onCreateNew} mini={true}>
-                    Legg til ny dag med delvis fravær
+                    <FormattedMessage id="step.periode.leggTilDagMedDelvisFravær" />
                 </Knapp>
             </FormBlock>
         </>

@@ -9,6 +9,9 @@ import { GYLDIG_TIDSROM } from '../../../validation/constants';
 import { validateAll, validateDateInRange, validateTomAfterFom } from '../../../validation/fieldValidations';
 import SøknadFormComponents from '../../SøknadFormComponents';
 import { validatePeriodeNotWeekend } from '../../../utils/periodeUtils';
+import { useIntl, FormattedMessage } from 'react-intl';
+import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
+import { Form } from 'formik';
 
 interface Props {
     index: number;
@@ -25,6 +28,7 @@ const PerioderMedFulltFraværListItem: React.FunctionComponent<Props> = ({
     disabledPerioder,
     onRemove
 }) => {
+    const intl = useIntl();
     const tomDateRange: Partial<DateRange> = {
         from: periode?.fom ? periode.fom : GYLDIG_TIDSROM.from,
         to: GYLDIG_TIDSROM.to
@@ -35,7 +39,7 @@ const PerioderMedFulltFraværListItem: React.FunctionComponent<Props> = ({
             <div className={bem.element('rangeWrapper')}>
                 <SøknadFormComponents.DateIntervalPicker
                     fromDatepickerProps={{
-                        label: 'Fra og med',
+                        label: intlHelper(intl, 'datovelger.fom'),
                         validate: validateAll([
                             validateRequiredField,
                             validateDateInRange(GYLDIG_TIDSROM),
@@ -55,7 +59,7 @@ const PerioderMedFulltFraværListItem: React.FunctionComponent<Props> = ({
                             validateDateInRange(tomDateRange),
                             validatePeriodeNotWeekend
                         ]),
-                        label: 'Til og med',
+                        label: intlHelper(intl, 'datovelger.tom'),
                         name: `${SøknadFormField.perioderMedFravær}.${index}.tom` as SøknadFormField,
                         minDate: tomDateRange.from,
                         maxDate: tomDateRange.to,
@@ -67,7 +71,7 @@ const PerioderMedFulltFraværListItem: React.FunctionComponent<Props> = ({
             {onRemove && (
                 <div className={bem.element('deleteButtonWrapper')}>
                     <Knapp mini={true} htmlType="button" onClick={() => onRemove(index)} form="kompakt">
-                        Fjern
+                        <FormattedMessage id="list.fjernKnapp" />
                     </Knapp>
                 </div>
             )}

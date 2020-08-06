@@ -24,6 +24,22 @@
     "Torsdag": "Torsdag",
     "Fredag": "Fredag",
 
+    "Dato": "Dato",
+    "dato": "dato",
+
+    "fravær.antallTimer": "Antall timer",
+    "fravær.time": "time",
+    "fravær.timer": "timer",
+    "fravær.timer.label": "Timer",
+    "fravær.delvis.fjern.fjernDag": "Fjern dag med delvis fravær ({dato}, {timer})",
+    "fravær.delvis.fjern.fjernDagUtenTimer": "Fjern dag med delvis fravær ({dato}, antall timer ikke valgt)",
+    "fravær.delvis.fjern.fjernTimer": "Fjern dag med delvis fravær (dato ikke valgt, {timer} valgt)",
+    "fravær.delvis.fjern.fjernUtenDagOgTimer": "Fjern dag med delvis fravær (dato og antall timer ikke valgt)",
+    "list.fjernKnapp": "Fjern",
+
+    "datovelger.fom": "Fra og med",
+    "datovelger.tom": "Til og med",
+
     "banner.title": "Søknad om utbetaling av omsorgspenger til selvstendig næringsdrivende eller frilansere",
 
     "page.loadingPage.tekst": "Laster ...",
@@ -155,6 +171,8 @@
     "step.periode.harPerioderMedFravær.modalTitle": "Fravær hele dager",
     "step.periode.harPerioderMedFravær.info.ikkeHelg.tittel": "Hvorfor kan jeg ikke velge lørdag eller søndag?",
     "step.periode.harPerioderMedFravær.info.ikkeHelg.tekst": "Du kan kun få utbetalt omsorgspenger for hverdager, selv om du jobber lørdag eller søndag. Derfor kan du ikke velge lørdag eller søndag som start- eller sluttdato i perioden du legger inn.",
+    "step.periode.leggTilPeriodeMedFulltFravær": "Legg til ny periode med fullt fravær",
+    "step.periode.leggTilDagMedDelvisFravær": "Legg til ny dag med delvis fravær",
     "step.periode.spm.harDagerMedDelvisFravær": "Har du hatt dager med delvis fravær fra jobb?",
     "step.periode.harDagerMedDelvisFravær.addLabel": "Legg til ny dag med delvis fravær",
     "step.periode.harDagerMedDelvisFravær.modalTitle": "Fravær deler av dag",

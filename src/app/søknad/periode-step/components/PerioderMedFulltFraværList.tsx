@@ -6,6 +6,7 @@ import { SøknadFormField } from '../../../types/SøknadFormData';
 import { validatePerioderMedFravær } from '../../../validation/fieldValidations';
 import SøknadFormComponents from '../../SøknadFormComponents';
 import PerioderMedFulltFraværListItem from './PerioderMedFulltFraværListItem';
+import { FormattedMessage } from 'react-intl';
 
 interface Props {
     perioderMedFravær: Periode[];
@@ -38,7 +39,7 @@ const PeriodeMedFulltFraværList: React.FunctionComponent<Props> = ({
             </SøknadFormComponents.InputGroup>
             <FormBlock margin="m">
                 <Knapp type="standard" htmlType={'button'} onClick={onCreateNew} mini={true}>
-                    Legg til ny periode med fullt fravær
+                    <FormattedMessage id="step.periode.leggTilPeriodeMedFulltFravær" />
                 </Knapp>
             </FormBlock>
         </>

@@ -10,6 +10,8 @@ import { validateAll, validateDateInRange } from '../../../validation/fieldValid
 import SøknadFormComponents from '../../SøknadFormComponents';
 import FraværTimerSelect from './FraværTimerSelect';
 import { validateFraværDelerAvDagNotWeekend } from '../../../utils/periodeUtils';
+import { IntlShape, useIntl, FormattedMessage } from 'react-intl';
+import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 
 interface Props {
     index: number;
@@ -23,24 +25,23 @@ const bem = bemUtils('dagerMedDelvisFravarListItem');
 
 export const pluralize = (count: number, single: string, other: string) => (count === 1 ? single : other);
 
-const getFjernLabel = (dato?: Date, timer?: number): string => {
-    const timerTekst: string | undefined = timer
-        ? `${timer} ${pluralize(timer === 1 ? 1 : 2, 'time', 'timer')}`
-        : undefined;
+const getFjernLabel = (intl: IntlShape, dato?: Date, timer?: number): string => {
+    const timerTekst: string | undefined = timer ? `${timer} ${intlHelper(intl, 'timer', { timer })}` : undefined;
 
     if (dato && timerTekst) {
-        return `Fjern dag med delvis fravær (${prettifyDate(dato)}, ${timerTekst})`;
+        return intlHelper(intl, 'fravær.delvis.fjern.fjernDag', { dato: prettifyDate(dato), timer: timerTekst });
     }
     if (dato) {
-        return `Fjern dag med delvis fravær (${prettifyDate(dato)}, antall timer ikke valgt)`;
+        return intlHelper(intl, 'fravær.delvis.fjern.fjernDagUtenTimer', { dato: prettifyDate(dato) });
     }
     if (timerTekst) {
-        return `Fjern dag med delvis fravær (dato ikke valgt, ${timerTekst} valgt)`;
+        return intlHelper(intl, 'fravær.delvis.fjern.fjernTimer', { timer: timerTekst });
     }
-    return 'Fjern dag med delvis fravær (dato og antall timer ikke valgt)';
+    return intlHelper(intl, 'fravær.delvis.fjern.fjernUtenDagOgTimer');
 };
 
 const DagerMedDelvisFraværListItem: React.FunctionComponent<Props> = ({ index, dag, disabledDager, onRemove }) => {
+    const intl = useIntl();
     const ugyldigeTidsperioder = disabledDager
         ?.filter((d) => d.dato)
         .map((d) => ({
@@ -51,7 +52,7 @@ const DagerMedDelvisFraværListItem: React.FunctionComponent<Props> = ({ index, 
         <div className={bem.classNames(bem.block, bem.modifierConditional('firstRow', index === 0))}>
             <div className={bem.element('dateWrapper')}>
                 <SøknadFormComponents.DatePicker
-                    label="Dato"
+                    label={intlHelper(intl, 'Dato')}
                     validate={validateAll([
                         validateRequiredField,
                         validateDateInRange(GYLDIG_TIDSROM),
@@ -74,8 +75,8 @@ const DagerMedDelvisFraværListItem: React.FunctionComponent<Props> = ({ index, 
                         htmlType="button"
                         onClick={() => onRemove(index)}
                         form="kompakt"
-                        aria-label={getFjernLabel(dag.dato, dag.timer)}>
-                        Fjern
+                        aria-label={getFjernLabel(intl, dag.dato, dag.timer)}>
+                        <FormattedMessage id="list.fjernKnapp" />
                     </Knapp>
                 </div>
             )}
