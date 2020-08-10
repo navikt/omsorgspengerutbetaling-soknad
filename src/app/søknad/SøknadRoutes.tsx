@@ -143,10 +143,7 @@ const SøknadRoutes = () => {
             )}
 
             {(isAvailable(RouteConfig.SØKNAD_SENDT_ROUTE, values) || søknadHasBeenSent) && (
-                <Route
-                    path={RouteConfig.SØKNAD_SENDT_ROUTE}
-                    render={() => <ConfirmationPage kvitteringInfo={kvitteringInfo} />}
-                />
+                <Route path={RouteConfig.SØKNAD_SENDT_ROUTE} render={() => <ConfirmationPage />} />
             )}
 
             <Route path={RouteConfig.ERROR_PAGE_ROUTE} component={GeneralErrorPage} />

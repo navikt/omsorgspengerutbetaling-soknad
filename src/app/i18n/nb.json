@@ -235,6 +235,11 @@
     "page.confirmation.sidetittel": "Vi har mottatt søknaden din",
     "page.confirmation.tittel": "Vi har mottatt søknad fra deg om utbetaling av omsorgspenger",
     "page.confirmation.undertittel": "Hva skjer videre nå?",
+    "page.confirmation.checklist.1": "Søknaden din vil bli synlig på Ditt NAV etter omkring en uke. Da vil du også kunne se hva slags dokumentasjon vi har fått fra deg.",
+    "page.confirmation.checklist.2.a": "Vi starter behandlingen av søknaden din når vi har mottatt all nødvendig dokumentasjon. Vi kontakter deg hvis vi trenger flere opplysninger i saken din. Hvis du skal ",
+    "page.confirmation.checklist.2.b": "ettersende dokumentasjon kan du gjøre det her",
+    "page.confirmation.checklist.3.a": "Når søknaden er ferdig behandlet, får du et svarbrev fra oss. Du kan se ",
+    "page.confirmation.checklist.3.b": "saksbehandlingstiden for ditt fylke her",
 
     "page.generalErrorPage.sidetittel": "Feil",
     "page.generalErrorPage.tittel": "Noe gikk galt...",
