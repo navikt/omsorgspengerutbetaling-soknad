@@ -23,17 +23,17 @@ const renderVirksomhetSummary = (virksomhet: VirksomhetApiData, intl: IntlShape)
     const fiskerinfo =
         harFiskerNæringstype(virksomhet.næringstyper) && virksomhet.fiskerErPåBladB !== undefined
             ? {
-                  erPåBladB: virksomhet.fiskerErPåBladB !== undefined && virksomhet.fiskerErPåBladB === true
+                  erPåBladB: virksomhet.fiskerErPåBladB !== undefined && virksomhet.fiskerErPåBladB === true,
               }
             : undefined;
 
     const tidsinfo = virksomhet.tilOgMed
         ? intlHelper(intl, 'summary.virksomhet.tidsinfo.avsluttet', {
               fraOgMed: prettifyApiDate(virksomhet.fraOgMed),
-              tilOgMed: prettifyApiDate(virksomhet.tilOgMed)
+              tilOgMed: prettifyApiDate(virksomhet.tilOgMed),
           })
         : intlHelper(intl, 'summary.virksomhet.tidsinfo.pågående', {
-              fraOgMed: prettifyApiDate(virksomhet.fraOgMed)
+              fraOgMed: prettifyApiDate(virksomhet.fraOgMed),
           });
 
     return (
@@ -75,7 +75,7 @@ const renderVirksomhetSummary = (virksomhet: VirksomhetApiData, intl: IntlShape)
                         id="summary.virksomhet.varigEndring"
                         values={{
                             dato: prettifyApiDate(virksomhet.varigEndring.dato),
-                            inntekt: intl.formatNumber(virksomhet.varigEndring.inntektEtterEndring)
+                            inntekt: intl.formatNumber(virksomhet.varigEndring.inntektEtterEndring),
                         }}
                     />
                     <TallSvar verdi={virksomhet.varigEndring.inntektEtterEndring} />
@@ -89,7 +89,7 @@ const renderVirksomhetSummary = (virksomhet: VirksomhetApiData, intl: IntlShape)
                     tagName="p"
                     id="summary.virksomhet.yrkesaktivSisteTreFerdigliknedeÅrene"
                     values={{
-                        dato: prettifyApiDate(virksomhet.yrkesaktivSisteTreFerdigliknedeÅrene.oppstartsdato)
+                        dato: prettifyApiDate(virksomhet.yrkesaktivSisteTreFerdigliknedeÅrene.oppstartsdato),
                     }}
                 />
             )}

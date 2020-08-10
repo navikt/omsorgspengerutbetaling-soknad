@@ -10,7 +10,7 @@ import {
     UtenlandsoppholdApiData,
     VirksomhetApiData,
     YesNoSpørsmålOgSvar,
-    YesNoSvar
+    YesNoSvar,
 } from '../types/SøknadApiData';
 import { SøknadFormData } from '../types/SøknadFormData';
 import { mapBostedUtlandToApiData } from './formToApiMaps/mapBostedUtlandToApiData';
@@ -52,28 +52,28 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
         harBoddUtenforNorgeSiste12Mnd,
         utenlandsoppholdSiste12Mnd,
         skalBoUtenforNorgeNeste12Mnd,
-        utenlandsoppholdNeste12Mnd
+        utenlandsoppholdNeste12Mnd,
     } = formValues;
 
     const yesOrNoQuestions: YesNoSpørsmålOgSvar[] = [
         {
             spørsmål: intlHelper(intl, 'step.inntekt.er_arbeidstaker'),
-            svar: mapYesOrNoToSvar(er_arbeidstaker)
+            svar: mapYesOrNoToSvar(er_arbeidstaker),
         },
         {
             spørsmål: intl.formatMessage({ id: 'steg.barn.har_fått_ekstra_omsorgsdager.spm' }),
-            svar: mapYesOrNoToSvar(har_fått_ekstra_omsorgsdager)
+            svar: mapYesOrNoToSvar(har_fått_ekstra_omsorgsdager),
         },
         {
             spørsmål: intlHelper(intl, 'steg.barn.fosterbarn.spm'),
-            svar: mapYesOrNoToSvar(har_fosterbarn)
-        }
+            svar: mapYesOrNoToSvar(har_fosterbarn),
+        },
     ];
 
     if (har_søkt_andre_utbetalinger === YesOrNo.NO) {
         yesOrNoQuestions.push({
             spørsmål: intlHelper(intl, 'step.periode.har_søkt_andre_utbetalinger.spm'),
-            svar: mapYesOrNoToSvar(har_søkt_andre_utbetalinger)
+            svar: mapYesOrNoToSvar(har_søkt_andre_utbetalinger),
         });
     }
 
@@ -81,7 +81,7 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
         språk: (intl.locale as any) === 'en' ? 'nn' : (intl.locale as Locale),
         bekreftelser: {
             harForståttRettigheterOgPlikter,
-            harBekreftetOpplysninger
+            harBekreftetOpplysninger,
         },
         spørsmål: [...yesOrNoQuestions],
         andreUtbetalinger: har_søkt_andre_utbetalinger === YesOrNo.YES ? [...andre_utbetalinger] : [],
@@ -101,7 +101,8 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
             selvstendig_virksomheter
         ),
         hjemmePgaSmittevernhensyn: hemmeligJaNeiSporsmal === YesOrNo.YES,
-        vedlegg: dokumenter.filter((attachment) => !attachmentUploadHasFailed(attachment)).map(({ url }) => url!)
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        vedlegg: dokumenter.filter((attachment) => !attachmentUploadHasFailed(attachment)).map(({ url }) => url!),
     };
 
     if (har_fosterbarn === YesOrNo.YES && har_fosterbarn.length > 0) {
@@ -124,7 +125,7 @@ export const mapPeriodeTilUtbetalingsperiode = (
                 fraOgMed: formatDateToApiFormat(periode.from),
                 tilOgMed: formatDateToApiFormat(periode.to),
                 antallTimerPlanlagt: null,
-                antallTimerBorte: null
+                antallTimerBorte: null,
             };
         }
     );
@@ -135,7 +136,7 @@ export const mapPeriodeTilUtbetalingsperiode = (
                 fraOgMed: formatDateToApiFormat(fraværDag.dato),
                 tilOgMed: formatDateToApiFormat(fraværDag.dato),
                 antallTimerPlanlagt: timeToIso8601Duration(decimalTimeToTime(parseFloat(fraværDag.timerArbeidsdag))),
-                antallTimerBorte: timeToIso8601Duration(decimalTimeToTime(parseFloat(fraværDag.timerFravær)))
+                antallTimerBorte: timeToIso8601Duration(decimalTimeToTime(parseFloat(fraværDag.timerFravær))),
             };
         }
     );

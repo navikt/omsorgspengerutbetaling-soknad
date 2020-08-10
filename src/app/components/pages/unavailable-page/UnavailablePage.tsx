@@ -9,7 +9,7 @@ import { FormattedMessage } from 'react-intl';
 
 const bem = bemUtils('introPage');
 
-const UnavailablePage: React.StatelessComponent<{}> = () => {
+const UnavailablePage: React.StatelessComponent = () => {
     const title = 'Søknad om utbetaling av omsorgspenger';
     return (
         <Page className={bem.block} title={title} topContentRenderer={() => <StepBanner text={title} />}>

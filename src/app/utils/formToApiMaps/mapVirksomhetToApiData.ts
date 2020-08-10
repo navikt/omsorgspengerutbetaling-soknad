@@ -20,7 +20,7 @@ export const mapVirksomhetToVirksomhetApiData = (
         registrertINorge,
         ...(registrertINorge
             ? {
-                  organisasjonsnummer: virksomhet.organisasjonsnummer
+                  organisasjonsnummer: virksomhet.organisasjonsnummer,
               }
             : {
                   registrertILand: virksomhet.registrertILand
@@ -29,13 +29,13 @@ export const mapVirksomhetToVirksomhetApiData = (
                   registrertIUtlandet: virksomhet.registrertILand
                       ? {
                             landkode: virksomhet[VirksomhetFormField.registrertILand],
-                            landnavn: getCountryName(virksomhet.registrertILand, locale)
+                            landnavn: getCountryName(virksomhet.registrertILand, locale),
                         }
-                      : null
+                      : null,
               }),
         fraOgMed: formatDateToApiFormat(virksomhet.fom),
         tilOgMed: virksomhet.erPågående || virksomhet.tom === undefined ? null : formatDateToApiFormat(virksomhet.tom),
-        næringsinntekt: virksomhet.næringsinntekt
+        næringsinntekt: virksomhet.næringsinntekt,
     };
 
     if (virksomhet.hattVarigEndringAvNæringsinntektSiste4Kalenderår) {
@@ -43,7 +43,7 @@ export const mapVirksomhetToVirksomhetApiData = (
         const {
             varigEndringINæringsinntekt_dato,
             varigEndringINæringsinntekt_forklaring,
-            varigEndringINæringsinntekt_inntektEtterEndring
+            varigEndringINæringsinntekt_inntektEtterEndring,
         } = virksomhet;
         if (
             harHatt &&
@@ -54,7 +54,7 @@ export const mapVirksomhetToVirksomhetApiData = (
             data.varigEndring = {
                 dato: formatDateToApiFormat(varigEndringINæringsinntekt_dato),
                 forklaring: varigEndringINæringsinntekt_forklaring,
-                inntektEtterEndring: varigEndringINæringsinntekt_inntektEtterEndring
+                inntektEtterEndring: varigEndringINæringsinntekt_inntektEtterEndring,
             };
         }
     }
@@ -67,24 +67,24 @@ export const mapVirksomhetToVirksomhetApiData = (
         const harBlittAktiv = virksomhet.harBlittYrkesaktivILøpetAvDeTreSisteFerdigliknedeÅrene === YesOrNo.YES;
         if (harBlittAktiv && virksomhet.oppstartsdato) {
             data.yrkesaktivSisteTreFerdigliknedeÅrene = {
-                oppstartsdato: formatDateToApiFormat(virksomhet.oppstartsdato)
+                oppstartsdato: formatDateToApiFormat(virksomhet.oppstartsdato),
             };
         }
     }
 
-    if (harRegnskapsfører) {
+    if (harRegnskapsfører && virksomhet.regnskapsfører_navn && virksomhet.regnskapsfører_telefon) {
         data.regnskapsfører = {
-            navn: virksomhet.regnskapsfører_navn!,
-            telefon: virksomhet.regnskapsfører_telefon!
+            navn: virksomhet.regnskapsfører_navn,
+            telefon: virksomhet.regnskapsfører_telefon,
         };
     }
 
     if (!harRegnskapsfører) {
-        if (virksomhet.harRevisor === YesOrNo.YES) {
+        if (virksomhet.harRevisor === YesOrNo.YES && virksomhet.revisor_navn && virksomhet.revisor_telefon) {
             data.revisor = {
-                navn: virksomhet.revisor_navn!,
-                telefon: virksomhet.revisor_telefon!,
-                kanInnhenteOpplysninger: virksomhet.kanInnhenteOpplsyningerFraRevisor === YesOrNo.YES
+                navn: virksomhet.revisor_navn,
+                telefon: virksomhet.revisor_telefon,
+                kanInnhenteOpplysninger: virksomhet.kanInnhenteOpplsyningerFraRevisor === YesOrNo.YES,
             };
         }
     }

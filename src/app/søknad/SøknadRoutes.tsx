@@ -7,8 +7,6 @@ import GeneralErrorPage from '../components/pages/general-error-page/GeneralErro
 import WelcomingPage from '../components/pages/welcoming-page/WelcomingPage';
 import RouteConfig from '../config/routeConfig';
 import { StepID } from '../config/stepConfig';
-import { Søkerdata } from '../types/Søkerdata';
-import { SøknadApiData } from '../types/SøknadApiData';
 import { SøknadFormData, SøknadFormField } from '../types/SøknadFormData';
 import * as apiUtils from '../utils/apiUtils';
 import appSentryLogger from '../utils/appSentryLogger';
@@ -26,8 +24,6 @@ import SøknadTempStorage from './SøknadTempStorage';
 export interface KvitteringInfo {
     søkernavn: string;
 }
-
-interface SøknadRoutes {}
 
 const SøknadRoutes = () => {
     const [søknadHasBeenSent, setSøknadHasBeenSent] = React.useState(false);
@@ -118,7 +114,7 @@ const SøknadRoutes = () => {
                     path={getSøknadRoute(StepID.OPPSUMMERING)}
                     render={() => (
                         <OppsummeringStep
-                            onApplicationSent={(apiData: SøknadApiData, søkerdata: Søkerdata) => {
+                            onApplicationSent={() => {
                                 setSøknadHasBeenSent(true);
                                 resetForm();
                                 if (isFeatureEnabled(Feature.MELLOMLAGRING)) {

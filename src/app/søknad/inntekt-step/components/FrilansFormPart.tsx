@@ -17,7 +17,7 @@ interface Props {
     formValues: SøknadFormData;
 }
 
-const FrilansFormPart: React.FunctionComponent<Props> = ({ formValues }) => {
+const FrilansFormPart: React.FunctionComponent<Props> = ({ formValues }: Props) => {
     const harHattInntektSomFrilanser = formValues[SøknadFormField.frilans_harHattInntektSomFrilanser] === YesOrNo.YES;
     const intl = useIntl();
     return (

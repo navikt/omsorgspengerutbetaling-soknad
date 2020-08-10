@@ -40,7 +40,7 @@ interface Props {
 
 const renderApiDataFeil = (feil: FeiloppsummeringFeil) => <span>{feil.feilmelding}</span>;
 
-const OppsummeringStep: React.StatelessComponent<Props> = ({ onApplicationSent }) => {
+const OppsummeringStep: React.StatelessComponent<Props> = ({ onApplicationSent }: Props) => {
     const intl = useIntl();
     const { values } = useFormikContext<SøknadFormData>();
     const søkerdata = React.useContext(SøkerdataContext);
@@ -68,7 +68,7 @@ const OppsummeringStep: React.StatelessComponent<Props> = ({ onApplicationSent }
     }
 
     const {
-        person: { fornavn, mellomnavn, etternavn, fødselsnummer }
+        person: { fornavn, mellomnavn, etternavn, fødselsnummer },
     } = søkerdata;
 
     const apiValues: SøknadApiData = mapFormDataToApiData(values, intl);

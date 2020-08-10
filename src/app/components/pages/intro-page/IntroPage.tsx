@@ -22,7 +22,7 @@ enum PageFormField {
     'erSelvstendigEllerFrilanser' = 'erSelvstendigEllerFrilanser',
     'hjemmePgaStengt' = 'hjemmePgaStengt',
     'hjemmePgaSykdom' = 'hjemmePgaSykdom',
-    'smittevernHensyn' = 'smittevernHensyn'
+    'smittevernHensyn' = 'smittevernHensyn',
 }
 
 interface PageFormValues {
@@ -36,7 +36,7 @@ const initialValues = {
     [PageFormField.erSelvstendigEllerFrilanser]: YesOrNo.UNANSWERED,
     [PageFormField.hjemmePgaStengt]: YesOrNo.UNANSWERED,
     [PageFormField.hjemmePgaSykdom]: YesOrNo.UNANSWERED,
-    [PageFormField.smittevernHensyn]: YesOrNo.UNANSWERED
+    [PageFormField.smittevernHensyn]: YesOrNo.UNANSWERED,
 };
 const PageForm = getTypedFormComponents<PageFormField, PageFormValues>();
 
@@ -94,7 +94,7 @@ const IntroPage: React.StatelessComponent = () => {
                     onSubmit={() => null}
                     initialValues={initialValues}
                     renderForm={({
-                        values: { erSelvstendigEllerFrilanser, hjemmePgaStengt, hjemmePgaSykdom, smittevernHensyn }
+                        values: { erSelvstendigEllerFrilanser, hjemmePgaStengt, hjemmePgaSykdom, smittevernHensyn },
                     }) => {
                         const kanBrukeSøknaden =
                             (erSelvstendigEllerFrilanser === YesOrNo.YES && smittevernHensyn === YesOrNo.YES) ||

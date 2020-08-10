@@ -8,7 +8,7 @@ import Step from '../Step';
 jest.mock('../../../utils/featureToggleUtils', () => {
     return {
         isFeatureEnabled: () => false,
-        Feature: {}
+        Feature: {},
     };
 });
 
@@ -24,7 +24,11 @@ describe('<Step>', () => {
     let renderResult: RenderResult;
 
     beforeAll(() => {
-        renderResult = renderWrappedInMemoryRouter(<Step id={stepID} stepConfig={getStepConfig()} />);
+        renderResult = renderWrappedInMemoryRouter(
+            <Step id={stepID} stepConfig={getStepConfig()}>
+                content
+            </Step>
+        );
     });
 
     it('should render common <Step> content', () => {

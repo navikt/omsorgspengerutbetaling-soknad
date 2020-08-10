@@ -23,7 +23,7 @@ const ApplicationWrapper = ({ locale, children }: ApplicationWrapperProps) => {
                     <ApplicationMessages
                         messages={{
                             nb: appBokmålstekster,
-                            nn: appNynorsktekster
+                            nn: appNynorsktekster,
                         }}
                         title="Omsorgspengerutbetaling SN/frilanser"
                     />

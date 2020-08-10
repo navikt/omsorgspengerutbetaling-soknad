@@ -19,7 +19,7 @@ const bokmålstekster = {
     ...fraværMessages.nb,
     ...fosterbarnMessages.nb,
     ...virksomhetMessages.nb,
-    ...appBokmålstekster
+    ...appBokmålstekster,
 };
 const nynorsktekster = {
     ...allCommonMessages.nn,
@@ -27,7 +27,7 @@ const nynorsktekster = {
     ...fraværMessages.nn,
     ...fosterbarnMessages.nn,
     ...virksomhetMessages.nn,
-    ...appNynorsktekster
+    ...appNynorsktekster,
 };
 
 export interface IntlProviderProps {
@@ -36,12 +36,13 @@ export interface IntlProviderProps {
 
 export interface IntlProviderProps {
     locale: Locale;
+    children: React.ReactNode;
     onError?: (err: any) => void;
 }
 
 const showMessages = false;
 
-const IntlProvider: React.FunctionComponent<IntlProviderProps> = ({ locale, children, onError }) => {
+const IntlProvider: React.FunctionComponent<IntlProviderProps> = ({ locale, children, onError }: IntlProviderProps) => {
     const messages = bokmålstekster;
     return (
         <Provider locale={locale} messages={messages} onError={onError}>
@@ -52,7 +53,7 @@ const IntlProvider: React.FunctionComponent<IntlProviderProps> = ({ locale, chil
                     showMissingTextSummary={false}
                     messages={{
                         nb: bokmålstekster,
-                        nn: nynorsktekster
+                        nn: nynorsktekster,
                     }}
                 />
             )}

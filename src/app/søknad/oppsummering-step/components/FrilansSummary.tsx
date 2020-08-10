@@ -7,7 +7,7 @@ interface Props {
     frilans?: Frilans;
 }
 
-const FrilansSummary: React.FunctionComponent<Props> = ({ frilans }) => {
+const FrilansSummary: React.FunctionComponent<Props> = ({ frilans }: Props) => {
     if (frilans) {
         return (
             <>

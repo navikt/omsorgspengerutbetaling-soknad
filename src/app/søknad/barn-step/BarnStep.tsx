@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {
     validateRequiredList,
-    validateYesOrNoIsAnswered
+    validateYesOrNoIsAnswered,
 } from '@navikt/sif-common-core/lib/validation/fieldValidations';
 import { YesOrNo } from '@navikt/sif-common-formik/lib';
 import FosterbarnListAndDialog from '@navikt/sif-common-forms/lib/fosterbarn/FosterbarnListAndDialog';

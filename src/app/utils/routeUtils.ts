@@ -6,7 +6,7 @@ import {
     medlemskapStepIsAvailable,
     periodeStepIsAvailable,
     barnStepIsAvailable,
-    summaryStepAvailable
+    summaryStepAvailable,
 } from './stepUtils';
 
 export const getSøknadRoute = (stepId: StepID | undefined) => {

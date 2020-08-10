@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useIntl, FormattedMessage } from 'react-intl';
 import {
     validateRequiredList,
-    validateYesOrNoIsAnswered
+    validateYesOrNoIsAnswered,
 } from '@navikt/sif-common-core/lib/validation/fieldValidations';
 import BostedUtlandListAndDialog from '@navikt/sif-common-forms/lib/bosted-utland/BostedUtlandListAndDialog';
 import { fraværDagToFraværDateRange, validateNoCollisions } from '@navikt/sif-common-forms/lib/fravær';
@@ -26,7 +26,7 @@ import SøknadFormComponents from '../SøknadFormComponents';
 import SøknadStep from '../SøknadStep';
 import './periodeStep.less';
 
-const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) => {
+const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }: StepConfigProps) => {
     const { values } = useFormikContext<SøknadFormData>();
     const { harPerioderMedFravær, harDagerMedDelvisFravær, perioder_harVærtIUtlandet } = values;
 
@@ -97,15 +97,15 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                                 validateNoCollisions(
                                     values[SøknadFormField.fraværDager],
                                     values[SøknadFormField.fraværPerioder]
-                                )
+                                ),
                             ])}
                             labels={{
                                 addLabel: intlHelper(intl, 'step.periode.harPerioderMedFravær.addLabel'),
-                                modalTitle: intlHelper(intl, 'step.periode.harPerioderMedFravær.modalTitle')
+                                modalTitle: intlHelper(intl, 'step.periode.harPerioderMedFravær.modalTitle'),
                             }}
                             dateRangesToDisable={[
                                 ...values.fraværPerioder,
-                                ...values.fraværDager.map(fraværDagToFraværDateRange)
+                                ...values.fraværDager.map(fraværDagToFraværDateRange),
                             ]}
                             helgedagerIkkeTillat={true}
                         />
@@ -138,15 +138,15 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                                 validateNoCollisions(
                                     values[SøknadFormField.fraværDager],
                                     values[SøknadFormField.fraværPerioder]
-                                )
+                                ),
                             ])}
                             labels={{
                                 addLabel: intlHelper(intl, 'step.periode.harPerioderMedFravær.addLabel'),
-                                modalTitle: intlHelper(intl, 'step.periode.harPerioderMedFravær.modalTitle')
+                                modalTitle: intlHelper(intl, 'step.periode.harPerioderMedFravær.modalTitle'),
                             }}
                             dateRangesToDisable={[
                                 ...values.fraværDager.map(fraværDagToFraværDateRange),
-                                ...values.fraværPerioder
+                                ...values.fraværPerioder,
                             ]}
                             helgedagerIkkeTillatt={true}
                             maksArbeidstidPerDag={24}
@@ -204,7 +204,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                                 maxDate={date1YearFromNow}
                                 labels={{
                                     addLabel: intlHelper(intl, 'step.periode.utenlandsopphold.addLabel'),
-                                    modalTitle: intlHelper(intl, 'step.periode.utenlandsopphold.modalTitle')
+                                    modalTitle: intlHelper(intl, 'step.periode.utenlandsopphold.modalTitle'),
                                 }}
                                 validate={validateRequiredList}
                             />
@@ -225,18 +225,18 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                                         {
                                             id: AndreUtbetalinger.dagpenger,
                                             value: AndreUtbetalinger.dagpenger,
-                                            label: intlHelper(intl, 'andre_utbetalinger.dagpenger')
+                                            label: intlHelper(intl, 'andre_utbetalinger.dagpenger'),
                                         },
                                         {
                                             id: AndreUtbetalinger.sykepenger,
                                             value: AndreUtbetalinger.sykepenger,
-                                            label: intlHelper(intl, 'andre_utbetalinger.sykepenger')
+                                            label: intlHelper(intl, 'andre_utbetalinger.sykepenger'),
                                         },
                                         {
                                             id: AndreUtbetalinger.midlertidigkompensasjonsnfri,
                                             value: AndreUtbetalinger.midlertidigkompensasjonsnfri,
-                                            label: intlHelper(intl, 'andre_utbetalinger.midlertidigkompensasjonsnfri')
-                                        }
+                                            label: intlHelper(intl, 'andre_utbetalinger.midlertidigkompensasjonsnfri'),
+                                        },
                                     ]}
                                     validate={validateRequiredList}
                                 />

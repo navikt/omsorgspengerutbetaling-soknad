@@ -11,13 +11,13 @@ export const validateSoknadApiData = (apiValues: SøknadApiData): Feiloppsummeri
             if (!hasValue(navn)) {
                 errors.push({
                     feilmelding: `Regnskapsførers navn mangler for ${virksomhet.navnPåVirksomheten}. Du må gå tilbake og korrigere dette for å kunne sende inn søknaden`,
-                    skjemaelementId: ''
+                    skjemaelementId: '',
                 });
             }
             if (!hasValue(telefon)) {
                 errors.push({
                     feilmelding: `Regnskapsførers telefonnummer mangler for ${virksomhet.navnPåVirksomheten}. . Du må gå tilbake og korrigere dette for å kunne sende inn søknaden`,
-                    skjemaelementId: ''
+                    skjemaelementId: '',
                 });
             }
         }
@@ -26,13 +26,13 @@ export const validateSoknadApiData = (apiValues: SøknadApiData): Feiloppsummeri
             if (!hasValue(navn)) {
                 errors.push({
                     feilmelding: `Revisors navn mangler for ${virksomhet.navnPåVirksomheten}. Du må gå tilbake og korrigere dette for å kunne sende inn søknaden`,
-                    skjemaelementId: ''
+                    skjemaelementId: '',
                 });
             }
             if (!hasValue(telefon)) {
                 errors.push({
                     feilmelding: `Revisors telefonnummer mangler for ${virksomhet.navnPåVirksomheten}. . Du må gå tilbake og korrigere dette for å kunne sende inn søknaden`,
-                    skjemaelementId: ''
+                    skjemaelementId: '',
                 });
             }
         }

@@ -12,7 +12,7 @@ import { date1YearAgo, date1YearFromNow, dateToday } from 'common/utils/dateUtil
 import intlHelper from 'common/utils/intlUtils';
 import {
     validateUtenlandsoppholdNeste12Mnd,
-    validateUtenlandsoppholdSiste12Mnd
+    validateUtenlandsoppholdSiste12Mnd,
 } from 'app/validation/fieldValidations';
 import { StepConfigProps, StepID } from '../../config/stepConfig';
 import getLenker from '../../lenker';
@@ -20,7 +20,7 @@ import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import SøknadFormComponents from '../SøknadFormComponents';
 import SøknadStep from '../SøknadStep';
 
-const MedlemsskapStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) => {
+const MedlemsskapStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }: StepConfigProps) => {
     const intl = useIntl();
     const { values } = useFormikContext<SøknadFormData>();
 
@@ -54,7 +54,7 @@ const MedlemsskapStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubm
                         validate={validateUtenlandsoppholdSiste12Mnd}
                         labels={{
                             addLabel: intlHelper(intl, 'steg.medlemsskap.utenlandsopphold.leggTilLabel'),
-                            modalTitle: intlHelper(intl, 'steg.medlemsskap.annetLandSiste12.listeTittel')
+                            modalTitle: intlHelper(intl, 'steg.medlemsskap.annetLandSiste12.listeTittel'),
                         }}
                     />
                 </FormBlock>
@@ -80,7 +80,7 @@ const MedlemsskapStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubm
                         validate={validateUtenlandsoppholdNeste12Mnd}
                         labels={{
                             addLabel: intlHelper(intl, 'steg.medlemsskap.utenlandsopphold.leggTilLabel'),
-                            modalTitle: intlHelper(intl, 'steg.medlemsskap.annetLandNeste12.listeTittel')
+                            modalTitle: intlHelper(intl, 'steg.medlemsskap.annetLandNeste12.listeTittel'),
                         }}
                     />
                 </FormBlock>
