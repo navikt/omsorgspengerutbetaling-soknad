@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
-import { formatName } from '@navikt/sif-common-core/lib/utils/personUtils';
 import { useFormikContext } from 'formik';
+import { YesOrNo } from 'common/types/YesOrNo';
 import ConfirmationPage from '../components/pages/confirmation-page/ConfirmationPage';
 import GeneralErrorPage from '../components/pages/general-error-page/GeneralErrorPage';
 import WelcomingPage from '../components/pages/welcoming-page/WelcomingPage';
@@ -11,35 +11,26 @@ import { Søkerdata } from '../types/Søkerdata';
 import { SøknadApiData } from '../types/SøknadApiData';
 import { SøknadFormData, SøknadFormField } from '../types/SøknadFormData';
 import * as apiUtils from '../utils/apiUtils';
+import appSentryLogger from '../utils/appSentryLogger';
 import { Feature, isFeatureEnabled } from '../utils/featureToggleUtils';
 import { navigateTo, navigateToLoginPage } from '../utils/navigationUtils';
 import { getNextStepRoute, getSøknadRoute, isAvailable } from '../utils/routeUtils';
+import BarnStep from './barn-step/BarnStep';
+import DokumenterStep from './dokumenter-step/DokumenterStep';
 import InntektStep from './inntekt-step/InntektStep';
 import MedlemsskapStep from './medlemskap-step/MedlemsskapStep';
 import OppsummeringStep from './oppsummering-step/OppsummeringStep';
 import PeriodeStep from './periode-step/PeriodeStep';
-import BarnStep from './barn-step/BarnStep';
 import SøknadTempStorage from './SøknadTempStorage';
-import DokumenterStep from './dokumenter-step/DokumenterStep';
-import { YesOrNo } from 'common/types/YesOrNo';
-import appSentryLogger from '../utils/appSentryLogger';
 
 export interface KvitteringInfo {
     søkernavn: string;
 }
 
-const getKvitteringInfoFromApiData = (søkerdata: Søkerdata): KvitteringInfo | undefined => {
-    const { fornavn, mellomnavn, etternavn } = søkerdata.person;
-    return {
-        søkernavn: formatName(fornavn, etternavn, mellomnavn)
-    };
-};
-
 interface SøknadRoutes {}
 
 const SøknadRoutes = () => {
     const [søknadHasBeenSent, setSøknadHasBeenSent] = React.useState(false);
-    const [kvitteringInfo, setKvitteringInfo] = React.useState<KvitteringInfo | undefined>(undefined);
     const { values, resetForm } = useFormikContext<SøknadFormData>();
 
     const skalViseVedleggSteg: boolean = values[SøknadFormField.hemmeligJaNeiSporsmal] === YesOrNo.YES;
@@ -128,8 +119,6 @@ const SøknadRoutes = () => {
                     render={() => (
                         <OppsummeringStep
                             onApplicationSent={(apiData: SøknadApiData, søkerdata: Søkerdata) => {
-                                const info = getKvitteringInfoFromApiData(søkerdata);
-                                setKvitteringInfo(info);
                                 setSøknadHasBeenSent(true);
                                 resetForm();
                                 if (isFeatureEnabled(Feature.MELLOMLAGRING)) {
