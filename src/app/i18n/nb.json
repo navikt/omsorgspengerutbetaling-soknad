@@ -306,6 +306,8 @@
     "steg.footer.fortsettSenere": "Avslutt og fortsett senere",
 
     "steg.dokumenter.vedlegg": "Last opp bilde av dokumentene (maks 3 bilder)",
+    "steg.dokumenter.steg.dokumenter.info.1": "Du må laste opp en bekreftelse fra lege om at det er særlige smittevernhensyn som gjør at barnet ikke kan gå i barnehage eller skole.",
+    "steg.dokumenter.steg.dokumenter.info.2": "Hvis du ikke har bekreftelsen tilgjengelig nå, må du ettersende den til oss så snart du har den. Vi kan ikke behandle søknaden før vi har mottatt bekreftelsen.",
 
     "steg.intro.info.1.html": "Denne søknaden bruker du når du er <strong>selvstendig næringsdrivende eller frilanser</strong> og skal søke om utbetaling av omsorgspenger. Hvis du er ansatt i eget AS regnes du som arbeidstaker, da skal du eller din regnskapsfører ",
     "steg.intro.info.2": "sende inntektsmelding til NAV",
@@ -332,7 +334,7 @@
 
     "steg.en.smittevern.sporsmal": "Har du vært hjemme med barn grunnet særlige smittevernhensyn?",
     "steg.oppsummering.dokumenter.header": "Bekreftelse fra lege",
-    "step.vedlegg.stepIndicatorLabel": "Last opp dokumenter",
+    "step.vedlegg.stepTitle": "Ta bildet av forklaringen fra arbeidsgiveren din, og last opp.",
     "step.vedlegg.pageTitle": "Last opp dokumenter",
     "fieldvalidation.for_mange_dokumenter": "For mange dokumenter er lastet opp",
     "steg.oppsummering.dokumenter.ikkelastetopp": "Ikke lastet opp, må ettersendes",
