@@ -58,18 +58,17 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                         Nå skal du legge inn dagene du har hatt fravær fra jobb fordi du har vært hjemme med
                         omsorgsdager.
                     </p>
-
                     <p>
-                        Reglene for hvor mange dager du selv må dekke, har endret seg flere ganger på grunn av
+                        Reglene for hvor mange dager du selv må dekke har endret seg flere ganger på grunn av
                         koronasituasjonen:
                     </p>
                     <ul>
-                        <li>Frem til og med 30. juni 2020 må du dekke de tre første omsorgsdagene selv</li>
-                        <li>Fra 1. juli 2020 må du dekke de 10 første omsorgsdagene selv</li>
+                        <li>Frem til og med 12. mars 2020 må du dekke de 10 første omsorgsdagene selv.</li>
+                        <li>Fra 13. mars 2020 må du dekke de 3 første omsorgsdagene selv.</li>
                     </ul>
                     <p>
-                        Dagene du selv skal dekke gjelder totalt for hele 2020. Det betyr at hvis du allerede har dekket
-                        3 dager, gjenstår det 7 dager for deg å dekke selv i år.
+                        Dagene du selv skal dekke gjelder totalt for 2020. Det betyr at hvis du allerede har dekket for
+                        eksempel 3 dager, gjenstår det 7 dager for deg å dekke selv i år.
                     </p>
                     <p>
                         I søknaden legger du inn alle dagene du har vært hjemme med omsorgsdager i den perioden du nå
