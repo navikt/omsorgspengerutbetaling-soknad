@@ -65,6 +65,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                     <ul>
                         <li>Frem til og med 12. mars 2020 må du dekke de 10 første omsorgsdagene selv.</li>
                         <li>Fra 13. mars 2020 må du dekke de 3 første omsorgsdagene selv.</li>
+                        <li>Fra 1. juli 2020 må du dekke de 10 første omsorgsdagene selv.</li>
                     </ul>
                     <p>
                         Dagene du selv skal dekke gjelder totalt for 2020. Det betyr at hvis du allerede har dekket for
