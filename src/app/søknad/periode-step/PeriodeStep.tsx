@@ -68,6 +68,9 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                         <li>
                             <FormattedMessage id="step.periode.info.2.2" />
                         </li>
+                        <li>
+                            <FormattedMessage id="step.periode.info.2.3" />
+                        </li>
                     </ul>
                     <p>
                         <FormattedMessage id="step.periode.info.3" />
