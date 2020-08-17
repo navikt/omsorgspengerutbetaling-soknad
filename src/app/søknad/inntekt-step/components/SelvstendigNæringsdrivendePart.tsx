@@ -17,7 +17,7 @@ interface Props {
     formValues: SøknadFormData;
 }
 
-const SelvstendigNæringsdrivendeFormPart: React.FunctionComponent<Props> = ({ formValues }) => {
+const SelvstendigNæringsdrivendeFormPart: React.FunctionComponent<Props> = ({ formValues }: Props) => {
     const intl = useIntl();
     const { values } = useFormikContext<SøknadFormData>();
     return (
@@ -35,7 +35,7 @@ const SelvstendigNæringsdrivendeFormPart: React.FunctionComponent<Props> = ({ f
                             labels={{
                                 listTitle: intlHelper(intl, 'selvstendig.list.tittel'),
                                 addLabel: intlHelper(intl, 'selvstendig.list.leggTilLabel'),
-                                modalTitle: intlHelper(intl, 'selvstendig.dialog.tittel')
+                                modalTitle: intlHelper(intl, 'selvstendig.dialog.tittel'),
                             }}
                             validate={validateRequiredList}
                             onAfterChange={

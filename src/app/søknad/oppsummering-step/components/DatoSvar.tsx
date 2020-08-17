@@ -7,6 +7,6 @@ interface Props {
 }
 export const prettifyApiDate = (apiDato: ApiStringDate): string => prettifyDate(apiStringDateToDate(apiDato));
 
-const DatoSvar: React.FunctionComponent<Props> = ({ apiDato }) => <>{prettifyApiDate(apiDato)}</>;
+const DatoSvar: React.FunctionComponent<Props> = ({ apiDato }: Props) => <>{prettifyApiDate(apiDato)}</>;
 
 export default DatoSvar;

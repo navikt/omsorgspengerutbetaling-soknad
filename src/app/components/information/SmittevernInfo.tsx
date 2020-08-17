@@ -1,14 +1,6 @@
 import React from 'react';
+import FormattedHtmlMessage from '@navikt/sif-common-core/lib/components/formatted-html-message/FormattedHtmlMessage';
 
-interface Props {}
-
-const SmittevernInfo = ({}: Props) => (
-    <>
-        Når barnehagen eller skolen er åpen, men du må være hjemme med barnet ditt på grunn{' '}
-        <strong>av særlige smittevernhensyn</strong>, kan du bruke omsorgsdager. Det er en lege som avgjør om det
-        foreligger særlige smittevernhensyn. Det kan være smittevernhensyn til barnet eller andre familiemedlemmer som
-        bor med barnet.
-    </>
-);
+const SmittevernInfo = () => <FormattedHtmlMessage id="info.smittevern.info.html" />;
 
 export default SmittevernInfo;

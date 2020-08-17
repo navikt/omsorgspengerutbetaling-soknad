@@ -1,15 +1,15 @@
-import {YesOrNo} from 'common/types/YesOrNo';
-import {BarnStepQuestions} from '../søknad/barn-step/config';
-import {SøknadFormData, SøknadFormField} from '../types/SøknadFormData';
-import {Utenlandsopphold, Virksomhet} from '@navikt/sif-common-forms/lib';
+import { YesOrNo } from 'common/types/YesOrNo';
+import { BarnStepQuestions } from '../søknad/barn-step/config';
+import { SøknadFormData, SøknadFormField } from '../types/SøknadFormData';
+import { Utenlandsopphold, Virksomhet } from '@navikt/sif-common-forms/lib';
 import {
     delvisFraværIsValid,
     minimumEnUtbetalingsperiode,
     oppholdIsValid,
-    perioderIsValid
+    perioderIsValid,
 } from '../søknad/periode-step/periodeStepConfig';
-import {frilansIsValid, selvstendigIsValid} from '../søknad/inntekt-step/inntektStepConfig';
-import {FraværDag, FraværPeriode} from "@navikt/sif-common-forms/lib/fravær";
+import { frilansIsValid, selvstendigIsValid } from '../søknad/inntekt-step/inntektStepConfig';
+import { FraværDag, FraværPeriode } from '@navikt/sif-common-forms/lib/fravær';
 
 export const welcomingPageIsValid = ({ harForståttRettigheterOgPlikter }: SøknadFormData): boolean =>
     harForståttRettigheterOgPlikter === true;
@@ -22,7 +22,7 @@ export const periodeStepIsValid = (formData: SøknadFormData) => {
     const perioderHarVærtIUtlandet: YesOrNo = formData[SøknadFormField.perioder_harVærtIUtlandet];
     const perioderUtenlandsopphold: Utenlandsopphold[] = formData[SøknadFormField.perioder_utenlandsopphold];
 
-    const isValid: boolean = !!(
+    const isValid = !!(
         perioderIsValid(harPerioderMedFravær, fraværPerioder) &&
         delvisFraværIsValid(harDagerMedDelvisFravær, fraværDager) &&
         oppholdIsValid(perioderHarVærtIUtlandet, perioderUtenlandsopphold) &&
@@ -53,7 +53,7 @@ export const barnStepIsValid = (values: SøknadFormData): boolean => {
 
 export const medlemskapStepIsValid = ({
     harBoddUtenforNorgeSiste12Mnd,
-    skalBoUtenforNorgeNeste12Mnd
+    skalBoUtenforNorgeNeste12Mnd,
 }: SøknadFormData): boolean =>
     (harBoddUtenforNorgeSiste12Mnd === YesOrNo.YES || harBoddUtenforNorgeSiste12Mnd === YesOrNo.NO) &&
     (skalBoUtenforNorgeNeste12Mnd === YesOrNo.YES || skalBoUtenforNorgeNeste12Mnd === YesOrNo.NO);

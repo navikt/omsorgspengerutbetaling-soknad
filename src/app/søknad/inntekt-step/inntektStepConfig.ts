@@ -1,5 +1,5 @@
-import {YesOrNo} from "common/types/YesOrNo";
-import {Virksomhet} from "@navikt/sif-common-forms/lib";
+import { YesOrNo } from 'common/types/YesOrNo';
+import { Virksomhet } from '@navikt/sif-common-forms/lib';
 
 export const frilansIsValid = (
     frilansHarHattInntektSomFrilanser: YesOrNo,

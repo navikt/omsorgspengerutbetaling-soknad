@@ -9,5 +9,5 @@ export const mapBostedUtlandToApiData = (opphold: BostedUtland, locale: string):
     landkode: opphold.landkode,
     fraOgMed: formatDateToApiFormat(opphold.fom),
     tilOgMed: formatDateToApiFormat(opphold.tom),
-    erEØSLand: countryIsMemberOfEøsOrEfta(opphold.landkode)
+    erEØSLand: countryIsMemberOfEøsOrEfta(opphold.landkode),
 });

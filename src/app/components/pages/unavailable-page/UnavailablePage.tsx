@@ -5,20 +5,22 @@ import Page from 'common/components/page/Page';
 import StepBanner from 'common/components/step-banner/StepBanner';
 import bemUtils from 'common/utils/bemUtils';
 import './unavailablePage.less';
+import { FormattedMessage } from 'react-intl';
 
 const bem = bemUtils('introPage');
 
-const UnavailablePage: React.StatelessComponent<{}> = () => {
+const UnavailablePage: React.StatelessComponent = () => {
     const title = 'Søknad om utbetaling av omsorgspenger';
     return (
         <Page className={bem.block} title={title} topContentRenderer={() => <StepBanner text={title} />}>
             <Box margin="xxxl">
                 <AlertStripeAdvarsel>
                     <p>
-                        Den digitale søknaden dessverre ikke tilgjengelig på grunn av teknisk feil. Vi jobber med å løse
-                        feilen slik at du kan søke digitalt.
+                        <FormattedMessage id="page.unavailable.1" />
                     </p>
-                    <p>Vi beklager.</p>
+                    <p>
+                        <FormattedMessage id="page.unavailable.2" />
+                    </p>
                 </AlertStripeAdvarsel>
             </Box>
         </Page>

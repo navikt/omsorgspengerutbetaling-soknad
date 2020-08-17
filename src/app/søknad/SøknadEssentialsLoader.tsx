@@ -15,7 +15,7 @@ import {
     navigateToLoginPage,
     navigateToWelcomePage,
     userIsCurrentlyOnErrorPage,
-    userIsOnStep
+    userIsOnStep,
 } from '../utils/navigationUtils';
 import SøknadTempStorage, { STORAGE_VERSION } from './SøknadTempStorage';
 import appSentryLogger from '../utils/appSentryLogger';

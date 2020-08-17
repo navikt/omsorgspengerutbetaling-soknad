@@ -5,7 +5,7 @@ import { Attachment } from 'common/types/Attachment';
 import { YesOrNo } from 'common/types/YesOrNo';
 import { AndreUtbetalinger } from './AndreUtbetalinger';
 import { FraværDag, FraværPeriode } from '@navikt/sif-common-forms/lib/fravær';
-import {FraværDelerAvDag, Periode} from "../../@types/omsorgspengerutbetaling-schema";
+import { FraværDelerAvDag, Periode } from '../../@types/omsorgspengerutbetaling-schema';
 
 export enum SøknadFormField {
     harForståttRettigheterOgPlikter = 'harForståttRettigheterOgPlikter',
@@ -50,7 +50,7 @@ export enum SøknadFormField {
     harBoddUtenforNorgeSiste12Mnd = 'harBoddUtenforNorgeSiste12Mnd',
     utenlandsoppholdSiste12Mnd = 'utenlandsoppholdSiste12Mnd',
     skalBoUtenforNorgeNeste12Mnd = 'skalBoUtenforNorgeNeste12Mnd',
-    utenlandsoppholdNeste12Mnd = 'utenlandsoppholdNeste12Mnd'
+    utenlandsoppholdNeste12Mnd = 'utenlandsoppholdNeste12Mnd',
 }
 
 export interface SøknadFormData {
@@ -136,5 +136,5 @@ export const initialValues: SøknadFormData = {
     [SøknadFormField.harBoddUtenforNorgeSiste12Mnd]: YesOrNo.UNANSWERED,
     [SøknadFormField.utenlandsoppholdSiste12Mnd]: [],
     [SøknadFormField.skalBoUtenforNorgeNeste12Mnd]: YesOrNo.UNANSWERED,
-    [SøknadFormField.utenlandsoppholdNeste12Mnd]: []
+    [SøknadFormField.utenlandsoppholdNeste12Mnd]: [],
 };

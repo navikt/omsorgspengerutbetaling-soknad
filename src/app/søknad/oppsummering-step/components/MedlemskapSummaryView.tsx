@@ -5,6 +5,8 @@ import SummaryList from 'common/components/summary-list/SummaryList';
 import { UtenlandsoppholdApiData } from '../../../types/SøknadApiData';
 import { renderUtenlandsoppholdIPeriodenSummary } from './renderUtenlandsoppholdSummary';
 import SummaryBlock from './SummaryBlock';
+import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
+import { useIntl } from 'react-intl';
 
 export interface Props {
     bosteder: UtenlandsoppholdApiData[];
@@ -12,6 +14,7 @@ export interface Props {
 
 const MedlemskapSummaryView = (props: Props) => {
     const { bosteder } = props;
+    const intl = useIntl();
 
     if (bosteder.length === 0) {
         return null;
@@ -21,12 +24,12 @@ const MedlemskapSummaryView = (props: Props) => {
     return (
         <>
             {bostederSiste12.length > 0 && (
-                <SummaryBlock header="Bosteder i utlandet siste 12 måneder">
+                <SummaryBlock header={intlHelper(intl, 'steg.oppsummering.bostederUtlandSiste12.listetittel')}>
                     <SummaryList items={bostederSiste12} itemRenderer={renderUtenlandsoppholdIPeriodenSummary} />
                 </SummaryBlock>
             )}
             {bostederNeste12.length > 0 && (
-                <SummaryBlock header="Bosteder i utlandet neste 12 måneder">
+                <SummaryBlock header={intlHelper(intl, 'steg.oppsummering.bostederUtlandNeste12.listetittel')}>
                     <SummaryList items={bostederNeste12} itemRenderer={renderUtenlandsoppholdIPeriodenSummary} />
                 </SummaryBlock>
             )}

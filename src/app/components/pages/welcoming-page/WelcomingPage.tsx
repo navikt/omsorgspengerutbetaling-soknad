@@ -26,7 +26,7 @@ class WelcomingPage extends React.Component<Props, WelcomingPageState> {
         super(props);
         this.state = {
             dinePlikterModalOpen: false,
-            behandlingAvPersonopplysningerModalOpen: false
+            behandlingAvPersonopplysningerModalOpen: false,
         };
 
         this.openDinePlikterModal = this.openDinePlikterModal.bind(this);
@@ -37,25 +37,25 @@ class WelcomingPage extends React.Component<Props, WelcomingPageState> {
 
     openDinePlikterModal() {
         this.setState({
-            dinePlikterModalOpen: true
+            dinePlikterModalOpen: true,
         });
     }
 
     closeDinePlikterModal() {
         this.setState({
-            dinePlikterModalOpen: false
+            dinePlikterModalOpen: false,
         });
     }
 
     openBehandlingAvPersonopplysningerModal() {
         this.setState({
-            behandlingAvPersonopplysningerModalOpen: true
+            behandlingAvPersonopplysningerModalOpen: true,
         });
     }
 
     closeBehandlingAvPersonopplysningerModal() {
         this.setState({
-            behandlingAvPersonopplysningerModalOpen: false
+            behandlingAvPersonopplysningerModalOpen: false,
         });
     }
 
@@ -73,7 +73,7 @@ class WelcomingPage extends React.Component<Props, WelcomingPageState> {
                             bannerSize="large"
                             counsellorWithSpeechBubbleProps={{
                                 strongText: intlHelper(intl, 'welcomingPage.banner.tittel'),
-                                normalText: intlHelper(intl, 'welcomingPage.banner.tekst')
+                                normalText: intlHelper(intl, 'welcomingPage.banner.tekst'),
                             }}
                         />
                     )}>

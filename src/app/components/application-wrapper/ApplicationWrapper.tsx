@@ -1,24 +1,33 @@
 import * as React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Normaltekst } from 'nav-frontend-typografi';
-// import LanguageToggle from 'common/components/language-toggle/LanguageToggle';
+import ApplicationMessages from 'common/dev-utils/intl/application-messages/ApplicationMessages';
 import { Locale } from 'common/types/Locale';
 import { Søkerdata } from '../../types/Søkerdata';
 import { getEnvironmentVariable } from '../../utils/envUtils';
-import IntlProvider from '../intl-provider/IntlProvider';
+import IntlProvider, { appBokmålstekster, appNynorsktekster } from '../intl-provider/IntlProvider';
 
 interface ApplicationWrapperProps {
     søkerdata?: Søkerdata;
     locale: Locale;
+    children: React.ReactNode;
     onChangeLocale: (locale: Locale) => void;
 }
 
-const ApplicationWrapper: React.FunctionComponent<ApplicationWrapperProps> = ({ locale, onChangeLocale, children }) => {
+const ApplicationWrapper = ({ locale, children }: ApplicationWrapperProps) => {
     return (
         <IntlProvider locale={locale}>
             <Normaltekst tag="div">
-                {/* <LanguageToggle locale={locale} toggle={onChangeLocale} /> */}
-                <Router basename={getEnvironmentVariable('PUBLIC_PATH')}>{children}</Router>
+                <Router basename={getEnvironmentVariable('PUBLIC_PATH')}>
+                    {children}
+                    <ApplicationMessages
+                        messages={{
+                            nb: appBokmålstekster,
+                            nn: appNynorsktekster,
+                        }}
+                        title="Omsorgspengerutbetaling SN/frilanser"
+                    />
+                </Router>
             </Normaltekst>
         </IntlProvider>
     );

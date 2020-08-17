@@ -3,8 +3,13 @@ import { FormikValidateFunction } from '@navikt/sif-common-formik/lib';
 import { ArrayHelpers, useFormikContext } from 'formik';
 import { Attachment, PersistedFile } from 'common/types/Attachment';
 import {
-    attachmentShouldBeProcessed, attachmentShouldBeUploaded, attachmentUploadHasFailed,
-    getPendingAttachmentFromFile, isFileObject, mapFileToPersistedFile, VALID_EXTENSIONS
+    attachmentShouldBeProcessed,
+    attachmentShouldBeUploaded,
+    attachmentUploadHasFailed,
+    getPendingAttachmentFromFile,
+    isFileObject,
+    mapFileToPersistedFile,
+    VALID_EXTENSIONS,
 } from 'common/utils/attachmentUtils';
 import { uploadFile } from '../../api/api';
 import SøknadFormComponents from '../../søknad/SøknadFormComponents';
@@ -32,7 +37,7 @@ const FormikFileUploader: React.FunctionComponent<Props> = ({
     onErrorUploadingAttachments,
     onUnauthorizedOrForbiddenUpload,
     ...otherProps
-}) => {
+}: Props) => {
     const { values } = useFormikContext<SøknadFormData>();
     async function uploadAttachment(attachment: Attachment) {
         const { file } = attachment;

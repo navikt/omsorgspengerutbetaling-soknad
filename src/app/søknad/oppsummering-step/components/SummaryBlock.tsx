@@ -7,7 +7,7 @@ interface Props {
     children: React.ReactElement<any> | Array<React.ReactElement<any>> | React.ReactNode;
 }
 
-const SummaryBlock: React.FunctionComponent<Props> = ({ header, children }) => (
+const SummaryBlock: React.FunctionComponent<Props> = ({ header, children }: Props) => (
     <Box margin="l">
         <ContentWithHeader header={header}>{children}</ContentWithHeader>
     </Box>

@@ -10,7 +10,7 @@ export enum StepID {
     'LEGEERKLÆRING' = 'legeerklaering',
     'INNTEKT' = 'inntekt',
     'MEDLEMSKAP' = 'medlemskap',
-    'OPPSUMMERING' = 'oppsummering'
+    'OPPSUMMERING' = 'oppsummering',
 }
 
 export interface StepConfigItemTexts {
@@ -37,7 +37,7 @@ const getStepConfigItemTextKeys = (stepId: StepID): StepConfigItemTexts => {
         stepTitle: `step.${stepId}.stepTitle`,
         stepIndicatorLabel: `step.${stepId}.stepIndicatorLabel`,
         nextButtonLabel: 'step.nextButtonLabel',
-        nextButtonAriaLabel: 'step.nextButtonAriaLabel'
+        nextButtonAriaLabel: 'step.nextButtonAriaLabel',
     };
 };
 
@@ -52,8 +52,8 @@ export const getStepConfig = (formData?: SøknadFormData): StepConfigInterface =
             index: idx++,
             nextStep:
                 skalViseDokumenterStep && skalViseDokumenterStep === YesOrNo.YES ? StepID.DOKUMENTER : StepID.INNTEKT,
-            backLinkHref: routeConfig.WELCOMING_PAGE_ROUTE
-        }
+            backLinkHref: routeConfig.WELCOMING_PAGE_ROUTE,
+        },
     };
 
     let configMaybeSteg = {};
@@ -63,8 +63,8 @@ export const getStepConfig = (formData?: SøknadFormData): StepConfigInterface =
                 ...getStepConfigItemTextKeys(StepID.DOKUMENTER),
                 index: idx++,
                 nextStep: StepID.INNTEKT,
-                backLinkHref: getSøknadRoute(StepID.PERIODE)
-            }
+                backLinkHref: getSøknadRoute(StepID.PERIODE),
+            },
         };
     }
 
@@ -76,33 +76,33 @@ export const getStepConfig = (formData?: SøknadFormData): StepConfigInterface =
             backLinkHref:
                 skalViseDokumenterStep && skalViseDokumenterStep === YesOrNo.YES
                     ? getSøknadRoute(StepID.DOKUMENTER)
-                    : getSøknadRoute(StepID.PERIODE)
+                    : getSøknadRoute(StepID.PERIODE),
         },
         [StepID.BARN]: {
             ...getStepConfigItemTextKeys(StepID.BARN),
             index: idx++,
             nextStep: StepID.MEDLEMSKAP,
-            backLinkHref: getSøknadRoute(StepID.INNTEKT)
+            backLinkHref: getSøknadRoute(StepID.INNTEKT),
         },
         [StepID.MEDLEMSKAP]: {
             ...getStepConfigItemTextKeys(StepID.MEDLEMSKAP),
             index: idx++,
             nextStep: StepID.OPPSUMMERING,
-            backLinkHref: getSøknadRoute(StepID.BARN)
+            backLinkHref: getSøknadRoute(StepID.BARN),
         },
         [StepID.OPPSUMMERING]: {
             ...getStepConfigItemTextKeys(StepID.OPPSUMMERING),
             index: idx++,
             backLinkHref: getSøknadRoute(StepID.MEDLEMSKAP),
             nextButtonLabel: 'step.sendButtonLabel',
-            nextButtonAriaLabel: 'step.sendButtonAriaLabel'
-        }
+            nextButtonAriaLabel: 'step.sendButtonAriaLabel',
+        },
     };
 
     return {
         ...configDelEn,
         ...configMaybeSteg,
-        ...configDelTo
+        ...configDelTo,
     };
 };
 

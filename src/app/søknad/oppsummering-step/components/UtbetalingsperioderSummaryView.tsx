@@ -32,7 +32,7 @@ export const toMaybeUtbetalingsperiodeDag = (p: UtbetalingsperiodeApi): Utbetali
             return {
                 dato: p.fraOgMed,
                 antallTimerPlanlagt: antallTimerPlanlagtTime,
-                antallTimerBorte: antallTimerBorteTime
+                antallTimerBorte: antallTimerBorteTime,
             };
         }
     }
