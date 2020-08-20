@@ -1,13 +1,11 @@
 import { YesOrNo } from 'common/types/YesOrNo';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
-import {
-    legeerklæringStepIsValid, medlemskapStepIsValid, welcomingPageIsValid
-} from '../stepValidations';
+import { legeerklæringStepIsValid, medlemskapStepIsValid, welcomingPageIsValid } from '../stepValidations';
 
 jest.mock('./../fieldValidations', () => {
     return {
         validateNavn: jest.fn(() => undefined),
-        validateFødselsnummer: jest.fn(() => undefined)
+        validateFødselsnummer: jest.fn(() => undefined),
     };
 });
 

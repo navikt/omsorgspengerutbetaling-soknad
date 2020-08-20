@@ -44,7 +44,7 @@ const ConfirmationPage = () => {
                     <li>
                         <FormattedMessage id="page.confirmation.checklist.3.a" />
                         <Lenke href={getLenker(intl.locale).saksbehandlingstider} target="_blank">
-                            <FormattedMessage id="page.confirmation.checklist.3b" />
+                            <FormattedMessage id="page.confirmation.checklist.3.b" />
                         </Lenke>
                         .
                     </li>

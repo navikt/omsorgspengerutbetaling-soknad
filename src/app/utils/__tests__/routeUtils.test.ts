@@ -7,7 +7,7 @@ import * as stepUtils from '../stepUtils';
 jest.mock('../featureToggleUtils', () => {
     return {
         isFeatureEnabled: () => false,
-        Feature: {}
+        Feature: {},
     };
 });
 
@@ -15,7 +15,7 @@ jest.mock('./../stepUtils', () => {
     return {
         legeerklæringStepAvailable: jest.fn(() => 'legeerklæring step available'),
         medlemskapStepAvailable: jest.fn(() => 'medlemskap step available'),
-        summaryStepAvailable: jest.fn(() => 'summary step available')
+        summaryStepAvailable: jest.fn(() => 'summary step available'),
     };
 });
 
@@ -53,7 +53,7 @@ describe('routeUtils', () => {
         it('should return true if route=RouteConfig.SØKNAD_SENDT_ROUTE and harBekreftetOpplysninger is true', () => {
             const result = isAvailable(RouteConfig.SØKNAD_SENDT_ROUTE, {
                 ...formValues,
-                [SøknadFormField.harBekreftetOpplysninger]: true
+                [SøknadFormField.harBekreftetOpplysninger]: true,
             });
             expect(result).toBe(true);
         });
@@ -61,7 +61,7 @@ describe('routeUtils', () => {
         it('should return false if route=RouteConfig.SØKNAD_SENDT_ROUTE and harBekreftetOpplysninger is false', () => {
             const result = isAvailable(RouteConfig.SØKNAD_SENDT_ROUTE, {
                 ...formValues,
-                [SøknadFormField.harBekreftetOpplysninger]: false
+                [SøknadFormField.harBekreftetOpplysninger]: false,
             });
             expect(result).toBe(false);
         });

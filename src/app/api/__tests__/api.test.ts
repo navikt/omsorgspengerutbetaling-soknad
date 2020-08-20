@@ -8,7 +8,7 @@ const mockedApiUrl = 'nav.no/api';
 jest.mock('./../../utils/apiUtils', () => {
     return {
         getApiUrlByResourceType: jest.fn(() => mockedApiUrl),
-        sendMultipartPostRequest: jest.fn()
+        sendMultipartPostRequest: jest.fn(),
     };
 });
 
