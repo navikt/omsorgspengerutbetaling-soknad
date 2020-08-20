@@ -1,9 +1,8 @@
 import * as React from 'react';
-import { useIntl, FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import Box from '@navikt/sif-common-core/lib/components/box/Box';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
 import { useFormikContext } from 'formik';
-import HelperTextPanel from 'common/components/helper-text-panel/HelperTextPanel';
 import intlHelper from 'common/utils/intlUtils';
 import FileUploadErrors from 'common/components/file-upload-errors/FileUploadErrors';
 import FormikFileUploader from '../../components/formik-file-uploader/FormikFileUploader';
@@ -38,12 +37,9 @@ const DokumenterStep = ({ onValidSubmit }: StepConfigProps) => {
                     </p>
                 </CounsellorPanel>
             </FormBlock>
-
-            <FormBlock>
-                <HelperTextPanel>
-                    <PictureScanningGuide />
-                </HelperTextPanel>
-            </FormBlock>
+            <Box margin={'l'}>
+                <PictureScanningGuide />
+            </Box>
             <FormBlock>
                 <FormikFileUploader
                     name={SøknadFormField.dokumenter}

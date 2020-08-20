@@ -9,16 +9,16 @@ webpackConfig.plugins.push(
     new HtmlWebpackPlugin({
         template: `${__dirname}/../../app/index.html`,
         inject: 'body',
-        hash: true
+        hash: true,
     })
 );
 
 webpackConfig.optimization = {
     minimizer: [
         new TerserPlugin({
-            sourceMap: true
-        })
-    ]
+            sourceMap: true,
+        }),
+    ],
 };
 
 module.exports = webpackConfig;

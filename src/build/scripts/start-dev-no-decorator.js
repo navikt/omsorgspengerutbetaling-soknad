@@ -13,6 +13,5 @@ createEnvSettingsFile(path.resolve(`${__dirname}/../../../dist/js/settings.js`))
 const compiler = webpack(webpackConfig);
 const server = new WebpackDevServer(compiler, configureDevServer({}));
 
-
 let PORT = 8080;
 server.listen(PORT, '127.0.0.1', () => console.log(`Started server on http://localhost:${PORT}`));

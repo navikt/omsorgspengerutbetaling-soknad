@@ -7,38 +7,30 @@ describe('getPeriodeBoundaries', () => {
         expect(getPeriodeBoundaries([], [])).toEqual({ min: undefined, max: undefined });
     });
     describe('should return boundaries when', () => {
-        const date1 = moment()
-            .add(1, 'day')
-            .toDate();
-        const date2 = moment()
-            .add(2, 'day')
-            .toDate();
-        const date3 = moment()
-            .add(3, 'day')
-            .toDate();
-        const date4 = moment()
-            .add(4, 'day')
-            .toDate();
+        const date1 = moment().add(1, 'day').toDate();
+        const date2 = moment().add(2, 'day').toDate();
+        const date3 = moment().add(3, 'day').toDate();
+        const date4 = moment().add(4, 'day').toDate();
 
         const periode1: Periode = {
             fom: date1,
-            tom: date2
+            tom: date2,
         };
         const periode2: Periode = {
             fom: date3,
-            tom: date4
+            tom: date4,
         };
         const dag1: FraværDelerAvDag = {
             dato: date1,
-            timer: 1
+            timer: 1,
         };
         const dag2: FraværDelerAvDag = {
             dato: date2,
-            timer: 1
+            timer: 1,
         };
         const dag3: FraværDelerAvDag = {
             dato: date3,
-            timer: 1
+            timer: 1,
         };
 
         it('has only one periode', () => {
