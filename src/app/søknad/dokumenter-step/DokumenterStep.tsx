@@ -14,12 +14,15 @@ import { validateDocuments } from '../../validation/fieldValidations';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import SøknadStep from '../SøknadStep';
 import CounsellorPanel from 'common/components/counsellor-panel/CounsellorPanel';
+import { getTotalSizeOfAttachments, MAX_TOTAL_ATTACHMENT_SIZE_BYTES } from 'common/utils/attachmentUtils';
+import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 
 const DokumenterStep = ({ onValidSubmit }: StepConfigProps) => {
     const intl = useIntl();
     const { values } = useFormikContext<SøknadFormData>();
     const [filesThatDidntGetUploaded, setFilesThatDidntGetUploaded] = React.useState<File[]>([]);
     const hasPendingUploads: boolean = (values.dokumenter || []).find((a: any) => a.pending === true) !== undefined;
+    const totalSize = getTotalSizeOfAttachments(values.dokumenter);
 
     return (
         <SøknadStep
@@ -52,6 +55,13 @@ const DokumenterStep = ({ onValidSubmit }: StepConfigProps) => {
                     validate={validateDocuments}
                 />
             </FormBlock>
+            {totalSize > MAX_TOTAL_ATTACHMENT_SIZE_BYTES && (
+                <Box margin={'l'}>
+                    <AlertStripeAdvarsel>
+                        <FormattedMessage id={'steg.dokumenter.advarsel.totalstørrelse'} />
+                    </AlertStripeAdvarsel>
+                </Box>
+            )}
             <Box margin="m">
                 <FileUploadErrors filesThatDidntGetUploaded={filesThatDidntGetUploaded} />
             </Box>
