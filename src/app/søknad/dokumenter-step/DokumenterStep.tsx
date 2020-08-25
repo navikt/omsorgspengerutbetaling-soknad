@@ -16,6 +16,7 @@ import SøknadStep from '../SøknadStep';
 import CounsellorPanel from 'common/components/counsellor-panel/CounsellorPanel';
 import { getTotalSizeOfAttachments, MAX_TOTAL_ATTACHMENT_SIZE_BYTES } from 'common/utils/attachmentUtils';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+import Lenke from 'nav-frontend-lenker';
 
 const DokumenterStep = ({ onValidSubmit }: StepConfigProps) => {
     const intl = useIntl();
@@ -58,7 +59,15 @@ const DokumenterStep = ({ onValidSubmit }: StepConfigProps) => {
             {totalSize > MAX_TOTAL_ATTACHMENT_SIZE_BYTES && (
                 <Box margin={'l'}>
                     <AlertStripeAdvarsel>
-                        <FormattedMessage id={'steg.dokumenter.advarsel.totalstørrelse'} />
+                        <FormattedMessage id={'dokumenter.advarsel.totalstørrelse.1'} />
+                        <Lenke
+                            target={'_blank'}
+                            rel={'noopener noreferrer'}
+                            href={
+                                'https://www.nav.no/soknader/nb/person/familie/omsorgspenger/NAV%2009-35.01/ettersendelse'
+                            }>
+                            <FormattedMessage id={'dokumenter.advarsel.totalstørrelse.2'} />
+                        </Lenke>
                     </AlertStripeAdvarsel>
                 </Box>
             )}
