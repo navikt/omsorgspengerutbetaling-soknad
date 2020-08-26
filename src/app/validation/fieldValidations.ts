@@ -13,7 +13,11 @@ import { FieldValidationResult } from 'common/validation/types';
 import { FraværDelerAvDag, Periode } from '../../@types/omsorgspengerutbetaling-schema';
 import { datesCollide } from './dateValidationUtils';
 import { Attachment } from 'common/types/Attachment';
-import { attachmentHasBeenUploaded } from 'common/utils/attachmentUtils';
+import {
+    attachmentHasBeenUploaded,
+    getTotalSizeOfAttachments,
+    MAX_TOTAL_ATTACHMENT_SIZE_BYTES,
+} from 'common/utils/attachmentUtils';
 
 export const hasValue = (v: any) => v !== '' && v !== undefined && v !== null;
 
@@ -40,6 +44,7 @@ export enum AppFieldValidationErrors {
     'tom_er_før_fom' = 'fieldvalidation.tom_er_før_fom',
     'ingen_dokumenter' = 'fieldvalidation.ingen_dokumenter',
     'for_mange_dokumenter' = 'fieldvalidation.for_mange_dokumenter',
+    'samlet_storrelse_for_hoy' = 'fieldvalidation.samlet_storrelse_for_hoy',
     'ingen_endringer_spesifisert' = 'fieldvalidation.inntektsendring.ingen_endringer_spesifisert',
     'ikke_lørdag_eller_søndag_periode' = 'fieldvalidation.saturday_and_sunday_not_possible_periode',
     'ikke_lørdag_eller_søndag_dag' = 'fieldvalidation.saturday_and_sunday_not_possible_dag',
@@ -214,7 +219,11 @@ export const validateHours = ({ min, max }: { min?: number; max?: number }) => (
 // export const validateDocuments = (attachments: Attachment[]): FieldValidationResult => undefined;
 export const validateDocuments = (attachments: Attachment[]): FieldValidationResult => {
     const uploadedAttachments = attachments.filter((attachment) => attachmentHasBeenUploaded(attachment));
-    if (uploadedAttachments.length > 3) {
+    const totalSizeInBytes: number = getTotalSizeOfAttachments(attachments);
+    if (totalSizeInBytes > MAX_TOTAL_ATTACHMENT_SIZE_BYTES) {
+        return createAppFieldValidationError(AppFieldValidationErrors.samlet_storrelse_for_hoy);
+    }
+    if (uploadedAttachments.length > 100) {
         return createAppFieldValidationError(AppFieldValidationErrors.for_mange_dokumenter);
     }
     return undefined;

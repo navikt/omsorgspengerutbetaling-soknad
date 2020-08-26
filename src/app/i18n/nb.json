@@ -290,6 +290,8 @@
     "fieldvalidation.timer_for_mange_timer": "Verdien må være mellom 0,5 og 7,5 timer",
     "fieldvalidation.dato_utenfor_gyldig_tidsrom": "Dato er utenfor gyldig tidsperiode",
     "fieldvalidation.tom_er_før_fom": "Til dato kan ikke være før fra dato",
+    "fieldvalidation.for_mange_dokumenter": "For mange dokumenter er lastet opp",
+    "fieldvalidation.samlet_storrelse_for_hoy": "Total samlet størrelse for dokumentene du har lastet opp overstiger grensen på 24Mb.",
 
     "avbrytSøknadDialog.avbrytSøknadLabel": "Ja, avbryt søknad",
     "avbrytSøknadDialog.fortsettSøknadLabel": "Nei",
@@ -306,9 +308,11 @@
     "steg.footer.avbryt": "Avbryt og slett søknad",
     "steg.footer.fortsettSenere": "Avslutt og fortsett senere",
 
-    "steg.dokumenter.vedlegg": "Last opp bilde av dokumentene (maks 3 bilder)",
+    "steg.dokumenter.vedlegg": "Last opp bekreftelse fra lege",
     "steg.dokumenter.info.1": "Du må laste opp en bekreftelse fra lege om at det er særlige smittevernhensyn som gjør at barnet ikke kan gå i barnehage eller skole. Det gjør du enten ved å ta bilde av bekreftelsen, eller ved å scanne den.",
     "steg.dokumenter.info.2": "Hvis du ikke har bekreftelsen tilgjengelig nå, må du ettersende den til oss så snart du har den. Vi kan ikke behandle søknaden før vi har mottatt bekreftelsen.",
+    "dokumenter.advarsel.totalstørrelse.1": "Du har totalt lastet opp mer enn grensen på 24 Mb. Det betyr at du må fjerne noe av det du har lastet opp. Hvis det betyr at du ikke får plass til alt du ønsker å sende nå, kan du ",
+    "dokumenter.advarsel.totalstørrelse.2": "ettersende flere dokumenter.",
 
     "steg.intro.info.1.html": "Denne søknaden bruker du når du er <strong>selvstendig næringsdrivende eller frilanser</strong> og skal søke om utbetaling av omsorgspenger. Hvis du er ansatt i eget AS regnes du som arbeidstaker, da skal du eller din regnskapsfører ",
     "steg.intro.info.2": "sende inntektsmelding til NAV",
@@ -338,7 +342,6 @@
     "step.vedlegg.stepTitle": "Last opp bekreftelse fra lege",
     "step.vedlegg.pageTitle": "Last opp dokumenter",
     "step.vedlegg.stepIndicatorLabel": "Last opp dokumenter",
-    "fieldvalidation.for_mange_dokumenter": "For mange dokumenter er lastet opp",
     "steg.oppsummering.dokumenter.ikkelastetopp": "Ikke lastet opp, må ettersendes",
 
     "psg-temp.innholdstittel": "Ta bilde av dokumentene og last opp",
