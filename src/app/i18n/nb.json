@@ -335,8 +335,8 @@
     "steg.intro.kanIkkeBrukeSøknad.html": "Du kan <strong>kun</strong> bruke denne søknaden hvis du er hjemme fra jobb på grunn av én av situasjonene beskrevet over.",
     "steg.intro.smittevernInfo.1.html": "I søknaden må du laste opp en bekreftelse fra lege. Legen må bekrefte at barnet ikke kan gå i barnehage eller skole fordi det er <strong>særlige smittevernhensyn</strong> i forbindelse med koronaviruset som må ivaretas for enten barnet eller et familiemedlem som barnet bor sammen med. Legen skal ikke oppgi diagnose eller hvilket familiemedlem det gjelder.",
     "steg.intro.smittevernInfo.2": "Hvis du ikke har bekreftelse tilgjengelig når du søker, kan du ettersende den. Vi kan ikke behandle søknaden før vi mottar bekreftelsen.",
-    "steg.intro.stengtBhgSkole.1": "I søknaden må du laste opp en bekreftelse fra barnehagen eller skolen om at har stengt.",
-    "steg.intro.stengtBhgSkole.2": "Hvis du ikke har bekreftelse tilgjengelig når du søker, kan du ettersende den. Vi kan ikke behandle søknaden før vi mottar bekreftelsen.",
+    "steg.intro.stengtBhgSkole.1": "I søknaden må du laste opp en bekreftelse fra barnehagen eller skolen om at de har stengt.",
+    "steg.intro.stengtBhgSkole.2": "Hvis du ikke har bekreftelsen tilgjengelig når du søker, kan du ettersende den. Vi kan ikke behandle søknaden før vi mottar bekreftelsen.",
 
     "steg.en.smittevern.sporsmal": "Har du vært hjemme med barn grunnet særlige smittevernhensyn?",
     "steg.oppsummering.dokumenterSmittevern.header": "Bekreftelse fra lege",
