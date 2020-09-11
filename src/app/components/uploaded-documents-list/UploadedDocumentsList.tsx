@@ -16,7 +16,7 @@ interface Props {
 const UploadedDocumentsList: React.FunctionComponent<Props> = ({ includeDeletionFunctionality }) => {
     const { values, setFieldValue } = useFormikContext<SøknadFormData>();
 
-    const dokumenter: Attachment[] = values.dokumenter.filter(({ file }: Attachment) =>
+    const dokumenter: Attachment[] = values.dokumenterSmittevernhensyn.filter(({ file }: Attachment) =>
         fileExtensionIsValid(file.name)
     );
 
@@ -30,18 +30,18 @@ const UploadedDocumentsList: React.FunctionComponent<Props> = ({ includeDeletion
                 attachments={dokumenter}
                 onRemoveAttachmentClick={(attachment: Attachment) => {
                     attachment.pending = true;
-                    setFieldValue(SøknadFormField.dokumenter, dokumenter);
+                    setFieldValue(SøknadFormField.dokumenterSmittevernhensyn, dokumenter);
                     if (attachment.url) {
                         deleteFile(attachment.url).then(
                             () => {
                                 setFieldValue(
-                                    SøknadFormField.dokumenter,
+                                    SøknadFormField.dokumenterSmittevernhensyn,
                                     removeElementFromArray(attachment, dokumenter)
                                 );
                             },
                             () => {
                                 setFieldValue(
-                                    SøknadFormField.dokumenter,
+                                    SøknadFormField.dokumenterSmittevernhensyn,
                                     removeElementFromArray(attachment, dokumenter)
                                 );
                             }

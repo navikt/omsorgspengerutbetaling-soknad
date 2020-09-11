@@ -44,7 +44,7 @@ const getStepConfigItemTextKeys = (stepId: StepID): StepConfigItemTexts => {
 export const getStepConfig = (formData?: SøknadFormData): StepConfigInterface => {
     let idx = 0;
 
-    const skalViseDokumenterStep = formData ? formData[SøknadFormField.hemmeligJaNeiSporsmal] : undefined;
+    const skalViseDokumenterStep = formData ? formData[SøknadFormField.hjemmePgaSmittevernhensyn] : undefined;
 
     const configDelEn = {
         [StepID.PERIODE]: {

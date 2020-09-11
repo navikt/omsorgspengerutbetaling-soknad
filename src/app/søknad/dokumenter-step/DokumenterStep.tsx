@@ -3,27 +3,28 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import Box from '@navikt/sif-common-core/lib/components/box/Box';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
 import { useFormikContext } from 'formik';
-import intlHelper from 'common/utils/intlUtils';
-import FileUploadErrors from 'common/components/file-upload-errors/FileUploadErrors';
-import FormikFileUploader from '../../components/formik-file-uploader/FormikFileUploader';
-import PictureScanningGuide from 'common/components/picture-scanning-guide/PictureScanningGuide';
-import UploadedDocumentsList from '../../components/uploaded-documents-list/UploadedDocumentsList';
-import { StepConfigProps, StepID } from '../../config/stepConfig';
-import { navigateToLoginPage } from '../../utils/navigationUtils';
-import { validateDocuments } from '../../validation/fieldValidations';
-import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
-import SøknadStep from '../SøknadStep';
-import CounsellorPanel from 'common/components/counsellor-panel/CounsellorPanel';
-import { getTotalSizeOfAttachments, MAX_TOTAL_ATTACHMENT_SIZE_BYTES } from 'common/utils/attachmentUtils';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import Lenke from 'nav-frontend-lenker';
+import CounsellorPanel from 'common/components/counsellor-panel/CounsellorPanel';
+import FileUploadErrors from 'common/components/file-upload-errors/FileUploadErrors';
+import PictureScanningGuide from 'common/components/picture-scanning-guide/PictureScanningGuide';
+import { getTotalSizeOfAttachments, MAX_TOTAL_ATTACHMENT_SIZE_BYTES } from 'common/utils/attachmentUtils';
+import intlHelper from 'common/utils/intlUtils';
+import FormikFileUploader from '../../components/formik-file-uploader/FormikFileUploader';
+import UploadedDocumentsList from '../../components/uploaded-documents-list/UploadedDocumentsList';
+import { StepConfigProps, StepID } from '../../config/stepConfig';
+import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
+import { navigateToLoginPage } from '../../utils/navigationUtils';
+import { validateDocuments } from '../../validation/fieldValidations';
+import SøknadStep from '../SøknadStep';
 
 const DokumenterStep = ({ onValidSubmit }: StepConfigProps) => {
     const intl = useIntl();
     const { values } = useFormikContext<SøknadFormData>();
     const [filesThatDidntGetUploaded, setFilesThatDidntGetUploaded] = React.useState<File[]>([]);
-    const hasPendingUploads: boolean = (values.dokumenter || []).find((a: any) => a.pending === true) !== undefined;
-    const totalSize = getTotalSizeOfAttachments(values.dokumenter);
+    const hasPendingUploads: boolean =
+        (values.dokumenterSmittevernhensyn || []).find((a: any) => a.pending === true) !== undefined;
+    const totalSize = getTotalSizeOfAttachments(values.dokumenterSmittevernhensyn);
 
     return (
         <SøknadStep
@@ -46,7 +47,7 @@ const DokumenterStep = ({ onValidSubmit }: StepConfigProps) => {
             </Box>
             <FormBlock>
                 <FormikFileUploader
-                    name={SøknadFormField.dokumenter}
+                    name={SøknadFormField.dokumenterSmittevernhensyn}
                     label={intlHelper(intl, 'steg.dokumenter.vedlegg')}
                     onErrorUploadingAttachments={setFilesThatDidntGetUploaded}
                     onFileInputClick={() => {

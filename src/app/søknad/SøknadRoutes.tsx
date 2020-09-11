@@ -29,7 +29,7 @@ const SøknadRoutes = () => {
     const [søknadHasBeenSent, setSøknadHasBeenSent] = React.useState(false);
     const { values, resetForm } = useFormikContext<SøknadFormData>();
 
-    const skalViseVedleggSteg: boolean = values[SøknadFormField.hemmeligJaNeiSporsmal] === YesOrNo.YES;
+    const skalViseVedleggSteg: boolean = values[SøknadFormField.hjemmePgaSmittevernhensyn] === YesOrNo.YES;
 
     const history = useHistory();
 

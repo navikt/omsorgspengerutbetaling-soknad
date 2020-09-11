@@ -91,7 +91,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
             {/* DAGER MED FULLT FRAVÆR*/}
             {harPerioderMedFravær === YesOrNo.YES && (
                 <>
-                    <FormBlock paddingBottom={'l'} margin={'l'}>
+                    <FormBlock margin="l">
                         <FraværPerioderListAndDialog<SøknadFormField>
                             name={SøknadFormField.fraværPerioder}
                             minDate={GYLDIG_TIDSROM.from || date1YearAgo}
@@ -113,7 +113,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                             ]}
                             helgedagerIkkeTillat={true}
                         />
-                        <FormBlock margin={'l'}>
+                        <FormBlock margin="l">
                             <ExpandableInfo
                                 title={intlHelper(intl, 'step.periode.harPerioderMedFravær.info.ikkeHelg.tittel')}>
                                 <FormattedMessage id="step.periode.harPerioderMedFravær.info.ikkeHelg.tekst" />
@@ -132,7 +132,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
             {/* DAGER MED DELVIS FRAVÆR*/}
             {harDagerMedDelvisFravær === YesOrNo.YES && (
                 <>
-                    <FormBlock margin={'l'}>
+                    <FormBlock margin="l">
                         <FraværDagerListAndDialog<SøknadFormField>
                             name={SøknadFormField.fraværDager}
                             minDate={GYLDIG_TIDSROM.from || date1YearAgo}
@@ -145,8 +145,8 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                                 ),
                             ])}
                             labels={{
-                                addLabel: intlHelper(intl, 'step.periode.harPerioderMedFravær.addLabel'),
-                                modalTitle: intlHelper(intl, 'step.periode.harPerioderMedFravær.modalTitle'),
+                                addLabel: intlHelper(intl, 'step.periode.harDagerMedDelvisFravær.addLabel'),
+                                modalTitle: intlHelper(intl, 'step.periode.harDagerMedDelvisFravær.modalTitle'),
                             }}
                             dateRangesToDisable={[
                                 ...values.fraværDager.map(fraværDagToFraværDateRange),
@@ -177,15 +177,15 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                 <>
                     <FormBlock>
                         <SøknadFormComponents.YesOrNoQuestion
-                            name={SøknadFormField.harVærtHjemmePgaStengtBhgEllerSkole}
-                            legend={intlHelper(intl, 'step.periode.spm.harVærtHjemmePgaStengtBhgEllerSkole')}
+                            name={SøknadFormField.hjemmePgaStengtBhgSkole}
+                            legend={intlHelper(intl, 'step.periode.spm.hjemmePgaStengtBhgSkole')}
                             validate={validateYesOrNoIsAnswered}
                         />
                     </FormBlock>
 
                     <FormBlock>
                         <SøknadFormComponents.YesOrNoQuestion
-                            name={SøknadFormField.hemmeligJaNeiSporsmal}
+                            name={SøknadFormField.hjemmePgaSmittevernhensyn}
                             legend={intlHelper(intl, 'steg.intro.form.spm.smittevernhensyn')}
                             validate={validateYesOrNoIsAnswered}
                             description={

@@ -25,14 +25,14 @@ export enum SøknadFormField {
     har_søkt_andre_utbetalinger = 'har_søkt_andre_utbetalinger',
     andre_utbetalinger = 'andre_utbetalinger',
 
-    hemmeligJaNeiSporsmal = 'hemmeligJaNeiSporsmal',
+    hjemmePgaSmittevernhensyn = 'hjemmePgaSmittevernhensyn',
 
     // Felter knyttet til stengt bhg eller skole
-    harVærtHjemmePgaStengtBhgEllerSkole = 'harVærtHjemmePgaStengtBhgEllerSkole',
+    hjemmePgaStengtBhgSkole = 'hjemmePgaStengtBhgSkole',
     dokumenterStengtBkgSkole = 'dokumenterStengtBkgSkole',
 
     // Optional vedlegg step
-    dokumenter = 'dokumenter',
+    dokumenterSmittevernhensyn = 'dokumenterSmittevernhensyn',
 
     // Conditional perioder i utlandet
     hvis_utenlandsopphold_en_test_verdi = 'hvis_utenlandsopphold_en_test_verdi',
@@ -73,13 +73,13 @@ export interface SøknadFormData {
     [SøknadFormField.har_søkt_andre_utbetalinger]: YesOrNo;
     [SøknadFormField.andre_utbetalinger]: AndreUtbetalinger[];
 
-    [SøknadFormField.hemmeligJaNeiSporsmal]: YesOrNo;
+    [SøknadFormField.hjemmePgaSmittevernhensyn]: YesOrNo;
 
-    [SøknadFormField.harVærtHjemmePgaStengtBhgEllerSkole]: YesOrNo;
+    [SøknadFormField.hjemmePgaStengtBhgSkole]: YesOrNo;
     [SøknadFormField.dokumenterStengtBkgSkole]: Attachment[];
 
     // Optional vedlegg step
-    [SøknadFormField.dokumenter]: Attachment[];
+    [SøknadFormField.dokumenterSmittevernhensyn]: Attachment[];
 
     // Conditional perioder i utlandet
     [SøknadFormField.hvis_utenlandsopphold_en_test_verdi]: YesOrNo;
@@ -120,13 +120,13 @@ export const initialValues: SøknadFormData = {
     [SøknadFormField.har_søkt_andre_utbetalinger]: YesOrNo.UNANSWERED,
     [SøknadFormField.andre_utbetalinger]: [],
 
-    [SøknadFormField.hemmeligJaNeiSporsmal]: YesOrNo.UNANSWERED,
+    [SøknadFormField.hjemmePgaSmittevernhensyn]: YesOrNo.UNANSWERED,
 
-    [SøknadFormField.harVærtHjemmePgaStengtBhgEllerSkole]: YesOrNo.UNANSWERED,
+    [SøknadFormField.hjemmePgaStengtBhgSkole]: YesOrNo.UNANSWERED,
     [SøknadFormField.dokumenterStengtBkgSkole]: [],
 
     // Optional vedlegg step
-    [SøknadFormField.dokumenter]: [],
+    [SøknadFormField.dokumenterSmittevernhensyn]: [],
 
     // Conditional perioder i utlandet
     [SøknadFormField.hvis_utenlandsopphold_en_test_verdi]: YesOrNo.UNANSWERED,
