@@ -1,11 +1,11 @@
 import { Utenlandsopphold } from '@navikt/sif-common-forms/lib//utenlandsopphold/types';
 import { Fosterbarn } from '@navikt/sif-common-forms/lib/fosterbarn/types';
+import { FraværDag, FraværPeriode } from '@navikt/sif-common-forms/lib/fravær';
 import { Virksomhet } from '@navikt/sif-common-forms/lib/virksomhet/types';
 import { Attachment } from 'common/types/Attachment';
 import { YesOrNo } from 'common/types/YesOrNo';
-import { AndreUtbetalinger } from './AndreUtbetalinger';
-import { FraværDag, FraværPeriode } from '@navikt/sif-common-forms/lib/fravær';
 import { FraværDelerAvDag, Periode } from '../../@types/omsorgspengerutbetaling-schema';
+import { AndreUtbetalinger } from './AndreUtbetalinger';
 
 export enum SøknadFormField {
     harForståttRettigheterOgPlikter = 'harForståttRettigheterOgPlikter',
