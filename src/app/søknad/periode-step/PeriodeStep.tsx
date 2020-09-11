@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useIntl, FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import {
     validateRequiredList,
     validateYesOrNoIsAnswered,
@@ -25,6 +25,7 @@ import { GYLDIG_TIDSROM } from '../../validation/constants';
 import SøknadFormComponents from '../SøknadFormComponents';
 import SøknadStep from '../SøknadStep';
 import './periodeStep.less';
+import Box from '@navikt/sif-common-core/lib/components/box/Box';
 
 const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }: StepConfigProps) => {
     const { values } = useFormikContext<SøknadFormData>();
@@ -131,7 +132,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
             {/* DAGER MED DELVIS FRAVÆR*/}
             {harDagerMedDelvisFravær === YesOrNo.YES && (
                 <>
-                    <FormBlock margin={'l'} paddingBottom={'l'}>
+                    <FormBlock margin={'l'}>
                         <FraværDagerListAndDialog<SøknadFormField>
                             name={SøknadFormField.fraværDager}
                             minDate={GYLDIG_TIDSROM.from || date1YearAgo}
@@ -154,12 +155,12 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                             helgedagerIkkeTillatt={true}
                             maksArbeidstidPerDag={24}
                         />
-                        <FormBlock margin={'l'}>
+                        <Box margin={'l'}>
                             <ExpandableInfo
                                 title={intlHelper(intl, 'step.periode.harDagerMedDelvisFravær.info.ikkeHelg.tittel')}>
                                 <FormattedMessage id="step.periode.harDagerMedDelvisFravær.info.ikkeHelg.tekst" />
                             </ExpandableInfo>
-                        </FormBlock>
+                        </Box>
                     </FormBlock>
                 </>
             )}
@@ -173,18 +174,28 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
             )}
 
             {kanIkkeFortsette === false && (
-                <FormBlock>
-                    <SøknadFormComponents.YesOrNoQuestion
-                        name={SøknadFormField.hemmeligJaNeiSporsmal}
-                        legend={intlHelper(intl, 'steg.intro.form.spm.smittevernhensyn')}
-                        validate={validateYesOrNoIsAnswered}
-                        description={
-                            <ExpandableInfo title={intlHelper(intl, 'info.smittevern.tittel')}>
-                                <SmittevernInfo />
-                            </ExpandableInfo>
-                        }
-                    />
-                </FormBlock>
+                <>
+                    <FormBlock>
+                        <SøknadFormComponents.YesOrNoQuestion
+                            name={SøknadFormField.harVærtHjemmePgaStengtBhgEllerSkole}
+                            legend={intlHelper(intl, 'step.periode.spm.harVærtHjemmePgaStengtBhgEllerSkole')}
+                            validate={validateYesOrNoIsAnswered}
+                        />
+                    </FormBlock>
+
+                    <FormBlock>
+                        <SøknadFormComponents.YesOrNoQuestion
+                            name={SøknadFormField.hemmeligJaNeiSporsmal}
+                            legend={intlHelper(intl, 'steg.intro.form.spm.smittevernhensyn')}
+                            validate={validateYesOrNoIsAnswered}
+                            description={
+                                <ExpandableInfo title={intlHelper(intl, 'info.smittevern.tittel')}>
+                                    <SmittevernInfo />
+                                </ExpandableInfo>
+                            }
+                        />
+                    </FormBlock>
+                </>
             )}
 
             {kanIkkeFortsette === false && (

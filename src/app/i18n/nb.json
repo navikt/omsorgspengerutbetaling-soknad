@@ -175,6 +175,7 @@
     "step.periode.leggTilPeriodeMedFulltFravær": "Legg til ny periode med fullt fravær",
     "step.periode.leggTilDagMedDelvisFravær": "Legg til ny dag med delvis fravær",
     "step.periode.spm.harDagerMedDelvisFravær": "Har du hatt dager med delvis fravær fra jobb?",
+    "step.periode.spm.harVærtHjemmePgaStengtBhgEllerSkole": "Har du vært hjemme fra jobb fordi barnehagen eller skolen har vært stengt på grunn av koronaviruset?",
     "step.periode.harDagerMedDelvisFravær.addLabel": "Legg til ny dag med delvis fravær",
     "step.periode.harDagerMedDelvisFravær.modalTitle": "Fravær deler av dag",
     "step.periode.harDagerMedDelvisFravær.info.ikkeHelg.tittel": "Hvorfor kan jeg ikke velge lørdag eller søndag?",

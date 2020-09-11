@@ -27,6 +27,10 @@ export enum SøknadFormField {
 
     hemmeligJaNeiSporsmal = 'hemmeligJaNeiSporsmal',
 
+    // Felter knyttet til stengt bhg eller skole
+    harVærtHjemmePgaStengtBhgEllerSkole = 'harVærtHjemmePgaStengtBhgEllerSkole',
+    dokumenterStengtBkgSkole = 'dokumenterStengtBkgSkole',
+
     // Optional vedlegg step
     dokumenter = 'dokumenter',
 
@@ -71,6 +75,9 @@ export interface SøknadFormData {
 
     [SøknadFormField.hemmeligJaNeiSporsmal]: YesOrNo;
 
+    [SøknadFormField.harVærtHjemmePgaStengtBhgEllerSkole]: YesOrNo;
+    [SøknadFormField.dokumenterStengtBkgSkole]: Attachment[];
+
     // Optional vedlegg step
     [SøknadFormField.dokumenter]: Attachment[];
 
@@ -114,6 +121,9 @@ export const initialValues: SøknadFormData = {
     [SøknadFormField.andre_utbetalinger]: [],
 
     [SøknadFormField.hemmeligJaNeiSporsmal]: YesOrNo.UNANSWERED,
+
+    [SøknadFormField.harVærtHjemmePgaStengtBhgEllerSkole]: YesOrNo.UNANSWERED,
+    [SøknadFormField.dokumenterStengtBkgSkole]: [],
 
     // Optional vedlegg step
     [SøknadFormField.dokumenter]: [],
