@@ -42,7 +42,7 @@ const DokumenterStep = ({ onValidSubmit }: StepConfigProps) => {
                     </p>
                 </CounsellorPanel>
             </FormBlock>
-            <Box margin={'l'}>
+            <Box margin="l">
                 <PictureScanningGuide />
             </Box>
             <FormBlock>
@@ -58,7 +58,7 @@ const DokumenterStep = ({ onValidSubmit }: StepConfigProps) => {
                 />
             </FormBlock>
             {totalSize > MAX_TOTAL_ATTACHMENT_SIZE_BYTES && (
-                <Box margin={'l'}>
+                <Box margin="l">
                     <AlertStripeAdvarsel>
                         <FormattedMessage id={'dokumenter.advarsel.totalstørrelse.1'} />
                         <Lenke

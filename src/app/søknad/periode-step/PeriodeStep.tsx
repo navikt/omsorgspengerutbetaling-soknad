@@ -155,7 +155,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                             helgedagerIkkeTillatt={true}
                             maksArbeidstidPerDag={24}
                         />
-                        <Box margin={'l'}>
+                        <Box margin="l">
                             <ExpandableInfo
                                 title={intlHelper(intl, 'step.periode.harDagerMedDelvisFravær.info.ikkeHelg.tittel')}>
                                 <FormattedMessage id="step.periode.harDagerMedDelvisFravær.info.ikkeHelg.tekst" />
@@ -200,7 +200,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
 
             {kanIkkeFortsette === false && (
                 <>
-                    <FormBlock margin={'xl'}>
+                    <FormBlock margin="xl">
                         <SøknadFormComponents.YesOrNoQuestion
                             name={SøknadFormField.perioder_harVærtIUtlandet}
                             legend={intlHelper(

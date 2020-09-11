@@ -111,7 +111,7 @@ const OppsummeringStep: React.StatelessComponent<Props> = ({ onApplicationSent }
                         </SummaryBlock>
                     )}
 
-                    <Box margin={'s'}>
+                    <Box margin="s">
                         <SummaryBlock header={intlHelper(intl, 'steg.intro.form.spm.smittevernhensyn')}>
                             <JaNeiSvar harSvartJa={apiValues.hjemmePgaSmittevernhensyn} />
                         </SummaryBlock>
@@ -134,7 +134,7 @@ const OppsummeringStep: React.StatelessComponent<Props> = ({ onApplicationSent }
                     <MedlemskapSummaryView bosteder={apiValues.bosteder} />
 
                     {apiValues.vedlegg.length === 0 && apiValues.hjemmePgaSmittevernhensyn && (
-                        <Box margin={'s'}>
+                        <Box margin="s">
                             <SummaryBlock header={intlHelper(intl, 'steg.oppsummering.dokumenter.header')}>
                                 <FormattedMessage id={'steg.oppsummering.dokumenter.ikkelastetopp'} />
                             </SummaryBlock>

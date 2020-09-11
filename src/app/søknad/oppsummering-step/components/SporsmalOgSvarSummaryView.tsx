@@ -11,10 +11,10 @@ export interface Props {
 export const SpørsmålOgSvarSummaryView = (props: Props) => {
     const { yesNoSpørsmålOgSvar } = props;
     return (
-        <Box margin={'l'}>
+        <Box margin="l">
             {yesNoSpørsmålOgSvar.map((sporsmål: YesNoSpørsmålOgSvar, index: number) => {
                 return (
-                    <Box margin={'s'} key={`spørsmålOgSvarView${index}`}>
+                    <Box margin="s" key={`spørsmålOgSvarView${index}`}>
                         <SummaryBlock header={sporsmål.spørsmål}>
                             <JaNeiSvar harSvartJa={sporsmål.svar} />
                         </SummaryBlock>
