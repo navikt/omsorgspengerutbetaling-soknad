@@ -26,6 +26,7 @@ import SøknadFormComponents from '../SøknadFormComponents';
 import SøknadStep from '../SøknadStep';
 import './periodeStep.less';
 import Box from '@navikt/sif-common-core/lib/components/box/Box';
+import { Feature, isFeatureEnabled } from '../../utils/featureToggleUtils';
 
 const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }: StepConfigProps) => {
     const { values } = useFormikContext<SøknadFormData>();
@@ -175,14 +176,15 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
 
             {kanIkkeFortsette === false && (
                 <>
-                    <FormBlock>
-                        <SøknadFormComponents.YesOrNoQuestion
-                            name={SøknadFormField.hjemmePgaStengtBhgSkole}
-                            legend={intlHelper(intl, 'step.periode.spm.hjemmePgaStengtBhgSkole')}
-                            validate={validateYesOrNoIsAnswered}
-                        />
-                    </FormBlock>
-
+                    {isFeatureEnabled(Feature.STENGT_BHG_SKOLE) && (
+                        <FormBlock>
+                            <SøknadFormComponents.YesOrNoQuestion
+                                name={SøknadFormField.hjemmePgaStengtBhgSkole}
+                                legend={intlHelper(intl, 'step.periode.spm.hjemmePgaStengtBhgSkole')}
+                                validate={validateYesOrNoIsAnswered}
+                            />
+                        </FormBlock>
+                    )}
                     <FormBlock>
                         <SøknadFormComponents.YesOrNoQuestion
                             name={SøknadFormField.hjemmePgaSmittevernhensyn}

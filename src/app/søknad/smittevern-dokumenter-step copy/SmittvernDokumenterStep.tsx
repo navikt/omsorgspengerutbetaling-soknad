@@ -11,14 +11,14 @@ import PictureScanningGuide from 'common/components/picture-scanning-guide/Pictu
 import { getTotalSizeOfAttachments, MAX_TOTAL_ATTACHMENT_SIZE_BYTES } from 'common/utils/attachmentUtils';
 import intlHelper from 'common/utils/intlUtils';
 import FormikFileUploader from '../../components/formik-file-uploader/FormikFileUploader';
-import UploadedDocumentsList from '../../components/uploaded-documents-list/UploadedDocumentsList';
+import UploadedSmittevernDocumentsList from '../../components/uploaded-smittevern-documents-list/UploadedSmittevernDocumentsList';
 import { StepConfigProps, StepID } from '../../config/stepConfig';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import { navigateToLoginPage } from '../../utils/navigationUtils';
 import { validateDocuments } from '../../validation/fieldValidations';
 import SøknadStep from '../SøknadStep';
 
-const DokumenterStep = ({ onValidSubmit }: StepConfigProps) => {
+const SmittevernDokumenterStep = ({ onValidSubmit }: StepConfigProps) => {
     const intl = useIntl();
     const { values } = useFormikContext<SøknadFormData>();
     const [filesThatDidntGetUploaded, setFilesThatDidntGetUploaded] = React.useState<File[]>([]);
@@ -28,7 +28,7 @@ const DokumenterStep = ({ onValidSubmit }: StepConfigProps) => {
 
     return (
         <SøknadStep
-            id={StepID.DOKUMENTER}
+            id={StepID.DOKUMENTER_SMITTEVERNHENSYN}
             onValidFormSubmit={onValidSubmit}
             useValidationErrorSummary={true}
             buttonDisabled={hasPendingUploads}>
@@ -76,10 +76,10 @@ const DokumenterStep = ({ onValidSubmit }: StepConfigProps) => {
                 <FileUploadErrors filesThatDidntGetUploaded={filesThatDidntGetUploaded} />
             </Box>
             <Box margin="l">
-                <UploadedDocumentsList wrapNoAttachmentsInBox={true} includeDeletionFunctionality={true} />
+                <UploadedSmittevernDocumentsList wrapNoAttachmentsInBox={true} includeDeletionFunctionality={true} />
             </Box>
         </SøknadStep>
     );
 };
 
-export default DokumenterStep;
+export default SmittevernDokumenterStep;

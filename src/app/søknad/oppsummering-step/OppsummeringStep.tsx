@@ -27,12 +27,14 @@ import { SpørsmålOgSvarSummaryView } from './components/SporsmalOgSvarSummaryV
 import SummaryBlock from './components/SummaryBlock';
 import UtbetalingsperioderSummaryView from './components/UtbetalingsperioderSummaryView';
 import UtenlandsoppholdISøkeperiodeSummaryView from './components/UtenlandsoppholdISøkeperiodeSummaryView';
-import UploadedDocumentsList from '../../components/uploaded-documents-list/UploadedDocumentsList';
+import UploadedSmittevernDocumentsList from '../../components/uploaded-smittevern-documents-list/UploadedSmittevernDocumentsList';
 import JaNeiSvar from './components/JaNeiSvar';
 import { validateSoknadApiData } from '../../validation/soknadApiDataValidation';
 import { Feiloppsummering, FeiloppsummeringFeil } from 'nav-frontend-skjema';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
 import appSentryLogger from '../../utils/appSentryLogger';
+import { Feature, isFeatureEnabled } from '../../utils/featureToggleUtils';
+import UploadedStengtDocumentsList from '../../components/uploaded-stengt-documents-list/UploadedStengtDocumentsList';
 
 interface Props {
     onApplicationSent: (apiValues: SøknadApiData, søkerdata: Søkerdata) => void;
@@ -111,6 +113,14 @@ const OppsummeringStep: React.StatelessComponent<Props> = ({ onApplicationSent }
                         </SummaryBlock>
                     )}
 
+                    {isFeatureEnabled(Feature.STENGT_BHG_SKOLE) && apiValues.hjemmePgaStengtBhgSkole !== undefined && (
+                        <Box margin="s">
+                            <SummaryBlock header={intlHelper(intl, 'step.periode.spm.hjemmePgaStengtBhgSkole')}>
+                                <JaNeiSvar harSvartJa={apiValues.hjemmePgaStengtBhgSkole} />
+                            </SummaryBlock>
+                        </Box>
+                    )}
+
                     <Box margin="s">
                         <SummaryBlock header={intlHelper(intl, 'steg.intro.form.spm.smittevernhensyn')}>
                             <JaNeiSvar harSvartJa={apiValues.hjemmePgaSmittevernhensyn} />
@@ -133,17 +143,30 @@ const OppsummeringStep: React.StatelessComponent<Props> = ({ onApplicationSent }
                     <SelvstendigSummary selvstendigVirksomheter={apiValues.selvstendigVirksomheter} />
                     <MedlemskapSummaryView bosteder={apiValues.bosteder} />
 
-                    {apiValues.vedlegg.length === 0 && apiValues.hjemmePgaSmittevernhensyn && (
+                    {apiValues.hjemmePgaSmittevernhensyn && (
                         <Box margin="s">
-                            <SummaryBlock header={intlHelper(intl, 'steg.oppsummering.dokumenter.header')}>
-                                <FormattedMessage id={'steg.oppsummering.dokumenter.ikkelastetopp'} />
+                            <SummaryBlock header={intlHelper(intl, 'steg.oppsummering.dokumenterSmittevern.header')}>
+                                {apiValues._vedleggSmittevern.length === 0 && (
+                                    <FormattedMessage id={'steg.oppsummering.dokumenter.ikkelastetopp'} />
+                                )}
+                                {apiValues._vedleggSmittevern.length > 0 && (
+                                    <UploadedSmittevernDocumentsList includeDeletionFunctionality={false} />
+                                )}
                             </SummaryBlock>
                         </Box>
                     )}
-                    {apiValues.vedlegg.length > 0 && (
-                        <SummaryBlock header={intlHelper(intl, 'steg.oppsummering.dokumenter.header')}>
-                            <UploadedDocumentsList includeDeletionFunctionality={false} />
-                        </SummaryBlock>
+                    {apiValues.hjemmePgaStengtBhgSkole && (
+                        <Box margin="s">
+                            <SummaryBlock
+                                header={intlHelper(intl, 'steg.oppsummering.dokumenterStengtBhgSkole.header')}>
+                                {apiValues._vedleggStengtSkole.length === 0 && (
+                                    <FormattedMessage id={'steg.oppsummering.dokumenter.ikkelastetopp'} />
+                                )}
+                                {apiValues._vedleggStengtSkole.length > 0 && (
+                                    <UploadedStengtDocumentsList includeDeletionFunctionality={false} />
+                                )}
+                            </SummaryBlock>
+                        </Box>
                     )}
                 </ResponsivePanel>
             </Box>

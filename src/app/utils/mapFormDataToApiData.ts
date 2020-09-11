@@ -19,6 +19,17 @@ import { SøknadFormData } from '../types/SøknadFormData';
 import { mapBostedUtlandToApiData } from './formToApiMaps/mapBostedUtlandToApiData';
 import { mapFrilansToApiData } from './formToApiMaps/mapFrilansToApiData';
 import { mapVirksomhetToVirksomhetApiData } from './formToApiMaps/mapVirksomhetToApiData';
+import { Feature, isFeatureEnabled } from './featureToggleUtils';
+import { Attachment } from '@navikt/sif-common-core/lib/types/Attachment';
+
+const getVedleggUrlFromAttachments = (attachments: Attachment[]): string[] => {
+    return (
+        attachments
+            .filter((attachment) => !attachmentUploadHasFailed(attachment))
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            .map(({ url }) => url!)
+    );
+};
 
 export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShape): SøknadApiData => {
     const {
@@ -33,8 +44,11 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
         har_søkt_andre_utbetalinger,
         andre_utbetalinger,
 
+        hjemmePgaStengtBhgSkole,
+        dokumenterStengtBkgSkole = [],
+
         hjemmePgaSmittevernhensyn,
-        dokumenterSmittevernhensyn,
+        dokumenterSmittevernhensyn = [],
 
         // Inntekt
         frilans_startdato,
@@ -77,6 +91,9 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
         });
     }
 
+    const vedleggSmittevern = getVedleggUrlFromAttachments(dokumenterSmittevernhensyn);
+    const vedleggStengtBhgSkole = getVedleggUrlFromAttachments(dokumenterStengtBkgSkole);
+
     const apiData: SøknadApiData = {
         språk: (intl.locale as any) === 'en' ? 'nn' : (intl.locale as Locale),
         bekreftelser: {
@@ -101,10 +118,12 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
             selvstendig_virksomheter
         ),
         hjemmePgaSmittevernhensyn: hjemmePgaSmittevernhensyn === YesOrNo.YES,
-        vedlegg: dokumenterSmittevernhensyn
-            .filter((attachment) => !attachmentUploadHasFailed(attachment))
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            .map(({ url }) => url!),
+        hjemmePgaStengtBhgSkole: isFeatureEnabled(Feature.STENGT_BHG_SKOLE)
+            ? hjemmePgaStengtBhgSkole === YesOrNo.YES
+            : undefined,
+        vedlegg: [...vedleggSmittevern, ...vedleggStengtBhgSkole],
+        _vedleggStengtSkole: vedleggStengtBhgSkole,
+        _vedleggSmittevern: vedleggSmittevern,
     };
 
     if (har_fosterbarn === YesOrNo.YES && har_fosterbarn.length > 0) {

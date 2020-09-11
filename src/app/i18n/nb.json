@@ -291,6 +291,7 @@
     "fieldvalidation.timer_for_mange_timer": "Verdien må være mellom 0,5 og 7,5 timer",
     "fieldvalidation.dato_utenfor_gyldig_tidsrom": "Dato er utenfor gyldig tidsperiode",
     "fieldvalidation.tom_er_før_fom": "Til dato kan ikke være før fra dato",
+    "fieldvalidation.ingen_dokumenter": "Ingen vedlegg er lastet opp",
     "fieldvalidation.for_mange_dokumenter": "For mange dokumenter er lastet opp",
     "fieldvalidation.samlet_storrelse_for_hoy": "Total samlet størrelse for dokumentene du har lastet opp overstiger grensen på 24Mb.",
 
@@ -309,9 +310,6 @@
     "steg.footer.avbryt": "Avbryt og slett søknad",
     "steg.footer.fortsettSenere": "Avslutt og fortsett senere",
 
-    "steg.dokumenter.vedlegg": "Last opp bekreftelse fra lege",
-    "steg.dokumenter.info.1": "Du må laste opp en bekreftelse fra lege om at det er særlige smittevernhensyn som gjør at barnet ikke kan gå i barnehage eller skole. Det gjør du enten ved å ta bilde av bekreftelsen, eller ved å scanne den.",
-    "steg.dokumenter.info.2": "Hvis du ikke har bekreftelsen tilgjengelig nå, må du ettersende den til oss så snart du har den. Vi kan ikke behandle søknaden før vi har mottatt bekreftelsen.",
     "dokumenter.advarsel.totalstørrelse.1": "Du har totalt lastet opp mer enn grensen på 24 Mb. Det betyr at du må fjerne noe av det du har lastet opp. Hvis det betyr at du ikke får plass til alt du ønsker å sende nå, kan du ",
     "dokumenter.advarsel.totalstørrelse.2": "ettersende flere dokumenter.",
 
@@ -330,19 +328,34 @@
 
     "steg.intro.form.spm.erSelvstendigEllerFrilanser": "Er du selvstendig næringsdrivende eller frilanser?",
     "steg.intro.form.spm.smittevernhensyn": "Har du vært hjemme med barn grunnet særlige smittevernhensyn?",
-    "steg.intro.form.spm.hjemmePgaStengt": "Har du vært hjemme fra jobb fordi skolen/barnehagen er stengt på grunn av koronaviruset?",
+    "steg.intro.form.spm.hjemmePgaStengt": "Har du vært hjemme fra jobb fordi barnehagen eller skolen er stengt på grunn av koronaviruset?",
     "steg.intro.form.spm.hjemmePgaSykdom": "Har du vært hjemme fra jobb fordi barnet eller barnepasser er blitt syk?",
     "steg.intro.søknadGjelderKunFor.1.html": "Denne søknaden gjelder <strong>kun for selvstendig næringsdrivende og frilansere</strong> som skal søke om utbetaling av omsorgspenger.",
     "steg.intro.søknadGjelderKunFor.2.html": "Hvis du er <strong>arbeidstaker</strong>, skal du ikke søke om utbetaling av omsorgspenger. Arbeidsgiveren din skal utbetale deg lønn som vanlig de dagene du tar ut omsorgsdager.",
     "steg.intro.kanIkkeBrukeSøknad.html": "Du kan <strong>kun</strong> bruke denne søknaden hvis du er hjemme fra jobb på grunn av én av situasjonene beskrevet over.",
     "steg.intro.smittevernInfo.1.html": "I søknaden må du laste opp en bekreftelse fra lege. Legen må bekrefte at barnet ikke kan gå i barnehage eller skole fordi det er <strong>særlige smittevernhensyn</strong> i forbindelse med koronaviruset som må ivaretas for enten barnet eller et familiemedlem som barnet bor sammen med. Legen skal ikke oppgi diagnose eller hvilket familiemedlem det gjelder.",
     "steg.intro.smittevernInfo.2": "Hvis du ikke har bekreftelse tilgjengelig når du søker, kan du ettersende den. Vi kan ikke behandle søknaden før vi mottar bekreftelsen.",
+    "steg.intro.stengtBhgSkole.1": "I søknaden må du laste opp en bekreftelse fra barnehagen eller skolen om at har stengt.",
+    "steg.intro.stengtBhgSkole.2": "Hvis du ikke har bekreftelse tilgjengelig når du søker, kan du ettersende den. Vi kan ikke behandle søknaden før vi mottar bekreftelsen.",
 
     "steg.en.smittevern.sporsmal": "Har du vært hjemme med barn grunnet særlige smittevernhensyn?",
-    "steg.oppsummering.dokumenter.header": "Bekreftelse fra lege",
-    "step.vedlegg.stepTitle": "Last opp bekreftelse fra lege",
-    "step.vedlegg.pageTitle": "Last opp dokumenter",
-    "step.vedlegg.stepIndicatorLabel": "Last opp dokumenter",
+    "steg.oppsummering.dokumenterSmittevern.header": "Bekreftelse fra lege",
+    "steg.oppsummering.dokumenterStengtBhgSkole.header": "Bekreftelse fra barnehage eller skole",
+
+    "step.vedlegg_smittevernhensyn.stepTitle": "Last opp bekreftelse fra lege",
+    "step.vedlegg_smittevernhensyn.pageTitle": "Last opp dokumenter",
+    "step.vedlegg_smittevernhensyn.stepIndicatorLabel": "Last opp dokumenter",
+    "steg.vedlegg_smittevernhensyn.vedlegg": "Last opp bekreftelse fra lege",
+    "steg.vedlegg_smittevernhensyn.info.1": "Du må laste opp en bekreftelse fra lege om at det er særlige smittevernhensyn som gjør at barnet ikke kan gå i barnehage eller skole. Det gjør du enten ved å ta bilde av bekreftelsen, eller ved å scanne den.",
+    "steg.vedlegg_smittevernhensyn.info.2": "Hvis du ikke har bekreftelsen tilgjengelig nå, må du ettersende den til oss så snart du har den. Vi kan ikke behandle søknaden før vi har mottatt bekreftelsen.",
+
+    "step.vedlegg_stengtSkoleBhg.stepTitle": "Last opp bekreftelse fra barnehagen eller skolen",
+    "step.vedlegg_stengtSkoleBhg.pageTitle": "Last opp dokumenter",
+    "step.vedlegg_stengtSkoleBhg.stepIndicatorLabel": "Last opp dokumenter",
+    "steg.vedlegg_stengtSkoleBhg.vedlegg": "Last opp bekreftelse fra barnehagen eller skolen",
+    "steg.vedlegg_stengtSkoleBhg.info.1": "Du må laste opp en bekreftelse fra barnehagen eller skolen på at de har vært stengt på grunn av koronaviruset. Det gjør du enten ved å ta bilde av bekreftelsen, eller ved å scanne den.",
+    "steg.vedlegg_stengtSkoleBhg.info.2": "Hvis du ikke har bekreftelsen tilgjengelig nå, må du ettersende den til oss så snart du har den. Vi kan ikke behandle søknaden før vi har mottatt bekreftelsen.",
+
     "steg.oppsummering.dokumenter.ikkelastetopp": "Ikke lastet opp, må ettersendes",
 
     "psg-temp.innholdstittel": "Ta bilde av dokumentene og last opp",
