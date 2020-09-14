@@ -32,6 +32,7 @@ const SelvstendigNæringsdrivendeFormPart: React.FunctionComponent<Props> = ({ f
                     <ResponsivePanel>
                         <VirksomhetListAndDialog
                             name={SøknadFormField.selvstendig_virksomheter}
+                            hideFormFields={{ harRevisor: true }}
                             labels={{
                                 listTitle: intlHelper(intl, 'selvstendig.list.tittel'),
                                 addLabel: intlHelper(intl, 'selvstendig.list.leggTilLabel'),
