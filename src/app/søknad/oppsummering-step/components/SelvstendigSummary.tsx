@@ -102,26 +102,8 @@ const renderVirksomhetSummary = (virksomhet: VirksomhetApiData, intl: IntlShape)
                     values={{ ...virksomhet.regnskapsfører }}
                 />
             )}
-            {/* Revisor */}
-            {virksomhet.revisor && (
-                <p>
-                    <FormattedMessage
-                        tagName="span"
-                        id="summary.virksomhet.revisor"
-                        values={{ ...virksomhet.revisor }}
-                    />
-                    {virksomhet.revisor.kanInnhenteOpplysninger === true && (
-                        <>
-                            <br />
-                            <FormattedMessage id="summary.virksomhet.revisor.fullmakt" />
-                        </>
-                    )}
-                </p>
-            )}
-            {/** Har hverken revisor eller regnskapsfører */}
-            {!virksomhet.regnskapsfører && !virksomhet.revisor && (
-                <FormattedMessage tagName="p" id="summary.virksomhet.ikkeRegnskapsførerEllerRevisor" />
-            )}
+            {/** Har ikke regnskapsfører */}
+            {!virksomhet.regnskapsfører && <FormattedMessage tagName="p" id="summary.virksomhet.ikkeRegnskapsfører" />}
         </SummaryBlock>
     );
 };

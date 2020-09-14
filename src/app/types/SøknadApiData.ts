@@ -69,11 +69,6 @@ export interface VirksomhetApiData {
         navn: string;
         telefon: string;
     };
-    revisor?: {
-        navn: string;
-        telefon: string;
-        kanInnhenteOpplysninger?: boolean;
-    };
 }
 
 export interface FosterbarnApi {
