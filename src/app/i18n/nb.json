@@ -374,9 +374,7 @@
 
     "summary.virksomhet.næringstype": "Næringstype",
     "summary.virksomhet.regnskapsfører": "Regnskapsfører er {navn}, telefon: {telefon}.",
-    "summary.virksomhet.revisor": "Revisor er {navn}, telefon: {telefon}.",
-    "summary.virksomhet.revisor.fullmakt": "Nav har fullmakt til å innhente opplysninger direkte fra revisor.",
-    "summary.virksomhet.ikkeRegnskapsførerEllerRevisor": "Har ikke regnskapsfører eller revisor.",
+    "summary.virksomhet.ikkeRegnskapsfører": "Har ikke regnskapsfører.",
     "summary.virksomhet.tidsinfo.avsluttet": "Startet {fraOgMed}, avsluttet {tilOgMed}.",
     "summary.virksomhet.tidsinfo.pågående": "Startet {fraOgMed} (pågående).",
     "summary.virksomhet.fisker.påBladB": "Fisker er på Blad B.",

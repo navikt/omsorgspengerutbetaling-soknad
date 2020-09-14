@@ -42,8 +42,8 @@ export interface Frilans {
 }
 
 export interface Land {
-    landkode?: String;
-    landnavn?: String;
+    landkode?: string;
+    landnavn?: string;
 }
 
 export interface VirksomhetApiData {
@@ -68,11 +68,6 @@ export interface VirksomhetApiData {
     regnskapsfører?: {
         navn: string;
         telefon: string;
-    };
-    revisor?: {
-        navn: string;
-        telefon: string;
-        kanInnhenteOpplysninger?: boolean;
     };
 }
 

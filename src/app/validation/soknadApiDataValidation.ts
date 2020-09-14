@@ -21,21 +21,6 @@ export const validateSoknadApiData = (apiValues: SøknadApiData): Feiloppsummeri
                 });
             }
         }
-        if (virksomhet.revisor) {
-            const { navn, telefon } = virksomhet.revisor;
-            if (!hasValue(navn)) {
-                errors.push({
-                    feilmelding: `Revisors navn mangler for ${virksomhet.navnPåVirksomheten}. Du må gå tilbake og korrigere dette for å kunne sende inn søknaden`,
-                    skjemaelementId: '',
-                });
-            }
-            if (!hasValue(telefon)) {
-                errors.push({
-                    feilmelding: `Revisors telefonnummer mangler for ${virksomhet.navnPåVirksomheten}. . Du må gå tilbake og korrigere dette for å kunne sende inn søknaden`,
-                    skjemaelementId: '',
-                });
-            }
-        }
     });
     return errors;
 };
