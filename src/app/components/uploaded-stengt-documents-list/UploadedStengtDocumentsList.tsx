@@ -13,10 +13,10 @@ interface Props {
     wrapNoAttachmentsInBox?: boolean;
 }
 
-const UploadedDocumentsList: React.FunctionComponent<Props> = ({ includeDeletionFunctionality }) => {
+const UploadedStengtDocumentsList: React.FunctionComponent<Props> = ({ includeDeletionFunctionality }) => {
     const { values, setFieldValue } = useFormikContext<SøknadFormData>();
 
-    const dokumenter: Attachment[] = values.dokumenter.filter(({ file }: Attachment) =>
+    const dokumenter: Attachment[] = values.dokumenterStengtBkgSkole.filter(({ file }: Attachment) =>
         fileExtensionIsValid(file.name)
     );
 
@@ -30,18 +30,18 @@ const UploadedDocumentsList: React.FunctionComponent<Props> = ({ includeDeletion
                 attachments={dokumenter}
                 onRemoveAttachmentClick={(attachment: Attachment) => {
                     attachment.pending = true;
-                    setFieldValue(SøknadFormField.dokumenter, dokumenter);
+                    setFieldValue(SøknadFormField.dokumenterStengtBkgSkole, dokumenter);
                     if (attachment.url) {
                         deleteFile(attachment.url).then(
                             () => {
                                 setFieldValue(
-                                    SøknadFormField.dokumenter,
+                                    SøknadFormField.dokumenterStengtBkgSkole,
                                     removeElementFromArray(attachment, dokumenter)
                                 );
                             },
                             () => {
                                 setFieldValue(
-                                    SøknadFormField.dokumenter,
+                                    SøknadFormField.dokumenterStengtBkgSkole,
                                     removeElementFromArray(attachment, dokumenter)
                                 );
                             }
@@ -55,4 +55,4 @@ const UploadedDocumentsList: React.FunctionComponent<Props> = ({ includeDeletion
     }
 };
 
-export default UploadedDocumentsList;
+export default UploadedStengtDocumentsList;

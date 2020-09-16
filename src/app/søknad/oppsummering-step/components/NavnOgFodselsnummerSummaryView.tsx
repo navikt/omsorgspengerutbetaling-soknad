@@ -17,7 +17,7 @@ export interface Props {
 export const NavnOgFodselsnummerSummaryView = (props: Props) => {
     const { fornavn, etternavn, mellomnavn, intl, fødselsnummer } = props;
     return (
-        <Box margin={'l'}>
+        <Box margin="l">
             <ContentWithHeader header={intlHelper(intl, 'steg.oppsummering.søker.header')}>
                 <Normaltekst>{formatName(fornavn, etternavn, mellomnavn)}</Normaltekst>
                 <Normaltekst>Fødselsnummer: {fødselsnummer}</Normaltekst>

@@ -90,5 +90,8 @@ export interface SøknadApiData {
     frilans?: Frilans;
     selvstendigVirksomheter: VirksomhetApiData[];
     hjemmePgaSmittevernhensyn: boolean;
+    hjemmePgaStengtBhgSkole?: boolean;
     vedlegg: string[];
+    _vedleggSmittevern: string[];
+    _vedleggStengtSkole: string[];
 }

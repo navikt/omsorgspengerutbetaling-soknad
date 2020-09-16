@@ -43,31 +43,6 @@ const SøknadEssentialsLoader = ({ contentLoadedRenderer }: Props) => {
     const [loadState, setLoadState] = useState<LoadState>({ isLoading: true, doApiCalls: true });
     const [essentials, setEssentials] = useState<Essentials | undefined>();
 
-    async function loadEssentials() {
-        if (essentials?.søkerdata === undefined && loadState.error === undefined) {
-            try {
-                if (isFeatureEnabled(Feature.MELLOMLAGRING)) {
-                    const [søkerResponse, tempStorage] = await Promise.all([getSøker(), SøknadTempStorage.rehydrate()]);
-                    handleEssentialsFetchSuccess(søkerResponse, tempStorage);
-                } else {
-                    const søkerResponse = await getSøker();
-                    handleEssentialsFetchSuccess(søkerResponse);
-                }
-            } catch (error) {
-                if (apiUtils.isForbidden(error) || apiUtils.isUnauthorized(error)) {
-                    navigateToLoginPage();
-                    setLoadState({ isLoading: true, doApiCalls: false, error: undefined });
-                } else if (!userIsCurrentlyOnErrorPage()) {
-                    appSentryLogger.logApiError(error);
-                    navigateToErrorPage(history);
-                    setLoadState({ isLoading: false, doApiCalls: false, error: true });
-                } else {
-                    setLoadState({ isLoading: false, doApiCalls: false, error: true });
-                }
-            }
-        }
-    }
-
     const getValidTemporaryStorage = (data?: TemporaryStorage): TemporaryStorage | undefined => {
         if (data?.metadata?.version === STORAGE_VERSION) {
             return data;
@@ -75,32 +50,58 @@ const SøknadEssentialsLoader = ({ contentLoadedRenderer }: Props) => {
         return undefined;
     };
 
-    const handleEssentialsFetchSuccess = (
-        søkerResponse: AxiosResponse<Person>,
-        tempStorageResponse?: AxiosResponse
-    ) => {
-        const tempStorage = getValidTemporaryStorage(tempStorageResponse?.data);
-        const formData = tempStorage?.formData;
-        const lastStepID = tempStorage?.metadata?.lastStepID;
-        setEssentials({ søkerdata: { person: søkerResponse.data }, formData: formData || { ...initialValues } });
-        setLoadState({ isLoading: false, doApiCalls: false, error: undefined });
-
-        if (userIsCurrentlyOnErrorPage()) {
-            if (lastStepID) {
-                navigateTo(lastStepID, history);
-            } else {
-                navigateToWelcomePage();
-            }
-        } else if (lastStepID && !userIsOnStep(lastStepID, history)) {
-            navigateTo(lastStepID, history);
-        }
-    };
-
     useEffect(() => {
+        const handleEssentialsFetchSuccess = (
+            søkerResponse: AxiosResponse<Person>,
+            tempStorageResponse?: AxiosResponse
+        ) => {
+            const tempStorage = getValidTemporaryStorage(tempStorageResponse?.data);
+            const formData = tempStorage?.formData;
+            const lastStepID = tempStorage?.metadata?.lastStepID;
+            setEssentials({ søkerdata: { person: søkerResponse.data }, formData: formData || { ...initialValues } });
+            setLoadState({ isLoading: false, doApiCalls: false, error: undefined });
+
+            if (userIsCurrentlyOnErrorPage()) {
+                if (lastStepID) {
+                    navigateTo(lastStepID, history);
+                } else {
+                    navigateToWelcomePage();
+                }
+            } else if (lastStepID && !userIsOnStep(lastStepID, history)) {
+                navigateTo(lastStepID, history);
+            }
+        };
+        async function loadEssentials() {
+            if (essentials?.søkerdata === undefined && loadState.error === undefined) {
+                try {
+                    if (isFeatureEnabled(Feature.MELLOMLAGRING)) {
+                        const [søkerResponse, tempStorage] = await Promise.all([
+                            getSøker(),
+                            SøknadTempStorage.rehydrate(),
+                        ]);
+                        handleEssentialsFetchSuccess(søkerResponse, tempStorage);
+                    } else {
+                        const søkerResponse = await getSøker();
+                        handleEssentialsFetchSuccess(søkerResponse);
+                    }
+                } catch (error) {
+                    if (apiUtils.isForbidden(error) || apiUtils.isUnauthorized(error)) {
+                        navigateToLoginPage();
+                        setLoadState({ isLoading: true, doApiCalls: false, error: undefined });
+                    } else if (!userIsCurrentlyOnErrorPage()) {
+                        appSentryLogger.logApiError(error);
+                        navigateToErrorPage(history);
+                        setLoadState({ isLoading: false, doApiCalls: false, error: true });
+                    } else {
+                        setLoadState({ isLoading: false, doApiCalls: false, error: true });
+                    }
+                }
+            }
+        }
         if (loadState.doApiCalls) {
             loadEssentials();
         }
-    }, [essentials, loadState]);
+    }, [essentials, loadState, history]);
 
     const { isLoading, error } = loadState;
 

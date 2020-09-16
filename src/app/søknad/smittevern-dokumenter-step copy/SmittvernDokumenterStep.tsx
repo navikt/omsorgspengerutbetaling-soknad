@@ -3,31 +3,32 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import Box from '@navikt/sif-common-core/lib/components/box/Box';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
 import { useFormikContext } from 'formik';
-import intlHelper from 'common/utils/intlUtils';
-import FileUploadErrors from 'common/components/file-upload-errors/FileUploadErrors';
-import FormikFileUploader from '../../components/formik-file-uploader/FormikFileUploader';
-import PictureScanningGuide from 'common/components/picture-scanning-guide/PictureScanningGuide';
-import UploadedDocumentsList from '../../components/uploaded-documents-list/UploadedDocumentsList';
-import { StepConfigProps, StepID } from '../../config/stepConfig';
-import { navigateToLoginPage } from '../../utils/navigationUtils';
-import { validateDocuments } from '../../validation/fieldValidations';
-import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
-import SøknadStep from '../SøknadStep';
-import CounsellorPanel from 'common/components/counsellor-panel/CounsellorPanel';
-import { getTotalSizeOfAttachments, MAX_TOTAL_ATTACHMENT_SIZE_BYTES } from 'common/utils/attachmentUtils';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import Lenke from 'nav-frontend-lenker';
+import CounsellorPanel from 'common/components/counsellor-panel/CounsellorPanel';
+import FileUploadErrors from 'common/components/file-upload-errors/FileUploadErrors';
+import PictureScanningGuide from 'common/components/picture-scanning-guide/PictureScanningGuide';
+import { getTotalSizeOfAttachments, MAX_TOTAL_ATTACHMENT_SIZE_BYTES } from 'common/utils/attachmentUtils';
+import intlHelper from 'common/utils/intlUtils';
+import FormikFileUploader from '../../components/formik-file-uploader/FormikFileUploader';
+import UploadedSmittevernDocumentsList from '../../components/uploaded-smittevern-documents-list/UploadedSmittevernDocumentsList';
+import { StepConfigProps, StepID } from '../../config/stepConfig';
+import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
+import { navigateToLoginPage } from '../../utils/navigationUtils';
+import { validateDocuments } from '../../validation/fieldValidations';
+import SøknadStep from '../SøknadStep';
 
-const DokumenterStep = ({ onValidSubmit }: StepConfigProps) => {
+const SmittevernDokumenterStep = ({ onValidSubmit }: StepConfigProps) => {
     const intl = useIntl();
     const { values } = useFormikContext<SøknadFormData>();
     const [filesThatDidntGetUploaded, setFilesThatDidntGetUploaded] = React.useState<File[]>([]);
-    const hasPendingUploads: boolean = (values.dokumenter || []).find((a: any) => a.pending === true) !== undefined;
-    const totalSize = getTotalSizeOfAttachments(values.dokumenter);
+    const hasPendingUploads: boolean =
+        (values.dokumenterSmittevernhensyn || []).find((a: any) => a.pending === true) !== undefined;
+    const totalSize = getTotalSizeOfAttachments(values.dokumenterSmittevernhensyn);
 
     return (
         <SøknadStep
-            id={StepID.DOKUMENTER}
+            id={StepID.DOKUMENTER_SMITTEVERNHENSYN}
             onValidFormSubmit={onValidSubmit}
             useValidationErrorSummary={true}
             buttonDisabled={hasPendingUploads}>
@@ -41,12 +42,12 @@ const DokumenterStep = ({ onValidSubmit }: StepConfigProps) => {
                     </p>
                 </CounsellorPanel>
             </FormBlock>
-            <Box margin={'l'}>
+            <Box margin="l">
                 <PictureScanningGuide />
             </Box>
             <FormBlock>
                 <FormikFileUploader
-                    name={SøknadFormField.dokumenter}
+                    name={SøknadFormField.dokumenterSmittevernhensyn}
                     label={intlHelper(intl, 'steg.dokumenter.vedlegg')}
                     onErrorUploadingAttachments={setFilesThatDidntGetUploaded}
                     onFileInputClick={() => {
@@ -57,7 +58,7 @@ const DokumenterStep = ({ onValidSubmit }: StepConfigProps) => {
                 />
             </FormBlock>
             {totalSize > MAX_TOTAL_ATTACHMENT_SIZE_BYTES && (
-                <Box margin={'l'}>
+                <Box margin="l">
                     <AlertStripeAdvarsel>
                         <FormattedMessage id={'dokumenter.advarsel.totalstørrelse.1'} />
                         <Lenke
@@ -75,10 +76,10 @@ const DokumenterStep = ({ onValidSubmit }: StepConfigProps) => {
                 <FileUploadErrors filesThatDidntGetUploaded={filesThatDidntGetUploaded} />
             </Box>
             <Box margin="l">
-                <UploadedDocumentsList wrapNoAttachmentsInBox={true} includeDeletionFunctionality={true} />
+                <UploadedSmittevernDocumentsList wrapNoAttachmentsInBox={true} includeDeletionFunctionality={true} />
             </Box>
         </SøknadStep>
     );
 };
 
-export default DokumenterStep;
+export default SmittevernDokumenterStep;

@@ -1,15 +1,15 @@
+import { Utenlandsopphold, Virksomhet } from '@navikt/sif-common-forms/lib';
+import { FraværDag, FraværPeriode } from '@navikt/sif-common-forms/lib/fravær';
 import { YesOrNo } from 'common/types/YesOrNo';
 import { BarnStepQuestions } from '../søknad/barn-step/config';
-import { SøknadFormData, SøknadFormField } from '../types/SøknadFormData';
-import { Utenlandsopphold, Virksomhet } from '@navikt/sif-common-forms/lib';
+import { frilansIsValid, selvstendigIsValid } from '../søknad/inntekt-step/inntektStepConfig';
 import {
     delvisFraværIsValid,
     minimumEnUtbetalingsperiode,
     oppholdIsValid,
     perioderIsValid,
 } from '../søknad/periode-step/periodeStepConfig';
-import { frilansIsValid, selvstendigIsValid } from '../søknad/inntekt-step/inntektStepConfig';
-import { FraværDag, FraværPeriode } from '@navikt/sif-common-forms/lib/fravær';
+import { SøknadFormData, SøknadFormField } from '../types/SøknadFormData';
 
 export const welcomingPageIsValid = ({ harForståttRettigheterOgPlikter }: SøknadFormData): boolean =>
     harForståttRettigheterOgPlikter === true;

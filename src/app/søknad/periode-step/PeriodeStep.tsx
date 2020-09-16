@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useIntl, FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import {
     validateRequiredList,
     validateYesOrNoIsAnswered,
@@ -25,6 +25,8 @@ import { GYLDIG_TIDSROM } from '../../validation/constants';
 import SøknadFormComponents from '../SøknadFormComponents';
 import SøknadStep from '../SøknadStep';
 import './periodeStep.less';
+import Box from '@navikt/sif-common-core/lib/components/box/Box';
+import { Feature, isFeatureEnabled } from '../../utils/featureToggleUtils';
 
 const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }: StepConfigProps) => {
     const { values } = useFormikContext<SøknadFormData>();
@@ -90,7 +92,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
             {/* DAGER MED FULLT FRAVÆR*/}
             {harPerioderMedFravær === YesOrNo.YES && (
                 <>
-                    <FormBlock paddingBottom={'l'} margin={'l'}>
+                    <FormBlock margin="l">
                         <FraværPerioderListAndDialog<SøknadFormField>
                             name={SøknadFormField.fraværPerioder}
                             minDate={GYLDIG_TIDSROM.from || date1YearAgo}
@@ -112,7 +114,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                             ]}
                             helgedagerIkkeTillat={true}
                         />
-                        <FormBlock margin={'l'}>
+                        <FormBlock margin="l">
                             <ExpandableInfo
                                 title={intlHelper(intl, 'step.periode.harPerioderMedFravær.info.ikkeHelg.tittel')}>
                                 <FormattedMessage id="step.periode.harPerioderMedFravær.info.ikkeHelg.tekst" />
@@ -131,7 +133,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
             {/* DAGER MED DELVIS FRAVÆR*/}
             {harDagerMedDelvisFravær === YesOrNo.YES && (
                 <>
-                    <FormBlock margin={'l'} paddingBottom={'l'}>
+                    <FormBlock margin="l">
                         <FraværDagerListAndDialog<SøknadFormField>
                             name={SøknadFormField.fraværDager}
                             minDate={GYLDIG_TIDSROM.from || date1YearAgo}
@@ -144,8 +146,8 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                                 ),
                             ])}
                             labels={{
-                                addLabel: intlHelper(intl, 'step.periode.harPerioderMedFravær.addLabel'),
-                                modalTitle: intlHelper(intl, 'step.periode.harPerioderMedFravær.modalTitle'),
+                                addLabel: intlHelper(intl, 'step.periode.harDagerMedDelvisFravær.addLabel'),
+                                modalTitle: intlHelper(intl, 'step.periode.harDagerMedDelvisFravær.modalTitle'),
                             }}
                             dateRangesToDisable={[
                                 ...values.fraværDager.map(fraværDagToFraværDateRange),
@@ -154,12 +156,12 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                             helgedagerIkkeTillatt={true}
                             maksArbeidstidPerDag={24}
                         />
-                        <FormBlock margin={'l'}>
+                        <Box margin="l">
                             <ExpandableInfo
                                 title={intlHelper(intl, 'step.periode.harDagerMedDelvisFravær.info.ikkeHelg.tittel')}>
                                 <FormattedMessage id="step.periode.harDagerMedDelvisFravær.info.ikkeHelg.tekst" />
                             </ExpandableInfo>
-                        </FormBlock>
+                        </Box>
                     </FormBlock>
                 </>
             )}
@@ -173,23 +175,34 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
             )}
 
             {kanIkkeFortsette === false && (
-                <FormBlock>
-                    <SøknadFormComponents.YesOrNoQuestion
-                        name={SøknadFormField.hemmeligJaNeiSporsmal}
-                        legend={intlHelper(intl, 'steg.intro.form.spm.smittevernhensyn')}
-                        validate={validateYesOrNoIsAnswered}
-                        description={
-                            <ExpandableInfo title={intlHelper(intl, 'info.smittevern.tittel')}>
-                                <SmittevernInfo />
-                            </ExpandableInfo>
-                        }
-                    />
-                </FormBlock>
+                <>
+                    {isFeatureEnabled(Feature.STENGT_BHG_SKOLE) && (
+                        <FormBlock>
+                            <SøknadFormComponents.YesOrNoQuestion
+                                name={SøknadFormField.hjemmePgaStengtBhgSkole}
+                                legend={intlHelper(intl, 'step.periode.spm.hjemmePgaStengtBhgSkole')}
+                                validate={validateYesOrNoIsAnswered}
+                            />
+                        </FormBlock>
+                    )}
+                    <FormBlock>
+                        <SøknadFormComponents.YesOrNoQuestion
+                            name={SøknadFormField.hjemmePgaSmittevernhensyn}
+                            legend={intlHelper(intl, 'steg.intro.form.spm.smittevernhensyn')}
+                            validate={validateYesOrNoIsAnswered}
+                            description={
+                                <ExpandableInfo title={intlHelper(intl, 'info.smittevern.tittel')}>
+                                    <SmittevernInfo />
+                                </ExpandableInfo>
+                            }
+                        />
+                    </FormBlock>
+                </>
             )}
 
             {kanIkkeFortsette === false && (
                 <>
-                    <FormBlock margin={'xl'}>
+                    <FormBlock margin="xl">
                         <SøknadFormComponents.YesOrNoQuestion
                             name={SøknadFormField.perioder_harVærtIUtlandet}
                             legend={intlHelper(

@@ -1,7 +1,10 @@
 import { IntlShape } from 'react-intl';
 import { Locale } from '@navikt/sif-common-core/lib/types/Locale';
+import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import { Utenlandsopphold, Virksomhet } from '@navikt/sif-common-forms/lib';
+import { FraværDag, FraværPeriode } from '@navikt/sif-common-forms/lib/fravær';
 import { YesOrNo } from 'common/types/YesOrNo';
+import { attachmentUploadHasFailed } from 'common/utils/attachmentUtils';
 import { formatDateToApiFormat } from 'common/utils/dateUtils';
 import { decimalTimeToTime, timeToIso8601Duration } from 'common/utils/timeUtils';
 import {
@@ -16,9 +19,17 @@ import { SøknadFormData } from '../types/SøknadFormData';
 import { mapBostedUtlandToApiData } from './formToApiMaps/mapBostedUtlandToApiData';
 import { mapFrilansToApiData } from './formToApiMaps/mapFrilansToApiData';
 import { mapVirksomhetToVirksomhetApiData } from './formToApiMaps/mapVirksomhetToApiData';
-import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
-import { attachmentUploadHasFailed } from 'common/utils/attachmentUtils';
-import { FraværDag, FraværPeriode } from '@navikt/sif-common-forms/lib/fravær';
+import { Feature, isFeatureEnabled } from './featureToggleUtils';
+import { Attachment } from '@navikt/sif-common-core/lib/types/Attachment';
+
+const getVedleggUrlFromAttachments = (attachments: Attachment[]): string[] => {
+    return (
+        attachments
+            .filter((attachment) => !attachmentUploadHasFailed(attachment))
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            .map(({ url }) => url!)
+    );
+};
 
 export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShape): SøknadApiData => {
     const {
@@ -33,8 +44,11 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
         har_søkt_andre_utbetalinger,
         andre_utbetalinger,
 
-        hemmeligJaNeiSporsmal,
-        dokumenter,
+        hjemmePgaStengtBhgSkole,
+        dokumenterStengtBkgSkole = [],
+
+        hjemmePgaSmittevernhensyn,
+        dokumenterSmittevernhensyn = [],
 
         // Inntekt
         frilans_startdato,
@@ -77,6 +91,9 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
         });
     }
 
+    const vedleggSmittevern = getVedleggUrlFromAttachments(dokumenterSmittevernhensyn);
+    const vedleggStengtBhgSkole = getVedleggUrlFromAttachments(dokumenterStengtBkgSkole);
+
     const apiData: SøknadApiData = {
         språk: (intl.locale as any) === 'en' ? 'nn' : (intl.locale as Locale),
         bekreftelser: {
@@ -100,9 +117,13 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
             selvstendig_harHattInntektSomSN,
             selvstendig_virksomheter
         ),
-        hjemmePgaSmittevernhensyn: hemmeligJaNeiSporsmal === YesOrNo.YES,
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        vedlegg: dokumenter.filter((attachment) => !attachmentUploadHasFailed(attachment)).map(({ url }) => url!),
+        hjemmePgaSmittevernhensyn: hjemmePgaSmittevernhensyn === YesOrNo.YES,
+        hjemmePgaStengtBhgSkole: isFeatureEnabled(Feature.STENGT_BHG_SKOLE)
+            ? hjemmePgaStengtBhgSkole === YesOrNo.YES
+            : undefined,
+        vedlegg: [...vedleggSmittevern, ...vedleggStengtBhgSkole],
+        _vedleggStengtSkole: vedleggStengtBhgSkole,
+        _vedleggSmittevern: vedleggSmittevern,
     };
 
     if (har_fosterbarn === YesOrNo.YES && har_fosterbarn.length > 0) {

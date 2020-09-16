@@ -81,6 +81,8 @@ export const mock1: SøknadApiData = {
     ],
     hjemmePgaSmittevernhensyn: false,
     vedlegg: [],
+    _vedleggSmittevern: [],
+    _vedleggStengtSkole: [],
     andreUtbetalinger: [],
     bosteder: [
         {

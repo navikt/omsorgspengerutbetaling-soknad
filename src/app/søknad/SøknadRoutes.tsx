@@ -7,19 +7,20 @@ import GeneralErrorPage from '../components/pages/general-error-page/GeneralErro
 import WelcomingPage from '../components/pages/welcoming-page/WelcomingPage';
 import RouteConfig from '../config/routeConfig';
 import { StepID } from '../config/stepConfig';
-import { SøknadFormData, SøknadFormField } from '../types/SøknadFormData';
+import { SøknadFormData } from '../types/SøknadFormData';
 import * as apiUtils from '../utils/apiUtils';
 import appSentryLogger from '../utils/appSentryLogger';
 import { Feature, isFeatureEnabled } from '../utils/featureToggleUtils';
 import { navigateTo, navigateToLoginPage } from '../utils/navigationUtils';
 import { getNextStepRoute, getSøknadRoute, isAvailable } from '../utils/routeUtils';
 import BarnStep from './barn-step/BarnStep';
-import DokumenterStep from './dokumenter-step/DokumenterStep';
+import SmittevernDokumenterStep from './smittevern-dokumenter-step/SmittvernDokumenterStep';
 import InntektStep from './inntekt-step/InntektStep';
 import MedlemsskapStep from './medlemskap-step/MedlemsskapStep';
 import OppsummeringStep from './oppsummering-step/OppsummeringStep';
 import PeriodeStep from './periode-step/PeriodeStep';
 import SøknadTempStorage from './SøknadTempStorage';
+import StengtBhgSkoleDokumenterStep from './stengt-bhg-skole-dokumenter-step/StengtBhgSkoleDokumenterStep';
 
 export interface KvitteringInfo {
     søkernavn: string;
@@ -29,7 +30,8 @@ const SøknadRoutes = () => {
     const [søknadHasBeenSent, setSøknadHasBeenSent] = React.useState(false);
     const { values, resetForm } = useFormikContext<SøknadFormData>();
 
-    const skalViseVedleggSteg: boolean = values[SøknadFormField.hemmeligJaNeiSporsmal] === YesOrNo.YES;
+    const skalViseStengtBhgSkoleVedleggSteg: boolean = values.hjemmePgaStengtBhgSkole === YesOrNo.YES;
+    const skalViseSmittevernVedleggSteg: boolean = values.hjemmePgaSmittevernhensyn === YesOrNo.YES;
 
     const history = useHistory();
 
@@ -82,10 +84,25 @@ const SøknadRoutes = () => {
                 />
             )}
 
-            {isAvailable(StepID.DOKUMENTER, values) && skalViseVedleggSteg && (
+            {isAvailable(StepID.DOKUMENTER_STENGT_SKOLE_BHG, values) && skalViseStengtBhgSkoleVedleggSteg && (
                 <Route
-                    path={getSøknadRoute(StepID.DOKUMENTER)}
-                    render={() => <DokumenterStep onValidSubmit={() => navigateToNextStepFrom(StepID.DOKUMENTER)} />}
+                    path={getSøknadRoute(StepID.DOKUMENTER_STENGT_SKOLE_BHG)}
+                    render={() => (
+                        <StengtBhgSkoleDokumenterStep
+                            onValidSubmit={() => navigateToNextStepFrom(StepID.DOKUMENTER_STENGT_SKOLE_BHG)}
+                        />
+                    )}
+                />
+            )}
+
+            {isAvailable(StepID.DOKUMENTER_SMITTEVERNHENSYN, values) && skalViseSmittevernVedleggSteg && (
+                <Route
+                    path={getSøknadRoute(StepID.DOKUMENTER_SMITTEVERNHENSYN)}
+                    render={() => (
+                        <SmittevernDokumenterStep
+                            onValidSubmit={() => navigateToNextStepFrom(StepID.DOKUMENTER_SMITTEVERNHENSYN)}
+                        />
+                    )}
                 />
             )}
 

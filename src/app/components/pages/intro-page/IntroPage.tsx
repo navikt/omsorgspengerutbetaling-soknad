@@ -120,6 +120,10 @@ const IntroPage: React.StatelessComponent = () => {
 
                         const skalViseSmittevernInfo =
                             erSelvstendigEllerFrilanser === YesOrNo.YES && smittevernHensyn === YesOrNo.YES;
+
+                        const skalViseStengtBhgSkoleInfo =
+                            skalViseSmittevernInfo !== true && hjemmePgaStengt === YesOrNo.YES;
+
                         const skalViseErIkkeFrilansEllerSelvstendigInfo = erSelvstendigEllerFrilanser === YesOrNo.NO;
                         const skalViseKanIkkeBrukeSøknadenInfo =
                             erSelvstendigEllerFrilanser === YesOrNo.YES &&
@@ -187,6 +191,19 @@ const IntroPage: React.StatelessComponent = () => {
                                         <AlertStripeInfo>
                                             <p style={{ marginTop: 0, marginBottom: 0 }}>
                                                 <FormattedHtmlMessage id="steg.intro.kanIkkeBrukeSøknad.html" />
+                                            </p>
+                                        </AlertStripeInfo>
+                                    </Box>
+                                )}
+
+                                {skalViseStengtBhgSkoleInfo && (
+                                    <Box margin="xl">
+                                        <AlertStripeInfo>
+                                            <p style={{ marginTop: 0, marginBottom: 0 }}>
+                                                <FormattedHtmlMessage id="steg.intro.stengtBhgSkole.1" />
+                                            </p>
+                                            <p>
+                                                <FormattedHtmlMessage id="steg.intro.stengtBhgSkole.2" />
                                             </p>
                                         </AlertStripeInfo>
                                     </Box>

@@ -1,11 +1,11 @@
 import { Utenlandsopphold } from '@navikt/sif-common-forms/lib//utenlandsopphold/types';
 import { Fosterbarn } from '@navikt/sif-common-forms/lib/fosterbarn/types';
+import { FraværDag, FraværPeriode } from '@navikt/sif-common-forms/lib/fravær';
 import { Virksomhet } from '@navikt/sif-common-forms/lib/virksomhet/types';
 import { Attachment } from 'common/types/Attachment';
 import { YesOrNo } from 'common/types/YesOrNo';
-import { AndreUtbetalinger } from './AndreUtbetalinger';
-import { FraværDag, FraværPeriode } from '@navikt/sif-common-forms/lib/fravær';
 import { FraværDelerAvDag, Periode } from '../../@types/omsorgspengerutbetaling-schema';
+import { AndreUtbetalinger } from './AndreUtbetalinger';
 
 export enum SøknadFormField {
     harForståttRettigheterOgPlikter = 'harForståttRettigheterOgPlikter',
@@ -25,10 +25,14 @@ export enum SøknadFormField {
     har_søkt_andre_utbetalinger = 'har_søkt_andre_utbetalinger',
     andre_utbetalinger = 'andre_utbetalinger',
 
-    hemmeligJaNeiSporsmal = 'hemmeligJaNeiSporsmal',
+    hjemmePgaSmittevernhensyn = 'hjemmePgaSmittevernhensyn',
+
+    // Felter knyttet til stengt bhg eller skole
+    hjemmePgaStengtBhgSkole = 'hjemmePgaStengtBhgSkole',
+    dokumenterStengtBkgSkole = 'dokumenterStengtBkgSkole',
 
     // Optional vedlegg step
-    dokumenter = 'dokumenter',
+    dokumenterSmittevernhensyn = 'dokumenterSmittevernhensyn',
 
     // Conditional perioder i utlandet
     hvis_utenlandsopphold_en_test_verdi = 'hvis_utenlandsopphold_en_test_verdi',
@@ -69,10 +73,13 @@ export interface SøknadFormData {
     [SøknadFormField.har_søkt_andre_utbetalinger]: YesOrNo;
     [SøknadFormField.andre_utbetalinger]: AndreUtbetalinger[];
 
-    [SøknadFormField.hemmeligJaNeiSporsmal]: YesOrNo;
+    [SøknadFormField.hjemmePgaSmittevernhensyn]: YesOrNo;
+
+    [SøknadFormField.hjemmePgaStengtBhgSkole]: YesOrNo;
+    [SøknadFormField.dokumenterStengtBkgSkole]: Attachment[];
 
     // Optional vedlegg step
-    [SøknadFormField.dokumenter]: Attachment[];
+    [SøknadFormField.dokumenterSmittevernhensyn]: Attachment[];
 
     // Conditional perioder i utlandet
     [SøknadFormField.hvis_utenlandsopphold_en_test_verdi]: YesOrNo;
@@ -113,10 +120,13 @@ export const initialValues: SøknadFormData = {
     [SøknadFormField.har_søkt_andre_utbetalinger]: YesOrNo.UNANSWERED,
     [SøknadFormField.andre_utbetalinger]: [],
 
-    [SøknadFormField.hemmeligJaNeiSporsmal]: YesOrNo.UNANSWERED,
+    [SøknadFormField.hjemmePgaSmittevernhensyn]: YesOrNo.UNANSWERED,
+
+    [SøknadFormField.hjemmePgaStengtBhgSkole]: YesOrNo.UNANSWERED,
+    [SøknadFormField.dokumenterStengtBkgSkole]: [],
 
     // Optional vedlegg step
-    [SøknadFormField.dokumenter]: [],
+    [SøknadFormField.dokumenterSmittevernhensyn]: [],
 
     // Conditional perioder i utlandet
     [SøknadFormField.hvis_utenlandsopphold_en_test_verdi]: YesOrNo.UNANSWERED,

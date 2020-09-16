@@ -1,12 +1,13 @@
-import { SøknadFormData, SøknadFormField } from '../types/SøknadFormData';
+import { YesOrNo } from 'common/types/YesOrNo';
+import { SøknadFormData } from '../types/SøknadFormData';
 import { getSøknadRoute } from '../utils/routeUtils';
 import routeConfig from './routeConfig';
-import { YesOrNo } from 'common/types/YesOrNo';
 
 export enum StepID {
     'BARN' = 'barn',
     'PERIODE' = 'periode',
-    'DOKUMENTER' = 'vedlegg',
+    'DOKUMENTER_STENGT_SKOLE_BHG' = 'vedlegg_stengtSkoleBhg',
+    'DOKUMENTER_SMITTEVERNHENSYN' = 'vedlegg_smittevernhensyn',
     'LEGEERKLÆRING' = 'legeerklaering',
     'INNTEKT' = 'inntekt',
     'MEDLEMSKAP' = 'medlemskap',
@@ -44,39 +45,69 @@ const getStepConfigItemTextKeys = (stepId: StepID): StepConfigItemTexts => {
 export const getStepConfig = (formData?: SøknadFormData): StepConfigInterface => {
     let idx = 0;
 
-    const skalViseDokumenterStep = formData ? formData[SøknadFormField.hemmeligJaNeiSporsmal] : undefined;
+    const { hjemmePgaStengtBhgSkole, hjemmePgaSmittevernhensyn } = formData || {};
+    const skalViseStengtSkoleBhgDokumenterStep = hjemmePgaStengtBhgSkole === YesOrNo.YES;
+    const skalViseSmittevernDokumenterStep = hjemmePgaSmittevernhensyn === YesOrNo.YES;
+
+    const getNextStepAfterPeriodeStep = (): StepID => {
+        if (skalViseStengtSkoleBhgDokumenterStep) {
+            return StepID.DOKUMENTER_STENGT_SKOLE_BHG;
+        }
+        if (skalViseSmittevernDokumenterStep) {
+            return StepID.DOKUMENTER_SMITTEVERNHENSYN;
+        }
+        return StepID.INNTEKT;
+    };
+
+    const getPrevioustStepForInntektStep = (): StepID => {
+        if (skalViseSmittevernDokumenterStep) {
+            return StepID.DOKUMENTER_SMITTEVERNHENSYN;
+        }
+        if (skalViseStengtSkoleBhgDokumenterStep) {
+            return StepID.DOKUMENTER_STENGT_SKOLE_BHG;
+        }
+        return StepID.PERIODE;
+    };
 
     const configDelEn = {
         [StepID.PERIODE]: {
             ...getStepConfigItemTextKeys(StepID.PERIODE),
             index: idx++,
-            nextStep:
-                skalViseDokumenterStep && skalViseDokumenterStep === YesOrNo.YES ? StepID.DOKUMENTER : StepID.INNTEKT,
+            nextStep: getNextStepAfterPeriodeStep(),
             backLinkHref: routeConfig.WELCOMING_PAGE_ROUTE,
         },
     };
 
-    let configMaybeSteg = {};
-    if (skalViseDokumenterStep && skalViseDokumenterStep === YesOrNo.YES) {
-        configMaybeSteg = {
-            [StepID.DOKUMENTER]: {
-                ...getStepConfigItemTextKeys(StepID.DOKUMENTER),
-                index: idx++,
-                nextStep: StepID.INNTEKT,
-                backLinkHref: getSøknadRoute(StepID.PERIODE),
-            },
-        };
-    }
+    const configDokumentStengtBhgSkole = skalViseStengtSkoleBhgDokumenterStep
+        ? {
+              [StepID.DOKUMENTER_STENGT_SKOLE_BHG]: {
+                  ...getStepConfigItemTextKeys(StepID.DOKUMENTER_STENGT_SKOLE_BHG),
+                  index: idx++,
+                  nextStep: skalViseSmittevernDokumenterStep ? StepID.DOKUMENTER_SMITTEVERNHENSYN : StepID.INNTEKT,
+                  backLinkHref: getSøknadRoute(StepID.PERIODE),
+              },
+          }
+        : undefined;
+
+    const configDokumentSmittevernhensynSteg = skalViseSmittevernDokumenterStep
+        ? {
+              [StepID.DOKUMENTER_SMITTEVERNHENSYN]: {
+                  ...getStepConfigItemTextKeys(StepID.DOKUMENTER_SMITTEVERNHENSYN),
+                  index: idx++,
+                  nextStep: StepID.INNTEKT,
+                  backLinkHref: skalViseStengtSkoleBhgDokumenterStep
+                      ? getSøknadRoute(StepID.DOKUMENTER_STENGT_SKOLE_BHG)
+                      : getSøknadRoute(StepID.PERIODE),
+              },
+          }
+        : undefined;
 
     const configDelTo = {
         [StepID.INNTEKT]: {
             ...getStepConfigItemTextKeys(StepID.INNTEKT),
             index: idx++,
             nextStep: StepID.BARN,
-            backLinkHref:
-                skalViseDokumenterStep && skalViseDokumenterStep === YesOrNo.YES
-                    ? getSøknadRoute(StepID.DOKUMENTER)
-                    : getSøknadRoute(StepID.PERIODE),
+            backLinkHref: getPrevioustStepForInntektStep(),
         },
         [StepID.BARN]: {
             ...getStepConfigItemTextKeys(StepID.BARN),
@@ -101,7 +132,8 @@ export const getStepConfig = (formData?: SøknadFormData): StepConfigInterface =
 
     return {
         ...configDelEn,
-        ...configMaybeSteg,
+        ...configDokumentStengtBhgSkole,
+        ...configDokumentSmittevernhensynSteg,
         ...configDelTo,
     };
 };
@@ -109,5 +141,3 @@ export const getStepConfig = (formData?: SøknadFormData): StepConfigInterface =
 export interface StepConfigProps {
     onValidSubmit: () => void;
 }
-
-export const stepConfig: StepConfigInterface = getStepConfig();
