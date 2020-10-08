@@ -17,6 +17,8 @@ import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import { navigateToLoginPage } from '../../utils/navigationUtils';
 import { validateDocuments } from '../../validation/fieldValidations';
 import SøknadStep from '../SøknadStep';
+import { valuesToAlleDokumenterISøknaden } from 'app/utils/attachmentsUtils';
+import { Attachment } from '@navikt/sif-common-core/lib/types/Attachment';
 
 const StengtBhgSkoleDokumenterStep = ({ onValidSubmit }: StepConfigProps) => {
     const intl = useIntl();
@@ -24,14 +26,16 @@ const StengtBhgSkoleDokumenterStep = ({ onValidSubmit }: StepConfigProps) => {
     const [filesThatDidntGetUploaded, setFilesThatDidntGetUploaded] = React.useState<File[]>([]);
     const hasPendingUploads: boolean =
         (values.dokumenterStengtBkgSkole || []).find((a: any) => a.pending === true) !== undefined;
-    const totalSize = getTotalSizeOfAttachments(values.dokumenterStengtBkgSkole);
 
+    const alleDokumenterISøknaden: Attachment[] = valuesToAlleDokumenterISøknaden(values);
+    const totalSize = getTotalSizeOfAttachments(alleDokumenterISøknaden);
+    const attachmentsSizeOver24Mb = totalSize > MAX_TOTAL_ATTACHMENT_SIZE_BYTES;
     return (
         <SøknadStep
             id={StepID.DOKUMENTER_STENGT_SKOLE_BHG}
             onValidFormSubmit={onValidSubmit}
             useValidationErrorSummary={true}
-            buttonDisabled={hasPendingUploads}>
+            buttonDisabled={hasPendingUploads || attachmentsSizeOver24Mb}>
             <FormBlock>
                 <CounsellorPanel>
                     <p>
@@ -45,18 +49,20 @@ const StengtBhgSkoleDokumenterStep = ({ onValidSubmit }: StepConfigProps) => {
             <Box margin="l">
                 <PictureScanningGuide />
             </Box>
-            <FormBlock>
-                <FormikFileUploader
-                    name={SøknadFormField.dokumenterStengtBkgSkole}
-                    label={intlHelper(intl, 'steg.vedlegg_stengtSkoleBhg.vedlegg')}
-                    onErrorUploadingAttachments={setFilesThatDidntGetUploaded}
-                    onFileInputClick={() => {
-                        setFilesThatDidntGetUploaded([]);
-                    }}
-                    onUnauthorizedOrForbiddenUpload={() => navigateToLoginPage()}
-                    validate={validateDocuments}
-                />
-            </FormBlock>
+            {totalSize <= MAX_TOTAL_ATTACHMENT_SIZE_BYTES && (
+                <FormBlock>
+                    <FormikFileUploader
+                        name={SøknadFormField.dokumenterStengtBkgSkole}
+                        label={intlHelper(intl, 'steg.vedlegg_stengtSkoleBhg.vedlegg')}
+                        onErrorUploadingAttachments={setFilesThatDidntGetUploaded}
+                        onFileInputClick={() => {
+                            setFilesThatDidntGetUploaded([]);
+                        }}
+                        onUnauthorizedOrForbiddenUpload={() => navigateToLoginPage()}
+                        validate={validateDocuments}
+                    />
+                </FormBlock>
+            )}
             {totalSize > MAX_TOTAL_ATTACHMENT_SIZE_BYTES && (
                 <Box margin="l">
                     <AlertStripeAdvarsel>
