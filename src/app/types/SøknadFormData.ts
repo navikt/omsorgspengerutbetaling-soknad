@@ -86,7 +86,7 @@ export interface SøknadFormData {
 
     // Inntekt
     [SøknadFormField.frilans_harHattInntektSomFrilanser]: YesOrNo;
-    [SøknadFormField.frilans_startdato]?: Date;
+    [SøknadFormField.frilans_startdato]?: string;
     [SøknadFormField.frilans_jobberFortsattSomFrilans]?: YesOrNo;
     [SøknadFormField.selvstendig_harHattInntektSomSN]: YesOrNo;
     [SøknadFormField.selvstendig_virksomheter]?: Virksomhet[];

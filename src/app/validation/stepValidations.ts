@@ -1,3 +1,4 @@
+import datepickerUtils from '@navikt/sif-common-formik/lib/components/formik-datepicker/datepickerUtils';
 import { Utenlandsopphold, Virksomhet } from '@navikt/sif-common-forms/lib';
 import { FraværDag, FraværPeriode } from '@navikt/sif-common-forms/lib/fravær';
 import { YesOrNo } from 'common/types/YesOrNo';
@@ -33,7 +34,7 @@ export const periodeStepIsValid = (formData: SøknadFormData) => {
 
 export const inntektStepIsValid = (formData: SøknadFormData) => {
     const frilansHarHattInntektSomFrilanser: YesOrNo = formData[SøknadFormField.frilans_harHattInntektSomFrilanser];
-    const frilansStartdato: Date | undefined = formData[SøknadFormField.frilans_startdato];
+    const frilansStartdato: string | undefined = formData[SøknadFormField.frilans_startdato];
     const frilansJobberFortsattSomFrilans: YesOrNo | undefined =
         formData[SøknadFormField.frilans_jobberFortsattSomFrilans];
     const selvstendigHarHattInntektSomSN: YesOrNo | undefined =
@@ -41,8 +42,11 @@ export const inntektStepIsValid = (formData: SøknadFormData) => {
     const selvstendigVirksomheter: Virksomhet[] | undefined = formData[SøknadFormField.selvstendig_virksomheter];
 
     const isValid: boolean =
-        frilansIsValid(frilansHarHattInntektSomFrilanser, frilansStartdato, frilansJobberFortsattSomFrilans) &&
-        selvstendigIsValid(selvstendigHarHattInntektSomSN, selvstendigVirksomheter);
+        frilansIsValid(
+            frilansHarHattInntektSomFrilanser,
+            datepickerUtils.getDateFromDateString(frilansStartdato),
+            frilansJobberFortsattSomFrilans
+        ) && selvstendigIsValid(selvstendigHarHattInntektSomSN, selvstendigVirksomheter);
     // && minimumEnVirksomhet(frilansJobberFortsattSomFrilans, selvstendigVirksomheter)
     return isValid;
 };
