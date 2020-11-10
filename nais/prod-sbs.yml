@@ -53,7 +53,7 @@ spec:
         - name: STENGT_BHG_SKOLE
           value: "on"
         - name: NYNORSK
-          value: "off"
+          value: "on"
         - name: MELLOMLAGRING
           value: "on"
         - name: APPSTATUS_PROJECT_ID
