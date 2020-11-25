@@ -19,7 +19,7 @@ const FrilansSummary: React.FunctionComponent<Props> = ({ frilans }: Props) => {
             <SummaryBlock header={intlHelper(intl, 'frilanser.summary.harDuHattInntekt.header')}>
                 <JaNeiSvar harSvartJa={frilans !== undefined} />
             </SummaryBlock>
-            {console.log(frilans)}
+
             {frilans && (
                 <>
                     <SummaryBlock header={intlHelper(intl, 'frilanser.summary.nårStartet.header')}>
