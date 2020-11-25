@@ -38,6 +38,7 @@
         "@navikt/sif-common-forms": "^10.0.2",
         "@navikt/sif-common-question-config": "^0.0.6",
         "@navikt/sif-common-sentry": "0.0.13",
+        "@navikt/sif-common-soknad": "^1.0.10",
         "@sentry/browser": "^5.27.2",
         "@testing-library/react": "^11.0.1",
         "axios": "^0.21.0",
