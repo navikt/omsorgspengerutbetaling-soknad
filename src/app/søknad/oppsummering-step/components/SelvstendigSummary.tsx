@@ -12,6 +12,7 @@ import JaNeiSvar from './JaNeiSvar';
 import Sitat from './Sitat';
 import SummaryBlock from './SummaryBlock';
 import TallSvar from './TallSvar';
+import SummarySection from '@navikt/sif-common-soknad/lib/soknad-summary/summary-section/SummarySection';
 
 interface Props {
     selvstendigVirksomheter?: VirksomhetApiData[];
@@ -112,7 +113,7 @@ function SelvstendigSummary({ selvstendigVirksomheter = [] }: Props) {
     const intl = useIntl();
     const harSelvstendigVirksomheter = selvstendigVirksomheter.length > 0;
     return (
-        <>
+        <SummarySection header={intlHelper(intl, 'summary.virksomhet.header')}>
             <SummaryBlock header={intlHelper(intl, 'selvstendig.summary.harDuHattInntekt.header')}>
                 <JaNeiSvar harSvartJa={harSelvstendigVirksomheter} />
             </SummaryBlock>
@@ -124,7 +125,7 @@ function SelvstendigSummary({ selvstendigVirksomheter = [] }: Props) {
                     />
                 </SummaryBlock>
             )}
-        </>
+        </SummarySection>
     );
 }
 

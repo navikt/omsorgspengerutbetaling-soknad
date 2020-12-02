@@ -51,6 +51,7 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
         dokumenterSmittevernhensyn = [],
 
         // Inntekt
+        frilans_harHattInntektSomFrilanser,
         frilans_startdato,
         frilans_jobberFortsattSomFrilans,
         selvstendig_harHattInntektSomSN,
@@ -111,7 +112,11 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
             intl.locale
         ),
         opphold: settInnOpphold(perioder_harVærtIUtlandet, perioder_utenlandsopphold, intl.locale), // periode siden, har du oppholdt
-        frilans: mapFrilansToApiData(frilans_jobberFortsattSomFrilans, frilans_startdato),
+        frilans: mapFrilansToApiData(
+            frilans_harHattInntektSomFrilanser,
+            frilans_jobberFortsattSomFrilans,
+            frilans_startdato
+        ),
         selvstendigVirksomheter: settInnVirksomheter(
             intl.locale,
             selvstendig_harHattInntektSomSN,

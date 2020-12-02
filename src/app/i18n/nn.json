@@ -204,9 +204,10 @@
     "steg.medlemsskap.utenlandsopphold.leggTilLabel": "Legg til eit nytt utanlandsopphald",
 
     "steg.oppsummering.info": "Les gjennom oppsummeringa før du sender inn søknaden. Dersom du vil gjere endringar, kan du gå tilbake.",
-    "steg.oppsummering.søker.header": "Namn på søkjaren",
+    "steg.oppsummering.søker.omDeg": "Om deg",
     "steg.oppsummering.søker.fnr": "Fødselsnummer: {fødselsnummer}",
 
+    "steg.oppsummering.barnet.omBarn": "Om barn",
     "steg.oppsummering.barnet.header": "Om barnet",
     "steg.oppsummering.barnet.navn": "Namn: {navn}",
     "steg.oppsummering.barnet.fødselsdato": "Fødselsdato: {dato}",
@@ -218,6 +219,9 @@
 
     "steg.oppsummering.arbeidssituasjon.header": "Arbeidssituasjonen din",
     "steg.oppsummering.søkt_om_andre_utbetalinger": "Andre utbetalingar som det er søkt om frå NAV",
+    "steg.oppsummering.utbetalinger.header": "Omsorgsdagar du søker utbetaling for",
+
+    "steg.oppsummering.medlemskap.header": "Medlemskap i folketrygden",
 
     "steg.oppsummering.utlandetSiste12.header": "Har budd i utlandet dei siste 12 månadene",
     "steg.oppsummering.utlandetNeste12.header": "Skal bu i utlandet dei neste 12 månadene",
@@ -229,8 +233,6 @@
     "steg.oppsummering.bekrefterOpplysninger.ikkeBekreftet": "Du må bekrefte opplysningane",
 
     "steg.oppsummering.utenlandsoppholdIPerioden.listetittel": "Utanlandsopphald i perioden",
-    "steg.oppsummering.bostederUtlandSiste12.listetittel": "Bustader i utlandet dei siste 12 månadene",
-    "steg.oppsummering.bostederUtlandNeste12.listetittel": "Bustader i utlandet dei neste 12 månadene",
 
     "steg.oppsummering.apiValideringFeil.tittel": "Noko av informasjonen manglar",
 
@@ -339,6 +341,9 @@
     "steg.intro.stengtBhgSkole.2": "Dersom du ikkje har stadfestinga tilgjengeleg når du søkjer, kan du ettersende den. Vi kan ikkje behandle søknaden før vi mottar stadfestinga.",
 
     "steg.en.smittevern.sporsmal": "Har du vore heime med barn av særlege smittevernomsyn?",
+
+    "steg.oppsummering.dokumenter.header": "Vedlegg",
+    "steg.oppsummering.dokumenter.ingenVedlegg": "Ingen vedlegg er lasta opp",
     "steg.oppsummering.dokumenterSmittevern.header": "Stadfesting frå lege",
     "steg.oppsummering.dokumenterStengtBhgSkole.header": "Stadfesting frå barnehage eller skole",
 
@@ -386,6 +391,7 @@
     "fiskerinfo.BLAD_A": "Blad A",
     "fiskerinfo.BLAD_B": "Blad B",
 
+    "summary.virksomhet.header": "Næringsinntekt",
     "summary.virksomhet.næringstype": "Næringstype",
     "summary.virksomhet.regnskapsfører": "Reknskapsførar er {navn}, telefon: {telefon}.",
     "summary.virksomhet.ikkeRegnskapsfører": "Har ikkje regnskapsførar.",
@@ -408,7 +414,11 @@
     "frilanser.harDuHattInntekt.spm": "Har du jobba og hatt inntekt som frilansar dei siste 4 vekene?",
     "frilanser.nårStartet.spm": "Når starta du som frilansar?",
     "frilanser.jobberFortsatt.spm": "Jobbar du framleis som frilansar?",
+
+    "frilanser.summary.header": "Frilansinntekt",
     "frilanser.summary.harDuHattInntekt.header": "Har du jobba og hatt inntekt som frilansar dei 4 siste vekene?",
     "frilanser.summary.nårStartet.header": "Når starta du som frilansar?",
-    "frilanser.summary.jobberFortsatt.header": "Jobbar du framleis som frilansar?"
+    "frilanser.summary.jobberFortsatt.header": "Jobbar du framleis som frilansar?",
+
+    "summary.andreIntekter.header": "Eventuelle andre inntekter"
 }
