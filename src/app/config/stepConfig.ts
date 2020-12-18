@@ -19,7 +19,6 @@ export interface StepConfigItemTexts {
     stepTitle: string;
     stepIndicatorLabel: string;
     nextButtonLabel?: string;
-    nextButtonAriaLabel?: string;
 }
 
 export interface StepItemConfigInterface extends StepConfigItemTexts {
@@ -38,7 +37,6 @@ const getStepConfigItemTextKeys = (stepId: StepID): StepConfigItemTexts => {
         stepTitle: `step.${stepId}.stepTitle`,
         stepIndicatorLabel: `step.${stepId}.stepIndicatorLabel`,
         nextButtonLabel: 'step.nextButtonLabel',
-        nextButtonAriaLabel: 'step.nextButtonAriaLabel',
     };
 };
 
@@ -126,7 +124,6 @@ export const getStepConfig = (formData?: SøknadFormData): StepConfigInterface =
             index: idx++,
             backLinkHref: getSøknadRoute(StepID.MEDLEMSKAP),
             nextButtonLabel: 'step.sendButtonLabel',
-            nextButtonAriaLabel: 'step.sendButtonAriaLabel',
         },
     };
 

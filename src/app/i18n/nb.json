@@ -43,6 +43,8 @@
     "banner.title": "Søknad om utbetaling av omsorgspenger til selvstendig næringsdrivende eller frilansere",
 
     "page.loadingPage.tekst": "Laster ...",
+    "page.form.ubesvarteSpørsmålInfo": "For å komme videre, må du svare på alle spørsmålene ovenfor",
+
     "gotoApplicationLink.lenketekst": "Gå til den digitale søknaden",
     "backlink.label": "Tilbake",
 
@@ -74,7 +76,6 @@
     "relasjonTilBarnet.fosterforelder": "Fosterforelder",
 
     "step.nextButtonLabel": "Fortsett",
-    "step.nextButtonAriaLabel": "Gå til neste steg",
     "step.sendButtonLabel": "Send inn søknaden",
     "step.sendButtonAriaLabel": "Send inn søknaden",
 

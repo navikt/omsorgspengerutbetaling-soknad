@@ -17,7 +17,6 @@ export const getStepTexts = (intl: IntlShape, stepId: StepID, stepConfig: StepCo
         stepTitle: intlHelper(intl, conf.stepTitle),
         stepIndicatorLabel: intlHelper(intl, conf.stepIndicatorLabel),
         nextButtonLabel: conf.nextButtonLabel ? intlHelper(intl, conf.nextButtonLabel) : undefined,
-        nextButtonAriaLabel: conf.nextButtonAriaLabel ? intlHelper(intl, conf.nextButtonAriaLabel) : undefined,
     };
 };
 
