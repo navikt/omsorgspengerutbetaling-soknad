@@ -4,6 +4,7 @@ import Box from 'common/components/box/Box';
 import SummaryList from 'common/components/summary-list/SummaryList';
 import TextareaSummary from 'common/components/textarea-summary/TextareaSummary';
 import intlHelper from 'common/utils/intlUtils';
+import SummarySection from '../../../components/summary-section/SummarySection';
 import { VirksomhetApiData } from '../../../types/SøknadApiData';
 import { harFiskerNæringstype } from '../../../utils/formToApiMaps/mapVirksomhetToApiData';
 import { prettifyApiDate } from './DatoSvar';
@@ -12,7 +13,6 @@ import JaNeiSvar from './JaNeiSvar';
 import Sitat from './Sitat';
 import SummaryBlock from './SummaryBlock';
 import TallSvar from './TallSvar';
-import SummarySection from '@navikt/sif-common-soknad/lib/soknad-summary/summary-section/SummarySection';
 
 interface Props {
     selvstendigVirksomheter?: VirksomhetApiData[];

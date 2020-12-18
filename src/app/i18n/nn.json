@@ -43,6 +43,8 @@
     "banner.title": "Søknad om utbetaling av omsorgspengar til sjølvstendig næringsdrivande eller frilansarar",
 
     "page.loadingPage.tekst": "Lastar ...",
+    "page.form.ubesvarteSpørsmålInfo": "For å kome vidare, må du svare på alle spørsmåla ovanfor",
+
     "gotoApplicationLink.lenketekst": "Gå til den digitale søknaden",
     "backlink.label": "Tilbake",
 

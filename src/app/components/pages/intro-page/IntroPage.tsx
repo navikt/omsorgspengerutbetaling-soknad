@@ -4,7 +4,7 @@ import ExpandableInfo from '@navikt/sif-common-core/lib/components/expandable-co
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
 import FormattedHtmlMessage from '@navikt/sif-common-core/lib/components/formatted-html-message/FormattedHtmlMessage';
 import { commonFieldErrorRenderer } from '@navikt/sif-common-core/lib/utils/commonFieldErrorRenderer';
-import { getTypedFormComponents, YesOrNo } from '@navikt/sif-common-formik/lib';
+import { getTypedFormComponents, UnansweredQuestionsInfo, YesOrNo } from '@navikt/sif-common-formik/lib';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import Lenke from 'nav-frontend-lenker';
 import Box from 'common/components/box/Box';
@@ -49,7 +49,7 @@ const IntroPage: React.StatelessComponent = () => {
         <Page
             className={bem.block}
             title={intlHelper(intl, 'introPage.tittel')}
-            topContentRenderer={() => <StepBanner text={intlHelper(intl, 'introPage.stegTittel')} />}>
+            topContentRenderer={() => <StepBanner tag="h1" text={intlHelper(intl, 'introPage.stegTittel')} />}>
             <Box margin="xxxl">
                 <InformationPoster>
                     <p>
@@ -134,7 +134,16 @@ const IntroPage: React.StatelessComponent = () => {
                         return (
                             <PageForm.Form
                                 fieldErrorRenderer={(error) => commonFieldErrorRenderer(intl, error)}
-                                includeButtons={false}>
+                                includeButtons={false}
+                                noButtonsContentRenderer={() => {
+                                    return kanBrukeSøknaden ||
+                                        skalViseKanIkkeBrukeSøknadenInfo ||
+                                        skalViseErIkkeFrilansEllerSelvstendigInfo ? null : (
+                                        <UnansweredQuestionsInfo>
+                                            <FormattedMessage id="page.form.ubesvarteSpørsmålInfo" />
+                                        </UnansweredQuestionsInfo>
+                                    );
+                                }}>
                                 <PageForm.YesOrNoQuestion
                                     name={PageFormField.erSelvstendigEllerFrilanser}
                                     legend={intlHelper(intl, 'steg.intro.form.spm.erSelvstendigEllerFrilanser')}
