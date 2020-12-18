@@ -27,11 +27,13 @@ const MedlemsskapStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubm
     return (
         <SøknadStep id={StepID.MEDLEMSKAP} onValidFormSubmit={onValidSubmit}>
             <CounsellorPanel>
-                <FormattedMessage id="steg.medlemsskap.info.1" />
-                <Lenke href={getLenker().medlemskap} target="_blank">
-                    <FormattedMessage id="steg.medlemsskap.info.2" />
-                </Lenke>
-                .
+                <p>
+                    <FormattedMessage id="steg.medlemsskap.info.1" />
+                    <Lenke href={getLenker().medlemskap} target="_blank">
+                        <FormattedMessage id="steg.medlemsskap.info.2" />
+                    </Lenke>
+                    .
+                </p>
             </CounsellorPanel>
             <FormBlock margin="xxl">
                 <SøknadFormComponents.YesOrNoQuestion
