@@ -36,6 +36,7 @@ import { SpørsmålOgSvarSummaryView } from './components/SporsmalOgSvarSummaryV
 import SummaryBlock from './components/SummaryBlock';
 import UtbetalingsperioderSummaryView from './components/UtbetalingsperioderSummaryView';
 import UtenlandsoppholdISøkeperiodeSummaryView from './components/UtenlandsoppholdISøkeperiodeSummaryView';
+import { isCurrentDateBefore2021 } from '../../utils/checkDate2021';
 
 interface Props {
     onApplicationSent: (apiValues: SøknadApiData, søkerdata: Søkerdata) => void;
@@ -133,7 +134,12 @@ const OppsummeringStep: React.FC<Props> = ({ onApplicationSent }: Props) => {
 
                         {isFeatureEnabled(Feature.STENGT_BHG_SKOLE) && apiValues.hjemmePgaStengtBhgSkole !== undefined && (
                             <Box margin="s">
-                                <SummaryBlock header={intlHelper(intl, 'step.periode.spm.hjemmePgaStengtBhgSkole')}>
+                                <SummaryBlock
+                                    header={
+                                        isCurrentDateBefore2021()
+                                            ? intlHelper(intl, 'step.periode.spm.hjemmePgaStengtBhgSkole')
+                                            : intlHelper(intl, 'step.periode.spm.hjemmePgaStengtBhgSkole.2021')
+                                    }>
                                     <JaNeiSvar harSvartJa={apiValues.hjemmePgaStengtBhgSkole} />
                                 </SummaryBlock>
                             </Box>
