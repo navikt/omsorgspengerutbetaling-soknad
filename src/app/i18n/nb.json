@@ -168,6 +168,17 @@
     "step.periode.info.2.3": "Fra 1. juli 2020 må du dekke de 10 første omsorgsdagene selv.",
     "step.periode.info.3": "Dagene du selv skal dekke gjelder totalt for 2020. Det betyr at hvis du allerede har dekket for eksempel 3 dager, gjenstår det 7 dager for deg å dekke selv i år.",
     "step.periode.info.4": "I søknaden legger du inn alle dagene du har vært hjemme med omsorgsdager i den perioden du nå søker for, inkludert dagene du selv dekker.",
+
+    "step.periode.info2021.1": "Nå skal du legge inn dagene du har hatt fravær fra jobb fordi du har vært hjemme med omsorgsdager. Du kan få utbetalt omsorgspenger i opptil tre måneder tilbake i tid, regnet fra måneden før NAV mottok søknad fra deg.",
+    "step.periode.info2021.2": "For omsorgsdager du bruker i 2021 må du selv dekke de 10 første dagene.",
+    "step.periode.info2021.3": "I søknaden legger du inn alle dagene du har vært hjemme med omsorgsdager i den perioden du søker for, inkludert dagene du dekker selv.",
+    "step.periode.info2021.nedtrekk.tittle": "Informasjon til deg som søker utbetaling for 2020",
+    "step.periode.info2021.nedtrekk.1": "Reglene for hvor mange dager du selv må dekke har endret seg flere ganger på grunn av koronasituasjonen. Her er en oversikt over hvor mange omsorgsdager du selv må dekke i 2020:",
+    "step.periode.info2021.nedtrekk.list.1": "1. januar 2020 – 12. mars 2020 må du dekke de 10 første omsorgsdagene selv.",
+    "step.periode.info2021.nedtrekk.list.2": "13. mars 2020 – 30. juni 2020 må du dekke de 3 første omsorgsdagene selv.",
+    "step.periode.info2021.nedtrekk.list.3": "1. juli 2020 – 31. desember 2020 må du dekke de 10 første omsorgsdagene selv.",
+    "step.periode.info2021.nedtrekk.2": "Dagene du selv skal dekke gjelder totalt for 2020. Det betyr at hvis du i 2020 allerede har dekket for eksempel 7 dager, gjenstår det 3 dager for deg å dekke i 2020.",
+
     "step.periode.spm.harPerioderMedFravær": "Har du hatt hele dager med fravær fra jobb?",
     "step.periode.harPerioderMedFravær.addLabel": "Legg til ny periode med fullt fravær",
     "step.periode.harPerioderMedFravær.modalTitle": "Fravær hele dager",

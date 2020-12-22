@@ -27,6 +27,7 @@ import SøknadStep from '../SøknadStep';
 import './periodeStep.less';
 import Box from '@navikt/sif-common-core/lib/components/box/Box';
 import { Feature, isFeatureEnabled } from '../../utils/featureToggleUtils';
+import { isCurrentDateBefore2021 } from 'app/utils/checkDate2021';
 
 const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }: StepConfigProps) => {
     const { values } = useFormikContext<SøknadFormData>();
@@ -45,7 +46,69 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
         }
         return cleanedValues;
     };
+    const getInfoPanel = () => {
+        return isCurrentDateBefore2021() ? (
+            <>
+                <p>
+                    <FormattedMessage id="step.periode.info.1" />
+                </p>
 
+                <p>
+                    <FormattedMessage id="step.periode.info.2" />
+                </p>
+                <ul>
+                    <li>
+                        <FormattedMessage id="step.periode.info.2.1" />
+                    </li>
+                    <li>
+                        <FormattedMessage id="step.periode.info.2.2" />
+                    </li>
+                    <li>
+                        <FormattedMessage id="step.periode.info.2.3" />
+                    </li>
+                </ul>
+                <p>
+                    <FormattedMessage id="step.periode.info.3" />
+                </p>
+                <p>
+                    <FormattedMessage id="step.periode.info.4" />
+                </p>
+            </>
+        ) : (
+            <>
+                <p>
+                    <FormattedMessage id="step.periode.info2021.1" />
+                </p>
+                <p>
+                    <FormattedMessage id="step.periode.info2021.2" />
+                </p>
+                <p>
+                    <FormattedMessage id="step.periode.info2021.3" />
+                </p>
+                <ExpandableInfo
+                    title={intlHelper(intl, 'step.periode.info2021.nedtrekk.tittle')}
+                    filledBackground={false}>
+                    <p>
+                        <FormattedMessage id="step.periode.info2021.nedtrekk.1" />
+                    </p>
+                    <ul>
+                        <li>
+                            <FormattedMessage id="step.periode.info2021.nedtrekk.list.1" />
+                        </li>
+                        <li>
+                            <FormattedMessage id="step.periode.info2021.nedtrekk.list.2" />
+                        </li>
+                        <li>
+                            <FormattedMessage id="step.periode.info2021.nedtrekk.list.3" />
+                        </li>
+                    </ul>
+                    <p>
+                        <FormattedMessage id="step.periode.info2021.nedtrekk.2" />
+                    </p>
+                </ExpandableInfo>
+            </>
+        );
+    };
     return (
         <SøknadStep
             id={StepID.PERIODE}
@@ -55,32 +118,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
             cleanupStep={cleanupStep}
             showSubmitButton={kanIkkeFortsette === false}>
             <FormBlock>
-                <CounsellorPanel>
-                    <p>
-                        <FormattedMessage id="step.periode.info.1" />
-                    </p>
-
-                    <p>
-                        <FormattedMessage id="step.periode.info.2" />
-                    </p>
-                    <ul>
-                        <li>
-                            <FormattedMessage id="step.periode.info.2.1" />
-                        </li>
-                        <li>
-                            <FormattedMessage id="step.periode.info.2.2" />
-                        </li>
-                        <li>
-                            <FormattedMessage id="step.periode.info.2.3" />
-                        </li>
-                    </ul>
-                    <p>
-                        <FormattedMessage id="step.periode.info.3" />
-                    </p>
-                    <p>
-                        <FormattedMessage id="step.periode.info.4" />
-                    </p>
-                </CounsellorPanel>
+                <CounsellorPanel>{getInfoPanel()}</CounsellorPanel>
             </FormBlock>
             <FormBlock>
                 <SøknadFormComponents.YesOrNoQuestion
@@ -180,7 +218,11 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                         <FormBlock>
                             <SøknadFormComponents.YesOrNoQuestion
                                 name={SøknadFormField.hjemmePgaStengtBhgSkole}
-                                legend={intlHelper(intl, 'step.periode.spm.hjemmePgaStengtBhgSkole')}
+                                legend={
+                                    isCurrentDateBefore2021()
+                                        ? intlHelper(intl, 'step.periode.spm.hjemmePgaStengtBhgSkole')
+                                        : intlHelper(intl, 'step.periode.spm.hjemmePgaStengtBhgSkole.2021')
+                                }
                                 validate={validateYesOrNoIsAnswered}
                             />
                         </FormBlock>
