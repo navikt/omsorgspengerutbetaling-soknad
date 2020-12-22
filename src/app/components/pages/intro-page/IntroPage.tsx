@@ -17,6 +17,7 @@ import RouteConfig, { getRouteUrl } from '../../../config/routeConfig';
 import SmittevernInfo from '../../information/SmittevernInfo';
 import Knappelenke from 'common/components/knappelenke/Knappelenke';
 import './introPage.less';
+import { isDateBefore2021 } from '../../../utils/checkDate2021';
 
 const bem = bemUtils('introPage');
 
@@ -167,7 +168,11 @@ const IntroPage: React.StatelessComponent = () => {
                                     <FormBlock>
                                         <PageForm.YesOrNoQuestion
                                             name={PageFormField.hjemmePgaStengt}
-                                            legend={intlHelper(intl, 'steg.intro.form.spm.hjemmePgaStengt')}
+                                            legend={
+                                                isDateBefore2021()
+                                                    ? intlHelper(intl, 'steg.intro.form.spm.hjemmePgaStengt')
+                                                    : intlHelper(intl, 'steg.intro.form.spm.hjemmePgaStengt.2021')
+                                            }
                                         />
                                     </FormBlock>
                                 )}
