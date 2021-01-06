@@ -333,7 +333,8 @@
     "steg.intro.info.3": "Du kan søkje om omsorgspengar når du har vore heime frå jobb fordi",
     "steg.intro.info.4": "barnet er sjukt eller barnepassaren er sjuk",
     "steg.intro.info.5": "barnehagen eller skulen er stengd på grunn av koronaviruset",
-    "steg.intro.info.6": "barnet ikkje kan gå i barnehagen eller på skulen når desse blir opna igjen, av særlege smittevernomsyn",
+    "steg.intro.info.6": "barnet ikkje kan gå i barnehage/skule/SFO på grunn av særlege smittevernomsyn",
+    "steg.intro.info.6.1": "barnet er i karantene på grunn av koronaviruset",
     "steg.intro.info.7.1": "Ver merksam på at du om du har søkt om ",
     "steg.intro.info.7.2": "kompensasjon for tapt inntekt som sjølvstendig næringsdrivande og/eller frilansar",
     "steg.intro.info.7.3": ", kan du ikkje søkje om omsorgspengar for den same perioden.",
@@ -345,7 +346,10 @@
     "steg.intro.form.spm.smittevernhensyn": "Har du vore heime med barn av særlege smittevernomsyn?",
     "steg.intro.form.spm.hjemmePgaStengt": "Har du vore heime frå jobb fordi skulen/barnehagen er stengd på grunn av koronaviruset?",
     "steg.intro.form.spm.hjemmePgaStengt.2021": "Har du vore heime frå jobb fordi skulen/barnehagen/SFO er stengd på grunn av koronaviruset?",
+
     "steg.intro.form.spm.hjemmePgaSykdom": "Har du vore heime frå jobb fordi barnet er blitt sjukt eller barnepassaren er blitt sjuk?",
+    "steg.intro.form.spm.hjemmePgaKarantene": "Har du vore heime frå jobb fordi barnet har vore i karantene på grunn av koronaviruset?",
+
     "steg.intro.søknadGjelderKunFor.1.html": "Denne søknaden gjeld <strong>berre for sjølvstendig næringsdrivande og frilansarar</strong> som skal søkje om utbetaling av omsorgspengar.",
     "steg.intro.søknadGjelderKunFor.2.html": "Dersom du er <strong>arbeidstakar</strong>, skal du ikkje søkje om utbetaling av omsorgspengar. Arbeidsgivaren din skal betale ut lønn til deg som vanleg dei dagane du tek ut omsorgsdagar.",
     "steg.intro.kanIkkeBrukeSøknad.html": "Du kan <strong>berre</strong> bruke denne søknaden dersom du er heime frå jobb på grunn av éin av situasjonane det er gjort greie for over.",

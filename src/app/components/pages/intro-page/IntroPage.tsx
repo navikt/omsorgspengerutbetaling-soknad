@@ -26,6 +26,7 @@ enum PageFormField {
     'hjemmePgaStengt' = 'hjemmePgaStengt',
     'hjemmePgaSykdom' = 'hjemmePgaSykdom',
     'smittevernHensyn' = 'smittevernHensyn',
+    'hjemmePgaKarantene' = 'hjemmePgaKarantene',
 }
 
 interface PageFormValues {
@@ -33,6 +34,7 @@ interface PageFormValues {
     [PageFormField.hjemmePgaStengt]: YesOrNo;
     [PageFormField.hjemmePgaSykdom]: YesOrNo;
     [PageFormField.smittevernHensyn]: YesOrNo;
+    [PageFormField.hjemmePgaKarantene]: YesOrNo;
 }
 
 const initialValues = {
@@ -40,10 +42,11 @@ const initialValues = {
     [PageFormField.hjemmePgaStengt]: YesOrNo.UNANSWERED,
     [PageFormField.hjemmePgaSykdom]: YesOrNo.UNANSWERED,
     [PageFormField.smittevernHensyn]: YesOrNo.UNANSWERED,
+    [PageFormField.hjemmePgaKarantene]: YesOrNo.UNANSWERED,
 };
 const PageForm = getTypedFormComponents<PageFormField, PageFormValues>();
 
-const IntroPage: React.StatelessComponent = () => {
+const IntroPage: React.FC = () => {
     const intl = useIntl();
 
     return (
@@ -75,6 +78,9 @@ const IntroPage: React.StatelessComponent = () => {
                         <li>
                             <FormattedHtmlMessage id="steg.intro.info.6" />
                         </li>
+                        <li>
+                            <FormattedHtmlMessage id="steg.intro.info.6.1" />
+                        </li>
                     </ul>
                     <p>
                         <FormattedHtmlMessage id="steg.intro.info.7.1" />
@@ -97,7 +103,13 @@ const IntroPage: React.StatelessComponent = () => {
                     onSubmit={() => null}
                     initialValues={initialValues}
                     renderForm={({
-                        values: { erSelvstendigEllerFrilanser, hjemmePgaStengt, hjemmePgaSykdom, smittevernHensyn },
+                        values: {
+                            erSelvstendigEllerFrilanser,
+                            hjemmePgaStengt,
+                            hjemmePgaSykdom,
+                            smittevernHensyn,
+                            hjemmePgaKarantene,
+                        },
                     }) => {
                         const kanBrukeSøknaden =
                             (erSelvstendigEllerFrilanser === YesOrNo.YES && smittevernHensyn === YesOrNo.YES) ||
@@ -107,7 +119,8 @@ const IntroPage: React.StatelessComponent = () => {
                             (erSelvstendigEllerFrilanser === YesOrNo.YES &&
                                 smittevernHensyn === YesOrNo.NO &&
                                 hjemmePgaStengt === YesOrNo.NO &&
-                                hjemmePgaSykdom === YesOrNo.YES);
+                                hjemmePgaSykdom === YesOrNo.YES &&
+                                hjemmePgaKarantene === YesOrNo.YES);
 
                         const skalViseSmittevernSpørsmål = erSelvstendigEllerFrilanser === YesOrNo.YES;
 
@@ -118,6 +131,12 @@ const IntroPage: React.StatelessComponent = () => {
                             erSelvstendigEllerFrilanser === YesOrNo.YES &&
                             smittevernHensyn === YesOrNo.NO &&
                             hjemmePgaStengt === YesOrNo.NO;
+
+                        const skalViseKaranteneSpørsmål =
+                            erSelvstendigEllerFrilanser === YesOrNo.YES &&
+                            smittevernHensyn === YesOrNo.NO &&
+                            hjemmePgaStengt === YesOrNo.NO &&
+                            hjemmePgaSykdom === YesOrNo.YES;
 
                         const skalViseSmittevernInfo =
                             erSelvstendigEllerFrilanser === YesOrNo.YES && smittevernHensyn === YesOrNo.YES;
@@ -132,13 +151,23 @@ const IntroPage: React.StatelessComponent = () => {
                             hjemmePgaStengt === YesOrNo.NO &&
                             hjemmePgaSykdom === YesOrNo.NO;
 
+                        const skalViseKanIkkeBrukeSøknadenInfoKarantene =
+                            erSelvstendigEllerFrilanser === YesOrNo.YES &&
+                            smittevernHensyn === YesOrNo.NO &&
+                            hjemmePgaStengt === YesOrNo.NO &&
+                            hjemmePgaSykdom === YesOrNo.YES &&
+                            hjemmePgaKarantene === YesOrNo.NO;
+
+                        const skalViseKanIkkeBrukeSøknaden =
+                            skalViseKanIkkeBrukeSøknadenInfo || skalViseKanIkkeBrukeSøknadenInfoKarantene;
+
                         return (
                             <PageForm.Form
                                 fieldErrorRenderer={(error) => commonFieldErrorRenderer(intl, error)}
                                 includeButtons={false}
                                 noButtonsContentRenderer={() => {
                                     return kanBrukeSøknaden ||
-                                        skalViseKanIkkeBrukeSøknadenInfo ||
+                                        skalViseKanIkkeBrukeSøknaden ||
                                         skalViseErIkkeFrilansEllerSelvstendigInfo ? null : (
                                         <UnansweredQuestionsInfo>
                                             <FormattedMessage id="page.form.ubesvarteSpørsmålInfo" />
@@ -185,6 +214,15 @@ const IntroPage: React.StatelessComponent = () => {
                                     </FormBlock>
                                 )}
 
+                                {skalViseKaranteneSpørsmål && (
+                                    <FormBlock>
+                                        <PageForm.YesOrNoQuestion
+                                            name={PageFormField.hjemmePgaKarantene}
+                                            legend={intlHelper(intl, 'steg.intro.form.spm.hjemmePgaKarantene')}
+                                        />
+                                    </FormBlock>
+                                )}
+
                                 {skalViseErIkkeFrilansEllerSelvstendigInfo && (
                                     <Box margin="xl">
                                         <AlertStripeInfo>
@@ -200,7 +238,7 @@ const IntroPage: React.StatelessComponent = () => {
                                     </Box>
                                 )}
 
-                                {skalViseKanIkkeBrukeSøknadenInfo && (
+                                {skalViseKanIkkeBrukeSøknaden && (
                                     <Box margin="xl">
                                         <AlertStripeInfo>
                                             <p style={{ marginTop: 0, marginBottom: 0 }}>
