@@ -1,6 +1,7 @@
 import { FormikValidateFunction } from '@navikt/sif-common-formik/lib';
 import { Utenlandsopphold } from '@navikt/sif-common-forms/lib//utenlandsopphold/types';
-import moment from 'moment';
+import dayjs from 'dayjs';
+import isBetween from 'dayjs/plugin/isBetween';
 import {
     date1YearAgo,
     date1YearFromNow,
@@ -18,6 +19,8 @@ import {
     getTotalSizeOfAttachments,
     MAX_TOTAL_ATTACHMENT_SIZE_BYTES,
 } from 'common/utils/attachmentUtils';
+
+dayjs.extend(isBetween);
 
 export const hasValue = (v: any) => v !== '' && v !== undefined && v !== null;
 
@@ -111,13 +114,13 @@ export const validateUtenlandsoppholdNeste12Mnd = (utenlandsopphold: Utenlandsop
 
 const datoErInnenforTidsrom = (dato: Date, range: Partial<DateRange>): boolean => {
     if (range.from && range.to) {
-        return moment(dato).isBetween(range.from, range.to, 'days', '[]');
+        return dayjs(dato).isBetween(range.from, range.to, 'days', '[]');
     }
     if (range.from) {
-        return moment(dato).isSameOrAfter(range.from);
+        return dayjs(dato).isSameOrAfter(range.from);
     }
     if (range.to) {
-        return moment(dato).isSameOrBefore(range.to);
+        return dayjs(dato).isSameOrBefore(range.to);
     }
     return true;
 };
@@ -131,7 +134,7 @@ export const harLikeDager = (dager: FraværDelerAvDag[]): boolean => {
 };
 
 export const validateTomAfterFom = (fom: Date) => (date: Date) => {
-    if (moment(date).isBefore(fom)) {
+    if (dayjs(date).isBefore(fom)) {
         return createFieldValidationError(AppFieldValidationErrors.tom_er_før_fom);
     }
 };
@@ -165,7 +168,7 @@ export const validatePerioderMedFravær = (
 export const datesCollideWithDateRanges = (dates: Date[], ranges: DateRange[]): boolean => {
     if (ranges.length > 0 && dates.length > 0) {
         return dates.some((d) => {
-            return ranges.some((range) => moment(d).isSameOrAfter(range.from) && moment(d).isSameOrBefore(range.to));
+            return ranges.some((range) => dayjs(d).isSameOrAfter(range.from) && dayjs(d).isSameOrBefore(range.to));
         });
     }
     return false;

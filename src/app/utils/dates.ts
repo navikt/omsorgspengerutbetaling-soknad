@@ -1,3 +1,3 @@
-import moment from 'moment';
+import dayjs from 'dayjs';
 
-export const date3MonthsAgo = moment().subtract(3, 'months').toDate();
+export const date3MonthsAgo = dayjs().subtract(3, 'months').toDate();
