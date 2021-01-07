@@ -119,7 +119,11 @@ const IntroPage: React.FC = () => {
                             (erSelvstendigEllerFrilanser === YesOrNo.YES &&
                                 smittevernHensyn === YesOrNo.NO &&
                                 hjemmePgaStengt === YesOrNo.NO &&
-                                hjemmePgaSykdom === YesOrNo.YES &&
+                                hjemmePgaSykdom === YesOrNo.YES) ||
+                            (erSelvstendigEllerFrilanser === YesOrNo.YES &&
+                                smittevernHensyn === YesOrNo.NO &&
+                                hjemmePgaStengt === YesOrNo.NO &&
+                                hjemmePgaSykdom === YesOrNo.NO &&
                                 hjemmePgaKarantene === YesOrNo.YES);
 
                         const skalViseSmittevernSpørsmål = erSelvstendigEllerFrilanser === YesOrNo.YES;
@@ -136,7 +140,7 @@ const IntroPage: React.FC = () => {
                             erSelvstendigEllerFrilanser === YesOrNo.YES &&
                             smittevernHensyn === YesOrNo.NO &&
                             hjemmePgaStengt === YesOrNo.NO &&
-                            hjemmePgaSykdom === YesOrNo.YES;
+                            hjemmePgaSykdom === YesOrNo.NO;
 
                         const skalViseSmittevernInfo =
                             erSelvstendigEllerFrilanser === YesOrNo.YES && smittevernHensyn === YesOrNo.YES;
@@ -149,17 +153,8 @@ const IntroPage: React.FC = () => {
                             erSelvstendigEllerFrilanser === YesOrNo.YES &&
                             smittevernHensyn === YesOrNo.NO &&
                             hjemmePgaStengt === YesOrNo.NO &&
-                            hjemmePgaSykdom === YesOrNo.NO;
-
-                        const skalViseKanIkkeBrukeSøknadenInfoKarantene =
-                            erSelvstendigEllerFrilanser === YesOrNo.YES &&
-                            smittevernHensyn === YesOrNo.NO &&
-                            hjemmePgaStengt === YesOrNo.NO &&
-                            hjemmePgaSykdom === YesOrNo.YES &&
+                            hjemmePgaSykdom === YesOrNo.NO &&
                             hjemmePgaKarantene === YesOrNo.NO;
-
-                        const skalViseKanIkkeBrukeSøknaden =
-                            skalViseKanIkkeBrukeSøknadenInfo || skalViseKanIkkeBrukeSøknadenInfoKarantene;
 
                         return (
                             <PageForm.Form
@@ -167,7 +162,7 @@ const IntroPage: React.FC = () => {
                                 includeButtons={false}
                                 noButtonsContentRenderer={() => {
                                     return kanBrukeSøknaden ||
-                                        skalViseKanIkkeBrukeSøknaden ||
+                                        skalViseKanIkkeBrukeSøknadenInfo ||
                                         skalViseErIkkeFrilansEllerSelvstendigInfo ? null : (
                                         <UnansweredQuestionsInfo>
                                             <FormattedMessage id="page.form.ubesvarteSpørsmålInfo" />
@@ -238,7 +233,7 @@ const IntroPage: React.FC = () => {
                                     </Box>
                                 )}
 
-                                {skalViseKanIkkeBrukeSøknaden && (
+                                {skalViseKanIkkeBrukeSøknadenInfo && (
                                     <Box margin="xl">
                                         <AlertStripeInfo>
                                             <p style={{ marginTop: 0, marginBottom: 0 }}>
