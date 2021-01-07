@@ -1,4 +1,4 @@
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { FraværDelerAvDag, Periode } from '../../../@types/omsorgspengerutbetaling-schema';
 import { getPeriodeBoundaries } from '../periodeUtils';
 
@@ -7,10 +7,10 @@ describe('getPeriodeBoundaries', () => {
         expect(getPeriodeBoundaries([], [])).toEqual({ min: undefined, max: undefined });
     });
     describe('should return boundaries when', () => {
-        const date1 = moment().add(1, 'day').toDate();
-        const date2 = moment().add(2, 'day').toDate();
-        const date3 = moment().add(3, 'day').toDate();
-        const date4 = moment().add(4, 'day').toDate();
+        const date1 = dayjs().add(1, 'day').toDate();
+        const date2 = dayjs().add(2, 'day').toDate();
+        const date3 = dayjs().add(3, 'day').toDate();
+        const date4 = dayjs().add(4, 'day').toDate();
 
         const periode1: Periode = {
             fom: date1,
