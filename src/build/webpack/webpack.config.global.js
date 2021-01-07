@@ -4,8 +4,6 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const SpriteLoaderPlugin = require('svg-sprite-loader/plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 
-require('dotenv').config();
-
 const webpackConfig = {
     entry: {
         bundle: ['babel-polyfill', `${__dirname}/../../app/App.tsx`],
@@ -13,7 +11,7 @@ const webpackConfig = {
     output: {
         path: path.resolve(__dirname, './../../../dist'),
         filename: 'js/[name].js',
-        publicPath: `${process.env.PUBLIC_PATH}/dist`,
+        publicPath: `/familie/sykdom-i-familien/soknad/omsorgspengerutbetaling/dist`,
     },
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.json', '.jsx'],
