@@ -1,24 +1,27 @@
-import moment, { Moment } from 'moment';
-import { FraværDelerAvDag, Periode } from '../../@types/omsorgspengerutbetaling-schema';
-import { FieldValidationResult } from 'common/validation/types';
+import dayjs, { Dayjs } from 'dayjs';
+import minMax from 'dayjs/plugin/minMax';
 import { createFieldValidationError } from 'common/validation/fieldValidations';
+import { FieldValidationResult } from 'common/validation/types';
+import { FraværDelerAvDag, Periode } from '../../@types/omsorgspengerutbetaling-schema';
 import { AppFieldValidationErrors } from '../validation/fieldValidations';
+
+dayjs.extend(minMax);
 
 export const getPeriodeBoundaries = (
     perioderMedFravær: Periode[],
     dagerMedFravær: FraværDelerAvDag[]
 ): { min?: Date; max?: Date } => {
-    let min: Moment | undefined;
-    let max: Moment | undefined;
+    let min: Dayjs | undefined;
+    let max: Dayjs | undefined;
 
     perioderMedFravær.forEach((p) => {
-        min = min ? moment.min(moment(p.fom), min) : moment(p.fom);
-        max = max ? moment.max(moment(p.tom), max) : moment(p.tom);
+        min = min ? dayjs.min(dayjs(p.fom), min) : dayjs(p.fom);
+        max = max ? dayjs.max(dayjs(p.tom), max) : dayjs(p.tom);
     });
 
     dagerMedFravær.forEach((d) => {
-        min = min ? moment.min(moment(d.dato), min) : moment(d.dato);
-        max = max ? moment.max(moment(d.dato), max) : moment(d.dato);
+        min = min ? dayjs.min(dayjs(d.dato), min) : dayjs(d.dato);
+        max = max ? dayjs.max(dayjs(d.dato), max) : dayjs(d.dato);
     });
 
     return {

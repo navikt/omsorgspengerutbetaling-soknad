@@ -1,14 +1,19 @@
 import React from 'react';
+import { useIntl } from 'react-intl';
+import Box from '@navikt/sif-common-core/lib/components/box/Box';
 import { apiStringDateToDate, dateToday } from '@navikt/sif-common-core/lib/utils/dateUtils';
-import moment from 'moment';
+import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
+import dayjs from 'dayjs';
+import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 import SummaryList from 'common/components/summary-list/SummaryList';
 import { UtenlandsoppholdApiData } from '../../../types/SøknadApiData';
+import JaNeiSvar from './JaNeiSvar';
 import { renderUtenlandsoppholdIPeriodenSummary } from './renderUtenlandsoppholdSummary';
 import SummaryBlock from './SummaryBlock';
-import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
-import { useIntl } from 'react-intl';
-import JaNeiSvar from './JaNeiSvar';
-import Box from '@navikt/sif-common-core/lib/components/box/Box';
+
+dayjs.extend(isSameOrBefore);
+dayjs.extend(isSameOrAfter);
 
 export interface Props {
     bosteder: UtenlandsoppholdApiData[];
@@ -18,8 +23,8 @@ const MedlemskapSummaryView = (props: Props) => {
     const { bosteder } = props;
     const intl = useIntl();
 
-    const bostederSiste12 = bosteder.filter((b) => moment(apiStringDateToDate(b.tilOgMed)).isSameOrBefore(dateToday));
-    const bostederNeste12 = bosteder.filter((b) => moment(apiStringDateToDate(b.tilOgMed)).isSameOrAfter(dateToday));
+    const bostederSiste12 = bosteder.filter((b) => dayjs(apiStringDateToDate(b.tilOgMed)).isSameOrBefore(dateToday));
+    const bostederNeste12 = bosteder.filter((b) => dayjs(apiStringDateToDate(b.tilOgMed)).isSameOrAfter(dateToday));
     return (
         <>
             <SummaryBlock header={intlHelper(intl, 'steg.oppsummering.utlandetSiste12.header')}>

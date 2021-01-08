@@ -25,6 +25,10 @@ spec:
         requests:
             cpu: 50m
             memory: 128Mi
+    accessPolicy:
+        outbound:
+            external:
+            - host: www.nav.no
     ingresses:
         - https://www-q0.nav.no/familie/sykdom-i-familien/soknad/omsorgspengerutbetaling
         - https://omsorgspengerutbetaling.nais.oera-q.local
@@ -38,8 +42,8 @@ spec:
     vault:
         enabled: false
     env:
-        - name: APPRES_CMS_URL
-          value: http://appres.nav.no
+        - name: DECORATOR_URL
+          value: https://dekoratoren.dev.nav.no/?simple=true&chatbot=false
         - name: API_URL
           value: https://omsorgspengerutbetalingsoknad-api-q.nav.no
         - name: PUBLIC_PATH
