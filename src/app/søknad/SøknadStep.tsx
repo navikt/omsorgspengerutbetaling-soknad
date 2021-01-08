@@ -31,6 +31,7 @@ const SøknadStep: React.FunctionComponent<Props> = (props: Props) => {
     const intl = useIntl();
     const { children, onValidFormSubmit, showButtonSpinner, buttonDisabled, id, cleanupStep } = props;
     const stepConfig = getStepConfig(formik.values);
+
     const texts = getStepTexts(intl, id, stepConfig);
 
     const handleAvsluttOgFortsettSenere = () => {
