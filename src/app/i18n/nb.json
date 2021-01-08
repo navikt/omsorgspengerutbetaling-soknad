@@ -333,7 +333,8 @@
     "steg.intro.info.3": "Du kan søke om omsorgspenger når du har vært hjemme fra jobb fordi",
     "steg.intro.info.4": "barnet eller barnepasser er syk",
     "steg.intro.info.5": "barnehagen eller skolen er stengt på grunn av koronaviruset",
-    "steg.intro.info.6": "barnet ikke kan gå i barnehage eller skole når disse åpnes igjen, på grunn av særlige smittevernhensyn",
+    "steg.intro.info.6": "barnet ikke kan gå i barnehage/skole/SFO på grunn av særlige smittevernhensyn",
+    "steg.intro.info.6.1": "barnet er i karantene på grunn av koronaviruset",
     "steg.intro.info.7.1": "Vær oppmerksom på at om du har søkt om ",
     "steg.intro.info.7.2": "kompensasjon for tapt inntekt som selvstendig næringsdrivende og/eller frilanser",
     "steg.intro.info.7.3": ", kan du ikke søke om omsorgspenger for samme periode.",
@@ -347,6 +348,8 @@
     "steg.intro.form.spm.hjemmePgaStengt.2021": "Har du vært hjemme fra jobb fordi barnehage/skole/SFO har vært stengt på grunn av koronaviruset?",
 
     "steg.intro.form.spm.hjemmePgaSykdom": "Har du vært hjemme fra jobb fordi barnet eller barnepasser er blitt syk?",
+    "steg.intro.form.spm.hjemmePgaKarantene": "Har du vært hjemme fra jobb fordi barnet har vært i karantene på grunn av koronaviruset?",
+
     "steg.intro.søknadGjelderKunFor.1.html": "Denne søknaden gjelder <strong>kun for selvstendig næringsdrivende og frilansere</strong> som skal søke om utbetaling av omsorgspenger.",
     "steg.intro.søknadGjelderKunFor.2.html": "Hvis du er <strong>arbeidstaker</strong>, skal du ikke søke om utbetaling av omsorgspenger. Arbeidsgiveren din skal utbetale deg lønn som vanlig de dagene du tar ut omsorgsdager.",
     "steg.intro.kanIkkeBrukeSøknad.html": "Du kan <strong>kun</strong> bruke denne søknaden hvis du er hjemme fra jobb på grunn av én av situasjonene beskrevet over.",
