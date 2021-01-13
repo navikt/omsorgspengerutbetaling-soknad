@@ -67,7 +67,7 @@
         "react-collapse": "^5.1.0",
         "react-day-picker": "^7.4.8",
         "react-dom": "^17.0.1",
-        "react-intl": "^5.10.13",
+        "react-intl": "^5.10.16",
         "react-modal": "^3.12.1",
         "react-router-dom": "^5.2.0",
         "react-simple-timefield": "^3.2.3",
