@@ -1,5 +1,12 @@
 import * as React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
+import Box from '@navikt/sif-common-core/lib/components/box/Box';
+import CounsellorPanel from '@navikt/sif-common-core/lib/components/counsellor-panel/CounsellorPanel';
+import ExpandableInfo from '@navikt/sif-common-core/lib/components/expandable-content/ExpandableInfo';
+import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
+import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
+import { date1YearAgo, date1YearFromNow, dateToday } from '@navikt/sif-common-core/lib/utils/dateUtils';
+import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import {
     validateRequiredList,
     validateYesOrNoIsAnswered,
@@ -11,25 +18,18 @@ import FraværPerioderListAndDialog from '@navikt/sif-common-forms/lib/fravær/F
 import { validateAll } from '@navikt/sif-common-forms/lib/fravær/fraværValidationUtils';
 import { useFormikContext } from 'formik';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
-import CounsellorPanel from 'common/components/counsellor-panel/CounsellorPanel';
-import ExpandableInfo from 'common/components/expandable-content/ExpandableInfo';
-import FormBlock from 'common/components/form-block/FormBlock';
-import { YesOrNo } from 'common/types/YesOrNo';
-import { date1YearAgo, date1YearFromNow, dateToday } from 'common/utils/dateUtils';
-import intlHelper from 'common/utils/intlUtils';
 import SmittevernInfo from '../../components/information/SmittevernInfo';
 import { StepConfigProps, StepID } from '../../config/stepConfig';
 import { AndreUtbetalinger } from '../../types/AndreUtbetalinger';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
+import { isCurrentDateBefore2021 } from '../../utils/checkDate2021';
+import { Feature, isFeatureEnabled } from '../../utils/featureToggleUtils';
 import { GYLDIG_TIDSROM } from '../../validation/constants';
 import SøknadFormComponents from '../SøknadFormComponents';
 import SøknadStep from '../SøknadStep';
 import './periodeStep.less';
-import Box from '@navikt/sif-common-core/lib/components/box/Box';
-import { Feature, isFeatureEnabled } from '../../utils/featureToggleUtils';
-import { isCurrentDateBefore2021 } from 'app/utils/checkDate2021';
 
-const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }: StepConfigProps) => {
+const PeriodeStep = ({ onValidSubmit }: StepConfigProps) => {
     const { values } = useFormikContext<SøknadFormData>();
     const { harPerioderMedFravær, harDagerMedDelvisFravær, perioder_harVærtIUtlandet } = values;
 

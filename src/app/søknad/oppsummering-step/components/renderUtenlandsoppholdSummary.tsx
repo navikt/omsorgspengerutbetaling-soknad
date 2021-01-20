@@ -1,6 +1,6 @@
 import React from 'react';
-import { apiStringDateToDate, prettifyDateExtended } from 'common/utils/dateUtils';
-import bemUtils from 'common/utils/bemUtils';
+import { apiStringDateToDate, prettifyDateExtended } from '@navikt/sif-common-core/lib/utils/dateUtils';
+import bemUtils from '@navikt/sif-common-core/lib/utils/bemUtils';
 
 import './utenlandsoppholdSummaryItem.less';
 import { UtenlandsoppholdApiData } from '../../../types/SøknadApiData';

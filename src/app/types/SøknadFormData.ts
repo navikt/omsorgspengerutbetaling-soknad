@@ -2,8 +2,8 @@ import { Utenlandsopphold } from '@navikt/sif-common-forms/lib//utenlandsopphold
 import { Fosterbarn } from '@navikt/sif-common-forms/lib/fosterbarn/types';
 import { FraværDag, FraværPeriode } from '@navikt/sif-common-forms/lib/fravær';
 import { Virksomhet } from '@navikt/sif-common-forms/lib/virksomhet/types';
-import { Attachment } from 'common/types/Attachment';
-import { YesOrNo } from 'common/types/YesOrNo';
+import { Attachment } from '@navikt/sif-common-core/lib/types/Attachment';
+import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
 import { FraværDelerAvDag, Periode } from '../../@types/omsorgspengerutbetaling-schema';
 import { AndreUtbetalinger } from './AndreUtbetalinger';
 

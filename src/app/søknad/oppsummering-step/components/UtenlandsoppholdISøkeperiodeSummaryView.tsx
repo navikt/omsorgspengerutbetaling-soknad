@@ -1,7 +1,7 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
-import SummaryList from 'common/components/summary-list/SummaryList';
-import intlHelper from 'common/utils/intlUtils';
+import SummaryList from '@navikt/sif-common-core/lib/components/summary-list/SummaryList';
+import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import { UtenlandsoppholdApiData } from '../../../types/SøknadApiData';
 import { renderUtenlandsoppholdIPeriodenSummary } from './renderUtenlandsoppholdSummary';
 import SummaryBlock from './SummaryBlock';

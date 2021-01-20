@@ -3,10 +3,10 @@ import { Locale } from '@navikt/sif-common-core/lib/types/Locale';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import { Utenlandsopphold, Virksomhet } from '@navikt/sif-common-forms/lib';
 import { FraværDag, FraværPeriode } from '@navikt/sif-common-forms/lib/fravær';
-import { YesOrNo } from 'common/types/YesOrNo';
-import { attachmentUploadHasFailed } from 'common/utils/attachmentUtils';
-import { formatDateToApiFormat } from 'common/utils/dateUtils';
-import { decimalTimeToTime, timeToIso8601Duration } from 'common/utils/timeUtils';
+import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
+import { attachmentUploadHasFailed } from '@navikt/sif-common-core/lib/utils/attachmentUtils';
+import { formatDateToApiFormat } from '@navikt/sif-common-core/lib/utils/dateUtils';
+import { decimalTimeToTime, timeToIso8601Duration } from '@navikt/sif-common-core/lib/utils/timeUtils';
 import {
     SøknadApiData,
     UtbetalingsperiodeApi,

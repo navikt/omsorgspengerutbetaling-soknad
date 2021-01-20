@@ -1,9 +1,9 @@
 import React from 'react';
 import { FormattedMessage, IntlShape, useIntl } from 'react-intl';
-import Box from 'common/components/box/Box';
-import SummaryList from 'common/components/summary-list/SummaryList';
-import TextareaSummary from 'common/components/textarea-summary/TextareaSummary';
-import intlHelper from 'common/utils/intlUtils';
+import Box from '@navikt/sif-common-core/lib/components/box/Box';
+import SummaryList from '@navikt/sif-common-core/lib/components/summary-list/SummaryList';
+import TextareaSummary from '@navikt/sif-common-core/lib/components/textarea-summary/TextareaSummary';
+import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import SummarySection from '../../../components/summary-section/SummarySection';
 import { VirksomhetApiData } from '../../../types/SøknadApiData';
 import { harFiskerNæringstype } from '../../../utils/formToApiMaps/mapVirksomhetToApiData';

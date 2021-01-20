@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { FormikValidateFunction } from '@navikt/sif-common-formik/lib';
 import { ArrayHelpers, useFormikContext } from 'formik';
-import { Attachment, PersistedFile } from 'common/types/Attachment';
+import { Attachment, PersistedFile } from '@navikt/sif-common-core/lib/types/Attachment';
 import {
     attachmentShouldBeProcessed,
     attachmentShouldBeUploaded,
@@ -10,7 +10,7 @@ import {
     isFileObject,
     mapFileToPersistedFile,
     VALID_EXTENSIONS,
-} from 'common/utils/attachmentUtils';
+} from '@navikt/sif-common-core/lib/utils/attachmentUtils';
 import { uploadFile } from '../../api/api';
 import SøknadFormComponents from '../../søknad/SøknadFormComponents';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
@@ -31,7 +31,7 @@ interface FormikFileUploader {
 
 type Props = FormikFileUploader;
 
-const FormikFileUploader: React.FunctionComponent<Props> = ({
+const FormikFileUploader = ({
     name,
     onFileInputClick,
     onErrorUploadingAttachments,

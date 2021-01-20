@@ -2,13 +2,13 @@ import * as React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Ingress, Systemtittel } from 'nav-frontend-typografi';
 import Veilederpanel from 'nav-frontend-veilederpanel';
-import Box from 'common/components/box/Box';
-import Page from 'common/components/page/Page';
-import intlHelper from 'common/utils/intlUtils';
+import Box from '@navikt/sif-common-core/lib/components/box/Box';
+import Page from '@navikt/sif-common-core/lib/components/page/Page';
+import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import VeilederLokal from './VeilederLokal';
 import './generalErrorPage.less';
 
-const GeneralErrorPage: React.FunctionComponent = () => {
+const GeneralErrorPage = () => {
     const intl = useIntl();
     return (
         <Page title={intlHelper(intl, 'page.generalErrorPage.sidetittel')}>

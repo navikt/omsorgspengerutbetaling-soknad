@@ -1,4 +1,4 @@
-import { Locale } from 'common/types/Locale';
+import { Locale } from '@navikt/sif-common-core/lib/types/Locale';
 
 export interface AppState {
     locale: Locale;

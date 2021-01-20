@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import { Route, Switch } from 'react-router-dom';
 import AppStatusWrapper from '@navikt/sif-common-core/lib/components/app-status-wrapper/AppStatusWrapper';
 import Modal from 'nav-frontend-modal';
-import { Locale } from 'common/types/Locale';
+import { Locale } from '@navikt/sif-common-core/lib/types/Locale';
 import ApplicationWrapper from './components/application-wrapper/ApplicationWrapper';
 import IntroPage from './components/pages/intro-page/IntroPage';
 import UnavailablePage from './components/pages/unavailable-page/UnavailablePage';
@@ -12,7 +12,6 @@ import Søknad from './søknad/Søknad';
 import appSentryLogger from './utils/appSentryLogger';
 import { getEnvironmentVariable } from './utils/envUtils';
 import { getLocaleFromSessionStorage, setLocaleInSessionStorage } from './utils/localeUtils';
-import 'common/styles/globalStyles.less';
 import './styles/app.less';
 
 appSentryLogger.init();
@@ -27,7 +26,7 @@ const getAppStatusSanityConfig = () => {
 
 const APPLICATION_KEY = 'omsorgspengerutbetaling';
 
-const App: React.FunctionComponent = () => {
+const App = () => {
     const [locale, setLocale] = React.useState<Locale>(localeFromSessionStorage);
     const appStatusSanityConfig = getAppStatusSanityConfig();
 

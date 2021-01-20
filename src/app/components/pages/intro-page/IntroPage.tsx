@@ -7,15 +7,15 @@ import { commonFieldErrorRenderer } from '@navikt/sif-common-core/lib/utils/comm
 import { getTypedFormComponents, UnansweredQuestionsInfo, YesOrNo } from '@navikt/sif-common-formik/lib';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import Lenke from 'nav-frontend-lenker';
-import Box from 'common/components/box/Box';
-import InformationPoster from 'common/components/information-poster/InformationPoster';
-import Page from 'common/components/page/Page';
-import StepBanner from 'common/components/step-banner/StepBanner';
-import bemUtils from 'common/utils/bemUtils';
-import intlHelper from 'common/utils/intlUtils';
+import Box from '@navikt/sif-common-core/lib/components/box/Box';
+import InformationPoster from '@navikt/sif-common-core/lib/components/information-poster/InformationPoster';
+import Page from '@navikt/sif-common-core/lib/components/page/Page';
+import StepBanner from '@navikt/sif-common-core/lib/components/step-banner/StepBanner';
+import bemUtils from '@navikt/sif-common-core/lib/utils/bemUtils';
+import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import RouteConfig, { getRouteUrl } from '../../../config/routeConfig';
 import SmittevernInfo from '../../information/SmittevernInfo';
-import Knappelenke from 'common/components/knappelenke/Knappelenke';
+import Knappelenke from '@navikt/sif-common-core/lib/components/knappelenke/Knappelenke';
 import './introPage.less';
 import { isCurrentDateBefore2021 } from '../../../utils/checkDate2021';
 

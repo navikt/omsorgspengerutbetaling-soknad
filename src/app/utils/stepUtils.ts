@@ -1,6 +1,6 @@
 import { IntlShape } from 'react-intl';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
-import { StepConfigInterface, StepConfigItemTexts, StepID } from 'app/config/stepConfig';
+import { StepConfigInterface, StepConfigItemTexts, StepID } from '../config/stepConfig';
 import { SøknadFormData } from '../types/SøknadFormData';
 import {
     barnStepIsValid,

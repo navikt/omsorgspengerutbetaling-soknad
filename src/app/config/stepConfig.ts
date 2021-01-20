@@ -1,4 +1,4 @@
-import { YesOrNo } from 'common/types/YesOrNo';
+import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
 import { SøknadFormData } from '../types/SøknadFormData';
 import { getSøknadRoute } from '../utils/routeUtils';
 import routeConfig from './routeConfig';

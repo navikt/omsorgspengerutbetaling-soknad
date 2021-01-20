@@ -6,7 +6,7 @@ import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import dayjs from 'dayjs';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
-import SummaryList from 'common/components/summary-list/SummaryList';
+import SummaryList from '@navikt/sif-common-core/lib/components/summary-list/SummaryList';
 import { UtenlandsoppholdApiData } from '../../../types/SøknadApiData';
 import JaNeiSvar from './JaNeiSvar';
 import { renderUtenlandsoppholdIPeriodenSummary } from './renderUtenlandsoppholdSummary';

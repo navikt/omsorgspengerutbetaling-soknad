@@ -1,6 +1,6 @@
 import { Næringstype } from '@navikt/sif-common-forms/lib';
-import { ApiStringDate } from 'common/types/ApiStringDate';
-import { Locale } from 'common/types/Locale';
+import { ApiStringDate } from '@navikt/sif-common-core/lib/types/ApiStringDate';
+import { Locale } from '@navikt/sif-common-core/lib/types/Locale';
 import { AndreUtbetalinger } from './AndreUtbetalinger';
 
 export type ISO8601Duration = string;

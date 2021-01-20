@@ -1,5 +1,5 @@
 import React from 'react';
-import Box from 'common/components/box/Box';
+import Box from '@navikt/sif-common-core/lib/components/box/Box';
 import { YesNoSpørsmålOgSvar } from '../../../types/SøknadApiData';
 import JaNeiSvar from './JaNeiSvar';
 import SummaryBlock from './SummaryBlock';

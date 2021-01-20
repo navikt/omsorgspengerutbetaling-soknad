@@ -1,4 +1,4 @@
-import { YesOrNo } from 'common/types/YesOrNo';
+import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import { legeerklæringStepIsValid, medlemskapStepIsValid, welcomingPageIsValid } from '../stepValidations';
 

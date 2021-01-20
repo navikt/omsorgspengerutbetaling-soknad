@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { Sidetittel } from 'nav-frontend-typografi';
-import Box from 'common/components/box/Box';
-import FrontPageBanner from 'common/components/front-page-banner/FrontPageBanner';
-import Page from 'common/components/page/Page';
-import bemHelper from 'common/utils/bemUtils';
-import intlHelper from 'common/utils/intlUtils';
+import Box from '@navikt/sif-common-core/lib/components/box/Box';
+import FrontPageBanner from '@navikt/sif-common-core/lib/components/front-page-banner/FrontPageBanner';
+import Page from '@navikt/sif-common-core/lib/components/page/Page';
+import bemHelper from '@navikt/sif-common-core/lib/utils/bemUtils';
+import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import { StepConfigProps } from '../../../config/stepConfig';
 import BehandlingAvPersonopplysningerModal from '../../information/behandling-av-personopplysninger-modal/BehandlingAvPersonopplysningerModal';
 import DinePlikterModal from '../../information/dine-plikter-modal/DinePlikterModal';

@@ -1,8 +1,8 @@
 import React from 'react';
 import SummaryList from '@navikt/sif-common-core/lib/components/summary-list/SummaryList';
-import { Time } from 'common/types/Time';
-import { apiStringDateToDate, prettifyDate, prettifyDateExtended } from 'common/utils/dateUtils';
-import { iso8601DurationToTime, timeToDecimalTime } from 'common/utils/timeUtils';
+import { Time } from '@navikt/sif-common-core/lib/types/Time';
+import { apiStringDateToDate, prettifyDate, prettifyDateExtended } from '@navikt/sif-common-core/lib/utils/dateUtils';
+import { iso8601DurationToTime, timeToDecimalTime } from '@navikt/sif-common-core/lib/utils/timeUtils';
 import { UtbetalingsperiodeApi } from '../../../types/SøknadApiData';
 import SummaryBlock from './SummaryBlock';
 import { timeText } from '@navikt/sif-common-forms/lib/fravær';

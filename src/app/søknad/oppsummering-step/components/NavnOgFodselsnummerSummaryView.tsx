@@ -1,7 +1,7 @@
 import React from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
-import Box from 'common/components/box/Box';
-import { formatName } from 'common/utils/personUtils';
+import Box from '@navikt/sif-common-core/lib/components/box/Box';
+import { formatName } from '@navikt/sif-common-core/lib/utils/personUtils';
 
 export interface Props {
     fornavn: string;

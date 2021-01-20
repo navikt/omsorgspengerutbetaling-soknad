@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { useIntl } from 'react-intl';
-import LoadingSpinner from 'common/components/loading-spinner/LoadingSpinner';
-import Page from 'common/components/page/Page';
-import intlHelper from 'common/utils/intlUtils';
+import LoadingSpinner from '@navikt/sif-common-core/lib/components/loading-spinner/LoadingSpinner';
+import Page from '@navikt/sif-common-core/lib/components/page/Page';
+import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 
-const LoadingPage: React.FunctionComponent = () => {
+const LoadingPage = () => {
     const intl = useIntl();
     return (
         <Page title={intlHelper(intl, 'page.loadingPage.tekst')}>
