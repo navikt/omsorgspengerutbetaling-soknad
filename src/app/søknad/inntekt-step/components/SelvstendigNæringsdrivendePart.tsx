@@ -4,9 +4,12 @@ import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlo
 import ResponsivePanel from '@navikt/sif-common-core/lib/components/responsive-panel/ResponsivePanel';
 import VirksomhetListAndDialog from '@navikt/sif-common-forms/lib/virksomhet/VirksomhetListAndDialog';
 import { useFormikContext } from 'formik';
-import { YesOrNo } from 'common/types/YesOrNo';
-import intlHelper from 'common/utils/intlUtils';
-import { validateRequiredList, validateYesOrNoIsAnswered } from 'common/validation/fieldValidations';
+import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
+import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
+import {
+    validateRequiredList,
+    validateYesOrNoIsAnswered,
+} from '@navikt/sif-common-core/lib/validation/fieldValidations';
 import { StepID } from '../../../config/stepConfig';
 import { SøknadFormData, SøknadFormField } from '../../../types/SøknadFormData';
 import { Feature, isFeatureEnabled } from '../../../utils/featureToggleUtils';
@@ -17,7 +20,7 @@ interface Props {
     formValues: SøknadFormData;
 }
 
-const SelvstendigNæringsdrivendeFormPart: React.FunctionComponent<Props> = ({ formValues }: Props) => {
+const SelvstendigNæringsdrivendeFormPart = ({ formValues }: Props) => {
     const intl = useIntl();
     const { values } = useFormikContext<SøknadFormData>();
     return (

@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import LanguageToggle from '@navikt/sif-common-core/lib/components/language-toggle/LanguageToggle';
+import ApplicationMessages from '@navikt/sif-common-core/lib/dev-utils/intl/application-messages/ApplicationMessages';
+import { Locale } from '@navikt/sif-common-core/lib/types/Locale';
 import { Normaltekst } from 'nav-frontend-typografi';
-import ApplicationMessages from 'common/dev-utils/intl/application-messages/ApplicationMessages';
-import { Locale } from 'common/types/Locale';
 import { Søkerdata } from '../../types/Søkerdata';
 import { getEnvironmentVariable } from '../../utils/envUtils';
 import { Feature, isFeatureEnabled } from '../../utils/featureToggleUtils';

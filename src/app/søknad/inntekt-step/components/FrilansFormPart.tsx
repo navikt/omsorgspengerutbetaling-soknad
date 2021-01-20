@@ -2,12 +2,15 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
 import { PopoverOrientering } from 'nav-frontend-popover';
-import Box from 'common/components/box/Box';
-import ResponsivePanel from 'common/components/responsive-panel/ResponsivePanel';
-import { YesOrNo } from 'common/types/YesOrNo';
-import { dateToday } from 'common/utils/dateUtils';
-import intlHelper from 'common/utils/intlUtils';
-import { validateRequiredField, validateYesOrNoIsAnswered } from 'common/validation/fieldValidations';
+import Box from '@navikt/sif-common-core/lib/components/box/Box';
+import ResponsivePanel from '@navikt/sif-common-core/lib/components/responsive-panel/ResponsivePanel';
+import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
+import { dateToday } from '@navikt/sif-common-core/lib/utils/dateUtils';
+import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
+import {
+    validateRequiredField,
+    validateYesOrNoIsAnswered,
+} from '@navikt/sif-common-core/lib/validation/fieldValidations';
 import { SøknadFormData, SøknadFormField } from '../../../types/SøknadFormData';
 import SøknadFormComponents from '../../SøknadFormComponents';
 import FrilansEksempeltHtml from './FrilansEksempelHtml';
@@ -17,7 +20,7 @@ interface Props {
     formValues: SøknadFormData;
 }
 
-const FrilansFormPart: React.FunctionComponent<Props> = ({ formValues }: Props) => {
+const FrilansFormPart = ({ formValues }: Props) => {
     const harHattInntektSomFrilanser = formValues[SøknadFormField.frilans_harHattInntektSomFrilanser] === YesOrNo.YES;
     const intl = useIntl();
     return (

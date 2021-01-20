@@ -4,7 +4,7 @@ interface Props {
     children: React.ReactNode;
 }
 
-const Sitat: React.FunctionComponent<Props> = ({ children }: Props) => (
+const Sitat = ({ children }: Props) => (
     <span
         style={{
             display: 'block',

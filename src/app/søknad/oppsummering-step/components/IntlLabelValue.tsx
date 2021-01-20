@@ -1,7 +1,7 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
-import bemUtils from 'common/utils/bemUtils';
-import intlHelper from 'common/utils/intlUtils';
+import bemUtils from '@navikt/sif-common-core/lib/utils/bemUtils';
+import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 
 interface Props {
     children: React.ReactNode;
@@ -10,7 +10,7 @@ interface Props {
 
 const bem = bemUtils('summaryLabelValue');
 
-const IntlLabelValue: React.FunctionComponent<Props> = ({ labelKey: intlLabelKey, children }: Props) => {
+const IntlLabelValue = ({ labelKey: intlLabelKey, children }: Props) => {
     const intl = useIntl();
     return (
         <div className={bem.block}>

@@ -1,7 +1,7 @@
 import dayjs, { Dayjs } from 'dayjs';
 import minMax from 'dayjs/plugin/minMax';
-import { createFieldValidationError } from 'common/validation/fieldValidations';
-import { FieldValidationResult } from 'common/validation/types';
+import { createFieldValidationError } from '@navikt/sif-common-core/lib/validation/fieldValidations';
+import { FieldValidationResult } from '@navikt/sif-common-core/lib/validation/types';
 import { FraværDelerAvDag, Periode } from '../../@types/omsorgspengerutbetaling-schema';
 import { AppFieldValidationErrors } from '../validation/fieldValidations';
 

@@ -1,7 +1,7 @@
 import datepickerUtils from '@navikt/sif-common-formik/lib/components/formik-datepicker/datepickerUtils';
 import { Utenlandsopphold, Virksomhet } from '@navikt/sif-common-forms/lib';
 import { FraværDag, FraværPeriode } from '@navikt/sif-common-forms/lib/fravær';
-import { YesOrNo } from 'common/types/YesOrNo';
+import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
 import { BarnStepQuestions } from '../søknad/barn-step/config';
 import { frilansIsValid, selvstendigIsValid } from '../søknad/inntekt-step/inntektStepConfig';
 import {

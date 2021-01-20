@@ -7,9 +7,9 @@ import bostedUtlandMessages from '@navikt/sif-common-forms/lib/bosted-utland/bos
 import fosterbarnMessages from '@navikt/sif-common-forms/lib/fosterbarn/fosterbarnMessages';
 import fraværMessages from '@navikt/sif-common-forms/lib/fravær/fraværMessages';
 import virksomhetMessages from '@navikt/sif-common-forms/lib/virksomhet/virksomhetMessages';
-import MessagesPreview from 'common/dev-utils/intl/messages-preview/MessagesPreview';
-import { allCommonMessages } from 'common/i18n/allCommonMessages';
-import { Locale } from 'common/types/Locale';
+import MessagesPreview from '@navikt/sif-common-core/lib/dev-utils/intl/messages-preview/MessagesPreview';
+import { allCommonMessages } from '@navikt/sif-common-core/lib/i18n/allCommonMessages';
+import { Locale } from '@navikt/sif-common-core/lib/types/Locale';
 
 export const appBokmålstekster = require('../../i18n/nb.json');
 export const appNynorsktekster = require('../../i18n/nn.json');
@@ -43,7 +43,7 @@ export interface IntlProviderProps {
 
 const showMessages = false;
 
-const IntlProvider: React.FunctionComponent<IntlProviderProps> = ({ locale, children, onError }: IntlProviderProps) => {
+const IntlProvider = ({ locale, children, onError }: IntlProviderProps) => {
     const messages = locale === 'nb' ? bokmålstekster : nynorsktekster;
     return (
         <Provider locale={locale} messages={messages} onError={onError}>

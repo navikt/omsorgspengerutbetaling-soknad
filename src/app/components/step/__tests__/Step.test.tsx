@@ -1,7 +1,7 @@
 import { render, RenderResult } from '@testing-library/react';
 import * as React from 'react';
 import { MemoryRouter } from 'react-router';
-import IntlProvider from 'app/components/intl-provider/IntlProvider';
+import IntlProvider from '../../../components/intl-provider/IntlProvider';
 import { getStepConfig, StepID } from '../../../config/stepConfig';
 import Step from '../Step';
 

@@ -8,17 +8,17 @@ import {
     DateRange,
     dateRangesCollide,
     dateRangesExceedsRange,
-} from 'common/utils/dateUtils';
-import { createFieldValidationError } from 'common/validation/fieldValidations';
-import { FieldValidationResult } from 'common/validation/types';
+} from '@navikt/sif-common-core/lib/utils/dateUtils';
+import { createFieldValidationError } from '@navikt/sif-common-core/lib/validation/fieldValidations';
+import { FieldValidationResult } from '@navikt/sif-common-core/lib/validation/types';
 import { FraværDelerAvDag, Periode } from '../../@types/omsorgspengerutbetaling-schema';
 import { datesCollide } from './dateValidationUtils';
-import { Attachment } from 'common/types/Attachment';
+import { Attachment } from '@navikt/sif-common-core/lib/types/Attachment';
 import {
     attachmentHasBeenUploaded,
     getTotalSizeOfAttachments,
     MAX_TOTAL_ATTACHMENT_SIZE_BYTES,
-} from 'common/utils/attachmentUtils';
+} from '@navikt/sif-common-core/lib/utils/attachmentUtils';
 
 dayjs.extend(isBetween);
 

@@ -1,6 +1,6 @@
 import datepickerUtils from '@navikt/sif-common-formik/lib/components/formik-datepicker/datepickerUtils';
-import { YesOrNo } from 'common/types/YesOrNo';
-import { formatDateToApiFormat } from 'common/utils/dateUtils';
+import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
+import { formatDateToApiFormat } from '@navikt/sif-common-core/lib/utils/dateUtils';
 import { Frilans } from '../../types/SøknadApiData';
 
 export const mapFrilansToApiData = (

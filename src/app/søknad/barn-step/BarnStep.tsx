@@ -6,7 +6,7 @@ import {
 import { YesOrNo } from '@navikt/sif-common-formik/lib';
 import FosterbarnListAndDialog from '@navikt/sif-common-forms/lib/fosterbarn/FosterbarnListAndDialog';
 import { useFormikContext } from 'formik';
-import FormBlock from 'common/components/form-block/FormBlock';
+import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
 import { StepConfigProps, StepID } from '../../config/stepConfig';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import SøknadFormComponents from '../SøknadFormComponents';

@@ -2,12 +2,12 @@ import * as React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import Lenke from 'nav-frontend-lenker';
 import { Ingress, Innholdstittel } from 'nav-frontend-typografi';
-import Box from 'common/components/box/Box';
-import CheckmarkIcon from 'common/components/checkmark-icon/CheckmarkIcon';
-import Page from 'common/components/page/Page';
-import bemUtils from 'common/utils/bemUtils';
-import intlHelper from 'common/utils/intlUtils';
-import getLenker from 'app/lenker';
+import Box from '@navikt/sif-common-core/lib/components/box/Box';
+import CheckmarkIcon from '@navikt/sif-common-core/lib/components/checkmark-icon/CheckmarkIcon';
+import Page from '@navikt/sif-common-core/lib/components/page/Page';
+import bemUtils from '@navikt/sif-common-core/lib/utils/bemUtils';
+import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
+import getLenker from '../../../lenker';
 import './confirmationPage.less';
 
 const bem = bemUtils('confirmationPage');
