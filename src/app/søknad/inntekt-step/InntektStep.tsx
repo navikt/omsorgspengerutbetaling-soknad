@@ -16,14 +16,14 @@ import SøknadStep from '../SøknadStep';
 import FrilansFormPart from './components/FrilansFormPart';
 import SelvstendigNæringsdrivendeFormPart from './components/SelvstendigNæringsdrivendePart';
 
-const shouldShowSubmitButton = (søknadFormData: SøknadFormData) => {
+const shouldShowSubmitButton = (søknadFormData: SøknadFormData): boolean => {
     const harHattInntektSomFrilanser: YesOrNo = søknadFormData[SøknadFormField.frilans_harHattInntektSomFrilanser];
     const harHattInntektSomSN: YesOrNo | undefined = søknadFormData[SøknadFormField.selvstendig_harHattInntektSomSN];
 
     return !(harHattInntektSomFrilanser === YesOrNo.NO && harHattInntektSomSN === YesOrNo.NO);
 };
 
-const InntektStep = ({ onValidSubmit }: StepConfigProps) => {
+const InntektStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) => {
     const { values } = useFormikContext<SøknadFormData>();
     const intl = useIntl();
 

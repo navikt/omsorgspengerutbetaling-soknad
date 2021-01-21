@@ -1,4 +1,7 @@
 import * as React from 'react';
+import { useIntl } from 'react-intl';
+import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
+import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import {
     validateRequiredList,
     validateYesOrNoIsAnswered,
@@ -6,16 +9,13 @@ import {
 import { YesOrNo } from '@navikt/sif-common-formik/lib';
 import FosterbarnListAndDialog from '@navikt/sif-common-forms/lib/fosterbarn/FosterbarnListAndDialog';
 import { useFormikContext } from 'formik';
-import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
 import { StepConfigProps, StepID } from '../../config/stepConfig';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import SøknadFormComponents from '../SøknadFormComponents';
 import SøknadStep from '../SøknadStep';
 import { BarnStepQuestions } from './config';
-import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
-import { useIntl } from 'react-intl';
 
-const BarnStep = ({ onValidSubmit }: StepConfigProps) => {
+const BarnStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) => {
     const intl = useIntl();
     const { values } = useFormikContext<SøknadFormData>();
     const visibility = BarnStepQuestions.getVisbility(values);

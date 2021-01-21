@@ -11,7 +11,7 @@ interface Props {
     frilans?: Frilans;
 }
 
-const FrilansSummary = ({ frilans }: Props) => {
+const FrilansSummary: React.FunctionComponent<Props> = ({ frilans }) => {
     const intl = useIntl();
 
     return (

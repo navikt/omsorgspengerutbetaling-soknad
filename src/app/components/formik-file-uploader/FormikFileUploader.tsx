@@ -1,6 +1,4 @@
 import * as React from 'react';
-import { FormikValidateFunction } from '@navikt/sif-common-formik/lib';
-import { ArrayHelpers, useFormikContext } from 'formik';
 import { Attachment, PersistedFile } from '@navikt/sif-common-core/lib/types/Attachment';
 import {
     attachmentShouldBeProcessed,
@@ -11,6 +9,8 @@ import {
     mapFileToPersistedFile,
     VALID_EXTENSIONS,
 } from '@navikt/sif-common-core/lib/utils/attachmentUtils';
+import { FormikValidateFunction } from '@navikt/sif-common-formik/lib';
+import { ArrayHelpers, useFormikContext } from 'formik';
 import { uploadFile } from '../../api/api';
 import SøknadFormComponents from '../../søknad/SøknadFormComponents';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
@@ -20,7 +20,7 @@ export type FieldArrayReplaceFn = (index: number, value: any) => void;
 export type FieldArrayPushFn = (obj: any) => void;
 export type FieldArrayRemoveFn = (index: number) => undefined;
 
-interface FormikFileUploader {
+interface Props {
     name: SøknadFormField;
     label: string;
     validate?: FormikValidateFunction;
@@ -29,15 +29,13 @@ interface FormikFileUploader {
     onUnauthorizedOrForbiddenUpload: () => void;
 }
 
-type Props = FormikFileUploader;
-
-const FormikFileUploader = ({
+const FormikFileUploader: React.FunctionComponent<Props> = ({
     name,
     onFileInputClick,
     onErrorUploadingAttachments,
     onUnauthorizedOrForbiddenUpload,
     ...otherProps
-}: Props) => {
+}) => {
     const { values } = useFormikContext<SøknadFormData>();
     async function uploadAttachment(attachment: Attachment) {
         const { file } = attachment;

@@ -29,7 +29,7 @@ import SøknadFormComponents from '../SøknadFormComponents';
 import SøknadStep from '../SøknadStep';
 import './periodeStep.less';
 
-const PeriodeStep = ({ onValidSubmit }: StepConfigProps) => {
+const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) => {
     const { values } = useFormikContext<SøknadFormData>();
     const { harPerioderMedFravær, harDagerMedDelvisFravær, perioder_harVærtIUtlandet } = values;
 

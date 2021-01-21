@@ -10,7 +10,7 @@ export interface Props {
     utenlandsopphold: UtenlandsoppholdApiData[];
 }
 
-const UtenlandsoppholdISøkeperiodeSummaryView = ({ utenlandsopphold }: Props) => {
+const UtenlandsoppholdISøkeperiodeSummaryView: React.FunctionComponent<Props> = ({ utenlandsopphold }) => {
     const intl = useIntl();
     return utenlandsopphold && utenlandsopphold.length > 0 ? (
         <SummaryBlock header={intlHelper(intl, 'steg.oppsummering.utenlandsoppholdIPerioden.listetittel')}>

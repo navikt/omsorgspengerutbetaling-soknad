@@ -38,7 +38,7 @@ interface Essentials {
     formData: SøknadFormData | undefined;
 }
 
-const SøknadEssentialsLoader = ({ contentLoadedRenderer }: Props) => {
+const SøknadEssentialsLoader: React.FunctionComponent<Props> = ({ contentLoadedRenderer }) => {
     const history = useHistory();
     const [loadState, setLoadState] = useState<LoadState>({ isLoading: true, doApiCalls: true });
     const [essentials, setEssentials] = useState<Essentials | undefined>();

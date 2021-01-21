@@ -9,14 +9,13 @@ import { getEnvironmentVariable } from '../../utils/envUtils';
 import { Feature, isFeatureEnabled } from '../../utils/featureToggleUtils';
 import IntlProvider, { appBokmålstekster, appNynorsktekster } from '../intl-provider/IntlProvider';
 
-interface ApplicationWrapperProps {
+interface Props {
     søkerdata?: Søkerdata;
     locale: Locale;
-    children: React.ReactNode;
     onChangeLocale: (locale: Locale) => void;
 }
 
-const ApplicationWrapper = ({ locale, onChangeLocale, children }: ApplicationWrapperProps) => {
+const ApplicationWrapper: React.FunctionComponent<Props> = ({ locale, onChangeLocale, children }) => {
     return (
         <IntlProvider locale={locale}>
             <Normaltekst tag="div">

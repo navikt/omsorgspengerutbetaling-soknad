@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
+import { useAmplitudeInstance } from '@navikt/sif-common-amplitude/lib';
 import Box from '@navikt/sif-common-core/lib/components/box/Box';
 import CounsellorPanel from '@navikt/sif-common-core/lib/components/counsellor-panel/CounsellorPanel';
 import FileUploadErrors from '@navikt/sif-common-core/lib/components/file-upload-errors/FileUploadErrors';
@@ -23,7 +24,7 @@ import { navigateToLoginPage } from '../../utils/navigationUtils';
 import { validateDocuments } from '../../validation/fieldValidations';
 import SøknadStep from '../SøknadStep';
 
-const StengtBhgSkoleDokumenterStep = ({ onValidSubmit }: StepConfigProps) => {
+const StengtBhgSkoleDokumenterStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) => {
     const intl = useIntl();
     const { values } = useFormikContext<SøknadFormData>();
     const [filesThatDidntGetUploaded, setFilesThatDidntGetUploaded] = React.useState<File[]>([]);
@@ -33,6 +34,14 @@ const StengtBhgSkoleDokumenterStep = ({ onValidSubmit }: StepConfigProps) => {
     const alleDokumenterISøknaden: Attachment[] = valuesToAlleDokumenterISøknaden(values);
     const totalSize = getTotalSizeOfAttachments(alleDokumenterISøknaden);
     const attachmentsSizeOver24Mb = totalSize > MAX_TOTAL_ATTACHMENT_SIZE_BYTES;
+
+    const { logUserLoggedOut } = useAmplitudeInstance();
+
+    const uploadFailed = async () => {
+        await logUserLoggedOut('Ved opplasting av dokument');
+        navigateToLoginPage();
+    };
+
     return (
         <SøknadStep
             id={StepID.DOKUMENTER_STENGT_SKOLE_BHG}
@@ -61,7 +70,7 @@ const StengtBhgSkoleDokumenterStep = ({ onValidSubmit }: StepConfigProps) => {
                         onFileInputClick={() => {
                             setFilesThatDidntGetUploaded([]);
                         }}
-                        onUnauthorizedOrForbiddenUpload={() => navigateToLoginPage()}
+                        onUnauthorizedOrForbiddenUpload={uploadFailed}
                         validate={validateDocuments}
                     />
                 </FormBlock>

@@ -20,6 +20,8 @@ module.exports = {
         '@typescript-eslint/no-explicit-any': 'off',
         'react-hooks/rules-of-hooks': 'error',
         'react-hooks/exhaustive-deps': 'warn',
+        'react/display-name': 'off',
+        'react/prop-types': 'off',
     },
     plugins: ['jsx-a11y', 'react-hooks'],
     settings: {

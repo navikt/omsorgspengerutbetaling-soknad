@@ -8,7 +8,7 @@ const bem = bemUtils('behandlingAvPersonopplysningerModal');
 
 type Props = Omit<ModalProps, 'children'>;
 
-const BehandlingAvPersonopplysningerModal = (props: Props) => (
+const BehandlingAvPersonopplysningerModal: React.FunctionComponent<Props> = (props) => (
     <Modal className={bem.block} {...props}>
         <BehandlingAvPersonopplysningerContent />
     </Modal>

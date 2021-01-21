@@ -60,7 +60,7 @@ export const utbetalingsperiodeDagToDagSummaryStringView = (dag: Utbetalingsperi
     );
 };
 
-function UtbetalingsperioderSummaryView({ utbetalingsperioder = [] }: Props) {
+const UtbetalingsperioderSummaryView: React.FunctionComponent<Props> = ({ utbetalingsperioder = [] }) => {
     const perioder: UtbetalingsperiodeApi[] = utbetalingsperioder.filter(
         (p) => p.tilOgMed !== undefined && p.antallTimerBorte === null
     );
@@ -93,6 +93,6 @@ function UtbetalingsperioderSummaryView({ utbetalingsperioder = [] }: Props) {
             )}
         </>
     );
-}
+};
 
 export default UtbetalingsperioderSummaryView;

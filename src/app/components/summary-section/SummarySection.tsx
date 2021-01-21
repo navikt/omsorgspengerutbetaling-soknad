@@ -6,12 +6,11 @@ import './summarySection.less';
 interface Props {
     header: string;
     headerTag?: 'h2' | 'h3' | 'h4';
-    children: React.ReactElement<any> | Array<React.ReactElement<any>> | React.ReactNode;
 }
 
 const bem = bemUtils('summarySection');
 
-const SummarySection = ({ header, headerTag = 'h2', children }: Props) => (
+const SummarySection: React.FunctionComponent<Props> = ({ header, headerTag = 'h2', children }) => (
     <div className={bem.block}>
         <Undertittel tag={headerTag} className={bem.element('header')}>
             {header}

@@ -9,7 +9,7 @@ interface Props {
 
 const bem = bemUtils('loadWrapper');
 
-const LoadWrapper = ({ isLoading, contentRenderer }: Props) => (
+const LoadWrapper: React.FunctionComponent<Props> = ({ isLoading, contentRenderer }) => (
     <div className={bem.classNames(bem.block, bem.modifierConditional('loading', isLoading))}>
         <div className={bem.child('loader')}>{isLoading && <LoadingPage />}</div>
         {!isLoading && <>{contentRenderer()}</>}

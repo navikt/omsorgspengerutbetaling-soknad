@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
-import { useFormikContext } from 'formik';
+import { useAmplitudeInstance } from '@navikt/sif-common-amplitude/lib';
 import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
+import { useFormikContext } from 'formik';
+import { SKJEMANAVN } from '../App';
 import ConfirmationPage from '../components/pages/confirmation-page/ConfirmationPage';
 import GeneralErrorPage from '../components/pages/general-error-page/GeneralErrorPage';
 import WelcomingPage from '../components/pages/welcoming-page/WelcomingPage';
@@ -14,19 +16,19 @@ import { Feature, isFeatureEnabled } from '../utils/featureToggleUtils';
 import { navigateTo, navigateToLoginPage } from '../utils/navigationUtils';
 import { getNextStepRoute, getSøknadRoute, isAvailable } from '../utils/routeUtils';
 import BarnStep from './barn-step/BarnStep';
-import SmittevernDokumenterStep from './smittevern-dokumenter-step/SmittvernDokumenterStep';
 import InntektStep from './inntekt-step/InntektStep';
 import MedlemsskapStep from './medlemskap-step/MedlemsskapStep';
 import OppsummeringStep from './oppsummering-step/OppsummeringStep';
 import PeriodeStep from './periode-step/PeriodeStep';
-import SøknadTempStorage from './SøknadTempStorage';
+import SmittevernDokumenterStep from './smittevern-dokumenter-step/SmittvernDokumenterStep';
 import StengtBhgSkoleDokumenterStep from './stengt-bhg-skole-dokumenter-step/StengtBhgSkoleDokumenterStep';
+import SøknadTempStorage from './SøknadTempStorage';
 
 export interface KvitteringInfo {
     søkernavn: string;
 }
 
-const SøknadRoutes = () => {
+const SøknadRoutes: React.FunctionComponent = () => {
     const [søknadHasBeenSent, setSøknadHasBeenSent] = React.useState(false);
     const { values, resetForm } = useFormikContext<SøknadFormData>();
 
@@ -34,6 +36,7 @@ const SøknadRoutes = () => {
     const skalViseSmittevernVedleggSteg: boolean = values.hjemmePgaSmittevernhensyn === YesOrNo.YES;
 
     const history = useHistory();
+    const { logSoknadStartet, logUserLoggedOut } = useAmplitudeInstance();
 
     async function navigateToNextStepFrom(stepID: StepID) {
         if (isFeatureEnabled(Feature.MELLOMLAGRING)) {
@@ -41,6 +44,7 @@ const SøknadRoutes = () => {
                 await SøknadTempStorage.persist(values, stepID);
             } catch (error) {
                 if (apiUtils.isForbidden(error) || apiUtils.isUnauthorized(error)) {
+                    await logUserLoggedOut('Ved mellomlagring');
                     navigateToLoginPage();
                 } else {
                     appSentryLogger.logApiError(error);
@@ -56,25 +60,24 @@ const SøknadRoutes = () => {
         });
     }
 
+    const startSoknad = async () => {
+        await logSoknadStartet(SKJEMANAVN);
+        setTimeout(() => {
+            if (isFeatureEnabled(Feature.MELLOMLAGRING)) {
+                SøknadTempStorage.persist(values, StepID.PERIODE).then(() => {
+                    navigateTo(`${RouteConfig.SØKNAD_ROUTE_PREFIX}/${StepID.PERIODE}`, history);
+                });
+            } else {
+                navigateTo(`${RouteConfig.SØKNAD_ROUTE_PREFIX}/${StepID.PERIODE}`, history);
+            }
+        });
+    };
+
     return (
         <Switch>
             <Route
                 path={RouteConfig.WELCOMING_PAGE_ROUTE}
-                render={() => (
-                    <WelcomingPage
-                        onValidSubmit={() =>
-                            setTimeout(() => {
-                                if (isFeatureEnabled(Feature.MELLOMLAGRING)) {
-                                    SøknadTempStorage.persist(values, StepID.PERIODE).then(() => {
-                                        navigateTo(`${RouteConfig.SØKNAD_ROUTE_PREFIX}/${StepID.PERIODE}`, history);
-                                    });
-                                } else {
-                                    navigateTo(`${RouteConfig.SØKNAD_ROUTE_PREFIX}/${StepID.PERIODE}`, history);
-                                }
-                            })
-                        }
-                    />
-                )}
+                render={() => <WelcomingPage onValidSubmit={startSoknad} />}
             />
 
             {isAvailable(StepID.PERIODE, values) && (

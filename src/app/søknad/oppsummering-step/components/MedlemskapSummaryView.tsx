@@ -19,7 +19,7 @@ export interface Props {
     bosteder: UtenlandsoppholdApiData[];
 }
 
-const MedlemskapSummaryView = (props: Props) => {
+const MedlemskapSummaryView: React.FunctionComponent<Props> = (props) => {
     const { bosteder } = props;
     const intl = useIntl();
 

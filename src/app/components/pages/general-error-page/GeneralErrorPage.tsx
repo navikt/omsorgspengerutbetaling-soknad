@@ -1,15 +1,17 @@
 import * as React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { Ingress, Systemtittel } from 'nav-frontend-typografi';
-import Veilederpanel from 'nav-frontend-veilederpanel';
+import { SIFCommonPageKey, useLogSidevisning } from '@navikt/sif-common-amplitude/lib';
 import Box from '@navikt/sif-common-core/lib/components/box/Box';
 import Page from '@navikt/sif-common-core/lib/components/page/Page';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
+import { Ingress, Systemtittel } from 'nav-frontend-typografi';
+import Veilederpanel from 'nav-frontend-veilederpanel';
 import VeilederLokal from './VeilederLokal';
 import './generalErrorPage.less';
 
-const GeneralErrorPage = () => {
+const GeneralErrorPage: React.FunctionComponent = () => {
     const intl = useIntl();
+    useLogSidevisning(SIFCommonPageKey.feilside);
     return (
         <Page title={intlHelper(intl, 'page.generalErrorPage.sidetittel')}>
             <div className={'generalErrorPage'}>

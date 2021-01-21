@@ -8,7 +8,7 @@ import './behandlingAvPersonopplysningerContent.less';
 
 const getText = (part: string) => <FormattedMessage id={`modal.personalopplysninger.${part}`} />;
 
-const BehandlingAvPersonopplysningerContent = () => {
+const BehandlingAvPersonopplysningerContent: React.FunctionComponent = () => {
     const intl = useIntl();
     return (
         <>
