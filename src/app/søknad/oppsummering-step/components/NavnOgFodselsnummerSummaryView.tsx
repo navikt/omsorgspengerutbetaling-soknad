@@ -10,7 +10,7 @@ export interface Props {
     fødselsnummer: string;
 }
 
-export const NavnOgFodselsnummerSummaryView = (props: Props) => {
+export const NavnOgFodselsnummerSummaryView: React.FunctionComponent<Props> = (props) => {
     const { fornavn, etternavn, mellomnavn, fødselsnummer } = props;
     return (
         <Box margin="l">

@@ -1,8 +1,8 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
-import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
-import { PopoverOrientering } from 'nav-frontend-popover';
 import Box from '@navikt/sif-common-core/lib/components/box/Box';
+import ExpandableInfo from '@navikt/sif-common-core/lib/components/expandable-content/ExpandableInfo';
+import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
 import ResponsivePanel from '@navikt/sif-common-core/lib/components/responsive-panel/ResponsivePanel';
 import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
 import { dateToday } from '@navikt/sif-common-core/lib/utils/dateUtils';
@@ -14,13 +14,12 @@ import {
 import { SøknadFormData, SøknadFormField } from '../../../types/SøknadFormData';
 import SøknadFormComponents from '../../SøknadFormComponents';
 import FrilansEksempeltHtml from './FrilansEksempelHtml';
-import ExpandableInfo from '@navikt/sif-common-core/lib/components/expandable-content/ExpandableInfo';
 
 interface Props {
     formValues: SøknadFormData;
 }
 
-const FrilansFormPart = ({ formValues }: Props) => {
+const FrilansFormPart: React.FunctionComponent<Props> = ({ formValues }) => {
     const harHattInntektSomFrilanser = formValues[SøknadFormField.frilans_harHattInntektSomFrilanser] === YesOrNo.YES;
     const intl = useIntl();
     return (
@@ -33,7 +32,6 @@ const FrilansFormPart = ({ formValues }: Props) => {
                         <FrilansEksempeltHtml />
                     </ExpandableInfo>
                 }
-                infoPlassering={PopoverOrientering.Under}
                 validate={validateYesOrNoIsAnswered}
             />
             {harHattInntektSomFrilanser && (

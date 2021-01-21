@@ -12,7 +12,7 @@ import './confirmationPage.less';
 
 const bem = bemUtils('confirmationPage');
 
-const ConfirmationPage = () => {
+const ConfirmationPage: React.FunctionComponent = () => {
     const intl = useIntl();
     return (
         <Page title={intlHelper(intl, 'page.confirmation.sidetittel')} className={bem.block}>

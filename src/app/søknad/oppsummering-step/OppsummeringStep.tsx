@@ -44,7 +44,7 @@ interface Props {
 
 const renderApiDataFeil = (feil: FeiloppsummeringFeil) => <span>{feil.feilmelding}</span>;
 
-const OppsummeringStep: React.FC<Props> = ({ onApplicationSent }: Props) => {
+const OppsummeringStep: React.FunctionComponent<Props> = ({ onApplicationSent }) => {
     const intl = useIntl();
     const { values } = useFormikContext<SøknadFormData>();
     const søkerdata = React.useContext(SøkerdataContext);

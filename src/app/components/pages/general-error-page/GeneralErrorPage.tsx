@@ -8,7 +8,7 @@ import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import VeilederLokal from './VeilederLokal';
 import './generalErrorPage.less';
 
-const GeneralErrorPage = () => {
+const GeneralErrorPage: React.FunctionComponent = () => {
     const intl = useIntl();
     return (
         <Page title={intlHelper(intl, 'page.generalErrorPage.sidetittel')}>

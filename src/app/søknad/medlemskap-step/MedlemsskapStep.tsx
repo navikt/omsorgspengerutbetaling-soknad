@@ -20,7 +20,7 @@ import {
 import SøknadFormComponents from '../SøknadFormComponents';
 import SøknadStep from '../SøknadStep';
 
-const MedlemsskapStep = ({ onValidSubmit }: StepConfigProps) => {
+const MedlemsskapStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) => {
     const intl = useIntl();
     const { values } = useFormikContext<SøknadFormData>();
 

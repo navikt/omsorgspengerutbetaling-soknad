@@ -8,7 +8,7 @@ const bem = bemUtils('dinePlikterModal');
 
 type Props = Omit<ModalProps, 'children'>;
 
-const DinePlikterModal = (props: Props) => (
+const DinePlikterModal: React.FunctionComponent<Props> = (props) => (
     <Modal className={bem.block} {...props}>
         <DinePlikterContent />
     </Modal>

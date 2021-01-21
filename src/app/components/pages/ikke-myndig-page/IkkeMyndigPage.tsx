@@ -9,7 +9,7 @@ import { Innholdstittel } from 'nav-frontend-typografi';
 import getLenker from '../../../lenker';
 import './ikkeMyndigPage.less';
 
-const IkkeMyndigPage = () => {
+const IkkeMyndigPage: React.FunctionComponent = () => {
     const intl = useIntl();
     return (
         <Page

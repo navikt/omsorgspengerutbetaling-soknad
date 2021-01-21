@@ -26,7 +26,7 @@ export interface KvitteringInfo {
     søkernavn: string;
 }
 
-const SøknadRoutes = () => {
+const SøknadRoutes: React.FunctionComponent = () => {
     const [søknadHasBeenSent, setSøknadHasBeenSent] = React.useState(false);
     const { values, resetForm } = useFormikContext<SøknadFormData>();
 

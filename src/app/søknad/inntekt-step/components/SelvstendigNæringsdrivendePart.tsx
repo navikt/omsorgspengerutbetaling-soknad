@@ -20,7 +20,7 @@ interface Props {
     formValues: SøknadFormData;
 }
 
-const SelvstendigNæringsdrivendeFormPart = ({ formValues }: Props) => {
+const SelvstendigNæringsdrivendeFormPart: React.FunctionComponent<Props> = ({ formValues }) => {
     const intl = useIntl();
     const { values } = useFormikContext<SøknadFormData>();
     return (

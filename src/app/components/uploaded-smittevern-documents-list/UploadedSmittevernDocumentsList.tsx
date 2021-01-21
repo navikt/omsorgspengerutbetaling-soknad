@@ -16,7 +16,7 @@ interface Props {
     wrapNoAttachmentsInBox?: boolean;
 }
 
-const UploadedSmittevernDocumentsList = ({ includeDeletionFunctionality }: Props) => {
+const UploadedSmittevernDocumentsList: React.FunctionComponent<Props> = ({ includeDeletionFunctionality }) => {
     const { values, setFieldValue } = useFormikContext<SøknadFormData>();
 
     const dokumenter: Attachment[] = values.dokumenterSmittevernhensyn.filter(({ file }: Attachment) =>

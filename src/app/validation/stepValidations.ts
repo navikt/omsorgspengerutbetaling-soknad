@@ -15,7 +15,7 @@ import { SøknadFormData, SøknadFormField } from '../types/SøknadFormData';
 export const welcomingPageIsValid = ({ harForståttRettigheterOgPlikter }: SøknadFormData): boolean =>
     harForståttRettigheterOgPlikter === true;
 
-export const periodeStepIsValid = (formData: SøknadFormData) => {
+export const periodeStepIsValid = (formData: SøknadFormData): boolean => {
     const harPerioderMedFravær: YesOrNo = formData[SøknadFormField.harPerioderMedFravær];
     const fraværPerioder: FraværPeriode[] = formData.fraværPerioder;
     const harDagerMedDelvisFravær: YesOrNo = formData[SøknadFormField.harDagerMedDelvisFravær];
@@ -32,7 +32,7 @@ export const periodeStepIsValid = (formData: SøknadFormData) => {
     return isValid;
 };
 
-export const inntektStepIsValid = (formData: SøknadFormData) => {
+export const inntektStepIsValid = (formData: SøknadFormData): boolean => {
     const frilansHarHattInntektSomFrilanser: YesOrNo = formData[SøknadFormField.frilans_harHattInntektSomFrilanser];
     const frilansStartdato: string | undefined = formData[SøknadFormField.frilans_startdato];
     const frilansJobberFortsattSomFrilans: YesOrNo | undefined =

@@ -15,7 +15,6 @@ import SøknadFormComponents from './SøknadFormComponents';
 import SøknadTempStorage from './SøknadTempStorage';
 
 export interface FormikStepProps {
-    children: React.ReactNode;
     showSubmitButton?: boolean;
     showButtonSpinner?: boolean;
     buttonDisabled?: boolean;
@@ -26,7 +25,7 @@ export interface FormikStepProps {
 
 type Props = FormikStepProps & StepProps;
 
-const SøknadStep = (props: Props) => {
+const SøknadStep: React.FunctionComponent<Props> = (props) => {
     const formik = useFormikContext<SøknadFormData>();
     const intl = useIntl();
     const { children, onValidFormSubmit, showButtonSpinner, buttonDisabled, id, cleanupStep } = props;

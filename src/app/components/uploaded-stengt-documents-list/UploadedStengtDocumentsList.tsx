@@ -16,7 +16,7 @@ interface Props {
     wrapNoAttachmentsInBox?: boolean;
 }
 
-const UploadedStengtDocumentsList = ({ includeDeletionFunctionality }: Props) => {
+const UploadedStengtDocumentsList: React.FunctionComponent<Props> = ({ includeDeletionFunctionality }) => {
     const { values, setFieldValue } = useFormikContext<SøknadFormData>();
 
     const dokumenter: Attachment[] = values.dokumenterStengtBkgSkole.filter(({ file }: Attachment) =>

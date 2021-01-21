@@ -8,7 +8,7 @@ export interface Props {
     yesNoSpørsmålOgSvar: YesNoSpørsmålOgSvar[];
 }
 
-export const SpørsmålOgSvarSummaryView = (props: Props) => {
+export const SpørsmålOgSvarSummaryView: React.FunctionComponent<Props> = (props) => {
     const { yesNoSpørsmålOgSvar } = props;
     return (
         <Box margin="l">

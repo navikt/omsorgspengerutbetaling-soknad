@@ -4,13 +4,12 @@ import bemUtils from '@navikt/sif-common-core/lib/utils/bemUtils';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 
 interface Props {
-    children: React.ReactNode;
     labelKey: string;
 }
 
 const bem = bemUtils('summaryLabelValue');
 
-const IntlLabelValue = ({ labelKey: intlLabelKey, children }: Props) => {
+const IntlLabelValue: React.FunctionComponent<Props> = ({ labelKey: intlLabelKey, children }) => {
     const intl = useIntl();
     return (
         <div className={bem.block}>

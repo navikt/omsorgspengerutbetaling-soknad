@@ -13,6 +13,7 @@ import appSentryLogger from './utils/appSentryLogger';
 import { getEnvironmentVariable } from './utils/envUtils';
 import { getLocaleFromSessionStorage, setLocaleInSessionStorage } from './utils/localeUtils';
 import './styles/app.less';
+import { AmplitudeProvider } from '@navikt/sif-common-amplitude/lib';
 
 appSentryLogger.init();
 
@@ -26,7 +27,7 @@ const getAppStatusSanityConfig = () => {
 
 const APPLICATION_KEY = 'omsorgspengerutbetaling';
 
-const App = () => {
+const App: React.FunctionComponent = () => {
     const [locale, setLocale] = React.useState<Locale>(localeFromSessionStorage);
     const appStatusSanityConfig = getAppStatusSanityConfig();
 
@@ -37,23 +38,25 @@ const App = () => {
         </Switch>
     );
     return (
-        <ApplicationWrapper
-            locale={locale}
-            onChangeLocale={(activeLocale: Locale) => {
-                setLocaleInSessionStorage(activeLocale);
-                setLocale(activeLocale);
-            }}>
-            {appStatusSanityConfig ? (
-                <AppStatusWrapper
-                    applicationKey={APPLICATION_KEY}
-                    sanityConfig={appStatusSanityConfig}
-                    contentRenderer={renderContent}
-                    unavailableContentRenderer={() => <UnavailablePage />}
-                />
-            ) : (
-                renderContent()
-            )}
-        </ApplicationWrapper>
+        <AmplitudeProvider applicationKey={APPLICATION_KEY}>
+            <ApplicationWrapper
+                locale={locale}
+                onChangeLocale={(activeLocale: Locale) => {
+                    setLocaleInSessionStorage(activeLocale);
+                    setLocale(activeLocale);
+                }}>
+                {appStatusSanityConfig ? (
+                    <AppStatusWrapper
+                        applicationKey={APPLICATION_KEY}
+                        sanityConfig={appStatusSanityConfig}
+                        contentRenderer={renderContent}
+                        unavailableContentRenderer={() => <UnavailablePage />}
+                    />
+                ) : (
+                    renderContent()
+                )}
+            </ApplicationWrapper>
+        </AmplitudeProvider>
     );
 };
 

@@ -46,7 +46,7 @@ const initialValues = {
 };
 const PageForm = getTypedFormComponents<PageFormField, PageFormValues>();
 
-const IntroPage: React.FC = () => {
+const IntroPage: React.FunctionComponent = () => {
     const intl = useIntl();
 
     return (
