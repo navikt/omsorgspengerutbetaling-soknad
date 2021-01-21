@@ -1,16 +1,18 @@
 import * as React from 'react';
-import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+import { FormattedMessage } from 'react-intl';
+import { SIFCommonPageKey, useLogSidevisning } from '@navikt/sif-common-amplitude/lib';
 import Box from '@navikt/sif-common-core/lib/components/box/Box';
 import Page from '@navikt/sif-common-core/lib/components/page/Page';
 import StepBanner from '@navikt/sif-common-core/lib/components/step-banner/StepBanner';
 import bemUtils from '@navikt/sif-common-core/lib/utils/bemUtils';
+import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import './unavailablePage.less';
-import { FormattedMessage } from 'react-intl';
 
 const bem = bemUtils('introPage');
 
 const UnavailablePage: React.FunctionComponent = () => {
     const title = 'Søknad om utbetaling av omsorgspenger';
+    useLogSidevisning(SIFCommonPageKey.ikkeTilgjengelig);
     return (
         <Page className={bem.block} title={title} topContentRenderer={() => <StepBanner text={title} />}>
             <Box margin="xxxl">

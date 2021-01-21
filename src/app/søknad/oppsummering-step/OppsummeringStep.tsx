@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useHistory } from 'react-router-dom';
+import { useAmplitudeInstance } from '@navikt/sif-common-amplitude/lib';
 import Box from '@navikt/sif-common-core/lib/components/box/Box';
 import CounsellorPanel from '@navikt/sif-common-core/lib/components/counsellor-panel/CounsellorPanel';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
@@ -10,6 +11,7 @@ import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import { useFormikContext } from 'formik';
 import { Feiloppsummering, FeiloppsummeringFeil } from 'nav-frontend-skjema';
 import { sendApplication } from '../../api/api';
+import { SKJEMANAVN } from '../../App';
 import SummarySection from '../../components/summary-section/SummarySection';
 import UploadedSmittevernDocumentsList from '../../components/uploaded-smittevern-documents-list/UploadedSmittevernDocumentsList';
 import UploadedStengtDocumentsList from '../../components/uploaded-stengt-documents-list/UploadedStengtDocumentsList';
@@ -21,6 +23,7 @@ import { FosterbarnApi, SøknadApiData, YesNoSpørsmålOgSvar } from '../../type
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import * as apiUtils from '../../utils/apiUtils';
 import appSentryLogger from '../../utils/appSentryLogger';
+import { isCurrentDateBefore2021 } from '../../utils/checkDate2021';
 import { Feature, isFeatureEnabled } from '../../utils/featureToggleUtils';
 import { mapFormDataToApiData } from '../../utils/mapFormDataToApiData';
 import { navigateTo, navigateToLoginPage } from '../../utils/navigationUtils';
@@ -36,7 +39,6 @@ import { SpørsmålOgSvarSummaryView } from './components/SporsmalOgSvarSummaryV
 import SummaryBlock from './components/SummaryBlock';
 import UtbetalingsperioderSummaryView from './components/UtbetalingsperioderSummaryView';
 import UtenlandsoppholdISøkeperiodeSummaryView from './components/UtenlandsoppholdISøkeperiodeSummaryView';
-import { isCurrentDateBefore2021 } from '../../utils/checkDate2021';
 
 interface Props {
     onApplicationSent: (apiValues: SøknadApiData, søkerdata: Søkerdata) => void;
@@ -51,16 +53,20 @@ const OppsummeringStep: React.FunctionComponent<Props> = ({ onApplicationSent })
     const history = useHistory();
 
     const [sendingInProgress, setSendingInProgress] = useState(false);
+    const { logSoknadFailed, logSoknadSent, logUserLoggedOut } = useAmplitudeInstance();
 
-    async function navigate(data: SøknadApiData, søker: Søkerdata) {
+    async function doSendSoknad(data: SøknadApiData, søker: Søkerdata) {
         setSendingInProgress(true);
         try {
             await sendApplication(data);
+            await logSoknadSent(SKJEMANAVN);
             onApplicationSent(apiValues, søker);
         } catch (error) {
             if (apiUtils.isForbidden(error) || apiUtils.isUnauthorized(error)) {
+                await logUserLoggedOut('Innsending av søknad');
                 navigateToLoginPage();
             } else {
+                logSoknadFailed(SKJEMANAVN);
                 appSentryLogger.logApiError(error);
                 navigateTo(RouteConfig.ERROR_PAGE_ROUTE, history);
             }
@@ -85,7 +91,7 @@ const OppsummeringStep: React.FunctionComponent<Props> = ({ onApplicationSent })
             id={StepID.OPPSUMMERING}
             onValidFormSubmit={() => {
                 setTimeout(() => {
-                    navigate(apiValues, søkerdata); // La view oppdatere seg først
+                    doSendSoknad(apiValues, søkerdata); // La view oppdatere seg først
                 });
             }}
             useValidationErrorSummary={false}

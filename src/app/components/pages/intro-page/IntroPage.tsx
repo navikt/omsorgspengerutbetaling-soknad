@@ -1,23 +1,24 @@
 import * as React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
+import { SIFCommonPageKey, useLogSidevisning } from '@navikt/sif-common-amplitude/lib';
+import Box from '@navikt/sif-common-core/lib/components/box/Box';
 import ExpandableInfo from '@navikt/sif-common-core/lib/components/expandable-content/ExpandableInfo';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
 import FormattedHtmlMessage from '@navikt/sif-common-core/lib/components/formatted-html-message/FormattedHtmlMessage';
-import { commonFieldErrorRenderer } from '@navikt/sif-common-core/lib/utils/commonFieldErrorRenderer';
-import { getTypedFormComponents, UnansweredQuestionsInfo, YesOrNo } from '@navikt/sif-common-formik/lib';
-import { AlertStripeInfo } from 'nav-frontend-alertstriper';
-import Lenke from 'nav-frontend-lenker';
-import Box from '@navikt/sif-common-core/lib/components/box/Box';
 import InformationPoster from '@navikt/sif-common-core/lib/components/information-poster/InformationPoster';
+import Knappelenke from '@navikt/sif-common-core/lib/components/knappelenke/Knappelenke';
 import Page from '@navikt/sif-common-core/lib/components/page/Page';
 import StepBanner from '@navikt/sif-common-core/lib/components/step-banner/StepBanner';
 import bemUtils from '@navikt/sif-common-core/lib/utils/bemUtils';
+import { commonFieldErrorRenderer } from '@navikt/sif-common-core/lib/utils/commonFieldErrorRenderer';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
+import { getTypedFormComponents, UnansweredQuestionsInfo, YesOrNo } from '@navikt/sif-common-formik/lib';
+import { AlertStripeInfo } from 'nav-frontend-alertstriper';
+import Lenke from 'nav-frontend-lenker';
 import RouteConfig, { getRouteUrl } from '../../../config/routeConfig';
-import SmittevernInfo from '../../information/SmittevernInfo';
-import Knappelenke from '@navikt/sif-common-core/lib/components/knappelenke/Knappelenke';
-import './introPage.less';
 import { isCurrentDateBefore2021 } from '../../../utils/checkDate2021';
+import SmittevernInfo from '../../information/SmittevernInfo';
+import './introPage.less';
 
 const bem = bemUtils('introPage');
 
@@ -48,7 +49,7 @@ const PageForm = getTypedFormComponents<PageFormField, PageFormValues>();
 
 const IntroPage: React.FunctionComponent = () => {
     const intl = useIntl();
-
+    useLogSidevisning(SIFCommonPageKey.intro);
     return (
         <Page
             className={bem.block}

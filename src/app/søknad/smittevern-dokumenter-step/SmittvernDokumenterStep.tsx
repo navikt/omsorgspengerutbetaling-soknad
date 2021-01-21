@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
+import { useAmplitudeInstance } from '@navikt/sif-common-amplitude/lib';
 import Box from '@navikt/sif-common-core/lib/components/box/Box';
 import CounsellorPanel from '@navikt/sif-common-core/lib/components/counsellor-panel/CounsellorPanel';
 import FileUploadErrors from '@navikt/sif-common-core/lib/components/file-upload-errors/FileUploadErrors';
@@ -33,6 +34,13 @@ const SmittevernDokumenterStep: React.FunctionComponent<StepConfigProps> = ({ on
     const totalSize = getTotalSizeOfAttachments(alleDokumenterISøknaden);
     const attachmentsSizeOver24Mb = totalSize > MAX_TOTAL_ATTACHMENT_SIZE_BYTES;
 
+    const { logUserLoggedOut } = useAmplitudeInstance();
+
+    const uploadFailed = async () => {
+        await logUserLoggedOut('Ved opplasting av dokument');
+        navigateToLoginPage();
+    };
+
     return (
         <SøknadStep
             id={StepID.DOKUMENTER_SMITTEVERNHENSYN}
@@ -61,7 +69,7 @@ const SmittevernDokumenterStep: React.FunctionComponent<StepConfigProps> = ({ on
                         onFileInputClick={() => {
                             setFilesThatDidntGetUploaded([]);
                         }}
-                        onUnauthorizedOrForbiddenUpload={() => navigateToLoginPage()}
+                        onUnauthorizedOrForbiddenUpload={uploadFailed}
                         validate={validateDocuments}
                     />
                 </FormBlock>

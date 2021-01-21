@@ -25,7 +25,8 @@ const getAppStatusSanityConfig = () => {
     return !projectId || !dataset ? undefined : { projectId, dataset };
 };
 
-const APPLICATION_KEY = 'omsorgspengerutbetaling';
+export const APPLICATION_KEY = 'omsorgspengerutbetaling';
+export const SKJEMANAVN = 'omsorgspengerutbetaling-sn-fri';
 
 const App: React.FunctionComponent = () => {
     const [locale, setLocale] = React.useState<Locale>(localeFromSessionStorage);
