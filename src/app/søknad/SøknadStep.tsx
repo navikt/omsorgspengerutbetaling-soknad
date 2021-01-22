@@ -1,11 +1,6 @@
 import * as React from 'react';
 import { useIntl } from 'react-intl';
-import {
-    AmplitudeEvents,
-    ApplikasjonHendelse,
-    useAmplitudeInstance,
-    useLogSidevisning,
-} from '@navikt/sif-common-amplitude/lib';
+import { ApplikasjonHendelse, useAmplitudeInstance, useLogSidevisning } from '@navikt/sif-common-amplitude/lib';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
 import StepFooter from '@navikt/sif-common-core/lib/components/step-footer/StepFooter';
 import { commonFieldErrorRenderer } from '@navikt/sif-common-core/lib/utils/commonFieldErrorRenderer';
