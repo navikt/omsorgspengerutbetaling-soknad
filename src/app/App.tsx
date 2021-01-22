@@ -25,7 +25,7 @@ const getAppStatusSanityConfig = () => {
     return !projectId || !dataset ? undefined : { projectId, dataset };
 };
 
-export const APPLICATION_KEY = 'omsorgspengerutbetaling';
+export const APPLICATION_KEY = 'omsorgspengerutbetaling-soknad';
 export const SKJEMANAVN = 'omsorgspengerutbetaling-sn-fri';
 
 const App: React.FunctionComponent = () => {
