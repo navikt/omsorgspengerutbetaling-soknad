@@ -23,7 +23,6 @@ import { FosterbarnApi, SøknadApiData, YesNoSpørsmålOgSvar } from '../../type
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import * as apiUtils from '../../utils/apiUtils';
 import appSentryLogger from '../../utils/appSentryLogger';
-import { isCurrentDateBefore2021 } from '../../utils/checkDate2021';
 import { Feature, isFeatureEnabled } from '../../utils/featureToggleUtils';
 import { mapFormDataToApiData } from '../../utils/mapFormDataToApiData';
 import { navigateTo, navigateToLoginPage } from '../../utils/navigationUtils';
@@ -141,11 +140,7 @@ const OppsummeringStep: React.FunctionComponent<Props> = ({ onApplicationSent })
                         {isFeatureEnabled(Feature.STENGT_BHG_SKOLE) && apiValues.hjemmePgaStengtBhgSkole !== undefined && (
                             <Box margin="s">
                                 <SummaryBlock
-                                    header={
-                                        isCurrentDateBefore2021()
-                                            ? intlHelper(intl, 'step.periode.spm.hjemmePgaStengtBhgSkole')
-                                            : intlHelper(intl, 'step.periode.spm.hjemmePgaStengtBhgSkole.2021')
-                                    }>
+                                    header={intlHelper(intl, 'step.periode.spm.hjemmePgaStengtBhgSkole.2021')}>
                                     <JaNeiSvar harSvartJa={apiValues.hjemmePgaStengtBhgSkole} />
                                 </SummaryBlock>
                             </Box>

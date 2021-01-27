@@ -16,7 +16,6 @@ import { getTypedFormComponents, UnansweredQuestionsInfo, YesOrNo } from '@navik
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import Lenke from 'nav-frontend-lenker';
 import RouteConfig, { getRouteUrl } from '../../../config/routeConfig';
-import { isCurrentDateBefore2021 } from '../../../utils/checkDate2021';
 import SmittevernInfo from '../../information/SmittevernInfo';
 import './introPage.less';
 
@@ -193,11 +192,7 @@ const IntroPage: React.FunctionComponent = () => {
                                     <FormBlock>
                                         <PageForm.YesOrNoQuestion
                                             name={PageFormField.hjemmePgaStengt}
-                                            legend={
-                                                isCurrentDateBefore2021()
-                                                    ? intlHelper(intl, 'steg.intro.form.spm.hjemmePgaStengt')
-                                                    : intlHelper(intl, 'steg.intro.form.spm.hjemmePgaStengt.2021')
-                                            }
+                                            legend={intlHelper(intl, 'steg.intro.form.spm.hjemmePgaStengt.2021')}
                                         />
                                     </FormBlock>
                                 )}
