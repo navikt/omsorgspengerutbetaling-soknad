@@ -22,7 +22,6 @@ import SmittevernInfo from '../../components/information/SmittevernInfo';
 import { StepConfigProps, StepID } from '../../config/stepConfig';
 import { AndreUtbetalinger } from '../../types/AndreUtbetalinger';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
-import { isCurrentDateBefore2021 } from '../../utils/checkDate2021';
 import { Feature, isFeatureEnabled } from '../../utils/featureToggleUtils';
 import { GYLDIG_TIDSROM } from '../../validation/constants';
 import SøknadFormComponents from '../SøknadFormComponents';
@@ -47,34 +46,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
         return cleanedValues;
     };
     const getInfoPanel = () => {
-        return isCurrentDateBefore2021() ? (
-            <>
-                <p>
-                    <FormattedMessage id="step.periode.info.1" />
-                </p>
-
-                <p>
-                    <FormattedMessage id="step.periode.info.2" />
-                </p>
-                <ul>
-                    <li>
-                        <FormattedMessage id="step.periode.info.2.1" />
-                    </li>
-                    <li>
-                        <FormattedMessage id="step.periode.info.2.2" />
-                    </li>
-                    <li>
-                        <FormattedMessage id="step.periode.info.2.3" />
-                    </li>
-                </ul>
-                <p>
-                    <FormattedMessage id="step.periode.info.3" />
-                </p>
-                <p>
-                    <FormattedMessage id="step.periode.info.4" />
-                </p>
-            </>
-        ) : (
+        return (
             <>
                 <p>
                     <FormattedMessage id="step.periode.info2021.1" />
@@ -218,11 +190,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                         <FormBlock>
                             <SøknadFormComponents.YesOrNoQuestion
                                 name={SøknadFormField.hjemmePgaStengtBhgSkole}
-                                legend={
-                                    isCurrentDateBefore2021()
-                                        ? intlHelper(intl, 'step.periode.spm.hjemmePgaStengtBhgSkole')
-                                        : intlHelper(intl, 'step.periode.spm.hjemmePgaStengtBhgSkole.2021')
-                                }
+                                legend={intlHelper(intl, 'step.periode.spm.hjemmePgaStengtBhgSkole.2021')}
                                 validate={validateYesOrNoIsAnswered}
                             />
                         </FormBlock>
