@@ -28,7 +28,9 @@ spec:
     accessPolicy:
         outbound:
             external:
-            - host: www.nav.no
+            {{#each externalHosts as |host|}}
+            - host: {{host}}
+            {{/each}}
     ingresses:
       {{#each ingresses as |url|}}
        - {{url}}

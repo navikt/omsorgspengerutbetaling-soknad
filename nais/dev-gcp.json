@@ -6,6 +6,7 @@
     "minReplicas": "1",
     "maxReplicas": "1",
     "ingresses": ["https://omsorgspengerutbetaling-soknad.dev.nav.no"],
+    "externalHosts": ["omsorgspengerutbetalingsoknad-api-q.nav.no", "www.nav.no" ],
     "env": {
         "DECORATOR_URL": "https://www.nav.no/dekoratoren/?simple=true&chatbot=false",
         "API_URL": "https://omsorgspengerutbetalingsoknad-api-q.nav.no",
