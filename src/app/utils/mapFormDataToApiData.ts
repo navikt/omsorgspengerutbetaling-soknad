@@ -1,12 +1,13 @@
 import { IntlShape } from 'react-intl';
+import { Attachment } from '@navikt/sif-common-core/lib/types/Attachment';
 import { Locale } from '@navikt/sif-common-core/lib/types/Locale';
-import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
-import { Utenlandsopphold, Virksomhet } from '@navikt/sif-common-forms/lib';
-import { FraværDag, FraværPeriode } from '@navikt/sif-common-forms/lib/fravær';
 import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
 import { attachmentUploadHasFailed } from '@navikt/sif-common-core/lib/utils/attachmentUtils';
 import { formatDateToApiFormat } from '@navikt/sif-common-core/lib/utils/dateUtils';
+import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import { decimalTimeToTime, timeToIso8601Duration } from '@navikt/sif-common-core/lib/utils/timeUtils';
+import { Utenlandsopphold, Virksomhet, mapVirksomhetToVirksomhetApiData } from '@navikt/sif-common-forms/lib';
+import { FraværDag, FraværPeriode } from '@navikt/sif-common-forms/lib/fravær';
 import {
     SøknadApiData,
     UtbetalingsperiodeApi,
@@ -16,11 +17,9 @@ import {
     YesNoSvar,
 } from '../types/SøknadApiData';
 import { SøknadFormData } from '../types/SøknadFormData';
+import { Feature, isFeatureEnabled } from './featureToggleUtils';
 import { mapBostedUtlandToApiData } from './formToApiMaps/mapBostedUtlandToApiData';
 import { mapFrilansToApiData } from './formToApiMaps/mapFrilansToApiData';
-import { mapVirksomhetToVirksomhetApiData } from './formToApiMaps/mapVirksomhetToApiData';
-import { Feature, isFeatureEnabled } from './featureToggleUtils';
-import { Attachment } from '@navikt/sif-common-core/lib/types/Attachment';
 
 const getVedleggUrlFromAttachments = (attachments: Attachment[]): string[] => {
     return (

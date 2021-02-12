@@ -411,7 +411,7 @@
     "summary.virksomhet.registrertILand": "Registrert i {land}",
     "summary.virksomhet.registrertILand.orgnr": " (organisasjonsnummer {orgnr})",
     "summary.virksomhet.næringsinntekt": "Næringsinntekt: {næringsinntekt}",
-    "summary.virksomhet.varigEndring": "Har hatt varig endring i arbeidsforholdet, verksemda eller arbeidssituasjonen dei siste fire åra. Datoen for endringa var {dato}, og næringsinntekt etter endringa er {endring}. Skildring av endringa:",
+    "summary.virksomhet.varigEndring.html": "Har hatt varig endring i arbeidsforholdet, verksemda eller arbeidssituasjonen dei siste fire åra. Datoen for endringa var {dato}, og næringsinntekt etter endringa er <strong>{endring}</strong>. Skildring av endringa:",
     "summary.virksomhet.yrkesaktivSisteTreFerdigliknedeÅrene": "Blei yrkesaktiv {dato}",
 
     "selvstendig.harDuHattInntekt.spm": "Har du hatt inntekt som sjølvstendig næringsdrivande dei siste 4 vekene?",

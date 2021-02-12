@@ -55,7 +55,6 @@ export interface VirksomhetApiData {
     navnPåVirksomheten: string;
     organisasjonsnummer?: string;
     registrertINorge: boolean;
-    registrertILand?: string;
     registrertIUtlandet?: Land | null;
     yrkesaktivSisteTreFerdigliknedeÅrene?: {
         oppstartsdato: ApiStringDate;
