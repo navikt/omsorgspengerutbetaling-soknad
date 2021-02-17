@@ -45,7 +45,7 @@ const SelvstendigNæringsdrivendeFormPart: React.FunctionComponent<Props> = ({ f
                             onAfterChange={
                                 isFeatureEnabled(Feature.MELLOMLAGRING)
                                     ? () => {
-                                          SøknadTempStorage.persist(values, StepID.INNTEKT);
+                                          SøknadTempStorage.update(values, StepID.INNTEKT);
                                       }
                                     : undefined
                             }
