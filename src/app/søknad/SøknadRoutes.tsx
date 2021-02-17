@@ -64,7 +64,7 @@ const SøknadRoutes: React.FunctionComponent = () => {
         await logSoknadStartet(SKJEMANAVN);
         setTimeout(() => {
             if (isFeatureEnabled(Feature.MELLOMLAGRING)) {
-                SøknadTempStorage.persist(values, StepID.PERIODE).then(() => {
+                SøknadTempStorage.persist(undefined, StepID.PERIODE).then(() => {
                     navigateTo(`${RouteConfig.SØKNAD_ROUTE_PREFIX}/${StepID.PERIODE}`, history);
                 });
             } else {
