@@ -41,7 +41,7 @@ const SøknadRoutes: React.FunctionComponent = () => {
     async function navigateToNextStepFrom(stepID: StepID) {
         if (isFeatureEnabled(Feature.MELLOMLAGRING)) {
             try {
-                await SøknadTempStorage.persist(values, stepID);
+                await SøknadTempStorage.update(values, stepID);
             } catch (error) {
                 if (apiUtils.isForbidden(error) || apiUtils.isUnauthorized(error)) {
                     await logUserLoggedOut('Ved mellomlagring');
@@ -64,7 +64,7 @@ const SøknadRoutes: React.FunctionComponent = () => {
         await logSoknadStartet(SKJEMANAVN);
         setTimeout(() => {
             if (isFeatureEnabled(Feature.MELLOMLAGRING)) {
-                SøknadTempStorage.persist(values, StepID.PERIODE).then(() => {
+                SøknadTempStorage.create().then(() => {
                     navigateTo(`${RouteConfig.SØKNAD_ROUTE_PREFIX}/${StepID.PERIODE}`, history);
                 });
             } else {
