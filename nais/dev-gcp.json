@@ -17,6 +17,7 @@
         "STENGT_BHG_SKOLE": "on",
         "NYNORSK": "on",
         "APPSTATUS_PROJECT_ID": "ryujtq87",
-        "APPSTATUS_DATASET": "staging"
+        "APPSTATUS_DATASET": "staging",
+        "SKIP_ORGNUM_VALIDATION": "true"
     }
 }

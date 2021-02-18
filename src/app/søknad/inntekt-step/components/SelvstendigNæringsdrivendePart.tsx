@@ -15,6 +15,7 @@ import { SøknadFormData, SøknadFormField } from '../../../types/SøknadFormDat
 import { Feature, isFeatureEnabled } from '../../../utils/featureToggleUtils';
 import SøknadFormComponents from '../../SøknadFormComponents';
 import SøknadTempStorage from '../../SøknadTempStorage';
+import { getEnvironmentVariable } from '../../../utils/envUtils';
 
 interface Props {
     formValues: SøknadFormData;
@@ -23,6 +24,7 @@ interface Props {
 const SelvstendigNæringsdrivendeFormPart: React.FunctionComponent<Props> = ({ formValues }) => {
     const intl = useIntl();
     const { values } = useFormikContext<SøknadFormData>();
+    const skipOrgNumValidation = getEnvironmentVariable('SKIP_ORGNUM_VALIDATION') === 'true';
     return (
         <>
             <SøknadFormComponents.YesOrNoQuestion
@@ -41,6 +43,7 @@ const SelvstendigNæringsdrivendeFormPart: React.FunctionComponent<Props> = ({ f
                                 addLabel: intlHelper(intl, 'selvstendig.list.leggTilLabel'),
                                 modalTitle: intlHelper(intl, 'selvstendig.dialog.tittel'),
                             }}
+                            skipOrgNumValidation={skipOrgNumValidation}
                             validate={validateRequiredList}
                             onAfterChange={
                                 isFeatureEnabled(Feature.MELLOMLAGRING)
