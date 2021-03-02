@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { render } from 'react-dom';
 import { Route, Switch } from 'react-router-dom';
+import { AmplitudeProvider } from '@navikt/sif-common-amplitude/lib';
 import AppStatusWrapper from '@navikt/sif-common-core/lib/components/app-status-wrapper/AppStatusWrapper';
-import Modal from 'nav-frontend-modal';
 import { Locale } from '@navikt/sif-common-core/lib/types/Locale';
+import Modal from 'nav-frontend-modal';
 import ApplicationWrapper from './components/application-wrapper/ApplicationWrapper';
 import IntroPage from './components/pages/intro-page/IntroPage';
 import UnavailablePage from './components/pages/unavailable-page/UnavailablePage';
@@ -13,7 +14,6 @@ import appSentryLogger from './utils/appSentryLogger';
 import { getEnvironmentVariable } from './utils/envUtils';
 import { getLocaleFromSessionStorage, setLocaleInSessionStorage } from './utils/localeUtils';
 import './styles/app.less';
-import { AmplitudeProvider } from '@navikt/sif-common-amplitude/lib';
 
 appSentryLogger.init();
 

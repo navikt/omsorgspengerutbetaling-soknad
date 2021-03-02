@@ -10,9 +10,13 @@ import bostedUtlandMessages from '@navikt/sif-common-forms/lib/bosted-utland/bos
 import fosterbarnMessages from '@navikt/sif-common-forms/lib/fosterbarn/fosterbarnMessages';
 import fraværMessages from '@navikt/sif-common-forms/lib/fravær/fraværMessages';
 import virksomhetMessages from '@navikt/sif-common-forms/lib/virksomhet/virksomhetMessages';
+import dayjs from 'dayjs';
 
 export const appBokmålstekster = require('../../i18n/nb.json');
 export const appNynorsktekster = require('../../i18n/nn.json');
+
+require('dayjs/locale/nb');
+require('dayjs/locale/nn');
 
 const bokmålstekster = {
     ...allCommonMessages.nb,
@@ -40,6 +44,7 @@ const showMessages = false;
 
 const IntlProvider: React.FunctionComponent<IntlProviderProps> = ({ locale, children, onError }) => {
     const messages = locale === 'nb' ? bokmålstekster : nynorsktekster;
+    dayjs.locale(locale === 'nb' ? 'nb' : 'nn');
     return (
         <Provider locale={locale} messages={messages} onError={onError}>
             {children}
