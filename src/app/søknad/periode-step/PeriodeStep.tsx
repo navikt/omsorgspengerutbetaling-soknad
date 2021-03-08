@@ -12,7 +12,11 @@ import {
     validateYesOrNoIsAnswered,
 } from '@navikt/sif-common-core/lib/validation/fieldValidations';
 import BostedUtlandListAndDialog from '@navikt/sif-common-forms/lib/bosted-utland/BostedUtlandListAndDialog';
-import { fraværDagToFraværDateRange, validateNoCollisions } from '@navikt/sif-common-forms/lib/fravær';
+import {
+    fraværDagToFraværDateRange,
+    fraværPeriodeToDateRange,
+    validateNoCollisions,
+} from '@navikt/sif-common-forms/lib/fravær';
 import FraværDagerListAndDialog from '@navikt/sif-common-forms/lib/fravær/FraværDagerListAndDialog';
 import FraværPerioderListAndDialog from '@navikt/sif-common-forms/lib/fravær/FraværPerioderListAndDialog';
 import { validateAll } from '@navikt/sif-common-forms/lib/fravær/fraværValidationUtils';
@@ -119,7 +123,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                                 modalTitle: intlHelper(intl, 'step.periode.harPerioderMedFravær.modalTitle'),
                             }}
                             dateRangesToDisable={[
-                                ...values.fraværPerioder,
+                                ...values.fraværPerioder.map(fraværPeriodeToDateRange),
                                 ...values.fraværDager.map(fraværDagToFraværDateRange),
                             ]}
                             helgedagerIkkeTillat={true}
@@ -161,7 +165,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                             }}
                             dateRangesToDisable={[
                                 ...values.fraværDager.map(fraværDagToFraværDateRange),
-                                ...values.fraværPerioder,
+                                ...values.fraværPerioder.map(fraværPeriodeToDateRange),
                             ]}
                             helgedagerIkkeTillatt={true}
                             maksArbeidstidPerDag={24}

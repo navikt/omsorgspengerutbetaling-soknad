@@ -147,8 +147,8 @@ export const mapPeriodeTilUtbetalingsperiode = (
     const periodeMappedTilUtbetalingsperiode: UtbetalingsperiodeApi[] = fraværPerioder.map(
         (periode: FraværPeriode): UtbetalingsperiodeApi => {
             return {
-                fraOgMed: formatDateToApiFormat(periode.from),
-                tilOgMed: formatDateToApiFormat(periode.to),
+                fraOgMed: formatDateToApiFormat(periode.fraOgMed),
+                tilOgMed: formatDateToApiFormat(periode.tilOgMed),
                 antallTimerPlanlagt: null,
                 antallTimerBorte: null,
             };
