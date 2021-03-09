@@ -1,0 +1,8 @@
+// .json5 allows comments from javascript
+{
+  "fornavn":"Test",
+  "mellomnavn":null,
+  "etternavn":"Testesen",
+  "fodselsnummer":"12345123456",
+  "myndig":true
+}
