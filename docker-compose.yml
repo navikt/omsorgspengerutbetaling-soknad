@@ -6,9 +6,9 @@ services:
       context: .
       dockerfile: Dockerfile.api-mock
     environment:
-        - "PORT=8082"
+        - "PORT=8083"
     ports:
-      - 8082:8082
+      - 8083:8083
   web:
     network_mode: "host"
     build:
