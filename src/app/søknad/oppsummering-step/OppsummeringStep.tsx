@@ -113,16 +113,7 @@ const OppsummeringStep: React.FunctionComponent<Props> = ({ onApplicationSent })
 
                     {/* Om barn */}
                     <SummarySection header={intlHelper(intl, 'steg.oppsummering.barnet.omBarn')}>
-                        <SpørsmålOgSvarSummaryView
-                            yesNoSpørsmålOgSvar={apiValues.spørsmål.filter((sporsmål: YesNoSpørsmålOgSvar) => {
-                                return (
-                                    sporsmål.spørsmål ===
-                                        intlHelper(intl, 'steg.barn.har_fått_ekstra_omsorgsdager.spm') ||
-                                    sporsmål.spørsmål === intlHelper(intl, 'steg.barn.fosterbarn.spm')
-                                );
-                            })}
-                        />
-
+                        <SpørsmålOgSvarSummaryView yesNoSpørsmålOgSvar={apiValues.spørsmål} />
                         {fosterbarn.length > 0 && (
                             <SummaryBlock header="Fosterbarn">
                                 <SummaryList

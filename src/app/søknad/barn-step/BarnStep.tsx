@@ -43,13 +43,6 @@ const BarnStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) =
                     <FosterbarnListAndDialog name={SøknadFormField.fosterbarn} validate={validateRequiredList} />
                 </FormBlock>
             )}
-            <FormBlock>
-                <SøknadFormComponents.YesOrNoQuestion
-                    name={SøknadFormField.har_fått_ekstra_omsorgsdager}
-                    legend={intlHelper(intl, 'steg.barn.har_fått_ekstra_omsorgsdager.spm')}
-                    validate={validateYesOrNoIsAnswered}
-                />
-            </FormBlock>
         </SøknadStep>
     );
 };

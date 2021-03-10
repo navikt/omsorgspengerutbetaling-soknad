@@ -14,9 +14,6 @@ const BarnStepConfig: QuestionConfig<SøknadFormData, SøknadFormField> = {
         isIncluded: ({ har_fosterbarn }) => har_fosterbarn === YesOrNo.YES,
         isAnswered: ({ fosterbarn }) => fosterbarn !== undefined && fosterbarn.length > 0,
     },
-    [Q.har_fått_ekstra_omsorgsdager]: {
-        isAnswered: ({ har_fått_ekstra_omsorgsdager }) => yesOrNoIsAnswered(har_fått_ekstra_omsorgsdager),
-    },
 };
 
 export const BarnStepQuestions = Questions<SøknadFormData, SøknadFormField>(BarnStepConfig);

@@ -48,7 +48,6 @@ export enum SøknadFormField {
     // Barn
     har_fosterbarn = 'har_fosterbarn',
     fosterbarn = 'fosterbarn',
-    har_fått_ekstra_omsorgsdager = 'har_fått_ekstra_omsorgsdager',
 
     // Medlemskap
     harBoddUtenforNorgeSiste12Mnd = 'harBoddUtenforNorgeSiste12Mnd',
@@ -95,7 +94,6 @@ export interface SøknadFormData {
     // Barn
     [SøknadFormField.har_fosterbarn]: YesOrNo;
     [SøknadFormField.fosterbarn]: Fosterbarn[];
-    [SøknadFormField.har_fått_ekstra_omsorgsdager]: YesOrNo;
 
     // Medlemskap
     [SøknadFormField.harBoddUtenforNorgeSiste12Mnd]: YesOrNo;
@@ -140,7 +138,6 @@ export const initialValues: SøknadFormData = {
     // Kvalifisering
     [SøknadFormField.har_fosterbarn]: YesOrNo.UNANSWERED,
     [SøknadFormField.fosterbarn]: [],
-    [SøknadFormField.har_fått_ekstra_omsorgsdager]: YesOrNo.UNANSWERED,
 
     // STEG 7: Medlemskap
     [SøknadFormField.harBoddUtenforNorgeSiste12Mnd]: YesOrNo.UNANSWERED,

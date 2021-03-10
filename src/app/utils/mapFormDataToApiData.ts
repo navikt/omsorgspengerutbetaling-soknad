@@ -60,7 +60,6 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
         // Barn
         har_fosterbarn,
         fosterbarn,
-        har_fått_ekstra_omsorgsdager,
 
         // Medlemskap
         harBoddUtenforNorgeSiste12Mnd,
@@ -73,10 +72,6 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
         {
             spørsmål: intlHelper(intl, 'step.inntekt.er_arbeidstaker'),
             svar: mapYesOrNoToSvar(er_arbeidstaker),
-        },
-        {
-            spørsmål: intl.formatMessage({ id: 'steg.barn.har_fått_ekstra_omsorgsdager.spm' }),
-            svar: mapYesOrNoToSvar(har_fått_ekstra_omsorgsdager),
         },
         {
             spørsmål: intlHelper(intl, 'steg.barn.fosterbarn.spm'),
