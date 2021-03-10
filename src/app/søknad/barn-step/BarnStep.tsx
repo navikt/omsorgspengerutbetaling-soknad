@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import {
@@ -14,6 +14,7 @@ import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import SøknadFormComponents from '../SøknadFormComponents';
 import SøknadStep from '../SøknadStep';
 import { BarnStepQuestions } from './config';
+import CounsellorPanel from '@navikt/sif-common-core/lib/components/counsellor-panel/CounsellorPanel';
 
 const BarnStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) => {
     const intl = useIntl();
@@ -31,6 +32,11 @@ const BarnStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) =
 
     return (
         <SøknadStep id={StepID.BARN} onValidFormSubmit={onValidSubmit} cleanupStep={cleanupStep}>
+            <FormBlock>
+                <CounsellorPanel>
+                    <FormattedMessage id="fosterbarn.legend" />
+                </CounsellorPanel>
+            </FormBlock>
             <FormBlock>
                 <SøknadFormComponents.YesOrNoQuestion
                     name={SøknadFormField.har_fosterbarn}
