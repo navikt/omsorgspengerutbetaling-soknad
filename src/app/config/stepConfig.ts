@@ -9,7 +9,7 @@ export enum StepID {
     'DOKUMENTER_STENGT_SKOLE_BHG' = 'vedlegg_stengtSkoleBhg',
     'DOKUMENTER_SMITTEVERNHENSYN' = 'vedlegg_smittevernhensyn',
     'LEGEERKLÆRING' = 'legeerklaering',
-    'INNTEKT' = 'inntekt',
+    'ARBEIDSSITUASJON' = 'arbeidssituasjon',
     'MEDLEMSKAP' = 'medlemskap',
     'OPPSUMMERING' = 'oppsummering',
 }
@@ -54,7 +54,7 @@ export const getStepConfig = (formData?: SøknadFormData): StepConfigInterface =
         if (skalViseSmittevernDokumenterStep) {
             return StepID.DOKUMENTER_SMITTEVERNHENSYN;
         }
-        return StepID.INNTEKT;
+        return StepID.ARBEIDSSITUASJON;
     };
 
     const getPrevioustStepForInntektStep = (): StepID => {
@@ -81,7 +81,9 @@ export const getStepConfig = (formData?: SøknadFormData): StepConfigInterface =
               [StepID.DOKUMENTER_STENGT_SKOLE_BHG]: {
                   ...getStepConfigItemTextKeys(StepID.DOKUMENTER_STENGT_SKOLE_BHG),
                   index: idx++,
-                  nextStep: skalViseSmittevernDokumenterStep ? StepID.DOKUMENTER_SMITTEVERNHENSYN : StepID.INNTEKT,
+                  nextStep: skalViseSmittevernDokumenterStep
+                      ? StepID.DOKUMENTER_SMITTEVERNHENSYN
+                      : StepID.ARBEIDSSITUASJON,
                   backLinkHref: getSøknadRoute(StepID.PERIODE),
               },
           }
@@ -92,7 +94,7 @@ export const getStepConfig = (formData?: SøknadFormData): StepConfigInterface =
               [StepID.DOKUMENTER_SMITTEVERNHENSYN]: {
                   ...getStepConfigItemTextKeys(StepID.DOKUMENTER_SMITTEVERNHENSYN),
                   index: idx++,
-                  nextStep: StepID.INNTEKT,
+                  nextStep: StepID.ARBEIDSSITUASJON,
                   backLinkHref: skalViseStengtSkoleBhgDokumenterStep
                       ? getSøknadRoute(StepID.DOKUMENTER_STENGT_SKOLE_BHG)
                       : getSøknadRoute(StepID.PERIODE),
@@ -101,8 +103,8 @@ export const getStepConfig = (formData?: SøknadFormData): StepConfigInterface =
         : undefined;
 
     const configDelTo = {
-        [StepID.INNTEKT]: {
-            ...getStepConfigItemTextKeys(StepID.INNTEKT),
+        [StepID.ARBEIDSSITUASJON]: {
+            ...getStepConfigItemTextKeys(StepID.ARBEIDSSITUASJON),
             index: idx++,
             nextStep: StepID.BARN,
             backLinkHref: getPrevioustStepForInntektStep(),
@@ -111,7 +113,7 @@ export const getStepConfig = (formData?: SøknadFormData): StepConfigInterface =
             ...getStepConfigItemTextKeys(StepID.BARN),
             index: idx++,
             nextStep: StepID.MEDLEMSKAP,
-            backLinkHref: getSøknadRoute(StepID.INNTEKT),
+            backLinkHref: getSøknadRoute(StepID.ARBEIDSSITUASJON),
         },
         [StepID.MEDLEMSKAP]: {
             ...getStepConfigItemTextKeys(StepID.MEDLEMSKAP),

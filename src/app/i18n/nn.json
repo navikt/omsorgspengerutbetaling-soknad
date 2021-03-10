@@ -83,13 +83,11 @@
     "step.periode.stepTitle": "Kva dagar har du vore heime med barn?",
     "step.periode.stepIndicatorLabel": "Kva dagar har du vore heime med barn?",
 
-    "step.inntekt.pageTitle": "Inntekt – søknad om utbetaling av omsorgspengar",
-    "step.inntekt.stepTitle": "Inntekt",
-    "step.inntekt.stepIndicatorLabel": "Inntekt",
-    "step.inntekt.info.1": "Før du kan bruke av omsorgsdagane og ha rett til omsorgspengar, må du ha vore i jobb i minst 4 veker.",
-    "step.inntekt.info.2": "Når vi spør om dei siste 4 vekene, meiner vi dei 4 siste vekene før den første dagen du søkjer utbetaling for.",
-    "step.inntekt.info.3": "Dersom du ikkje har jobba dei 4 siste vekene, men fått ei utbetaling frå NAV som er likestilt med jobb, skal du svare «ja». Desse utbetalingane er: omsorgspengar, sjukepengar, dagpengar, foreldrepengar, svangerskapspengar, pleiepengar eller opplæringspengar.",
-    "step.inntekt.advarsel.ingenSituasjonValgt": "Du må velje minst éin av situasjonane over.",
+    "step.arbeidssituasjon.pageTitle": "Inntekt – søknad om utbetaling av omsorgspengar",
+    "step.arbeidssituasjon.stepTitle": "Inntekt",
+    "step.arbeidssituasjon.stepIndicatorLabel": "Inntekt",
+    "step.arbeidssituasjon.info.1": "Nå treng vi å vite kva som var din arbeidssituasjon på den første dagen du søkjer om utbetaling for.",
+    "step.arbeidssituasjon.advarsel.ingenSituasjonValgt": "Du må velje minst éin av situasjonane over.",
 
     "step.barn.pageTitle": "Barn – søknad om utbetaling av omsorgspengar",
     "step.barn.stepTitle": "Barn",
@@ -191,7 +189,7 @@
 
     "steg.arbeid.spm": "Kva er arbeidssituasjonen din? Du kan velje fleire.",
 
-    "step.inntekt.er_arbeidstaker": "Er du arbeidstakar i tillegg til at du er sjølvstendig næringsdrivande og/eller frilansar?",
+    "step.arbeidssituasjon.er_arbeidstaker": "Er du arbeidstakar i tillegg til at du er sjølvstendig næringsdrivande og/eller frilansar?",
 
     "fosterbarn.legend": "Vi hentar vanlegvis informasjon om barn frå folkeregisteret, men vi har ikkje tilgang til informasjon om fosterbarn der. Derfor må du sjølv leggje inn opplysningar om eventuelle fosterbarn. ",
 

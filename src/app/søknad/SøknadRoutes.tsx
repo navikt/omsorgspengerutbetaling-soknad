@@ -16,7 +16,7 @@ import { Feature, isFeatureEnabled } from '../utils/featureToggleUtils';
 import { navigateTo, navigateToLoginPage } from '../utils/navigationUtils';
 import { getNextStepRoute, getSøknadRoute, isAvailable } from '../utils/routeUtils';
 import BarnStep from './barn-step/BarnStep';
-import InntektStep from './inntekt-step/InntektStep';
+import ArbeidssituasjonStep from './arbeidssituasjon-step/ArbeidssituasjonStep';
 import MedlemsskapStep from './medlemskap-step/MedlemsskapStep';
 import OppsummeringStep from './oppsummering-step/OppsummeringStep';
 import PeriodeStep from './periode-step/PeriodeStep';
@@ -109,10 +109,12 @@ const SøknadRoutes: React.FunctionComponent = () => {
                 />
             )}
 
-            {isAvailable(StepID.INNTEKT, values) && (
+            {isAvailable(StepID.ARBEIDSSITUASJON, values) && (
                 <Route
-                    path={getSøknadRoute(StepID.INNTEKT)}
-                    render={() => <InntektStep onValidSubmit={() => navigateToNextStepFrom(StepID.INNTEKT)} />}
+                    path={getSøknadRoute(StepID.ARBEIDSSITUASJON)}
+                    render={() => (
+                        <ArbeidssituasjonStep onValidSubmit={() => navigateToNextStepFrom(StepID.ARBEIDSSITUASJON)} />
+                    )}
                 />
             )}
             {isAvailable(StepID.BARN, values) && (

@@ -4,7 +4,7 @@ import { StepConfigInterface, StepConfigItemTexts, StepID } from '../config/step
 import { SøknadFormData } from '../types/SøknadFormData';
 import {
     barnStepIsValid,
-    inntektStepIsValid,
+    arbeidssituasjonStepIsValid,
     medlemskapStepIsValid,
     periodeStepIsValid,
     welcomingPageIsValid,
@@ -22,11 +22,11 @@ export const getStepTexts = (intl: IntlShape, stepId: StepID, stepConfig: StepCo
 
 export const periodeStepIsAvailable = (formData: SøknadFormData) => welcomingPageIsValid(formData);
 
-export const inntektStepIsAvailable = (formData: SøknadFormData) =>
+export const arbeidssituasjonStepIsAvailable = (formData: SøknadFormData) =>
     periodeStepIsAvailable(formData) && periodeStepIsValid(formData);
 
 export const barnStepIsAvailable = (formData: SøknadFormData) =>
-    inntektStepIsAvailable(formData) && inntektStepIsValid(formData);
+    arbeidssituasjonStepIsAvailable(formData) && arbeidssituasjonStepIsValid(formData);
 
 export const medlemskapStepIsAvailable = (formData: SøknadFormData) =>
     barnStepIsAvailable(formData) && barnStepIsValid(formData);

@@ -157,7 +157,7 @@ const OppsummeringStep: React.FunctionComponent<Props> = ({ onApplicationSent })
                         <SpørsmålOgSvarSummaryView
                             yesNoSpørsmålOgSvar={apiValues.spørsmål.filter((sporsmål: YesNoSpørsmålOgSvar) => {
                                 return (
-                                    sporsmål.spørsmål === intlHelper(intl, 'step.inntekt.er_arbeidstaker') ||
+                                    sporsmål.spørsmål === intlHelper(intl, 'step.arbeidssituasjon.er_arbeidstaker') ||
                                     sporsmål.spørsmål ===
                                         intlHelper(intl, 'step.periode.har_søkt_andre_utbetalinger.spm')
                                 );

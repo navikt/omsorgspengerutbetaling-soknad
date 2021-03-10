@@ -70,7 +70,7 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
 
     const yesOrNoQuestions: YesNoSpørsmålOgSvar[] = [
         {
-            spørsmål: intlHelper(intl, 'step.inntekt.er_arbeidstaker'),
+            spørsmål: intlHelper(intl, 'step.arbeidssituasjon.er_arbeidstaker'),
             svar: mapYesOrNoToSvar(er_arbeidstaker),
         },
         {

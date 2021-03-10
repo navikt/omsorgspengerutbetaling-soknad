@@ -23,23 +23,17 @@ const shouldShowSubmitButton = (søknadFormData: SøknadFormData): boolean => {
     return !(harHattInntektSomFrilanser === YesOrNo.NO && harHattInntektSomSN === YesOrNo.NO);
 };
 
-const InntektStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) => {
+const ArbeidssituasjonStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) => {
     const { values } = useFormikContext<SøknadFormData>();
     const intl = useIntl();
 
     const showSubmitButton = shouldShowSubmitButton(values);
 
     return (
-        <SøknadStep id={StepID.INNTEKT} onValidFormSubmit={onValidSubmit} showSubmitButton={showSubmitButton}>
+        <SøknadStep id={StepID.ARBEIDSSITUASJON} onValidFormSubmit={onValidSubmit} showSubmitButton={showSubmitButton}>
             <CounsellorPanel>
                 <p>
-                    <FormattedHtmlMessage id="step.inntekt.info.1" />
-                </p>
-                <p>
-                    <FormattedHtmlMessage id="step.inntekt.info.2" />
-                </p>
-                <p>
-                    <FormattedHtmlMessage id="step.inntekt.info.3" />
+                    <FormattedHtmlMessage id="step.arbeidssituasjon.info.1" />
                 </p>
             </CounsellorPanel>
 
@@ -53,7 +47,7 @@ const InntektStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
             {!showSubmitButton && (
                 <FormBlock margin="l">
                     <AlertStripeAdvarsel>
-                        <FormattedHtmlMessage id="step.inntekt.advarsel.ingenSituasjonValgt" />
+                        <FormattedHtmlMessage id="step.arbeidssituasjon.advarsel.ingenSituasjonValgt" />
                     </AlertStripeAdvarsel>
                 </FormBlock>
             )}
@@ -61,7 +55,7 @@ const InntektStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                 <Box margin="l" padBottom="l">
                     <SøknadFormComponents.YesOrNoQuestion
                         name={SøknadFormField.er_arbeidstaker}
-                        legend={intlHelper(intl, 'step.inntekt.er_arbeidstaker')}
+                        legend={intlHelper(intl, 'step.arbeidssituasjon.er_arbeidstaker')}
                         validate={validateYesOrNoIsAnswered}
                     />
                 </Box>
@@ -70,4 +64,4 @@ const InntektStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
     );
 };
 
-export default InntektStep;
+export default ArbeidssituasjonStep;
