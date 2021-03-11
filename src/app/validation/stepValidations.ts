@@ -1,7 +1,11 @@
 import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
 import { Utenlandsopphold } from '@navikt/sif-common-forms/lib';
 import { FraværDag, FraværPeriode } from '@navikt/sif-common-forms/lib/fravær';
-import { frilansIsValid, selvstendigIsValid } from '../søknad/arbeidssituasjon-step/arbeidssituasjonUtils';
+import {
+    erArbeidstakerIsValid,
+    frilansIsValid,
+    selvstendigIsValid,
+} from '../søknad/arbeidssituasjon-step/arbeidssituasjonUtils';
 import { BarnStepQuestions } from '../søknad/barn-step/config';
 import {
     delvisFraværIsValid,
@@ -32,7 +36,7 @@ export const periodeStepIsValid = (formData: SøknadFormData): boolean => {
 };
 
 export const arbeidssituasjonStepIsValid = (formData: SøknadFormData): boolean => {
-    return frilansIsValid(formData) && selvstendigIsValid(formData);
+    return frilansIsValid(formData) && selvstendigIsValid(formData) && erArbeidstakerIsValid(formData.er_arbeidstaker);
 };
 
 export const barnStepIsValid = (values: SøknadFormData): boolean => {
