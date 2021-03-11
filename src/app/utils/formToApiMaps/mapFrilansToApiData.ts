@@ -4,15 +4,22 @@ import { formatDateToApiFormat } from '@navikt/sif-common-core/lib/utils/dateUti
 import { Frilans } from '../../types/SøknadApiData';
 
 export const mapFrilansToApiData = (
-    frilans_harHattInntektSomFrilanser: YesOrNo,
+    erFrilanser: YesOrNo,
     jobberFortsattSomFrilans: YesOrNo | undefined,
-    startdato: string | undefined
+    startdato: string | undefined,
+    sluttdato: string | undefined
 ): Frilans | undefined => {
     const startDate = datepickerUtils.getDateFromDateString(startdato);
-    if (frilans_harHattInntektSomFrilanser === YesOrNo.YES && startDate) {
+    const endDate = datepickerUtils.getDateFromDateString(sluttdato);
+
+    if (erFrilanser === YesOrNo.YES && startDate) {
+        if (jobberFortsattSomFrilans === YesOrNo.YES && endDate === undefined) {
+            return undefined;
+        }
         const frilans: Frilans = {
             startdato: formatDateToApiFormat(startDate),
             jobberFortsattSomFrilans: jobberFortsattSomFrilans === YesOrNo.YES,
+            sluttdato: endDate ? formatDateToApiFormat(endDate) : undefined,
         };
         return frilans;
     }

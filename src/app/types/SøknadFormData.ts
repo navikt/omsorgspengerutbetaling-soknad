@@ -38,10 +38,11 @@ export enum SøknadFormField {
     hvis_utenlandsopphold_en_test_verdi = 'hvis_utenlandsopphold_en_test_verdi',
 
     // Inntekt
-    frilans_harHattInntektSomFrilanser = 'frilans_harHattInntektSomFrilanser',
+    frilans_erFrilanser = 'frilans_erFrilanser',
     frilans_startdato = 'frilans_startdato',
     frilans_jobberFortsattSomFrilans = 'frilans_jobberFortsattSomFrilans',
-    selvstendig_harHattInntektSomSN = 'selvstendig_harHattInntektSomSN',
+    frilans_sluttdato = 'frilans_sluttdato',
+    selvstendig_erSelvstendigNæringsdrivende = 'selvstendig_erSelvstendigNæringsdrivende',
     selvstendig_virksomheter = 'selvstendig_virksomheter',
     er_arbeidstaker = 'er_arbeidstaker',
 
@@ -84,10 +85,11 @@ export interface SøknadFormData {
     [SøknadFormField.hvis_utenlandsopphold_en_test_verdi]: YesOrNo;
 
     // Inntekt
-    [SøknadFormField.frilans_harHattInntektSomFrilanser]: YesOrNo;
+    [SøknadFormField.frilans_erFrilanser]: YesOrNo;
     [SøknadFormField.frilans_startdato]?: string;
     [SøknadFormField.frilans_jobberFortsattSomFrilans]?: YesOrNo;
-    [SøknadFormField.selvstendig_harHattInntektSomSN]: YesOrNo;
+    [SøknadFormField.frilans_sluttdato]?: string;
+    [SøknadFormField.selvstendig_erSelvstendigNæringsdrivende]: YesOrNo;
     [SøknadFormField.selvstendig_virksomheter]?: Virksomhet[];
     [SøknadFormField.er_arbeidstaker]: YesOrNo;
 
@@ -101,6 +103,19 @@ export interface SøknadFormData {
     [SøknadFormField.skalBoUtenforNorgeNeste12Mnd]: YesOrNo;
     [SøknadFormField.utenlandsoppholdNeste12Mnd]: Utenlandsopphold[];
 }
+
+export type FrilansFormData = Pick<
+    SøknadFormData,
+    | SøknadFormField.frilans_erFrilanser
+    | SøknadFormField.frilans_jobberFortsattSomFrilans
+    | SøknadFormField.frilans_startdato
+    | SøknadFormField.frilans_sluttdato
+>;
+
+export type SelvstendigFormData = Pick<
+    SøknadFormData,
+    SøknadFormField.selvstendig_erSelvstendigNæringsdrivende | SøknadFormField.selvstendig_virksomheter
+>;
 
 export const initialValues: SøknadFormData = {
     [SøknadFormField.harForståttRettigheterOgPlikter]: false,
@@ -129,10 +144,9 @@ export const initialValues: SøknadFormData = {
     // Conditional perioder i utlandet
     [SøknadFormField.hvis_utenlandsopphold_en_test_verdi]: YesOrNo.UNANSWERED,
 
-    // Inntekt
-    [SøknadFormField.frilans_harHattInntektSomFrilanser]: YesOrNo.UNANSWERED,
-    [SøknadFormField.selvstendig_harHattInntektSomSN]: YesOrNo.UNANSWERED,
-    [SøknadFormField.selvstendig_harHattInntektSomSN]: YesOrNo.UNANSWERED,
+    // Arbeidssituasjon
+    [SøknadFormField.frilans_erFrilanser]: YesOrNo.UNANSWERED,
+    [SøknadFormField.selvstendig_erSelvstendigNæringsdrivende]: YesOrNo.UNANSWERED,
     [SøknadFormField.er_arbeidstaker]: YesOrNo.UNANSWERED,
 
     // Kvalifisering

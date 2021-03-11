@@ -13,6 +13,7 @@
         "start-express": "node ./server.js",
         "start-api-mock": "PORT=8083 node ./api-mock/mock-api-server.js",
         "test": "jest --maxWorkers=2 --config ./jest/jest.config.js",
+        "test-w": "jest --maxWorkers=2 --config ./jest/jest.config.js --watch",
         "snyk-protect": "snyk protect",
         "prepare": "npm run snyk-protect",
         "cypress:open": "npm add -D cypress && CYPRESS_baseUrl=http://localhost:8080 cypress open",

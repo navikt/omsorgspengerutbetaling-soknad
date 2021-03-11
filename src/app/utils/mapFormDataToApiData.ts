@@ -50,10 +50,11 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
         dokumenterSmittevernhensyn = [],
 
         // Inntekt
-        frilans_harHattInntektSomFrilanser,
+        frilans_erFrilanser,
         frilans_startdato,
+        frilans_sluttdato,
         frilans_jobberFortsattSomFrilans,
-        selvstendig_harHattInntektSomSN,
+        selvstendig_erSelvstendigNæringsdrivende,
         selvstendig_virksomheter,
         er_arbeidstaker,
 
@@ -107,13 +108,14 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
         ),
         opphold: settInnOpphold(perioder_harVærtIUtlandet, perioder_utenlandsopphold, intl.locale), // periode siden, har du oppholdt
         frilans: mapFrilansToApiData(
-            frilans_harHattInntektSomFrilanser,
+            frilans_erFrilanser,
             frilans_jobberFortsattSomFrilans,
-            frilans_startdato
+            frilans_startdato,
+            frilans_sluttdato
         ),
         selvstendigVirksomheter: settInnVirksomheter(
             intl.locale,
-            selvstendig_harHattInntektSomSN,
+            selvstendig_erSelvstendigNæringsdrivende,
             selvstendig_virksomheter
         ),
         hjemmePgaSmittevernhensyn: hjemmePgaSmittevernhensyn === YesOrNo.YES,
@@ -206,11 +208,11 @@ const settInnOpphold = (
 
 const settInnVirksomheter = (
     locale: string,
-    harHattInntektSomSN?: YesOrNo,
+    erSelvstendigNæringsdrivende?: YesOrNo,
     virksomheter?: Virksomhet[],
     harBesvartFiskerPåBladB?: boolean
 ): VirksomhetApiData[] => {
-    return harHattInntektSomSN && harHattInntektSomSN === YesOrNo.YES && virksomheter
+    return erSelvstendigNæringsdrivende && erSelvstendigNæringsdrivende === YesOrNo.YES && virksomheter
         ? virksomheter.map((virksomhet: Virksomhet) =>
               mapVirksomhetToVirksomhetApiData(locale, virksomhet, harBesvartFiskerPåBladB)
           )

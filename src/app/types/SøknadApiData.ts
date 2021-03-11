@@ -39,6 +39,7 @@ export interface UtbetalingsperiodeApi {
 export interface Frilans {
     startdato: string;
     jobberFortsattSomFrilans: boolean;
+    sluttdato?: string;
 }
 
 export interface Land {

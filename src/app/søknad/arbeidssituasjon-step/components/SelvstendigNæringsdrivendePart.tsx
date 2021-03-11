@@ -28,11 +28,11 @@ const SelvstendigNæringsdrivendeFormPart: React.FunctionComponent<Props> = ({ f
     return (
         <>
             <SøknadFormComponents.YesOrNoQuestion
-                name={SøknadFormField.selvstendig_harHattInntektSomSN}
-                legend={intlHelper(intl, 'selvstendig.harDuHattInntekt.spm')}
+                name={SøknadFormField.selvstendig_erSelvstendigNæringsdrivende}
+                legend={intlHelper(intl, 'selvstendig.erDuSelvstendigNæringsdrivende.spm')}
                 validate={validateYesOrNoIsAnswered}
             />
-            {formValues.selvstendig_harHattInntektSomSN === YesOrNo.YES && (
+            {formValues.selvstendig_erSelvstendigNæringsdrivende === YesOrNo.YES && (
                 <FormBlock margin="l">
                     <ResponsivePanel>
                         <VirksomhetListAndDialog

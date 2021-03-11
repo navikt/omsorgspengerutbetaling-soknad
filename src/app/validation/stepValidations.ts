@@ -1,6 +1,5 @@
 import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
-import datepickerUtils from '@navikt/sif-common-formik/lib/components/formik-datepicker/datepickerUtils';
-import { Utenlandsopphold, Virksomhet } from '@navikt/sif-common-forms/lib';
+import { Utenlandsopphold } from '@navikt/sif-common-forms/lib';
 import { FraværDag, FraværPeriode } from '@navikt/sif-common-forms/lib/fravær';
 import { frilansIsValid, selvstendigIsValid } from '../søknad/arbeidssituasjon-step/arbeidssituasjonUtils';
 import { BarnStepQuestions } from '../søknad/barn-step/config';
@@ -33,21 +32,7 @@ export const periodeStepIsValid = (formData: SøknadFormData): boolean => {
 };
 
 export const arbeidssituasjonStepIsValid = (formData: SøknadFormData): boolean => {
-    const frilansHarHattInntektSomFrilanser: YesOrNo = formData[SøknadFormField.frilans_harHattInntektSomFrilanser];
-    const frilansStartdato: string | undefined = formData[SøknadFormField.frilans_startdato];
-    const frilansJobberFortsattSomFrilans: YesOrNo | undefined =
-        formData[SøknadFormField.frilans_jobberFortsattSomFrilans];
-    const selvstendigHarHattInntektSomSN: YesOrNo | undefined =
-        formData[SøknadFormField.selvstendig_harHattInntektSomSN];
-    const selvstendigVirksomheter: Virksomhet[] | undefined = formData[SøknadFormField.selvstendig_virksomheter];
-
-    const isValid: boolean =
-        frilansIsValid(
-            frilansHarHattInntektSomFrilanser,
-            datepickerUtils.getDateFromDateString(frilansStartdato),
-            frilansJobberFortsattSomFrilans
-        ) && selvstendigIsValid(selvstendigHarHattInntektSomSN, selvstendigVirksomheter);
-    return isValid;
+    return frilansIsValid(formData) && selvstendigIsValid(formData);
 };
 
 export const barnStepIsValid = (values: SøknadFormData): boolean => {

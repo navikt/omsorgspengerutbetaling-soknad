@@ -1,38 +1,28 @@
 import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
+import datepickerUtils from '@navikt/sif-common-formik/lib/components/formik-datepicker/datepickerUtils';
 import { Virksomhet } from '@navikt/sif-common-forms/lib';
+import { FrilansFormData, SelvstendigFormData } from '../../types/SøknadFormData';
 
-export const frilansIsValid = (
-    frilansHarHattInntektSomFrilanser: YesOrNo,
-    frilansStartdato: Date | undefined,
-    frilansJobberFortsattSomFrilans: YesOrNo | undefined
-) => {
+export const frilansIsValid = (formData: FrilansFormData) => {
+    const erFrilanser: YesOrNo = formData.frilans_erFrilanser;
+    const frilansStartdato: Date | undefined = datepickerUtils.getDateFromDateString(formData.frilans_startdato);
+    const frilansSluttdato: Date | undefined = datepickerUtils.getDateFromDateString(formData.frilans_sluttdato);
+    const frilansJobberFortsattSomFrilans: YesOrNo | undefined = formData.frilans_jobberFortsattSomFrilans;
+
     return !!(
-        frilansHarHattInntektSomFrilanser === YesOrNo.NO ||
-        (frilansHarHattInntektSomFrilanser === YesOrNo.YES &&
+        erFrilanser === YesOrNo.NO ||
+        (erFrilanser === YesOrNo.YES &&
             frilansStartdato &&
-            frilansJobberFortsattSomFrilans &&
-            (frilansJobberFortsattSomFrilans === YesOrNo.YES || frilansJobberFortsattSomFrilans === YesOrNo.NO))
+            (frilansJobberFortsattSomFrilans === YesOrNo.YES ||
+                (frilansJobberFortsattSomFrilans === YesOrNo.NO && frilansSluttdato !== undefined)))
     );
 };
 
-export const selvstendigIsValid = (
-    selvstendigHarHattInntektSomSN: YesOrNo | undefined,
-    selvstendigVirksomheter: Virksomhet[] | undefined
-) => {
+export const selvstendigIsValid = (formData: SelvstendigFormData) => {
+    const erSelvstendigNæringsdrivende: YesOrNo | undefined = formData.selvstendig_erSelvstendigNæringsdrivende;
+    const selvstendigVirksomheter: Virksomhet[] | undefined = formData.selvstendig_virksomheter;
     return !!(
-        selvstendigHarHattInntektSomSN === YesOrNo.NO ||
-        (selvstendigHarHattInntektSomSN === YesOrNo.YES &&
-            selvstendigVirksomheter &&
-            selvstendigVirksomheter.length > 0)
-    );
-};
-
-export const minimumEnVirksomhet = (
-    frilansJobberFortsattSomFrilans: YesOrNo | undefined,
-    selvstendigVirksomheter: Virksomhet[] | undefined
-) => {
-    return !!(
-        frilansJobberFortsattSomFrilans === YesOrNo.YES ||
-        (selvstendigVirksomheter && selvstendigVirksomheter.length > 0)
+        erSelvstendigNæringsdrivende === YesOrNo.NO ||
+        (erSelvstendigNæringsdrivende === YesOrNo.YES && selvstendigVirksomheter && selvstendigVirksomheter.length > 0)
     );
 };

@@ -413,18 +413,19 @@
     "summary.virksomhet.varigEndring.html": "Har hatt varig endring i arbeidsforholdet, verksemda eller arbeidssituasjonen dei siste fire åra. Datoen for endringa var {dato}, og næringsinntekt etter endringa er <strong>{endring}</strong>. Skildring av endringa:",
     "summary.virksomhet.yrkesaktivSisteTreFerdigliknedeÅrene": "Blei yrkesaktiv {dato}",
 
-    "selvstendig.harDuHattInntekt.spm": "Har du hatt inntekt som sjølvstendig næringsdrivande dei siste 4 vekene?",
+    "selvstendig.erDuSelvstendigNæringsdrivende.spm": "Er du sjølvstendig næringsdrivande?",
     "selvstendig.list.tittel": "Registrerte verksemder",
     "selvstendig.list.leggTilLabel": "Legg til verksemd",
     "selvstendig.dialog.tittel": "Verksemd",
-    "selvstendig.summary.harDuHattInntekt.header": "Har du hatt inntekt som sjølvstendig næringsdrivande dei siste 4 vekene?",
+    "selvstendig.summary.harDuHattInntekt.header": "Er du sjølvstendig næringsdrivande?",
 
-    "frilanser.harDuHattInntekt.spm": "Har du jobba og hatt inntekt som frilansar dei siste 4 vekene?",
+    "frilanser.erFrilanser.spm": "Er du frilansar?",
     "frilanser.nårStartet.spm": "Når starta du som frilansar?",
     "frilanser.jobberFortsatt.spm": "Jobbar du framleis som frilansar?",
+    "frilanser.nårSluttet.spm": "Når sluttet du som frilansar?",
 
     "frilanser.summary.header": "Frilansinntekt",
-    "frilanser.summary.harDuHattInntekt.header": "Har du jobba og hatt inntekt som frilansar dei 4 siste vekene?",
+    "frilanser.summary.harDuHattInntekt.header": "Er du frilansar?",
     "frilanser.summary.nårStartet.header": "Når starta du som frilansar?",
     "frilanser.summary.jobberFortsatt.header": "Jobbar du framleis som frilansar?",
 

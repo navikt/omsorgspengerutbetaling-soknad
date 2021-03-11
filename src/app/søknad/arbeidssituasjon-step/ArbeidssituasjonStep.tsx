@@ -10,17 +10,39 @@ import Box from '@navikt/sif-common-core/lib/components/box/Box';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
 import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
 import { StepConfigProps, StepID } from '../../config/stepConfig';
-import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
+import { initialValues, SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import SøknadFormComponents from '../SøknadFormComponents';
 import SøknadStep from '../SøknadStep';
 import FrilansFormPart from './components/FrilansFormPart';
 import SelvstendigNæringsdrivendeFormPart from './components/SelvstendigNæringsdrivendePart';
 
 const shouldShowSubmitButton = (søknadFormData: SøknadFormData): boolean => {
-    const harHattInntektSomFrilanser: YesOrNo = søknadFormData[SøknadFormField.frilans_harHattInntektSomFrilanser];
-    const harHattInntektSomSN: YesOrNo | undefined = søknadFormData[SøknadFormField.selvstendig_harHattInntektSomSN];
+    const erFrilanser: YesOrNo = søknadFormData[SøknadFormField.frilans_erFrilanser];
+    const erSelvstendigNæringsdrivende: YesOrNo | undefined =
+        søknadFormData[SøknadFormField.selvstendig_erSelvstendigNæringsdrivende];
 
-    return !(harHattInntektSomFrilanser === YesOrNo.NO && harHattInntektSomSN === YesOrNo.NO);
+    return !(erFrilanser === YesOrNo.NO && erSelvstendigNæringsdrivende === YesOrNo.NO);
+};
+
+const cleanupStep = (values: SøknadFormData): SøknadFormData => {
+    const { frilans_erFrilanser, selvstendig_erSelvstendigNæringsdrivende } = values;
+    const cleanedValues = { ...values };
+
+    // Cleanup frilanser
+    if (frilans_erFrilanser === YesOrNo.NO) {
+        cleanedValues.frilans_jobberFortsattSomFrilans = initialValues.frilans_jobberFortsattSomFrilans;
+        cleanedValues.frilans_startdato = initialValues.frilans_startdato;
+        cleanedValues.frilans_sluttdato = initialValues.frilans_sluttdato;
+    } else {
+        if (values.frilans_jobberFortsattSomFrilans === YesOrNo.YES) {
+            cleanedValues.frilans_sluttdato = initialValues.frilans_sluttdato;
+        }
+    }
+    // Cleanup selvstendig næringsdrivende
+    if (selvstendig_erSelvstendigNæringsdrivende === YesOrNo.NO) {
+        cleanedValues.selvstendig_virksomheter = undefined;
+    }
+    return cleanedValues;
 };
 
 const ArbeidssituasjonStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) => {
@@ -30,7 +52,11 @@ const ArbeidssituasjonStep: React.FunctionComponent<StepConfigProps> = ({ onVali
     const showSubmitButton = shouldShowSubmitButton(values);
 
     return (
-        <SøknadStep id={StepID.ARBEIDSSITUASJON} onValidFormSubmit={onValidSubmit} showSubmitButton={showSubmitButton}>
+        <SøknadStep
+            id={StepID.ARBEIDSSITUASJON}
+            onValidFormSubmit={onValidSubmit}
+            showSubmitButton={showSubmitButton}
+            cleanupStep={cleanupStep}>
             <CounsellorPanel>
                 <p>
                     <FormattedHtmlMessage id="step.arbeidssituasjon.info.1" />
