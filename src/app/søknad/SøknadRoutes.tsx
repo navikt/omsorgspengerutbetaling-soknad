@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
 import { useAmplitudeInstance } from '@navikt/sif-common-amplitude/lib';
-import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
+import datepickerUtils from '@navikt/sif-common-formik/lib/components/formik-datepicker/datepickerUtils';
 import { useFormikContext } from 'formik';
 import { SKJEMANAVN } from '../App';
 import ConfirmationPage from '../components/pages/confirmation-page/ConfirmationPage';
@@ -14,16 +14,17 @@ import * as apiUtils from '../utils/apiUtils';
 import appSentryLogger from '../utils/appSentryLogger';
 import { Feature, isFeatureEnabled } from '../utils/featureToggleUtils';
 import { navigateTo, navigateToLoginPage } from '../utils/navigationUtils';
+import { harFraværPgaSmittevernhensyn, harFraværPgaStengBhgSkole } from '../utils/periodeUtils';
 import { getNextStepRoute, getSøknadRoute, isAvailable } from '../utils/routeUtils';
-import BarnStep from './barn-step/BarnStep';
 import ArbeidssituasjonStep from './arbeidssituasjon-step/ArbeidssituasjonStep';
+import BarnStep from './barn-step/BarnStep';
+import FraværStep from './fravær-step/FraværStep';
 import MedlemsskapStep from './medlemskap-step/MedlemsskapStep';
 import OppsummeringStep from './oppsummering-step/OppsummeringStep';
-import FraværStep from './fravær-step/FraværStep';
+import PeriodeStep from './periode-step/PeriodeStep';
 import SmittevernDokumenterStep from './smittevern-dokumenter-step/SmittvernDokumenterStep';
 import StengtBhgSkoleDokumenterStep from './stengt-bhg-skole-dokumenter-step/StengtBhgSkoleDokumenterStep';
 import SøknadTempStorage from './SøknadTempStorage';
-import PeriodeStep from './periode-step/PeriodeStep';
 
 export interface KvitteringInfo {
     søkernavn: string;
@@ -33,11 +34,11 @@ const SøknadRoutes: React.FunctionComponent = () => {
     const [søknadHasBeenSent, setSøknadHasBeenSent] = React.useState(false);
     const { values, resetForm } = useFormikContext<SøknadFormData>();
 
-    const skalViseStengtBhgSkoleVedleggSteg: boolean = values.hjemmePgaStengtBhgSkole === YesOrNo.YES;
-    const skalViseSmittevernVedleggSteg: boolean = values.hjemmePgaSmittevernhensyn === YesOrNo.YES;
-
     const history = useHistory();
     const { logSoknadStartet, logUserLoggedOut } = useAmplitudeInstance();
+
+    const fraværPgaStengBhgSkole: boolean = harFraværPgaStengBhgSkole(values.fraværPerioder, values.fraværDager);
+    const fraværPgaSmittevernhensyn: boolean = harFraværPgaSmittevernhensyn(values.fraværPerioder, values.fraværDager);
 
     async function navigateToNextStepFrom(stepID: StepID) {
         if (isFeatureEnabled(Feature.MELLOMLAGRING)) {
@@ -74,6 +75,9 @@ const SøknadRoutes: React.FunctionComponent = () => {
         });
     };
 
+    const førsteDagMedFravær = datepickerUtils.getDateFromDateString(values.førsteDagMedFravær);
+    const sisteDagMedFravær = datepickerUtils.getDateFromDateString(values.sisteDagMedFravær);
+
     return (
         <Switch>
             <Route
@@ -88,14 +92,20 @@ const SøknadRoutes: React.FunctionComponent = () => {
                 />
             )}
 
-            {isAvailable(StepID.FRAVÆR, values) && (
+            {isAvailable(StepID.FRAVÆR, values) && førsteDagMedFravær && sisteDagMedFravær && (
                 <Route
                     path={getSøknadRoute(StepID.FRAVÆR)}
-                    render={() => <FraværStep onValidSubmit={() => navigateToNextStepFrom(StepID.FRAVÆR)} />}
+                    render={() => (
+                        <FraværStep
+                            onValidSubmit={() => navigateToNextStepFrom(StepID.FRAVÆR)}
+                            førsteDagMedFravær={førsteDagMedFravær}
+                            sisteDagMedFravær={sisteDagMedFravær}
+                        />
+                    )}
                 />
             )}
 
-            {isAvailable(StepID.DOKUMENTER_STENGT_SKOLE_BHG, values) && skalViseStengtBhgSkoleVedleggSteg && (
+            {isAvailable(StepID.DOKUMENTER_STENGT_SKOLE_BHG, values) && fraværPgaStengBhgSkole && (
                 <Route
                     path={getSøknadRoute(StepID.DOKUMENTER_STENGT_SKOLE_BHG)}
                     render={() => (
@@ -106,7 +116,7 @@ const SøknadRoutes: React.FunctionComponent = () => {
                 />
             )}
 
-            {isAvailable(StepID.DOKUMENTER_SMITTEVERNHENSYN, values) && skalViseSmittevernVedleggSteg && (
+            {isAvailable(StepID.DOKUMENTER_SMITTEVERNHENSYN, values) && fraværPgaSmittevernhensyn && (
                 <Route
                     path={getSøknadRoute(StepID.DOKUMENTER_SMITTEVERNHENSYN)}
                     render={() => (
@@ -117,11 +127,15 @@ const SøknadRoutes: React.FunctionComponent = () => {
                 />
             )}
 
-            {isAvailable(StepID.ARBEIDSSITUASJON, values) && (
+            {isAvailable(StepID.ARBEIDSSITUASJON, values) && førsteDagMedFravær && sisteDagMedFravær && (
                 <Route
                     path={getSøknadRoute(StepID.ARBEIDSSITUASJON)}
                     render={() => (
-                        <ArbeidssituasjonStep onValidSubmit={() => navigateToNextStepFrom(StepID.ARBEIDSSITUASJON)} />
+                        <ArbeidssituasjonStep
+                            førsteDagMedFravær={førsteDagMedFravær}
+                            sisteDagMedFravær={sisteDagMedFravær}
+                            onValidSubmit={() => navigateToNextStepFrom(StepID.ARBEIDSSITUASJON)}
+                        />
                     )}
                 />
             )}
@@ -144,6 +158,8 @@ const SøknadRoutes: React.FunctionComponent = () => {
                     path={getSøknadRoute(StepID.OPPSUMMERING)}
                     render={() => (
                         <OppsummeringStep
+                            hjemmePgaSmittevernhensyn={fraværPgaSmittevernhensyn}
+                            hjemmePgaStengtBhgSkole={fraværPgaStengBhgSkole}
                             onApplicationSent={() => {
                                 setSøknadHasBeenSent(true);
                                 resetForm();

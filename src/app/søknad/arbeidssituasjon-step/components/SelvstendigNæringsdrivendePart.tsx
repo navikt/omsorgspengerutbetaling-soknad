@@ -18,6 +18,8 @@ import SøknadTempStorage from '../../SøknadTempStorage';
 import { getEnvironmentVariable } from '../../../utils/envUtils';
 
 interface Props {
+    førsteDagMedFravær: Date;
+    sisteDagMedFravær: Date;
     formValues: SøknadFormData;
 }
 

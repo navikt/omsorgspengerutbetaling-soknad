@@ -4,6 +4,7 @@ import { createFieldValidationError } from '@navikt/sif-common-core/lib/validati
 import { FieldValidationResult } from '@navikt/sif-common-core/lib/validation/types';
 import { FraværDelerAvDag, Periode } from '../../@types/omsorgspengerutbetaling-schema';
 import { AppFieldValidationErrors } from '../validation/soknadFieldValidations';
+import { FraværDag, FraværPeriode, FraværÅrsak } from '@navikt/sif-common-forms/lib';
 
 dayjs.extend(minMax);
 
@@ -40,3 +41,11 @@ export const validatePeriodeNotWeekend = (date: Date): FieldValidationResult =>
 
 export const validateFraværDelerAvDagNotWeekend = (date: Date): FieldValidationResult =>
     erHelg(date) ? createFieldValidationError(AppFieldValidationErrors.ikke_lørdag_eller_søndag_dag) : undefined;
+
+export const harFraværPgaSmittevernhensyn = (perioder: FraværPeriode[], dager: FraværDag[]): boolean => {
+    return [...perioder, ...dager].findIndex(({ årsak }) => årsak === FraværÅrsak.smittevernhensyn) >= 0;
+};
+
+export const harFraværPgaStengBhgSkole = (perioder: FraværPeriode[], dager: FraværDag[]): boolean => {
+    return [...perioder, ...dager].findIndex(({ årsak }) => årsak === FraværÅrsak.stengtSkoleBhg) >= 0;
+};

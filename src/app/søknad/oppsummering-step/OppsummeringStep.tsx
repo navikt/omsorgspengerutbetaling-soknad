@@ -40,12 +40,18 @@ import UtbetalingsperioderSummaryView from './components/UtbetalingsperioderSumm
 import UtenlandsoppholdISøkeperiodeSummaryView from './components/UtenlandsoppholdISøkeperiodeSummaryView';
 
 interface Props {
+    hjemmePgaSmittevernhensyn: boolean;
+    hjemmePgaStengtBhgSkole: boolean;
     onApplicationSent: (apiValues: SøknadApiData, søkerdata: Søkerdata) => void;
 }
 
 const renderApiDataFeil = (feil: FeiloppsummeringFeil) => <span>{feil.feilmelding}</span>;
 
-const OppsummeringStep: React.FunctionComponent<Props> = ({ onApplicationSent }) => {
+const OppsummeringStep: React.FunctionComponent<Props> = ({
+    hjemmePgaStengtBhgSkole,
+    hjemmePgaSmittevernhensyn,
+    onApplicationSent,
+}) => {
     const intl = useIntl();
     const { values } = useFormikContext<SøknadFormData>();
     const søkerdata = React.useContext(SøkerdataContext);
@@ -139,7 +145,7 @@ const OppsummeringStep: React.FunctionComponent<Props> = ({ onApplicationSent })
 
                         <Box margin="s">
                             <SummaryBlock header={intlHelper(intl, 'steg.intro.form.spm.smittevernhensyn')}>
-                                <JaNeiSvar harSvartJa={apiValues.hjemmePgaSmittevernhensyn} />
+                                <JaNeiSvar harSvartJa={hjemmePgaSmittevernhensyn} />
                             </SummaryBlock>
                         </Box>
 
@@ -182,7 +188,7 @@ const OppsummeringStep: React.FunctionComponent<Props> = ({ onApplicationSent })
 
                     {/* Vedlegg */}
                     <SummarySection header={intlHelper(intl, 'steg.oppsummering.dokumenter.header')}>
-                        {apiValues.hjemmePgaSmittevernhensyn && (
+                        {hjemmePgaSmittevernhensyn && (
                             <Box margin="s">
                                 <SummaryBlock
                                     header={intlHelper(intl, 'steg.oppsummering.dokumenterSmittevern.header')}>
@@ -195,7 +201,7 @@ const OppsummeringStep: React.FunctionComponent<Props> = ({ onApplicationSent })
                                 </SummaryBlock>
                             </Box>
                         )}
-                        {apiValues.hjemmePgaStengtBhgSkole && (
+                        {hjemmePgaStengtBhgSkole && (
                             <Box margin="s">
                                 <SummaryBlock
                                     header={intlHelper(intl, 'steg.oppsummering.dokumenterStengtBhgSkole.header')}>
@@ -208,7 +214,7 @@ const OppsummeringStep: React.FunctionComponent<Props> = ({ onApplicationSent })
                                 </SummaryBlock>
                             </Box>
                         )}
-                        {!apiValues.hjemmePgaSmittevernhensyn && !apiValues.hjemmePgaStengtBhgSkole && (
+                        {!hjemmePgaSmittevernhensyn && !hjemmePgaStengtBhgSkole && (
                             <Box margin="s">
                                 <FormattedMessage id={'steg.oppsummering.dokumenter.ingenVedlegg'} />
                             </Box>

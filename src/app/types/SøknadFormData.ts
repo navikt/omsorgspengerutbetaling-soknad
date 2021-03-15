@@ -28,8 +28,6 @@ export enum SøknadFormField {
     har_søkt_andre_utbetalinger = 'har_søkt_andre_utbetalinger',
     andre_utbetalinger = 'andre_utbetalinger',
 
-    hjemmePgaSmittevernhensyn = 'hjemmePgaSmittevernhensyn',
-
     // Felter knyttet til stengt bhg eller skole
     hjemmePgaStengtBhgSkole = 'hjemmePgaStengtBhgSkole',
     dokumenterStengtBkgSkole = 'dokumenterStengtBkgSkole',
@@ -78,8 +76,6 @@ export interface SøknadFormData {
     [SøknadFormField.perioder_utenlandsopphold]: Utenlandsopphold[];
     [SøknadFormField.har_søkt_andre_utbetalinger]: YesOrNo;
     [SøknadFormField.andre_utbetalinger]: AndreUtbetalinger[];
-
-    [SøknadFormField.hjemmePgaSmittevernhensyn]: YesOrNo;
 
     [SøknadFormField.hjemmePgaStengtBhgSkole]: YesOrNo;
     [SøknadFormField.dokumenterStengtBkgSkole]: Attachment[];
@@ -141,8 +137,6 @@ export const initialValues: SøknadFormData = {
     [SøknadFormField.perioder_utenlandsopphold]: [],
     [SøknadFormField.har_søkt_andre_utbetalinger]: YesOrNo.UNANSWERED,
     [SøknadFormField.andre_utbetalinger]: [],
-
-    [SøknadFormField.hjemmePgaSmittevernhensyn]: YesOrNo.UNANSWERED,
 
     [SøknadFormField.hjemmePgaStengtBhgSkole]: YesOrNo.UNANSWERED,
     [SøknadFormField.dokumenterStengtBkgSkole]: [],

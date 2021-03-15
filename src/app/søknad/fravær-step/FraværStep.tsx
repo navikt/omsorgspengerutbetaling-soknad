@@ -5,7 +5,6 @@ import CounsellorPanel from '@navikt/sif-common-core/lib/components/counsellor-p
 import ExpandableInfo from '@navikt/sif-common-core/lib/components/expandable-content/ExpandableInfo';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
 import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
-import { date1YearAgo, date1YearFromNow, dateToday } from '@navikt/sif-common-core/lib/utils/dateUtils';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import {
     validateRequiredList,
@@ -22,17 +21,18 @@ import FraværPerioderListAndDialog from '@navikt/sif-common-forms/lib/fravær/F
 import { validateAll } from '@navikt/sif-common-forms/lib/fravær/fraværValidationUtils';
 import { useFormikContext } from 'formik';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
-import SmittevernInfo from '../../components/information/SmittevernInfo';
 import { StepConfigProps, StepID } from '../../config/stepConfig';
 import { AndreUtbetalinger } from '../../types/AndreUtbetalinger';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
-// import { Feature, isFeatureEnabled } from '../../utils/featureToggleUtils';
-import { GYLDIG_TIDSROM } from '../../validation/constants';
 import SøknadFormComponents from '../SøknadFormComponents';
 import SøknadStep from '../SøknadStep';
 import './fraværStep.less';
 
-const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) => {
+const FraværStep: React.FunctionComponent<StepConfigProps & { førsteDagMedFravær: Date; sisteDagMedFravær: Date }> = ({
+    onValidSubmit,
+    førsteDagMedFravær,
+    sisteDagMedFravær,
+}) => {
     const { values } = useFormikContext<SøknadFormData>();
     const { harPerioderMedFravær, harDagerMedDelvisFravær, perioder_harVærtIUtlandet } = values;
 
@@ -109,8 +109,8 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                     <FormBlock margin="l">
                         <FraværPerioderListAndDialog<SøknadFormField>
                             name={SøknadFormField.fraværPerioder}
-                            minDate={GYLDIG_TIDSROM.from || date1YearAgo}
-                            maxDate={GYLDIG_TIDSROM.to || dateToday}
+                            minDate={førsteDagMedFravær}
+                            maxDate={sisteDagMedFravær}
                             validate={validateAll([
                                 validateRequiredList,
                                 validateNoCollisions(
@@ -150,8 +150,8 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                     <FormBlock margin="l">
                         <FraværDagerListAndDialog<SøknadFormField>
                             name={SøknadFormField.fraværDager}
-                            minDate={GYLDIG_TIDSROM.from || date1YearAgo}
-                            maxDate={GYLDIG_TIDSROM.to || dateToday}
+                            minDate={førsteDagMedFravær}
+                            maxDate={sisteDagMedFravær}
                             validate={validateAll([
                                 validateRequiredList,
                                 validateNoCollisions(
@@ -190,32 +190,6 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
 
             {kanIkkeFortsette === false && (
                 <>
-                    {/* {isFeatureEnabled(Feature.STENGT_BHG_SKOLE) && (
-                        <FormBlock>
-                            <SøknadFormComponents.YesOrNoQuestion
-                                name={SøknadFormField.hjemmePgaStengtBhgSkole}
-                                legend={intlHelper(intl, 'step.fravaer.spm.hjemmePgaStengtBhgSkole.2021')}
-                                validate={validateYesOrNoIsAnswered}
-                            />
-                        </FormBlock>
-                    )} */}
-                    <FormBlock>
-                        <SøknadFormComponents.YesOrNoQuestion
-                            name={SøknadFormField.hjemmePgaSmittevernhensyn}
-                            legend={intlHelper(intl, 'steg.intro.form.spm.smittevernhensyn')}
-                            validate={validateYesOrNoIsAnswered}
-                            description={
-                                <ExpandableInfo title={intlHelper(intl, 'info.smittevern.tittel')}>
-                                    <SmittevernInfo />
-                                </ExpandableInfo>
-                            }
-                        />
-                    </FormBlock>
-                </>
-            )}
-
-            {kanIkkeFortsette === false && (
-                <>
                     <FormBlock margin="xl">
                         <SøknadFormComponents.YesOrNoQuestion
                             name={SøknadFormField.perioder_harVærtIUtlandet}
@@ -230,8 +204,8 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                         <FormBlock margin="l">
                             <BostedUtlandListAndDialog<SøknadFormField>
                                 name={SøknadFormField.perioder_utenlandsopphold}
-                                minDate={date1YearAgo}
-                                maxDate={date1YearFromNow}
+                                minDate={førsteDagMedFravær}
+                                maxDate={sisteDagMedFravær}
                                 labels={{
                                     addLabel: intlHelper(intl, 'step.fravaer.utenlandsopphold.addLabel'),
                                     modalTitle: intlHelper(intl, 'step.fravaer.utenlandsopphold.modalTitle'),

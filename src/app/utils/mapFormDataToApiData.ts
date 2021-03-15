@@ -43,10 +43,7 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
         har_søkt_andre_utbetalinger,
         andre_utbetalinger,
 
-        // hjemmePgaStengtBhgSkole,
         dokumenterStengtBkgSkole = [],
-
-        hjemmePgaSmittevernhensyn,
         dokumenterSmittevernhensyn = [],
 
         // Inntekt
@@ -118,10 +115,6 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
             selvstendig_erSelvstendigNæringsdrivende,
             selvstendig_virksomheter
         ),
-        hjemmePgaSmittevernhensyn: hjemmePgaSmittevernhensyn === YesOrNo.YES,
-        // hjemmePgaStengtBhgSkole: isFeatureEnabled(Feature.STENGT_BHG_SKOLE)
-        //     ? hjemmePgaStengtBhgSkole === YesOrNo.YES
-        //     : undefined,
         vedlegg: [...vedleggSmittevern, ...vedleggStengtBhgSkole],
         _vedleggStengtSkole: vedleggStengtBhgSkole,
         _vedleggSmittevern: vedleggSmittevern,

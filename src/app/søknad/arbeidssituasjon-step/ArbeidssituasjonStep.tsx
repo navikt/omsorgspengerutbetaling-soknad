@@ -45,10 +45,11 @@ const cleanupStep = (values: SøknadFormData): SøknadFormData => {
     return cleanedValues;
 };
 
-const ArbeidssituasjonStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) => {
+const ArbeidssituasjonStep: React.FunctionComponent<
+    StepConfigProps & { førsteDagMedFravær: Date; sisteDagMedFravær: Date }
+> = ({ førsteDagMedFravær, sisteDagMedFravær, onValidSubmit }) => {
     const { values } = useFormikContext<SøknadFormData>();
     const intl = useIntl();
-
     const showSubmitButton = shouldShowSubmitButton(values);
 
     return (
@@ -64,11 +65,19 @@ const ArbeidssituasjonStep: React.FunctionComponent<StepConfigProps> = ({ onVali
             </CounsellorPanel>
 
             <Box margin="xxl" padBottom="l">
-                <FrilansFormPart formValues={values} />
+                <FrilansFormPart
+                    førsteDagMedFravær={førsteDagMedFravær}
+                    sisteDagMedFravær={sisteDagMedFravær}
+                    formValues={values}
+                />
             </Box>
 
             <Box margin="l" padBottom="l">
-                <SelvstendigNæringsdrivendeFormPart formValues={values} />
+                <SelvstendigNæringsdrivendeFormPart
+                    førsteDagMedFravær={førsteDagMedFravær}
+                    sisteDagMedFravær={sisteDagMedFravær}
+                    formValues={values}
+                />
             </Box>
             {!showSubmitButton && (
                 <FormBlock margin="l">

@@ -1,5 +1,5 @@
-import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
 import { SøknadFormData } from '../types/SøknadFormData';
+import { harFraværPgaSmittevernhensyn, harFraværPgaStengBhgSkole } from '../utils/periodeUtils';
 import { getSøknadRoute } from '../utils/routeUtils';
 import routeConfig from './routeConfig';
 
@@ -44,9 +44,14 @@ const getStepConfigItemTextKeys = (stepId: StepID): StepConfigItemTexts => {
 export const getStepConfig = (formData?: SøknadFormData): StepConfigInterface => {
     let idx = 0;
 
-    const { hjemmePgaStengtBhgSkole, hjemmePgaSmittevernhensyn } = formData || {};
-    const skalViseStengtSkoleBhgDokumenterStep = hjemmePgaStengtBhgSkole === YesOrNo.YES;
-    const skalViseSmittevernDokumenterStep = hjemmePgaSmittevernhensyn === YesOrNo.YES;
+    const skalViseStengtSkoleBhgDokumenterStep = harFraværPgaStengBhgSkole(
+        formData?.fraværPerioder || [],
+        formData?.fraværDager || []
+    );
+    const skalViseSmittevernDokumenterStep = harFraværPgaSmittevernhensyn(
+        formData?.fraværPerioder || [],
+        formData?.fraværDager || []
+    );
 
     const getNextStepAfterFraværStep = (): StepID => {
         if (skalViseStengtSkoleBhgDokumenterStep) {
