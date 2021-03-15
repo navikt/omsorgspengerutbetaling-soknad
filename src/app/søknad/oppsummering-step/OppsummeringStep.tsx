@@ -23,7 +23,7 @@ import { FosterbarnApi, SøknadApiData, YesNoSpørsmålOgSvar } from '../../type
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import * as apiUtils from '../../utils/apiUtils';
 import appSentryLogger from '../../utils/appSentryLogger';
-import { Feature, isFeatureEnabled } from '../../utils/featureToggleUtils';
+// import { Feature, isFeatureEnabled } from '../../utils/featureToggleUtils';
 import { mapFormDataToApiData } from '../../utils/mapFormDataToApiData';
 import { navigateTo, navigateToLoginPage } from '../../utils/navigationUtils';
 import { validateSoknadApiData } from '../../validation/soknadApiDataValidation';
@@ -128,14 +128,14 @@ const OppsummeringStep: React.FunctionComponent<Props> = ({ onApplicationSent })
                     <SummarySection header={intlHelper(intl, 'steg.oppsummering.utbetalinger.header')}>
                         <UtbetalingsperioderSummaryView utbetalingsperioder={apiValues.utbetalingsperioder} />
 
-                        {isFeatureEnabled(Feature.STENGT_BHG_SKOLE) && apiValues.hjemmePgaStengtBhgSkole !== undefined && (
+                        {/* {isFeatureEnabled(Feature.STENGT_BHG_SKOLE) && apiValues.hjemmePgaStengtBhgSkole !== undefined && (
                             <Box margin="s">
                                 <SummaryBlock
                                     header={intlHelper(intl, 'step.periode.spm.hjemmePgaStengtBhgSkole.2021')}>
                                     <JaNeiSvar harSvartJa={apiValues.hjemmePgaStengtBhgSkole} />
                                 </SummaryBlock>
                             </Box>
-                        )}
+                        )} */}
 
                         <Box margin="s">
                             <SummaryBlock header={intlHelper(intl, 'steg.intro.form.spm.smittevernhensyn')}>

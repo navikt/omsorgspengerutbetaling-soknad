@@ -26,7 +26,7 @@ import SmittevernInfo from '../../components/information/SmittevernInfo';
 import { StepConfigProps, StepID } from '../../config/stepConfig';
 import { AndreUtbetalinger } from '../../types/AndreUtbetalinger';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
-import { Feature, isFeatureEnabled } from '../../utils/featureToggleUtils';
+// import { Feature, isFeatureEnabled } from '../../utils/featureToggleUtils';
 import { GYLDIG_TIDSROM } from '../../validation/constants';
 import SøknadFormComponents from '../SøknadFormComponents';
 import SøknadStep from '../SøknadStep';
@@ -190,7 +190,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
 
             {kanIkkeFortsette === false && (
                 <>
-                    {isFeatureEnabled(Feature.STENGT_BHG_SKOLE) && (
+                    {/* {isFeatureEnabled(Feature.STENGT_BHG_SKOLE) && (
                         <FormBlock>
                             <SøknadFormComponents.YesOrNoQuestion
                                 name={SøknadFormField.hjemmePgaStengtBhgSkole}
@@ -198,7 +198,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                                 validate={validateYesOrNoIsAnswered}
                             />
                         </FormBlock>
-                    )}
+                    )} */}
                     <FormBlock>
                         <SøknadFormComponents.YesOrNoQuestion
                             name={SøknadFormField.hjemmePgaSmittevernhensyn}

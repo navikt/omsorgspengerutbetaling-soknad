@@ -17,7 +17,7 @@ import {
     YesNoSvar,
 } from '../types/SøknadApiData';
 import { SøknadFormData } from '../types/SøknadFormData';
-import { Feature, isFeatureEnabled } from './featureToggleUtils';
+// import { Feature, isFeatureEnabled } from './featureToggleUtils';
 import { mapBostedUtlandToApiData } from './formToApiMaps/mapBostedUtlandToApiData';
 import { mapFrilansToApiData } from './formToApiMaps/mapFrilansToApiData';
 
@@ -43,7 +43,7 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
         har_søkt_andre_utbetalinger,
         andre_utbetalinger,
 
-        hjemmePgaStengtBhgSkole,
+        // hjemmePgaStengtBhgSkole,
         dokumenterStengtBkgSkole = [],
 
         hjemmePgaSmittevernhensyn,
@@ -119,9 +119,9 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
             selvstendig_virksomheter
         ),
         hjemmePgaSmittevernhensyn: hjemmePgaSmittevernhensyn === YesOrNo.YES,
-        hjemmePgaStengtBhgSkole: isFeatureEnabled(Feature.STENGT_BHG_SKOLE)
-            ? hjemmePgaStengtBhgSkole === YesOrNo.YES
-            : undefined,
+        // hjemmePgaStengtBhgSkole: isFeatureEnabled(Feature.STENGT_BHG_SKOLE)
+        //     ? hjemmePgaStengtBhgSkole === YesOrNo.YES
+        //     : undefined,
         vedlegg: [...vedleggSmittevern, ...vedleggStengtBhgSkole],
         _vedleggStengtSkole: vedleggStengtBhgSkole,
         _vedleggSmittevern: vedleggSmittevern,
