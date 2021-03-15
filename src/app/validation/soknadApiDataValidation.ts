@@ -1,6 +1,6 @@
 import { SøknadApiData } from '../types/SøknadApiData';
 import { FeiloppsummeringFeil } from 'nav-frontend-skjema';
-import { hasValue } from './fieldValidations';
+import { hasValue } from './soknadFieldValidations';
 
 export const validateSoknadApiData = (apiValues: SøknadApiData): FeiloppsummeringFeil[] => {
     const errors: FeiloppsummeringFeil[] = [];

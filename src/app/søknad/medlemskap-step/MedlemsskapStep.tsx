@@ -16,7 +16,7 @@ import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import {
     validateUtenlandsoppholdNeste12Mnd,
     validateUtenlandsoppholdSiste12Mnd,
-} from '../../validation/fieldValidations';
+} from '../../validation/soknadFieldValidations';
 import SøknadFormComponents from '../SøknadFormComponents';
 import SøknadStep from '../SøknadStep';
 

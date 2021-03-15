@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import { FraværDelerAvDag } from '../../../@types/omsorgspengerutbetaling-schema';
-import { harLikeDager } from '../fieldValidations';
+import { harLikeDager } from '../soknadFieldValidations';
 
 jest.mock('common/utils/dateUtils', () => {
     return {

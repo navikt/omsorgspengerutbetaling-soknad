@@ -4,6 +4,7 @@ import { getSøknadRoute } from '../utils/routeUtils';
 import routeConfig from './routeConfig';
 
 export enum StepID {
+    'PERIODE' = 'periode',
     'FRAVÆR' = 'fravaer',
     'DOKUMENTER_STENGT_SKOLE_BHG' = 'vedlegg_stengtSkoleBhg',
     'DOKUMENTER_SMITTEVERNHENSYN' = 'vedlegg_smittevernhensyn',
@@ -68,11 +69,17 @@ export const getStepConfig = (formData?: SøknadFormData): StepConfigInterface =
     };
 
     const configDelEn = {
+        [StepID.PERIODE]: {
+            ...getStepConfigItemTextKeys(StepID.PERIODE),
+            index: idx++,
+            nextStep: StepID.FRAVÆR,
+            backLinkHref: routeConfig.WELCOMING_PAGE_ROUTE,
+        },
         [StepID.FRAVÆR]: {
             ...getStepConfigItemTextKeys(StepID.FRAVÆR),
             index: idx++,
             nextStep: getNextStepAfterFraværStep(),
-            backLinkHref: routeConfig.WELCOMING_PAGE_ROUTE,
+            backLinkHref: getSøknadRoute(StepID.PERIODE),
         },
     };
 

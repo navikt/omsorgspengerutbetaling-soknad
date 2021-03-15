@@ -8,6 +8,7 @@ import {
     DateRange,
     dateRangesCollide,
     dateRangesExceedsRange,
+    dateToday,
 } from '@navikt/sif-common-core/lib/utils/dateUtils';
 import { createFieldValidationError } from '@navikt/sif-common-core/lib/validation/fieldValidations';
 import { FieldValidationResult } from '@navikt/sif-common-core/lib/validation/types';
@@ -19,6 +20,7 @@ import {
     getTotalSizeOfAttachments,
     MAX_TOTAL_ATTACHMENT_SIZE_BYTES,
 } from '@navikt/sif-common-core/lib/utils/attachmentUtils';
+import datepickerUtils from '@navikt/sif-common-formik/lib/components/formik-datepicker/datepickerUtils';
 
 dayjs.extend(isBetween);
 
@@ -51,6 +53,12 @@ export enum AppFieldValidationErrors {
     'ingen_endringer_spesifisert' = 'fieldvalidation.inntektsendring.ingen_endringer_spesifisert',
     'ikke_lørdag_eller_søndag_periode' = 'fieldvalidation.saturday_and_sunday_not_possible_periode',
     'ikke_lørdag_eller_søndag_dag' = 'fieldvalidation.saturday_and_sunday_not_possible_dag',
+
+    'førsteDagMedFravære_påkrevd' = 'fieldvalidation.førsteDagMedFravære_påkrevd',
+    'førsteDagMedFravære_ugyldigTidsperiode' = 'fieldvalidation.førsteDagMedFravære_ugyldigTidsperiode',
+    'sisteDagMedFravære_påkrevd' = 'fieldvalidation.sisteDagMedFravære_påkrevd',
+    'sisteDagMedFravære_ugyldigTidsperiode' = 'fieldvalidation.sisteDagMedFravære_ugyldigTidsperiode',
+    'sisteDagMedFravære_ikkeSammeÅrSomFørsteDag' = 'fieldvalidation.sisteDagMedFravære_ikkeSammeÅrSomFørsteDag',
 }
 
 export const createAppFieldValidationError = (
@@ -228,6 +236,36 @@ export const validateDocuments = (attachments: Attachment[]): FieldValidationRes
     }
     if (uploadedAttachments.length > 100) {
         return createAppFieldValidationError(AppFieldValidationErrors.for_mange_dokumenter);
+    }
+    return undefined;
+};
+
+export const validateFørsteDagMedFravær = (value: string | undefined): FieldValidationResult => {
+    const førsteDag = datepickerUtils.getDateFromDateString(value);
+    if (førsteDag === undefined) {
+        return createFieldValidationError(AppFieldValidationErrors.førsteDagMedFravære_påkrevd);
+    }
+    if (dayjs(førsteDag).isBefore(date1YearAgo, 'day') || dayjs(førsteDag).isAfter(dateToday, 'day')) {
+        return createFieldValidationError(AppFieldValidationErrors.førsteDagMedFravære_ugyldigTidsperiode);
+    }
+
+    return undefined;
+};
+
+export const validateSisteDagMedFravær = (
+    value: string | undefined,
+    førsteDagMedFravær: string | undefined
+): FieldValidationResult => {
+    const førsteDag = datepickerUtils.getDateFromDateString(førsteDagMedFravær);
+    const sisteDag = datepickerUtils.getDateFromDateString(value);
+    if (sisteDag === undefined) {
+        return createFieldValidationError(AppFieldValidationErrors.sisteDagMedFravære_påkrevd);
+    }
+    if (dayjs(sisteDag).isBefore(førsteDag || date1YearAgo, 'day') || dayjs(sisteDag).isAfter(dateToday, 'day')) {
+        return createFieldValidationError(AppFieldValidationErrors.sisteDagMedFravære_ugyldigTidsperiode);
+    }
+    if (førsteDag && dayjs(sisteDag).get('year') !== dayjs(førsteDag).get('year')) {
+        return createFieldValidationError(AppFieldValidationErrors.sisteDagMedFravære_ikkeSammeÅrSomFørsteDag);
     }
     return undefined;
 };

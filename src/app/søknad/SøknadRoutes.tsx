@@ -23,6 +23,7 @@ import FraværStep from './fravær-step/FraværStep';
 import SmittevernDokumenterStep from './smittevern-dokumenter-step/SmittvernDokumenterStep';
 import StengtBhgSkoleDokumenterStep from './stengt-bhg-skole-dokumenter-step/StengtBhgSkoleDokumenterStep';
 import SøknadTempStorage from './SøknadTempStorage';
+import PeriodeStep from './periode-step/PeriodeStep';
 
 export interface KvitteringInfo {
     søkernavn: string;
@@ -65,10 +66,10 @@ const SøknadRoutes: React.FunctionComponent = () => {
         setTimeout(() => {
             if (isFeatureEnabled(Feature.MELLOMLAGRING)) {
                 SøknadTempStorage.create().then(() => {
-                    navigateTo(`${RouteConfig.SØKNAD_ROUTE_PREFIX}/${StepID.FRAVÆR}`, history);
+                    navigateTo(`${RouteConfig.SØKNAD_ROUTE_PREFIX}/${StepID.PERIODE}`, history);
                 });
             } else {
-                navigateTo(`${RouteConfig.SØKNAD_ROUTE_PREFIX}/${StepID.FRAVÆR}`, history);
+                navigateTo(`${RouteConfig.SØKNAD_ROUTE_PREFIX}/${StepID.PERIODE}`, history);
             }
         });
     };
@@ -79,6 +80,13 @@ const SøknadRoutes: React.FunctionComponent = () => {
                 path={RouteConfig.WELCOMING_PAGE_ROUTE}
                 render={() => <WelcomingPage onValidSubmit={startSoknad} />}
             />
+
+            {isAvailable(StepID.PERIODE, values) && (
+                <Route
+                    path={getSøknadRoute(StepID.PERIODE)}
+                    render={() => <PeriodeStep onValidSubmit={() => navigateToNextStepFrom(StepID.PERIODE)} />}
+                />
+            )}
 
             {isAvailable(StepID.FRAVÆR, values) && (
                 <Route

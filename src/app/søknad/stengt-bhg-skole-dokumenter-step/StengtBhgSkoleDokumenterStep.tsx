@@ -21,7 +21,7 @@ import { StepConfigProps, StepID } from '../../config/stepConfig';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import { valuesToAlleDokumenterISøknaden } from '../../utils/attachmentsUtils';
 import { navigateToLoginPage } from '../../utils/navigationUtils';
-import { validateDocuments } from '../../validation/fieldValidations';
+import { validateDocuments } from '../../validation/soknadFieldValidations';
 import SøknadStep from '../SøknadStep';
 
 const StengtBhgSkoleDokumenterStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) => {
