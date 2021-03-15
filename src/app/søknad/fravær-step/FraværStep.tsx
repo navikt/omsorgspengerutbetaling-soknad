@@ -30,9 +30,9 @@ import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import { GYLDIG_TIDSROM } from '../../validation/constants';
 import SøknadFormComponents from '../SøknadFormComponents';
 import SøknadStep from '../SøknadStep';
-import './periodeStep.less';
+import './fraværStep.less';
 
-const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) => {
+const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) => {
     const { values } = useFormikContext<SøknadFormData>();
     const { harPerioderMedFravær, harDagerMedDelvisFravær, perioder_harVærtIUtlandet } = values;
 
@@ -53,33 +53,33 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
         return (
             <>
                 <p>
-                    <FormattedMessage id="step.periode.info2021.1" />
+                    <FormattedMessage id="step.fravaer.info2021.1" />
                 </p>
                 <p>
-                    <FormattedMessage id="step.periode.info2021.2" />
+                    <FormattedMessage id="step.fravaer.info2021.2" />
                 </p>
                 <p>
-                    <FormattedMessage id="step.periode.info2021.3" />
+                    <FormattedMessage id="step.fravaer.info2021.3" />
                 </p>
                 <ExpandableInfo
-                    title={intlHelper(intl, 'step.periode.info2021.nedtrekk.tittle')}
+                    title={intlHelper(intl, 'step.fravaer.info2021.nedtrekk.tittle')}
                     filledBackground={false}>
                     <p>
-                        <FormattedMessage id="step.periode.info2021.nedtrekk.1" />
+                        <FormattedMessage id="step.fravaer.info2021.nedtrekk.1" />
                     </p>
                     <ul>
                         <li>
-                            <FormattedMessage id="step.periode.info2021.nedtrekk.list.1" />
+                            <FormattedMessage id="step.fravaer.info2021.nedtrekk.list.1" />
                         </li>
                         <li>
-                            <FormattedMessage id="step.periode.info2021.nedtrekk.list.2" />
+                            <FormattedMessage id="step.fravaer.info2021.nedtrekk.list.2" />
                         </li>
                         <li>
-                            <FormattedMessage id="step.periode.info2021.nedtrekk.list.3" />
+                            <FormattedMessage id="step.fravaer.info2021.nedtrekk.list.3" />
                         </li>
                     </ul>
                     <p>
-                        <FormattedMessage id="step.periode.info2021.nedtrekk.2" />
+                        <FormattedMessage id="step.fravaer.info2021.nedtrekk.2" />
                     </p>
                 </ExpandableInfo>
             </>
@@ -87,7 +87,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
     };
     return (
         <SøknadStep
-            id={StepID.PERIODE}
+            id={StepID.FRAVÆR}
             onValidFormSubmit={() => {
                 onValidSubmit();
             }}
@@ -99,7 +99,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
             <FormBlock>
                 <SøknadFormComponents.YesOrNoQuestion
                     name={SøknadFormField.harPerioderMedFravær}
-                    legend={intlHelper(intl, 'step.periode.spm.harPerioderMedFravær')}
+                    legend={intlHelper(intl, 'step.fravaer.spm.harPerioderMedFravær')}
                     validate={validateYesOrNoIsAnswered}
                 />
             </FormBlock>
@@ -119,8 +119,8 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                                 ),
                             ])}
                             labels={{
-                                addLabel: intlHelper(intl, 'step.periode.harPerioderMedFravær.addLabel'),
-                                modalTitle: intlHelper(intl, 'step.periode.harPerioderMedFravær.modalTitle'),
+                                addLabel: intlHelper(intl, 'step.fravaer.harPerioderMedFravær.addLabel'),
+                                modalTitle: intlHelper(intl, 'step.fravaer.harPerioderMedFravær.modalTitle'),
                             }}
                             dateRangesToDisable={[
                                 ...values.fraværPerioder.map(fraværPeriodeToDateRange),
@@ -130,8 +130,8 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                         />
                         <FormBlock margin="l">
                             <ExpandableInfo
-                                title={intlHelper(intl, 'step.periode.harPerioderMedFravær.info.ikkeHelg.tittel')}>
-                                <FormattedMessage id="step.periode.harPerioderMedFravær.info.ikkeHelg.tekst" />
+                                title={intlHelper(intl, 'step.fravaer.harPerioderMedFravær.info.ikkeHelg.tittel')}>
+                                <FormattedMessage id="step.fravaer.harPerioderMedFravær.info.ikkeHelg.tekst" />
                             </ExpandableInfo>
                         </FormBlock>
                     </FormBlock>
@@ -140,7 +140,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
             <FormBlock>
                 <SøknadFormComponents.YesOrNoQuestion
                     name={SøknadFormField.harDagerMedDelvisFravær}
-                    legend={intlHelper(intl, 'step.periode.spm.harDagerMedDelvisFravær')}
+                    legend={intlHelper(intl, 'step.fravaer.spm.harDagerMedDelvisFravær')}
                     validate={validateYesOrNoIsAnswered}
                 />
             </FormBlock>
@@ -160,8 +160,8 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                                 ),
                             ])}
                             labels={{
-                                addLabel: intlHelper(intl, 'step.periode.harDagerMedDelvisFravær.addLabel'),
-                                modalTitle: intlHelper(intl, 'step.periode.harDagerMedDelvisFravær.modalTitle'),
+                                addLabel: intlHelper(intl, 'step.fravaer.harDagerMedDelvisFravær.addLabel'),
+                                modalTitle: intlHelper(intl, 'step.fravaer.harDagerMedDelvisFravær.modalTitle'),
                             }}
                             dateRangesToDisable={[
                                 ...values.fraværDager.map(fraværDagToFraværDateRange),
@@ -172,8 +172,8 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                         />
                         <Box margin="l">
                             <ExpandableInfo
-                                title={intlHelper(intl, 'step.periode.harDagerMedDelvisFravær.info.ikkeHelg.tittel')}>
-                                <FormattedMessage id="step.periode.harDagerMedDelvisFravær.info.ikkeHelg.tekst" />
+                                title={intlHelper(intl, 'step.fravaer.harDagerMedDelvisFravær.info.ikkeHelg.tittel')}>
+                                <FormattedMessage id="step.fravaer.harDagerMedDelvisFravær.info.ikkeHelg.tekst" />
                             </ExpandableInfo>
                         </Box>
                     </FormBlock>
@@ -183,7 +183,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
             {kanIkkeFortsette && (
                 <FormBlock margin="xxl">
                     <AlertStripeAdvarsel>
-                        <FormattedMessage id="step.periode.måVelgeSituasjon" />
+                        <FormattedMessage id="step.fravaer.måVelgeSituasjon" />
                     </AlertStripeAdvarsel>
                 </FormBlock>
             )}
@@ -194,7 +194,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                         <FormBlock>
                             <SøknadFormComponents.YesOrNoQuestion
                                 name={SøknadFormField.hjemmePgaStengtBhgSkole}
-                                legend={intlHelper(intl, 'step.periode.spm.hjemmePgaStengtBhgSkole.2021')}
+                                legend={intlHelper(intl, 'step.fravaer.spm.hjemmePgaStengtBhgSkole.2021')}
                                 validate={validateYesOrNoIsAnswered}
                             />
                         </FormBlock>
@@ -221,7 +221,7 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                             name={SøknadFormField.perioder_harVærtIUtlandet}
                             legend={intlHelper(
                                 intl,
-                                'step.periode.har_du_oppholdt_deg_i_utlandet_for_dager_du_soker_ok.spm'
+                                'step.fravaer.har_du_oppholdt_deg_i_utlandet_for_dager_du_soker_ok.spm'
                             )}
                             validate={validateYesOrNoIsAnswered}
                         />
@@ -233,8 +233,8 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                                 minDate={date1YearAgo}
                                 maxDate={date1YearFromNow}
                                 labels={{
-                                    addLabel: intlHelper(intl, 'step.periode.utenlandsopphold.addLabel'),
-                                    modalTitle: intlHelper(intl, 'step.periode.utenlandsopphold.modalTitle'),
+                                    addLabel: intlHelper(intl, 'step.fravaer.utenlandsopphold.addLabel'),
+                                    modalTitle: intlHelper(intl, 'step.fravaer.utenlandsopphold.modalTitle'),
                                 }}
                                 validate={validateRequiredList}
                             />
@@ -243,14 +243,14 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                     <FormBlock>
                         <SøknadFormComponents.YesOrNoQuestion
                             name={SøknadFormField.har_søkt_andre_utbetalinger}
-                            legend={intlHelper(intl, 'step.periode.har_søkt_andre_utbetalinger.spm')}
+                            legend={intlHelper(intl, 'step.fravaer.har_søkt_andre_utbetalinger.spm')}
                             validate={validateYesOrNoIsAnswered}
                         />
                         {values.har_søkt_andre_utbetalinger === YesOrNo.YES && (
                             <FormBlock>
                                 <SøknadFormComponents.CheckboxPanelGroup
                                     name={SøknadFormField.andre_utbetalinger}
-                                    legend={intlHelper(intl, 'step.periode.hvilke_utbetalinger.spm')}
+                                    legend={intlHelper(intl, 'step.fravaer.hvilke_utbetalinger.spm')}
                                     checkboxes={[
                                         {
                                             id: AndreUtbetalinger.dagpenger,
@@ -279,4 +279,4 @@ const PeriodeStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
     );
 };
 
-export default PeriodeStep;
+export default FraværStep;

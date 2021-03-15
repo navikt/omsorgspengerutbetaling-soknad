@@ -19,7 +19,7 @@ import BarnStep from './barn-step/BarnStep';
 import ArbeidssituasjonStep from './arbeidssituasjon-step/ArbeidssituasjonStep';
 import MedlemsskapStep from './medlemskap-step/MedlemsskapStep';
 import OppsummeringStep from './oppsummering-step/OppsummeringStep';
-import PeriodeStep from './periode-step/PeriodeStep';
+import FraværStep from './fravær-step/FraværStep';
 import SmittevernDokumenterStep from './smittevern-dokumenter-step/SmittvernDokumenterStep';
 import StengtBhgSkoleDokumenterStep from './stengt-bhg-skole-dokumenter-step/StengtBhgSkoleDokumenterStep';
 import SøknadTempStorage from './SøknadTempStorage';
@@ -65,10 +65,10 @@ const SøknadRoutes: React.FunctionComponent = () => {
         setTimeout(() => {
             if (isFeatureEnabled(Feature.MELLOMLAGRING)) {
                 SøknadTempStorage.create().then(() => {
-                    navigateTo(`${RouteConfig.SØKNAD_ROUTE_PREFIX}/${StepID.PERIODE}`, history);
+                    navigateTo(`${RouteConfig.SØKNAD_ROUTE_PREFIX}/${StepID.FRAVÆR}`, history);
                 });
             } else {
-                navigateTo(`${RouteConfig.SØKNAD_ROUTE_PREFIX}/${StepID.PERIODE}`, history);
+                navigateTo(`${RouteConfig.SØKNAD_ROUTE_PREFIX}/${StepID.FRAVÆR}`, history);
             }
         });
     };
@@ -80,10 +80,10 @@ const SøknadRoutes: React.FunctionComponent = () => {
                 render={() => <WelcomingPage onValidSubmit={startSoknad} />}
             />
 
-            {isAvailable(StepID.PERIODE, values) && (
+            {isAvailable(StepID.FRAVÆR, values) && (
                 <Route
-                    path={getSøknadRoute(StepID.PERIODE)}
-                    render={() => <PeriodeStep onValidSubmit={() => navigateToNextStepFrom(StepID.PERIODE)} />}
+                    path={getSøknadRoute(StepID.FRAVÆR)}
+                    render={() => <FraværStep onValidSubmit={() => navigateToNextStepFrom(StepID.FRAVÆR)} />}
                 />
             )}
 

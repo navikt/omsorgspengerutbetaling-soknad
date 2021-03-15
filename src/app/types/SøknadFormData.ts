@@ -14,7 +14,7 @@ export enum SøknadFormField {
     førsteDagMedFravær = 'førsteDagMedFravær',
     sisteDagMedFravær = 'sisteDagMedFravær',
 
-    // Periode
+    // Fravær
     harPerioderMedFravær = 'harPerioderMedFravær',
     fraværPerioder = 'fraværPerioder',
     perioderMedFravær = 'perioderMedFravær',

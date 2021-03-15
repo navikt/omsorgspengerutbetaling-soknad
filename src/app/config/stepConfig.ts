@@ -4,12 +4,12 @@ import { getSøknadRoute } from '../utils/routeUtils';
 import routeConfig from './routeConfig';
 
 export enum StepID {
-    'BARN' = 'barn',
-    'PERIODE' = 'periode',
+    'FRAVÆR' = 'fravaer',
     'DOKUMENTER_STENGT_SKOLE_BHG' = 'vedlegg_stengtSkoleBhg',
     'DOKUMENTER_SMITTEVERNHENSYN' = 'vedlegg_smittevernhensyn',
-    'LEGEERKLÆRING' = 'legeerklaering',
     'ARBEIDSSITUASJON' = 'arbeidssituasjon',
+    'BARN' = 'barn',
+    'LEGEERKLÆRING' = 'legeerklaering',
     'MEDLEMSKAP' = 'medlemskap',
     'OPPSUMMERING' = 'oppsummering',
 }
@@ -47,7 +47,7 @@ export const getStepConfig = (formData?: SøknadFormData): StepConfigInterface =
     const skalViseStengtSkoleBhgDokumenterStep = hjemmePgaStengtBhgSkole === YesOrNo.YES;
     const skalViseSmittevernDokumenterStep = hjemmePgaSmittevernhensyn === YesOrNo.YES;
 
-    const getNextStepAfterPeriodeStep = (): StepID => {
+    const getNextStepAfterFraværStep = (): StepID => {
         if (skalViseStengtSkoleBhgDokumenterStep) {
             return StepID.DOKUMENTER_STENGT_SKOLE_BHG;
         }
@@ -64,14 +64,14 @@ export const getStepConfig = (formData?: SøknadFormData): StepConfigInterface =
         if (skalViseStengtSkoleBhgDokumenterStep) {
             return StepID.DOKUMENTER_STENGT_SKOLE_BHG;
         }
-        return StepID.PERIODE;
+        return StepID.FRAVÆR;
     };
 
     const configDelEn = {
-        [StepID.PERIODE]: {
-            ...getStepConfigItemTextKeys(StepID.PERIODE),
+        [StepID.FRAVÆR]: {
+            ...getStepConfigItemTextKeys(StepID.FRAVÆR),
             index: idx++,
-            nextStep: getNextStepAfterPeriodeStep(),
+            nextStep: getNextStepAfterFraværStep(),
             backLinkHref: routeConfig.WELCOMING_PAGE_ROUTE,
         },
     };
@@ -84,7 +84,7 @@ export const getStepConfig = (formData?: SøknadFormData): StepConfigInterface =
                   nextStep: skalViseSmittevernDokumenterStep
                       ? StepID.DOKUMENTER_SMITTEVERNHENSYN
                       : StepID.ARBEIDSSITUASJON,
-                  backLinkHref: getSøknadRoute(StepID.PERIODE),
+                  backLinkHref: getSøknadRoute(StepID.FRAVÆR),
               },
           }
         : undefined;
@@ -97,7 +97,7 @@ export const getStepConfig = (formData?: SøknadFormData): StepConfigInterface =
                   nextStep: StepID.ARBEIDSSITUASJON,
                   backLinkHref: skalViseStengtSkoleBhgDokumenterStep
                       ? getSøknadRoute(StepID.DOKUMENTER_STENGT_SKOLE_BHG)
-                      : getSøknadRoute(StepID.PERIODE),
+                      : getSøknadRoute(StepID.FRAVÆR),
               },
           }
         : undefined;

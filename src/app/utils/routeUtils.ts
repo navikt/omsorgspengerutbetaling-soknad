@@ -4,7 +4,7 @@ import { SøknadFormData, SøknadFormField } from '../types/SøknadFormData';
 import {
     arbeidssituasjonStepIsAvailable,
     medlemskapStepIsAvailable,
-    periodeStepIsAvailable,
+    fraværStepIsAvailable,
     barnStepIsAvailable,
     summaryStepAvailable,
 } from './stepUtils';
@@ -23,8 +23,8 @@ export const getNextStepRoute = (stepId: StepID, formData?: SøknadFormData): st
 
 export const isAvailable = (path: StepID | RouteConfig, values: SøknadFormData) => {
     switch (path) {
-        case StepID.PERIODE:
-            return periodeStepIsAvailable(values);
+        case StepID.FRAVÆR:
+            return fraværStepIsAvailable(values);
         case StepID.ARBEIDSSITUASJON:
             return arbeidssituasjonStepIsAvailable(values);
         case StepID.BARN:

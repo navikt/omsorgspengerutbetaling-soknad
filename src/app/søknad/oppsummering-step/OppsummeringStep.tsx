@@ -131,7 +131,7 @@ const OppsummeringStep: React.FunctionComponent<Props> = ({ onApplicationSent })
                         {/* {isFeatureEnabled(Feature.STENGT_BHG_SKOLE) && apiValues.hjemmePgaStengtBhgSkole !== undefined && (
                             <Box margin="s">
                                 <SummaryBlock
-                                    header={intlHelper(intl, 'step.periode.spm.hjemmePgaStengtBhgSkole.2021')}>
+                                    header={intlHelper(intl, 'step.fravaer.spm.hjemmePgaStengtBhgSkole.2021')}>
                                     <JaNeiSvar harSvartJa={apiValues.hjemmePgaStengtBhgSkole} />
                                 </SummaryBlock>
                             </Box>
@@ -159,7 +159,7 @@ const OppsummeringStep: React.FunctionComponent<Props> = ({ onApplicationSent })
                                 return (
                                     sporsmål.spørsmål === intlHelper(intl, 'step.arbeidssituasjon.er_arbeidstaker') ||
                                     sporsmål.spørsmål ===
-                                        intlHelper(intl, 'step.periode.har_søkt_andre_utbetalinger.spm')
+                                        intlHelper(intl, 'step.fravaer.har_søkt_andre_utbetalinger.spm')
                                 );
                             })}
                         />

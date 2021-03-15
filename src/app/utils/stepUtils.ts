@@ -6,7 +6,7 @@ import {
     barnStepIsValid,
     arbeidssituasjonStepIsValid,
     medlemskapStepIsValid,
-    periodeStepIsValid,
+    fraværStepIsValid,
     welcomingPageIsValid,
 } from '../validation/stepValidations';
 
@@ -20,10 +20,10 @@ export const getStepTexts = (intl: IntlShape, stepId: StepID, stepConfig: StepCo
     };
 };
 
-export const periodeStepIsAvailable = (formData: SøknadFormData) => welcomingPageIsValid(formData);
+export const fraværStepIsAvailable = (formData: SøknadFormData) => welcomingPageIsValid(formData);
 
 export const arbeidssituasjonStepIsAvailable = (formData: SøknadFormData) =>
-    periodeStepIsAvailable(formData) && periodeStepIsValid(formData);
+    fraværStepIsAvailable(formData) && fraværStepIsValid(formData);
 
 export const barnStepIsAvailable = (formData: SøknadFormData) =>
     arbeidssituasjonStepIsAvailable(formData) && arbeidssituasjonStepIsValid(formData);

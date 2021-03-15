@@ -109,7 +109,7 @@ export const validateUtenlandsoppholdNeste12Mnd = (utenlandsopphold: Utenlandsop
 };
 
 // -------------------------------------------------
-// PeriodeStep
+// Fravær-step
 // -------------------------------------------------
 
 const datoErInnenforTidsrom = (dato: Date, range: Partial<DateRange>): boolean => {

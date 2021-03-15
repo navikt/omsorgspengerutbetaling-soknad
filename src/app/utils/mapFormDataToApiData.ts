@@ -35,7 +35,7 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
         harForståttRettigheterOgPlikter,
         harBekreftetOpplysninger,
 
-        // Periode
+        // Fravær
         fraværPerioder,
         fraværDager,
         perioder_harVærtIUtlandet,
@@ -82,7 +82,7 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
 
     if (har_søkt_andre_utbetalinger === YesOrNo.NO) {
         yesOrNoQuestions.push({
-            spørsmål: intlHelper(intl, 'step.periode.har_søkt_andre_utbetalinger.spm'),
+            spørsmål: intlHelper(intl, 'step.fravaer.har_søkt_andre_utbetalinger.spm'),
             svar: mapYesOrNoToSvar(har_søkt_andre_utbetalinger),
         });
     }

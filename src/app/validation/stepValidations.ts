@@ -11,14 +11,14 @@ import {
     delvisFraværIsValid,
     minimumEnUtbetalingsperiode,
     oppholdIsValid,
-    perioderIsValid,
-} from '../søknad/periode-step/periodeStepConfig';
+    fraværsperioderIsValid,
+} from '../søknad/fravær-step/fraværStepConfig';
 import { SøknadFormData, SøknadFormField } from '../types/SøknadFormData';
 
 export const welcomingPageIsValid = ({ harForståttRettigheterOgPlikter }: SøknadFormData): boolean =>
     harForståttRettigheterOgPlikter === true;
 
-export const periodeStepIsValid = (formData: SøknadFormData): boolean => {
+export const fraværStepIsValid = (formData: SøknadFormData): boolean => {
     const harPerioderMedFravær: YesOrNo = formData[SøknadFormField.harPerioderMedFravær];
     const fraværPerioder: FraværPeriode[] = formData.fraværPerioder;
     const harDagerMedDelvisFravær: YesOrNo = formData[SøknadFormField.harDagerMedDelvisFravær];
@@ -27,7 +27,7 @@ export const periodeStepIsValid = (formData: SøknadFormData): boolean => {
     const perioderUtenlandsopphold: Utenlandsopphold[] = formData[SøknadFormField.perioder_utenlandsopphold];
 
     const isValid = !!(
-        perioderIsValid(harPerioderMedFravær, fraværPerioder) &&
+        fraværsperioderIsValid(harPerioderMedFravær, fraværPerioder) &&
         delvisFraværIsValid(harDagerMedDelvisFravær, fraværDager) &&
         oppholdIsValid(perioderHarVærtIUtlandet, perioderUtenlandsopphold) &&
         minimumEnUtbetalingsperiode(fraværPerioder, fraværDager)
