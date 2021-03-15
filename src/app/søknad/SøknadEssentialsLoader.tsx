@@ -8,7 +8,7 @@ import { Person, Søkerdata } from '../types/Søkerdata';
 import { initialValues, SøknadFormData } from '../types/SøknadFormData';
 import { TemporaryStorage } from '../types/TemporaryStorage';
 import * as apiUtils from '../utils/apiUtils';
-import { Feature, isFeatureEnabled } from '../utils/featureToggleUtils';
+import appSentryLogger from '../utils/appSentryLogger';
 import {
     navigateTo,
     navigateToErrorPage,
@@ -18,7 +18,6 @@ import {
     userIsOnStep,
 } from '../utils/navigationUtils';
 import SøknadTempStorage, { STORAGE_VERSION } from './SøknadTempStorage';
-import appSentryLogger from '../utils/appSentryLogger';
 
 interface Props {
     contentLoadedRenderer: (
@@ -74,16 +73,8 @@ const SøknadEssentialsLoader: React.FunctionComponent<Props> = ({ contentLoaded
         async function loadEssentials() {
             if (essentials?.søkerdata === undefined && loadState.error === undefined) {
                 try {
-                    if (isFeatureEnabled(Feature.MELLOMLAGRING)) {
-                        const [søkerResponse, tempStorage] = await Promise.all([
-                            getSøker(),
-                            SøknadTempStorage.rehydrate(),
-                        ]);
-                        handleEssentialsFetchSuccess(søkerResponse, tempStorage);
-                    } else {
-                        const søkerResponse = await getSøker();
-                        handleEssentialsFetchSuccess(søkerResponse);
-                    }
+                    const [søkerResponse, tempStorage] = await Promise.all([getSøker(), SøknadTempStorage.rehydrate()]);
+                    handleEssentialsFetchSuccess(søkerResponse, tempStorage);
                 } catch (error) {
                     if (apiUtils.isForbidden(error) || apiUtils.isUnauthorized(error)) {
                         navigateToLoginPage();

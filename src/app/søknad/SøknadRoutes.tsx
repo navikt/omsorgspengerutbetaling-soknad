@@ -12,7 +12,6 @@ import { StepID } from '../config/stepConfig';
 import { SøknadFormData } from '../types/SøknadFormData';
 import * as apiUtils from '../utils/apiUtils';
 import appSentryLogger from '../utils/appSentryLogger';
-import { Feature, isFeatureEnabled } from '../utils/featureToggleUtils';
 import { navigateTo, navigateToLoginPage } from '../utils/navigationUtils';
 import { harFraværPgaSmittevernhensyn, harFraværPgaStengBhgSkole } from '../utils/periodeUtils';
 import { getNextStepRoute, getSøknadRoute, isAvailable } from '../utils/routeUtils';
@@ -41,17 +40,15 @@ const SøknadRoutes: React.FunctionComponent = () => {
     const fraværPgaSmittevernhensyn: boolean = harFraværPgaSmittevernhensyn(values.fraværPerioder, values.fraværDager);
 
     async function navigateToNextStepFrom(stepID: StepID) {
-        if (isFeatureEnabled(Feature.MELLOMLAGRING)) {
-            try {
-                await SøknadTempStorage.update(values, stepID);
-            } catch (error) {
-                if (apiUtils.isForbidden(error) || apiUtils.isUnauthorized(error)) {
-                    await logUserLoggedOut('Ved mellomlagring');
-                    navigateToLoginPage();
-                } else {
-                    appSentryLogger.logApiError(error);
-                    navigateTo(RouteConfig.ERROR_PAGE_ROUTE, history);
-                }
+        try {
+            await SøknadTempStorage.update(values, stepID);
+        } catch (error) {
+            if (apiUtils.isForbidden(error) || apiUtils.isUnauthorized(error)) {
+                await logUserLoggedOut('Ved mellomlagring');
+                navigateToLoginPage();
+            } else {
+                appSentryLogger.logApiError(error);
+                navigateTo(RouteConfig.ERROR_PAGE_ROUTE, history);
             }
         }
         setTimeout(() => {
@@ -65,13 +62,9 @@ const SøknadRoutes: React.FunctionComponent = () => {
     const startSoknad = async () => {
         await logSoknadStartet(SKJEMANAVN);
         setTimeout(() => {
-            if (isFeatureEnabled(Feature.MELLOMLAGRING)) {
-                SøknadTempStorage.create().then(() => {
-                    navigateTo(`${RouteConfig.SØKNAD_ROUTE_PREFIX}/${StepID.PERIODE}`, history);
-                });
-            } else {
+            SøknadTempStorage.create().then(() => {
                 navigateTo(`${RouteConfig.SØKNAD_ROUTE_PREFIX}/${StepID.PERIODE}`, history);
-            }
+            });
         });
     };
 
@@ -163,9 +156,7 @@ const SøknadRoutes: React.FunctionComponent = () => {
                             onApplicationSent={() => {
                                 setSøknadHasBeenSent(true);
                                 resetForm();
-                                if (isFeatureEnabled(Feature.MELLOMLAGRING)) {
-                                    SøknadTempStorage.purge();
-                                }
+                                SøknadTempStorage.purge();
                                 navigateTo(RouteConfig.SØKNAD_SENDT_ROUTE, history);
                             }}
                         />

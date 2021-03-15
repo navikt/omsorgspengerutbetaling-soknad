@@ -77,14 +77,20 @@ export const getStepConfig = (formData?: SøknadFormData): StepConfigInterface =
         [StepID.PERIODE]: {
             ...getStepConfigItemTextKeys(StepID.PERIODE),
             index: idx++,
-            nextStep: StepID.FRAVÆR,
+            nextStep: StepID.BARN,
             backLinkHref: routeConfig.WELCOMING_PAGE_ROUTE,
+        },
+        [StepID.BARN]: {
+            ...getStepConfigItemTextKeys(StepID.BARN),
+            index: idx++,
+            nextStep: StepID.FRAVÆR,
+            backLinkHref: getSøknadRoute(StepID.PERIODE),
         },
         [StepID.FRAVÆR]: {
             ...getStepConfigItemTextKeys(StepID.FRAVÆR),
             index: idx++,
             nextStep: getNextStepAfterFraværStep(),
-            backLinkHref: getSøknadRoute(StepID.PERIODE),
+            backLinkHref: getSøknadRoute(StepID.BARN),
         },
     };
 
@@ -120,12 +126,6 @@ export const getStepConfig = (formData?: SøknadFormData): StepConfigInterface =
             index: idx++,
             nextStep: StepID.BARN,
             backLinkHref: getPrevioustStepForInntektStep(),
-        },
-        [StepID.BARN]: {
-            ...getStepConfigItemTextKeys(StepID.BARN),
-            index: idx++,
-            nextStep: StepID.MEDLEMSKAP,
-            backLinkHref: getSøknadRoute(StepID.ARBEIDSSITUASJON),
         },
         [StepID.MEDLEMSKAP]: {
             ...getStepConfigItemTextKeys(StepID.MEDLEMSKAP),

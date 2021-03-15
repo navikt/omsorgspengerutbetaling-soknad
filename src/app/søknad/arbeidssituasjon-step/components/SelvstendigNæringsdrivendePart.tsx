@@ -2,20 +2,19 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
 import ResponsivePanel from '@navikt/sif-common-core/lib/components/responsive-panel/ResponsivePanel';
-import VirksomhetListAndDialog from '@navikt/sif-common-forms/lib/virksomhet/VirksomhetListAndDialog';
-import { useFormikContext } from 'formik';
 import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import {
     validateRequiredList,
     validateYesOrNoIsAnswered,
 } from '@navikt/sif-common-core/lib/validation/fieldValidations';
+import VirksomhetListAndDialog from '@navikt/sif-common-forms/lib/virksomhet/VirksomhetListAndDialog';
+import { useFormikContext } from 'formik';
 import { StepID } from '../../../config/stepConfig';
 import { SøknadFormData, SøknadFormField } from '../../../types/SøknadFormData';
-import { Feature, isFeatureEnabled } from '../../../utils/featureToggleUtils';
+import { getEnvironmentVariable } from '../../../utils/envUtils';
 import SøknadFormComponents from '../../SøknadFormComponents';
 import SøknadTempStorage from '../../SøknadTempStorage';
-import { getEnvironmentVariable } from '../../../utils/envUtils';
 
 interface Props {
     førsteDagMedFravær: Date;
@@ -47,13 +46,9 @@ const SelvstendigNæringsdrivendeFormPart: React.FunctionComponent<Props> = ({ f
                             }}
                             skipOrgNumValidation={skipOrgNumValidation}
                             validate={validateRequiredList}
-                            onAfterChange={
-                                isFeatureEnabled(Feature.MELLOMLAGRING)
-                                    ? () => {
-                                          SøknadTempStorage.update(values, StepID.ARBEIDSSITUASJON);
-                                      }
-                                    : undefined
-                            }
+                            onAfterChange={() => {
+                                SøknadTempStorage.update(values, StepID.ARBEIDSSITUASJON);
+                            }}
                         />
                     </ResponsivePanel>
                 </FormBlock>
