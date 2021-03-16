@@ -28,16 +28,15 @@ export const periodeStepIsAvailable = (formData: SøknadFormData) => {
         validateSisteDagMedFravær(formData.sisteDagMedFravær, formData.førsteDagMedFravær) === undefined
     );
 };
+export const barnStepIsAvailable = (formData: SøknadFormData) => periodeStepIsAvailable(formData);
 
-export const fraværStepIsAvailable = (formData: SøknadFormData) => periodeStepIsAvailable(formData);
+export const fraværStepIsAvailable = (formData: SøknadFormData) =>
+    barnStepIsAvailable(formData) && barnStepIsValid(formData);
 
 export const arbeidssituasjonStepIsAvailable = (formData: SøknadFormData) =>
     fraværStepIsAvailable(formData) && fraværStepIsValid(formData);
 
-export const barnStepIsAvailable = (formData: SøknadFormData) =>
-    arbeidssituasjonStepIsAvailable(formData) && arbeidssituasjonStepIsValid(formData);
-
 export const medlemskapStepIsAvailable = (formData: SøknadFormData) =>
-    barnStepIsAvailable(formData) && barnStepIsValid(formData);
+    arbeidssituasjonStepIsAvailable(formData) && arbeidssituasjonStepIsValid(formData);
 
 export const summaryStepAvailable = (formData: SøknadFormData) => medlemskapStepIsValid(formData);

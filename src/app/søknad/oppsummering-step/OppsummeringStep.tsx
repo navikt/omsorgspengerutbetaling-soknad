@@ -19,18 +19,16 @@ import RouteConfig from '../../config/routeConfig';
 import { StepID } from '../../config/stepConfig';
 import { SøkerdataContext } from '../../context/SøkerdataContext';
 import { Søkerdata } from '../../types/Søkerdata';
-import { FosterbarnApi, SøknadApiData, YesNoSpørsmålOgSvar } from '../../types/SøknadApiData';
+import { ApiBarn, SøknadApiData, YesNoSpørsmålOgSvar } from '../../types/SøknadApiData';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import * as apiUtils from '../../utils/apiUtils';
 import appSentryLogger from '../../utils/appSentryLogger';
-// import { Feature, isFeatureEnabled } from '../../utils/featureToggleUtils';
 import { mapFormDataToApiData } from '../../utils/mapFormDataToApiData';
 import { navigateTo, navigateToLoginPage } from '../../utils/navigationUtils';
 import { validateSoknadApiData } from '../../validation/soknadApiDataValidation';
 import SøknadFormComponents from '../SøknadFormComponents';
 import SøknadStep from '../SøknadStep';
 import FrilansSummary from './components/FrilansSummary';
-import JaNeiSvar from './components/JaNeiSvar';
 import MedlemskapSummaryView from './components/MedlemskapSummaryView';
 import NavnOgFodselsnummerSummaryView from './components/NavnOgFodselsnummerSummaryView';
 import SelvstendigSummary from './components/SelvstendigSummary';
@@ -46,6 +44,15 @@ interface Props {
 }
 
 const renderApiDataFeil = (feil: FeiloppsummeringFeil) => <span>{feil.feilmelding}</span>;
+
+const barnListItemRenderer = (barn: ApiBarn): JSX.Element => {
+    return (
+        <>
+            {barn.navn}
+            {barn.identitetsnummer ? ` (${barn.identitetsnummer})` : undefined}
+        </>
+    );
+};
 
 const OppsummeringStep: React.FunctionComponent<Props> = ({
     hjemmePgaStengtBhgSkole,
@@ -84,10 +91,12 @@ const OppsummeringStep: React.FunctionComponent<Props> = ({
 
     const {
         person: { fornavn, mellomnavn, etternavn, fødselsnummer },
+        registrerteBarn,
     } = søkerdata;
 
-    const apiValues: SøknadApiData = mapFormDataToApiData(values, intl);
-    const fosterbarn = apiValues.fosterbarn || [];
+    const apiValues: SøknadApiData = mapFormDataToApiData(values, registrerteBarn, intl);
+    const { barn = [] } = apiValues;
+    const harAleneomsorgFor = barn.filter((b) => b.aleneOmOmsorgen);
 
     const apiValidationErrors = validateSoknadApiData(apiValues);
 
@@ -118,14 +127,14 @@ const OppsummeringStep: React.FunctionComponent<Props> = ({
                     </SummarySection>
 
                     {/* Om barn */}
-                    <SummarySection header={intlHelper(intl, 'steg.oppsummering.barnet.omBarn')}>
+                    <SummarySection header={intlHelper(intl, 'steg.oppsummering.barn.header')}>
                         <SpørsmålOgSvarSummaryView yesNoSpørsmålOgSvar={apiValues.spørsmål} />
-                        {fosterbarn.length > 0 && (
-                            <SummaryBlock header="Fosterbarn">
-                                <SummaryList
-                                    items={fosterbarn}
-                                    itemRenderer={(barn: FosterbarnApi) => <>{barn.fødselsnummer}</>}
-                                />
+                        <SummaryBlock header={intlHelper(intl, 'steg.oppsummering.barn.alleBarn')}>
+                            <SummaryList items={barn} itemRenderer={barnListItemRenderer} />
+                        </SummaryBlock>
+                        {harAleneomsorgFor.length > 0 && (
+                            <SummaryBlock header={intlHelper(intl, 'steg.oppsummering.barn.harAleneomsorgFor')}>
+                                <SummaryList items={harAleneomsorgFor} itemRenderer={barnListItemRenderer} />
                             </SummaryBlock>
                         )}
                     </SummarySection>
@@ -133,22 +142,6 @@ const OppsummeringStep: React.FunctionComponent<Props> = ({
                     {/* Omsorgsdager du søker utbetaling for */}
                     <SummarySection header={intlHelper(intl, 'steg.oppsummering.utbetalinger.header')}>
                         <UtbetalingsperioderSummaryView utbetalingsperioder={apiValues.utbetalingsperioder} />
-
-                        {/* {isFeatureEnabled(Feature.STENGT_BHG_SKOLE) && apiValues.hjemmePgaStengtBhgSkole !== undefined && (
-                            <Box margin="s">
-                                <SummaryBlock
-                                    header={intlHelper(intl, 'step.fravaer.spm.hjemmePgaStengtBhgSkole.2021')}>
-                                    <JaNeiSvar harSvartJa={apiValues.hjemmePgaStengtBhgSkole} />
-                                </SummaryBlock>
-                            </Box>
-                        )} */}
-
-                        <Box margin="s">
-                            <SummaryBlock header={intlHelper(intl, 'steg.intro.form.spm.smittevernhensyn')}>
-                                <JaNeiSvar harSvartJa={hjemmePgaSmittevernhensyn} />
-                            </SummaryBlock>
-                        </Box>
-
                         <UtenlandsoppholdISøkeperiodeSummaryView utenlandsopphold={apiValues.opphold} />
                     </SummarySection>
 

@@ -124,7 +124,7 @@ export const getStepConfig = (formData?: SøknadFormData): StepConfigInterface =
         [StepID.ARBEIDSSITUASJON]: {
             ...getStepConfigItemTextKeys(StepID.ARBEIDSSITUASJON),
             index: idx++,
-            nextStep: StepID.BARN,
+            nextStep: StepID.MEDLEMSKAP,
             backLinkHref: getPrevioustStepForInntektStep(),
         },
         [StepID.MEDLEMSKAP]: {

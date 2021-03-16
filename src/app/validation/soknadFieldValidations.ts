@@ -59,6 +59,8 @@ export enum AppFieldValidationErrors {
     'sisteDagMedFravære_påkrevd' = 'fieldvalidation.sisteDagMedFravære_påkrevd',
     'sisteDagMedFravære_ugyldigTidsperiode' = 'fieldvalidation.sisteDagMedFravære_ugyldigTidsperiode',
     'sisteDagMedFravære_ikkeSammeÅrSomFørsteDag' = 'fieldvalidation.sisteDagMedFravære_ikkeSammeÅrSomFørsteDag',
+
+    'aleneomsorgFor_påkrevd' = 'fieldvalidation.aleneomsorgFor_påkrevd',
 }
 
 export const createAppFieldValidationError = (
@@ -266,6 +268,13 @@ export const validateSisteDagMedFravær = (
     }
     if (førsteDag && dayjs(sisteDag).get('year') !== dayjs(førsteDag).get('year')) {
         return createFieldValidationError(AppFieldValidationErrors.sisteDagMedFravære_ikkeSammeÅrSomFørsteDag);
+    }
+    return undefined;
+};
+
+export const validateAleneomsorgForBarn = (barn: string[]): FieldValidationResult => {
+    if (barn.length === 0) {
+        return createFieldValidationError(AppFieldValidationErrors.aleneomsorgFor_påkrevd);
     }
     return undefined;
 };

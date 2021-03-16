@@ -24,14 +24,20 @@ import PeriodeStep from './periode-step/PeriodeStep';
 import SmittevernDokumenterStep from './smittevern-dokumenter-step/SmittvernDokumenterStep';
 import StengtBhgSkoleDokumenterStep from './stengt-bhg-skole-dokumenter-step/StengtBhgSkoleDokumenterStep';
 import SøknadTempStorage from './SøknadTempStorage';
+import { Søkerdata } from '../types/Søkerdata';
 
 export interface KvitteringInfo {
     søkernavn: string;
 }
 
-const SøknadRoutes: React.FunctionComponent = () => {
+interface Props {
+    søkerdata: Søkerdata | undefined;
+}
+
+const SøknadRoutes: React.FunctionComponent<Props> = ({ søkerdata }) => {
     const [søknadHasBeenSent, setSøknadHasBeenSent] = React.useState(false);
     const { values, resetForm } = useFormikContext<SøknadFormData>();
+    const registrerteBarn = søkerdata?.registrerteBarn || [];
 
     const history = useHistory();
     const { logSoknadStartet, logUserLoggedOut } = useAmplitudeInstance();
@@ -135,7 +141,12 @@ const SøknadRoutes: React.FunctionComponent = () => {
             {isAvailable(StepID.BARN, values) && (
                 <Route
                     path={getSøknadRoute(StepID.BARN)}
-                    render={() => <BarnStep onValidSubmit={() => navigateToNextStepFrom(StepID.BARN)} />}
+                    render={() => (
+                        <BarnStep
+                            registrerteBarn={registrerteBarn}
+                            onValidSubmit={() => navigateToNextStepFrom(StepID.BARN)}
+                        />
+                    )}
                 />
             )}
 

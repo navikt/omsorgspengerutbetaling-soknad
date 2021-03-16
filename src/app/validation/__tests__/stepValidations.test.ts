@@ -3,7 +3,7 @@ import { frilansIsValid, selvstendigIsValid } from '../../søknad/arbeidssituasj
 import { FrilansFormData, SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import { legeerklæringStepIsValid, medlemskapStepIsValid, welcomingPageIsValid } from '../stepValidations';
 
-jest.mock('./../fieldValidations', () => {
+jest.mock('./../soknadFieldValidations', () => {
     return {
         validateNavn: jest.fn(() => undefined),
         validateFødselsnummer: jest.fn(() => undefined),

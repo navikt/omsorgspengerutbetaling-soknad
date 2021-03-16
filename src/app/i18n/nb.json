@@ -93,9 +93,9 @@
     "step.arbeidssituasjon.info.1": "Nå trenger vi å vite hva som var arbeidssituasjonen din på den første dagen du søker om utbetaling for.",
     "step.arbeidssituasjon.advarsel.ingenSituasjonValgt": "Du må velge minst én av situasjonene over.",
 
-    "step.barn.pageTitle": "Barn - Søknad om utbetaling av omsorgspenger",
-    "step.barn.stepTitle": "Barn",
-    "step.barn.stepIndicatorLabel": "Barn",
+    "step.barn.pageTitle": "Om barn",
+    "step.barn.stepTitle": "Om barn",
+    "step.barn.stepIndicatorLabel": "Om barn",
 
     "step.medlemskap.pageTitle": "Medlemskap - Søknad om utbetaling av omsorgspenger",
     "step.medlemskap.stepTitle": "Medlemskap",
@@ -199,9 +199,26 @@
 
     "step.arbeidssituasjon.er_arbeidstaker": "Er du arbeidstaker i tillegg til at du er selvstendig næringsdrivende og/eller frilanser?",
 
-    "fosterbarn.legend": "Vi henter vanligvis informasjon om barn fra folkeregisteret, men vi har ikke tilgang til informasjon om fosterbarn der. Derfor må du selv legge inn opplysninger om eventuelle fosterbarn.",
-    
-    "steg.barn.fosterbarn.spm": "Har du fosterbarn?",
+    "step.barn.registrerteBarn.listHeader": "Registrerte barn",
+    "steg.barn.pageTitle": "Om barn",
+    "steg.barn.stepTitle": "Om barn",
+    "steg.barn.nextButtonLabel": "Fortsett",
+    "steg.barn.info.title": "Her ser du barn som er registrert på deg.",
+    "steg.barn.info": "Det er kun barn under 18 år som vises her. Hvis du har barn som har fylt 18 år i år, og som du har fått ekstra omsorgsdager for, kan du selv legge til dette barnet.",
+    "steg.barn.info.ingenbarn.1": "Vi fant ingen barn registrert på deg. Har du  barn som ikke er registrert her, kan du selv legge inn disse. Dette kan være fosterbarn, eller om du har barn som er fylt 18 år og som har ekstra omsorgsdager på grunn av kronisk sykdom eller funksjonshemning.",
+    "steg.barn.info.ingenbarn.2": "Du må legge til minst ett barn for å kunne gå videre.",
+
+    "steg.barn.info.title.andreBarn": "Har du andre barn?",
+    "steg.barn.info.title.flereBarn": "Har du flere barn?",
+    "steg.barn.info.text": "Har du barn som ikke er registrert her, kan du legge inn disse selv. Det kan være fosterbarn, eller om du har barn som er fylt 18 år og som har ekstra omsorgsdager på grunn av kronisk sykdom eller funksjonshemning.",
+    "steg.barn.annetBarn.addLabel": "Legg til barn",
+    "steg.barn.annetBarn.listTitle": "Andre barn",
+    "steg.barn.annetBarn.modalTitle": "Legg til barn",
+    "steg.barn.formLeggTilBarn.aldersGrenseInfo": "(Du kan ikke legge til barn som er 19 år eller eldre)",
+    "steg.barn.harAleneOmsorg.flereBarn.spm": "Er du alene om omsorgen for barn?",
+    "steg.barn.harAleneOmsorg.ettBarn.spm": "Er du alene om omsorgen for barnet ditt?",
+    "steg.barn.hvilkeAvBarnaAleneomsorg.spm": "Kryss av for barn du er alene om omsorgen for:",
+    "steg.barn.aldersGrenseInfo": "(Du kan ikke legge til barn som er 19 år eller eldre)",
 
     "steg.medlemsskap.annetLandSiste12.spm": "Har du bodd i utlandet i hele eller deler av de siste 12 månedene?",
     "steg.medlemsskap.annetLandNeste12.spm": "Planlegger du å bo i utlandet i hele eller deler av de neste 12 månedene?",
@@ -219,15 +236,9 @@
     "steg.oppsummering.søker.omDeg": "Om deg",
     "steg.oppsummering.søker.fnr": "Fødselsnummer: {fødselsnummer}",
 
-    "steg.oppsummering.barnet.omBarn": "Om barn",
-    "steg.oppsummering.barnet.header": "Om barnet",
-    "steg.oppsummering.barnet.navn": "Navn: {navn}",
-    "steg.oppsummering.barnet.fødselsdato": "Fødselsdato: {dato}",
-    "steg.oppsummering.barnet.forelopigFnr": "Foreløpig fødselsnummer / D-nummer: {fnr}",
-    "steg.oppsummering.barnet.fnr": "Fødselsnummer: {fnr}",
-    "steg.oppsummering.barnet.søkersRelasjonTilBarnet": "Din relasjon til barnet: {relasjon}",
-    "steg.oppsummering.barnet.sammeAdresse.header": "Er du folkeregistrert på samme adresse som barnet?",
-    "steg.oppsummering.barnet.deltOmsorg.header": "Deler du omsorgen med den andre forelderen?",
+    "steg.oppsummering.barn.header": "Om barn",
+    "steg.oppsummering.barn.alleBarn": "Dine barn",
+    "steg.oppsummering.barn.harAleneomsorgFor": "Barn du er alene om omsorgen for",
 
     "steg.oppsummering.arbeidssituasjon.header": "Din arbeidssituasjon",
     "steg.oppsummering.søkt_om_andre_utbetalinger": "Andre utbetalinger det er søkt om fra NAV",
@@ -314,6 +325,8 @@
     "fieldvalidation.sisteDagMedFravære_påkrevd": "Feltet \"Hva er siste dag du skal søke for?\" er påkrevd",
     "fieldvalidation.sisteDagMedFravære_ugyldigTidsperiode": "Datoen for når du har siste dag med fravær må være lik, eller etter første dag, og kan ikke være etter dagens dato.",
     "fieldvalidation.sisteDagMedFravære_ikkeSammeÅrSomFørsteDag": "En søknad kan kun inneholde dager med fravær som er i samme kalenderår. Dersom du skal søke for dager som er i ulike kalenderår, må du sende én søknad for hvert kalenderår.",
+
+    "fieldvalidation.aleneomsorgFor_påkrevd": "Du har valgt at du er alene om omsorgen for barn, da må du velge hvilket barn du har aleneomsorg for",
 
     "avbrytSøknadDialog.avbrytSøknadLabel": "Ja, avbryt søknad",
     "avbrytSøknadDialog.fortsettSøknadLabel": "Nei",

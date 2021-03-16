@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
-import { getSøker } from '../api/api';
+import { getSøker, getBarn } from '../api/api';
 import LoadWrapper from '../components/load-wrapper/LoadWrapper';
 import { SøkerdataContextProvider } from '../context/SøkerdataContext';
-import { Person, Søkerdata } from '../types/Søkerdata';
+import { Barn, Person, Søkerdata } from '../types/Søkerdata';
 import { initialValues, SøknadFormData } from '../types/SøknadFormData';
 import { TemporaryStorage } from '../types/TemporaryStorage';
 import * as apiUtils from '../utils/apiUtils';
@@ -18,6 +18,8 @@ import {
     userIsOnStep,
 } from '../utils/navigationUtils';
 import SøknadTempStorage, { STORAGE_VERSION } from './SøknadTempStorage';
+import { BarnRemoteData } from '../types/ResourceType';
+import { apiStringDateToDate } from '@navikt/sif-common-core/lib/utils/dateUtils';
 
 interface Props {
     contentLoadedRenderer: (
@@ -37,6 +39,16 @@ interface Essentials {
     formData: SøknadFormData | undefined;
 }
 
+const parseBarnRemoteData = (barnRemoteData: BarnRemoteData): Barn[] => {
+    return barnRemoteData.barn?.map((b) => ({
+        aktørId: b.aktørId,
+        etternavn: b.etternavn,
+        mellomnavn: b.mellomnavn || undefined,
+        fornavn: b.fornavn,
+        fødselsdato: apiStringDateToDate(b.fødselsdato),
+    }));
+};
+
 const SøknadEssentialsLoader: React.FunctionComponent<Props> = ({ contentLoadedRenderer }) => {
     const history = useHistory();
     const [loadState, setLoadState] = useState<LoadState>({ isLoading: true, doApiCalls: true });
@@ -52,12 +64,20 @@ const SøknadEssentialsLoader: React.FunctionComponent<Props> = ({ contentLoaded
     useEffect(() => {
         const handleEssentialsFetchSuccess = (
             søkerResponse: AxiosResponse<Person>,
+            barnResponse: AxiosResponse<BarnRemoteData>,
             tempStorageResponse?: AxiosResponse
         ) => {
             const tempStorage = getValidTemporaryStorage(tempStorageResponse?.data);
             const formData = tempStorage?.formData;
             const lastStepID = tempStorage?.metadata?.lastStepID;
-            setEssentials({ søkerdata: { person: søkerResponse.data }, formData: formData || { ...initialValues } });
+            setEssentials({
+                søkerdata: {
+                    person: søkerResponse.data,
+                    registrerteBarn: parseBarnRemoteData(barnResponse.data || []),
+                },
+                formData: formData || { ...initialValues },
+            });
+
             setLoadState({ isLoading: false, doApiCalls: false, error: undefined });
 
             if (userIsCurrentlyOnErrorPage()) {
@@ -73,8 +93,12 @@ const SøknadEssentialsLoader: React.FunctionComponent<Props> = ({ contentLoaded
         async function loadEssentials() {
             if (essentials?.søkerdata === undefined && loadState.error === undefined) {
                 try {
-                    const [søkerResponse, tempStorage] = await Promise.all([getSøker(), SøknadTempStorage.rehydrate()]);
-                    handleEssentialsFetchSuccess(søkerResponse, tempStorage);
+                    const [søkerResponse, barnResponse, tempStorage] = await Promise.all([
+                        getSøker(),
+                        getBarn(),
+                        SøknadTempStorage.rehydrate(),
+                    ]);
+                    handleEssentialsFetchSuccess(søkerResponse, barnResponse, tempStorage);
                 } catch (error) {
                     if (apiUtils.isForbidden(error) || apiUtils.isUnauthorized(error)) {
                         navigateToLoginPage();

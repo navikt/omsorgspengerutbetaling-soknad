@@ -6,7 +6,6 @@ import {
     frilansIsValid,
     selvstendigIsValid,
 } from '../søknad/arbeidssituasjon-step/arbeidssituasjonUtils';
-import { BarnStepQuestions } from '../søknad/barn-step/config';
 import {
     delvisFraværIsValid,
     minimumEnUtbetalingsperiode,
@@ -39,8 +38,14 @@ export const arbeidssituasjonStepIsValid = (formData: SøknadFormData): boolean 
     return frilansIsValid(formData) && selvstendigIsValid(formData) && erArbeidstakerIsValid(formData.er_arbeidstaker);
 };
 
-export const barnStepIsValid = (values: SøknadFormData): boolean => {
-    return BarnStepQuestions.getVisbility(values).areAllQuestionsAnswered();
+export const barnStepIsValid = ({ harAleneomsorg, harAleneomsorgFor = [] }: SøknadFormData): boolean => {
+    if (harAleneomsorg === YesOrNo.UNANSWERED) {
+        return false;
+    }
+    if (harAleneomsorg === YesOrNo.YES && harAleneomsorgFor.length === 0) {
+        return false;
+    }
+    return true;
 };
 
 export const medlemskapStepIsValid = ({

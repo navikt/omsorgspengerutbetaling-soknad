@@ -71,8 +71,11 @@ export interface VirksomhetApiData {
     };
 }
 
-export interface FosterbarnApi {
-    fødselsnummer: string;
+export interface ApiBarn {
+    identitetsnummer?: string;
+    aktørId?: string;
+    navn: string;
+    aleneOmOmsorgen?: boolean;
 }
 
 export interface SøknadApiData {
@@ -82,7 +85,7 @@ export interface SøknadApiData {
         harForståttRettigheterOgPlikter: boolean;
     };
     spørsmål: YesNoSpørsmålOgSvar[];
-    fosterbarn?: FosterbarnApi[];
+    barn?: ApiBarn[];
     utbetalingsperioder: UtbetalingsperiodeApi[]; // perioder
     andreUtbetalinger: AndreUtbetalinger[];
     opphold: UtenlandsoppholdApiData[]; // hvis ja på har oppholdt seg i utlandet
