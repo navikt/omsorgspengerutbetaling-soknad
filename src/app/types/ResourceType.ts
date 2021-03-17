@@ -6,7 +6,7 @@ export enum ResourceType {
     MELLOMLAGRING = 'mellomlagring',
 }
 export interface BarnRemoteData {
-    barn: {
+    barnOppslag: {
         fødselsdato: string;
         fornavn: string;
         mellomnavn: string | null;

@@ -40,7 +40,7 @@ interface Essentials {
 }
 
 const parseBarnRemoteData = (barnRemoteData: BarnRemoteData): Barn[] => {
-    return barnRemoteData.barn?.map((b) => ({
+    return barnRemoteData.barnOppslag?.map((b) => ({
         aktørId: b.aktørId,
         etternavn: b.etternavn,
         mellomnavn: b.mellomnavn || undefined,
