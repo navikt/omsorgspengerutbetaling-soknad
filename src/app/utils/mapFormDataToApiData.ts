@@ -121,8 +121,8 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, barn: Barn[], 
 };
 
 export const mapBarnToApiData = (
-    { harAleneomsorgFor, andreBarn }: SøknadFormData,
-    registrerteBarn: Barn[]
+    { harAleneomsorgFor, andreBarn = [] }: SøknadFormData,
+    registrerteBarn: Barn[] = []
 ): ApiBarn[] => {
     return [
         ...andreBarn.map((barn) => mapAnnetBarnToApiBarn(barn, harAleneomsorgFor)),
