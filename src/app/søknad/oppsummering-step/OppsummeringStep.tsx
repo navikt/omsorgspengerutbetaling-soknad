@@ -25,7 +25,7 @@ import * as apiUtils from '../../utils/apiUtils';
 import appSentryLogger from '../../utils/appSentryLogger';
 import { mapFormDataToApiData } from '../../utils/mapFormDataToApiData';
 import { navigateTo, navigateToLoginPage } from '../../utils/navigationUtils';
-import { validateSoknadApiData } from '../../validation/soknadApiDataValidation';
+import { validateSoknadApiData } from '../../validation/apiDataValidation';
 import SøknadFormComponents from '../SøknadFormComponents';
 import SøknadStep from '../SøknadStep';
 import FrilansSummary from './components/FrilansSummary';

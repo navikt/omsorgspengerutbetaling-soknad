@@ -2,7 +2,7 @@ import { IntlShape } from 'react-intl';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import { StepConfigInterface, StepConfigItemTexts, StepID } from '../config/stepConfig';
 import { SøknadFormData } from '../types/SøknadFormData';
-import { validateFørsteDagMedFravær, validateSisteDagMedFravær } from '../validation/soknadFieldValidations';
+import { validateFørsteDagMedFravær, validateSisteDagMedFravær } from '../validation/fieldValidations';
 import {
     arbeidssituasjonStepIsValid,
     barnStepIsValid,

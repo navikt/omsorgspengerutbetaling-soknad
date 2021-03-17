@@ -19,7 +19,7 @@ import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import { nYearsAgo } from '../../utils/aldersUtils';
 import SøknadFormComponents from '../SøknadFormComponents';
 import SøknadStep from '../SøknadStep';
-import { validateAleneomsorgForBarn } from '../../validation/soknadFieldValidations';
+import { validateAleneomsorgForBarn } from '../../validation/fieldValidations';
 
 interface OwnProps {
     registrerteBarn: Barn[];

@@ -9,7 +9,7 @@ import { useFormikContext } from 'formik';
 import { StepConfigProps, StepID } from '../../config/stepConfig';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import { GYLDIG_TIDSROM } from '../../validation/constants';
-import { validateFørsteDagMedFravær, validateSisteDagMedFravær } from '../../validation/soknadFieldValidations';
+import { validateFørsteDagMedFravær, validateSisteDagMedFravær } from '../../validation/fieldValidations';
 import SøknadFormComponents from '../SøknadFormComponents';
 import SøknadStep from '../SøknadStep';
 
