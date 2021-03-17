@@ -39,6 +39,7 @@ export interface UtbetalingsperiodeApi {
 export interface Frilans {
     startdato: string;
     jobberFortsattSomFrilans: boolean;
+    sluttdato?: string;
 }
 
 export interface Land {
@@ -70,8 +71,11 @@ export interface VirksomhetApiData {
     };
 }
 
-export interface FosterbarnApi {
-    fødselsnummer: string;
+export interface ApiBarn {
+    identitetsnummer?: string;
+    aktørId?: string;
+    navn: string;
+    aleneOmOmsorgen?: boolean;
 }
 
 export interface SøknadApiData {
@@ -81,15 +85,13 @@ export interface SøknadApiData {
         harForståttRettigheterOgPlikter: boolean;
     };
     spørsmål: YesNoSpørsmålOgSvar[];
-    fosterbarn?: FosterbarnApi[];
+    barn?: ApiBarn[];
     utbetalingsperioder: UtbetalingsperiodeApi[]; // perioder
     andreUtbetalinger: AndreUtbetalinger[];
     opphold: UtenlandsoppholdApiData[]; // hvis ja på har oppholdt seg i utlandet
     bosteder: UtenlandsoppholdApiData[]; // medlemskap-siden
     frilans?: Frilans;
     selvstendigVirksomheter: VirksomhetApiData[];
-    hjemmePgaSmittevernhensyn: boolean;
-    hjemmePgaStengtBhgSkole?: boolean;
     vedlegg: string[];
     _vedleggSmittevern: string[];
     _vedleggStengtSkole: string[];

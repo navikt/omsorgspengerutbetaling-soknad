@@ -9,6 +9,7 @@ import { decimalTimeToTime, timeToIso8601Duration } from '@navikt/sif-common-cor
 import { Utenlandsopphold, Virksomhet, mapVirksomhetToVirksomhetApiData } from '@navikt/sif-common-forms/lib';
 import { FraværDag, FraværPeriode } from '@navikt/sif-common-forms/lib/fravær';
 import {
+    ApiBarn,
     SøknadApiData,
     UtbetalingsperiodeApi,
     UtenlandsoppholdApiData,
@@ -17,9 +18,12 @@ import {
     YesNoSvar,
 } from '../types/SøknadApiData';
 import { SøknadFormData } from '../types/SøknadFormData';
-import { Feature, isFeatureEnabled } from './featureToggleUtils';
+// import { Feature, isFeatureEnabled } from './featureToggleUtils';
 import { mapBostedUtlandToApiData } from './formToApiMaps/mapBostedUtlandToApiData';
 import { mapFrilansToApiData } from './formToApiMaps/mapFrilansToApiData';
+import { Barn } from '../../@types/omsorgspengerutbetaling-schema';
+import { AnnetBarn } from '@navikt/sif-common-forms/lib/annet-barn/types';
+import { formatName } from '@navikt/sif-common-core/lib/utils/personUtils';
 
 const getVedleggUrlFromAttachments = (attachments: Attachment[]): string[] => {
     return (
@@ -30,12 +34,12 @@ const getVedleggUrlFromAttachments = (attachments: Attachment[]): string[] => {
     );
 };
 
-export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShape): SøknadApiData => {
+export const mapFormDataToApiData = (formValues: SøknadFormData, barn: Barn[], intl: IntlShape): SøknadApiData => {
     const {
         harForståttRettigheterOgPlikter,
         harBekreftetOpplysninger,
 
-        // Periode
+        // Fravær
         fraværPerioder,
         fraværDager,
         perioder_harVærtIUtlandet,
@@ -43,24 +47,17 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
         har_søkt_andre_utbetalinger,
         andre_utbetalinger,
 
-        hjemmePgaStengtBhgSkole,
         dokumenterStengtBkgSkole = [],
-
-        hjemmePgaSmittevernhensyn,
         dokumenterSmittevernhensyn = [],
 
         // Inntekt
-        frilans_harHattInntektSomFrilanser,
+        frilans_erFrilanser,
         frilans_startdato,
+        frilans_sluttdato,
         frilans_jobberFortsattSomFrilans,
-        selvstendig_harHattInntektSomSN,
+        selvstendig_erSelvstendigNæringsdrivende,
         selvstendig_virksomheter,
         er_arbeidstaker,
-
-        // Barn
-        har_fosterbarn,
-        fosterbarn,
-        har_fått_ekstra_omsorgsdager,
 
         // Medlemskap
         harBoddUtenforNorgeSiste12Mnd,
@@ -71,22 +68,14 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
 
     const yesOrNoQuestions: YesNoSpørsmålOgSvar[] = [
         {
-            spørsmål: intlHelper(intl, 'step.inntekt.er_arbeidstaker'),
+            spørsmål: intlHelper(intl, 'step.arbeidssituasjon.er_arbeidstaker'),
             svar: mapYesOrNoToSvar(er_arbeidstaker),
-        },
-        {
-            spørsmål: intl.formatMessage({ id: 'steg.barn.har_fått_ekstra_omsorgsdager.spm' }),
-            svar: mapYesOrNoToSvar(har_fått_ekstra_omsorgsdager),
-        },
-        {
-            spørsmål: intlHelper(intl, 'steg.barn.fosterbarn.spm'),
-            svar: mapYesOrNoToSvar(har_fosterbarn),
         },
     ];
 
     if (har_søkt_andre_utbetalinger === YesOrNo.NO) {
         yesOrNoQuestions.push({
-            spørsmål: intlHelper(intl, 'step.periode.har_søkt_andre_utbetalinger.spm'),
+            spørsmål: intlHelper(intl, 'step.fravaer.har_søkt_andre_utbetalinger.spm'),
             svar: mapYesOrNoToSvar(har_søkt_andre_utbetalinger),
         });
     }
@@ -112,32 +101,55 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
         ),
         opphold: settInnOpphold(perioder_harVærtIUtlandet, perioder_utenlandsopphold, intl.locale), // periode siden, har du oppholdt
         frilans: mapFrilansToApiData(
-            frilans_harHattInntektSomFrilanser,
+            frilans_erFrilanser,
             frilans_jobberFortsattSomFrilans,
-            frilans_startdato
+            frilans_startdato,
+            frilans_sluttdato
         ),
         selvstendigVirksomheter: settInnVirksomheter(
             intl.locale,
-            selvstendig_harHattInntektSomSN,
+            selvstendig_erSelvstendigNæringsdrivende,
             selvstendig_virksomheter
         ),
-        hjemmePgaSmittevernhensyn: hjemmePgaSmittevernhensyn === YesOrNo.YES,
-        hjemmePgaStengtBhgSkole: isFeatureEnabled(Feature.STENGT_BHG_SKOLE)
-            ? hjemmePgaStengtBhgSkole === YesOrNo.YES
-            : undefined,
         vedlegg: [...vedleggSmittevern, ...vedleggStengtBhgSkole],
         _vedleggStengtSkole: vedleggStengtBhgSkole,
         _vedleggSmittevern: vedleggSmittevern,
+        barn: mapBarnToApiData(formValues, barn),
     };
 
-    if (har_fosterbarn === YesOrNo.YES && har_fosterbarn.length > 0) {
-        apiData.fosterbarn = fosterbarn.map((barn) => {
-            const { fødselsnummer } = barn;
-            return { fødselsnummer };
-        });
-    }
-
     return apiData;
+};
+
+export const mapBarnToApiData = (
+    { harAleneomsorgFor, andreBarn = [] }: SøknadFormData,
+    registrerteBarn: Barn[] = []
+): ApiBarn[] => {
+    return [
+        ...andreBarn.map((barn) => mapAnnetBarnToApiBarn(barn, harAleneomsorgFor)),
+        ...registrerteBarn.map((barn) => mapBarnToApiBarn(barn, harAleneomsorgFor)),
+    ];
+};
+
+const barnFinnesIArray = (barnId: string, idArray: string[]): boolean => {
+    return (idArray || []).find((id) => id === barnId) !== undefined;
+};
+
+export const mapAnnetBarnToApiBarn = (annetBarn: AnnetBarn, harAleneomsorgFor: string[]): ApiBarn => {
+    return {
+        navn: annetBarn.navn,
+        aktørId: undefined,
+        identitetsnummer: annetBarn.fnr,
+        aleneOmOmsorgen: barnFinnesIArray(annetBarn.fnr, harAleneomsorgFor),
+    };
+};
+
+export const mapBarnToApiBarn = (registrertBarn: Barn, harAleneomsorgFor: string[]): ApiBarn => {
+    return {
+        navn: formatName(registrertBarn.fornavn, registrertBarn.etternavn, registrertBarn.mellomnavn),
+        aktørId: registrertBarn.aktørId,
+        identitetsnummer: undefined,
+        aleneOmOmsorgen: barnFinnesIArray(registrertBarn.aktørId, harAleneomsorgFor),
+    };
 };
 
 export const mapPeriodeTilUtbetalingsperiode = (
@@ -147,8 +159,8 @@ export const mapPeriodeTilUtbetalingsperiode = (
     const periodeMappedTilUtbetalingsperiode: UtbetalingsperiodeApi[] = fraværPerioder.map(
         (periode: FraværPeriode): UtbetalingsperiodeApi => {
             return {
-                fraOgMed: formatDateToApiFormat(periode.from),
-                tilOgMed: formatDateToApiFormat(periode.to),
+                fraOgMed: formatDateToApiFormat(periode.fraOgMed),
+                tilOgMed: formatDateToApiFormat(periode.tilOgMed),
                 antallTimerPlanlagt: null,
                 antallTimerBorte: null,
             };
@@ -211,11 +223,11 @@ const settInnOpphold = (
 
 const settInnVirksomheter = (
     locale: string,
-    harHattInntektSomSN?: YesOrNo,
+    erSelvstendigNæringsdrivende?: YesOrNo,
     virksomheter?: Virksomhet[],
     harBesvartFiskerPåBladB?: boolean
 ): VirksomhetApiData[] => {
-    return harHattInntektSomSN && harHattInntektSomSN === YesOrNo.YES && virksomheter
+    return erSelvstendigNæringsdrivende && erSelvstendigNæringsdrivende === YesOrNo.YES && virksomheter
         ? virksomheter.map((virksomhet: Virksomhet) =>
               mapVirksomhetToVirksomhetApiData(locale, virksomhet, harBesvartFiskerPåBladB)
           )

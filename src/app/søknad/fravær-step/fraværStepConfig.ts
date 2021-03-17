@@ -2,7 +2,7 @@ import { YesOrNo } from '@navikt/sif-common-formik/lib';
 import { Utenlandsopphold } from '@navikt/sif-common-forms/lib';
 import { FraværDag, FraværPeriode } from '@navikt/sif-common-forms/lib/fravær';
 
-export const perioderIsValid = (harPerioderMedFravær: YesOrNo, perioderMedFravær: FraværPeriode[]): boolean =>
+export const fraværsperioderIsValid = (harPerioderMedFravær: YesOrNo, perioderMedFravær: FraværPeriode[]): boolean =>
     harPerioderMedFravær === YesOrNo.NO || (harPerioderMedFravær === YesOrNo.YES && perioderMedFravær.length > 0);
 
 export const delvisFraværIsValid = (harDagerMedDelvisFravær: YesOrNo, dagerMedDelvisFravær: FraværDag[]): boolean =>

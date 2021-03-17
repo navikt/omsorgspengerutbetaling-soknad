@@ -79,7 +79,6 @@ export const mock1: SøknadApiData = {
             antallTimerBorte: 'PT5H0M',
         },
     ],
-    hjemmePgaSmittevernhensyn: false,
     vedlegg: [],
     _vedleggSmittevern: [],
     _vedleggStengtSkole: [],

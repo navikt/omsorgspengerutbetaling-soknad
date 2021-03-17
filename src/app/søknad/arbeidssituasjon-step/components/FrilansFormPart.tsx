@@ -1,6 +1,5 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
-import Box from '@navikt/sif-common-core/lib/components/box/Box';
 import ExpandableInfo from '@navikt/sif-common-core/lib/components/expandable-content/ExpandableInfo';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
 import ResponsivePanel from '@navikt/sif-common-core/lib/components/responsive-panel/ResponsivePanel';
@@ -17,16 +16,19 @@ import FrilansEksempeltHtml from './FrilansEksempelHtml';
 
 interface Props {
     formValues: SøknadFormData;
+    førsteDagMedFravær: Date;
+    sisteDagMedFravær: Date;
 }
 
 const FrilansFormPart: React.FunctionComponent<Props> = ({ formValues }) => {
-    const harHattInntektSomFrilanser = formValues[SøknadFormField.frilans_harHattInntektSomFrilanser] === YesOrNo.YES;
+    const erFrilanser = formValues[SøknadFormField.frilans_erFrilanser] === YesOrNo.YES;
+    const harSluttetSomFrilanser = formValues[SøknadFormField.frilans_jobberFortsattSomFrilans] === YesOrNo.NO;
     const intl = useIntl();
     return (
         <>
             <SøknadFormComponents.YesOrNoQuestion
-                name={SøknadFormField.frilans_harHattInntektSomFrilanser}
-                legend={intlHelper(intl, 'frilanser.harDuHattInntekt.spm')}
+                name={SøknadFormField.frilans_erFrilanser}
+                legend={intlHelper(intl, 'frilanser.erFrilanser.spm')}
                 description={
                     <ExpandableInfo title="Hva er en frilanser?">
                         <FrilansEksempeltHtml />
@@ -34,10 +36,10 @@ const FrilansFormPart: React.FunctionComponent<Props> = ({ formValues }) => {
                 }
                 validate={validateYesOrNoIsAnswered}
             />
-            {harHattInntektSomFrilanser && (
+            {erFrilanser && (
                 <FormBlock margin="l">
                     <ResponsivePanel className={'responsivePanel'}>
-                        <Box>
+                        <FormBlock margin="none">
                             <SøknadFormComponents.DatePicker
                                 name={SøknadFormField.frilans_startdato}
                                 label={intlHelper(intl, 'frilanser.nårStartet.spm')}
@@ -45,14 +47,25 @@ const FrilansFormPart: React.FunctionComponent<Props> = ({ formValues }) => {
                                 maxDate={dateToday}
                                 validate={validateRequiredField}
                             />
-                        </Box>
-                        <Box margin="xl">
+                        </FormBlock>
+                        <FormBlock>
                             <SøknadFormComponents.YesOrNoQuestion
                                 name={SøknadFormField.frilans_jobberFortsattSomFrilans}
                                 legend={intlHelper(intl, 'frilanser.jobberFortsatt.spm')}
                                 validate={validateYesOrNoIsAnswered}
                             />
-                        </Box>
+                        </FormBlock>
+                        {harSluttetSomFrilanser && (
+                            <FormBlock>
+                                <SøknadFormComponents.DatePicker
+                                    name={SøknadFormField.frilans_sluttdato}
+                                    label={intlHelper(intl, 'frilanser.nårSluttet.spm')}
+                                    showYearSelector={true}
+                                    maxDate={dateToday}
+                                    validate={validateRequiredField}
+                                />
+                            </FormBlock>
+                        )}
                     </ResponsivePanel>
                 </FormBlock>
             )}

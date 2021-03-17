@@ -5,3 +5,12 @@ export enum ResourceType {
     VEDLEGG = 'vedlegg',
     MELLOMLAGRING = 'mellomlagring',
 }
+export interface BarnRemoteData {
+    barnOppslag: {
+        fødselsdato: string;
+        fornavn: string;
+        mellomnavn: string | null;
+        etternavn: string;
+        aktørId: string;
+    }[];
+}
