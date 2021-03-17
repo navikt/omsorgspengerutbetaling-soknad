@@ -13,7 +13,7 @@ export const mapFrilansToApiData = (
     const endDate = datepickerUtils.getDateFromDateString(sluttdato);
 
     if (erFrilanser === YesOrNo.YES && startDate) {
-        if (jobberFortsattSomFrilans === YesOrNo.YES && endDate === undefined) {
+        if (jobberFortsattSomFrilans === YesOrNo.NO && endDate === undefined) {
             return undefined;
         }
         const frilans: Frilans = {

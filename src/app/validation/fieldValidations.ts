@@ -61,6 +61,7 @@ export enum AppFieldValidationErrors {
     'sisteDagMedFravære_ikkeSammeÅrSomFørsteDag' = 'fieldvalidation.sisteDagMedFravære_ikkeSammeÅrSomFørsteDag',
 
     'aleneomsorgFor_påkrevd' = 'fieldvalidation.aleneomsorgFor_påkrevd',
+    'andreBarn_påkrevd' = 'fieldvalidation.andreBarn_påkrevd',
 }
 
 export const createAppFieldValidationError = (
@@ -275,6 +276,13 @@ export const validateSisteDagMedFravær = (
 export const validateAleneomsorgForBarn = (barn: string[]): FieldValidationResult => {
     if (barn.length === 0) {
         return createFieldValidationError(AppFieldValidationErrors.aleneomsorgFor_påkrevd);
+    }
+    return undefined;
+};
+
+export const validateAndreBarn = (barn: string[]): FieldValidationResult => {
+    if (barn.length === 0) {
+        return createFieldValidationError(AppFieldValidationErrors.andreBarn_påkrevd);
     }
     return undefined;
 };

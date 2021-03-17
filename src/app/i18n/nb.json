@@ -203,14 +203,11 @@
     "steg.barn.pageTitle": "Om barn",
     "steg.barn.stepTitle": "Om barn",
     "steg.barn.nextButtonLabel": "Fortsett",
-    "steg.barn.info.title": "Her ser du barn som er registrert på deg.",
-    "steg.barn.info": "Det er kun barn under 18 år som vises her. Hvis du har barn som har fylt 18 år i år, og som du har fått ekstra omsorgsdager for, kan du selv legge til dette barnet.",
-    "steg.barn.info.ingenbarn.1": "Vi fant ingen barn registrert på deg. Har du  barn som ikke er registrert her, kan du selv legge inn disse. Dette kan være fosterbarn, eller om du har barn som er fylt 18 år og som har ekstra omsorgsdager på grunn av kronisk sykdom eller funksjonshemning.",
-    "steg.barn.info.ingenbarn.2": "Du må legge til minst ett barn for å kunne gå videre.",
-
+    "steg.barn.info": "Infotekst må skrives",
+    "steg.barn.info.ingenBarnFunnet": "Melding når ingen barn er funnet",
     "steg.barn.info.title.andreBarn": "Har du andre barn?",
     "steg.barn.info.title.flereBarn": "Har du flere barn?",
-    "steg.barn.info.text": "Har du barn som ikke er registrert her, kan du legge inn disse selv. Det kan være fosterbarn, eller om du har barn som er fylt 18 år og som har ekstra omsorgsdager på grunn av kronisk sykdom eller funksjonshemning.",
+    "steg.barn.info.text": "Har du barn som ikke er registrert her, kan du legge inn disse selv. ",
     "steg.barn.annetBarn.addLabel": "Legg til barn",
     "steg.barn.annetBarn.listTitle": "Andre barn",
     "steg.barn.annetBarn.modalTitle": "Legg til barn",
@@ -327,6 +324,7 @@
     "fieldvalidation.sisteDagMedFravære_ikkeSammeÅrSomFørsteDag": "En søknad kan kun inneholde dager med fravær som er i samme kalenderår. Dersom du skal søke for dager som er i ulike kalenderår, må du sende én søknad for hvert kalenderår.",
 
     "fieldvalidation.aleneomsorgFor_påkrevd": "Du har valgt at du er alene om omsorgen for barn, da må du velge hvilket barn du har aleneomsorg for",
+    "fieldvalidation.andreBarn_påkrevd": "Du må legge til barn for å kunne gå videre",
 
     "avbrytSøknadDialog.avbrytSøknadLabel": "Ja, avbryt søknad",
     "avbrytSøknadDialog.fortsettSøknadLabel": "Nei",
@@ -453,6 +451,7 @@
     "frilanser.summary.harDuHattInntekt.header": "Er du frilanser?",
     "frilanser.summary.nårStartet.header": "Når startet du som frilanser?",
     "frilanser.summary.jobberFortsatt.header": "Jobber du fortsatt som frilanser?",
+    "frilanser.summary.nårSluttet.header": "Når sluttet du som frilanser?",
 
     "summary.andreIntekter.header": "Eventuelle andre inntekter"
 }

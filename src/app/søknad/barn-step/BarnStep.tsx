@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import ContentWithHeader from '@navikt/sif-common-core/lib/components/content-with-header/ContentWithHeader';
 import CounsellorPanel from '@navikt/sif-common-core/lib/components/counsellor-panel/CounsellorPanel';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
@@ -12,14 +12,15 @@ import { validateYesOrNoIsAnswered } from '@navikt/sif-common-core/lib/validatio
 import AnnetBarnListAndDialog from '@navikt/sif-common-forms/lib/annet-barn/AnnetBarnListAndDialog';
 import { AnnetBarn } from '@navikt/sif-common-forms/lib/annet-barn/types';
 import { useFormikContext } from 'formik';
+import AlertStripe from 'nav-frontend-alertstriper';
 import { CheckboksPanelProps } from 'nav-frontend-skjema';
 import { StepConfigProps, StepID } from '../../config/stepConfig';
 import { Barn } from '../../types/Søkerdata';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import { nYearsAgo } from '../../utils/aldersUtils';
+import { validateAleneomsorgForBarn, validateAndreBarn } from '../../validation/fieldValidations';
 import SøknadFormComponents from '../SøknadFormComponents';
 import SøknadStep from '../SøknadStep';
-import { validateAleneomsorgForBarn } from '../../validation/fieldValidations';
 
 interface OwnProps {
     registrerteBarn: Barn[];
@@ -72,16 +73,23 @@ const BarnStep: React.FunctionComponent<Props> = ({ registrerteBarn, onValidSubm
         verifyHarAleneomsorgFor();
     }, [andreBarn, verifyHarAleneomsorgFor]);
 
+    const harBarn = andreBarn.length + registrerteBarn.length > 0;
+
     return (
         <SøknadStep id={StepID.BARN} onValidFormSubmit={onValidSubmit} cleanupStep={cleanupStep}>
             <FormBlock>
                 <CounsellorPanel>
-                    <p>{intlHelper(intl, 'steg.barn.info.title')}</p>
                     <p>{intlHelper(intl, 'steg.barn.info')}</p>
                 </CounsellorPanel>
             </FormBlock>
 
-            {registrerteBarn.length > 0 && (
+            {registrerteBarn.length === 0 ? (
+                <FormBlock>
+                    <AlertStripe type="info">
+                        <FormattedMessage id="steg.barn.info.ingenBarnFunnet" />
+                    </AlertStripe>
+                </FormBlock>
+            ) : (
                 <FormBlock>
                     <ContentWithHeader header={intlHelper(intl, 'step.barn.registrerteBarn.listHeader')}>
                         <ItemList<Barn>
@@ -93,6 +101,7 @@ const BarnStep: React.FunctionComponent<Props> = ({ registrerteBarn, onValidSubm
                     </ContentWithHeader>
                 </FormBlock>
             )}
+
             <FormBlock>
                 <ContentWithHeader
                     header={
@@ -115,6 +124,7 @@ const BarnStep: React.FunctionComponent<Props> = ({ registrerteBarn, onValidSubm
                     maxDate={dateToday}
                     minDate={nYearsAgo(18)}
                     aldersGrenseText={intlHelper(intl, 'steg.barn.aldersGrenseInfo')}
+                    validate={harBarn ? undefined : validateAndreBarn}
                 />
             </FormBlock>
 
