@@ -46,9 +46,8 @@ const SøknadRoutes: React.FunctionComponent<Props> = ({ søkerdata }) => {
     const fraværPgaSmittevernhensyn: boolean = harFraværPgaSmittevernhensyn(values.fraværPerioder, values.fraværDager);
 
     async function navigateToNextStepFrom(stepID: StepID) {
-        const nextStepRoute = getNextStepRoute(stepID, values);
         try {
-            await SøknadTempStorage.update(values, nextStepRoute || stepID);
+            await SøknadTempStorage.update(values, stepID);
         } catch (error) {
             if (apiUtils.isForbidden(error) || apiUtils.isUnauthorized(error)) {
                 await logUserLoggedOut('Ved mellomlagring');
@@ -59,6 +58,7 @@ const SøknadRoutes: React.FunctionComponent<Props> = ({ søkerdata }) => {
             }
         }
         setTimeout(() => {
+            const nextStepRoute = getNextStepRoute(stepID, values);
             if (nextStepRoute) {
                 navigateTo(nextStepRoute, history);
             }
