@@ -128,7 +128,6 @@ const OppsummeringStep: React.FunctionComponent<Props> = ({
 
                     {/* Om barn */}
                     <SummarySection header={intlHelper(intl, 'steg.oppsummering.barn.header')}>
-                        <SpørsmålOgSvarSummaryView yesNoSpørsmålOgSvar={apiValues.spørsmål} />
                         <SummaryBlock header={intlHelper(intl, 'steg.oppsummering.barn.alleBarn')}>
                             <SummaryList items={barn} itemRenderer={barnListItemRenderer} />
                         </SummaryBlock>

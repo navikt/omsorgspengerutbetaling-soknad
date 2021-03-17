@@ -49,6 +49,17 @@ const parseBarnRemoteData = (barnRemoteData: BarnRemoteData): Barn[] => {
     }));
 };
 
+const ugyldigBarnRemoteData = (barn: any): boolean => {
+    return !barn.aktørId || !barn.fornavn || !barn.fornavn || !barn.fødselsdato;
+};
+const validateBarnResponse = (remoteData: BarnRemoteData) => {
+    if (!remoteData || !remoteData.barnOppslag) {
+        return false;
+    }
+    const hasInvalidBarnData = remoteData.barnOppslag.find(ugyldigBarnRemoteData) !== undefined;
+    return hasInvalidBarnData === false;
+};
+
 const SøknadEssentialsLoader: React.FunctionComponent<Props> = ({ contentLoadedRenderer }) => {
     const history = useHistory();
     const [loadState, setLoadState] = useState<LoadState>({ isLoading: true, doApiCalls: true });
@@ -70,10 +81,15 @@ const SøknadEssentialsLoader: React.FunctionComponent<Props> = ({ contentLoaded
             const tempStorage = getValidTemporaryStorage(tempStorageResponse?.data);
             const formData = tempStorage?.formData;
             const lastStepID = tempStorage?.metadata?.lastStepID;
+            const barnResponseIsValid = validateBarnResponse(barnResponse.data);
+
+            if (barnResponseIsValid === false) {
+                throw new Error('Invalid barn response data');
+            }
             setEssentials({
                 søkerdata: {
                     person: søkerResponse.data,
-                    registrerteBarn: parseBarnRemoteData(barnResponse.data || []),
+                    registrerteBarn: parseBarnRemoteData(barnResponse.data || {}),
                 },
                 formData: formData || { ...initialValues },
             });

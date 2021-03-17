@@ -1,4 +1,4 @@
-import { Næringstype } from '@navikt/sif-common-forms/lib';
+import { FraværÅrsak, Næringstype } from '@navikt/sif-common-forms/lib';
 import { SøknadApiData } from '../../types/SøknadApiData';
 
 export const mock1: SøknadApiData = {
@@ -59,24 +59,28 @@ export const mock1: SøknadApiData = {
             tilOgMed: '2020-03-03',
             antallTimerPlanlagt: null,
             antallTimerBorte: null,
+            årsak: FraværÅrsak.annet,
         },
         {
             fraOgMed: '2020-03-04',
             tilOgMed: '2020-03-05',
             antallTimerPlanlagt: null,
             antallTimerBorte: null,
+            årsak: FraværÅrsak.annet,
         },
         {
             fraOgMed: '2020-03-09',
             tilOgMed: '2020-03-09',
             antallTimerPlanlagt: 'PT5H0M',
             antallTimerBorte: 'PT5H0M',
+            årsak: FraværÅrsak.annet,
         },
         {
             fraOgMed: '2020-03-10',
             tilOgMed: '2020-03-10',
             antallTimerPlanlagt: 'PT5H0M',
             antallTimerBorte: 'PT5H0M',
+            årsak: FraværÅrsak.annet,
         },
     ],
     vedlegg: [],

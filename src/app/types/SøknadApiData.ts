@@ -1,4 +1,4 @@
-import { Næringstype } from '@navikt/sif-common-forms/lib';
+import { FraværÅrsak, Næringstype } from '@navikt/sif-common-forms/lib';
 import { ApiStringDate } from '@navikt/sif-common-core/lib/types/ApiStringDate';
 import { Locale } from '@navikt/sif-common-core/lib/types/Locale';
 import { AndreUtbetalinger } from './AndreUtbetalinger';
@@ -30,6 +30,7 @@ export interface YesNoSpørsmålOgSvar {
 }
 
 export interface UtbetalingsperiodeApi {
+    årsak: FraværÅrsak;
     fraOgMed: ApiStringDate; // @JsonFormat(pattern = "yyyy-MM-dd")
     tilOgMed: ApiStringDate; // @JsonFormat(pattern = "yyyy-MM-dd")
     antallTimerBorte: string | null; // f eks PT5H30M | "null" (type Duration)

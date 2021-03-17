@@ -163,6 +163,7 @@ export const mapPeriodeTilUtbetalingsperiode = (
                 tilOgMed: formatDateToApiFormat(periode.tilOgMed),
                 antallTimerPlanlagt: null,
                 antallTimerBorte: null,
+                årsak: periode.årsak,
             };
         }
     );
@@ -174,6 +175,7 @@ export const mapPeriodeTilUtbetalingsperiode = (
                 tilOgMed: formatDateToApiFormat(fraværDag.dato),
                 antallTimerPlanlagt: timeToIso8601Duration(decimalTimeToTime(parseFloat(fraværDag.timerArbeidsdag))),
                 antallTimerBorte: timeToIso8601Duration(decimalTimeToTime(parseFloat(fraværDag.timerFravær))),
+                årsak: fraværDag.årsak,
             };
         }
     );
