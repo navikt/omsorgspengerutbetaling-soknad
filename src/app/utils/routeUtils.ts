@@ -16,9 +16,14 @@ export const getSøknadRoute = (stepId: StepID | undefined) => {
     return undefined;
 };
 
-export const getNextStepRoute = (stepId: StepID, formData?: SøknadFormData): string | undefined => {
+export const getNextStepId = (stepId: StepID, formData?: SøknadFormData): StepID | undefined => {
     const stepConfig = getStepConfig(formData);
-    return stepConfig[stepId] ? getSøknadRoute(stepConfig[stepId].nextStep) : undefined;
+    return stepConfig[stepId] ? stepConfig[stepId].nextStep : undefined;
+};
+
+export const getNextStepRoute = (stepId: StepID, formData?: SøknadFormData): string | undefined => {
+    const nextStepId = getNextStepId(stepId, formData);
+    return nextStepId ? getSøknadRoute(nextStepId) : undefined;
 };
 
 export const isAvailable = (path: StepID | RouteConfig, values: SøknadFormData) => {
