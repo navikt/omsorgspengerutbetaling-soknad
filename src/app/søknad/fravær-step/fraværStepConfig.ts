@@ -2,12 +2,11 @@ import { YesOrNo } from '@navikt/sif-common-formik/lib';
 import { Utenlandsopphold } from '@navikt/sif-common-forms/lib';
 import { FraværDag, FraværPeriode } from '@navikt/sif-common-forms/lib/fravær';
 
-export const fraværsperioderIsValid = (harPerioderMedFravær: YesOrNo, perioderMedFravær: FraværPeriode[]): boolean =>
-    harPerioderMedFravær === YesOrNo.NO || (harPerioderMedFravær === YesOrNo.YES && perioderMedFravær.length > 0);
+export const fraværsperioderIsValid = (harPerioderMedFravær: YesOrNo, fraværPerioder: FraværPeriode[]): boolean =>
+    harPerioderMedFravær === YesOrNo.NO || (harPerioderMedFravær === YesOrNo.YES && fraværPerioder.length > 0);
 
-export const delvisFraværIsValid = (harDagerMedDelvisFravær: YesOrNo, dagerMedDelvisFravær: FraværDag[]): boolean =>
-    harDagerMedDelvisFravær === YesOrNo.NO ||
-    (harDagerMedDelvisFravær === YesOrNo.YES && dagerMedDelvisFravær.length > 0);
+export const delvisFraværIsValid = (harDagerMedDelvisFravær: YesOrNo, fraværDager: FraværDag[]): boolean =>
+    harDagerMedDelvisFravær === YesOrNo.NO || (harDagerMedDelvisFravær === YesOrNo.YES && fraværDager.length > 0);
 
 export const oppholdIsValid = (
     perioderHarVærtIUtlandet: YesOrNo,
@@ -16,7 +15,5 @@ export const oppholdIsValid = (
     perioderHarVærtIUtlandet === YesOrNo.NO ||
     (perioderHarVærtIUtlandet === YesOrNo.YES && perioderUtenlandsopphold.length > 0);
 
-export const minimumEnUtbetalingsperiode = (
-    perioderMedFravær: FraværPeriode[],
-    dagerMedDelvisFravær: FraværDag[]
-): boolean => perioderMedFravær.length > 0 || dagerMedDelvisFravær.length > 0;
+export const minimumEnUtbetalingsperiode = (fraværPeriode: FraværPeriode[], fraværDag: FraværDag[]): boolean =>
+    fraværPeriode.length > 0 || fraværDag.length > 0;

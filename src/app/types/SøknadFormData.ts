@@ -4,7 +4,6 @@ import { FraværDag, FraværPeriode } from '@navikt/sif-common-forms/lib/fravær
 import { Virksomhet } from '@navikt/sif-common-forms/lib/virksomhet/types';
 import { Attachment } from '@navikt/sif-common-core/lib/types/Attachment';
 import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
-import { FraværDelerAvDag, Periode } from '../../@types/omsorgspengerutbetaling-schema';
 import { AndreUtbetalinger } from './AndreUtbetalinger';
 
 export enum SøknadFormField {
@@ -12,15 +11,10 @@ export enum SøknadFormField {
     harBekreftetOpplysninger = 'harBekreftetOpplysninger',
 
     // Fravær
-    årstall = 'årstall',
     harPerioderMedFravær = 'harPerioderMedFravær',
-    fraværPerioder = 'fraværPerioder',
-    perioderMedFravær = 'perioderMedFravær',
-    perioderMedFraværGroup = 'perioderMedFraværGroup',
     harDagerMedDelvisFravær = 'harDagerMedDelvisFravær',
+    fraværPerioder = 'fraværPerioder',
     fraværDager = 'fraværDager',
-    dagerMedDelvisFravær = 'dagerMedDelvisFravær',
-    dagerMedDelvisFraværGroup = 'dagerMedDelvisFraværGroup',
     perioder_harVærtIUtlandet = 'perioder_harVærtIUtlandet',
     perioder_utenlandsopphold = 'perioder_utenlandsopphold',
     harSøktAndreUtbetalinger = 'harSøktAndreUtbetalinger',
@@ -58,12 +52,9 @@ export interface SøknadFormData {
     [SøknadFormField.harBekreftetOpplysninger]: boolean;
 
     // Periode
-    [SøknadFormField.årstall]?: string;
     [SøknadFormField.harPerioderMedFravær]: YesOrNo;
-    [SøknadFormField.perioderMedFravær]: Periode[];
     [SøknadFormField.fraværPerioder]: FraværPeriode[];
     [SøknadFormField.harDagerMedDelvisFravær]: YesOrNo;
-    [SøknadFormField.dagerMedDelvisFravær]: FraværDelerAvDag[];
     [SøknadFormField.fraværDager]: FraværDag[];
     [SøknadFormField.perioder_harVærtIUtlandet]: YesOrNo;
     [SøknadFormField.perioder_utenlandsopphold]: Utenlandsopphold[];
@@ -114,12 +105,9 @@ export const initialValues: SøknadFormData = {
     [SøknadFormField.harBekreftetOpplysninger]: false,
 
     // Fravær
-    [SøknadFormField.årstall]: undefined,
     [SøknadFormField.harPerioderMedFravær]: YesOrNo.UNANSWERED,
-    [SøknadFormField.perioderMedFravær]: [],
     [SøknadFormField.fraværPerioder]: [],
     [SøknadFormField.harDagerMedDelvisFravær]: YesOrNo.UNANSWERED,
-    [SøknadFormField.dagerMedDelvisFravær]: [],
     [SøknadFormField.fraværDager]: [],
     [SøknadFormField.perioder_harVærtIUtlandet]: YesOrNo.UNANSWERED,
     [SøknadFormField.perioder_utenlandsopphold]: [],
