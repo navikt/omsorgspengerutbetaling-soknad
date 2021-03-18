@@ -16,8 +16,6 @@ import FrilansEksempeltHtml from './FrilansEksempelHtml';
 
 interface Props {
     formValues: SøknadFormData;
-    førsteDagMedFravær: Date;
-    sisteDagMedFravær: Date;
 }
 
 const FrilansFormPart: React.FunctionComponent<Props> = ({ formValues }) => {

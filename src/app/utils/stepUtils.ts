@@ -2,7 +2,6 @@ import { IntlShape } from 'react-intl';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import { StepConfigInterface, StepConfigItemTexts, StepID } from '../config/stepConfig';
 import { SøknadFormData } from '../types/SøknadFormData';
-import { validateFørsteDagMedFravær, validateSisteDagMedFravær } from '../validation/fieldValidations';
 import {
     arbeidssituasjonStepIsValid,
     barnStepIsValid,
@@ -21,20 +20,12 @@ export const getStepTexts = (intl: IntlShape, stepId: StepID, stepConfig: StepCo
     };
 };
 
-export const periodeStepIsAvailable = (formData: SøknadFormData) => {
-    return (
-        welcomingPageIsValid(formData) &&
-        validateFørsteDagMedFravær(formData.førsteDagMedFravær) === undefined &&
-        validateSisteDagMedFravær(formData.sisteDagMedFravær, formData.førsteDagMedFravær) === undefined
-    );
-};
-export const barnStepIsAvailable = (formData: SøknadFormData) => periodeStepIsAvailable(formData);
+export const fraværStepIsAvailable = (formData: SøknadFormData) => welcomingPageIsValid(formData);
 
-export const fraværStepIsAvailable = (formData: SøknadFormData) =>
-    barnStepIsAvailable(formData) && barnStepIsValid(formData);
+export const barnStepIsAvailable = (formData: SøknadFormData) => fraværStepIsValid(formData);
 
 export const arbeidssituasjonStepIsAvailable = (formData: SøknadFormData) =>
-    fraværStepIsAvailable(formData) && fraværStepIsValid(formData);
+    barnStepIsAvailable(formData) && barnStepIsValid(formData);
 
 export const medlemskapStepIsAvailable = (formData: SøknadFormData) =>
     arbeidssituasjonStepIsAvailable(formData) && arbeidssituasjonStepIsValid(formData);

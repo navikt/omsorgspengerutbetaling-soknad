@@ -17,8 +17,6 @@ import SøknadFormComponents from '../../SøknadFormComponents';
 import SøknadTempStorage from '../../SøknadTempStorage';
 
 interface Props {
-    førsteDagMedFravær: Date;
-    sisteDagMedFravær: Date;
     formValues: SøknadFormData;
 }
 

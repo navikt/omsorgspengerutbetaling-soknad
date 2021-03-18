@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
 import { useAmplitudeInstance } from '@navikt/sif-common-amplitude/lib';
-import datepickerUtils from '@navikt/sif-common-formik/lib/components/formik-datepicker/datepickerUtils';
 import { useFormikContext } from 'formik';
 import { SKJEMANAVN } from '../App';
 import ConfirmationPage from '../components/pages/confirmation-page/ConfirmationPage';
@@ -20,7 +19,6 @@ import BarnStep from './barn-step/BarnStep';
 import FraværStep from './fravær-step/FraværStep';
 import MedlemsskapStep from './medlemskap-step/MedlemsskapStep';
 import OppsummeringStep from './oppsummering-step/OppsummeringStep';
-import PeriodeStep from './periode-step/PeriodeStep';
 import SmittevernDokumenterStep from './smittevern-dokumenter-step/SmittvernDokumenterStep';
 import StengtBhgSkoleDokumenterStep from './stengt-bhg-skole-dokumenter-step/StengtBhgSkoleDokumenterStep';
 import SøknadTempStorage from './SøknadTempStorage';
@@ -69,13 +67,10 @@ const SøknadRoutes: React.FunctionComponent<Props> = ({ søkerdata }) => {
         await logSoknadStartet(SKJEMANAVN);
         setTimeout(() => {
             SøknadTempStorage.create().then(() => {
-                navigateTo(`${RouteConfig.SØKNAD_ROUTE_PREFIX}/${StepID.PERIODE}`, history);
+                navigateTo(`${RouteConfig.SØKNAD_ROUTE_PREFIX}/${StepID.FRAVÆR}`, history);
             });
         });
     };
-
-    const førsteDagMedFravær = datepickerUtils.getDateFromDateString(values.førsteDagMedFravær);
-    const sisteDagMedFravær = datepickerUtils.getDateFromDateString(values.sisteDagMedFravær);
 
     return (
         <Switch>
@@ -84,21 +79,20 @@ const SøknadRoutes: React.FunctionComponent<Props> = ({ søkerdata }) => {
                 render={() => <WelcomingPage onValidSubmit={startSoknad} />}
             />
 
-            {isAvailable(StepID.PERIODE, values) && (
+            {isAvailable(StepID.FRAVÆR, values) && (
                 <Route
-                    path={getSøknadRoute(StepID.PERIODE)}
-                    render={() => <PeriodeStep onValidSubmit={() => navigateToNextStepFrom(StepID.PERIODE)} />}
+                    path={getSøknadRoute(StepID.FRAVÆR)}
+                    render={() => <FraværStep onValidSubmit={() => navigateToNextStepFrom(StepID.FRAVÆR)} />}
                 />
             )}
 
-            {isAvailable(StepID.FRAVÆR, values) && førsteDagMedFravær && sisteDagMedFravær && (
+            {isAvailable(StepID.BARN, values) && (
                 <Route
-                    path={getSøknadRoute(StepID.FRAVÆR)}
+                    path={getSøknadRoute(StepID.BARN)}
                     render={() => (
-                        <FraværStep
-                            onValidSubmit={() => navigateToNextStepFrom(StepID.FRAVÆR)}
-                            førsteDagMedFravær={førsteDagMedFravær}
-                            sisteDagMedFravær={sisteDagMedFravær}
+                        <BarnStep
+                            registrerteBarn={registrerteBarn}
+                            onValidSubmit={() => navigateToNextStepFrom(StepID.BARN)}
                         />
                     )}
                 />
@@ -126,26 +120,11 @@ const SøknadRoutes: React.FunctionComponent<Props> = ({ søkerdata }) => {
                 />
             )}
 
-            {isAvailable(StepID.ARBEIDSSITUASJON, values) && førsteDagMedFravær && sisteDagMedFravær && (
+            {isAvailable(StepID.ARBEIDSSITUASJON, values) && (
                 <Route
                     path={getSøknadRoute(StepID.ARBEIDSSITUASJON)}
                     render={() => (
-                        <ArbeidssituasjonStep
-                            førsteDagMedFravær={førsteDagMedFravær}
-                            sisteDagMedFravær={sisteDagMedFravær}
-                            onValidSubmit={() => navigateToNextStepFrom(StepID.ARBEIDSSITUASJON)}
-                        />
-                    )}
-                />
-            )}
-            {isAvailable(StepID.BARN, values) && (
-                <Route
-                    path={getSøknadRoute(StepID.BARN)}
-                    render={() => (
-                        <BarnStep
-                            registrerteBarn={registrerteBarn}
-                            onValidSubmit={() => navigateToNextStepFrom(StepID.BARN)}
-                        />
+                        <ArbeidssituasjonStep onValidSubmit={() => navigateToNextStepFrom(StepID.ARBEIDSSITUASJON)} />
                     )}
                 />
             )}

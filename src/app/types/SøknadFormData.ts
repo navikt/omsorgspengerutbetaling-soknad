@@ -11,9 +11,6 @@ export enum SøknadFormField {
     harForståttRettigheterOgPlikter = 'harForståttRettigheterOgPlikter',
     harBekreftetOpplysninger = 'harBekreftetOpplysninger',
 
-    førsteDagMedFravær = 'førsteDagMedFravær',
-    sisteDagMedFravær = 'sisteDagMedFravær',
-
     // Fravær
     harPerioderMedFravær = 'harPerioderMedFravær',
     fraværPerioder = 'fraværPerioder',
@@ -58,9 +55,6 @@ export enum SøknadFormField {
 export interface SøknadFormData {
     [SøknadFormField.harForståttRettigheterOgPlikter]: boolean;
     [SøknadFormField.harBekreftetOpplysninger]: boolean;
-
-    [SøknadFormField.førsteDagMedFravær]?: string;
-    [SøknadFormField.sisteDagMedFravær]?: string;
 
     // Periode
     [SøknadFormField.harPerioderMedFravær]: YesOrNo;
@@ -117,10 +111,7 @@ export const initialValues: SøknadFormData = {
     [SøknadFormField.harForståttRettigheterOgPlikter]: false,
     [SøknadFormField.harBekreftetOpplysninger]: false,
 
-    [SøknadFormField.førsteDagMedFravær]: undefined,
-    [SøknadFormField.sisteDagMedFravær]: undefined,
-
-    // Periode
+    // Fravær
     [SøknadFormField.harPerioderMedFravær]: YesOrNo.UNANSWERED,
     [SøknadFormField.perioderMedFravær]: [],
     [SøknadFormField.fraværPerioder]: [],

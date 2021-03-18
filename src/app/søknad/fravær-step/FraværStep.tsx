@@ -27,12 +27,10 @@ import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import SøknadFormComponents from '../SøknadFormComponents';
 import SøknadStep from '../SøknadStep';
 import './fraværStep.less';
+import { GYLDIG_TIDSROM } from '../../validation/constants';
+import { date1YearAgo, dateToday } from '@navikt/sif-common-core/lib/utils/dateUtils';
 
-const FraværStep: React.FunctionComponent<StepConfigProps & { førsteDagMedFravær: Date; sisteDagMedFravær: Date }> = ({
-    onValidSubmit,
-    førsteDagMedFravær,
-    sisteDagMedFravær,
-}) => {
+const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) => {
     const { values } = useFormikContext<SøknadFormData>();
     const { harPerioderMedFravær, harDagerMedDelvisFravær, perioder_harVærtIUtlandet } = values;
 
@@ -109,8 +107,8 @@ const FraværStep: React.FunctionComponent<StepConfigProps & { førsteDagMedFrav
                     <FormBlock margin="l">
                         <FraværPerioderListAndDialog<SøknadFormField>
                             name={SøknadFormField.fraværPerioder}
-                            minDate={førsteDagMedFravær}
-                            maxDate={sisteDagMedFravær}
+                            minDate={GYLDIG_TIDSROM.from || date1YearAgo}
+                            maxDate={GYLDIG_TIDSROM.to || dateToday}
                             validate={validateAll([
                                 validateRequiredList,
                                 validateNoCollisions(
@@ -150,8 +148,8 @@ const FraværStep: React.FunctionComponent<StepConfigProps & { førsteDagMedFrav
                     <FormBlock margin="l">
                         <FraværDagerListAndDialog<SøknadFormField>
                             name={SøknadFormField.fraværDager}
-                            minDate={førsteDagMedFravær}
-                            maxDate={sisteDagMedFravær}
+                            minDate={GYLDIG_TIDSROM.from || date1YearAgo}
+                            maxDate={GYLDIG_TIDSROM.to || dateToday}
                             validate={validateAll([
                                 validateRequiredList,
                                 validateNoCollisions(
@@ -204,8 +202,8 @@ const FraværStep: React.FunctionComponent<StepConfigProps & { førsteDagMedFrav
                         <FormBlock margin="l">
                             <BostedUtlandListAndDialog<SøknadFormField>
                                 name={SøknadFormField.perioder_utenlandsopphold}
-                                minDate={førsteDagMedFravær}
-                                maxDate={sisteDagMedFravær}
+                                minDate={GYLDIG_TIDSROM.from || date1YearAgo}
+                                maxDate={GYLDIG_TIDSROM.to || dateToday}
                                 labels={{
                                     addLabel: intlHelper(intl, 'step.fravaer.utenlandsopphold.addLabel'),
                                     modalTitle: intlHelper(intl, 'step.fravaer.utenlandsopphold.modalTitle'),

@@ -21,6 +21,7 @@ import { nYearsAgo } from '../../utils/aldersUtils';
 import { validateAleneomsorgForBarn, validateAndreBarn } from '../../validation/fieldValidations';
 import SøknadFormComponents from '../SøknadFormComponents';
 import SøknadStep from '../SøknadStep';
+import Box from '@navikt/sif-common-core/lib/components/box/Box';
 
 interface OwnProps {
     registrerteBarn: Barn[];
@@ -83,6 +84,7 @@ const BarnStep: React.FunctionComponent<Props> = ({ registrerteBarn, onValidSubm
                 </CounsellorPanel>
             </FormBlock>
 
+            <h2>Dine barn</h2>
             {registrerteBarn.length === 0 ? (
                 <FormBlock>
                     <AlertStripe type="info">
@@ -128,6 +130,7 @@ const BarnStep: React.FunctionComponent<Props> = ({ registrerteBarn, onValidSubm
                 />
             </FormBlock>
 
+            <h2>Aleneomsorg</h2>
             <FormBlock>
                 <SøknadFormComponents.YesOrNoQuestion
                     name={SøknadFormField.harAleneomsorg}
@@ -140,14 +143,22 @@ const BarnStep: React.FunctionComponent<Props> = ({ registrerteBarn, onValidSubm
                 />
             </FormBlock>
             {harAleneomsorg === YesOrNo.YES && (
-                <FormBlock>
-                    <SøknadFormComponents.CheckboxPanelGroup
-                        legend={intlHelper(intl, 'steg.barn.hvilkeAvBarnaAleneomsorg.spm')}
-                        name={SøknadFormField.harAleneomsorgFor}
-                        checkboxes={barnOptions}
-                        validate={validateAleneomsorgForBarn}
-                    />
-                </FormBlock>
+                <>
+                    <FormBlock>
+                        <SøknadFormComponents.CheckboxPanelGroup
+                            legend={intlHelper(intl, 'steg.barn.hvilkeAvBarnaAleneomsorg.spm')}
+                            name={SøknadFormField.harAleneomsorgFor}
+                            checkboxes={barnOptions}
+                            validate={validateAleneomsorgForBarn}
+                        />
+                    </FormBlock>
+                    <Box margin="l">
+                        <AlertStripe type="info">
+                            infoboks om at denne informasjonen lagres (presisere lagringen? Hvor lenge?) for fremtidige
+                            behandlinger og det må gis beskjed hvis man ikke lenger er alene om omsorgen{' '}
+                        </AlertStripe>
+                    </Box>
+                </>
             )}
         </SøknadStep>
     );
