@@ -29,6 +29,7 @@ import Note from '../../components/note/Note';
 import { StepConfigProps, StepID } from '../../config/stepConfig';
 import { AndreUtbetalinger } from '../../types/AndreUtbetalinger';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
+import { validateFraværDagHarÅrstall, validateFraværPeriodeHarÅrstall } from '../../validation/fieldValidations';
 import SøknadFormComponents from '../SøknadFormComponents';
 import SøknadStep from '../SøknadStep';
 import './fraværStep.less';
@@ -186,10 +187,8 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                             maxDate={gyldigTidsrom.to}
                             validate={validateAll([
                                 validateRequiredList,
-                                validateNoCollisions(
-                                    values[SøknadFormField.fraværDager],
-                                    values[SøknadFormField.fraværPerioder]
-                                ),
+                                validateFraværPeriodeHarÅrstall(values.fraværPerioder, årstall),
+                                validateNoCollisions(values.fraværDager, values.fraværPerioder),
                             ])}
                             labels={{
                                 listTitle: 'Registrerte perioder med fravær',
@@ -223,6 +222,7 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                             maxDate={gyldigTidsrom.to}
                             validate={validateAll([
                                 validateRequiredList,
+                                validateFraværDagHarÅrstall(values.fraværDager, årstall),
                                 validateNoCollisions(
                                     values[SøknadFormField.fraværDager],
                                     values[SøknadFormField.fraværPerioder]

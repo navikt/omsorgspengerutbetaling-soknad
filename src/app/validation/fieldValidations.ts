@@ -8,7 +8,6 @@ import {
     DateRange,
     dateRangesCollide,
     dateRangesExceedsRange,
-    dateToday,
 } from '@navikt/sif-common-core/lib/utils/dateUtils';
 import { createFieldValidationError } from '@navikt/sif-common-core/lib/validation/fieldValidations';
 import { FieldValidationResult } from '@navikt/sif-common-core/lib/validation/types';
@@ -20,7 +19,7 @@ import {
     getTotalSizeOfAttachments,
     MAX_TOTAL_ATTACHMENT_SIZE_BYTES,
 } from '@navikt/sif-common-core/lib/utils/attachmentUtils';
-import datepickerUtils from '@navikt/sif-common-formik/lib/components/formik-datepicker/datepickerUtils';
+import { FraværDag, FraværPeriode } from '@navikt/sif-common-forms/lib';
 
 dayjs.extend(isBetween);
 
@@ -54,14 +53,11 @@ export enum AppFieldValidationErrors {
     'ikke_lørdag_eller_søndag_periode' = 'fieldvalidation.saturday_and_sunday_not_possible_periode',
     'ikke_lørdag_eller_søndag_dag' = 'fieldvalidation.saturday_and_sunday_not_possible_dag',
 
-    'førsteDagMedFravære_påkrevd' = 'fieldvalidation.førsteDagMedFravære_påkrevd',
-    'førsteDagMedFravære_ugyldigTidsperiode' = 'fieldvalidation.førsteDagMedFravære_ugyldigTidsperiode',
-    'sisteDagMedFravære_påkrevd' = 'fieldvalidation.sisteDagMedFravære_påkrevd',
-    'sisteDagMedFravære_ugyldigTidsperiode' = 'fieldvalidation.sisteDagMedFravære_ugyldigTidsperiode',
-    'sisteDagMedFravære_ikkeSammeÅrSomFørsteDag' = 'fieldvalidation.sisteDagMedFravære_ikkeSammeÅrSomFørsteDag',
-
     'aleneomsorgFor_påkrevd' = 'fieldvalidation.aleneomsorgFor_påkrevd',
     'andreBarn_påkrevd' = 'fieldvalidation.andreBarn_påkrevd',
+
+    'fraværDagIkkeSammeÅrstall' = 'fieldvalidation.fraværDagIkkeSammeÅrstall',
+    'fraværPeriodeIkkeSammeÅrstall' = 'fieldvalidation.fraværPeriodeIkkeSammeÅrstall',
 }
 
 export const createAppFieldValidationError = (
@@ -243,36 +239,6 @@ export const validateDocuments = (attachments: Attachment[]): FieldValidationRes
     return undefined;
 };
 
-export const validateFørsteDagMedFravær = (value: string | undefined): FieldValidationResult => {
-    const førsteDag = datepickerUtils.getDateFromDateString(value);
-    if (førsteDag === undefined) {
-        return createFieldValidationError(AppFieldValidationErrors.førsteDagMedFravære_påkrevd);
-    }
-    if (dayjs(førsteDag).isBefore(date1YearAgo, 'day') || dayjs(førsteDag).isAfter(dateToday, 'day')) {
-        return createFieldValidationError(AppFieldValidationErrors.førsteDagMedFravære_ugyldigTidsperiode);
-    }
-
-    return undefined;
-};
-
-export const validateSisteDagMedFravær = (
-    value: string | undefined,
-    førsteDagMedFravær: string | undefined
-): FieldValidationResult => {
-    const førsteDag = datepickerUtils.getDateFromDateString(førsteDagMedFravær);
-    const sisteDag = datepickerUtils.getDateFromDateString(value);
-    if (sisteDag === undefined) {
-        return createFieldValidationError(AppFieldValidationErrors.sisteDagMedFravære_påkrevd);
-    }
-    if (dayjs(sisteDag).isBefore(førsteDag || date1YearAgo, 'day') || dayjs(sisteDag).isAfter(dateToday, 'day')) {
-        return createFieldValidationError(AppFieldValidationErrors.sisteDagMedFravære_ugyldigTidsperiode);
-    }
-    if (førsteDag && dayjs(sisteDag).get('year') !== dayjs(førsteDag).get('year')) {
-        return createFieldValidationError(AppFieldValidationErrors.sisteDagMedFravære_ikkeSammeÅrSomFørsteDag);
-    }
-    return undefined;
-};
-
 export const validateAleneomsorgForBarn = (barn: string[]): FieldValidationResult => {
     if (barn.length === 0) {
         return createFieldValidationError(AppFieldValidationErrors.aleneomsorgFor_påkrevd);
@@ -283,6 +249,26 @@ export const validateAleneomsorgForBarn = (barn: string[]): FieldValidationResul
 export const validateAndreBarn = (barn: string[]): FieldValidationResult => {
     if (barn.length === 0) {
         return createFieldValidationError(AppFieldValidationErrors.andreBarn_påkrevd);
+    }
+    return undefined;
+};
+
+export const validateFraværDagHarÅrstall = (dager: FraværDag[], årstall?: number) => (): FieldValidationResult => {
+    if (årstall !== undefined) {
+        return dager.find((d) => d.dato.getFullYear() !== årstall)
+            ? createFieldValidationError(AppFieldValidationErrors.fraværDagIkkeSammeÅrstall)
+            : undefined;
+    }
+    return undefined;
+};
+export const validateFraværPeriodeHarÅrstall = (
+    perioder: FraværPeriode[],
+    årstall?: number
+) => (): FieldValidationResult => {
+    if (årstall !== undefined) {
+        return perioder.find((p) => p.fraOgMed.getFullYear() !== årstall || p.tilOgMed.getFullYear() !== årstall)
+            ? createFieldValidationError(AppFieldValidationErrors.fraværPeriodeIkkeSammeÅrstall)
+            : undefined;
     }
     return undefined;
 };

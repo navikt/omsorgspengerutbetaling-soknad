@@ -318,12 +318,6 @@
     "fieldvalidation.for_mange_dokumenter": "For mange dokumenter er lastet opp",
     "fieldvalidation.samlet_storrelse_for_hoy": "Total samlet størrelse for dokumentene du har lastet opp overstiger grensen på 24Mb.",
 
-    "fieldvalidation.førsteDagMedFravære_påkrevd": "Feltet \"Hva er første dag du skal søke for?\" er påkrevd",
-    "fieldvalidation.førsteDagMedFravære_ugyldigTidsperiode": "Datoen for når du har først dag med fravær må være innen siste år, og kan ikke være etter dagens dato.",
-    "fieldvalidation.sisteDagMedFravære_påkrevd": "Feltet \"Hva er siste dag du skal søke for?\" er påkrevd",
-    "fieldvalidation.sisteDagMedFravære_ugyldigTidsperiode": "Datoen for når du har siste dag med fravær må være lik, eller etter første dag, og kan ikke være etter dagens dato.",
-    "fieldvalidation.sisteDagMedFravære_ikkeSammeÅrSomFørsteDag": "En søknad kan kun inneholde dager med fravær som er i samme kalenderår. Dersom du skal søke for dager som er i ulike kalenderår, må du sende én søknad for hvert kalenderår.",
-
     "fieldvalidation.aleneomsorgFor_påkrevd": "Du har valgt at du er alene om omsorgen for barn, da må du velge hvilket barn du har aleneomsorg for",
     "fieldvalidation.andreBarn_påkrevd": "Du må legge til barn for å kunne gå videre",
 
