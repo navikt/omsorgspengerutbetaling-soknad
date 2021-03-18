@@ -20,7 +20,7 @@ import FraværDagerListAndDialog from '@navikt/sif-common-forms/lib/fravær/Frav
 import FraværPerioderListAndDialog from '@navikt/sif-common-forms/lib/fravær/FraværPerioderListAndDialog';
 import { validateAll } from '@navikt/sif-common-forms/lib/fravær/fraværValidationUtils';
 import { useFormikContext } from 'formik';
-import { AlertStripeAdvarsel, AlertStripeInfo } from 'nav-frontend-alertstriper';
+import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import { StepConfigProps, StepID } from '../../config/stepConfig';
 import { AndreUtbetalinger } from '../../types/AndreUtbetalinger';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
@@ -29,6 +29,7 @@ import SøknadStep from '../SøknadStep';
 import './fraværStep.less';
 import { GYLDIG_TIDSROM } from '../../validation/constants';
 import { date1YearAgo, dateToday } from '@navikt/sif-common-core/lib/utils/dateUtils';
+import Note from '../../components/note/Note';
 
 const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) => {
     const { values } = useFormikContext<SøknadFormData>();
@@ -52,32 +53,35 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
             <>
                 <p>
                     <FormattedMessage id="step.fravaer.info2021.1" />
-                </p>
-                <p>
-                    <FormattedMessage id="step.fravaer.info2021.2" />
+                    <Note>[informasjon om at en kun kan søke innenfor samme kalenderår i en søknad]</Note>
                 </p>
                 <p>
                     <FormattedMessage id="step.fravaer.info2021.3" />
                 </p>
                 <ExpandableInfo
-                    title={intlHelper(intl, 'step.fravaer.info2021.nedtrekk.tittle')}
+                    title={intlHelper(intl, 'step.fravaer.info2021.nedtrekk.title')}
+                    filledBackground={false}>
+                    <FormattedMessage id="step.fravaer.info2021.2" />
+                </ExpandableInfo>
+                <ExpandableInfo
+                    title={intlHelper(intl, 'step.fravaer.info2020.nedtrekk.title')}
                     filledBackground={false}>
                     <p>
-                        <FormattedMessage id="step.fravaer.info2021.nedtrekk.1" />
+                        <FormattedMessage id="step.fravaer.info2020.nedtrekk.1" />
                     </p>
                     <ul>
                         <li>
-                            <FormattedMessage id="step.fravaer.info2021.nedtrekk.list.1" />
+                            <FormattedMessage id="step.fravaer.info2020.nedtrekk.list.1" />
                         </li>
                         <li>
-                            <FormattedMessage id="step.fravaer.info2021.nedtrekk.list.2" />
+                            <FormattedMessage id="step.fravaer.info2020.nedtrekk.list.2" />
                         </li>
                         <li>
-                            <FormattedMessage id="step.fravaer.info2021.nedtrekk.list.3" />
+                            <FormattedMessage id="step.fravaer.info2020.nedtrekk.list.3" />
                         </li>
                     </ul>
                     <p>
-                        <FormattedMessage id="step.fravaer.info2021.nedtrekk.2" />
+                        <FormattedMessage id="step.fravaer.info2020.nedtrekk.2" />
                     </p>
                 </ExpandableInfo>
             </>
@@ -93,9 +97,6 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
             showSubmitButton={kanIkkeFortsette === false}>
             <FormBlock>
                 <CounsellorPanel>{getInfoPanel()}</CounsellorPanel>
-            </FormBlock>
-            <FormBlock>
-                <AlertStripeInfo>Infomasjon om at en kun kan søke innenfor samme kalenderår</AlertStripeInfo>
             </FormBlock>
 
             <FormBlock>
