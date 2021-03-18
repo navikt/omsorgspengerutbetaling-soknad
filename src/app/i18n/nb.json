@@ -62,9 +62,9 @@
     "fileUploadErrors.part1": "Det har dessverre skjedd en feil under opplasting av følgende vedlegg:",
     "formikValidationErrorSummary.tittel": "Du må rette opp i følgende feil:",
 
-    "andre_utbetalinger.dagpenger": "Dagpenger",
-    "andre_utbetalinger.sykepenger": "Sykepenger",
-    "andre_utbetalinger.midlertidigkompensasjonsnfri": "Midlertidig kompensasjon for selvstendig næringsdrivende og frilanser",
+    "andreUtbetalinger.dagpenger": "Dagpenger",
+    "andreUtbetalinger.sykepenger": "Sykepenger",
+    "andreUtbetalinger.midlertidigkompensasjonsnfri": "Midlertidig kompensasjon for selvstendig næringsdrivende og frilanser",
 
     "arbeidssituasjon.arbeidstaker": "Arbeidstaker",
     "arbeidssituasjon.selvstendigNæringsdrivende": "Selvstendig næringsdrivende",
@@ -165,7 +165,7 @@
     "step.fravaer.dager_med_delvis_fravært.label": "Dager med delvis fravær",
     "step.fravaer.dager_med_delvis_fravært.info": "TODO",
     "step.fravaer.har_du_oppholdt_deg_i_utlandet_for_dager_du_soker_ok.spm": "Har du vært i utlandet noen av dagene du søker omsorgspenger for?",
-    "step.fravaer.har_søkt_andre_utbetalinger.spm": "Har du søkt om andre utbetalinger fra NAV i forbindelse med koronasituasjonen?",
+    "step.fravaer.harSøktAndreUtbetalinger.spm": "Har du søkt om andre utbetalinger fra NAV i forbindelse med koronasituasjonen?",
     "step.fravaer.hvilke_utbetalinger.spm": "Hvilke andre utbetalinger fra NAV har du søkt om?",
 
     "step.fravaer.info2021.1": "Nå skal du legge inn dagene du har hatt fravær fra jobb fordi du har vært hjemme med omsorgsdager. Du kan få utbetalt omsorgspenger i opptil tre måneder tilbake i tid, regnet fra måneden før NAV mottok søknad fra deg.",
@@ -197,7 +197,7 @@
 
     "steg.arbeid.spm": "Hva er din arbeidssituasjon? Du kan velge flere.",
 
-    "step.arbeidssituasjon.er_arbeidstaker": "Er du arbeidstaker i tillegg til at du er selvstendig næringsdrivende og/eller frilanser?",
+    "step.arbeidssituasjon.erArbeidstaker": "Er du arbeidstaker i tillegg til at du er selvstendig næringsdrivende og/eller frilanser?",
 
     "step.barn.registrerteBarn.listHeader": "Registrerte barn",
     "steg.barn.pageTitle": "Om barn",
@@ -238,7 +238,7 @@
     "steg.oppsummering.barn.harAleneomsorgFor": "Barn du er alene om omsorgen for",
 
     "steg.oppsummering.arbeidssituasjon.header": "Din arbeidssituasjon",
-    "steg.oppsummering.søkt_om_andre_utbetalinger": "Andre utbetalinger det er søkt om fra NAV",
+    "steg.oppsummering.harSøktOmAndreUtbetalinger": "Andre utbetalinger det er søkt om fra NAV",
     "steg.oppsummering.utbetalinger.header": "Omsorgsdager du søker utbetaling for",
 
     "steg.oppsummering.medlemskap.header": "Medlemskap i folketrygden",

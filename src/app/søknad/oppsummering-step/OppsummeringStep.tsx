@@ -155,18 +155,17 @@ const OppsummeringStep: React.FunctionComponent<Props> = ({
                         <SpørsmålOgSvarSummaryView
                             yesNoSpørsmålOgSvar={apiValues.spørsmål.filter((sporsmål: YesNoSpørsmålOgSvar) => {
                                 return (
-                                    sporsmål.spørsmål === intlHelper(intl, 'step.arbeidssituasjon.er_arbeidstaker') ||
-                                    sporsmål.spørsmål ===
-                                        intlHelper(intl, 'step.fravaer.har_søkt_andre_utbetalinger.spm')
+                                    sporsmål.spørsmål === intlHelper(intl, 'step.arbeidssituasjon.erArbeidstaker') ||
+                                    sporsmål.spørsmål === intlHelper(intl, 'step.fravaer.harSøktAndreUtbetalinger.spm')
                                 );
                             })}
                         />
                         {apiValues.andreUtbetalinger.length > 0 && (
-                            <SummaryBlock header={intlHelper(intl, 'steg.oppsummering.søkt_om_andre_utbetalinger')}>
+                            <SummaryBlock header={intlHelper(intl, 'steg.oppsummering.harSøktOmAndreUtbetalinger')}>
                                 <SummaryList
                                     items={apiValues.andreUtbetalinger}
                                     itemRenderer={(utbetaling) => (
-                                        <span>{intlHelper(intl, `andre_utbetalinger.${utbetaling}`)}</span>
+                                        <span>{intlHelper(intl, `andreUtbetalinger.${utbetaling}`)}</span>
                                     )}
                                 />
                             </SummaryBlock>

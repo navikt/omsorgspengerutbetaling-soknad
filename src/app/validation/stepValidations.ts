@@ -35,7 +35,7 @@ export const fraværStepIsValid = (formData: SøknadFormData): boolean => {
 };
 
 export const arbeidssituasjonStepIsValid = (formData: SøknadFormData): boolean => {
-    return frilansIsValid(formData) && selvstendigIsValid(formData) && erArbeidstakerIsValid(formData.er_arbeidstaker);
+    return frilansIsValid(formData) && selvstendigIsValid(formData) && erArbeidstakerIsValid(formData.erArbeidstaker);
 };
 
 export const barnStepIsValid = ({ harAleneomsorg, harAleneomsorgFor = [] }: SøknadFormData): boolean => {

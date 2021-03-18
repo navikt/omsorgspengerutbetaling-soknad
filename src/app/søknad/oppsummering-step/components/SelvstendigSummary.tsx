@@ -1,18 +1,18 @@
 import React from 'react';
 import { FormattedMessage, IntlShape, useIntl } from 'react-intl';
 import Box from '@navikt/sif-common-core/lib/components/box/Box';
+import FormattedHtmlMessage from '@navikt/sif-common-core/lib/components/formatted-html-message/FormattedHtmlMessage';
 import SummaryList from '@navikt/sif-common-core/lib/components/summary-list/SummaryList';
 import TextareaSummary from '@navikt/sif-common-core/lib/components/textarea-summary/TextareaSummary';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
+import { VirksomhetApiData } from '@navikt/sif-common-forms/lib';
 import { harFiskerNæringstype } from '@navikt/sif-common-forms/lib/virksomhet/virksomhetUtils';
 import SummarySection from '../../../components/summary-section/SummarySection';
-import { VirksomhetApiData } from '../../../types/SøknadApiData';
 import { prettifyApiDate } from './DatoSvar';
 import IntlLabelValue from './IntlLabelValue';
 import JaNeiSvar from './JaNeiSvar';
 import Sitat from './Sitat';
 import SummaryBlock from './SummaryBlock';
-import FormattedHtmlMessage from '@navikt/sif-common-core/lib/components/formatted-html-message/FormattedHtmlMessage';
 
 interface Props {
     selvstendigVirksomheter?: VirksomhetApiData[];

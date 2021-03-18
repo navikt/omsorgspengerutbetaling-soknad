@@ -216,30 +216,30 @@ const FraværStep: React.FunctionComponent<StepConfigProps & { førsteDagMedFrav
                     )}
                     <FormBlock>
                         <SøknadFormComponents.YesOrNoQuestion
-                            name={SøknadFormField.har_søkt_andre_utbetalinger}
-                            legend={intlHelper(intl, 'step.fravaer.har_søkt_andre_utbetalinger.spm')}
+                            name={SøknadFormField.harSøktAndreUtbetalinger}
+                            legend={intlHelper(intl, 'step.fravaer.harSøktAndreUtbetalinger.spm')}
                             validate={validateYesOrNoIsAnswered}
                         />
-                        {values.har_søkt_andre_utbetalinger === YesOrNo.YES && (
+                        {values.harSøktAndreUtbetalinger === YesOrNo.YES && (
                             <FormBlock>
                                 <SøknadFormComponents.CheckboxPanelGroup
-                                    name={SøknadFormField.andre_utbetalinger}
+                                    name={SøknadFormField.andreUtbetalinger}
                                     legend={intlHelper(intl, 'step.fravaer.hvilke_utbetalinger.spm')}
                                     checkboxes={[
                                         {
                                             id: AndreUtbetalinger.dagpenger,
                                             value: AndreUtbetalinger.dagpenger,
-                                            label: intlHelper(intl, 'andre_utbetalinger.dagpenger'),
+                                            label: intlHelper(intl, 'andreUtbetalinger.dagpenger'),
                                         },
                                         {
                                             id: AndreUtbetalinger.sykepenger,
                                             value: AndreUtbetalinger.sykepenger,
-                                            label: intlHelper(intl, 'andre_utbetalinger.sykepenger'),
+                                            label: intlHelper(intl, 'andreUtbetalinger.sykepenger'),
                                         },
                                         {
                                             id: AndreUtbetalinger.midlertidigkompensasjonsnfri,
                                             value: AndreUtbetalinger.midlertidigkompensasjonsnfri,
-                                            label: intlHelper(intl, 'andre_utbetalinger.midlertidigkompensasjonsnfri'),
+                                            label: intlHelper(intl, 'andreUtbetalinger.midlertidigkompensasjonsnfri'),
                                         },
                                     ]}
                                     validate={validateRequiredList}

@@ -131,6 +131,7 @@ export const mock1: SøknadApiData = {
             fraOgMed: '2013-03-04',
             tilOgMed: null,
             fiskerErPåBladB: true,
+            erNyoppstartet: false,
             regnskapsfører: {
                 navn: 'Mr regnskapsfører',
                 telefon: '99887766',
@@ -144,6 +145,7 @@ export const mock1: SøknadApiData = {
             tilOgMed: '2019-03-07',
             næringsinntekt: 12345678,
             fiskerErPåBladB: false,
+            erNyoppstartet: false,
         },
     ],
 };

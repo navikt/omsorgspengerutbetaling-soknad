@@ -25,8 +25,8 @@ export enum SøknadFormField {
     dagerMedDelvisFraværGroup = 'dagerMedDelvisFraværGroup',
     perioder_harVærtIUtlandet = 'perioder_harVærtIUtlandet',
     perioder_utenlandsopphold = 'perioder_utenlandsopphold',
-    har_søkt_andre_utbetalinger = 'har_søkt_andre_utbetalinger',
-    andre_utbetalinger = 'andre_utbetalinger',
+    harSøktAndreUtbetalinger = 'harSøktAndreUtbetalinger',
+    andreUtbetalinger = 'andreUtbetalinger',
 
     // Barn
     andreBarn = 'andreBarn',
@@ -39,9 +39,6 @@ export enum SøknadFormField {
     // Optional vedlegg step
     dokumenterSmittevernhensyn = 'dokumenterSmittevernhensyn',
 
-    // Conditional perioder i utlandet
-    hvis_utenlandsopphold_en_test_verdi = 'hvis_utenlandsopphold_en_test_verdi',
-
     // Inntekt
     frilans_erFrilanser = 'frilans_erFrilanser',
     frilans_startdato = 'frilans_startdato',
@@ -49,7 +46,7 @@ export enum SøknadFormField {
     frilans_sluttdato = 'frilans_sluttdato',
     selvstendig_erSelvstendigNæringsdrivende = 'selvstendig_erSelvstendigNæringsdrivende',
     selvstendig_virksomheter = 'selvstendig_virksomheter',
-    er_arbeidstaker = 'er_arbeidstaker',
+    erArbeidstaker = 'erArbeidstaker',
 
     // Medlemskap
     harBoddUtenforNorgeSiste12Mnd = 'harBoddUtenforNorgeSiste12Mnd',
@@ -74,16 +71,13 @@ export interface SøknadFormData {
     [SøknadFormField.fraværDager]: FraværDag[];
     [SøknadFormField.perioder_harVærtIUtlandet]: YesOrNo;
     [SøknadFormField.perioder_utenlandsopphold]: Utenlandsopphold[];
-    [SøknadFormField.har_søkt_andre_utbetalinger]: YesOrNo;
-    [SøknadFormField.andre_utbetalinger]: AndreUtbetalinger[];
+    [SøknadFormField.harSøktAndreUtbetalinger]: YesOrNo;
+    [SøknadFormField.andreUtbetalinger]: AndreUtbetalinger[];
 
     [SøknadFormField.dokumenterStengtBkgSkole]: Attachment[];
 
     // Optional vedlegg step
     [SøknadFormField.dokumenterSmittevernhensyn]: Attachment[];
-
-    // Conditional perioder i utlandet
-    [SøknadFormField.hvis_utenlandsopphold_en_test_verdi]: YesOrNo;
 
     // Inntekt
     [SøknadFormField.frilans_erFrilanser]: YesOrNo;
@@ -92,7 +86,7 @@ export interface SøknadFormData {
     [SøknadFormField.frilans_sluttdato]?: string;
     [SøknadFormField.selvstendig_erSelvstendigNæringsdrivende]: YesOrNo;
     [SøknadFormField.selvstendig_virksomheter]?: Virksomhet[];
-    [SøknadFormField.er_arbeidstaker]: YesOrNo;
+    [SøknadFormField.erArbeidstaker]: YesOrNo;
 
     // Barn
     [SøknadFormField.andreBarn]: AnnetBarn[];
@@ -135,8 +129,8 @@ export const initialValues: SøknadFormData = {
     [SøknadFormField.fraværDager]: [],
     [SøknadFormField.perioder_harVærtIUtlandet]: YesOrNo.UNANSWERED,
     [SøknadFormField.perioder_utenlandsopphold]: [],
-    [SøknadFormField.har_søkt_andre_utbetalinger]: YesOrNo.UNANSWERED,
-    [SøknadFormField.andre_utbetalinger]: [],
+    [SøknadFormField.harSøktAndreUtbetalinger]: YesOrNo.UNANSWERED,
+    [SøknadFormField.andreUtbetalinger]: [],
 
     // Barn
     [SøknadFormField.andreBarn]: [],
@@ -146,13 +140,10 @@ export const initialValues: SøknadFormData = {
     [SøknadFormField.dokumenterStengtBkgSkole]: [],
     [SøknadFormField.dokumenterSmittevernhensyn]: [],
 
-    // Conditional perioder i utlandet
-    [SøknadFormField.hvis_utenlandsopphold_en_test_verdi]: YesOrNo.UNANSWERED,
-
     // Arbeidssituasjon
     [SøknadFormField.frilans_erFrilanser]: YesOrNo.UNANSWERED,
     [SøknadFormField.selvstendig_erSelvstendigNæringsdrivende]: YesOrNo.UNANSWERED,
-    [SøknadFormField.er_arbeidstaker]: YesOrNo.UNANSWERED,
+    [SøknadFormField.erArbeidstaker]: YesOrNo.UNANSWERED,
 
     // STEG 7: Medlemskap
     [SøknadFormField.harBoddUtenforNorgeSiste12Mnd]: YesOrNo.UNANSWERED,

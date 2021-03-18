@@ -89,8 +89,8 @@ const ArbeidssituasjonStep: React.FunctionComponent<
             {showSubmitButton && (
                 <Box margin="l" padBottom="l">
                     <SøknadFormComponents.YesOrNoQuestion
-                        name={SøknadFormField.er_arbeidstaker}
-                        legend={intlHelper(intl, 'step.arbeidssituasjon.er_arbeidstaker')}
+                        name={SøknadFormField.erArbeidstaker}
+                        legend={intlHelper(intl, 'step.arbeidssituasjon.erArbeidstaker')}
                         validate={validateYesOrNoIsAnswered}
                     />
                 </Box>

@@ -1,4 +1,4 @@
-import { FraværÅrsak, Næringstype } from '@navikt/sif-common-forms/lib';
+import { FraværÅrsak, VirksomhetApiData } from '@navikt/sif-common-forms/lib';
 import { ApiStringDate } from '@navikt/sif-common-core/lib/types/ApiStringDate';
 import { Locale } from '@navikt/sif-common-core/lib/types/Locale';
 import { AndreUtbetalinger } from './AndreUtbetalinger';
@@ -47,31 +47,6 @@ export interface Land {
     landkode?: string;
     landnavn?: string;
 }
-
-export interface VirksomhetApiData {
-    næringstyper: Næringstype[];
-    fiskerErPåBladB?: boolean;
-    fraOgMed: ApiStringDate;
-    tilOgMed?: ApiStringDate | null;
-    næringsinntekt?: number;
-    navnPåVirksomheten: string;
-    organisasjonsnummer?: string;
-    registrertINorge: boolean;
-    registrertIUtlandet?: Land | null;
-    yrkesaktivSisteTreFerdigliknedeÅrene?: {
-        oppstartsdato: ApiStringDate;
-    };
-    varigEndring?: {
-        dato: ApiStringDate;
-        inntektEtterEndring: number;
-        forklaring: string;
-    };
-    regnskapsfører?: {
-        navn: string;
-        telefon: string;
-    };
-}
-
 export interface ApiBarn {
     identitetsnummer?: string;
     aktørId?: string;
