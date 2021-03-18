@@ -4,7 +4,7 @@ import Box from '@navikt/sif-common-core/lib/components/box/Box';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import { FormikValidationErrorSummary } from '@navikt/sif-common-formik/lib';
 import { History } from 'history';
-import { Systemtittel } from 'nav-frontend-typografi';
+import { Innholdstittel } from 'nav-frontend-typografi';
 import BackLink from '@navikt/sif-common-core/lib/components/back-link/BackLink';
 import Page from '@navikt/sif-common-core/lib/components/page/Page';
 import StepBanner from '@navikt/sif-common-core/lib/components/step-banner/StepBanner';
@@ -53,9 +53,9 @@ const Step: React.FunctionComponent<Props> = ({ id, stepConfig, useValidationErr
             )}
             <StepIndicator stepConfig={stepConfig} activeStep={conf.index} />
             <Box margin="xxl">
-                <Systemtittel tag="h1" className={bem.element('title')}>
+                <Innholdstittel tag="h1" className={bem.element('title')}>
                     {stepTexts.stepTitle}
-                </Systemtittel>
+                </Innholdstittel>
             </Box>
             <Box margin="xl">{children}</Box>
         </Page>

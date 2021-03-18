@@ -20,7 +20,7 @@ import FraværDagerListAndDialog from '@navikt/sif-common-forms/lib/fravær/Frav
 import FraværPerioderListAndDialog from '@navikt/sif-common-forms/lib/fravær/FraværPerioderListAndDialog';
 import { validateAll } from '@navikt/sif-common-forms/lib/fravær/fraværValidationUtils';
 import { useFormikContext } from 'formik';
-import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+import { AlertStripeAdvarsel, AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { StepConfigProps, StepID } from '../../config/stepConfig';
 import { AndreUtbetalinger } from '../../types/AndreUtbetalinger';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
@@ -95,18 +95,29 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                 <CounsellorPanel>{getInfoPanel()}</CounsellorPanel>
             </FormBlock>
             <FormBlock>
+                <AlertStripeInfo>Infomasjon om at en kun kan søke innenfor samme kalenderår</AlertStripeInfo>
+            </FormBlock>
+
+            <FormBlock>
                 <SøknadFormComponents.YesOrNoQuestion
                     name={SøknadFormField.harPerioderMedFravær}
                     legend={intlHelper(intl, 'step.fravaer.spm.harPerioderMedFravær')}
                     validate={validateYesOrNoIsAnswered}
                 />
             </FormBlock>
+
             {/* DAGER MED FULLT FRAVÆR*/}
             {harPerioderMedFravær === YesOrNo.YES && (
                 <>
-                    <FormBlock margin="l">
+                    <FormBlock margin="xl">
                         <FraværPerioderListAndDialog<SøknadFormField>
                             name={SøknadFormField.fraværPerioder}
+                            periodeDescription={
+                                <ExpandableInfo
+                                    title={intlHelper(intl, 'step.fravaer.harPerioderMedFravær.info.ikkeHelg.tittel')}>
+                                    <FormattedMessage id="step.fravaer.harPerioderMedFravær.info.ikkeHelg.tekst" />
+                                </ExpandableInfo>
+                            }
                             minDate={GYLDIG_TIDSROM.from || date1YearAgo}
                             maxDate={GYLDIG_TIDSROM.to || dateToday}
                             validate={validateAll([
@@ -117,6 +128,7 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                                 ),
                             ])}
                             labels={{
+                                listTitle: 'Registrerte perioder med fravær',
                                 addLabel: intlHelper(intl, 'step.fravaer.harPerioderMedFravær.addLabel'),
                                 modalTitle: intlHelper(intl, 'step.fravaer.harPerioderMedFravær.modalTitle'),
                             }}
@@ -126,12 +138,6 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                             ]}
                             helgedagerIkkeTillat={true}
                         />
-                        <FormBlock margin="l">
-                            <ExpandableInfo
-                                title={intlHelper(intl, 'step.fravaer.harPerioderMedFravær.info.ikkeHelg.tittel')}>
-                                <FormattedMessage id="step.fravaer.harPerioderMedFravær.info.ikkeHelg.tekst" />
-                            </ExpandableInfo>
-                        </FormBlock>
                     </FormBlock>
                 </>
             )}
@@ -148,6 +154,12 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                     <FormBlock margin="l">
                         <FraværDagerListAndDialog<SøknadFormField>
                             name={SøknadFormField.fraværDager}
+                            dagDescription={
+                                <ExpandableInfo
+                                    title={intlHelper(intl, 'step.fravaer.harPerioderMedFravær.info.ikkeHelg.tittel')}>
+                                    <FormattedMessage id="step.fravaer.harPerioderMedFravær.info.ikkeHelg.tekst" />
+                                </ExpandableInfo>
+                            }
                             minDate={GYLDIG_TIDSROM.from || date1YearAgo}
                             maxDate={GYLDIG_TIDSROM.to || dateToday}
                             validate={validateAll([

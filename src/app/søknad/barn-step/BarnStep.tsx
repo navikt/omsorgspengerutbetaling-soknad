@@ -22,6 +22,7 @@ import { validateAleneomsorgForBarn, validateAndreBarn } from '../../validation/
 import SøknadFormComponents from '../SøknadFormComponents';
 import SøknadStep from '../SøknadStep';
 import Box from '@navikt/sif-common-core/lib/components/box/Box';
+import FormSection from '../../components/form-section/FormSection';
 
 interface OwnProps {
     registrerteBarn: Barn[];
@@ -84,15 +85,12 @@ const BarnStep: React.FunctionComponent<Props> = ({ registrerteBarn, onValidSubm
                 </CounsellorPanel>
             </FormBlock>
 
-            <h2>Dine barn</h2>
-            {registrerteBarn.length === 0 ? (
-                <FormBlock>
+            <FormSection title="Dine barn">
+                {registrerteBarn.length === 0 ? (
                     <AlertStripe type="info">
                         <FormattedMessage id="steg.barn.info.ingenBarnFunnet" />
                     </AlertStripe>
-                </FormBlock>
-            ) : (
-                <FormBlock>
+                ) : (
                     <ContentWithHeader header={intlHelper(intl, 'step.barn.registrerteBarn.listHeader')}>
                         <ItemList<Barn>
                             getItemId={(registrerteBarn): string => registrerteBarn.aktørId}
@@ -101,37 +99,35 @@ const BarnStep: React.FunctionComponent<Props> = ({ registrerteBarn, onValidSubm
                             items={registrerteBarn}
                         />
                     </ContentWithHeader>
+                )}
+                <FormBlock>
+                    <ContentWithHeader
+                        header={
+                            registrerteBarn.length === 0
+                                ? intlHelper(intl, 'steg.barn.info.title.andreBarn')
+                                : intlHelper(intl, 'steg.barn.info.title.flereBarn')
+                        }>
+                        {intlHelper(intl, 'steg.barn.info.text')}
+                    </ContentWithHeader>
                 </FormBlock>
-            )}
+                <FormBlock>
+                    <AnnetBarnListAndDialog<SøknadFormField>
+                        name={SøknadFormField.andreBarn}
+                        includeFødselsdatoSpørsmål={false}
+                        labels={{
+                            addLabel: intlHelper(intl, 'steg.barn.annetBarn.addLabel'),
+                            listTitle: intlHelper(intl, 'steg.barn.annetBarn.listTitle'),
+                            modalTitle: intlHelper(intl, 'steg.barn.annetBarn.modalTitle'),
+                        }}
+                        maxDate={dateToday}
+                        minDate={nYearsAgo(18)}
+                        aldersGrenseText={intlHelper(intl, 'steg.barn.aldersGrenseInfo')}
+                        validate={harBarn ? undefined : validateAndreBarn}
+                    />
+                </FormBlock>
+            </FormSection>
 
-            <FormBlock>
-                <ContentWithHeader
-                    header={
-                        registrerteBarn.length === 0
-                            ? intlHelper(intl, 'steg.barn.info.title.andreBarn')
-                            : intlHelper(intl, 'steg.barn.info.title.flereBarn')
-                    }>
-                    {intlHelper(intl, 'steg.barn.info.text')}
-                </ContentWithHeader>
-            </FormBlock>
-            <FormBlock>
-                <AnnetBarnListAndDialog<SøknadFormField>
-                    name={SøknadFormField.andreBarn}
-                    includeFødselsdatoSpørsmål={false}
-                    labels={{
-                        addLabel: intlHelper(intl, 'steg.barn.annetBarn.addLabel'),
-                        listTitle: intlHelper(intl, 'steg.barn.annetBarn.listTitle'),
-                        modalTitle: intlHelper(intl, 'steg.barn.annetBarn.modalTitle'),
-                    }}
-                    maxDate={dateToday}
-                    minDate={nYearsAgo(18)}
-                    aldersGrenseText={intlHelper(intl, 'steg.barn.aldersGrenseInfo')}
-                    validate={harBarn ? undefined : validateAndreBarn}
-                />
-            </FormBlock>
-
-            <h2>Aleneomsorg</h2>
-            <FormBlock>
+            <FormSection title="Aleneomsorg">
                 <SøknadFormComponents.YesOrNoQuestion
                     name={SøknadFormField.harAleneomsorg}
                     legend={
@@ -141,25 +137,25 @@ const BarnStep: React.FunctionComponent<Props> = ({ registrerteBarn, onValidSubm
                     }
                     validate={validateYesOrNoIsAnswered}
                 />
-            </FormBlock>
-            {harAleneomsorg === YesOrNo.YES && (
-                <>
-                    <FormBlock>
-                        <SøknadFormComponents.CheckboxPanelGroup
-                            legend={intlHelper(intl, 'steg.barn.hvilkeAvBarnaAleneomsorg.spm')}
-                            name={SøknadFormField.harAleneomsorgFor}
-                            checkboxes={barnOptions}
-                            validate={validateAleneomsorgForBarn}
-                        />
-                    </FormBlock>
-                    <Box margin="l">
-                        <AlertStripe type="info">
-                            infoboks om at denne informasjonen lagres (presisere lagringen? Hvor lenge?) for fremtidige
-                            behandlinger og det må gis beskjed hvis man ikke lenger er alene om omsorgen{' '}
-                        </AlertStripe>
-                    </Box>
-                </>
-            )}
+                {harAleneomsorg === YesOrNo.YES && (
+                    <>
+                        <FormBlock>
+                            <SøknadFormComponents.CheckboxPanelGroup
+                                legend={intlHelper(intl, 'steg.barn.hvilkeAvBarnaAleneomsorg.spm')}
+                                name={SøknadFormField.harAleneomsorgFor}
+                                checkboxes={barnOptions}
+                                validate={validateAleneomsorgForBarn}
+                            />
+                        </FormBlock>
+                        <Box margin="l">
+                            <AlertStripe type="info">
+                                infoboks om at denne informasjonen lagres (presisere lagringen? Hvor lenge?) for
+                                fremtidige behandlinger og det må gis beskjed hvis man ikke lenger er alene om omsorgen{' '}
+                            </AlertStripe>
+                        </Box>
+                    </>
+                )}
+            </FormSection>
         </SøknadStep>
     );
 };
