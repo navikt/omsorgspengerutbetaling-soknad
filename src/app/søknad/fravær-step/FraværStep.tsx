@@ -181,12 +181,6 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                             helgedagerIkkeTillatt={true}
                             maksArbeidstidPerDag={24}
                         />
-                        <Box margin="l">
-                            <ExpandableInfo
-                                title={intlHelper(intl, 'step.fravaer.harDagerMedDelvisFravær.info.ikkeHelg.tittel')}>
-                                <FormattedMessage id="step.fravaer.harDagerMedDelvisFravær.info.ikkeHelg.tekst" />
-                            </ExpandableInfo>
-                        </Box>
                     </FormBlock>
                 </>
             )}
