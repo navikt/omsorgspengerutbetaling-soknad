@@ -16,30 +16,30 @@ describe('getPeriodeBoundaries', () => {
         const periode1: FraværPeriode = {
             fraOgMed: date1,
             tilOgMed: date2,
-            årsak: FraværÅrsak.annet,
+            årsak: FraværÅrsak.ordinært,
         };
         const periode2: FraværPeriode = {
             fraOgMed: date3,
             tilOgMed: date4,
-            årsak: FraværÅrsak.annet,
+            årsak: FraværÅrsak.ordinært,
         };
         const dag1: FraværDag = {
             dato: date1,
             timerArbeidsdag: '2',
             timerFravær: '1',
-            årsak: FraværÅrsak.annet,
+            årsak: FraværÅrsak.ordinært,
         };
         const dag2: FraværDag = {
             dato: date2,
             timerArbeidsdag: '2',
             timerFravær: '1',
-            årsak: FraværÅrsak.annet,
+            årsak: FraværÅrsak.ordinært,
         };
         const dag3: FraværDag = {
             dato: date3,
             timerArbeidsdag: '2',
             timerFravær: '1',
-            årsak: FraværÅrsak.annet,
+            årsak: FraværÅrsak.ordinært,
         };
 
         it('has only one periode', () => {

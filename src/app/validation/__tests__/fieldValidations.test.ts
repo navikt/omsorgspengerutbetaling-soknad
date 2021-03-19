@@ -10,10 +10,15 @@ jest.mock('common/utils/dateUtils', () => {
 
 describe('fieldValidations', () => {
     describe('harLikeDager', () => {
-        const dag1: FraværDag = { dato: new Date(), årsak: FraværÅrsak.annet, timerFravær: '1', timerArbeidsdag: '1' };
+        const dag1: FraværDag = {
+            dato: new Date(),
+            årsak: FraværÅrsak.ordinært,
+            timerFravær: '1',
+            timerArbeidsdag: '1',
+        };
         const dag2: FraværDag = {
             dato: dayjs().add(1, 'day').toDate(),
-            årsak: FraværÅrsak.annet,
+            årsak: FraværÅrsak.ordinært,
             timerFravær: '1',
             timerArbeidsdag: '1',
         };

@@ -16,11 +16,10 @@ import {
     fraværDagToFraværDateRange,
     FraværPeriode,
     fraværPeriodeToDateRange,
-    validateNoCollisions,
 } from '@navikt/sif-common-forms/lib/fravær';
 import FraværDagerListAndDialog from '@navikt/sif-common-forms/lib/fravær/FraværDagerListAndDialog';
 import FraværPerioderListAndDialog from '@navikt/sif-common-forms/lib/fravær/FraværPerioderListAndDialog';
-import { validateAll } from '@navikt/sif-common-forms/lib/fravær/fraværValidationUtils';
+import { validateAll, validateNoCollisions } from '@navikt/sif-common-forms/lib/fravær/fraværValidationUtils';
 import dayjs from 'dayjs';
 import MinMax from 'dayjs/plugin/minMax';
 import { useFormikContext } from 'formik';

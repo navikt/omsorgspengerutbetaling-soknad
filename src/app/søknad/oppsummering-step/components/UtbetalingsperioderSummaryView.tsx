@@ -60,7 +60,7 @@ export const utbetalingsperiodeDagToDagSummaryStringView = (
         <div>
             {prettifyDateExtended(apiStringDateToDate(dag.dato))}: Skulle jobbet {antallTimerSkulleJobbet}. Borte fra
             jobb {antallTimerBorteFraJobb}.
-            {dag.årsak !== FraværÅrsak.annet && <div>Årsak: {getFraværÅrsakTekstKort(dag.årsak, intl)}</div>}
+            {dag.årsak !== FraværÅrsak.ordinært && <div>Årsak: {getFraværÅrsakTekstKort(dag.årsak, intl)}</div>}
         </div>
     );
 };
@@ -82,7 +82,7 @@ const UtbetalingsperioderSummaryView: React.FunctionComponent<Props> = ({ utbeta
                             <div>
                                 Fra og med {prettifyDate(apiStringDateToDate(periode.fraOgMed))}, til og med{' '}
                                 {prettifyDate(apiStringDateToDate(periode.tilOgMed))}
-                                {periode.årsak !== FraværÅrsak.annet && (
+                                {periode.årsak !== FraværÅrsak.ordinært && (
                                     <div>Årsak: {getFraværÅrsakTekstKort(periode.årsak, intl)}</div>
                                 )}
                             </div>
