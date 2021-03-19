@@ -24,7 +24,7 @@ import { validateAll } from '@navikt/sif-common-forms/lib/fravær/fraværValidat
 import dayjs from 'dayjs';
 import MinMax from 'dayjs/plugin/minMax';
 import { useFormikContext } from 'formik';
-import { AlertStripeAdvarsel, AlertStripeInfo } from 'nav-frontend-alertstriper';
+import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import FormSection from '../../components/form-section/FormSection';
 import { StepConfigProps, StepID } from '../../config/stepConfig';
 import { AndreUtbetalinger } from '../../types/AndreUtbetalinger';
@@ -180,7 +180,7 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
             </FormBlock>
 
             <FormSection title="Dager med fravær">
-                <AlertStripeInfo>
+                <p>
                     En søknad kan kun inneholde fraværsdager i ett og samme år.{' '}
                     {årstall !== undefined && (
                         <span>
@@ -188,7 +188,7 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                             året.
                         </span>
                     )}
-                </AlertStripeInfo>
+                </p>
                 <FormBlock>
                     <SøknadFormComponents.YesOrNoQuestion
                         name={SøknadFormField.harPerioderMedFravær}
