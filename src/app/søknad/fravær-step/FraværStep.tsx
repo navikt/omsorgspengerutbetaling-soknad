@@ -134,7 +134,6 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
             <>
                 <p>
                     <FormattedMessage id="step.fravaer.info2021.1" />
-                    <Note>[informasjon om at en kun kan søke innenfor samme kalenderår i en søknad]</Note>
                 </p>
                 <p>
                     <FormattedMessage id="step.fravaer.info2021.3" />
