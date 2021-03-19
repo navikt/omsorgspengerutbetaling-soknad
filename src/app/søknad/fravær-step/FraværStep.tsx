@@ -25,7 +25,7 @@ import dayjs from 'dayjs';
 import MinMax from 'dayjs/plugin/minMax';
 import { useFormikContext } from 'formik';
 import { AlertStripeAdvarsel, AlertStripeInfo } from 'nav-frontend-alertstriper';
-import Note from '../../components/note/Note';
+import FormSection from '../../components/form-section/FormSection';
 import { StepConfigProps, StepID } from '../../config/stepConfig';
 import { AndreUtbetalinger } from '../../types/AndreUtbetalinger';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
@@ -34,7 +34,6 @@ import { validateFraværDagHarÅrstall, validateFraværPeriodeHarÅrstall } from
 import SøknadFormComponents from '../SøknadFormComponents';
 import SøknadStep from '../SøknadStep';
 import './fraværStep.less';
-import FormSection from '../../components/form-section/FormSection';
 
 dayjs.extend(MinMax);
 
