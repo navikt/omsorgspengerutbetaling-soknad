@@ -23,6 +23,8 @@ import SøknadFormComponents from '../SøknadFormComponents';
 import SøknadStep from '../SøknadStep';
 import Box from '@navikt/sif-common-core/lib/components/box/Box';
 import FormSection from '../../components/form-section/FormSection';
+import ExpandableInfo from '@navikt/sif-common-core/lib/components/expandable-content/ExpandableInfo';
+import Note from '../../components/note/Note';
 
 interface OwnProps {
     registrerteBarn: Barn[];
@@ -81,7 +83,11 @@ const BarnStep: React.FunctionComponent<Props> = ({ registrerteBarn, onValidSubm
         <SøknadStep id={StepID.BARN} onValidFormSubmit={onValidSubmit} cleanupStep={cleanupStep}>
             <FormBlock>
                 <CounsellorPanel>
-                    <p>{intlHelper(intl, 'steg.barn.info')}</p>
+                    <Note>
+                        Her ser du barn som er registrert på deg. Det er kun barn under 18 år som vises her. Hvis du har
+                        barn som har fylt 18 år i år, og som du har fått ekstra omsorgsdager for, kan du selv legge til
+                        dette barnet.
+                    </Note>
                 </CounsellorPanel>
             </FormBlock>
 
@@ -130,6 +136,11 @@ const BarnStep: React.FunctionComponent<Props> = ({ registrerteBarn, onValidSubm
             <FormSection title="Aleneomsorg">
                 <SøknadFormComponents.YesOrNoQuestion
                     name={SøknadFormField.harAleneomsorg}
+                    description={
+                        <ExpandableInfo title="Hva betyr dette?">
+                            <Note>Informasjon må skrives</Note>
+                        </ExpandableInfo>
+                    }
                     legend={
                         antallBarn === 1
                             ? intlHelper(intl, 'steg.barn.harAleneOmsorg.ettBarn.spm')

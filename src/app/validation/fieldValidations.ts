@@ -11,7 +11,6 @@ import {
 } from '@navikt/sif-common-core/lib/utils/dateUtils';
 import { createFieldValidationError } from '@navikt/sif-common-core/lib/validation/fieldValidations';
 import { FieldValidationResult } from '@navikt/sif-common-core/lib/validation/types';
-import { FraværDelerAvDag, Periode } from '../../@types/omsorgspengerutbetaling-schema';
 import { datesCollide } from './dateValidationUtils';
 import { Attachment } from '@navikt/sif-common-core/lib/types/Attachment';
 import {
@@ -132,11 +131,7 @@ const datoErInnenforTidsrom = (dato: Date, range: Partial<DateRange>): boolean =
     return true;
 };
 
-const isPeriodeMedFomTom = (periode: Periode): boolean => {
-    return periode.fom !== undefined && periode.tom !== undefined;
-};
-
-export const harLikeDager = (dager: FraværDelerAvDag[]): boolean => {
+export const harLikeDager = (dager: FraværDag[]): boolean => {
     return datesCollide(dager.map((d) => d.dato));
 };
 
@@ -146,32 +141,6 @@ export const validateTomAfterFom = (fom: Date) => (date: Date) => {
     }
 };
 
-const perioderMedFraværToDateRanges = (perioder: Periode[]): DateRange[] =>
-    perioder.map((periode: Periode) => ({ from: periode.fom, to: periode.tom }));
-
-export const validatePerioderMedFravær = (
-    allePerioder: Periode[],
-    dagerMedGradvisFravær: FraværDelerAvDag[]
-): FieldValidationResult => {
-    if (allePerioder.length === 0) {
-        return createFieldValidationError(AppFieldValidationErrors.fraværsperioder_mangler);
-    }
-    const perioder = allePerioder.filter(isPeriodeMedFomTom);
-    const dateRanges: DateRange[] = perioderMedFraværToDateRanges(perioder);
-    if (dateRangesCollide(dateRanges)) {
-        return createFieldValidationError(AppFieldValidationErrors.fraværsperioder_overlapper);
-    }
-    if (
-        datesCollideWithDateRanges(
-            dagerMedGradvisFravær.map((d) => d.dato),
-            dateRanges
-        )
-    ) {
-        return createFieldValidationError(AppFieldValidationErrors.fraværsperioder_overlapper_med_fraværsdager);
-    }
-    return undefined;
-};
-
 export const datesCollideWithDateRanges = (dates: Date[], ranges: DateRange[]): boolean => {
     if (ranges.length > 0 && dates.length > 0) {
         return dates.some((d) => {
@@ -179,33 +148,6 @@ export const datesCollideWithDateRanges = (dates: Date[], ranges: DateRange[]): 
         });
     }
     return false;
-};
-
-export const validateDagerMedFravær = (
-    dagerMedGradvisFravær: FraværDelerAvDag[],
-    perioderMedFravær: Periode[]
-): FieldValidationResult => {
-    if (dagerMedGradvisFravær.length === 0) {
-        return createFieldValidationError(AppFieldValidationErrors.dager_med_fravær_mangler);
-    }
-    const dager = dagerMedGradvisFravær.filter(
-        (d) => d.dato !== undefined && d.timer !== undefined && isNaN(d.timer) === false
-    );
-
-    if (harLikeDager(dager)) {
-        return createFieldValidationError(AppFieldValidationErrors.dager_med_fravær_like);
-    }
-    const dateRanges: DateRange[] = perioderMedFraværToDateRanges(perioderMedFravær);
-    if (
-        datesCollideWithDateRanges(
-            dagerMedGradvisFravær.map((d) => d.dato),
-            dateRanges
-        )
-    ) {
-        return createFieldValidationError(AppFieldValidationErrors.dager_med_fravær_overlapper_perioder);
-    }
-
-    return undefined;
 };
 
 export const validateDateInRange = (tidsrom: Partial<DateRange>) => (date: any): FieldValidationResult => {

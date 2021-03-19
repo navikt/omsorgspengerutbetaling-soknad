@@ -24,15 +24,17 @@ import { validateAll } from '@navikt/sif-common-forms/lib/fravær/fraværValidat
 import dayjs from 'dayjs';
 import MinMax from 'dayjs/plugin/minMax';
 import { useFormikContext } from 'formik';
-import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+import { AlertStripeAdvarsel, AlertStripeInfo } from 'nav-frontend-alertstriper';
 import Note from '../../components/note/Note';
 import { StepConfigProps, StepID } from '../../config/stepConfig';
 import { AndreUtbetalinger } from '../../types/AndreUtbetalinger';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
+import { getPeriodeBoundaries } from '../../utils/periodeUtils';
 import { validateFraværDagHarÅrstall, validateFraværPeriodeHarÅrstall } from '../../validation/fieldValidations';
 import SøknadFormComponents from '../SøknadFormComponents';
 import SøknadStep from '../SøknadStep';
 import './fraværStep.less';
+import FormSection from '../../components/form-section/FormSection';
 
 dayjs.extend(MinMax);
 
@@ -52,7 +54,6 @@ const getÅrstallFromFravær = (
             return dayjs.min(dager.map((d) => dayjs(d))).get('year');
     }
 };
-
 const getTidsromFromÅrstall = (årstall?: number): DateRange => {
     if (årstall === undefined) {
         return { from: date1YearAgo, to: dayjs().endOf('day').toDate() };
@@ -80,6 +81,7 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
     const [gyldigTidsrom, setGyldigTidsrom] = useState<DateRange>(
         getTidsromFromÅrstall(getÅrstallFromFravær(fraværDager, fraværPerioder))
     );
+    const førsteOgSisteDagMedFravær = getPeriodeBoundaries(fraværPerioder, fraværDager);
 
     const updateÅrstall = useCallback(
         (årstall: number | undefined) => {
@@ -96,12 +98,20 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
         }
     }, [årstall, fraværDager, fraværPerioder, updateÅrstall]);
 
-    const årstallInfo =
-        årstall !== undefined ? (
+    const tidsromBegrensningInfo =
+        årstall !== undefined && 1 + 1 === 3 ? (
+            <ExpandableInfo title="Om begrensninger i hvilke datoer du kan velge ... (eller noe sånt)">
+                <p style={{ marginTop: 0 }}>
+                    En søknad kan kun inneholde fraværsdager i ett og samme år. Du har allerede lagt til fraværsdager i{' '}
+                    {årstall}, og du kan da bare velge datoer i dette året.
+                </p>
+                <FormattedMessage id="step.fravaer.harPerioderMedFravær.info.ikkeHelg.tekst" />
+            </ExpandableInfo>
+        ) : (
             <ExpandableInfo title={intlHelper(intl, 'step.fravaer.harPerioderMedFravær.info.ikkeHelg.tittel')}>
                 <FormattedMessage id="step.fravaer.harPerioderMedFravær.info.ikkeHelg.tekst" />
             </ExpandableInfo>
-        ) : undefined;
+        );
 
     const kanIkkeFortsette = harPerioderMedFravær === YesOrNo.NO && harDagerMedDelvisFravær === YesOrNo.NO;
 
@@ -168,91 +178,98 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                 <CounsellorPanel>{getInfoPanel()}</CounsellorPanel>
             </FormBlock>
 
-            <FormBlock>
-                <SøknadFormComponents.YesOrNoQuestion
-                    name={SøknadFormField.harPerioderMedFravær}
-                    legend={intlHelper(intl, 'step.fravaer.spm.harPerioderMedFravær')}
-                    validate={validateYesOrNoIsAnswered}
-                />
-            </FormBlock>
-
-            {/* DAGER MED FULLT FRAVÆR*/}
-            {harPerioderMedFravær === YesOrNo.YES && (
-                <>
-                    <FormBlock margin="xl">
-                        <FraværPerioderListAndDialog<SøknadFormField>
-                            name={SøknadFormField.fraværPerioder}
-                            periodeDescription={årstallInfo}
-                            minDate={gyldigTidsrom.from}
-                            maxDate={gyldigTidsrom.to}
-                            validate={validateAll([
-                                validateRequiredList,
-                                validateFraværPeriodeHarÅrstall(values.fraværPerioder, årstall),
-                                validateNoCollisions(values.fraværDager, values.fraværPerioder),
-                            ])}
-                            labels={{
-                                listTitle: 'Registrerte perioder med fravær',
-                                addLabel: intlHelper(intl, 'step.fravaer.harPerioderMedFravær.addLabel'),
-                                modalTitle: intlHelper(intl, 'step.fravaer.harPerioderMedFravær.modalTitle'),
-                            }}
-                            dateRangesToDisable={[
-                                ...values.fraværPerioder.map(fraværPeriodeToDateRange),
-                                ...values.fraværDager.map(fraværDagToFraværDateRange),
-                            ]}
-                            helgedagerIkkeTillat={true}
-                        />
-                    </FormBlock>
-                </>
-            )}
-            <FormBlock>
-                <SøknadFormComponents.YesOrNoQuestion
-                    name={SøknadFormField.harDagerMedDelvisFravær}
-                    legend={intlHelper(intl, 'step.fravaer.spm.harDagerMedDelvisFravær')}
-                    validate={validateYesOrNoIsAnswered}
-                />
-            </FormBlock>
-            {/* DAGER MED DELVIS FRAVÆR*/}
-            {harDagerMedDelvisFravær === YesOrNo.YES && (
-                <>
-                    <FormBlock margin="l">
-                        <FraværDagerListAndDialog<SøknadFormField>
-                            name={SøknadFormField.fraværDager}
-                            dagDescription={årstallInfo}
-                            minDate={gyldigTidsrom.from}
-                            maxDate={gyldigTidsrom.to}
-                            validate={validateAll([
-                                validateRequiredList,
-                                validateFraværDagHarÅrstall(values.fraværDager, årstall),
-                                validateNoCollisions(
-                                    values[SøknadFormField.fraværDager],
-                                    values[SøknadFormField.fraværPerioder]
-                                ),
-                            ])}
-                            labels={{
-                                addLabel: intlHelper(intl, 'step.fravaer.harDagerMedDelvisFravær.addLabel'),
-                                modalTitle: intlHelper(intl, 'step.fravaer.harDagerMedDelvisFravær.modalTitle'),
-                            }}
-                            dateRangesToDisable={[
-                                ...values.fraværDager.map(fraværDagToFraværDateRange),
-                                ...values.fraværPerioder.map(fraværPeriodeToDateRange),
-                            ]}
-                            helgedagerIkkeTillatt={true}
-                            maksArbeidstidPerDag={24}
-                        />
-                    </FormBlock>
-                </>
-            )}
-
-            {kanIkkeFortsette && (
-                <FormBlock margin="xxl">
-                    <AlertStripeAdvarsel>
-                        <FormattedMessage id="step.fravaer.måVelgeSituasjon" />
-                    </AlertStripeAdvarsel>
+            <FormSection title="Dager med fravær">
+                <AlertStripeInfo>
+                    En søknad kan kun inneholde fraværsdager i ett og samme år. Du har allerede lagt til fraværsdager i{' '}
+                    {årstall}, og du kan da bare velge datoer i dette året.
+                </AlertStripeInfo>
+                <FormBlock>
+                    <SøknadFormComponents.YesOrNoQuestion
+                        name={SøknadFormField.harPerioderMedFravær}
+                        legend={intlHelper(intl, 'step.fravaer.spm.harPerioderMedFravær')}
+                        validate={validateYesOrNoIsAnswered}
+                    />
                 </FormBlock>
-            )}
+
+                {/* DAGER MED FULLT FRAVÆR*/}
+                {harPerioderMedFravær === YesOrNo.YES && (
+                    <>
+                        <FormBlock margin="xl">
+                            <FraværPerioderListAndDialog<SøknadFormField>
+                                name={SøknadFormField.fraværPerioder}
+                                periodeDescription={tidsromBegrensningInfo}
+                                minDate={gyldigTidsrom.from}
+                                maxDate={gyldigTidsrom.to}
+                                validate={validateAll([
+                                    validateRequiredList,
+                                    validateFraværPeriodeHarÅrstall(values.fraværPerioder, årstall),
+                                    validateNoCollisions(values.fraværDager, values.fraværPerioder),
+                                ])}
+                                labels={{
+                                    listTitle: `Perioder med fullt fravær`,
+                                    addLabel: intlHelper(intl, 'step.fravaer.harPerioderMedFravær.addLabel'),
+                                    modalTitle: intlHelper(intl, 'step.fravaer.harPerioderMedFravær.modalTitle'),
+                                }}
+                                dateRangesToDisable={[
+                                    ...values.fraværPerioder.map(fraværPeriodeToDateRange),
+                                    ...values.fraværDager.map(fraværDagToFraværDateRange),
+                                ]}
+                                helgedagerIkkeTillat={true}
+                            />
+                        </FormBlock>
+                    </>
+                )}
+                <FormBlock>
+                    <SøknadFormComponents.YesOrNoQuestion
+                        name={SøknadFormField.harDagerMedDelvisFravær}
+                        legend={intlHelper(intl, 'step.fravaer.spm.harDagerMedDelvisFravær')}
+                        validate={validateYesOrNoIsAnswered}
+                    />
+                </FormBlock>
+                {/* DAGER MED DELVIS FRAVÆR*/}
+                {harDagerMedDelvisFravær === YesOrNo.YES && (
+                    <>
+                        <FormBlock margin="xl">
+                            <FraværDagerListAndDialog<SøknadFormField>
+                                name={SøknadFormField.fraværDager}
+                                dagDescription={tidsromBegrensningInfo}
+                                minDate={gyldigTidsrom.from}
+                                maxDate={gyldigTidsrom.to}
+                                validate={validateAll([
+                                    validateRequiredList,
+                                    validateFraværDagHarÅrstall(values.fraværDager, årstall),
+                                    validateNoCollisions(
+                                        values[SøknadFormField.fraværDager],
+                                        values[SøknadFormField.fraværPerioder]
+                                    ),
+                                ])}
+                                labels={{
+                                    listTitle: 'Dager med delvis fravær',
+                                    addLabel: intlHelper(intl, 'step.fravaer.harDagerMedDelvisFravær.addLabel'),
+                                    modalTitle: intlHelper(intl, 'step.fravaer.harDagerMedDelvisFravær.modalTitle'),
+                                }}
+                                dateRangesToDisable={[
+                                    ...values.fraværDager.map(fraværDagToFraværDateRange),
+                                    ...values.fraværPerioder.map(fraværPeriodeToDateRange),
+                                ]}
+                                helgedagerIkkeTillatt={true}
+                                maksArbeidstidPerDag={24}
+                            />
+                        </FormBlock>
+                    </>
+                )}
+
+                {kanIkkeFortsette && (
+                    <FormBlock margin="xxl">
+                        <AlertStripeAdvarsel>
+                            <FormattedMessage id="step.fravaer.måVelgeSituasjon" />
+                        </AlertStripeAdvarsel>
+                    </FormBlock>
+                )}
+            </FormSection>
 
             {kanIkkeFortsette === false && (
-                <>
+                <FormSection title="Utenlandsopphold i dagene med fravær">
                     <FormBlock margin="xl">
                         <SøknadFormComponents.YesOrNoQuestion
                             name={SøknadFormField.perioder_harVærtIUtlandet}
@@ -267,8 +284,8 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                         <FormBlock margin="l">
                             <BostedUtlandListAndDialog<SøknadFormField>
                                 name={SøknadFormField.perioder_utenlandsopphold}
-                                minDate={gyldigTidsrom.from}
-                                maxDate={gyldigTidsrom.to}
+                                minDate={førsteOgSisteDagMedFravær.min || gyldigTidsrom.from}
+                                maxDate={førsteOgSisteDagMedFravær.max || gyldigTidsrom.to}
                                 labels={{
                                     addLabel: intlHelper(intl, 'step.fravaer.utenlandsopphold.addLabel'),
                                     modalTitle: intlHelper(intl, 'step.fravaer.utenlandsopphold.modalTitle'),
@@ -310,7 +327,7 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                             </FormBlock>
                         )}
                     </FormBlock>
-                </>
+                </FormSection>
             )}
         </SøknadStep>
     );

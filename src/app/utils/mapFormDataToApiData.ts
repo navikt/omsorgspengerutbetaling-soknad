@@ -15,7 +15,6 @@ import {
 } from '@navikt/sif-common-forms/lib';
 import { AnnetBarn } from '@navikt/sif-common-forms/lib/annet-barn/types';
 import { FraværDag, FraværPeriode } from '@navikt/sif-common-forms/lib/fravær';
-import { Barn } from '../../@types/omsorgspengerutbetaling-schema';
 import {
     ApiBarn,
     SøknadApiData,
@@ -27,6 +26,7 @@ import {
 import { SøknadFormData } from '../types/SøknadFormData';
 import { mapBostedUtlandToApiData } from './formToApiMaps/mapBostedUtlandToApiData';
 import { mapFrilansToApiData } from './formToApiMaps/mapFrilansToApiData';
+import { Barn } from '../types/Søkerdata';
 
 const getVedleggUrlFromAttachments = (attachments: Attachment[]): string[] => {
     return (

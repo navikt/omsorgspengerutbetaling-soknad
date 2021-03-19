@@ -1,7 +1,6 @@
 import { apiStringDateToDate } from '@navikt/sif-common-core/lib/utils/dateUtils';
 import { FraværDag, FraværPeriode, FraværÅrsak } from '@navikt/sif-common-forms/lib';
 import dayjs from 'dayjs';
-import { FraværDelerAvDag, Periode } from '../../../@types/omsorgspengerutbetaling-schema';
 import { getPeriodeBoundaries, harFraværPgaSmittevernhensyn, harFraværPgaStengBhgSkole } from '../periodeUtils';
 
 describe('getPeriodeBoundaries', () => {
@@ -14,25 +13,33 @@ describe('getPeriodeBoundaries', () => {
         const date3 = dayjs().add(3, 'day').toDate();
         const date4 = dayjs().add(4, 'day').toDate();
 
-        const periode1: Periode = {
-            fom: date1,
-            tom: date2,
+        const periode1: FraværPeriode = {
+            fraOgMed: date1,
+            tilOgMed: date2,
+            årsak: FraværÅrsak.annet,
         };
-        const periode2: Periode = {
-            fom: date3,
-            tom: date4,
+        const periode2: FraværPeriode = {
+            fraOgMed: date3,
+            tilOgMed: date4,
+            årsak: FraværÅrsak.annet,
         };
-        const dag1: FraværDelerAvDag = {
+        const dag1: FraværDag = {
             dato: date1,
-            timer: 1,
+            timerArbeidsdag: '2',
+            timerFravær: '1',
+            årsak: FraværÅrsak.annet,
         };
-        const dag2: FraværDelerAvDag = {
+        const dag2: FraværDag = {
             dato: date2,
-            timer: 1,
+            timerArbeidsdag: '2',
+            timerFravær: '1',
+            årsak: FraværÅrsak.annet,
         };
-        const dag3: FraværDelerAvDag = {
+        const dag3: FraværDag = {
             dato: date3,
-            timer: 1,
+            timerArbeidsdag: '2',
+            timerFravær: '1',
+            årsak: FraværÅrsak.annet,
         };
 
         it('has only one periode', () => {
