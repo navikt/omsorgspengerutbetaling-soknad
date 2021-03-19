@@ -114,6 +114,9 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
         );
 
     const kanIkkeFortsette = harPerioderMedFravær === YesOrNo.NO && harDagerMedDelvisFravær === YesOrNo.NO;
+    const harFlereEnnEttFraværRegistrert = fraværDager.length + fraværPerioder.length > 1;
+    const minDateForFravær = harFlereEnnEttFraværRegistrert ? gyldigTidsrom.from : date1YearAgo;
+    const maxDateForFravær = harFlereEnnEttFraværRegistrert ? gyldigTidsrom.to : dateToday;
 
     const cleanupStep = (valuesToBeCleaned: SøknadFormData): SøknadFormData => {
         const cleanedValues = { ...valuesToBeCleaned };
@@ -180,8 +183,13 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
 
             <FormSection title="Dager med fravær">
                 <AlertStripeInfo>
-                    En søknad kan kun inneholde fraværsdager i ett og samme år. Du har allerede lagt til fraværsdager i{' '}
-                    {årstall}, og du kan da bare velge datoer i dette året.
+                    En søknad kan kun inneholde fraværsdager i ett og samme år.{' '}
+                    {årstall !== undefined && (
+                        <span>
+                            Du har allerede lagt til fraværsdager i {årstall}, og du kan da bare velge datoer i dette
+                            året.
+                        </span>
+                    )}
                 </AlertStripeInfo>
                 <FormBlock>
                     <SøknadFormComponents.YesOrNoQuestion
@@ -198,8 +206,8 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                             <FraværPerioderListAndDialog<SøknadFormField>
                                 name={SøknadFormField.fraværPerioder}
                                 periodeDescription={tidsromBegrensningInfo}
-                                minDate={gyldigTidsrom.from}
-                                maxDate={gyldigTidsrom.to}
+                                minDate={minDateForFravær}
+                                maxDate={maxDateForFravær}
                                 validate={validateAll([
                                     validateRequiredList,
                                     validateFraværPeriodeHarÅrstall(values.fraværPerioder, årstall),
@@ -233,8 +241,8 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                             <FraværDagerListAndDialog<SøknadFormField>
                                 name={SøknadFormField.fraværDager}
                                 dagDescription={tidsromBegrensningInfo}
-                                minDate={gyldigTidsrom.from}
-                                maxDate={gyldigTidsrom.to}
+                                minDate={minDateForFravær}
+                                maxDate={maxDateForFravær}
                                 validate={validateAll([
                                     validateRequiredList,
                                     validateFraværDagHarÅrstall(values.fraværDager, årstall),
@@ -269,8 +277,8 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
             </FormSection>
 
             {kanIkkeFortsette === false && (
-                <FormSection title="Utenlandsopphold i dagene med fravær">
-                    <FormBlock margin="xl">
+                <>
+                    <FormSection title="Utenlandsopphold i dagene med fravær">
                         <SøknadFormComponents.YesOrNoQuestion
                             name={SøknadFormField.perioder_harVærtIUtlandet}
                             legend={intlHelper(
@@ -279,22 +287,23 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                             )}
                             validate={validateYesOrNoIsAnswered}
                         />
-                    </FormBlock>
-                    {perioder_harVærtIUtlandet === YesOrNo.YES && (
-                        <FormBlock margin="l">
-                            <BostedUtlandListAndDialog<SøknadFormField>
-                                name={SøknadFormField.perioder_utenlandsopphold}
-                                minDate={førsteOgSisteDagMedFravær.min || gyldigTidsrom.from}
-                                maxDate={førsteOgSisteDagMedFravær.max || gyldigTidsrom.to}
-                                labels={{
-                                    addLabel: intlHelper(intl, 'step.fravaer.utenlandsopphold.addLabel'),
-                                    modalTitle: intlHelper(intl, 'step.fravaer.utenlandsopphold.modalTitle'),
-                                }}
-                                validate={validateRequiredList}
-                            />
-                        </FormBlock>
-                    )}
-                    <FormBlock>
+
+                        {perioder_harVærtIUtlandet === YesOrNo.YES && (
+                            <FormBlock margin="l">
+                                <BostedUtlandListAndDialog<SøknadFormField>
+                                    name={SøknadFormField.perioder_utenlandsopphold}
+                                    minDate={førsteOgSisteDagMedFravær.min || gyldigTidsrom.from}
+                                    maxDate={førsteOgSisteDagMedFravær.max || gyldigTidsrom.to}
+                                    labels={{
+                                        addLabel: intlHelper(intl, 'step.fravaer.utenlandsopphold.addLabel'),
+                                        modalTitle: intlHelper(intl, 'step.fravaer.utenlandsopphold.modalTitle'),
+                                    }}
+                                    validate={validateRequiredList}
+                                />
+                            </FormBlock>
+                        )}
+                    </FormSection>
+                    <FormSection title="Andre utbetalinger i dagene med fravær">
                         <SøknadFormComponents.YesOrNoQuestion
                             name={SøknadFormField.harSøktAndreUtbetalinger}
                             legend={intlHelper(intl, 'step.fravaer.harSøktAndreUtbetalinger.spm')}
@@ -326,8 +335,8 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                                 />
                             </FormBlock>
                         )}
-                    </FormBlock>
-                </FormSection>
+                    </FormSection>
+                </>
             )}
         </SøknadStep>
     );
