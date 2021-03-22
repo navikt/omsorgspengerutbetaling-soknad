@@ -23,7 +23,7 @@ import { validateAll, validateNoCollisions } from '@navikt/sif-common-forms/lib/
 import dayjs from 'dayjs';
 import MinMax from 'dayjs/plugin/minMax';
 import { useFormikContext } from 'formik';
-import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+import { AlertStripeAdvarsel, AlertStripeInfo } from 'nav-frontend-alertstriper';
 import FormSection from '../../components/form-section/FormSection';
 import { StepConfigProps, StepID } from '../../config/stepConfig';
 import { AndreUtbetalinger } from '../../types/AndreUtbetalinger';
@@ -72,6 +72,7 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
         perioder_harVærtIUtlandet,
         fraværDager,
         fraværPerioder,
+        harDekketTiFørsteDagerSelv,
     } = values;
 
     const intl = useIntl();
@@ -178,6 +179,22 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                 <CounsellorPanel switchToPlakatOnSmallScreenSize={true}>{getInfoPanel()}</CounsellorPanel>
             </FormBlock>
 
+            <FormSection title="Fraværsdager du må dekke selv">
+                <FormBlock>
+                    <SøknadFormComponents.YesOrNoQuestion
+                        name={SøknadFormField.harDekketTiFørsteDagerSelv}
+                        description={<ExpandableInfo title="Hva betyr dette?">Trenger vi denne infoen?</ExpandableInfo>}
+                        legend={intlHelper(intl, 'step.fravaer.spm.harDekketTiFørsteDagerSelv')}
+                        validate={validateYesOrNoIsAnswered}
+                    />
+                </FormBlock>
+                {harDekketTiFørsteDagerSelv === YesOrNo.NO && (
+                    <FormBlock>
+                        <AlertStripeInfo>Informasjon</AlertStripeInfo>
+                    </FormBlock>
+                )}
+            </FormSection>
+
             <FormSection title="Dager med fravær">
                 <p>
                     En søknad kan kun inneholde fraværsdager i ett og samme år.{' '}
@@ -188,6 +205,7 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                         </span>
                     )}
                 </p>
+
                 <FormBlock>
                     <SøknadFormComponents.YesOrNoQuestion
                         name={SøknadFormField.harPerioderMedFravær}

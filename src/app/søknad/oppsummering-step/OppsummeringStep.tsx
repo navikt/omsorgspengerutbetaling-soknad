@@ -36,6 +36,7 @@ import { SpørsmålOgSvarSummaryView } from './components/SporsmalOgSvarSummaryV
 import SummaryBlock from './components/SummaryBlock';
 import UtbetalingsperioderSummaryView from './components/UtbetalingsperioderSummaryView';
 import UtenlandsoppholdISøkeperiodeSummaryView from './components/UtenlandsoppholdISøkeperiodeSummaryView';
+import JaNeiSvar from './components/JaNeiSvar';
 
 interface Props {
     hjemmePgaSmittevernhensyn: boolean;
@@ -140,6 +141,9 @@ const OppsummeringStep: React.FunctionComponent<Props> = ({
 
                     {/* Omsorgsdager du søker utbetaling for */}
                     <SummarySection header={intlHelper(intl, 'steg.oppsummering.utbetalinger.header')}>
+                        <SummaryBlock header={intlHelper(intl, 'step.fravaer.spm.harDekketTiFørsteDagerSelv')}>
+                            <JaNeiSvar harSvartJa={apiValues._harDekketTiFørsteDagerSelv} />
+                        </SummaryBlock>
                         <UtbetalingsperioderSummaryView utbetalingsperioder={apiValues.utbetalingsperioder} />
                         <UtenlandsoppholdISøkeperiodeSummaryView utenlandsopphold={apiValues.opphold} />
                     </SummarySection>

@@ -43,6 +43,7 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, barn: Barn[], 
         harBekreftetOpplysninger,
 
         // Fravær
+        harDekketTiFørsteDagerSelv,
         fraværPerioder,
         fraværDager,
         perioder_harVærtIUtlandet,
@@ -73,6 +74,10 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, barn: Barn[], 
         {
             spørsmål: intlHelper(intl, 'step.arbeidssituasjon.erArbeidstaker'),
             svar: mapYesOrNoToSvar(erArbeidstaker),
+        },
+        {
+            spørsmål: intlHelper(intl, 'step.fravaer.spm.harDekketTiFørsteDagerSelv'),
+            svar: mapYesOrNoToSvar(harDekketTiFørsteDagerSelv),
         },
     ];
 
@@ -117,6 +122,7 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, barn: Barn[], 
         vedlegg: [...vedleggSmittevern, ...vedleggStengtBhgSkole],
         _vedleggStengtSkole: vedleggStengtBhgSkole,
         _vedleggSmittevern: vedleggSmittevern,
+        _harDekketTiFørsteDagerSelv: mapYesOrNoToSvar(harDekketTiFørsteDagerSelv),
         barn: mapBarnToApiData(formValues, barn),
     };
 
