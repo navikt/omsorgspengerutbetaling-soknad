@@ -112,9 +112,9 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
         );
 
     const kanIkkeFortsette = harPerioderMedFravær === YesOrNo.NO && harDagerMedDelvisFravær === YesOrNo.NO;
-    const harFlereEnnEttFraværRegistrert = fraværDager.length + fraværPerioder.length > 1;
-    const minDateForFravær = harFlereEnnEttFraværRegistrert ? gyldigTidsrom.from : date1YearAgo;
-    const maxDateForFravær = harFlereEnnEttFraværRegistrert ? gyldigTidsrom.to : dateToday;
+    const harRegistrertFravær = fraværDager.length + fraværPerioder.length > 0;
+    const minDateForFravær = harRegistrertFravær ? gyldigTidsrom.from : date1YearAgo;
+    const maxDateForFravær = harRegistrertFravær ? gyldigTidsrom.to : dateToday;
 
     const cleanupStep = (valuesToBeCleaned: SøknadFormData): SøknadFormData => {
         const cleanedValues = { ...valuesToBeCleaned };
