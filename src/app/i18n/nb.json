@@ -314,6 +314,8 @@
     "fieldvalidation.fraværPeriodeIkkeSammeÅrstall": "Du har lagt til fravær som er i flere år. En søknad kan kun inneholde fravær i ett år.",
     "fieldvalidation.aleneomsorgFor_påkrevd": "Du har valgt at du er alene om omsorgen for barn, da må du velge hvilket barn du har aleneomsorg for",
     "fieldvalidation.andreBarn_påkrevd": "Du må legge til barn for å kunne gå videre",
+    "fieldvalidation.frilans_startEtterSlutt": "Datoen du sluttet som frilanser kan ikke være før datoen du startet",
+    "fieldvalidation.frilans_startEtterDagensDato": "Datoen for når du startet som frilanser, kan ikke være frem i tid",
 
     "avbrytSøknadDialog.avbrytSøknadLabel": "Ja, avbryt søknad",
     "avbrytSøknadDialog.fortsettSøknadLabel": "Nei",

@@ -8,6 +8,7 @@ import {
     DateRange,
     dateRangesCollide,
     dateRangesExceedsRange,
+    dateToday,
 } from '@navikt/sif-common-core/lib/utils/dateUtils';
 import { createFieldValidationError } from '@navikt/sif-common-core/lib/validation/fieldValidations';
 import { FieldValidationResult } from '@navikt/sif-common-core/lib/validation/types';
@@ -19,6 +20,7 @@ import {
     MAX_TOTAL_ATTACHMENT_SIZE_BYTES,
 } from '@navikt/sif-common-core/lib/utils/attachmentUtils';
 import { FraværDag, FraværPeriode } from '@navikt/sif-common-forms/lib';
+import datepickerUtils from '@navikt/sif-common-formik/lib/components/formik-datepicker/datepickerUtils';
 
 dayjs.extend(isBetween);
 
@@ -57,6 +59,9 @@ export enum AppFieldValidationErrors {
 
     'fraværDagIkkeSammeÅrstall' = 'fieldvalidation.fraværDagIkkeSammeÅrstall',
     'fraværPeriodeIkkeSammeÅrstall' = 'fieldvalidation.fraværPeriodeIkkeSammeÅrstall',
+
+    'frilans_startEtterDagensDato' = 'fieldvalidation.frilans_startEtterDagensDato',
+    'frilans_startEtterSlutt' = 'fieldvalidation.frilans_startEtterSlutt',
 }
 
 export const createAppFieldValidationError = (
@@ -213,4 +218,21 @@ export const validateFraværPeriodeHarÅrstall = (
             : undefined;
     }
     return undefined;
+};
+
+export const validateFrilanserStartdato = (value: string | undefined): FieldValidationResult => {
+    const startDate = datepickerUtils.getDateFromDateString(value);
+    return startDate && dayjs(startDate).isAfter(dateToday, 'day')
+        ? createFieldValidationError(AppFieldValidationErrors.frilans_startEtterDagensDato)
+        : undefined;
+};
+
+export const validateFrilanserSluttdato = (frilanserStartdato: string | undefined) => (
+    value: string | undefined
+): FieldValidationResult => {
+    const startDate = datepickerUtils.getDateFromDateString(frilanserStartdato);
+    const endDate = datepickerUtils.getDateFromDateString(value);
+    return startDate && endDate && dayjs(startDate).isAfter(endDate, 'day')
+        ? createFieldValidationError(AppFieldValidationErrors.frilans_startEtterSlutt)
+        : undefined;
 };

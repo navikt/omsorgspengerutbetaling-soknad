@@ -7,20 +7,24 @@ import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
 import { dateToday } from '@navikt/sif-common-core/lib/utils/dateUtils';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import {
+    validateAll,
     validateRequiredField,
     validateYesOrNoIsAnswered,
 } from '@navikt/sif-common-core/lib/validation/fieldValidations';
 import { SøknadFormData, SøknadFormField } from '../../../types/SøknadFormData';
 import SøknadFormComponents from '../../SøknadFormComponents';
 import FrilansEksempeltHtml from './FrilansEksempelHtml';
+import { validateFrilanserSluttdato, validateFrilanserStartdato } from '../../../validation/fieldValidations';
 
 interface Props {
     formValues: SøknadFormData;
 }
 
-const FrilansFormPart: React.FunctionComponent<Props> = ({ formValues }) => {
-    const erFrilanser = formValues[SøknadFormField.frilans_erFrilanser] === YesOrNo.YES;
-    const harSluttetSomFrilanser = formValues[SøknadFormField.frilans_jobberFortsattSomFrilans] === YesOrNo.NO;
+const FrilansFormPart: React.FunctionComponent<Props> = ({
+    formValues: { frilans_erFrilanser, frilans_jobberFortsattSomFrilans, frilans_startdato },
+}) => {
+    const erFrilanser = frilans_erFrilanser === YesOrNo.YES;
+    const harSluttetSomFrilanser = frilans_jobberFortsattSomFrilans === YesOrNo.NO;
     const intl = useIntl();
     return (
         <>
@@ -43,7 +47,7 @@ const FrilansFormPart: React.FunctionComponent<Props> = ({ formValues }) => {
                                 label={intlHelper(intl, 'frilanser.nårStartet.spm')}
                                 showYearSelector={true}
                                 maxDate={dateToday}
-                                validate={validateRequiredField}
+                                validate={validateAll([validateRequiredField, validateFrilanserStartdato])}
                             />
                         </FormBlock>
                         <FormBlock>
@@ -60,7 +64,10 @@ const FrilansFormPart: React.FunctionComponent<Props> = ({ formValues }) => {
                                     label={intlHelper(intl, 'frilanser.nårSluttet.spm')}
                                     showYearSelector={true}
                                     maxDate={dateToday}
-                                    validate={validateRequiredField}
+                                    validate={validateAll([
+                                        validateRequiredField,
+                                        validateFrilanserSluttdato(frilans_startdato),
+                                    ])}
                                 />
                             </FormBlock>
                         )}
