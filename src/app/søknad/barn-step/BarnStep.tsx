@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
+import Box from '@navikt/sif-common-core/lib/components/box/Box';
 import ContentWithHeader from '@navikt/sif-common-core/lib/components/content-with-header/ContentWithHeader';
 import CounsellorPanel from '@navikt/sif-common-core/lib/components/counsellor-panel/CounsellorPanel';
+import ExpandableInfo from '@navikt/sif-common-core/lib/components/expandable-content/ExpandableInfo';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
 import ItemList from '@navikt/sif-common-core/lib/components/item-list/ItemList';
 import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
@@ -14,6 +16,7 @@ import { AnnetBarn } from '@navikt/sif-common-forms/lib/annet-barn/types';
 import { useFormikContext } from 'formik';
 import AlertStripe from 'nav-frontend-alertstriper';
 import { CheckboksPanelProps } from 'nav-frontend-skjema';
+import FormSection from '../../components/form-section/FormSection';
 import { StepConfigProps, StepID } from '../../config/stepConfig';
 import { Barn } from '../../types/Søkerdata';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
@@ -21,10 +24,6 @@ import { nYearsAgo } from '../../utils/aldersUtils';
 import { validateAleneomsorgForBarn, validateAndreBarn } from '../../validation/fieldValidations';
 import SøknadFormComponents from '../SøknadFormComponents';
 import SøknadStep from '../SøknadStep';
-import Box from '@navikt/sif-common-core/lib/components/box/Box';
-import FormSection from '../../components/form-section/FormSection';
-import ExpandableInfo from '@navikt/sif-common-core/lib/components/expandable-content/ExpandableInfo';
-import Note from '../../components/note/Note';
 
 interface OwnProps {
     registrerteBarn: Barn[];
@@ -83,18 +82,19 @@ const BarnStep: React.FunctionComponent<Props> = ({ registrerteBarn, onValidSubm
         <SøknadStep id={StepID.BARN} onValidFormSubmit={onValidSubmit} cleanupStep={cleanupStep}>
             <FormBlock>
                 <CounsellorPanel>
-                    <Note>
-                        Her ser du barn som er registrert på deg. Det er kun barn under 18 år som vises her. Hvis du har
-                        barn som har fylt 18 år i år, og som du har fått ekstra omsorgsdager for, kan du selv legge til
-                        dette barnet.
-                    </Note>
+                    <p>
+                        <FormattedMessage id="steg.barn.info.1" />
+                    </p>
+                    <p>
+                        <FormattedMessage id="steg.barn.info.2" />
+                    </p>
                 </CounsellorPanel>
             </FormBlock>
 
-            <FormSection title="Dine barn">
+            <FormSection title={intlHelper(intl, 'steg.barn.dineBarn')}>
                 {registrerteBarn.length === 0 ? (
                     <AlertStripe type="info">
-                        <FormattedMessage id="steg.barn.info.ingenBarnFunnet" />
+                        <FormattedMessage id="steg.barn.ingenBarnFunnet" />
                     </AlertStripe>
                 ) : (
                     <ContentWithHeader header={intlHelper(intl, 'step.barn.registrerteBarn.listHeader')}>
@@ -104,18 +104,11 @@ const BarnStep: React.FunctionComponent<Props> = ({ registrerteBarn, onValidSubm
                             labelRenderer={(barn): React.ReactNode => barnItemLabelRenderer(barn)}
                             items={registrerteBarn}
                         />
+                        <p>
+                            <FormattedMessage id="steg.barn.flereBarn.info" />
+                        </p>
                     </ContentWithHeader>
                 )}
-                <FormBlock>
-                    <ContentWithHeader
-                        header={
-                            registrerteBarn.length === 0
-                                ? intlHelper(intl, 'steg.barn.info.title.andreBarn')
-                                : intlHelper(intl, 'steg.barn.info.title.flereBarn')
-                        }>
-                        {intlHelper(intl, 'steg.barn.info.text')}
-                    </ContentWithHeader>
-                </FormBlock>
                 <FormBlock>
                     <AnnetBarnListAndDialog<SøknadFormField>
                         name={SøknadFormField.andreBarn}
@@ -137,8 +130,13 @@ const BarnStep: React.FunctionComponent<Props> = ({ registrerteBarn, onValidSubm
                 <SøknadFormComponents.YesOrNoQuestion
                     name={SøknadFormField.harAleneomsorg}
                     description={
-                        <ExpandableInfo title="Hva betyr dette?">
-                            <Note>Informasjon må skrives</Note>
+                        <ExpandableInfo title={intlHelper(intl, 'steg.barn.aleneomsorg.info.tittel')}>
+                            <p style={{ marginTop: '0' }}>
+                                <FormattedMessage id="steg.barn.aleneomsorg.info.tekst.1" />
+                            </p>
+                            <p>
+                                <FormattedMessage id="steg.barn.aleneomsorg.info.tekst.2" />
+                            </p>
                         </ExpandableInfo>
                     }
                     legend={
@@ -160,8 +158,7 @@ const BarnStep: React.FunctionComponent<Props> = ({ registrerteBarn, onValidSubm
                         </FormBlock>
                         <Box margin="l">
                             <AlertStripe type="info">
-                                infoboks om at denne informasjonen lagres (presisere lagringen? Hvor lenge?) for
-                                fremtidige behandlinger og det må gis beskjed hvis man ikke lenger er alene om omsorgen{' '}
+                                <FormattedMessage id="steg.barn.aleneomsorg.lagring.info" />
                             </AlertStripe>
                         </Box>
                     </>
