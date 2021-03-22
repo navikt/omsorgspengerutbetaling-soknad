@@ -104,11 +104,11 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                     En søknad kan kun inneholde fraværsdager i ett og samme år. Du har allerede lagt til fraværsdager i{' '}
                     {årstall}, og du kan da bare velge datoer i dette året.
                 </p>
-                <FormattedMessage id="step.fravaer.harPerioderMedFravær.info.ikkeHelg.tekst" />
+                <FormattedMessage id="step.fravaer.info.ikkeHelg.tekst" />
             </ExpandableInfo>
         ) : (
-            <ExpandableInfo title={intlHelper(intl, 'step.fravaer.harPerioderMedFravær.info.ikkeHelg.tittel')}>
-                <FormattedMessage id="step.fravaer.harPerioderMedFravær.info.ikkeHelg.tekst" />
+            <ExpandableInfo title={intlHelper(intl, 'step.fravaer.info.ikkeHelg.tittel')}>
+                <FormattedMessage id="step.fravaer.info.ikkeHelg.tekst" />
             </ExpandableInfo>
         );
 
@@ -116,6 +116,8 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
     const harRegistrertFravær = fraværDager.length + fraværPerioder.length > 0;
     const minDateForFravær = harRegistrertFravær ? gyldigTidsrom.from : date1YearAgo;
     const maxDateForFravær = harRegistrertFravær ? gyldigTidsrom.to : dateToday;
+    const inneværendeÅr = new Date().getFullYear();
+    const forrigeÅr = inneværendeÅr - 1;
 
     const cleanupStep = (valuesToBeCleaned: SøknadFormData): SøknadFormData => {
         const cleanedValues = { ...valuesToBeCleaned };
@@ -128,45 +130,6 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
         return cleanedValues;
     };
 
-    const getInfoPanel = () => {
-        return (
-            <>
-                <p>
-                    <FormattedMessage id="step.fravaer.info2021.1" />
-                </p>
-                <p>
-                    <FormattedMessage id="step.fravaer.info2021.3" />
-                </p>
-                <ExpandableInfo
-                    title={intlHelper(intl, 'step.fravaer.info2020.nedtrekk.title')}
-                    filledBackground={false}>
-                    <p style={{ marginTop: 0 }}>
-                        <FormattedMessage id="step.fravaer.info2020.nedtrekk.1" />
-                    </p>
-                    <ul>
-                        <li>
-                            <FormattedMessage id="step.fravaer.info2020.nedtrekk.list.1" />
-                        </li>
-                        <li>
-                            <FormattedMessage id="step.fravaer.info2020.nedtrekk.list.2" />
-                        </li>
-                        <li>
-                            <FormattedMessage id="step.fravaer.info2020.nedtrekk.list.3" />
-                        </li>
-                    </ul>
-                    <p>
-                        <FormattedMessage id="step.fravaer.info2020.nedtrekk.2" />
-                    </p>
-                </ExpandableInfo>
-
-                <ExpandableInfo
-                    title={intlHelper(intl, 'step.fravaer.info2021.nedtrekk.title')}
-                    filledBackground={false}>
-                    <FormattedMessage id="step.fravaer.info2021.2" />
-                </ExpandableInfo>
-            </>
-        );
-    };
     return (
         <SøknadStep
             id={StepID.FRAVÆR}
@@ -176,7 +139,14 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
             cleanupStep={cleanupStep}
             showSubmitButton={kanIkkeFortsette === false}>
             <FormBlock>
-                <CounsellorPanel switchToPlakatOnSmallScreenSize={true}>{getInfoPanel()}</CounsellorPanel>
+                <CounsellorPanel switchToPlakatOnSmallScreenSize={true}>
+                    <p>
+                        <FormattedMessage id="step.fravaer.info.1" />
+                    </p>
+                    <p>
+                        <FormattedMessage id="step.fravaer.info.2" />
+                    </p>
+                </CounsellorPanel>
             </FormBlock>
 
             <FormSection title="Fraværsdager du må dekke selv">
@@ -195,15 +165,9 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                 )}
             </FormSection>
 
-            <FormSection title="Dager med fravær">
+            <FormSection title={intlHelper(intl, 'step.fravaer.dager.tittel')}>
                 <p>
-                    En søknad kan kun inneholde fraværsdager i ett og samme år.{' '}
-                    {årstall !== undefined && (
-                        <span>
-                            Du har allerede lagt til fraværsdager i {årstall}, og du kan da bare velge datoer i dette
-                            året.
-                        </span>
-                    )}
+                    <FormattedMessage id="step.fravaer.dager.info" values={{ forrigeÅr, inneværendeÅr }} />
                 </p>
 
                 <FormBlock>
@@ -229,7 +193,7 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                                     validateNoCollisions(values.fraværDager, values.fraværPerioder),
                                 ])}
                                 labels={{
-                                    listTitle: `Perioder med fullt fravær`,
+                                    listTitle: intlHelper(intl, 'step.fravaer.harPerioderMedFravær.listTitle'),
                                     addLabel: intlHelper(intl, 'step.fravaer.harPerioderMedFravær.addLabel'),
                                     modalTitle: intlHelper(intl, 'step.fravaer.harPerioderMedFravær.modalTitle'),
                                 }}
@@ -267,7 +231,7 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                                     ),
                                 ])}
                                 labels={{
-                                    listTitle: 'Dager med delvis fravær',
+                                    listTitle: intlHelper(intl, 'step.fravaer.harDagerMedDelvisFravær.listTitle'),
                                     addLabel: intlHelper(intl, 'step.fravaer.harDagerMedDelvisFravær.addLabel'),
                                     modalTitle: intlHelper(intl, 'step.fravaer.harDagerMedDelvisFravær.modalTitle'),
                                 }}
@@ -293,7 +257,7 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
 
             {kanIkkeFortsette === false && (
                 <>
-                    <FormSection title="Utenlandsopphold i dagene med fravær">
+                    <FormSection title={intlHelper(intl, 'step.fravaer.utenlandsopphold.tittel')}>
                         <SøknadFormComponents.YesOrNoQuestion
                             name={SøknadFormField.perioder_harVærtIUtlandet}
                             legend={intlHelper(
@@ -318,7 +282,7 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                             </FormBlock>
                         )}
                     </FormSection>
-                    <FormSection title="Andre utbetalinger i dagene med fravær">
+                    <FormSection title={intlHelper(intl, 'step.fravaer.andreUtbetalinger')}>
                         <SøknadFormComponents.YesOrNoQuestion
                             name={SøknadFormField.harSøktAndreUtbetalinger}
                             legend={intlHelper(intl, 'step.fravaer.harSøktAndreUtbetalinger.spm')}
