@@ -175,7 +175,7 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
             cleanupStep={cleanupStep}
             showSubmitButton={kanIkkeFortsette === false}>
             <FormBlock>
-                <CounsellorPanel>{getInfoPanel()}</CounsellorPanel>
+                <CounsellorPanel switchToPlakatOnSmallScreenSize={true}>{getInfoPanel()}</CounsellorPanel>
             </FormBlock>
 
             <FormSection title="Dager med fravær">
