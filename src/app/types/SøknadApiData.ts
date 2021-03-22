@@ -72,4 +72,5 @@ export interface SøknadApiData {
     _vedleggSmittevern: string[];
     _vedleggStengtSkole: string[];
     _harDekketTiFørsteDagerSelv: boolean;
+    _harSøktAndreUtbetalinger: boolean;
 }

@@ -26,7 +26,3 @@ export const selvstendigIsValid = (formData: SelvstendigFormData) => {
         (erSelvstendigNæringsdrivende === YesOrNo.YES && selvstendigVirksomheter && selvstendigVirksomheter.length > 0)
     );
 };
-
-export const erArbeidstakerIsValid = (erArbeidstaker: YesOrNo): boolean => {
-    return erArbeidstaker === YesOrNo.YES || erArbeidstaker === YesOrNo.NO;
-};

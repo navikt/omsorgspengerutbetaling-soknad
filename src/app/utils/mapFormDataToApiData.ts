@@ -61,7 +61,6 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, barn: Barn[], 
         frilans_jobberFortsattSomFrilans,
         selvstendig_erSelvstendigNæringsdrivende,
         selvstendig_virksomheter,
-        erArbeidstaker,
 
         // Medlemskap
         harBoddUtenforNorgeSiste12Mnd,
@@ -71,10 +70,6 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, barn: Barn[], 
     } = formValues;
 
     const yesOrNoQuestions: YesNoSpørsmålOgSvar[] = [
-        {
-            spørsmål: intlHelper(intl, 'step.arbeidssituasjon.erArbeidstaker'),
-            svar: mapYesOrNoToSvar(erArbeidstaker),
-        },
         {
             spørsmål: intlHelper(intl, 'step.fravaer.spm.harDekketTiFørsteDagerSelv'),
             svar: mapYesOrNoToSvar(harDekketTiFørsteDagerSelv),
@@ -98,6 +93,7 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, barn: Barn[], 
             harBekreftetOpplysninger,
         },
         spørsmål: [...yesOrNoQuestions],
+        barn: mapBarnToApiData(formValues, barn),
         andreUtbetalinger: harSøktAndreUtbetalinger === YesOrNo.YES ? [...andreUtbetalinger] : [],
         utbetalingsperioder: mapPeriodeTilUtbetalingsperiode(fraværPerioder, fraværDager),
         bosteder: settInnBosteder(
@@ -123,7 +119,7 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, barn: Barn[], 
         _vedleggStengtSkole: vedleggStengtBhgSkole,
         _vedleggSmittevern: vedleggSmittevern,
         _harDekketTiFørsteDagerSelv: mapYesOrNoToSvar(harDekketTiFørsteDagerSelv),
-        barn: mapBarnToApiData(formValues, barn),
+        _harSøktAndreUtbetalinger: mapYesOrNoToSvar(harSøktAndreUtbetalinger),
     };
 
     return apiData;

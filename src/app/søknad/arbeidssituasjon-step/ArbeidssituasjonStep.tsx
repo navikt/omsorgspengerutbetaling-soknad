@@ -1,17 +1,13 @@
 import * as React from 'react';
-import { useIntl } from 'react-intl';
+import Box from '@navikt/sif-common-core/lib/components/box/Box';
 import CounsellorPanel from '@navikt/sif-common-core/lib/components/counsellor-panel/CounsellorPanel';
+import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
 import FormattedHtmlMessage from '@navikt/sif-common-core/lib/components/formatted-html-message/FormattedHtmlMessage';
-import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
-import { validateYesOrNoIsAnswered } from '@navikt/sif-common-core/lib/validation/fieldValidations';
+import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
 import { useFormikContext } from 'formik';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
-import Box from '@navikt/sif-common-core/lib/components/box/Box';
-import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
-import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
 import { StepConfigProps, StepID } from '../../config/stepConfig';
 import { initialValues, SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
-import SøknadFormComponents from '../SøknadFormComponents';
 import SøknadStep from '../SøknadStep';
 import FrilansFormPart from './components/FrilansFormPart';
 import SelvstendigNæringsdrivendeFormPart from './components/SelvstendigNæringsdrivendePart';
@@ -47,7 +43,6 @@ const cleanupStep = (values: SøknadFormData): SøknadFormData => {
 
 const ArbeidssituasjonStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) => {
     const { values } = useFormikContext<SøknadFormData>();
-    const intl = useIntl();
     const showSubmitButton = shouldShowSubmitButton(values);
 
     return (
@@ -75,15 +70,6 @@ const ArbeidssituasjonStep: React.FunctionComponent<StepConfigProps> = ({ onVali
                         <FormattedHtmlMessage id="step.arbeidssituasjon.advarsel.ingenSituasjonValgt" />
                     </AlertStripeAdvarsel>
                 </FormBlock>
-            )}
-            {showSubmitButton && (
-                <Box margin="l" padBottom="l">
-                    <SøknadFormComponents.YesOrNoQuestion
-                        name={SøknadFormField.erArbeidstaker}
-                        legend={intlHelper(intl, 'step.arbeidssituasjon.erArbeidstaker')}
-                        validate={validateYesOrNoIsAnswered}
-                    />
-                </Box>
             )}
         </SøknadStep>
     );

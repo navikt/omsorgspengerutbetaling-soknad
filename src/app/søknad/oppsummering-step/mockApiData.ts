@@ -87,6 +87,7 @@ export const mock1: SøknadApiData = {
     _vedleggSmittevern: [],
     _vedleggStengtSkole: [],
     _harDekketTiFørsteDagerSelv: true,
+    _harSøktAndreUtbetalinger: true,
     andreUtbetalinger: [],
     bosteder: [
         {

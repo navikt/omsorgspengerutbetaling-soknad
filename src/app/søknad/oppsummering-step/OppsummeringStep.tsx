@@ -19,7 +19,7 @@ import RouteConfig from '../../config/routeConfig';
 import { StepID } from '../../config/stepConfig';
 import { SøkerdataContext } from '../../context/SøkerdataContext';
 import { Søkerdata } from '../../types/Søkerdata';
-import { ApiBarn, SøknadApiData, YesNoSpørsmålOgSvar } from '../../types/SøknadApiData';
+import { ApiBarn, SøknadApiData } from '../../types/SøknadApiData';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import * as apiUtils from '../../utils/apiUtils';
 import appSentryLogger from '../../utils/appSentryLogger';
@@ -32,7 +32,6 @@ import FrilansSummary from './components/FrilansSummary';
 import MedlemskapSummaryView from './components/MedlemskapSummaryView';
 import NavnOgFodselsnummerSummaryView from './components/NavnOgFodselsnummerSummaryView';
 import SelvstendigSummary from './components/SelvstendigSummary';
-import { SpørsmålOgSvarSummaryView } from './components/SporsmalOgSvarSummaryView';
 import SummaryBlock from './components/SummaryBlock';
 import UtbetalingsperioderSummaryView from './components/UtbetalingsperioderSummaryView';
 import UtenlandsoppholdISøkeperiodeSummaryView from './components/UtenlandsoppholdISøkeperiodeSummaryView';
@@ -156,14 +155,9 @@ const OppsummeringStep: React.FunctionComponent<Props> = ({
 
                     {/* Eventuelle andre inntekter */}
                     <SummarySection header={intlHelper(intl, 'summary.andreIntekter.header')}>
-                        <SpørsmålOgSvarSummaryView
-                            yesNoSpørsmålOgSvar={apiValues.spørsmål.filter((sporsmål: YesNoSpørsmålOgSvar) => {
-                                return (
-                                    sporsmål.spørsmål === intlHelper(intl, 'step.arbeidssituasjon.erArbeidstaker') ||
-                                    sporsmål.spørsmål === intlHelper(intl, 'step.fravaer.harSøktAndreUtbetalinger.spm')
-                                );
-                            })}
-                        />
+                        <SummaryBlock header={intlHelper(intl, 'step.fravaer.harSøktAndreUtbetalinger.spm')}>
+                            <JaNeiSvar harSvartJa={apiValues._harSøktAndreUtbetalinger} />
+                        </SummaryBlock>
                         {apiValues.andreUtbetalinger.length > 0 && (
                             <SummaryBlock header={intlHelper(intl, 'steg.oppsummering.harSøktOmAndreUtbetalinger')}>
                                 <SummaryList

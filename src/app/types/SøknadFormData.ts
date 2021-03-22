@@ -39,7 +39,6 @@ export enum SøknadFormField {
     frilans_sluttdato = 'frilans_sluttdato',
     selvstendig_erSelvstendigNæringsdrivende = 'selvstendig_erSelvstendigNæringsdrivende',
     selvstendig_virksomheter = 'selvstendig_virksomheter',
-    erArbeidstaker = 'erArbeidstaker',
 
     // Medlemskap
     harBoddUtenforNorgeSiste12Mnd = 'harBoddUtenforNorgeSiste12Mnd',
@@ -75,7 +74,6 @@ export interface SøknadFormData {
     [SøknadFormField.frilans_sluttdato]?: string;
     [SøknadFormField.selvstendig_erSelvstendigNæringsdrivende]: YesOrNo;
     [SøknadFormField.selvstendig_virksomheter]?: Virksomhet[];
-    [SøknadFormField.erArbeidstaker]: YesOrNo;
 
     // Barn
     [SøknadFormField.andreBarn]: AnnetBarn[];
@@ -128,7 +126,6 @@ export const initialValues: SøknadFormData = {
     // Arbeidssituasjon
     [SøknadFormField.frilans_erFrilanser]: YesOrNo.UNANSWERED,
     [SøknadFormField.selvstendig_erSelvstendigNæringsdrivende]: YesOrNo.UNANSWERED,
-    [SøknadFormField.erArbeidstaker]: YesOrNo.UNANSWERED,
 
     // STEG 7: Medlemskap
     [SøknadFormField.harBoddUtenforNorgeSiste12Mnd]: YesOrNo.UNANSWERED,

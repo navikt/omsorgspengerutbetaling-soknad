@@ -1,11 +1,7 @@
 import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
 import { Utenlandsopphold } from '@navikt/sif-common-forms/lib';
 import { FraværDag, FraværPeriode } from '@navikt/sif-common-forms/lib/fravær';
-import {
-    erArbeidstakerIsValid,
-    frilansIsValid,
-    selvstendigIsValid,
-} from '../søknad/arbeidssituasjon-step/arbeidssituasjonUtils';
+import { frilansIsValid, selvstendigIsValid } from '../søknad/arbeidssituasjon-step/arbeidssituasjonUtils';
 import {
     delvisFraværIsValid,
     minimumEnUtbetalingsperiode,
@@ -35,7 +31,7 @@ export const fraværStepIsValid = (formData: SøknadFormData): boolean => {
 };
 
 export const arbeidssituasjonStepIsValid = (formData: SøknadFormData): boolean => {
-    return frilansIsValid(formData) && selvstendigIsValid(formData) && erArbeidstakerIsValid(formData.erArbeidstaker);
+    return frilansIsValid(formData) && selvstendigIsValid(formData);
 };
 
 export const barnStepIsValid = ({ harAleneomsorg, harAleneomsorgFor = [] }: SøknadFormData): boolean => {

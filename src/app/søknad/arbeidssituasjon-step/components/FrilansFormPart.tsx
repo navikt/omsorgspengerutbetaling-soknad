@@ -15,6 +15,7 @@ import { SøknadFormData, SøknadFormField } from '../../../types/SøknadFormDat
 import SøknadFormComponents from '../../SøknadFormComponents';
 import FrilansEksempeltHtml from './FrilansEksempelHtml';
 import { validateFrilanserSluttdato, validateFrilanserStartdato } from '../../../validation/fieldValidations';
+import datepickerUtils from '@navikt/sif-common-formik/lib/components/formik-datepicker/datepickerUtils';
 
 interface Props {
     formValues: SøknadFormData;
@@ -63,6 +64,7 @@ const FrilansFormPart: React.FunctionComponent<Props> = ({
                                     name={SøknadFormField.frilans_sluttdato}
                                     label={intlHelper(intl, 'frilanser.nårSluttet.spm')}
                                     showYearSelector={true}
+                                    minDate={datepickerUtils.getDateFromDateString(frilans_startdato)}
                                     maxDate={dateToday}
                                     validate={validateAll([
                                         validateRequiredField,

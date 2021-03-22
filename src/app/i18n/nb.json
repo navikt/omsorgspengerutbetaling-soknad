@@ -318,6 +318,8 @@
     "fieldvalidation.andreBarn_påkrevd": "Du må legge til barn for å kunne gå videre",
     "fieldvalidation.frilans_startEtterSlutt": "Datoen du sluttet som frilanser kan ikke være før datoen du startet",
     "fieldvalidation.frilans_startEtterDagensDato": "Datoen for når du startet som frilanser, kan ikke være frem i tid",
+    
+    "fieldvalidation.harDekketTiFørsteDagerSelv_påkrevd": "Du må svare på om du har dekket de ti første dagene selv",
 
     "avbrytSøknadDialog.avbrytSøknadLabel": "Ja, avbryt søknad",
     "avbrytSøknadDialog.fortsettSøknadLabel": "Nei",
@@ -445,8 +447,6 @@
     "frilanser.summary.nårStartet.header": "Når startet du som frilanser?",
     "frilanser.summary.jobberFortsatt.header": "Jobber du fortsatt som frilanser?",
     "frilanser.summary.nårSluttet.header": "Når sluttet du som frilanser?",
-
-    "step.arbeidssituasjon.erArbeidstaker": "Var du arbeidstaker i tillegg til å være selvstendig næringsdrivende/frilanser i dagene du søker utbetaling for?",
 
     "summary.andreIntekter.header": "Eventuelle andre inntekter"
 }
