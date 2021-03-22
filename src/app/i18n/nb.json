@@ -90,7 +90,7 @@
     "step.arbeidssituasjon.pageTitle": "Arbeidssituasjon - Søknad om utbetaling av omsorgspenger",
     "step.arbeidssituasjon.stepTitle": "Arbeidssituasjon",
     "step.arbeidssituasjon.stepIndicatorLabel": "Arbeidssituasjon",
-    "step.arbeidssituasjon.info.1": "Nå trenger vi å vite hva som var arbeidssituasjonen din på den første dagen du søker om utbetaling for.",
+    "step.arbeidssituasjon.info.1": "Nå trenger vi å vite hva som var arbeidssituasjonen din i dagene du søker utbetaling for.",
     "step.arbeidssituasjon.advarsel.ingenSituasjonValgt": "Du må velge minst én av situasjonene over.",
 
     "step.barn.pageTitle": "Om barn",
@@ -191,8 +191,6 @@
     "step.fravaer.andreUtbetalinger": "Andre utbetalinger fra NAV",
 
     "steg.arbeid.spm": "Hva er din arbeidssituasjon? Du kan velge flere.",
-
-    "step.arbeidssituasjon.erArbeidstaker": "Er du arbeidstaker i tillegg til at du er selvstendig næringsdrivende og/eller frilanser?",
 
     "step.barn.registrerteBarn.listHeader": "Barn som er registrert på deg:",
     "steg.barn.pageTitle": "Om barn",
@@ -431,22 +429,24 @@
     "summary.virksomhet.varigEndring.html": "Har hatt varig endring i arbeidsforholdet, virksomheten eller arbeidssituasjonen de siste fire årene. Dato for endring var {dato}, og næringsinntekt etter endringen er <strong>{inntekt}</strong>. Beskrivelse av endringen:",
     "summary.virksomhet.yrkesaktivSisteTreFerdigliknedeÅrene": "Ble yrkesaktiv {dato}",
 
-    "selvstendig.erDuSelvstendigNæringsdrivende.spm": "Er du selvstendig næringsdrivende?",
+    "selvstendig.erDuSelvstendigNæringsdrivende.spm": "Var du selvstendig næringsdrivende i dagene du søker utbetaling for?",
     "selvstendig.list.tittel": "Registrerte virksomheter",
     "selvstendig.list.leggTilLabel": "Legg til virksomhet",
     "selvstendig.dialog.tittel": "Virksomhet",
-    "selvstendig.summary.harDuHattInntekt.header": "Er du selvstendig næringsdrivende?",
+    "selvstendig.summary.harDuHattInntekt.header": "Var du selvstendig næringsdrivende i dagene du søker utbetaling for?",
 
-    "frilanser.erFrilanser.spm": "Er du frilanser?",
+    "frilanser.erFrilanser.spm": "Var du frilanser i dagene du søker utbetaling for?",
     "frilanser.nårStartet.spm": "Når startet du som frilanser?",
     "frilanser.jobberFortsatt.spm": "Jobber du fortsatt som frilanser?",
     "frilanser.nårSluttet.spm": "Når sluttet du som frilanser?",
 
     "frilanser.summary.header": "Frilansinntekt",
-    "frilanser.summary.harDuHattInntekt.header": "Er du frilanser?",
+    "frilanser.summary.harDuHattInntekt.header": "Var du frilanser i dagene du søker utbetaling for?",
     "frilanser.summary.nårStartet.header": "Når startet du som frilanser?",
     "frilanser.summary.jobberFortsatt.header": "Jobber du fortsatt som frilanser?",
     "frilanser.summary.nårSluttet.header": "Når sluttet du som frilanser?",
+
+    "step.arbeidssituasjon.erArbeidstaker": "Var du arbeidstaker i tillegg til å være selvstendig næringsdrivende/frilanser i dagene du søker utbetaling for?",
 
     "summary.andreIntekter.header": "Eventuelle andre inntekter"
 }
