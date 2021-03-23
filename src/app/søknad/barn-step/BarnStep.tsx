@@ -97,7 +97,7 @@ const BarnStep: React.FunctionComponent<Props> = ({ registrerteBarn, onValidSubm
                         <FormattedMessage id="steg.barn.ingenBarnFunnet" />
                     </AlertStripe>
                 ) : (
-                    <ContentWithHeader header={intlHelper(intl, 'step.barn.registrerteBarn.listHeader')}>
+                    <ContentWithHeader header={intlHelper(intl, 'steg.barn.registrerteBarn.listHeader')}>
                         <ItemList<Barn>
                             getItemId={(registrerteBarn): string => registrerteBarn.aktørId}
                             getItemTitle={(registrerteBarn): string => registrerteBarn.etternavn}
