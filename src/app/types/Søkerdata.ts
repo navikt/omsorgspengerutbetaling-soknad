@@ -9,7 +9,6 @@ export interface Person {
 
 export interface Søkerdata {
     person: Person;
-    registrerteBarn: Barn[];
 }
 
 export interface Barn {

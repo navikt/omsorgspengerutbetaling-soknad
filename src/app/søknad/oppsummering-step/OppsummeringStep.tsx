@@ -91,12 +91,10 @@ const OppsummeringStep: React.FunctionComponent<Props> = ({
 
     const {
         person: { fornavn, mellomnavn, etternavn, fødselsnummer },
-        registrerteBarn,
     } = søkerdata;
 
-    const apiValues: SøknadApiData = mapFormDataToApiData(values, registrerteBarn, intl);
+    const apiValues: SøknadApiData = mapFormDataToApiData(values, intl);
     const { barn = [] } = apiValues;
-    const harAleneomsorgFor = barn.filter((b) => b.aleneOmOmsorgen);
 
     const apiValidationErrors = validateSoknadApiData(apiValues);
 
@@ -131,11 +129,6 @@ const OppsummeringStep: React.FunctionComponent<Props> = ({
                         <SummaryBlock header={intlHelper(intl, 'steg.oppsummering.barn.alleBarn')}>
                             <SummaryList items={barn} itemRenderer={barnListItemRenderer} />
                         </SummaryBlock>
-                        {harAleneomsorgFor.length > 0 && (
-                            <SummaryBlock header={intlHelper(intl, 'steg.oppsummering.barn.harAleneomsorgFor')}>
-                                <SummaryList items={harAleneomsorgFor} itemRenderer={barnListItemRenderer} />
-                            </SummaryBlock>
-                        )}
                     </SummarySection>
 
                     {/* Omsorgsdager du søker utbetaling for */}

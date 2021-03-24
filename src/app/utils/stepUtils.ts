@@ -25,7 +25,7 @@ export const fraværStepIsAvailable = (formData: SøknadFormData) => welcomingPa
 export const barnStepIsAvailable = (formData: SøknadFormData) => fraværStepIsValid(formData);
 
 export const arbeidssituasjonStepIsAvailable = (formData: SøknadFormData) =>
-    barnStepIsAvailable(formData) && barnStepIsValid(formData);
+    barnStepIsAvailable(formData) && barnStepIsValid();
 
 export const medlemskapStepIsAvailable = (formData: SøknadFormData) =>
     arbeidssituasjonStepIsAvailable(formData) && arbeidssituasjonStepIsValid(formData);

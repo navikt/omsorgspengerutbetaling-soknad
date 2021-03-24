@@ -23,8 +23,6 @@ export enum SøknadFormField {
 
     // Barn
     andreBarn = 'andreBarn',
-    harAleneomsorg = 'harAleneomsorg',
-    harAleneomsorgFor = 'harAleneomsorgFor',
 
     // Felter knyttet til stengt bhg eller skole
     dokumenterStengtBkgSkole = 'dokumenterStengtBkgSkole',
@@ -77,8 +75,6 @@ export interface SøknadFormData {
 
     // Barn
     [SøknadFormField.andreBarn]: AnnetBarn[];
-    [SøknadFormField.harAleneomsorg]: YesOrNo;
-    [SøknadFormField.harAleneomsorgFor]: Array<string>;
 
     // Medlemskap
     [SøknadFormField.harBoddUtenforNorgeSiste12Mnd]: YesOrNo;
@@ -117,8 +113,6 @@ export const initialValues: SøknadFormData = {
 
     // Barn
     [SøknadFormField.andreBarn]: [],
-    [SøknadFormField.harAleneomsorg]: YesOrNo.UNANSWERED,
-    [SøknadFormField.harAleneomsorgFor]: [],
 
     [SøknadFormField.dokumenterStengtBkgSkole]: [],
     [SøknadFormField.dokumenterSmittevernhensyn]: [],

@@ -192,27 +192,16 @@
 
     "steg.arbeid.spm": "Hva er din arbeidssituasjon? Du kan velge flere.",
 
-    "steg.barn.registrerteBarn.listHeader": "Barn som er registrert på deg:",
-    "steg.barn.pageTitle": "Om barn",
-    "steg.barn.stepTitle": "Om barn",
-    "steg.barn.info.1": "Her ser du barn under 18 år som er registrert på deg.",
-    "steg.barn.info.2": "Hvis du har fosterbarn, eller barn som er 18 år eller eldre, kan du selv legge til dette barnet.",
+    "steg.barn.pageTitle": "Fosterbarn",
+    "steg.barn.stepTitle": "Fosterbarn",
+    "steg.barn.info": "Hvis du har fosterbarn, kan du selv legge til dette barnet.",
     "steg.barn.nextButtonLabel": "Fortsett",
-    "steg.barn.dineBarn": "Dine barn",
-    "steg.barn.ingenBarnFunnet": "Vi finner ikke noen barn som er registrert på deg.",
-    "steg.barn.flereBarn.info": "Har du barn som ikke er registrerte her, kan du legge inn disse selv.",
-    "steg.barn.annetBarn.addLabel": "Legg til barn",
-    "steg.barn.annetBarn.listTitle": "Andre barn",
-    "steg.barn.annetBarn.modalTitle": "Legg til barn",
+    "steg.barn.dineBarn": "Dine fosterbarn",
+    "steg.barn.annetBarn.addLabel": "Legg til fosterbarn",
+    "steg.barn.annetBarn.listTitle": "Dine fosterbarn",
+    "steg.barn.annetBarn.modalTitle": "Legg til fosterbarn",
     "steg.barn.formLeggTilBarn.aldersGrenseInfo": "(Du kan ikke legge til barn som er 19 år eller eldre)",
-    "steg.barn.harAleneOmsorg.flereBarn.spm": "Er du alene om omsorgen for barn?",
-    "steg.barn.harAleneOmsorg.ettBarn.spm": "Er du alene om omsorgen for barnet ditt?",
-    "steg.barn.hvilkeAvBarnaAleneomsorg.spm": "Kryss av for barn du er alene om omsorgen for:",
     "steg.barn.aldersGrenseInfo": "(Du kan ikke legge til barn som er 19 år eller eldre)",
-    "steg.barn.aleneomsorg.info.tittel": "Hva betyr det å være alene om omsorgen?",
-    "steg.barn.aleneomsorg.info.tekst.1": "Når det gjelder omsorgsdager, er du regnet som alene om omsorgen hvis du ikke bor sammen med den andre forelderen, og barnet bor fast bare hos deg. Det betyr at barnet har folkeregistrert adresse hos deg.",
-    "steg.barn.aleneomsorg.info.tekst.2": "Hvis du og den andre forelderen har en avtale om delt bosted vil ingen av dere bli regnet som alene om omsorgen.",
-    "steg.barn.aleneomsorg.lagring.info": "Vi lagrer informasjonen om at du er alene om omsorgen. Hvis du gifter deg, eller har vært samboer i mer enn 12 måneder, regnes du ikke lenger som alene om omsorgen. I de tilfellene må du gi beskjed  til oss.",
 
     "steg.medlemsskap.annetLandSiste12.spm": "Har du bodd i utlandet i hele eller deler av de siste 12 månedene?",
     "steg.medlemsskap.annetLandNeste12.spm": "Planlegger du å bo i utlandet i hele eller deler av de neste 12 månedene?",
@@ -232,7 +221,7 @@
 
     "steg.oppsummering.barn.header": "Om barn",
     "steg.oppsummering.barn.alleBarn": "Dine barn",
-    "steg.oppsummering.barn.harAleneomsorgFor": "Barn du er alene om omsorgen for",
+
 
     "steg.oppsummering.arbeidssituasjon.header": "Din arbeidssituasjon",
     "steg.oppsummering.harSøktOmAndreUtbetalinger": "Andre utbetalinger det er søkt om fra NAV",
@@ -314,11 +303,9 @@
     "fieldvalidation.for_mange_dokumenter": "For mange dokumenter er lastet opp",
     "fieldvalidation.samlet_storrelse_for_hoy": "Total samlet størrelse for dokumentene du har lastet opp overstiger grensen på 24Mb.",
     "fieldvalidation.fraværPeriodeIkkeSammeÅrstall": "Du har lagt til fravær som er i flere år. En søknad kan kun inneholde fravær i ett år.",
-    "fieldvalidation.aleneomsorgFor_påkrevd": "Du har valgt at du er alene om omsorgen for barn, da må du velge hvilket barn du har aleneomsorg for",
     "fieldvalidation.andreBarn_påkrevd": "Du må legge til barn for å kunne gå videre",
     "fieldvalidation.frilans_startEtterSlutt": "Datoen du sluttet som frilanser kan ikke være før datoen du startet",
     "fieldvalidation.frilans_startEtterDagensDato": "Datoen for når du startet som frilanser, kan ikke være frem i tid",
-    
     "fieldvalidation.harDekketTiFørsteDagerSelv_påkrevd": "Du må svare på om du har dekket de ti første dagene selv",
 
     "avbrytSøknadDialog.avbrytSøknadLabel": "Ja, avbryt søknad",

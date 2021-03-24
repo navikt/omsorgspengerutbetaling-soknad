@@ -54,9 +54,6 @@ export enum AppFieldValidationErrors {
     'ikke_lørdag_eller_søndag_periode' = 'fieldvalidation.saturday_and_sunday_not_possible_periode',
     'ikke_lørdag_eller_søndag_dag' = 'fieldvalidation.saturday_and_sunday_not_possible_dag',
 
-    'aleneomsorgFor_påkrevd' = 'fieldvalidation.aleneomsorgFor_påkrevd',
-    'andreBarn_påkrevd' = 'fieldvalidation.andreBarn_påkrevd',
-
     'fraværDagIkkeSammeÅrstall' = 'fieldvalidation.fraværDagIkkeSammeÅrstall',
     'fraværPeriodeIkkeSammeÅrstall' = 'fieldvalidation.fraværPeriodeIkkeSammeÅrstall',
 
@@ -182,20 +179,6 @@ export const validateDocuments = (attachments: Attachment[]): FieldValidationRes
     }
     if (uploadedAttachments.length > 100) {
         return createAppFieldValidationError(AppFieldValidationErrors.for_mange_dokumenter);
-    }
-    return undefined;
-};
-
-export const validateAleneomsorgForBarn = (barn: string[]): FieldValidationResult => {
-    if (barn.length === 0) {
-        return createFieldValidationError(AppFieldValidationErrors.aleneomsorgFor_påkrevd);
-    }
-    return undefined;
-};
-
-export const validateAndreBarn = (barn: string[]): FieldValidationResult => {
-    if (barn.length === 0) {
-        return createFieldValidationError(AppFieldValidationErrors.andreBarn_påkrevd);
     }
     return undefined;
 };

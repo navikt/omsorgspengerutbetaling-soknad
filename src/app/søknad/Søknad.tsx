@@ -19,7 +19,7 @@ const Søknad: React.FunctionComponent = () => (
                 <SøknadFormComponents.FormikWrapper
                     initialValues={formData || initialValues}
                     onSubmit={() => null}
-                    renderForm={() => <SøknadRoutes søkerdata={søkerdata} />}
+                    renderForm={() => <SøknadRoutes />}
                 />
             );
         }}

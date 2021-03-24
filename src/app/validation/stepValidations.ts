@@ -34,13 +34,7 @@ export const arbeidssituasjonStepIsValid = (formData: SøknadFormData): boolean 
     return frilansIsValid(formData) && selvstendigIsValid(formData);
 };
 
-export const barnStepIsValid = ({ harAleneomsorg, harAleneomsorgFor = [] }: SøknadFormData): boolean => {
-    if (harAleneomsorg === YesOrNo.UNANSWERED) {
-        return false;
-    }
-    if (harAleneomsorg === YesOrNo.YES && harAleneomsorgFor.length === 0) {
-        return false;
-    }
+export const barnStepIsValid = (): boolean => {
     return true;
 };
 

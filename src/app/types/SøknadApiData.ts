@@ -51,7 +51,6 @@ export interface ApiBarn {
     identitetsnummer?: string;
     aktørId?: string;
     navn: string;
-    aleneOmOmsorgen?: boolean;
 }
 
 export interface SøknadApiData {

@@ -37,7 +37,7 @@ const getVedleggUrlFromAttachments = (attachments: Attachment[]): string[] => {
     );
 };
 
-export const mapFormDataToApiData = (formValues: SøknadFormData, barn: Barn[], intl: IntlShape): SøknadApiData => {
+export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShape): SøknadApiData => {
     const {
         harForståttRettigheterOgPlikter,
         harBekreftetOpplysninger,
@@ -93,7 +93,7 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, barn: Barn[], 
             harBekreftetOpplysninger,
         },
         spørsmål: [...yesOrNoQuestions],
-        barn: mapBarnToApiData(formValues, barn),
+        barn: mapBarnToApiData(formValues),
         andreUtbetalinger: harSøktAndreUtbetalinger === YesOrNo.YES ? [...andreUtbetalinger] : [],
         utbetalingsperioder: mapPeriodeTilUtbetalingsperiode(fraværPerioder, fraværDager),
         bosteder: settInnBosteder(
@@ -125,35 +125,23 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, barn: Barn[], 
     return apiData;
 };
 
-export const mapBarnToApiData = (
-    { harAleneomsorgFor, andreBarn = [] }: SøknadFormData,
-    registrerteBarn: Barn[] = []
-): ApiBarn[] => {
-    return [
-        ...andreBarn.map((barn) => mapAnnetBarnToApiBarn(barn, harAleneomsorgFor)),
-        ...registrerteBarn.map((barn) => mapBarnToApiBarn(barn, harAleneomsorgFor)),
-    ];
+export const mapBarnToApiData = ({ andreBarn = [] }: SøknadFormData): ApiBarn[] => {
+    return andreBarn.map((barn) => mapAnnetBarnToApiBarn(barn));
 };
 
-const barnFinnesIArray = (barnId: string, idArray: string[]): boolean => {
-    return (idArray || []).find((id) => id === barnId) !== undefined;
-};
-
-export const mapAnnetBarnToApiBarn = (annetBarn: AnnetBarn, harAleneomsorgFor: string[]): ApiBarn => {
+export const mapAnnetBarnToApiBarn = (annetBarn: AnnetBarn): ApiBarn => {
     return {
         navn: annetBarn.navn,
         aktørId: undefined,
         identitetsnummer: annetBarn.fnr,
-        aleneOmOmsorgen: barnFinnesIArray(annetBarn.fnr, harAleneomsorgFor),
     };
 };
 
-export const mapBarnToApiBarn = (registrertBarn: Barn, harAleneomsorgFor: string[]): ApiBarn => {
+export const mapBarnToApiBarn = (registrertBarn: Barn): ApiBarn => {
     return {
         navn: formatName(registrertBarn.fornavn, registrertBarn.etternavn, registrertBarn.mellomnavn),
         aktørId: registrertBarn.aktørId,
         identitetsnummer: undefined,
-        aleneOmOmsorgen: barnFinnesIArray(registrertBarn.aktørId, harAleneomsorgFor),
     };
 };
 
