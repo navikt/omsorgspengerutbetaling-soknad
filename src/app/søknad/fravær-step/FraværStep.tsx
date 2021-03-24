@@ -24,8 +24,10 @@ import dayjs from 'dayjs';
 import MinMax from 'dayjs/plugin/minMax';
 import { useFormikContext } from 'formik';
 import { AlertStripeAdvarsel, AlertStripeInfo } from 'nav-frontend-alertstriper';
+import Lenke from 'nav-frontend-lenker';
 import FormSection from '../../components/form-section/FormSection';
 import { StepConfigProps, StepID } from '../../config/stepConfig';
+import getLenker from '../../lenker';
 import { AndreUtbetalinger } from '../../types/AndreUtbetalinger';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import { getPeriodeBoundaries } from '../../utils/periodeUtils';
@@ -149,18 +151,32 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                 </CounsellorPanel>
             </FormBlock>
 
-            <FormSection title="Fraværsdager du må dekke selv">
+            <FormSection title={intlHelper(intl, 'step.fravaer.dekkeSelv.tittel')}>
                 <FormBlock>
                     <SøknadFormComponents.YesOrNoQuestion
                         name={SøknadFormField.harDekketTiFørsteDagerSelv}
-                        description={<ExpandableInfo title="Hva betyr dette?">Trenger vi denne infoen?</ExpandableInfo>}
                         legend={intlHelper(intl, 'step.fravaer.spm.harDekketTiFørsteDagerSelv')}
+                        description={
+                            <ExpandableInfo title={intlHelper(intl, 'step.fravaer.dekkeSelv.info.tittel')}>
+                                <p style={{ marginTop: '0' }}>
+                                    <FormattedMessage id="step.fravaer.dekkeSelv.info.1" />
+                                </p>
+                                <p>
+                                    <FormattedMessage id="step.fravaer.dekkeSelv.info.2" />
+                                    <Lenke href={getLenker(intl.locale).søkeEkstraDager}>
+                                        <FormattedMessage id="step.fravaer.dekkeSelv.info.3" />
+                                    </Lenke>
+                                </p>
+                            </ExpandableInfo>
+                        }
                         validate={validateYesOrNoIsAnswered}
                     />
                 </FormBlock>
                 {harDekketTiFørsteDagerSelv === YesOrNo.NO && (
                     <FormBlock>
-                        <AlertStripeInfo>Informasjon</AlertStripeInfo>
+                        <AlertStripeInfo>
+                            <FormattedMessage id="step.fravaer.ikkeDekket.info" />
+                        </AlertStripeInfo>
                     </FormBlock>
                 )}
             </FormSection>

@@ -160,6 +160,14 @@
     "step.periode.sisteDagMedFravær.spm": "Hva er siste dag du skal søke for?",
 
     "step.fravaer.counsellorpanel.content": "I de fleste tilfeller må man som selvstendig næringsdrivende og frilanser betale de 10 første dager med omsorgspenger i året selv.",
+    "step.fravaer.dekkeSelv.spm": "Har du dekket de 10 første omsorgsdagene selv?",
+    "step.fravaer.dekkeSelv.tittel": "Omsorgsdager du må dekke selv",
+    "step.fravaer.dekkeSelv.info.tittel": "Hva betyr dette?",
+    "step.fravaer.dekkeSelv.info.1": "Som selvstendig næringsdrivende og/eller frilanser må du selv dekke de 10 første omsorgsdagene du bruker hvert år. Det vil si at du tidligst kan søke om utbetaling fra den 11. omsorgsdagen.",
+    "step.fravaer.dekkeSelv.info.2": "Du kan ha rett til utbetaling fra første dag hvis du kun har barn som er 13 år eller eldre, som er kronisk sykt eller funksjonshemmet.",
+    "step.fravaer.dekkeSelv.info.3": "I disse tilfellene må du ha søkt om og fått ekstra omsorgsdager.",
+    "step.fravaer.ikkeDekket.info": "For å søke om utbetaling av omsorgspenger må du først ha dekket de 10 første omsorgsdagene selv.",
+
     "step.fravaer.dager_med_fullt_fravært.label": "Dager med fullt fravær",
     "step.fravaer.dager_med_fullt_fravært.info": "TODO",
     "step.fravaer.dager_med_delvis_fravært.label": "Dager med delvis fravær",
