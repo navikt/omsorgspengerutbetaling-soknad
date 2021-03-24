@@ -65,10 +65,6 @@ describe('apiUtils', () => {
     });
 
     describe('getApiUrlByResourceType', () => {
-        it('should return correct URL for ResourceType.BARN', () => {
-            expect(getApiUrlByResourceType(ResourceType.BARN)).toEqual(`${mockedApiUrl}/${ResourceType.BARN}`);
-        });
-
         it('should return correct URL for ResourceType.SEND_SØKNAD', () => {
             expect(getApiUrlByResourceType(ResourceType.SEND_SØKNAD)).toEqual(
                 `${mockedApiUrl}/${ResourceType.SEND_SØKNAD}`

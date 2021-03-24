@@ -5,7 +5,6 @@ import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
 import { attachmentUploadHasFailed } from '@navikt/sif-common-core/lib/utils/attachmentUtils';
 import { formatDateToApiFormat } from '@navikt/sif-common-core/lib/utils/dateUtils';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
-import { formatName } from '@navikt/sif-common-core/lib/utils/personUtils';
 import { decimalTimeToTime, timeToIso8601Duration } from '@navikt/sif-common-core/lib/utils/timeUtils';
 import {
     mapVirksomhetToVirksomhetApiData,
@@ -13,10 +12,9 @@ import {
     Virksomhet,
     VirksomhetApiData,
 } from '@navikt/sif-common-forms/lib';
-import { AnnetBarn } from '@navikt/sif-common-forms/lib/annet-barn/types';
 import { FraværDag, FraværPeriode } from '@navikt/sif-common-forms/lib/fravær';
 import {
-    ApiBarn,
+    ApiFosterbarn,
     SøknadApiData,
     UtbetalingsperiodeApi,
     UtenlandsoppholdApiData,
@@ -26,7 +24,6 @@ import {
 import { SøknadFormData } from '../types/SøknadFormData';
 import { mapBostedUtlandToApiData } from './formToApiMaps/mapBostedUtlandToApiData';
 import { mapFrilansToApiData } from './formToApiMaps/mapFrilansToApiData';
-import { Barn } from '../types/Søkerdata';
 
 const getVedleggUrlFromAttachments = (attachments: Attachment[]): string[] => {
     return (
@@ -93,7 +90,7 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
             harBekreftetOpplysninger,
         },
         spørsmål: [...yesOrNoQuestions],
-        barn: mapBarnToApiData(formValues),
+        fosterbarn: mapFosterbarnToApiFosterbarn(formValues),
         andreUtbetalinger: harSøktAndreUtbetalinger === YesOrNo.YES ? [...andreUtbetalinger] : [],
         utbetalingsperioder: mapPeriodeTilUtbetalingsperiode(fraværPerioder, fraværDager),
         bosteder: settInnBosteder(
@@ -125,24 +122,10 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
     return apiData;
 };
 
-export const mapBarnToApiData = ({ andreBarn = [] }: SøknadFormData): ApiBarn[] => {
-    return andreBarn.map((barn) => mapAnnetBarnToApiBarn(barn));
-};
-
-export const mapAnnetBarnToApiBarn = (annetBarn: AnnetBarn): ApiBarn => {
-    return {
-        navn: annetBarn.navn,
-        aktørId: undefined,
-        identitetsnummer: annetBarn.fnr,
-    };
-};
-
-export const mapBarnToApiBarn = (registrertBarn: Barn): ApiBarn => {
-    return {
-        navn: formatName(registrertBarn.fornavn, registrertBarn.etternavn, registrertBarn.mellomnavn),
-        aktørId: registrertBarn.aktørId,
-        identitetsnummer: undefined,
-    };
+export const mapFosterbarnToApiFosterbarn = ({ fosterbarn = [] }: SøknadFormData): ApiFosterbarn[] => {
+    return fosterbarn.map((fosterbarn) => ({
+        identitetsnummer: fosterbarn.fødselsnummer,
+    }));
 };
 
 export const mapPeriodeTilUtbetalingsperiode = (

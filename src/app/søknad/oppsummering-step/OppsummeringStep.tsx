@@ -19,7 +19,7 @@ import RouteConfig from '../../config/routeConfig';
 import { StepID } from '../../config/stepConfig';
 import { SøkerdataContext } from '../../context/SøkerdataContext';
 import { Søkerdata } from '../../types/Søkerdata';
-import { ApiBarn, SøknadApiData } from '../../types/SøknadApiData';
+import { ApiFosterbarn, SøknadApiData } from '../../types/SøknadApiData';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import * as apiUtils from '../../utils/apiUtils';
 import appSentryLogger from '../../utils/appSentryLogger';
@@ -45,13 +45,8 @@ interface Props {
 
 const renderApiDataFeil = (feil: FeiloppsummeringFeil) => <span>{feil.feilmelding}</span>;
 
-const barnListItemRenderer = (barn: ApiBarn): JSX.Element => {
-    return (
-        <>
-            {barn.navn}
-            {barn.identitetsnummer ? ` (${barn.identitetsnummer})` : undefined}
-        </>
-    );
+const fosterbarnListItemRenderer = (fosterbarn: ApiFosterbarn): JSX.Element => {
+    return <>{fosterbarn.identitetsnummer}</>;
 };
 
 const OppsummeringStep: React.FunctionComponent<Props> = ({
@@ -94,7 +89,7 @@ const OppsummeringStep: React.FunctionComponent<Props> = ({
     } = søkerdata;
 
     const apiValues: SøknadApiData = mapFormDataToApiData(values, intl);
-    const { barn = [] } = apiValues;
+    const { fosterbarn = [] } = apiValues;
 
     const apiValidationErrors = validateSoknadApiData(apiValues);
 
@@ -127,7 +122,7 @@ const OppsummeringStep: React.FunctionComponent<Props> = ({
                     {/* Om barn */}
                     <SummarySection header={intlHelper(intl, 'steg.oppsummering.barn.header')}>
                         <SummaryBlock header={intlHelper(intl, 'steg.oppsummering.barn.alleBarn')}>
-                            <SummaryList items={barn} itemRenderer={barnListItemRenderer} />
+                            <SummaryList items={fosterbarn} itemRenderer={fosterbarnListItemRenderer} />
                         </SummaryBlock>
                     </SummarySection>
 

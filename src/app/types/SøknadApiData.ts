@@ -47,10 +47,8 @@ export interface Land {
     landkode?: string;
     landnavn?: string;
 }
-export interface ApiBarn {
+export interface ApiFosterbarn {
     identitetsnummer?: string;
-    aktørId?: string;
-    navn: string;
 }
 
 export interface SøknadApiData {
@@ -60,7 +58,7 @@ export interface SøknadApiData {
         harForståttRettigheterOgPlikter: boolean;
     };
     spørsmål: YesNoSpørsmålOgSvar[];
-    barn?: ApiBarn[];
+    fosterbarn?: ApiFosterbarn[];
     utbetalingsperioder: UtbetalingsperiodeApi[]; // perioder
     andreUtbetalinger: AndreUtbetalinger[];
     opphold: UtenlandsoppholdApiData[]; // hvis ja på har oppholdt seg i utlandet

@@ -1,10 +1,10 @@
 import { Utenlandsopphold } from '@navikt/sif-common-forms/lib//utenlandsopphold/types';
-import { AnnetBarn } from '@navikt/sif-common-forms/lib/annet-barn/types';
 import { FraværDag, FraværPeriode } from '@navikt/sif-common-forms/lib/fravær';
 import { Virksomhet } from '@navikt/sif-common-forms/lib/virksomhet/types';
 import { Attachment } from '@navikt/sif-common-core/lib/types/Attachment';
 import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
 import { AndreUtbetalinger } from './AndreUtbetalinger';
+import { Fosterbarn } from '@navikt/sif-common-forms/lib';
 
 export enum SøknadFormField {
     harForståttRettigheterOgPlikter = 'harForståttRettigheterOgPlikter',
@@ -22,7 +22,8 @@ export enum SøknadFormField {
     andreUtbetalinger = 'andreUtbetalinger',
 
     // Barn
-    andreBarn = 'andreBarn',
+    harFosterbarn = 'harFosterbarn',
+    fosterbarn = 'fosterbarn',
 
     // Felter knyttet til stengt bhg eller skole
     dokumenterStengtBkgSkole = 'dokumenterStengtBkgSkole',
@@ -74,7 +75,8 @@ export interface SøknadFormData {
     [SøknadFormField.selvstendig_virksomheter]?: Virksomhet[];
 
     // Barn
-    [SøknadFormField.andreBarn]: AnnetBarn[];
+    [SøknadFormField.harFosterbarn]: YesOrNo;
+    [SøknadFormField.fosterbarn]: Fosterbarn[];
 
     // Medlemskap
     [SøknadFormField.harBoddUtenforNorgeSiste12Mnd]: YesOrNo;
@@ -112,7 +114,8 @@ export const initialValues: SøknadFormData = {
     [SøknadFormField.andreUtbetalinger]: [],
 
     // Barn
-    [SøknadFormField.andreBarn]: [],
+    [SøknadFormField.harFosterbarn]: YesOrNo.UNANSWERED,
+    [SøknadFormField.fosterbarn]: [],
 
     [SøknadFormField.dokumenterStengtBkgSkole]: [],
     [SøknadFormField.dokumenterSmittevernhensyn]: [],

@@ -1,42 +1,46 @@
 import * as React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
-import CounsellorPanel from '@navikt/sif-common-core/lib/components/counsellor-panel/CounsellorPanel';
+import { useIntl } from 'react-intl';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
-import { dateToday } from '@navikt/sif-common-core/lib/utils/dateUtils';
+import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
-import AnnetBarnListAndDialog from '@navikt/sif-common-forms/lib/annet-barn/AnnetBarnListAndDialog';
+import {
+    validateRequiredList,
+    validateYesOrNoIsAnswered,
+} from '@navikt/sif-common-core/lib/validation/fieldValidations';
+import FosterbarnListAndDialog from '@navikt/sif-common-forms/lib/fosterbarn/FosterbarnListAndDialog';
+import { useFormikContext } from 'formik';
 import { StepConfigProps, StepID } from '../../config/stepConfig';
-import { SøknadFormField } from '../../types/SøknadFormData';
-import { nYearsAgo } from '../../utils/aldersUtils';
+import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
+import SøknadFormComponents from '../SøknadFormComponents';
 import SøknadStep from '../SøknadStep';
 
 const BarnStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) => {
     const intl = useIntl();
+    const { values } = useFormikContext<SøknadFormData>();
+
+    const cleanupStep = (valuesToBeCleaned: SøknadFormData): SøknadFormData => {
+        const { harFosterbarn } = values;
+        const cleanedValues = { ...valuesToBeCleaned };
+        if (harFosterbarn === YesOrNo.NO) {
+            cleanedValues.fosterbarn = [];
+        }
+        return cleanedValues;
+    };
 
     return (
-        <SøknadStep id={StepID.BARN} onValidFormSubmit={onValidSubmit}>
+        <SøknadStep id={StepID.BARN} onValidFormSubmit={onValidSubmit} cleanupStep={cleanupStep}>
             <FormBlock>
-                <CounsellorPanel>
-                    <p>
-                        <FormattedMessage id="steg.barn.info" />
-                    </p>
-                </CounsellorPanel>
-            </FormBlock>
-
-            <FormBlock>
-                <AnnetBarnListAndDialog<SøknadFormField>
-                    name={SøknadFormField.andreBarn}
-                    includeFødselsdatoSpørsmål={false}
-                    labels={{
-                        addLabel: intlHelper(intl, 'steg.barn.annetBarn.addLabel'),
-                        listTitle: intlHelper(intl, 'steg.barn.annetBarn.listTitle'),
-                        modalTitle: intlHelper(intl, 'steg.barn.annetBarn.modalTitle'),
-                    }}
-                    maxDate={dateToday}
-                    minDate={nYearsAgo(18)}
-                    aldersGrenseText={intlHelper(intl, 'steg.barn.aldersGrenseInfo')}
+                <SøknadFormComponents.YesOrNoQuestion
+                    name={SøknadFormField.harFosterbarn}
+                    legend={intlHelper(intl, 'steg.barn.fosterbarn.spm')}
+                    validate={validateYesOrNoIsAnswered}
                 />
             </FormBlock>
+            {values.harFosterbarn === YesOrNo.YES && (
+                <FormBlock margin="l">
+                    <FosterbarnListAndDialog name={SøknadFormField.fosterbarn} validate={validateRequiredList} />
+                </FormBlock>
+            )}
         </SøknadStep>
     );
 };
