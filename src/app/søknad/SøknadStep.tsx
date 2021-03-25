@@ -9,7 +9,6 @@ import { Knapp } from 'nav-frontend-knapper';
 import Step, { StepProps } from '../components/step/Step';
 import { getStepConfig } from '../config/stepConfig';
 import { SøknadFormData } from '../types/SøknadFormData';
-import { Feature, isFeatureEnabled } from '../utils/featureToggleUtils';
 import { navigateToNAVno, navigateToWelcomePage } from '../utils/navigationUtils';
 import { getStepTexts } from '../utils/stepUtils';
 import SøknadFormComponents from './SøknadFormComponents';
@@ -71,12 +70,10 @@ const SøknadStep: React.FunctionComponent<Props> = (props) => {
                     </FormBlock>
                 )}
             </SøknadFormComponents.Form>
-            {isFeatureEnabled(Feature.MELLOMLAGRING) && (
-                <StepFooter
-                    onAvbrytOgFortsettSenere={handleAvsluttOgFortsettSenere}
-                    onAvbrytOgSlett={handleAvbrytOgSlettSøknad}
-                />
-            )}
+            <StepFooter
+                onAvbrytOgFortsettSenere={handleAvsluttOgFortsettSenere}
+                onAvbrytOgSlett={handleAvbrytOgSlettSøknad}
+            />
         </Step>
     );
 };

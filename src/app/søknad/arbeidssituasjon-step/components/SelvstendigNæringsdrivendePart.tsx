@@ -2,17 +2,17 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
 import ResponsivePanel from '@navikt/sif-common-core/lib/components/responsive-panel/ResponsivePanel';
-import VirksomhetListAndDialog from '@navikt/sif-common-forms/lib/virksomhet/VirksomhetListAndDialog';
-import { useFormikContext } from 'formik';
 import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import {
     validateRequiredList,
     validateYesOrNoIsAnswered,
 } from '@navikt/sif-common-core/lib/validation/fieldValidations';
+import VirksomhetListAndDialog from '@navikt/sif-common-forms/lib/virksomhet/VirksomhetListAndDialog';
+import { useFormikContext } from 'formik';
 import { StepID } from '../../../config/stepConfig';
 import { SøknadFormData, SøknadFormField } from '../../../types/SøknadFormData';
-import { Feature, isFeatureEnabled } from '../../../utils/featureToggleUtils';
+import { getEnvironmentVariable } from '../../../utils/envUtils';
 import SøknadFormComponents from '../../SøknadFormComponents';
 import SøknadTempStorage from '../../SøknadTempStorage';
 
@@ -23,14 +23,15 @@ interface Props {
 const SelvstendigNæringsdrivendeFormPart: React.FunctionComponent<Props> = ({ formValues }) => {
     const intl = useIntl();
     const { values } = useFormikContext<SøknadFormData>();
+    const skipOrgNumValidation = getEnvironmentVariable('SKIP_ORGNUM_VALIDATION') === 'true';
     return (
         <>
             <SøknadFormComponents.YesOrNoQuestion
-                name={SøknadFormField.selvstendig_harHattInntektSomSN}
-                legend={intlHelper(intl, 'selvstendig.harDuHattInntekt.spm')}
+                name={SøknadFormField.selvstendig_erSelvstendigNæringsdrivende}
+                legend={intlHelper(intl, 'selvstendig.erDuSelvstendigNæringsdrivende.spm')}
                 validate={validateYesOrNoIsAnswered}
             />
-            {formValues.selvstendig_harHattInntektSomSN === YesOrNo.YES && (
+            {formValues.selvstendig_erSelvstendigNæringsdrivende === YesOrNo.YES && (
                 <FormBlock margin="l">
                     <ResponsivePanel>
                         <VirksomhetListAndDialog
@@ -41,14 +42,11 @@ const SelvstendigNæringsdrivendeFormPart: React.FunctionComponent<Props> = ({ f
                                 addLabel: intlHelper(intl, 'selvstendig.list.leggTilLabel'),
                                 modalTitle: intlHelper(intl, 'selvstendig.dialog.tittel'),
                             }}
+                            skipOrgNumValidation={skipOrgNumValidation}
                             validate={validateRequiredList}
-                            onAfterChange={
-                                isFeatureEnabled(Feature.MELLOMLAGRING)
-                                    ? () => {
-                                          SøknadTempStorage.update(values, StepID.INNTEKT);
-                                      }
-                                    : undefined
-                            }
+                            onAfterChange={() => {
+                                SøknadTempStorage.update(values, StepID.ARBEIDSSITUASJON);
+                            }}
                         />
                     </ResponsivePanel>
                 </FormBlock>

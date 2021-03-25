@@ -1,4 +1,4 @@
-import { Næringstype } from '@navikt/sif-common-forms/lib';
+import { FraværÅrsak, Næringstype } from '@navikt/sif-common-forms/lib';
 import { SøknadApiData } from '../../types/SøknadApiData';
 
 export const mock1: SøknadApiData = {
@@ -59,30 +59,36 @@ export const mock1: SøknadApiData = {
             tilOgMed: '2020-03-03',
             antallTimerPlanlagt: null,
             antallTimerBorte: null,
+            årsak: FraværÅrsak.ordinært,
         },
         {
             fraOgMed: '2020-03-04',
             tilOgMed: '2020-03-05',
             antallTimerPlanlagt: null,
             antallTimerBorte: null,
+            årsak: FraværÅrsak.ordinært,
         },
         {
             fraOgMed: '2020-03-09',
             tilOgMed: '2020-03-09',
             antallTimerPlanlagt: 'PT5H0M',
             antallTimerBorte: 'PT5H0M',
+            årsak: FraværÅrsak.ordinært,
         },
         {
             fraOgMed: '2020-03-10',
             tilOgMed: '2020-03-10',
             antallTimerPlanlagt: 'PT5H0M',
             antallTimerBorte: 'PT5H0M',
+            årsak: FraværÅrsak.ordinært,
         },
     ],
-    hjemmePgaSmittevernhensyn: false,
     vedlegg: [],
     _vedleggSmittevern: [],
     _vedleggStengtSkole: [],
+    _harDekketTiFørsteDagerSelv: true,
+    _harSøktAndreUtbetalinger: true,
+    _harFosterbarn: true,
     andreUtbetalinger: [],
     bosteder: [
         {
@@ -128,6 +134,7 @@ export const mock1: SøknadApiData = {
             fraOgMed: '2013-03-04',
             tilOgMed: null,
             fiskerErPåBladB: true,
+            erNyoppstartet: false,
             regnskapsfører: {
                 navn: 'Mr regnskapsfører',
                 telefon: '99887766',
@@ -141,6 +148,7 @@ export const mock1: SøknadApiData = {
             tilOgMed: '2019-03-07',
             næringsinntekt: 12345678,
             fiskerErPåBladB: false,
+            erNyoppstartet: false,
         },
     ],
 };

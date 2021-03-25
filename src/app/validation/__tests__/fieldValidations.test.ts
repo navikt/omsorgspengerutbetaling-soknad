@@ -1,5 +1,5 @@
+import { FraværDag, FraværÅrsak } from '@navikt/sif-common-forms/lib';
 import dayjs from 'dayjs';
-import { FraværDelerAvDag } from '../../../@types/omsorgspengerutbetaling-schema';
 import { harLikeDager } from '../fieldValidations';
 
 jest.mock('common/utils/dateUtils', () => {
@@ -10,10 +10,17 @@ jest.mock('common/utils/dateUtils', () => {
 
 describe('fieldValidations', () => {
     describe('harLikeDager', () => {
-        const dag1: FraværDelerAvDag = { dato: new Date(), timer: 2 };
-        const dag2: FraværDelerAvDag = {
+        const dag1: FraværDag = {
+            dato: new Date(),
+            årsak: FraværÅrsak.ordinært,
+            timerFravær: '1',
+            timerArbeidsdag: '1',
+        };
+        const dag2: FraværDag = {
             dato: dayjs().add(1, 'day').toDate(),
-            timer: 2,
+            årsak: FraværÅrsak.ordinært,
+            timerFravær: '1',
+            timerArbeidsdag: '1',
         };
         it('should return false when only one item in array', () => {
             expect(harLikeDager([])).toBeFalsy();

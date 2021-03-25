@@ -19,33 +19,41 @@ import RouteConfig from '../../config/routeConfig';
 import { StepID } from '../../config/stepConfig';
 import { SøkerdataContext } from '../../context/SøkerdataContext';
 import { Søkerdata } from '../../types/Søkerdata';
-import { FosterbarnApi, SøknadApiData, YesNoSpørsmålOgSvar } from '../../types/SøknadApiData';
+import { ApiFosterbarn, SøknadApiData } from '../../types/SøknadApiData';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import * as apiUtils from '../../utils/apiUtils';
 import appSentryLogger from '../../utils/appSentryLogger';
-import { Feature, isFeatureEnabled } from '../../utils/featureToggleUtils';
 import { mapFormDataToApiData } from '../../utils/mapFormDataToApiData';
 import { navigateTo, navigateToLoginPage } from '../../utils/navigationUtils';
-import { validateSoknadApiData } from '../../validation/soknadApiDataValidation';
+import { validateSoknadApiData } from '../../validation/apiDataValidation';
 import SøknadFormComponents from '../SøknadFormComponents';
 import SøknadStep from '../SøknadStep';
 import FrilansSummary from './components/FrilansSummary';
-import JaNeiSvar from './components/JaNeiSvar';
 import MedlemskapSummaryView from './components/MedlemskapSummaryView';
 import NavnOgFodselsnummerSummaryView from './components/NavnOgFodselsnummerSummaryView';
 import SelvstendigSummary from './components/SelvstendigSummary';
-import { SpørsmålOgSvarSummaryView } from './components/SporsmalOgSvarSummaryView';
 import SummaryBlock from './components/SummaryBlock';
 import UtbetalingsperioderSummaryView from './components/UtbetalingsperioderSummaryView';
 import UtenlandsoppholdISøkeperiodeSummaryView from './components/UtenlandsoppholdISøkeperiodeSummaryView';
+import JaNeiSvar from './components/JaNeiSvar';
 
 interface Props {
+    hjemmePgaSmittevernhensyn: boolean;
+    hjemmePgaStengtBhgSkole: boolean;
     onApplicationSent: (apiValues: SøknadApiData, søkerdata: Søkerdata) => void;
 }
 
 const renderApiDataFeil = (feil: FeiloppsummeringFeil) => <span>{feil.feilmelding}</span>;
 
-const OppsummeringStep: React.FunctionComponent<Props> = ({ onApplicationSent }) => {
+const fosterbarnListItemRenderer = (fosterbarn: ApiFosterbarn): JSX.Element => {
+    return <>{fosterbarn.identitetsnummer}</>;
+};
+
+const OppsummeringStep: React.FunctionComponent<Props> = ({
+    hjemmePgaStengtBhgSkole,
+    hjemmePgaSmittevernhensyn,
+    onApplicationSent,
+}) => {
     const intl = useIntl();
     const { values } = useFormikContext<SøknadFormData>();
     const søkerdata = React.useContext(SøkerdataContext);
@@ -81,7 +89,7 @@ const OppsummeringStep: React.FunctionComponent<Props> = ({ onApplicationSent })
     } = søkerdata;
 
     const apiValues: SøknadApiData = mapFormDataToApiData(values, intl);
-    const fosterbarn = apiValues.fosterbarn || [];
+    const { fosterbarn = [] } = apiValues;
 
     const apiValidationErrors = validateSoknadApiData(apiValues);
 
@@ -112,46 +120,23 @@ const OppsummeringStep: React.FunctionComponent<Props> = ({ onApplicationSent })
                     </SummarySection>
 
                     {/* Om barn */}
-                    <SummarySection header={intlHelper(intl, 'steg.oppsummering.barnet.omBarn')}>
-                        <SpørsmålOgSvarSummaryView
-                            yesNoSpørsmålOgSvar={apiValues.spørsmål.filter((sporsmål: YesNoSpørsmålOgSvar) => {
-                                return (
-                                    sporsmål.spørsmål ===
-                                        intlHelper(intl, 'steg.barn.har_fått_ekstra_omsorgsdager.spm') ||
-                                    sporsmål.spørsmål === intlHelper(intl, 'steg.barn.fosterbarn.spm')
-                                );
-                            })}
-                        />
-
+                    <SummarySection header={intlHelper(intl, 'steg.oppsummering.barn.header')}>
+                        <SummaryBlock header={intlHelper(intl, 'steg.barn.fosterbarn.spm')}>
+                            <JaNeiSvar harSvartJa={apiValues._harFosterbarn} />
+                        </SummaryBlock>
                         {fosterbarn.length > 0 && (
-                            <SummaryBlock header="Fosterbarn">
-                                <SummaryList
-                                    items={fosterbarn}
-                                    itemRenderer={(barn: FosterbarnApi) => <>{barn.fødselsnummer}</>}
-                                />
+                            <SummaryBlock header={intlHelper(intl, 'steg.oppsummering.barn.alleBarn')}>
+                                <SummaryList items={fosterbarn} itemRenderer={fosterbarnListItemRenderer} />
                             </SummaryBlock>
                         )}
                     </SummarySection>
 
                     {/* Omsorgsdager du søker utbetaling for */}
                     <SummarySection header={intlHelper(intl, 'steg.oppsummering.utbetalinger.header')}>
+                        <SummaryBlock header={intlHelper(intl, 'step.fravaer.spm.harDekketTiFørsteDagerSelv')}>
+                            <JaNeiSvar harSvartJa={apiValues._harDekketTiFørsteDagerSelv} />
+                        </SummaryBlock>
                         <UtbetalingsperioderSummaryView utbetalingsperioder={apiValues.utbetalingsperioder} />
-
-                        {isFeatureEnabled(Feature.STENGT_BHG_SKOLE) && apiValues.hjemmePgaStengtBhgSkole !== undefined && (
-                            <Box margin="s">
-                                <SummaryBlock
-                                    header={intlHelper(intl, 'step.periode.spm.hjemmePgaStengtBhgSkole.2021')}>
-                                    <JaNeiSvar harSvartJa={apiValues.hjemmePgaStengtBhgSkole} />
-                                </SummaryBlock>
-                            </Box>
-                        )}
-
-                        <Box margin="s">
-                            <SummaryBlock header={intlHelper(intl, 'steg.intro.form.spm.smittevernhensyn')}>
-                                <JaNeiSvar harSvartJa={apiValues.hjemmePgaSmittevernhensyn} />
-                            </SummaryBlock>
-                        </Box>
-
                         <UtenlandsoppholdISøkeperiodeSummaryView utenlandsopphold={apiValues.opphold} />
                     </SummarySection>
 
@@ -163,21 +148,15 @@ const OppsummeringStep: React.FunctionComponent<Props> = ({ onApplicationSent })
 
                     {/* Eventuelle andre inntekter */}
                     <SummarySection header={intlHelper(intl, 'summary.andreIntekter.header')}>
-                        <SpørsmålOgSvarSummaryView
-                            yesNoSpørsmålOgSvar={apiValues.spørsmål.filter((sporsmål: YesNoSpørsmålOgSvar) => {
-                                return (
-                                    sporsmål.spørsmål === intlHelper(intl, 'step.inntekt.er_arbeidstaker') ||
-                                    sporsmål.spørsmål ===
-                                        intlHelper(intl, 'step.periode.har_søkt_andre_utbetalinger.spm')
-                                );
-                            })}
-                        />
+                        <SummaryBlock header={intlHelper(intl, 'step.fravaer.harSøktAndreUtbetalinger.spm')}>
+                            <JaNeiSvar harSvartJa={apiValues._harSøktAndreUtbetalinger} />
+                        </SummaryBlock>
                         {apiValues.andreUtbetalinger.length > 0 && (
-                            <SummaryBlock header={intlHelper(intl, 'steg.oppsummering.søkt_om_andre_utbetalinger')}>
+                            <SummaryBlock header={intlHelper(intl, 'steg.oppsummering.harSøktOmAndreUtbetalinger')}>
                                 <SummaryList
                                     items={apiValues.andreUtbetalinger}
                                     itemRenderer={(utbetaling) => (
-                                        <span>{intlHelper(intl, `andre_utbetalinger.${utbetaling}`)}</span>
+                                        <span>{intlHelper(intl, `andreUtbetalinger.${utbetaling}`)}</span>
                                     )}
                                 />
                             </SummaryBlock>
@@ -191,7 +170,7 @@ const OppsummeringStep: React.FunctionComponent<Props> = ({ onApplicationSent })
 
                     {/* Vedlegg */}
                     <SummarySection header={intlHelper(intl, 'steg.oppsummering.dokumenter.header')}>
-                        {apiValues.hjemmePgaSmittevernhensyn && (
+                        {hjemmePgaSmittevernhensyn && (
                             <Box margin="s">
                                 <SummaryBlock
                                     header={intlHelper(intl, 'steg.oppsummering.dokumenterSmittevern.header')}>
@@ -204,7 +183,7 @@ const OppsummeringStep: React.FunctionComponent<Props> = ({ onApplicationSent })
                                 </SummaryBlock>
                             </Box>
                         )}
-                        {apiValues.hjemmePgaStengtBhgSkole && (
+                        {hjemmePgaStengtBhgSkole && (
                             <Box margin="s">
                                 <SummaryBlock
                                     header={intlHelper(intl, 'steg.oppsummering.dokumenterStengtBhgSkole.header')}>
@@ -217,7 +196,7 @@ const OppsummeringStep: React.FunctionComponent<Props> = ({ onApplicationSent })
                                 </SummaryBlock>
                             </Box>
                         )}
-                        {!apiValues.hjemmePgaSmittevernhensyn && !apiValues.hjemmePgaStengtBhgSkole && (
+                        {!hjemmePgaSmittevernhensyn && !hjemmePgaStengtBhgSkole && (
                             <Box margin="s">
                                 <FormattedMessage id={'steg.oppsummering.dokumenter.ingenVedlegg'} />
                             </Box>

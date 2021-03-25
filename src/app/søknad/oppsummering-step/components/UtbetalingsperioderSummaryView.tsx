@@ -1,11 +1,12 @@
 import React from 'react';
+import { IntlShape, useIntl } from 'react-intl';
 import SummaryList from '@navikt/sif-common-core/lib/components/summary-list/SummaryList';
 import { Time } from '@navikt/sif-common-core/lib/types/Time';
 import { apiStringDateToDate, prettifyDate, prettifyDateExtended } from '@navikt/sif-common-core/lib/utils/dateUtils';
 import { iso8601DurationToTime, timeToDecimalTime } from '@navikt/sif-common-core/lib/utils/timeUtils';
+import { FraværÅrsak, getFraværÅrsakTekstKort, timeText } from '@navikt/sif-common-forms/lib/fravær';
 import { UtbetalingsperiodeApi } from '../../../types/SøknadApiData';
 import SummaryBlock from './SummaryBlock';
-import { timeText } from '@navikt/sif-common-forms/lib/fravær';
 
 export interface Props {
     utbetalingsperioder: UtbetalingsperiodeApi[];
@@ -15,6 +16,7 @@ interface UtbetalingsperiodeDag {
     dato: string;
     antallTimerPlanlagt: Time;
     antallTimerBorte: Time;
+    årsak: FraværÅrsak;
 }
 
 export const isTime = (value: any): value is Time => {
@@ -33,6 +35,7 @@ export const toMaybeUtbetalingsperiodeDag = (p: UtbetalingsperiodeApi): Utbetali
                 dato: p.fraOgMed,
                 antallTimerPlanlagt: antallTimerPlanlagtTime,
                 antallTimerBorte: antallTimerBorteTime,
+                årsak: p.årsak,
             };
         }
     }
@@ -43,7 +46,10 @@ export const outNull = (
     maybeUtbetalingsperiodeDag: UtbetalingsperiodeDag | null
 ): maybeUtbetalingsperiodeDag is UtbetalingsperiodeDag => maybeUtbetalingsperiodeDag !== null;
 
-export const utbetalingsperiodeDagToDagSummaryStringView = (dag: UtbetalingsperiodeDag): JSX.Element => {
+export const utbetalingsperiodeDagToDagSummaryStringView = (
+    dag: UtbetalingsperiodeDag,
+    intl: IntlShape
+): JSX.Element => {
     const antallTimerSkulleJobbet = `${timeToDecimalTime(dag.antallTimerPlanlagt)} ${timeText(
         `${timeToDecimalTime(dag.antallTimerPlanlagt)}`
     )}`;
@@ -51,12 +57,11 @@ export const utbetalingsperiodeDagToDagSummaryStringView = (dag: Utbetalingsperi
         `${timeToDecimalTime(dag.antallTimerBorte)}`
     )}`;
     return (
-        <>
-            <span>
-                {prettifyDateExtended(apiStringDateToDate(dag.dato))}: Skulle jobbet {antallTimerSkulleJobbet}. Borte
-                fra jobb {antallTimerBorteFraJobb}.
-            </span>
-        </>
+        <div>
+            {prettifyDateExtended(apiStringDateToDate(dag.dato))}: Skulle jobbet {antallTimerSkulleJobbet}. Borte fra
+            jobb {antallTimerBorteFraJobb}.
+            {dag.årsak !== FraværÅrsak.ordinært && <div>Årsak: {getFraværÅrsakTekstKort(dag.årsak, intl)}</div>}
+        </div>
     );
 };
 
@@ -64,6 +69,7 @@ const UtbetalingsperioderSummaryView: React.FunctionComponent<Props> = ({ utbeta
     const perioder: UtbetalingsperiodeApi[] = utbetalingsperioder.filter(
         (p) => p.tilOgMed !== undefined && p.antallTimerBorte === null
     );
+    const intl = useIntl();
     const dager: UtbetalingsperiodeDag[] = utbetalingsperioder.map(toMaybeUtbetalingsperiodeDag).filter(outNull);
 
     return (
@@ -73,10 +79,13 @@ const UtbetalingsperioderSummaryView: React.FunctionComponent<Props> = ({ utbeta
                     <SummaryList
                         items={perioder}
                         itemRenderer={(periode: UtbetalingsperiodeApi) => (
-                            <span>
+                            <div>
                                 Fra og med {prettifyDate(apiStringDateToDate(periode.fraOgMed))}, til og med{' '}
                                 {prettifyDate(apiStringDateToDate(periode.tilOgMed))}
-                            </span>
+                                {periode.årsak !== FraværÅrsak.ordinært && (
+                                    <div>Årsak: {getFraværÅrsakTekstKort(periode.årsak, intl)}</div>
+                                )}
+                            </div>
                         )}
                     />
                 </SummaryBlock>
@@ -85,9 +94,9 @@ const UtbetalingsperioderSummaryView: React.FunctionComponent<Props> = ({ utbeta
                 <SummaryBlock header={'Dager med delvis fravær'}>
                     <SummaryList
                         items={dager}
-                        itemRenderer={(dag: UtbetalingsperiodeDag) => (
-                            <span>{utbetalingsperiodeDagToDagSummaryStringView(dag)}</span>
-                        )}
+                        itemRenderer={(dag: UtbetalingsperiodeDag) =>
+                            utbetalingsperiodeDagToDagSummaryStringView(dag, intl)
+                        }
                     />
                 </SummaryBlock>
             )}

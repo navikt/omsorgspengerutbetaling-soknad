@@ -1,21 +1,19 @@
-import datepickerUtils from '@navikt/sif-common-formik/lib/components/formik-datepicker/datepickerUtils';
-import { Utenlandsopphold, Virksomhet } from '@navikt/sif-common-forms/lib';
-import { FraværDag, FraværPeriode } from '@navikt/sif-common-forms/lib/fravær';
 import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
-import { BarnStepQuestions } from '../søknad/barn-step/config';
-import { frilansIsValid, selvstendigIsValid } from '../søknad/inntekt-step/inntektStepConfig';
+import { Utenlandsopphold } from '@navikt/sif-common-forms/lib';
+import { FraværDag, FraværPeriode } from '@navikt/sif-common-forms/lib/fravær';
+import { frilansIsValid, selvstendigIsValid } from '../søknad/arbeidssituasjon-step/arbeidssituasjonUtils';
 import {
     delvisFraværIsValid,
     minimumEnUtbetalingsperiode,
     oppholdIsValid,
-    perioderIsValid,
-} from '../søknad/periode-step/periodeStepConfig';
+    fraværsperioderIsValid,
+} from '../søknad/fravær-step/fraværStepConfig';
 import { SøknadFormData, SøknadFormField } from '../types/SøknadFormData';
 
 export const welcomingPageIsValid = ({ harForståttRettigheterOgPlikter }: SøknadFormData): boolean =>
     harForståttRettigheterOgPlikter === true;
 
-export const periodeStepIsValid = (formData: SøknadFormData): boolean => {
+export const fraværStepIsValid = (formData: SøknadFormData): boolean => {
     const harPerioderMedFravær: YesOrNo = formData[SøknadFormField.harPerioderMedFravær];
     const fraværPerioder: FraværPeriode[] = formData.fraværPerioder;
     const harDagerMedDelvisFravær: YesOrNo = formData[SøknadFormField.harDagerMedDelvisFravær];
@@ -24,7 +22,7 @@ export const periodeStepIsValid = (formData: SøknadFormData): boolean => {
     const perioderUtenlandsopphold: Utenlandsopphold[] = formData[SøknadFormField.perioder_utenlandsopphold];
 
     const isValid = !!(
-        perioderIsValid(harPerioderMedFravær, fraværPerioder) &&
+        fraværsperioderIsValid(harPerioderMedFravær, fraværPerioder) &&
         delvisFraværIsValid(harDagerMedDelvisFravær, fraværDager) &&
         oppholdIsValid(perioderHarVærtIUtlandet, perioderUtenlandsopphold) &&
         minimumEnUtbetalingsperiode(fraværPerioder, fraværDager)
@@ -32,27 +30,12 @@ export const periodeStepIsValid = (formData: SøknadFormData): boolean => {
     return isValid;
 };
 
-export const inntektStepIsValid = (formData: SøknadFormData): boolean => {
-    const frilansHarHattInntektSomFrilanser: YesOrNo = formData[SøknadFormField.frilans_harHattInntektSomFrilanser];
-    const frilansStartdato: string | undefined = formData[SøknadFormField.frilans_startdato];
-    const frilansJobberFortsattSomFrilans: YesOrNo | undefined =
-        formData[SøknadFormField.frilans_jobberFortsattSomFrilans];
-    const selvstendigHarHattInntektSomSN: YesOrNo | undefined =
-        formData[SøknadFormField.selvstendig_harHattInntektSomSN];
-    const selvstendigVirksomheter: Virksomhet[] | undefined = formData[SøknadFormField.selvstendig_virksomheter];
-
-    const isValid: boolean =
-        frilansIsValid(
-            frilansHarHattInntektSomFrilanser,
-            datepickerUtils.getDateFromDateString(frilansStartdato),
-            frilansJobberFortsattSomFrilans
-        ) && selvstendigIsValid(selvstendigHarHattInntektSomSN, selvstendigVirksomheter);
-    // && minimumEnVirksomhet(frilansJobberFortsattSomFrilans, selvstendigVirksomheter)
-    return isValid;
+export const arbeidssituasjonStepIsValid = (formData: SøknadFormData): boolean => {
+    return frilansIsValid(formData) && selvstendigIsValid(formData);
 };
 
-export const barnStepIsValid = (values: SøknadFormData): boolean => {
-    return BarnStepQuestions.getVisbility(values).areAllQuestionsAnswered();
+export const barnStepIsValid = (): boolean => {
+    return true;
 };
 
 export const medlemskapStepIsValid = ({

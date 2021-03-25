@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
 import { useAmplitudeInstance } from '@navikt/sif-common-amplitude/lib';
-import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
 import { useFormikContext } from 'formik';
 import { SKJEMANAVN } from '../App';
 import ConfirmationPage from '../components/pages/confirmation-page/ConfirmationPage';
@@ -12,14 +11,14 @@ import { StepID } from '../config/stepConfig';
 import { SøknadFormData } from '../types/SøknadFormData';
 import * as apiUtils from '../utils/apiUtils';
 import appSentryLogger from '../utils/appSentryLogger';
-import { Feature, isFeatureEnabled } from '../utils/featureToggleUtils';
 import { navigateTo, navigateToLoginPage } from '../utils/navigationUtils';
+import { harFraværPgaSmittevernhensyn, harFraværPgaStengBhgSkole } from '../utils/periodeUtils';
 import { getNextStepRoute, getSøknadRoute, isAvailable } from '../utils/routeUtils';
+import ArbeidssituasjonStep from './arbeidssituasjon-step/ArbeidssituasjonStep';
 import BarnStep from './barn-step/BarnStep';
-import InntektStep from './inntekt-step/InntektStep';
+import FraværStep from './fravær-step/FraværStep';
 import MedlemsskapStep from './medlemskap-step/MedlemsskapStep';
 import OppsummeringStep from './oppsummering-step/OppsummeringStep';
-import PeriodeStep from './periode-step/PeriodeStep';
 import SmittevernDokumenterStep from './smittevern-dokumenter-step/SmittvernDokumenterStep';
 import StengtBhgSkoleDokumenterStep from './stengt-bhg-skole-dokumenter-step/StengtBhgSkoleDokumenterStep';
 import SøknadTempStorage from './SøknadTempStorage';
@@ -32,24 +31,22 @@ const SøknadRoutes: React.FunctionComponent = () => {
     const [søknadHasBeenSent, setSøknadHasBeenSent] = React.useState(false);
     const { values, resetForm } = useFormikContext<SøknadFormData>();
 
-    const skalViseStengtBhgSkoleVedleggSteg: boolean = values.hjemmePgaStengtBhgSkole === YesOrNo.YES;
-    const skalViseSmittevernVedleggSteg: boolean = values.hjemmePgaSmittevernhensyn === YesOrNo.YES;
-
     const history = useHistory();
     const { logSoknadStartet, logUserLoggedOut } = useAmplitudeInstance();
 
+    const fraværPgaStengBhgSkole: boolean = harFraværPgaStengBhgSkole(values.fraværPerioder, values.fraværDager);
+    const fraværPgaSmittevernhensyn: boolean = harFraværPgaSmittevernhensyn(values.fraværPerioder, values.fraværDager);
+
     async function navigateToNextStepFrom(stepID: StepID) {
-        if (isFeatureEnabled(Feature.MELLOMLAGRING)) {
-            try {
-                await SøknadTempStorage.update(values, stepID);
-            } catch (error) {
-                if (apiUtils.isForbidden(error) || apiUtils.isUnauthorized(error)) {
-                    await logUserLoggedOut('Ved mellomlagring');
-                    navigateToLoginPage();
-                } else {
-                    appSentryLogger.logApiError(error);
-                    navigateTo(RouteConfig.ERROR_PAGE_ROUTE, history);
-                }
+        try {
+            await SøknadTempStorage.update(values, stepID);
+        } catch (error) {
+            if (apiUtils.isForbidden(error) || apiUtils.isUnauthorized(error)) {
+                await logUserLoggedOut('Ved mellomlagring');
+                navigateToLoginPage();
+            } else {
+                appSentryLogger.logApiError(error);
+                navigateTo(RouteConfig.ERROR_PAGE_ROUTE, history);
             }
         }
         setTimeout(() => {
@@ -63,13 +60,9 @@ const SøknadRoutes: React.FunctionComponent = () => {
     const startSoknad = async () => {
         await logSoknadStartet(SKJEMANAVN);
         setTimeout(() => {
-            if (isFeatureEnabled(Feature.MELLOMLAGRING)) {
-                SøknadTempStorage.create().then(() => {
-                    navigateTo(`${RouteConfig.SØKNAD_ROUTE_PREFIX}/${StepID.PERIODE}`, history);
-                });
-            } else {
-                navigateTo(`${RouteConfig.SØKNAD_ROUTE_PREFIX}/${StepID.PERIODE}`, history);
-            }
+            SøknadTempStorage.create().then(() => {
+                navigateTo(`${RouteConfig.SØKNAD_ROUTE_PREFIX}/${StepID.FRAVÆR}`, history);
+            });
         });
     };
 
@@ -80,14 +73,21 @@ const SøknadRoutes: React.FunctionComponent = () => {
                 render={() => <WelcomingPage onValidSubmit={startSoknad} />}
             />
 
-            {isAvailable(StepID.PERIODE, values) && (
+            {isAvailable(StepID.FRAVÆR, values) && (
                 <Route
-                    path={getSøknadRoute(StepID.PERIODE)}
-                    render={() => <PeriodeStep onValidSubmit={() => navigateToNextStepFrom(StepID.PERIODE)} />}
+                    path={getSøknadRoute(StepID.FRAVÆR)}
+                    render={() => <FraværStep onValidSubmit={() => navigateToNextStepFrom(StepID.FRAVÆR)} />}
                 />
             )}
 
-            {isAvailable(StepID.DOKUMENTER_STENGT_SKOLE_BHG, values) && skalViseStengtBhgSkoleVedleggSteg && (
+            {isAvailable(StepID.BARN, values) && (
+                <Route
+                    path={getSøknadRoute(StepID.BARN)}
+                    render={() => <BarnStep onValidSubmit={() => navigateToNextStepFrom(StepID.BARN)} />}
+                />
+            )}
+
+            {isAvailable(StepID.DOKUMENTER_STENGT_SKOLE_BHG, values) && fraværPgaStengBhgSkole && (
                 <Route
                     path={getSøknadRoute(StepID.DOKUMENTER_STENGT_SKOLE_BHG)}
                     render={() => (
@@ -98,7 +98,7 @@ const SøknadRoutes: React.FunctionComponent = () => {
                 />
             )}
 
-            {isAvailable(StepID.DOKUMENTER_SMITTEVERNHENSYN, values) && skalViseSmittevernVedleggSteg && (
+            {isAvailable(StepID.DOKUMENTER_SMITTEVERNHENSYN, values) && fraværPgaSmittevernhensyn && (
                 <Route
                     path={getSøknadRoute(StepID.DOKUMENTER_SMITTEVERNHENSYN)}
                     render={() => (
@@ -109,16 +109,12 @@ const SøknadRoutes: React.FunctionComponent = () => {
                 />
             )}
 
-            {isAvailable(StepID.INNTEKT, values) && (
+            {isAvailable(StepID.ARBEIDSSITUASJON, values) && (
                 <Route
-                    path={getSøknadRoute(StepID.INNTEKT)}
-                    render={() => <InntektStep onValidSubmit={() => navigateToNextStepFrom(StepID.INNTEKT)} />}
-                />
-            )}
-            {isAvailable(StepID.BARN, values) && (
-                <Route
-                    path={getSøknadRoute(StepID.BARN)}
-                    render={() => <BarnStep onValidSubmit={() => navigateToNextStepFrom(StepID.BARN)} />}
+                    path={getSøknadRoute(StepID.ARBEIDSSITUASJON)}
+                    render={() => (
+                        <ArbeidssituasjonStep onValidSubmit={() => navigateToNextStepFrom(StepID.ARBEIDSSITUASJON)} />
+                    )}
                 />
             )}
 
@@ -134,12 +130,12 @@ const SøknadRoutes: React.FunctionComponent = () => {
                     path={getSøknadRoute(StepID.OPPSUMMERING)}
                     render={() => (
                         <OppsummeringStep
+                            hjemmePgaSmittevernhensyn={fraværPgaSmittevernhensyn}
+                            hjemmePgaStengtBhgSkole={fraværPgaStengBhgSkole}
                             onApplicationSent={() => {
                                 setSøknadHasBeenSent(true);
                                 resetForm();
-                                if (isFeatureEnabled(Feature.MELLOMLAGRING)) {
-                                    SøknadTempStorage.purge();
-                                }
+                                SøknadTempStorage.purge();
                                 navigateTo(RouteConfig.SØKNAD_SENDT_ROUTE, history);
                             }}
                         />
