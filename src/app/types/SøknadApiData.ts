@@ -70,4 +70,5 @@ export interface SøknadApiData {
     _vedleggStengtSkole: string[];
     _harDekketTiFørsteDagerSelv: boolean;
     _harSøktAndreUtbetalinger: boolean;
+    _harFosterbarn: boolean;
 }

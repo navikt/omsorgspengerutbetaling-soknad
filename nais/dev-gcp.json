@@ -15,7 +15,7 @@
         "UTILGJENGELIG": "off",
         "MELLOMLAGRING": "on",
         "STENGT_BHG_SKOLE": "on",
-        "NYNORSK": "on",
+        "NYNORSK": "off",
         "APPSTATUS_PROJECT_ID": "ryujtq87",
         "APPSTATUS_DATASET": "staging",
         "SKIP_ORGNUM_VALIDATION": "true"

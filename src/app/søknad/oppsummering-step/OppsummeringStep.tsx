@@ -121,9 +121,14 @@ const OppsummeringStep: React.FunctionComponent<Props> = ({
 
                     {/* Om barn */}
                     <SummarySection header={intlHelper(intl, 'steg.oppsummering.barn.header')}>
-                        <SummaryBlock header={intlHelper(intl, 'steg.oppsummering.barn.alleBarn')}>
-                            <SummaryList items={fosterbarn} itemRenderer={fosterbarnListItemRenderer} />
+                        <SummaryBlock header={intlHelper(intl, 'steg.barn.fosterbarn.spm')}>
+                            <JaNeiSvar harSvartJa={apiValues._harFosterbarn} />
                         </SummaryBlock>
+                        {fosterbarn.length > 0 && (
+                            <SummaryBlock header={intlHelper(intl, 'steg.oppsummering.barn.alleBarn')}>
+                                <SummaryList items={fosterbarn} itemRenderer={fosterbarnListItemRenderer} />
+                            </SummaryBlock>
+                        )}
                     </SummarySection>
 
                     {/* Omsorgsdager du søker utbetaling for */}

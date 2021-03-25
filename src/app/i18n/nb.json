@@ -178,7 +178,7 @@
 
     "step.fravaer.info.1": "Nå skal du legge inn dagene du har hatt fravær fra jobb fordi du har vært hjemme med omsorgsdager. Du kan få utbetalt omsorgspenger i opptil tre måneder tilbake i tid, regnet fra måneden før NAV mottok søknad fra deg.",
     "step.fravaer.info.2": "I søknaden legger du kun inn dagene du søker utbetaling for. Du skal altså ikke legge inn de 10 første dagene som du dekker selv.",
-    "step.fravaer.spm.harDekketTiFørsteDagerSelv": "Har du dekket de ti første dagene selv?",
+    "step.fravaer.spm.harDekketTiFørsteDagerSelv": "Har du dekket de 10 første omsorgsdagene selv?",
     "step.fravaer.spm.harPerioderMedFravær": "Har du hatt hele dager med fravær fra jobb?",
     "step.fravaer.dager.tittel": "Omsorgsdager du søker utbetaling for",
     "step.fravaer.dager.info": "Her skal du legge inn dagene du søker utbetaling for. Du kan kun søke om dager fra ett og samme år. Hvis du skal søke for {forrigeÅr} i tillegg til {inneværendeÅr} må du sende to søknader.",
@@ -222,18 +222,18 @@
     "steg.oppsummering.søker.omDeg": "Om deg",
     "steg.oppsummering.søker.fnr": "Fødselsnummer: {fødselsnummer}",
 
-    "steg.oppsummering.barn.header": "Om barn",
-    "steg.oppsummering.barn.alleBarn": "Dine barn",
+    "steg.oppsummering.barn.header": "Fosterbarn",
+    "steg.oppsummering.barn.alleBarn": "Fosterbarn du har lagt til",
 
 
     "steg.oppsummering.arbeidssituasjon.header": "Din arbeidssituasjon",
-    "steg.oppsummering.harSøktOmAndreUtbetalinger": "Andre utbetalinger det er søkt om fra NAV",
+    "steg.oppsummering.harSøktOmAndreUtbetalinger": "Hvilke andre utbetalinger har du søkt om?",
     "steg.oppsummering.utbetalinger.header": "Omsorgsdager du søker utbetaling for",
 
     "steg.oppsummering.medlemskap.header": "Medlemskap i folketrygden",
 
-    "steg.oppsummering.utlandetSiste12.header": "Har bodd i utlandet siste 12 måneder",
-    "steg.oppsummering.utlandetNeste12.header": "Skal bo i utlandet neste 12 måneder",
+    "steg.oppsummering.utlandetSiste12.header": "Har du bodd i utlandet i de siste 12 månedene?",
+    "steg.oppsummering.utlandetNeste12.header": "Skal du bo i utlandet i de neste 12 månedene?",
     "steg.oppsummering.utlandetSiste12.liste.header": "Utenlandsopphold siste 12 måneder",
     "steg.oppsummering.utlandetNeste12.liste.header": "Utenlandsopphold neste 12 måneder",
     "steg.oppsummering.legeerklæring.header": "Legeerklæring",
@@ -406,7 +406,7 @@
     "fiskerinfo.BLAD_A": "Blad A",
     "fiskerinfo.BLAD_B": "Blad B",
 
-    "summary.virksomhet.header": "Næringsinntekt",
+    "summary.virksomhet.header": "Selvstendig næringsdrivende",
     "summary.virksomhet.næringstype": "Næringstype",
     "summary.virksomhet.regnskapsfører": "Regnskapsfører er {navn}, telefon: {telefon}.",
     "summary.virksomhet.ikkeRegnskapsfører": "Har ikke regnskapsfører.",
@@ -431,11 +431,11 @@
     "frilanser.jobberFortsatt.spm": "Jobber du fortsatt som frilanser?",
     "frilanser.nårSluttet.spm": "Når sluttet du som frilanser?",
 
-    "frilanser.summary.header": "Frilansinntekt",
+    "frilanser.summary.header": "Frilanser",
     "frilanser.summary.harDuHattInntekt.header": "Var du frilanser i dagene du søker utbetaling for?",
     "frilanser.summary.nårStartet.header": "Når startet du som frilanser?",
     "frilanser.summary.jobberFortsatt.header": "Jobber du fortsatt som frilanser?",
     "frilanser.summary.nårSluttet.header": "Når sluttet du som frilanser?",
 
-    "summary.andreIntekter.header": "Eventuelle andre inntekter"
+    "summary.andreIntekter.header": "Andre utbetalinger"
 }
