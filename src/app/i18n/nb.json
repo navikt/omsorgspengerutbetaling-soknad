@@ -87,6 +87,10 @@
     "step.fravaer.stepTitle": "Dager du har vært hjemme med barn",
     "step.fravaer.stepIndicatorLabel": "Dager du har vært hjemme med barn",
 
+    "step.fravaerFra.pageTitle": "Fravær fra",
+    "step.fravaerFra.stepTitle": "Fravær fra",
+    "step.fravaerFra.stepIndicatorLabel": "Fravær fra",
+
     "step.arbeidssituasjon.pageTitle": "Arbeidssituasjon - Søknad om utbetaling av omsorgspenger",
     "step.arbeidssituasjon.stepTitle": "Arbeidssituasjon",
     "step.arbeidssituasjon.stepIndicatorLabel": "Arbeidssituasjon",
@@ -199,6 +203,8 @@
     "step.fravaer.andreUtbetalinger": "Andre utbetalinger fra NAV",
 
     "steg.arbeid.spm": "Hva er din arbeidssituasjon? Du kan velge flere.",
+
+    "steg.fravarFra.intro": "Spesifiser fravær",
 
     "steg.barn.pageTitle": "Fosterbarn",
     "steg.barn.stepTitle": "Fosterbarn",

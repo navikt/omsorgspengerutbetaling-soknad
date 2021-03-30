@@ -4,8 +4,10 @@ import { Locale } from '@navikt/sif-common-core/lib/types/Locale';
 import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
 import { attachmentUploadHasFailed } from '@navikt/sif-common-core/lib/utils/attachmentUtils';
 import { formatDateToApiFormat } from '@navikt/sif-common-core/lib/utils/dateUtils';
+// import { formatDateToApiFormat } from '@navikt/sif-common-core/lib/utils/dateUtils';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import { decimalTimeToTime, timeToIso8601Duration } from '@navikt/sif-common-core/lib/utils/timeUtils';
+// import { decimalTimeToTime, timeToIso8601Duration } from '@navikt/sif-common-core/lib/utils/timeUtils';
 import {
     Fosterbarn,
     mapVirksomhetToVirksomhetApiData,
@@ -14,6 +16,7 @@ import {
     VirksomhetApiData,
 } from '@navikt/sif-common-forms/lib';
 import { FraværDag, FraværPeriode } from '@navikt/sif-common-forms/lib/fravær';
+import { Aktivitet } from '../types/AktivitetFravær';
 import {
     ApiFosterbarn,
     SøknadApiData,
@@ -25,6 +28,7 @@ import {
 import { SøknadFormData } from '../types/SøknadFormData';
 import { mapBostedUtlandToApiData } from './formToApiMaps/mapBostedUtlandToApiData';
 import { mapFrilansToApiData } from './formToApiMaps/mapFrilansToApiData';
+import { delFraværPerioderOppIDager, getAktivitetForDag, getAktivitetFromAktivitetFravær } from './fraværUtils';
 
 const getVedleggUrlFromAttachments = (attachments: Attachment[]): string[] => {
     return (
@@ -42,8 +46,6 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
 
         // Fravær
         harDekketTiFørsteDagerSelv,
-        fraværPerioder,
-        fraværDager,
         perioder_harVærtIUtlandet,
         perioder_utenlandsopphold,
         harSøktAndreUtbetalinger,
@@ -92,6 +94,18 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
     const vedleggSmittevern = getVedleggUrlFromAttachments(dokumenterSmittevernhensyn);
     const vedleggStengtBhgSkole = getVedleggUrlFromAttachments(dokumenterStengtBkgSkole);
 
+    const frilans = mapFrilansToApiData(
+        frilans_erFrilanser,
+        frilans_jobberFortsattSomFrilans,
+        frilans_startdato,
+        frilans_sluttdato
+    );
+    const selvstendigVirksomheter = settInnVirksomheter(
+        intl.locale,
+        selvstendig_erSelvstendigNæringsdrivende,
+        selvstendig_virksomheter
+    );
+
     const apiData: SøknadApiData = {
         språk: (intl.locale as any) === 'en' ? 'nn' : (intl.locale as Locale),
         bekreftelser: {
@@ -101,7 +115,7 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
         spørsmål: [...yesOrNoQuestions],
         fosterbarn: fosterbarn.map(mapFosterbarnToApiFosterbarn),
         andreUtbetalinger: harSøktAndreUtbetalinger === YesOrNo.YES ? [...andreUtbetalinger] : [],
-        utbetalingsperioder: mapPeriodeTilUtbetalingsperiode(fraværPerioder, fraværDager),
+        utbetalingsperioder: getUtbetalingsperioderApiFromFormData(formValues),
         bosteder: settInnBosteder(
             harBoddUtenforNorgeSiste12Mnd,
             utenlandsoppholdSiste12Mnd,
@@ -109,18 +123,9 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
             utenlandsoppholdNeste12Mnd,
             intl.locale
         ),
+        frilans,
+        selvstendigVirksomheter,
         opphold: settInnOpphold(perioder_harVærtIUtlandet, perioder_utenlandsopphold, intl.locale), // periode siden, har du oppholdt
-        frilans: mapFrilansToApiData(
-            frilans_erFrilanser,
-            frilans_jobberFortsattSomFrilans,
-            frilans_startdato,
-            frilans_sluttdato
-        ),
-        selvstendigVirksomheter: settInnVirksomheter(
-            intl.locale,
-            selvstendig_erSelvstendigNæringsdrivende,
-            selvstendig_virksomheter
-        ),
         vedlegg: [...vedleggSmittevern, ...vedleggStengtBhgSkole],
         _vedleggStengtSkole: vedleggStengtBhgSkole,
         _vedleggSmittevern: vedleggSmittevern,
@@ -136,36 +141,37 @@ export const mapFosterbarnToApiFosterbarn = ({ fødselsnummer }: Fosterbarn): Ap
     identitetsnummer: fødselsnummer,
 });
 
-export const mapPeriodeTilUtbetalingsperiode = (
-    fraværPerioder: FraværPeriode[],
-    fraværDager: FraværDag[]
-): UtbetalingsperiodeApi[] => {
-    const periodeMappedTilUtbetalingsperiode: UtbetalingsperiodeApi[] = fraværPerioder.map(
-        (periode: FraværPeriode): UtbetalingsperiodeApi => {
-            return {
-                fraOgMed: formatDateToApiFormat(periode.fraOgMed),
-                tilOgMed: formatDateToApiFormat(periode.tilOgMed),
-                antallTimerPlanlagt: null,
-                antallTimerBorte: null,
-                årsak: periode.årsak,
-            };
-        }
-    );
-
-    const fraværDeleravDagMappedTilUtbetalingsperiode: UtbetalingsperiodeApi[] = fraværDager.map(
-        (fraværDag: FraværDag): UtbetalingsperiodeApi => {
-            return {
-                fraOgMed: formatDateToApiFormat(fraværDag.dato),
-                tilOgMed: formatDateToApiFormat(fraværDag.dato),
-                antallTimerPlanlagt: timeToIso8601Duration(decimalTimeToTime(parseFloat(fraværDag.timerArbeidsdag))),
-                antallTimerBorte: timeToIso8601Duration(decimalTimeToTime(parseFloat(fraværDag.timerFravær))),
-                årsak: fraværDag.årsak,
-            };
-        }
-    );
-
-    return [...periodeMappedTilUtbetalingsperiode, ...fraværDeleravDagMappedTilUtbetalingsperiode];
-};
+// export const mapPerioderOgDagerTilUtbetalingsperiode = (
+//     fraværPerioder: FraværPeriode[],
+//     fraværDager: FraværDag[],
+//     aktivitet: Aktivitet
+// ): UtbetalingsperiodeApi[] => {
+//     const periodeMappedTilUtbetalingsperiode: UtbetalingsperiodeApi[] = fraværPerioder.map(
+//         (periode: FraværPeriode): UtbetalingsperiodeApi => {
+//             return {
+//                 fraOgMed: formatDateToApiFormat(periode.fraOgMed),
+//                 tilOgMed: formatDateToApiFormat(periode.tilOgMed),
+//                 antallTimerPlanlagt: null,
+//                 antallTimerBorte: null,
+//                 årsak: periode.årsak,
+//                 fraværAktivitet: [aktivitet],
+//             };
+//         }
+//     );
+//     const fraværDeleravDagMappedTilUtbetalingsperiode: UtbetalingsperiodeApi[] = fraværDager.map(
+//         (fraværDag: FraværDag): UtbetalingsperiodeApi => {
+//             return {
+//                 fraOgMed: formatDateToApiFormat(fraværDag.dato),
+//                 tilOgMed: formatDateToApiFormat(fraværDag.dato),
+//                 antallTimerPlanlagt: timeToIso8601Duration(decimalTimeToTime(parseFloat(fraværDag.timerArbeidsdag))),
+//                 antallTimerBorte: timeToIso8601Duration(decimalTimeToTime(parseFloat(fraværDag.timerFravær))),
+//                 årsak: fraværDag.årsak,
+//                 fraværAktivitet: [aktivitet],
+//             };
+//         }
+//     );
+//     return [...periodeMappedTilUtbetalingsperiode, ...fraværDeleravDagMappedTilUtbetalingsperiode];
+// };
 
 export const mapYesOrNoToSvar = (input: YesOrNo): YesNoSvar => {
     return input === YesOrNo.YES;
@@ -218,4 +224,66 @@ const settInnVirksomheter = (
               mapVirksomhetToVirksomhetApiData(locale, virksomhet, harBesvartFiskerPåBladB)
           )
         : [];
+};
+
+export const getUtbetalingsperioderApiFromFormData = (formValues: SøknadFormData): UtbetalingsperiodeApi[] => {
+    const {
+        fraværDager,
+        fraværPerioder,
+        aktivitetFravær,
+        frilans_erFrilanser,
+        selvstendig_erSelvstendigNæringsdrivende,
+    } = formValues;
+    const erFrilanser = frilans_erFrilanser === YesOrNo.YES;
+    const erSN = selvstendig_erSelvstendigNæringsdrivende === YesOrNo.YES;
+    const aktivitet: Aktivitet[] = getAktivitetFromAktivitetFravær(aktivitetFravær, erFrilanser, erSN);
+
+    if (aktivitet.length === 1) {
+        return [
+            ...fraværDager.map((dag) => mapFraværDagTilUtbetalingsperiodeApi(dag, aktivitet)),
+            ...fraværPerioder.map((periode) => mapFraværPeriodeTilUtbetalingsperiodeApi(periode, aktivitet)),
+        ];
+    } else if (aktivitet.length === 2) {
+        return [
+            ...fraværDager.map((dag) =>
+                mapFraværDagTilUtbetalingsperiodeApi(dag, getAktivitetForDag(dag.dato, aktivitetFravær))
+            ),
+            ...delFraværPerioderOppIDager(fraværPerioder).map((periodeDag) =>
+                mapFraværPeriodeTilUtbetalingsperiodeApi(
+                    periodeDag,
+                    getAktivitetForDag(periodeDag.fraOgMed, aktivitetFravær)
+                )
+            ),
+        ];
+    } else {
+        throw new Error('Missing aktivitet');
+    }
+};
+
+export const mapFraværPeriodeTilUtbetalingsperiodeApi = (
+    periode: FraværPeriode,
+    aktivitet: Aktivitet[]
+): UtbetalingsperiodeApi => {
+    return {
+        fraOgMed: formatDateToApiFormat(periode.fraOgMed),
+        tilOgMed: formatDateToApiFormat(periode.tilOgMed),
+        antallTimerPlanlagt: null,
+        antallTimerBorte: null,
+        årsak: periode.årsak,
+        fraværAktivitet: aktivitet,
+    };
+};
+
+export const mapFraværDagTilUtbetalingsperiodeApi = (
+    fraværDag: FraværDag,
+    aktivitet: Aktivitet[]
+): UtbetalingsperiodeApi => {
+    return {
+        fraOgMed: formatDateToApiFormat(fraværDag.dato),
+        tilOgMed: formatDateToApiFormat(fraværDag.dato),
+        antallTimerPlanlagt: timeToIso8601Duration(decimalTimeToTime(parseFloat(fraværDag.timerArbeidsdag))),
+        antallTimerBorte: timeToIso8601Duration(decimalTimeToTime(parseFloat(fraværDag.timerFravær))),
+        årsak: fraværDag.årsak,
+        fraværAktivitet: aktivitet,
+    };
 };

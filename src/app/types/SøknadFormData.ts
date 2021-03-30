@@ -5,6 +5,7 @@ import { Attachment } from '@navikt/sif-common-core/lib/types/Attachment';
 import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
 import { AndreUtbetalinger } from './AndreUtbetalinger';
 import { Fosterbarn } from '@navikt/sif-common-forms/lib';
+import { AktivitetFravær } from './AktivitetFravær';
 
 export enum SøknadFormField {
     harForståttRettigheterOgPlikter = 'harForståttRettigheterOgPlikter',
@@ -25,11 +26,12 @@ export enum SøknadFormField {
     harFosterbarn = 'harFosterbarn',
     fosterbarn = 'fosterbarn',
 
-    // Felter knyttet til stengt bhg eller skole
+    // Dokumenter
     dokumenterStengtBkgSkole = 'dokumenterStengtBkgSkole',
-
-    // Optional vedlegg step
     dokumenterSmittevernhensyn = 'dokumenterSmittevernhensyn',
+
+    // Fravær fra
+    aktivitetFravær = 'aktivitetFravær',
 
     // Inntekt
     frilans_erFrilanser = 'frilans_erFrilanser',
@@ -61,9 +63,8 @@ export interface SøknadFormData {
     [SøknadFormField.harSøktAndreUtbetalinger]: YesOrNo;
     [SøknadFormField.andreUtbetalinger]: AndreUtbetalinger[];
 
+    // Dokumenter
     [SøknadFormField.dokumenterStengtBkgSkole]: Attachment[];
-
-    // Optional vedlegg step
     [SøknadFormField.dokumenterSmittevernhensyn]: Attachment[];
 
     // Inntekt
@@ -77,6 +78,9 @@ export interface SøknadFormData {
     // Barn
     [SøknadFormField.harFosterbarn]: YesOrNo;
     [SøknadFormField.fosterbarn]: Fosterbarn[];
+
+    // Fravær fra
+    [SøknadFormField.aktivitetFravær]: AktivitetFravær[];
 
     // Medlemskap
     [SøknadFormField.harBoddUtenforNorgeSiste12Mnd]: YesOrNo;
@@ -123,6 +127,8 @@ export const initialValues: SøknadFormData = {
     // Arbeidssituasjon
     [SøknadFormField.frilans_erFrilanser]: YesOrNo.UNANSWERED,
     [SøknadFormField.selvstendig_erSelvstendigNæringsdrivende]: YesOrNo.UNANSWERED,
+
+    [SøknadFormField.aktivitetFravær]: [],
 
     // STEG 7: Medlemskap
     [SøknadFormField.harBoddUtenforNorgeSiste12Mnd]: YesOrNo.UNANSWERED,
