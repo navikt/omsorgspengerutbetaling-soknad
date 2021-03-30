@@ -1,7 +1,7 @@
 import { dateToISOString } from '@navikt/sif-common-formik/lib';
 import { dateErHelg, FraværDag, FraværPeriode } from '@navikt/sif-common-forms/lib';
 import { flatten, uniqBy } from 'lodash';
-import { AktivitetFravær, Aktivitet } from '../types/AktivitetFravær';
+import { AktivitetFravær, Aktivitet, ApiAktivitet } from '../types/AktivitetFravær';
 import { getDatesWithinDateRange, sortByDate } from './dates';
 import dayjs from 'dayjs';
 
@@ -40,25 +40,34 @@ export const getAktivitetFromAktivitetFravær = (
     aktivitetFravær: AktivitetFravær[],
     erFrilanser: boolean,
     erSelvstendigNæringsdrivende: boolean
-): Aktivitet[] => {
+): ApiAktivitet[] => {
     if (erFrilanser && !erSelvstendigNæringsdrivende) {
-        return [Aktivitet.FRILANSER];
+        return [ApiAktivitet.FRILANSER];
     }
     if (erSelvstendigNæringsdrivende && !erFrilanser) {
-        return [Aktivitet.SELVSTENDIG_NÆRINGSDRIVENDE];
+        return [ApiAktivitet.SELVSTENDIG_NÆRINGSDRIVENDE];
     }
     return [
-        ...(harFraværSomFrilanser(aktivitetFravær) ? [Aktivitet.FRILANSER] : []),
-        ...(harFraværSomSN(aktivitetFravær) ? [Aktivitet.SELVSTENDIG_NÆRINGSDRIVENDE] : []),
+        ...(harFraværSomFrilanser(aktivitetFravær) ? [ApiAktivitet.FRILANSER] : []),
+        ...(harFraværSomSN(aktivitetFravær) ? [ApiAktivitet.SELVSTENDIG_NÆRINGSDRIVENDE] : []),
     ];
 };
 
-export const getAktivitetForDag = (dato: Date, fravær: AktivitetFravær[]): Aktivitet[] => {
+export const getApiAktivitetFromAktivitet = (aktivitet: Aktivitet): ApiAktivitet[] => {
+    switch (aktivitet) {
+        case Aktivitet.BEGGE:
+            return [ApiAktivitet.SELVSTENDIG_NÆRINGSDRIVENDE, ApiAktivitet.FRILANSER];
+        case Aktivitet.SELVSTENDIG_NÆRINGSDRIVENDE:
+            return [ApiAktivitet.SELVSTENDIG_NÆRINGSDRIVENDE];
+        case Aktivitet.FRILANSER:
+            return [ApiAktivitet.FRILANSER];
+    }
+};
+
+export const getApiAktivitetForDag = (dato: Date, fravær: AktivitetFravær[]): ApiAktivitet[] => {
     const aktivitetFravær = fravær.find((fa) => dayjs(fa.dato).isSame(dato, 'day'));
     if (!aktivitetFravær) {
         throw new Error('Missing aktivitet for date');
     }
-    return aktivitetFravær.aktivitet === Aktivitet.BEGGE
-        ? [Aktivitet.FRILANSER, Aktivitet.SELVSTENDIG_NÆRINGSDRIVENDE]
-        : [aktivitetFravær.aktivitet];
+    return getApiAktivitetFromAktivitet(aktivitetFravær.aktivitet);
 };

@@ -2,7 +2,7 @@ import { FraværÅrsak, VirksomhetApiData } from '@navikt/sif-common-forms/lib';
 import { ApiStringDate } from '@navikt/sif-common-core/lib/types/ApiStringDate';
 import { Locale } from '@navikt/sif-common-core/lib/types/Locale';
 import { AndreUtbetalinger } from './AndreUtbetalinger';
-import { Aktivitet } from './AktivitetFravær';
+import { ApiAktivitet } from './AktivitetFravær';
 
 export type ISO8601Duration = string;
 
@@ -36,7 +36,7 @@ export interface UtbetalingsperiodeApi {
     tilOgMed: ApiStringDate; // @JsonFormat(pattern = "yyyy-MM-dd")
     antallTimerBorte: string | null; // f eks PT5H30M | "null" (type Duration)
     antallTimerPlanlagt: string | null; // f eks PT5H30M | "null" (type Duration)
-    fraværAktivitet: Aktivitet[];
+    fraværAktivitet: ApiAktivitet[];
 }
 
 export interface Frilans {

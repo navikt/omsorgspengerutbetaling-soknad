@@ -81,6 +81,7 @@ export interface SøknadFormData {
 
     // Fravær fra
     [SøknadFormField.aktivitetFravær]: AktivitetFravær[];
+    [SøknadFormField.aktivitetFravær]: AktivitetFravær[];
 
     // Medlemskap
     [SøknadFormField.harBoddUtenforNorgeSiste12Mnd]: YesOrNo;

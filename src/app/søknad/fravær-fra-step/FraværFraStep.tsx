@@ -2,46 +2,40 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import CounsellorPanel from '@navikt/sif-common-core/lib/components/counsellor-panel/CounsellorPanel';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
-import { dateToISOString } from '@navikt/sif-common-formik/lib';
 import { useFormikContext } from 'formik';
 import FormSection from '../../components/form-section/FormSection';
 import { StepConfigProps, StepID } from '../../config/stepConfig';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import { getUtbetalingsdatoerFraFravær } from '../../utils/fraværUtils';
 import SøknadStep from '../SøknadStep';
-import { Aktivitet } from '../../types/AktivitetFravær';
+import { Aktivitet, AktivitetFravær } from '../../types/AktivitetFravær';
 import dayjs from 'dayjs';
 import SøknadFormComponents from '../SøknadFormComponents';
 import { validateRequiredField } from '@navikt/sif-common-core/lib/validation/fieldValidations';
+import { dateToISOString } from '@navikt/sif-common-formik/lib';
 
 const FraværFraStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) => {
     const {
         values: { fraværDager, fraværPerioder },
     } = useFormikContext<SøknadFormData>();
 
-    const getFieldName = (date: Date): string => {
-        const key = dateToISOString(date);
-        const fieldName = `${key}_fraværFra`;
-        return fieldName;
+    const getFieldName = (dato: Date): string => {
+        const key = dateToISOString(dato);
+        return `${SøknadFormField.aktivitetFravær}_${key}`;
     };
     const utbetalingsdatoer = getUtbetalingsdatoerFraFravær(fraværPerioder, fraværDager);
+
     const cleanupStep = (formData: SøknadFormData): SøknadFormData => {
-        formData.aktivitetFravær = [];
+        const aktivitetFravær: AktivitetFravær[] = [];
+        /** Legg til dato */
         utbetalingsdatoer.forEach((d) => {
             const fieldName = getFieldName(d);
-            formData.aktivitetFravær.push({
-                dato: d,
+            aktivitetFravær.push({
                 aktivitet: formData[fieldName],
+                dato: d,
             });
         });
-        Object.keys(formData).forEach((key: string) => {
-            if (key.indexOf('_fraværFra') === 10) {
-                if (utbetalingsdatoer.findIndex((d) => getFieldName(d) === key) === -1) {
-                    console.log(`Deleting ${key}`);
-                    delete formData[key];
-                }
-            }
-        });
+        formData.aktivitetFravær = aktivitetFravær;
         return formData;
     };
 
@@ -77,7 +71,7 @@ const FraværFraStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmi
                                         },
                                         {
                                             label: 'Både frilanser og selvstendig næringsdrivende',
-                                            value: 'begge',
+                                            value: Aktivitet.BEGGE,
                                         },
                                     ]}
                                     validate={validateRequiredField}

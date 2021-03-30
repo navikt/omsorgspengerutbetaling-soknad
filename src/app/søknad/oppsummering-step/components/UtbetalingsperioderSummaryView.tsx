@@ -7,6 +7,8 @@ import { iso8601DurationToTime, timeToDecimalTime } from '@navikt/sif-common-cor
 import { FraværÅrsak, getFraværÅrsakTekstKort, timeText } from '@navikt/sif-common-forms/lib/fravær';
 import { UtbetalingsperiodeApi } from '../../../types/SøknadApiData';
 import SummaryBlock from './SummaryBlock';
+import dayjs from 'dayjs';
+import uniqBy from 'lodash/uniqBy';
 
 export interface Props {
     utbetalingsperioder: UtbetalingsperiodeApi[];
@@ -46,10 +48,7 @@ export const outNull = (
     maybeUtbetalingsperiodeDag: UtbetalingsperiodeDag | null
 ): maybeUtbetalingsperiodeDag is UtbetalingsperiodeDag => maybeUtbetalingsperiodeDag !== null;
 
-export const utbetalingsperiodeDagToDagSummaryStringView = (
-    dag: UtbetalingsperiodeDag,
-    intl: IntlShape
-): JSX.Element => {
+export const renderUtbetalingsperiodeDag = (dag: UtbetalingsperiodeDag, intl: IntlShape): JSX.Element => {
     const antallTimerSkulleJobbet = `${timeToDecimalTime(dag.antallTimerPlanlagt)} ${timeText(
         `${timeToDecimalTime(dag.antallTimerPlanlagt)}`
     )}`;
@@ -65,12 +64,40 @@ export const utbetalingsperiodeDagToDagSummaryStringView = (
     );
 };
 
+const renderUtbetalingsperiode = (
+    periode: UtbetalingsperiodeApi,
+    visAktivitet: boolean,
+    intl: IntlShape
+): JSX.Element => {
+    const fom = apiStringDateToDate(periode.fraOgMed);
+    const tom = apiStringDateToDate(periode.tilOgMed);
+    const fomDag = dayjs(fom).format('dddd');
+    // const aktivitet = {};
+
+    return periode.fraOgMed === periode.tilOgMed ? (
+        <div>
+            <span style={{ textTransform: 'capitalize' }}>{fomDag}</span> {prettifyDate(fom)}
+            {visAktivitet && periode.fraværAktivitet}
+        </div>
+    ) : (
+        <div>
+            Fra og med {prettifyDate(fom)}, til og med {prettifyDate(tom)}
+            {periode.årsak !== FraværÅrsak.ordinært && <div>Årsak: {getFraværÅrsakTekstKort(periode.årsak, intl)}</div>}
+        </div>
+    );
+};
+
+const harFlereFraværAktiviteter = (perioder: UtbetalingsperiodeApi[]) => {
+    return uniqBy(perioder, (periode) => periode.fraværAktivitet).length === 2;
+};
+
 const UtbetalingsperioderSummaryView: React.FunctionComponent<Props> = ({ utbetalingsperioder = [] }) => {
     const perioder: UtbetalingsperiodeApi[] = utbetalingsperioder.filter(
         (p) => p.tilOgMed !== undefined && p.antallTimerBorte === null
     );
     const intl = useIntl();
     const dager: UtbetalingsperiodeDag[] = utbetalingsperioder.map(toMaybeUtbetalingsperiodeDag).filter(outNull);
+    const harUlikeAktiviteter = harFlereFraværAktiviteter(utbetalingsperioder);
 
     return (
         <>
@@ -78,15 +105,7 @@ const UtbetalingsperioderSummaryView: React.FunctionComponent<Props> = ({ utbeta
                 <SummaryBlock header={'Hele dager med fravær'}>
                     <SummaryList
                         items={perioder}
-                        itemRenderer={(periode: UtbetalingsperiodeApi) => (
-                            <div>
-                                Fra og med {prettifyDate(apiStringDateToDate(periode.fraOgMed))}, til og med{' '}
-                                {prettifyDate(apiStringDateToDate(periode.tilOgMed))}
-                                {periode.årsak !== FraværÅrsak.ordinært && (
-                                    <div>Årsak: {getFraværÅrsakTekstKort(periode.årsak, intl)}</div>
-                                )}
-                            </div>
-                        )}
+                        itemRenderer={(periode) => renderUtbetalingsperiode(periode, harUlikeAktiviteter, intl)}
                     />
                 </SummaryBlock>
             )}
@@ -94,9 +113,7 @@ const UtbetalingsperioderSummaryView: React.FunctionComponent<Props> = ({ utbeta
                 <SummaryBlock header={'Dager med delvis fravær'}>
                     <SummaryList
                         items={dager}
-                        itemRenderer={(dag: UtbetalingsperiodeDag) =>
-                            utbetalingsperiodeDagToDagSummaryStringView(dag, intl)
-                        }
+                        itemRenderer={(dag: UtbetalingsperiodeDag) => renderUtbetalingsperiodeDag(dag, intl)}
                     />
                 </SummaryBlock>
             )}

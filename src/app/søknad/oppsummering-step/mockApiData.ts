@@ -1,5 +1,5 @@
 import { FraværÅrsak, Næringstype } from '@navikt/sif-common-forms/lib';
-import { Aktivitet } from '../../types/AktivitetFravær';
+import { ApiAktivitet } from '../../types/AktivitetFravær';
 import { SøknadApiData } from '../../types/SøknadApiData';
 
 export const mock1: SøknadApiData = {
@@ -61,7 +61,7 @@ export const mock1: SøknadApiData = {
             antallTimerPlanlagt: null,
             antallTimerBorte: null,
             årsak: FraværÅrsak.ordinært,
-            fraværAktivitet: [Aktivitet.FRILANSER],
+            fraværAktivitet: [ApiAktivitet.FRILANSER],
         },
         {
             fraOgMed: '2020-03-04',
@@ -69,7 +69,7 @@ export const mock1: SøknadApiData = {
             antallTimerPlanlagt: null,
             antallTimerBorte: null,
             årsak: FraværÅrsak.ordinært,
-            fraværAktivitet: [Aktivitet.FRILANSER],
+            fraværAktivitet: [ApiAktivitet.FRILANSER],
         },
         {
             fraOgMed: '2020-03-09',
@@ -77,7 +77,7 @@ export const mock1: SøknadApiData = {
             antallTimerPlanlagt: 'PT5H0M',
             antallTimerBorte: 'PT5H0M',
             årsak: FraværÅrsak.ordinært,
-            fraværAktivitet: [Aktivitet.FRILANSER],
+            fraværAktivitet: [ApiAktivitet.FRILANSER],
         },
         {
             fraOgMed: '2020-03-10',
@@ -85,7 +85,7 @@ export const mock1: SøknadApiData = {
             antallTimerPlanlagt: 'PT5H0M',
             antallTimerBorte: 'PT5H0M',
             årsak: FraværÅrsak.ordinært,
-            fraværAktivitet: [Aktivitet.FRILANSER],
+            fraværAktivitet: [ApiAktivitet.FRILANSER],
         },
     ],
     vedlegg: [],
