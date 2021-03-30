@@ -27,7 +27,6 @@ const FraværFraStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmi
 
     const cleanupStep = (formData: SøknadFormData): SøknadFormData => {
         const aktivitetFravær: AktivitetFravær[] = [];
-        /** Legg til dato */
         utbetalingsdatoer.forEach((d) => {
             const fieldName = getFieldName(d);
             aktivitetFravær.push({

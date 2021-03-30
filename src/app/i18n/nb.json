@@ -70,6 +70,9 @@
     "arbeidssituasjon.selvstendigNæringsdrivende": "Selvstendig næringsdrivende",
     "arbeidssituasjon.frilanser": "Frilanser",
 
+    "fraværAktivitet.SELVSTENDIG_NÆRINGSDRIVENDE": "selvstendig næringsdrivende",
+    "fraværAktivitet.FRILANSER": "frilanser",
+
     "relasjonTilBarnet.mor": "Mor",
     "relasjonTilBarnet.far": "Far",
     "relasjonTilBarnet.adoptivforelder": "Adoptivforelder",
@@ -232,7 +235,6 @@
     "steg.oppsummering.barn.header": "Fosterbarn",
     "steg.oppsummering.barn.alleBarn": "Fosterbarn du har lagt til",
 
-
     "steg.oppsummering.arbeidssituasjon.header": "Din arbeidssituasjon",
     "steg.oppsummering.harSøktOmAndreUtbetalinger": "Hvilke andre utbetalinger har du søkt om?",
     "steg.oppsummering.utbetalinger.header": "Omsorgsdager du søker utbetaling for",
@@ -251,6 +253,15 @@
     "steg.oppsummering.utenlandsoppholdIPerioden.listetittel": "Utenlandsopphold i perioden",
 
     "steg.oppsummering.apiValideringFeil.tittel": "Noe av informasjonen mangler",
+
+    "steg.oppsummering.dokumenter.header": "Vedlegg",
+    "steg.oppsummering.dokumenter.ingenVedlegg": "Ingen vedlegg er lastet opp",
+    "steg.oppsummering.dokumenterSmittevern.header": "Bekreftelse fra lege",
+    "steg.oppsummering.dokumenterStengtBhgSkole.header": "Bekreftelse fra barnehage eller skole",
+
+    "steg.oppsummering.fravær.årsak": "Årsak: {årsak}.",
+    "steg.oppsummering.fravær.aktivitet.1": "Fravær som {aktivitet}.",
+    "steg.oppsummering.fravær.aktivitet.2": "Fravær som {aktivitet1} og {aktivitet2}.",
 
     "page.confirmation.sidetittel": "Vi har mottatt søknaden din",
     "page.confirmation.tittel": "Vi har mottatt søknad fra deg om utbetaling av omsorgspenger",
@@ -363,11 +374,6 @@
     "steg.intro.smittevernInfo.2": "Hvis du ikke har bekreftelse tilgjengelig når du søker, kan du ettersende den. Vi kan ikke behandle søknaden før vi mottar bekreftelsen.",
     "steg.intro.stengtBhgSkole.1": "I søknaden må du laste opp en bekreftelse fra barnehagen eller skolen på at de har stengt.",
     "steg.intro.stengtBhgSkole.2": "Hvis du ikke har bekreftelsen tilgjengelig når du søker, kan du ettersende den. Vi kan ikke behandle søknaden før vi mottar bekreftelsen.",
-
-    "steg.oppsummering.dokumenter.header": "Vedlegg",
-    "steg.oppsummering.dokumenter.ingenVedlegg": "Ingen vedlegg er lastet opp",
-    "steg.oppsummering.dokumenterSmittevern.header": "Bekreftelse fra lege",
-    "steg.oppsummering.dokumenterStengtBhgSkole.header": "Bekreftelse fra barnehage eller skole",
 
     "step.vedlegg_smittevernhensyn.stepTitle": "Last opp bekreftelse fra lege",
     "step.vedlegg_smittevernhensyn.pageTitle": "Last opp dokumenter",
