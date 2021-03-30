@@ -36,7 +36,7 @@ export interface UtbetalingsperiodeApi {
     tilOgMed: ApiStringDate; // @JsonFormat(pattern = "yyyy-MM-dd")
     antallTimerBorte: string | null; // f eks PT5H30M | "null" (type Duration)
     antallTimerPlanlagt: string | null; // f eks PT5H30M | "null" (type Duration)
-    fraværAktivitet: ApiAktivitet[];
+    aktivitetFravær: ApiAktivitet[];
 }
 
 export interface Frilans {

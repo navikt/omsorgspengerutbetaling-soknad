@@ -231,7 +231,7 @@ export const getUtbetalingsperioderApiFromFormData = (formValues: SøknadFormDat
 
 export const mapFraværPeriodeTilUtbetalingsperiodeApi = (
     periode: FraværPeriode,
-    fraværAktivitet: ApiAktivitet[]
+    aktivitetFravær: ApiAktivitet[]
 ): UtbetalingsperiodeApi => {
     return {
         fraOgMed: formatDateToApiFormat(periode.fraOgMed),
@@ -239,13 +239,13 @@ export const mapFraværPeriodeTilUtbetalingsperiodeApi = (
         antallTimerPlanlagt: null,
         antallTimerBorte: null,
         årsak: periode.årsak,
-        fraværAktivitet,
+        aktivitetFravær,
     };
 };
 
 export const mapFraværDagTilUtbetalingsperiodeApi = (
     fraværDag: FraværDag,
-    fraværAktivitet: ApiAktivitet[]
+    aktivitetFravær: ApiAktivitet[]
 ): UtbetalingsperiodeApi => {
     return {
         fraOgMed: formatDateToApiFormat(fraværDag.dato),
@@ -253,6 +253,6 @@ export const mapFraværDagTilUtbetalingsperiodeApi = (
         antallTimerPlanlagt: timeToIso8601Duration(decimalTimeToTime(parseFloat(fraværDag.timerArbeidsdag))),
         antallTimerBorte: timeToIso8601Duration(decimalTimeToTime(parseFloat(fraværDag.timerFravær))),
         årsak: fraværDag.årsak,
-        fraværAktivitet,
+        aktivitetFravær,
     };
 };

@@ -70,8 +70,8 @@
     "arbeidssituasjon.selvstendigNæringsdrivende": "Selvstendig næringsdrivende",
     "arbeidssituasjon.frilanser": "Frilanser",
 
-    "fraværAktivitet.SELVSTENDIG_VIRKSOMHET": "selvstendig næringsdrivende",
-    "fraværAktivitet.FRILANSER": "frilanser",
+    "aktivitetFravær.SELVSTENDIG_VIRKSOMHET": "selvstendig næringsdrivende",
+    "aktivitetFravær.FRILANSER": "frilanser",
 
     "relasjonTilBarnet.mor": "Mor",
     "relasjonTilBarnet.far": "Far",

@@ -43,7 +43,7 @@ export const toMaybeUtbetalingsperiodeDag = (p: UtbetalingsperiodeApi): Utbetali
                 antallTimerPlanlagt: antallTimerPlanlagtTime,
                 antallTimerBorte: antallTimerBorteTime,
                 årsak: p.årsak,
-                fraværAktivitet: p.fraværAktivitet,
+                aktivitetFravær: p.aktivitetFravær,
             };
         }
     }
@@ -54,14 +54,14 @@ export const outNull = (
     maybeUtbetalingsperiodeDag: UtbetalingsperiodeDag | null
 ): maybeUtbetalingsperiodeDag is UtbetalingsperiodeDag => maybeUtbetalingsperiodeDag !== null;
 
-const getFraværAktivitetString = (fraværAktivitet: ApiAktivitet[], intl: IntlShape) => {
-    return fraværAktivitet.length === 2
+const getFraværAktivitetString = (aktivitetFravær: ApiAktivitet[], intl: IntlShape) => {
+    return aktivitetFravær.length === 2
         ? intlHelper(intl, `steg.oppsummering.fravær.aktivitet.2`, {
-              aktivitet1: intlHelper(intl, `fraværAktivitet.${fraværAktivitet[0]}`),
-              aktivitet2: intlHelper(intl, `fraværAktivitet.${fraværAktivitet[1]}`),
+              aktivitet1: intlHelper(intl, `aktivitetFravær.${aktivitetFravær[0]}`),
+              aktivitet2: intlHelper(intl, `aktivitetFravær.${aktivitetFravær[1]}`),
           })
         : intlHelper(intl, `steg.oppsummering.fravær.aktivitet.1`, {
-              aktivitet: intlHelper(intl, `fraværAktivitet.${fraværAktivitet[0]}`),
+              aktivitet: intlHelper(intl, `aktivitetFravær.${aktivitetFravær[0]}`),
           });
 };
 
@@ -103,7 +103,7 @@ export const renderUtbetalingsperiodeDag = (
             {renderEnkeltdagElement(apiStringDateToDate(dag.dato))}
             Skulle jobbet {antallTimerSkulleJobbet}. Borte fra jobb {antallTimerBorteFraJobb}.
             {renderÅrsakElement(dag.årsak, intl)}
-            {renderFraværAktivitetElement(dag.fraværAktivitet, visAktivitet, intl)}
+            {renderFraværAktivitetElement(dag.aktivitetFravær, visAktivitet, intl)}
         </div>
     );
 };
@@ -122,13 +122,13 @@ const renderUtbetalingsperiode = (
                 <div>
                     {renderEnkeltdagElement(fom)}
                     {renderÅrsakElement(periode.årsak, intl)}
-                    {renderFraværAktivitetElement(periode.fraværAktivitet, visAktivitet, intl)}
+                    {renderFraværAktivitetElement(periode.aktivitetFravær, visAktivitet, intl)}
                 </div>
             ) : (
                 <div>
                     Fra og med {prettifyDate(fom)}, til og med {prettifyDate(tom)}
                     {renderÅrsakElement(periode.årsak, intl)}
-                    {renderFraværAktivitetElement(periode.fraværAktivitet, visAktivitet, intl)}
+                    {renderFraværAktivitetElement(periode.aktivitetFravær, visAktivitet, intl)}
                 </div>
             )}
         </div>
@@ -136,7 +136,7 @@ const renderUtbetalingsperiode = (
 };
 
 const harFlereFraværAktiviteter = (perioder: UtbetalingsperiodeApi[]) => {
-    return uniq(flatten(perioder.map((p) => p.fraværAktivitet))).length > 1;
+    return uniq(flatten(perioder.map((p) => p.aktivitetFravær))).length > 1;
 };
 
 const UtbetalingsperioderSummaryView: React.FunctionComponent<Props> = ({ utbetalingsperioder = [] }) => {
