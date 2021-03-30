@@ -66,7 +66,7 @@ const FraværFraStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmi
                                         },
                                         {
                                             label: 'Selvstendig næringsdrivende',
-                                            value: Aktivitet.SELVSTENDIG_NÆRINGSDRIVENDE,
+                                            value: Aktivitet.SELVSTENDIG_VIRKSOMHET,
                                         },
                                         {
                                             label: 'Både frilanser og selvstendig næringsdrivende',

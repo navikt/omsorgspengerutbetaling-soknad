@@ -19,7 +19,7 @@ export const harFraværSomFrilanser = (dager: AktivitetFravær[] = []) => {
 
 export const harFraværSomSN = (fraværFraDag: AktivitetFravær[] = []) => {
     return fraværFraDag.some(
-        (ff) => ff.aktivitet === Aktivitet.BEGGE || ff.aktivitet === Aktivitet.SELVSTENDIG_NÆRINGSDRIVENDE
+        (ff) => ff.aktivitet === Aktivitet.BEGGE || ff.aktivitet === Aktivitet.SELVSTENDIG_VIRKSOMHET
     );
 };
 
@@ -45,20 +45,20 @@ export const getAktivitetFromAktivitetFravær = (
         return [ApiAktivitet.FRILANSER];
     }
     if (erSelvstendigNæringsdrivende && !erFrilanser) {
-        return [ApiAktivitet.SELVSTENDIG_NÆRINGSDRIVENDE];
+        return [ApiAktivitet.SELVSTENDIG_VIRKSOMHET];
     }
     return [
         ...(harFraværSomFrilanser(aktivitetFravær) ? [ApiAktivitet.FRILANSER] : []),
-        ...(harFraværSomSN(aktivitetFravær) ? [ApiAktivitet.SELVSTENDIG_NÆRINGSDRIVENDE] : []),
+        ...(harFraværSomSN(aktivitetFravær) ? [ApiAktivitet.SELVSTENDIG_VIRKSOMHET] : []),
     ];
 };
 
 export const getApiAktivitetFromAktivitet = (aktivitet: Aktivitet): ApiAktivitet[] => {
     switch (aktivitet) {
         case Aktivitet.BEGGE:
-            return [ApiAktivitet.SELVSTENDIG_NÆRINGSDRIVENDE, ApiAktivitet.FRILANSER];
-        case Aktivitet.SELVSTENDIG_NÆRINGSDRIVENDE:
-            return [ApiAktivitet.SELVSTENDIG_NÆRINGSDRIVENDE];
+            return [ApiAktivitet.SELVSTENDIG_VIRKSOMHET, ApiAktivitet.FRILANSER];
+        case Aktivitet.SELVSTENDIG_VIRKSOMHET:
+            return [ApiAktivitet.SELVSTENDIG_VIRKSOMHET];
         case Aktivitet.FRILANSER:
             return [ApiAktivitet.FRILANSER];
     }

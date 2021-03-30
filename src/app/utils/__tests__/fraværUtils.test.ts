@@ -75,9 +75,9 @@ describe('fraværUtils', () => {
     });
 
     describe('harFraværFraSom frilanser', () => {
-        it(`Returns false when aktivitet contains only ${Aktivitet.SELVSTENDIG_NÆRINGSDRIVENDE}`, () => {
+        it(`Returns false when aktivitet contains only ${Aktivitet.SELVSTENDIG_VIRKSOMHET}`, () => {
             expect(
-                harFraværSomFrilanser([{ dato: new Date(), aktivitet: Aktivitet.SELVSTENDIG_NÆRINGSDRIVENDE }])
+                harFraværSomFrilanser([{ dato: new Date(), aktivitet: Aktivitet.SELVSTENDIG_VIRKSOMHET }])
             ).toBeFalsy();
         });
         it(`Returns true when aktivitet is ${Aktivitet.FRILANSER}`, () => {
@@ -96,10 +96,8 @@ describe('fraværUtils', () => {
         it(`Returns false when aktivitet contains only ${Aktivitet.FRILANSER}`, () => {
             expect(harFraværSomSN([{ dato: new Date(), aktivitet: Aktivitet.FRILANSER }])).toBeFalsy();
         });
-        it(`Returns true when aktivitet is ${Aktivitet.SELVSTENDIG_NÆRINGSDRIVENDE}`, () => {
-            expect(
-                harFraværSomSN([{ dato: new Date(), aktivitet: Aktivitet.SELVSTENDIG_NÆRINGSDRIVENDE }])
-            ).toBeTruthy();
+        it(`Returns true when aktivitet is ${Aktivitet.SELVSTENDIG_VIRKSOMHET}`, () => {
+            expect(harFraværSomSN([{ dato: new Date(), aktivitet: Aktivitet.SELVSTENDIG_VIRKSOMHET }])).toBeTruthy();
             expect(
                 harFraværSomSN([
                     {
