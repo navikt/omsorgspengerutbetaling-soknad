@@ -175,7 +175,12 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                 {harDekketTiFørsteDagerSelv === YesOrNo.NO && (
                     <FormBlock>
                         <AlertStripeInfo>
-                            <FormattedMessage id="step.fravaer.ikkeDekket.info" />
+                            <p style={{ marginTop: '0' }}>
+                                <FormattedMessage id="step.fravaer.ikkeDekket.info.1" />
+                            </p>
+                            <p>
+                                <FormattedMessage id="step.fravaer.ikkeDekket.info.2" />
+                            </p>
                         </AlertStripeInfo>
                     </FormBlock>
                 )}
