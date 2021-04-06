@@ -1,3 +1,4 @@
+import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
 import { SøknadFormData } from '../types/SøknadFormData';
 import { harFraværPgaSmittevernhensyn, harFraværPgaStengBhgSkole } from '../utils/periodeUtils';
 import { getSøknadRoute } from '../utils/routeUtils';
@@ -9,6 +10,7 @@ export enum StepID {
     'DOKUMENTER_STENGT_SKOLE_BHG' = 'vedlegg_stengtSkoleBhg',
     'DOKUMENTER_SMITTEVERNHENSYN' = 'vedlegg_smittevernhensyn',
     'ARBEIDSSITUASJON' = 'arbeidssituasjon',
+    'FRAVÆR_FRA' = 'fravaerFra',
     'LEGEERKLÆRING' = 'legeerklaering',
     'MEDLEMSKAP' = 'medlemskap',
     'OPPSUMMERING' = 'oppsummering',
@@ -42,6 +44,11 @@ const getStepConfigItemTextKeys = (stepId: StepID): StepConfigItemTexts => {
 
 export const getStepConfig = (formData?: SøknadFormData): StepConfigInterface => {
     let idx = 0;
+
+    const erFrilanser = formData?.frilans_erFrilanser === YesOrNo.YES;
+    const erSelvstendigNæringsdrivende = formData?.selvstendig_erSelvstendigNæringsdrivende === YesOrNo.YES;
+
+    const skalViseFraværFraSteg = erFrilanser && erSelvstendigNæringsdrivende;
 
     const skalViseStengtSkoleBhgDokumenterStep = harFraværPgaStengBhgSkole(
         formData?.fraværPerioder || [],
@@ -117,14 +124,20 @@ export const getStepConfig = (formData?: SøknadFormData): StepConfigInterface =
         [StepID.ARBEIDSSITUASJON]: {
             ...getStepConfigItemTextKeys(StepID.ARBEIDSSITUASJON),
             index: idx++,
-            nextStep: StepID.MEDLEMSKAP,
+            nextStep: skalViseFraværFraSteg ? StepID.FRAVÆR_FRA : StepID.MEDLEMSKAP,
             backLinkHref: getPrevioustStepForArbeidssituasjonStep(),
+        },
+        [StepID.FRAVÆR_FRA]: {
+            ...getStepConfigItemTextKeys(StepID.FRAVÆR_FRA),
+            index: idx++,
+            nextStep: StepID.MEDLEMSKAP,
+            backLinkHref: getSøknadRoute(StepID.ARBEIDSSITUASJON),
         },
         [StepID.MEDLEMSKAP]: {
             ...getStepConfigItemTextKeys(StepID.MEDLEMSKAP),
             index: idx++,
             nextStep: StepID.OPPSUMMERING,
-            backLinkHref: getSøknadRoute(StepID.ARBEIDSSITUASJON),
+            backLinkHref: getSøknadRoute(skalViseFraværFraSteg ? StepID.FRAVÆR_FRA : StepID.ARBEIDSSITUASJON),
         },
         [StepID.OPPSUMMERING]: {
             ...getStepConfigItemTextKeys(StepID.OPPSUMMERING),

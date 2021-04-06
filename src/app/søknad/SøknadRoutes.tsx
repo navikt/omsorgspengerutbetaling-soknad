@@ -22,6 +22,7 @@ import OppsummeringStep from './oppsummering-step/OppsummeringStep';
 import SmittevernDokumenterStep from './smittevern-dokumenter-step/SmittvernDokumenterStep';
 import StengtBhgSkoleDokumenterStep from './stengt-bhg-skole-dokumenter-step/StengtBhgSkoleDokumenterStep';
 import SøknadTempStorage from './SøknadTempStorage';
+import FraværFraStep from './fravær-fra-step/FraværFraStep';
 
 export interface KvitteringInfo {
     søkernavn: string;
@@ -115,6 +116,13 @@ const SøknadRoutes: React.FunctionComponent = () => {
                     render={() => (
                         <ArbeidssituasjonStep onValidSubmit={() => navigateToNextStepFrom(StepID.ARBEIDSSITUASJON)} />
                     )}
+                />
+            )}
+
+            {isAvailable(StepID.FRAVÆR_FRA, values) && (
+                <Route
+                    path={getSøknadRoute(StepID.FRAVÆR_FRA)}
+                    render={() => <FraværFraStep onValidSubmit={() => navigateToNextStepFrom(StepID.FRAVÆR_FRA)} />}
                 />
             )}
 

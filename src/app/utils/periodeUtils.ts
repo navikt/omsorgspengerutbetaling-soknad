@@ -7,6 +7,8 @@ import { FraværDag, FraværPeriode, FraværÅrsak } from '@navikt/sif-common-fo
 
 dayjs.extend(minMax);
 
+export const isSameDay = (d1: Date, d2: Date): boolean => dayjs(d1).isSame(d2, 'day');
+
 export const getPeriodeBoundaries = (
     perioderMedFravær: FraværPeriode[],
     dagerMedFravær: FraværDag[]

@@ -70,6 +70,9 @@
     "arbeidssituasjon.selvstendigNæringsdrivende": "Selvstendig næringsdrivende",
     "arbeidssituasjon.frilanser": "Frilanser",
 
+    "aktivitetFravær.SELVSTENDIG_VIRKSOMHET": "selvstendig næringsdrivende",
+    "aktivitetFravær.FRILANSER": "frilanser",
+
     "relasjonTilBarnet.mor": "Mor",
     "relasjonTilBarnet.far": "Far",
     "relasjonTilBarnet.adoptivforelder": "Adoptivforelder",
@@ -86,6 +89,10 @@
     "step.fravaer.pageTitle": "Dager du har vært hjemme med barn",
     "step.fravaer.stepTitle": "Dager du har vært hjemme med barn",
     "step.fravaer.stepIndicatorLabel": "Dager du har vært hjemme med barn",
+
+    "step.fravaerFra.pageTitle": "Fravær fra",
+    "step.fravaerFra.stepTitle": "Fravær fra",
+    "step.fravaerFra.stepIndicatorLabel": "Fravær fra",
 
     "step.arbeidssituasjon.pageTitle": "Arbeidssituasjon - Søknad om utbetaling av omsorgspenger",
     "step.arbeidssituasjon.stepTitle": "Arbeidssituasjon",
@@ -166,7 +173,8 @@
     "step.fravaer.dekkeSelv.info.1": "Som selvstendig næringsdrivende og/eller frilanser må du selv dekke de 10 første omsorgsdagene du bruker hvert år. Det vil si at du tidligst kan søke om utbetaling fra den 11. omsorgsdagen.",
     "step.fravaer.dekkeSelv.info.2": "Du kan ha rett til utbetaling fra første dag hvis du kun har barn som er 13 år eller eldre, som er kronisk sykt eller funksjonshemmet.",
     "step.fravaer.dekkeSelv.info.3": "I disse tilfellene må du ha søkt om og fått ekstra omsorgsdager.",
-    "step.fravaer.ikkeDekket.info": "For å søke om utbetaling av omsorgspenger må du først ha dekket de 10 første omsorgsdagene selv.",
+    "step.fravaer.ikkeDekket.info.1": "For å søke om utbetaling av omsorgspenger må du vanligvis først ha dekket de 10 første omsorgsdagene selv.",
+    "step.fravaer.ikkeDekket.info.2": "I noen tilfeller kan du ha rett til utbetaling fra første dag. Det er hvis du kun har barn som er 13 år eller eldre og som du har fått ekstra omsorgsdager for fordi barnet er kronisk sykt eller funksjonshemmet.",
 
     "step.fravaer.dager_med_fullt_fravært.label": "Dager med fullt fravær",
     "step.fravaer.dager_med_fullt_fravært.info": "TODO",
@@ -200,6 +208,8 @@
 
     "steg.arbeid.spm": "Hva er din arbeidssituasjon? Du kan velge flere.",
 
+    "steg.fravarFra.intro": "Spesifiser fravær",
+
     "steg.barn.pageTitle": "Fosterbarn",
     "steg.barn.stepTitle": "Fosterbarn",
     "steg.barn.intro": "Vi henter inn barn som er registrert på deg fra folkeregisteret, men dette får vi ikke gjort med fosterbarn. Hvis du har fosterbarn kan du selv legge dem til.",
@@ -226,7 +236,6 @@
     "steg.oppsummering.barn.header": "Fosterbarn",
     "steg.oppsummering.barn.alleBarn": "Fosterbarn du har lagt til",
 
-
     "steg.oppsummering.arbeidssituasjon.header": "Din arbeidssituasjon",
     "steg.oppsummering.harSøktOmAndreUtbetalinger": "Hvilke andre utbetalinger har du søkt om?",
     "steg.oppsummering.utbetalinger.header": "Omsorgsdager du søker utbetaling for",
@@ -245,6 +254,15 @@
     "steg.oppsummering.utenlandsoppholdIPerioden.listetittel": "Utenlandsopphold i perioden",
 
     "steg.oppsummering.apiValideringFeil.tittel": "Noe av informasjonen mangler",
+
+    "steg.oppsummering.dokumenter.header": "Vedlegg",
+    "steg.oppsummering.dokumenter.ingenVedlegg": "Ingen vedlegg er lastet opp",
+    "steg.oppsummering.dokumenterSmittevern.header": "Bekreftelse fra lege",
+    "steg.oppsummering.dokumenterStengtBhgSkole.header": "Bekreftelse fra barnehage eller skole",
+
+    "steg.oppsummering.fravær.årsak": "Årsak: {årsak}.",
+    "steg.oppsummering.fravær.aktivitet.1": "Fravær som {aktivitet}.",
+    "steg.oppsummering.fravær.aktivitet.2": "Fravær som {aktivitet1} og {aktivitet2}.",
 
     "page.confirmation.sidetittel": "Vi har mottatt søknaden din",
     "page.confirmation.tittel": "Vi har mottatt søknad fra deg om utbetaling av omsorgspenger",
@@ -357,11 +375,6 @@
     "steg.intro.smittevernInfo.2": "Hvis du ikke har bekreftelse tilgjengelig når du søker, kan du ettersende den. Vi kan ikke behandle søknaden før vi mottar bekreftelsen.",
     "steg.intro.stengtBhgSkole.1": "I søknaden må du laste opp en bekreftelse fra barnehagen eller skolen på at de har stengt.",
     "steg.intro.stengtBhgSkole.2": "Hvis du ikke har bekreftelsen tilgjengelig når du søker, kan du ettersende den. Vi kan ikke behandle søknaden før vi mottar bekreftelsen.",
-
-    "steg.oppsummering.dokumenter.header": "Vedlegg",
-    "steg.oppsummering.dokumenter.ingenVedlegg": "Ingen vedlegg er lastet opp",
-    "steg.oppsummering.dokumenterSmittevern.header": "Bekreftelse fra lege",
-    "steg.oppsummering.dokumenterStengtBhgSkole.header": "Bekreftelse fra barnehage eller skole",
 
     "step.vedlegg_smittevernhensyn.stepTitle": "Last opp bekreftelse fra lege",
     "step.vedlegg_smittevernhensyn.pageTitle": "Last opp dokumenter",
