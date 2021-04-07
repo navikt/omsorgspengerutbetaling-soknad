@@ -162,7 +162,7 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                                     <FormattedMessage id="step.fravaer.dekkeSelv.info.1" />
                                 </p>
                                 <p>
-                                    <FormattedMessage id="step.fravaer.dekkeSelv.info.2" />
+                                    <FormattedMessage id="step.fravaer.dekkeSelv.info.2" />{' '}
                                     <Lenke href={getLenker(intl.locale).søkeEkstraDager}>
                                         <FormattedMessage id="step.fravaer.dekkeSelv.info.3" />
                                     </Lenke>
