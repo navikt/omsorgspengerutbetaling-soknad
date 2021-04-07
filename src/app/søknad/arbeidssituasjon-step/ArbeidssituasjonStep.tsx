@@ -10,7 +10,7 @@ import { StepConfigProps, StepID } from '../../config/stepConfig';
 import { initialValues, SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import SøknadStep from '../SøknadStep';
 import FrilansFormPart from './components/FrilansFormPart';
-import SelvstendigNæringsdrivendeFormPart from './components/SelvstendigNæringsdrivendePart';
+import SelvstendigNæringsdrivendeFormPart from './components/SelvstendigNæringsdrivendeFormPart';
 
 const shouldShowSubmitButton = (søknadFormData: SøknadFormData): boolean => {
     const erFrilanser: YesOrNo = søknadFormData[SøknadFormField.frilans_erFrilanser];

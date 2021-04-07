@@ -435,6 +435,7 @@
     "summary.virksomhet.yrkesaktivSisteTreFerdigliknedeÅrene": "Ble yrkesaktiv {dato}",
 
     "selvstendig.erDuSelvstendigNæringsdrivende.spm": "Var du selvstendig næringsdrivende i dagene du søker utbetaling for?",
+    "selvstendig.harFlereVirksomheter.spm": "Har du flere enn én næringsvirksomhet?",
     "selvstendig.list.tittel": "Registrerte virksomheter",
     "selvstendig.list.leggTilLabel": "Legg til virksomhet",
     "selvstendig.dialog.tittel": "Virksomhet",
