@@ -99,20 +99,11 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
         }
     }, [årstall, fraværDager, fraværPerioder, updateÅrstall]);
 
-    const tidsromBegrensningInfo =
-        årstall !== undefined && 1 + 1 === 3 ? (
-            <ExpandableInfo title="Om begrensninger i hvilke datoer du kan velge ... (eller noe sånt)">
-                <p style={{ marginTop: 0 }}>
-                    En søknad kan kun inneholde fraværsdager i ett og samme år. Du har allerede lagt til fraværsdager i{' '}
-                    {årstall}, og du kan da bare velge datoer i dette året.
-                </p>
-                <FormattedMessage id="step.fravaer.info.ikkeHelg.tekst" />
-            </ExpandableInfo>
-        ) : (
-            <ExpandableInfo title={intlHelper(intl, 'step.fravaer.info.ikkeHelg.tittel')}>
-                <FormattedMessage id="step.fravaer.info.ikkeHelg.tekst" />
-            </ExpandableInfo>
-        );
+    const tidsromBegrensningInfo = (
+        <ExpandableInfo title={intlHelper(intl, 'step.fravaer.info.ikkeHelg.tittel')}>
+            <FormattedMessage id="step.fravaer.info.ikkeHelg.tekst" />
+        </ExpandableInfo>
+    );
 
     const kanIkkeFortsette = harPerioderMedFravær === YesOrNo.NO && harDagerMedDelvisFravær === YesOrNo.NO;
     const harRegistrertFravær = fraværDager.length + fraværPerioder.length > 0;
