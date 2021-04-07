@@ -103,7 +103,9 @@ const renderVirksomhetSummary = (virksomhet: VirksomhetApiData, intl: IntlShape)
                 />
             )}
             {/** Har ikke regnskapsfører */}
-            {!virksomhet.regnskapsfører && <FormattedMessage tagName="p" id="summary.virksomhet.ikkeRegnskapsfører" />}
+            {virksomhet.registrertINorge === true && virksomhet.regnskapsfører === undefined && (
+                <FormattedMessage tagName="p" id="summary.virksomhet.ikkeRegnskapsfører" />
+            )}
         </SummaryBlock>
     );
 };

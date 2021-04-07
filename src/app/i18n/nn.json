@@ -352,14 +352,14 @@
     "step.vedlegg_smittevernhensyn.pageTitle": "Last opp dokument",
     "step.vedlegg_smittevernhensyn.stepIndicatorLabel": "Last opp dokument",
     "steg.vedlegg_smittevernhensyn.vedlegg": "Last opp stadfesting frå lege",
-    "steg.vedlegg_smittevernhensyn.info.1": "Du må laste opp ei stadfesting frå lege om at det er særlege smittevernhensyn som gjer at barnet ikkje kan gå i barnehage eller skule. Det gjer du enten ved å ta bilete av stadfestinga, eller ved å scanne den.",
+    "steg.vedlegg_smittevernhensyn.info.1": "Du må laste opp ei stadfesting frå lege om at det er særlege smittevernhensyn som gjer at barnet ikkje kan gå i barnehage eller skule. Det gjer du enten ved å ta bilete av stadfestinga, eller ved å skanne den.",
     "steg.vedlegg_smittevernhensyn.info.2": "Dersom du ikkje har stadfestinga tilgjengeleg nå, må du ettersende den til oss så snart du har den. Vi kan ikkje behandle søknaden før vi har mottatt stadfestinga.",
 
     "step.vedlegg_stengtSkoleBhg.stepTitle": "Last opp stadfesting frå barnehagen eller skulen",
     "step.vedlegg_stengtSkoleBhg.pageTitle": "Last opp dokument",
     "step.vedlegg_stengtSkoleBhg.stepIndicatorLabel": "Last opp dokument",
     "steg.vedlegg_stengtSkoleBhg.vedlegg": "Last opp stadfesting frå barnehagen eller skulen",
-    "steg.vedlegg_stengtSkoleBhg.info.1": "Du må laste opp ei stadfesting frå barnehagen eller skulen på at dei har vore stengt på grunn av koronaviruset. Det gjør du enten ved å ta bilete av stadfestinga, eller ved å scanne den.",
+    "steg.vedlegg_stengtSkoleBhg.info.1": "Du må laste opp ei stadfesting frå barnehagen eller skulen på at dei har vore stengt på grunn av koronaviruset. Det gjør du enten ved å ta bilete av stadfestinga, eller ved å skanne den.",
     "steg.vedlegg_stengtSkoleBhg.info.2": "Dersom du ikkje har stadfestinga tilgjengeleg nå, må du ettersende den til oss så snart du har den. Vi kan ikkje behandle søknaden før vi har mottatt stadfestinga.",
 
     "steg.oppsummering.dokumenter.ikkelastetopp": "Ikkje lasta opp, må ettersendast",

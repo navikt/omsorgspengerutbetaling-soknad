@@ -9,21 +9,23 @@ import {
     validateYesOrNoIsAnswered,
 } from '@navikt/sif-common-core/lib/validation/fieldValidations';
 import VirksomhetListAndDialog from '@navikt/sif-common-forms/lib/virksomhet/VirksomhetListAndDialog';
-import { useFormikContext } from 'formik';
 import { StepID } from '../../../config/stepConfig';
 import { SøknadFormData, SøknadFormField } from '../../../types/SøknadFormData';
 import { getEnvironmentVariable } from '../../../utils/envUtils';
 import SøknadFormComponents from '../../SøknadFormComponents';
 import SøknadTempStorage from '../../SøknadTempStorage';
+import CounsellorPanel from '@navikt/sif-common-core/lib/components/counsellor-panel/CounsellorPanel';
 
 interface Props {
     formValues: SøknadFormData;
 }
 
-const SelvstendigNæringsdrivendeFormPart: React.FunctionComponent<Props> = ({ formValues }) => {
+const SelvstendigNæringsdrivendeFormPart: React.FunctionComponent<Props> = ({ formValues: values }) => {
     const intl = useIntl();
-    const { values } = useFormikContext<SøknadFormData>();
     const skipOrgNumValidation = getEnvironmentVariable('SKIP_ORGNUM_VALIDATION') === 'true';
+    const erSelvstendigNæringsdrivende = values.selvstendig_erSelvstendigNæringsdrivende === YesOrNo.YES;
+    const harFlereVirksomheter =
+        erSelvstendigNæringsdrivende && values.selvstendig_harFlereVirksomheter === YesOrNo.YES;
     return (
         <>
             <SøknadFormComponents.YesOrNoQuestion
@@ -31,16 +33,40 @@ const SelvstendigNæringsdrivendeFormPart: React.FunctionComponent<Props> = ({ f
                 legend={intlHelper(intl, 'selvstendig.erDuSelvstendigNæringsdrivende.spm')}
                 validate={validateYesOrNoIsAnswered}
             />
-            {formValues.selvstendig_erSelvstendigNæringsdrivende === YesOrNo.YES && (
-                <FormBlock margin="l">
+
+            {erSelvstendigNæringsdrivende && (
+                <FormBlock>
+                    <SøknadFormComponents.YesOrNoQuestion
+                        name={SøknadFormField.selvstendig_harFlereVirksomheter}
+                        legend={intlHelper(intl, 'selvstendig.harFlereVirksomheter.spm')}
+                        validate={validateYesOrNoIsAnswered}
+                    />
+                </FormBlock>
+            )}
+
+            {harFlereVirksomheter && (
+                <FormBlock>
+                    <CounsellorPanel>Informasjon om at en må legge til sin eldste virksomhet</CounsellorPanel>
+                </FormBlock>
+            )}
+
+            {erSelvstendigNæringsdrivende && values.selvstendig_harFlereVirksomheter !== YesOrNo.UNANSWERED && (
+                <FormBlock>
                     <ResponsivePanel>
                         <VirksomhetListAndDialog
                             name={SøknadFormField.selvstendig_virksomheter}
-                            hideFormFields={{ harRevisor: true }}
+                            maxItems={1}
+                            gjelderFlereVirksomheter={harFlereVirksomheter}
                             labels={{
-                                listTitle: intlHelper(intl, 'selvstendig.list.tittel'),
-                                addLabel: intlHelper(intl, 'selvstendig.list.leggTilLabel'),
-                                modalTitle: intlHelper(intl, 'selvstendig.dialog.tittel'),
+                                listTitle: harFlereVirksomheter
+                                    ? 'Din registrerte virksomhet'
+                                    : intlHelper(intl, 'selvstendig.list.tittel'),
+                                addLabel: harFlereVirksomheter
+                                    ? 'Registrer virksomhet'
+                                    : intlHelper(intl, 'selvstendig.list.leggTilLabel'),
+                                modalTitle: harFlereVirksomheter
+                                    ? 'Opplysninger om virksomhet'
+                                    : intlHelper(intl, 'selvstendig.dialog.tittel'),
                             }}
                             skipOrgNumValidation={skipOrgNumValidation}
                             validate={validateRequiredList}

@@ -6,12 +6,12 @@ import routeConfig from './routeConfig';
 
 export enum StepID {
     'FRAVÆR' = 'fravaer',
-    'BARN' = 'barn',
     'DOKUMENTER_STENGT_SKOLE_BHG' = 'vedlegg_stengtSkoleBhg',
     'DOKUMENTER_SMITTEVERNHENSYN' = 'vedlegg_smittevernhensyn',
     'ARBEIDSSITUASJON' = 'arbeidssituasjon',
     'FRAVÆR_FRA' = 'fravaerFra',
     'LEGEERKLÆRING' = 'legeerklaering',
+    'BARN' = 'barn',
     'MEDLEMSKAP' = 'medlemskap',
     'OPPSUMMERING' = 'oppsummering',
 }
@@ -59,7 +59,7 @@ export const getStepConfig = (formData?: SøknadFormData): StepConfigInterface =
         formData?.fraværDager || []
     );
 
-    const getNextStepAfterBarnStep = (): StepID => {
+    const getNextStepAfterFraværStep = (): StepID => {
         if (skalViseStengtSkoleBhgDokumenterStep) {
             return StepID.DOKUMENTER_STENGT_SKOLE_BHG;
         }
@@ -83,14 +83,8 @@ export const getStepConfig = (formData?: SøknadFormData): StepConfigInterface =
         [StepID.FRAVÆR]: {
             ...getStepConfigItemTextKeys(StepID.FRAVÆR),
             index: idx++,
-            nextStep: StepID.BARN,
+            nextStep: getNextStepAfterFraværStep(),
             backLinkHref: routeConfig.WELCOMING_PAGE_ROUTE,
-        },
-        [StepID.BARN]: {
-            ...getStepConfigItemTextKeys(StepID.BARN),
-            index: idx++,
-            nextStep: getNextStepAfterBarnStep(),
-            backLinkHref: getSøknadRoute(StepID.FRAVÆR),
         },
     };
 
@@ -102,7 +96,7 @@ export const getStepConfig = (formData?: SøknadFormData): StepConfigInterface =
                   nextStep: skalViseSmittevernDokumenterStep
                       ? StepID.DOKUMENTER_SMITTEVERNHENSYN
                       : StepID.ARBEIDSSITUASJON,
-                  backLinkHref: getSøknadRoute(StepID.BARN),
+                  backLinkHref: getSøknadRoute(StepID.FRAVÆR),
               },
           }
         : undefined;
@@ -124,20 +118,27 @@ export const getStepConfig = (formData?: SøknadFormData): StepConfigInterface =
         [StepID.ARBEIDSSITUASJON]: {
             ...getStepConfigItemTextKeys(StepID.ARBEIDSSITUASJON),
             index: idx++,
-            nextStep: skalViseFraværFraSteg ? StepID.FRAVÆR_FRA : StepID.MEDLEMSKAP,
+            nextStep: skalViseFraværFraSteg ? StepID.FRAVÆR_FRA : StepID.BARN,
             backLinkHref: getPrevioustStepForArbeidssituasjonStep(),
         },
         [StepID.FRAVÆR_FRA]: {
             ...getStepConfigItemTextKeys(StepID.FRAVÆR_FRA),
             index: idx++,
-            nextStep: StepID.MEDLEMSKAP,
+            nextStep: StepID.BARN,
             backLinkHref: getSøknadRoute(StepID.ARBEIDSSITUASJON),
         },
+        [StepID.BARN]: {
+            ...getStepConfigItemTextKeys(StepID.BARN),
+            index: idx++,
+            nextStep: StepID.MEDLEMSKAP,
+            backLinkHref: getSøknadRoute(skalViseFraværFraSteg ? StepID.FRAVÆR_FRA : StepID.ARBEIDSSITUASJON),
+        },
+
         [StepID.MEDLEMSKAP]: {
             ...getStepConfigItemTextKeys(StepID.MEDLEMSKAP),
             index: idx++,
             nextStep: StepID.OPPSUMMERING,
-            backLinkHref: getSøknadRoute(skalViseFraværFraSteg ? StepID.FRAVÆR_FRA : StepID.ARBEIDSSITUASJON),
+            backLinkHref: getSøknadRoute(StepID.BARN),
         },
         [StepID.OPPSUMMERING]: {
             ...getStepConfigItemTextKeys(StepID.OPPSUMMERING),

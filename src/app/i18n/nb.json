@@ -90,9 +90,11 @@
     "step.fravaer.stepTitle": "Dager du har vært hjemme med barn",
     "step.fravaer.stepIndicatorLabel": "Dager du har vært hjemme med barn",
 
-    "step.fravaerFra.pageTitle": "Fravær fra",
-    "step.fravaerFra.stepTitle": "Fravær fra",
-    "step.fravaerFra.stepIndicatorLabel": "Fravær fra",
+    "step.fravaerFra.pageTitle": "Fravær fra arbeid som selvstendig næringsdrivende og/eller frilanser",
+    "step.fravaerFra.stepTitle": "Fravær fra arbeid som selvstendig næringsdrivende og/eller frilanser",
+    "step.fravaerFra.stepIndicatorLabel": "Fravær fra arbeid som selvstendig næringsdrivende og/eller frilanser",
+    "step.fravaerFra.info": "Du har opplyst at du er både selvstendig næringsdrivende og frilanser. Nå trenger vi å vite hvilket arbeid du hadde fravær fra i dagene du var hjemme med barn.",
+    "step.fravaerFra.dag.spm": "Hvilket arbeid hadde du fravær fra {dato}?",
 
     "step.arbeidssituasjon.pageTitle": "Arbeidssituasjon - Søknad om utbetaling av omsorgspenger",
     "step.arbeidssituasjon.stepTitle": "Arbeidssituasjon",
@@ -189,7 +191,7 @@
     "step.fravaer.spm.harDekketTiFørsteDagerSelv": "Har du dekket de 10 første omsorgsdagene selv?",
     "step.fravaer.spm.harPerioderMedFravær": "Har du hatt hele dager med fravær fra jobb?",
     "step.fravaer.dager.tittel": "Omsorgsdager du søker utbetaling for",
-    "step.fravaer.dager.info": "Her skal du legge inn dagene du søker utbetaling for. Du kan kun søke om dager fra ett og samme år. Hvis du skal søke for {forrigeÅr} i tillegg til {inneværendeÅr} må du sende to søknader.",
+    "step.fravaer.dager.info": "Her skal du legge inn dagene du søker utbetaling for. Du kan kun søke om utbetaling fra ett og samme år. Det betyr at hvis du skal søke om utbetaling for 2020 i tillegg til 2021 må du sende to søknader.",
     "step.fravaer.harPerioderMedFravær.listTitle": "Dager med fullt fravær fra jobb",
     "step.fravaer.harPerioderMedFravær.addLabel": "Legg til dager med fullt fravær fra jobb",
     "step.fravaer.harPerioderMedFravær.modalTitle": "Dager med fullt fravær fra jobb",
@@ -207,8 +209,6 @@
     "step.fravaer.andreUtbetalinger": "Andre utbetalinger fra NAV",
 
     "steg.arbeid.spm": "Hva er din arbeidssituasjon? Du kan velge flere.",
-
-    "steg.fravarFra.intro": "Spesifiser fravær",
 
     "steg.barn.pageTitle": "Fosterbarn",
     "steg.barn.stepTitle": "Fosterbarn",
@@ -380,14 +380,14 @@
     "step.vedlegg_smittevernhensyn.pageTitle": "Last opp dokumenter",
     "step.vedlegg_smittevernhensyn.stepIndicatorLabel": "Last opp dokumenter",
     "steg.vedlegg_smittevernhensyn.vedlegg": "Last opp bekreftelse fra lege",
-    "steg.vedlegg_smittevernhensyn.info.1": "Du må laste opp en bekreftelse fra lege om at det er særlige smittevernhensyn som gjør at barnet ikke kan gå i barnehage eller skole. Det gjør du enten ved å ta bilde av bekreftelsen, eller ved å scanne den.",
+    "steg.vedlegg_smittevernhensyn.info.1": "Du må laste opp en bekreftelse fra lege om at det er særlige smittevernhensyn som gjør at barnet ikke kan gå i barnehage eller skole. Det gjør du enten ved å ta bilde av bekreftelsen, eller ved å skanne den.",
     "steg.vedlegg_smittevernhensyn.info.2": "Hvis du ikke har bekreftelsen tilgjengelig nå, må du ettersende den til oss så snart du har den. Vi kan ikke behandle søknaden før vi har mottatt bekreftelsen.",
 
     "step.vedlegg_stengtSkoleBhg.stepTitle": "Last opp bekreftelse fra barnehagen eller skolen",
     "step.vedlegg_stengtSkoleBhg.pageTitle": "Last opp dokumenter",
     "step.vedlegg_stengtSkoleBhg.stepIndicatorLabel": "Last opp dokumenter",
     "steg.vedlegg_stengtSkoleBhg.vedlegg": "Last opp bekreftelse fra barnehagen eller skolen",
-    "steg.vedlegg_stengtSkoleBhg.info.1": "Du må laste opp en bekreftelse fra barnehagen eller skolen på at de har vært stengt på grunn av koronaviruset. Det gjør du enten ved å ta bilde av bekreftelsen, eller ved å scanne den.",
+    "steg.vedlegg_stengtSkoleBhg.info.1": "Du må laste opp en bekreftelse fra barnehagen eller skolen på at de har vært stengt på grunn av koronaviruset. Det gjør du enten ved å ta bilde av bekreftelsen, eller ved å skanne den.",
     "steg.vedlegg_stengtSkoleBhg.info.2": "Hvis du ikke har bekreftelsen tilgjengelig nå, må du ettersende den til oss så snart du har den. Vi kan ikke behandle søknaden før vi har mottatt bekreftelsen.",
 
     "steg.oppsummering.dokumenter.ikkelastetopp": "Ikke lastet opp, må ettersendes",
@@ -435,6 +435,7 @@
     "summary.virksomhet.yrkesaktivSisteTreFerdigliknedeÅrene": "Ble yrkesaktiv {dato}",
 
     "selvstendig.erDuSelvstendigNæringsdrivende.spm": "Var du selvstendig næringsdrivende i dagene du søker utbetaling for?",
+    "selvstendig.harFlereVirksomheter.spm": "Har du flere enn én næringsvirksomhet?",
     "selvstendig.list.tittel": "Registrerte virksomheter",
     "selvstendig.list.leggTilLabel": "Legg til virksomhet",
     "selvstendig.dialog.tittel": "Virksomhet",
