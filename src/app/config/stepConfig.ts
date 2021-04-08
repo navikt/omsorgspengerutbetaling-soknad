@@ -109,7 +109,7 @@ export const getStepConfig = (formData?: SøknadFormData): StepConfigInterface =
                   nextStep: StepID.ARBEIDSSITUASJON,
                   backLinkHref: skalViseStengtSkoleBhgDokumenterStep
                       ? getSøknadRoute(StepID.DOKUMENTER_STENGT_SKOLE_BHG)
-                      : getSøknadRoute(StepID.BARN),
+                      : getSøknadRoute(StepID.FRAVÆR),
               },
           }
         : undefined;
