@@ -64,6 +64,7 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
         frilans_sluttdato,
         frilans_jobberFortsattSomFrilans,
         selvstendig_erSelvstendigNæringsdrivende,
+        selvstendig_harFlereVirksomheter,
         selvstendig_virksomheter,
 
         // Medlemskap
@@ -87,6 +88,13 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
         });
     }
 
+    if (selvstendig_harFlereVirksomheter) {
+        yesOrNoQuestions.push({
+            spørsmål: intlHelper(intl, 'selvstendig.harFlereVirksomheter.spm'),
+            svar: mapYesOrNoToSvar(selvstendig_harFlereVirksomheter),
+        });
+    }
+
     const vedleggSmittevern = getVedleggUrlFromAttachments(dokumenterSmittevernhensyn);
     const vedleggStengtBhgSkole = getVedleggUrlFromAttachments(dokumenterStengtBkgSkole);
 
@@ -96,7 +104,8 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
         frilans_startdato,
         frilans_sluttdato
     );
-    const selvstendigVirksomheter = settInnVirksomheter(
+
+    const selvstendigVirksomheter = mapVirksomheterTilApiData(
         intl.locale,
         selvstendig_erSelvstendigNæringsdrivende,
         selvstendig_virksomheter
@@ -128,6 +137,12 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
         _vedleggSmittevern: vedleggSmittevern,
         _harSøktAndreUtbetalinger: mapYesOrNoToSvar(harSøktAndreUtbetalinger),
         _harFosterbarn: mapYesOrNoToSvar(harFosterbarn),
+        _varFrilansIPerioden: mapYesOrNoToSvar(frilans_erFrilanser),
+        _varSelvstendigNæringsdrivendeIPerioden: mapYesOrNoToSvar(selvstendig_erSelvstendigNæringsdrivende),
+        _harFlereVirksomheter:
+            selvstendigVirksomheter.length > 0 && selvstendig_harFlereVirksomheter
+                ? mapYesOrNoToSvar(selvstendig_harFlereVirksomheter)
+                : undefined,
     };
 
     return apiData;
@@ -177,7 +192,7 @@ const settInnOpphold = (
         : [];
 };
 
-const settInnVirksomheter = (
+const mapVirksomheterTilApiData = (
     locale: string,
     erSelvstendigNæringsdrivende?: YesOrNo,
     virksomheter?: Virksomhet[],

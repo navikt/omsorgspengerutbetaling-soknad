@@ -444,6 +444,7 @@
     "selvstendig.list.leggTilLabel": "Legg til virksomhet",
     "selvstendig.dialog.tittel": "Virksomhet",
     "selvstendig.summary.harDuHattInntekt.header": "Var du selvstendig næringsdrivende i dagene du søker utbetaling for?",
+    "selvstendig.summary.harFlereVirksomheter.header": "Har du flere enn én næringsvirksomhet?",
 
     "frilanser.erFrilanser.spm": "Var du frilanser i dagene du søker utbetaling for?",
     "frilanser.nårStartet.spm": "Når startet du som frilanser?",

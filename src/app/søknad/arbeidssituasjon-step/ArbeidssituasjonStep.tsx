@@ -7,8 +7,9 @@ import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
 import { useFormikContext } from 'formik';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import { StepConfigProps, StepID } from '../../config/stepConfig';
-import { initialValues, SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
+import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import SøknadStep from '../SøknadStep';
+import { cleanupArbeidssituasjonStep } from './cleanupArbeidssituasjonStep';
 import FrilansFormPart from './components/FrilansFormPart';
 import SelvstendigNæringsdrivendeFormPart from './components/SelvstendigNæringsdrivendeFormPart';
 
@@ -20,27 +21,6 @@ const shouldShowSubmitButton = (søknadFormData: SøknadFormData): boolean => {
     return !(erFrilanser === YesOrNo.NO && erSelvstendigNæringsdrivende === YesOrNo.NO);
 };
 
-const cleanupStep = (values: SøknadFormData): SøknadFormData => {
-    const { frilans_erFrilanser, selvstendig_erSelvstendigNæringsdrivende } = values;
-    const cleanedValues = { ...values };
-
-    // Cleanup frilanser
-    if (frilans_erFrilanser === YesOrNo.NO) {
-        cleanedValues.frilans_jobberFortsattSomFrilans = initialValues.frilans_jobberFortsattSomFrilans;
-        cleanedValues.frilans_startdato = initialValues.frilans_startdato;
-        cleanedValues.frilans_sluttdato = initialValues.frilans_sluttdato;
-    } else {
-        if (values.frilans_jobberFortsattSomFrilans === YesOrNo.YES) {
-            cleanedValues.frilans_sluttdato = initialValues.frilans_sluttdato;
-        }
-    }
-    // Cleanup selvstendig næringsdrivende
-    if (selvstendig_erSelvstendigNæringsdrivende === YesOrNo.NO) {
-        cleanedValues.selvstendig_virksomheter = undefined;
-    }
-    return cleanedValues;
-};
-
 const ArbeidssituasjonStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) => {
     const { values } = useFormikContext<SøknadFormData>();
     const showSubmitButton = shouldShowSubmitButton(values);
@@ -50,7 +30,7 @@ const ArbeidssituasjonStep: React.FunctionComponent<StepConfigProps> = ({ onVali
             id={StepID.ARBEIDSSITUASJON}
             onValidFormSubmit={onValidSubmit}
             showSubmitButton={showSubmitButton}
-            cleanupStep={cleanupStep}>
+            cleanupStep={cleanupArbeidssituasjonStep}>
             <CounsellorPanel>
                 <p>
                     <FormattedHtmlMessage id="step.arbeidssituasjon.info.1" />

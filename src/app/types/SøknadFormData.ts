@@ -102,7 +102,9 @@ export type FrilansFormData = Pick<
 
 export type SelvstendigFormData = Pick<
     SøknadFormData,
-    SøknadFormField.selvstendig_erSelvstendigNæringsdrivende | SøknadFormField.selvstendig_virksomheter
+    | SøknadFormField.selvstendig_erSelvstendigNæringsdrivende
+    | SøknadFormField.selvstendig_virksomheter
+    | SøknadFormField.selvstendig_harFlereVirksomheter
 >;
 
 export const initialValues: SøknadFormData = {

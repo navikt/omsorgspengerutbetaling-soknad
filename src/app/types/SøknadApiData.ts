@@ -68,9 +68,12 @@ export interface SøknadApiData {
     frilans?: Frilans;
     selvstendigVirksomheter: VirksomhetApiData[];
     vedlegg: string[];
+    harDekketTiFørsteDagerSelv: boolean;
     _vedleggSmittevern: string[];
     _vedleggStengtSkole: string[];
-    harDekketTiFørsteDagerSelv: boolean;
     _harSøktAndreUtbetalinger: boolean;
     _harFosterbarn: boolean;
+    _varFrilansIPerioden: boolean;
+    _varSelvstendigNæringsdrivendeIPerioden: boolean;
+    _harFlereVirksomheter?: boolean;
 }

@@ -16,6 +16,7 @@ import SummaryBlock from './SummaryBlock';
 
 interface Props {
     selvstendigVirksomheter?: VirksomhetApiData[];
+    harFlereVirksomheter?: boolean;
 }
 
 const renderVirksomhetSummary = (virksomhet: VirksomhetApiData, intl: IntlShape) => {
@@ -110,13 +111,16 @@ const renderVirksomhetSummary = (virksomhet: VirksomhetApiData, intl: IntlShape)
     );
 };
 
-const SelvstendigSummary: React.FunctionComponent<Props> = ({ selvstendigVirksomheter = [] }) => {
+const SelvstendigSummary: React.FunctionComponent<Props> = ({ selvstendigVirksomheter = [], harFlereVirksomheter }) => {
     const intl = useIntl();
     const harSelvstendigVirksomheter = selvstendigVirksomheter.length > 0;
     return (
         <SummarySection header={intlHelper(intl, 'summary.virksomhet.header')}>
             <SummaryBlock header={intlHelper(intl, 'selvstendig.summary.harDuHattInntekt.header')}>
                 <JaNeiSvar harSvartJa={harSelvstendigVirksomheter} />
+            </SummaryBlock>
+            <SummaryBlock header={intlHelper(intl, 'selvstendig.summary.harFlereVirksomheter.header')}>
+                <JaNeiSvar harSvartJa={harFlereVirksomheter} />
             </SummaryBlock>
             {harSelvstendigVirksomheter && (
                 <SummaryBlock header="Virksomheter:">
