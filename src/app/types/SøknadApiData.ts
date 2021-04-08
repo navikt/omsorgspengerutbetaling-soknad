@@ -70,7 +70,7 @@ export interface SøknadApiData {
     vedlegg: string[];
     _vedleggSmittevern: string[];
     _vedleggStengtSkole: string[];
-    _harDekketTiFørsteDagerSelv: boolean;
+    harDekketTiFørsteDagerSelv: boolean;
     _harSøktAndreUtbetalinger: boolean;
     _harFosterbarn: boolean;
 }

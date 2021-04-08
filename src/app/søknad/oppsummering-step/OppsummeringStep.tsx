@@ -134,7 +134,7 @@ const OppsummeringStep: React.FunctionComponent<Props> = ({
                     {/* Omsorgsdager du søker utbetaling for */}
                     <SummarySection header={intlHelper(intl, 'steg.oppsummering.utbetalinger.header')}>
                         <SummaryBlock header={intlHelper(intl, 'step.fravaer.spm.harDekketTiFørsteDagerSelv')}>
-                            <JaNeiSvar harSvartJa={apiValues._harDekketTiFørsteDagerSelv} />
+                            <JaNeiSvar harSvartJa={apiValues.harDekketTiFørsteDagerSelv} />
                         </SummaryBlock>
                         <UtbetalingsperioderSummaryView utbetalingsperioder={apiValues.utbetalingsperioder} />
                         <UtenlandsoppholdISøkeperiodeSummaryView utenlandsopphold={apiValues.opphold} />

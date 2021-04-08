@@ -75,10 +75,6 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
 
     const yesOrNoQuestions: YesNoSpørsmålOgSvar[] = [
         {
-            spørsmål: intlHelper(intl, 'step.fravaer.spm.harDekketTiFørsteDagerSelv'),
-            svar: mapYesOrNoToSvar(harDekketTiFørsteDagerSelv),
-        },
-        {
             spørsmål: intlHelper(intl, 'steg.barn.fosterbarn.spm'),
             svar: mapYesOrNoToSvar(harFosterbarn),
         },
@@ -112,6 +108,7 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
             harForståttRettigheterOgPlikter,
             harBekreftetOpplysninger,
         },
+        harDekketTiFørsteDagerSelv: mapYesOrNoToSvar(harDekketTiFørsteDagerSelv),
         spørsmål: [...yesOrNoQuestions],
         fosterbarn: fosterbarn.map(mapFosterbarnToApiFosterbarn),
         andreUtbetalinger: harSøktAndreUtbetalinger === YesOrNo.YES ? [...andreUtbetalinger] : [],
@@ -129,7 +126,6 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
         vedlegg: [...vedleggSmittevern, ...vedleggStengtBhgSkole],
         _vedleggStengtSkole: vedleggStengtBhgSkole,
         _vedleggSmittevern: vedleggSmittevern,
-        _harDekketTiFørsteDagerSelv: mapYesOrNoToSvar(harDekketTiFørsteDagerSelv),
         _harSøktAndreUtbetalinger: mapYesOrNoToSvar(harSøktAndreUtbetalinger),
         _harFosterbarn: mapYesOrNoToSvar(harFosterbarn),
     };
