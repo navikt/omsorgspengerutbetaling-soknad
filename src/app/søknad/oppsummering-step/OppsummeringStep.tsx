@@ -144,7 +144,10 @@ const OppsummeringStep: React.FunctionComponent<Props> = ({
                     <FrilansSummary frilans={apiValues.frilans} />
 
                     {/* Næringsinntekt */}
-                    <SelvstendigSummary selvstendigVirksomheter={apiValues.selvstendigVirksomheter} />
+                    <SelvstendigSummary
+                        selvstendigVirksomheter={apiValues.selvstendigVirksomheter}
+                        harFlereVirksomheter={apiValues._harFlereVirksomheter}
+                    />
 
                     {/* Eventuelle andre inntekter */}
                     <SummarySection header={intlHelper(intl, 'summary.andreIntekter.header')}>

@@ -16,7 +16,7 @@ import SummaryBlock from './SummaryBlock';
 
 interface Props {
     selvstendigVirksomheter?: VirksomhetApiData[];
-    harFlereVirksomheter?: boolean;
+    harFlereVirksomheter: boolean | undefined;
 }
 
 const renderVirksomhetSummary = (virksomhet: VirksomhetApiData, intl: IntlShape) => {
