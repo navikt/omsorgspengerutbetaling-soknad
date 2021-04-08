@@ -143,7 +143,7 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
             </FormBlock>
 
             <FormSection title={intlHelper(intl, 'step.fravaer.dekkeSelv.tittel')}>
-                <FormBlock>
+                <FormBlock margin="l">
                     <SøknadFormComponents.YesOrNoQuestion
                         name={SøknadFormField.harDekketTiFørsteDagerSelv}
                         legend={intlHelper(intl, 'step.fravaer.spm.harDekketTiFørsteDagerSelv')}
