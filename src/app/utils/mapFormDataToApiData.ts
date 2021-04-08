@@ -74,12 +74,7 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
         utenlandsoppholdNeste12Mnd,
     } = formValues;
 
-    const yesOrNoQuestions: YesNoSpørsmålOgSvar[] = [
-        {
-            spørsmål: intlHelper(intl, 'steg.barn.fosterbarn.spm'),
-            svar: mapYesOrNoToSvar(harFosterbarn),
-        },
-    ];
+    const yesOrNoQuestions: YesNoSpørsmålOgSvar[] = [];
 
     if (harSøktAndreUtbetalinger === YesOrNo.NO) {
         yesOrNoQuestions.push({
@@ -87,13 +82,28 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
             svar: mapYesOrNoToSvar(harSøktAndreUtbetalinger),
         });
     }
-
+    if (frilans_erFrilanser) {
+        yesOrNoQuestions.push({
+            spørsmål: intlHelper(intl, 'frilanser.erFrilanser.spm'),
+            svar: mapYesOrNoToSvar(frilans_erFrilanser),
+        });
+    }
+    if (selvstendig_erSelvstendigNæringsdrivende) {
+        yesOrNoQuestions.push({
+            spørsmål: intlHelper(intl, 'selvstendig.erDuSelvstendigNæringsdrivende.spm'),
+            svar: mapYesOrNoToSvar(selvstendig_erSelvstendigNæringsdrivende),
+        });
+    }
     if (selvstendig_harFlereVirksomheter) {
         yesOrNoQuestions.push({
             spørsmål: intlHelper(intl, 'selvstendig.harFlereVirksomheter.spm'),
             svar: mapYesOrNoToSvar(selvstendig_harFlereVirksomheter),
         });
     }
+    yesOrNoQuestions.push({
+        spørsmål: intlHelper(intl, 'steg.barn.fosterbarn.spm'),
+        svar: mapYesOrNoToSvar(harFosterbarn),
+    });
 
     const vedleggSmittevern = getVedleggUrlFromAttachments(dokumenterSmittevernhensyn);
     const vedleggStengtBhgSkole = getVedleggUrlFromAttachments(dokumenterStengtBkgSkole);
