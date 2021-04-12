@@ -75,26 +75,20 @@ describe('stepValidation tests', () => {
                     })
                 ).toBeTruthy();
             });
-            it(`should be valid if ${SøknadFormField.selvstendig_erSelvstendigNæringsdrivende} === ${YesOrNo.YES} and ${SøknadFormField.selvstendig_virksomheter} has more than one instance`, () => {
+            it(`should be valid if ${SøknadFormField.selvstendig_erSelvstendigNæringsdrivende} === ${YesOrNo.YES} and ${SøknadFormField.selvstendig_virksomhet} has more than one instance`, () => {
                 const mockSelvstendigNæringsdrivende: any = {};
                 expect(
                     selvstendigIsValid({
                         selvstendig_erSelvstendigNæringsdrivende: YesOrNo.YES,
-                        selvstendig_virksomheter: [mockSelvstendigNæringsdrivende],
+                        selvstendig_virksomhet: mockSelvstendigNæringsdrivende,
                     })
                 ).toBeTruthy();
             });
-            it(`should be invalid if ${SøknadFormField.selvstendig_erSelvstendigNæringsdrivende} === ${YesOrNo.YES} and ${SøknadFormField.selvstendig_virksomheter} is undefined or empty`, () => {
+            it(`should be invalid if ${SøknadFormField.selvstendig_erSelvstendigNæringsdrivende} === ${YesOrNo.YES} and ${SøknadFormField.selvstendig_virksomhet} is undefined`, () => {
                 expect(
                     selvstendigIsValid({
                         selvstendig_erSelvstendigNæringsdrivende: YesOrNo.YES,
-                        selvstendig_virksomheter: undefined,
-                    })
-                ).toBeFalsy();
-                expect(
-                    selvstendigIsValid({
-                        selvstendig_erSelvstendigNæringsdrivende: YesOrNo.YES,
-                        selvstendig_virksomheter: [],
+                        selvstendig_virksomhet: undefined,
                     })
                 ).toBeFalsy();
             });

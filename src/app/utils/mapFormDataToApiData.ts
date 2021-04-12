@@ -57,7 +57,7 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
         frilans_jobberFortsattSomFrilans,
         selvstendig_erSelvstendigNæringsdrivende,
         selvstendig_harFlereVirksomheter,
-        selvstendig_virksomheter,
+        selvstendig_virksomhet,
 
         // Medlemskap
         harBoddUtenforNorgeSiste12Mnd,
@@ -107,9 +107,9 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
         frilans_sluttdato
     );
 
-    const selvstendigVirksomhet =
-        selvstendig_erSelvstendigNæringsdrivende === YesOrNo.YES && selvstendig_virksomheter?.length === 1
-            ? mapVirksomhetToVirksomhetApiData(intl.locale, selvstendig_virksomheter[0])
+    const virksomhet =
+        selvstendig_erSelvstendigNæringsdrivende === YesOrNo.YES && selvstendig_virksomhet !== undefined
+            ? mapVirksomhetToVirksomhetApiData(intl.locale, selvstendig_virksomhet)
             : undefined;
 
     const apiData: SøknadApiData = {
@@ -131,7 +131,7 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
             intl.locale
         ),
         frilans,
-        selvstendigVirksomheter: selvstendigVirksomhet ? [selvstendigVirksomhet] : [],
+        selvstendigVirksomheter: virksomhet ? [virksomhet] : [],
         opphold: settInnOpphold(perioder_harVærtIUtlandet, perioder_utenlandsopphold, intl.locale), // periode siden, har du oppholdt
         vedlegg: [...vedleggSmittevern, ...vedleggStengtBhgSkole],
         _vedleggStengtSkole: vedleggStengtBhgSkole,
@@ -141,7 +141,7 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
         _varFrilansIPerioden: mapYesOrNoToSvar(frilans_erFrilanser),
         _varSelvstendigNæringsdrivendeIPerioden: mapYesOrNoToSvar(selvstendig_erSelvstendigNæringsdrivende),
         _harFlereVirksomheter:
-            selvstendigVirksomhet && selvstendig_harFlereVirksomheter
+            virksomhet && selvstendig_harFlereVirksomheter
                 ? mapYesOrNoToSvar(selvstendig_harFlereVirksomheter)
                 : undefined,
     };

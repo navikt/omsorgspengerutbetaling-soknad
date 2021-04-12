@@ -7,7 +7,7 @@ import { SøknadFormData } from '../types/SøknadFormData';
 import { TemporaryStorage } from '../types/TemporaryStorage';
 import { getApiUrlByResourceType } from '../utils/apiUtils';
 
-export const STORAGE_VERSION = '9.1';
+export const STORAGE_VERSION = '9.2';
 
 interface SøknadPersistenceInterface extends Omit<PersistenceInterface<TemporaryStorage>, 'update'> {
     update: (formData: SøknadFormData | undefined, lastStepID: StepID) => Promise<AxiosResponse>;

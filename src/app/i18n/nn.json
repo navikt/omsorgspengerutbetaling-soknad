@@ -414,7 +414,7 @@
     "selvstendig.virksomhetSummary.tittel": "Verksemd som du har lagt inn:",
     "selvstendig.virksomhetSummary.registrerKnapp": "Registrer verksemd",
     "selvstendig.dialog.tittel": "Verksemd",
-    "selvstendig.summary.harDuHattInntekt.header": "Er du sjølvstendig næringsdrivande?",
+    "summary.virksomhet.harDuHattInntekt.header": "Er du sjølvstendig næringsdrivande?",
 
     "frilanser.erFrilanser.spm": "Er du frilansar?",
     "frilanser.nårStartet.spm": "Når starta du som frilansar?",

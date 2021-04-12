@@ -16,14 +16,14 @@ const SelvstendigSummary: React.FunctionComponent<Props> = ({ virksomhet, harFle
     const intl = useIntl();
     return (
         <SummarySection header={intlHelper(intl, 'summary.virksomhet.header')}>
-            <SummaryBlock header={intlHelper(intl, 'selvstendig.summary.harDuHattInntekt.header')}>
+            <SummaryBlock header={intlHelper(intl, 'summary.virksomhet.harDuHattInntekt.header')}>
                 <JaNeiSvar harSvartJa={virksomhet !== undefined} />
             </SummaryBlock>
-            <SummaryBlock header={intlHelper(intl, 'selvstendig.summary.harFlereVirksomheter.header')}>
+            <SummaryBlock header={intlHelper(intl, 'summary.virksomhet.harFlereVirksomheter.header')}>
                 <JaNeiSvar harSvartJa={harFlereVirksomheter} />
             </SummaryBlock>
             {virksomhet && (
-                <SummaryBlock header={intlHelper(intl, 'selvstendig.virksomhetSummary.tittel')}>
+                <SummaryBlock header={intlHelper(intl, 'summary.virksomhet.virksomhetInfo.tittel')}>
                     <VirksomhetSummary virksomhet={virksomhet} />
                 </SummaryBlock>
             )}

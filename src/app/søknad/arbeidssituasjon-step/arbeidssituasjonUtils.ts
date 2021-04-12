@@ -20,9 +20,9 @@ export const frilansIsValid = (formData: FrilansFormData) => {
 
 export const selvstendigIsValid = (formData: SelvstendigFormData) => {
     const erSelvstendigNæringsdrivende: YesOrNo | undefined = formData.selvstendig_erSelvstendigNæringsdrivende;
-    const selvstendigVirksomheter: Virksomhet[] | undefined = formData.selvstendig_virksomheter;
+    const selvstendigVirksomhet: Virksomhet | undefined = formData.selvstendig_virksomhet;
     return !!(
         erSelvstendigNæringsdrivende === YesOrNo.NO ||
-        (erSelvstendigNæringsdrivende === YesOrNo.YES && selvstendigVirksomheter && selvstendigVirksomheter.length > 0)
+        (erSelvstendigNæringsdrivende === YesOrNo.YES && selvstendigVirksomhet !== undefined)
     );
 };

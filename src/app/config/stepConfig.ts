@@ -76,7 +76,7 @@ export const getStepConfig = (formData?: SøknadFormData): StepConfigInterface =
         if (skalViseStengtSkoleBhgDokumenterStep) {
             return StepID.DOKUMENTER_STENGT_SKOLE_BHG;
         }
-        return StepID.BARN;
+        return StepID.FRAVÆR;
     };
 
     const configDelEn = {

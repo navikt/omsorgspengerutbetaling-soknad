@@ -17,15 +17,13 @@ describe('cleanupArbeidssituasjonStep', () => {
         frilans_startdato: '2020-10-10',
     };
     const snData: SelvstendigFormData = {
-        selvstendig_virksomheter: [
-            {
-                fom: new Date(),
-                harRegnskapsfører: YesOrNo.NO,
-                navnPåVirksomheten: 'abc',
-                næringstyper: [Næringstype.ANNEN],
-                registrertINorge: YesOrNo.YES,
-            },
-        ],
+        selvstendig_virksomhet: {
+            fom: new Date(),
+            harRegnskapsfører: YesOrNo.NO,
+            navnPåVirksomheten: 'abc',
+            næringstyper: [Næringstype.ANNEN],
+            registrertINorge: YesOrNo.YES,
+        },
         selvstendig_erSelvstendigNæringsdrivende: YesOrNo.YES,
         selvstendig_harFlereVirksomheter: YesOrNo.NO,
     };
@@ -49,12 +47,12 @@ describe('cleanupArbeidssituasjonStep', () => {
         const values: SøknadFormData = { ...formData, selvstendig_erSelvstendigNæringsdrivende: YesOrNo.NO };
         const result = cleanupArbeidssituasjonStep(values);
         expect(result.selvstendig_harFlereVirksomheter).toBeUndefined();
-        expect(result.selvstendig_virksomheter).toBeUndefined();
+        expect(result.selvstendig_virksomhet).toBeUndefined();
     });
     it(`retains selvstendig info if ${SøknadFormField.selvstendig_erSelvstendigNæringsdrivende} === ${YesOrNo.YES}`, () => {
         const values: SøknadFormData = { ...formData, selvstendig_erSelvstendigNæringsdrivende: YesOrNo.YES };
         const result = cleanupArbeidssituasjonStep(values);
         expect(result.selvstendig_harFlereVirksomheter).toBeDefined();
-        expect(result.selvstendig_virksomheter).toBeDefined();
+        expect(result.selvstendig_virksomhet).toBeDefined();
     });
 });
