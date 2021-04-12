@@ -1,5 +1,5 @@
 import React from 'react';
-import { useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
 import ResponsivePanel from '@navikt/sif-common-core/lib/components/responsive-panel/ResponsivePanel';
 import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
@@ -46,7 +46,9 @@ const SelvstendigNæringsdrivendeFormPart: React.FunctionComponent<Props> = ({ f
 
             {harFlereVirksomheter && (
                 <FormBlock>
-                    <CounsellorPanel>Informasjon om at en må legge til sin eldste virksomhet</CounsellorPanel>
+                    <CounsellorPanel>
+                        <FormattedMessage id="selvstendig.veileder.flereAktiveVirksomheter" />
+                    </CounsellorPanel>
                 </FormBlock>
             )}
 
@@ -58,15 +60,11 @@ const SelvstendigNæringsdrivendeFormPart: React.FunctionComponent<Props> = ({ f
                             maxItems={1}
                             gjelderFlereVirksomheter={harFlereVirksomheter}
                             labels={{
-                                listTitle: harFlereVirksomheter
-                                    ? 'Din registrerte virksomhet'
-                                    : intlHelper(intl, 'selvstendig.list.tittel'),
-                                addLabel: harFlereVirksomheter
-                                    ? 'Registrer virksomhet'
-                                    : intlHelper(intl, 'selvstendig.list.leggTilLabel'),
+                                listTitle: intlHelper(intl, 'selvstendig.virksomhetSummary.tittel'),
+                                addLabel: intlHelper(intl, 'selvstendig.virksomhetSummary.registrerKnapp'),
                                 modalTitle: harFlereVirksomheter
-                                    ? 'Opplysninger om virksomhet'
-                                    : intlHelper(intl, 'selvstendig.dialog.tittel'),
+                                    ? intlHelper(intl, 'selvstendig.dialog.tittel.flere')
+                                    : intlHelper(intl, 'selvstendig.dialog.tittel.en'),
                             }}
                             skipOrgNumValidation={skipOrgNumValidation}
                             validate={validateRequiredList}

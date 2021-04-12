@@ -29,13 +29,13 @@ import { validateSoknadApiData } from '../../validation/apiDataValidation';
 import SøknadFormComponents from '../SøknadFormComponents';
 import SøknadStep from '../SøknadStep';
 import FrilansSummary from './components/FrilansSummary';
+import JaNeiSvar from './components/JaNeiSvar';
 import MedlemskapSummaryView from './components/MedlemskapSummaryView';
 import NavnOgFodselsnummerSummaryView from './components/NavnOgFodselsnummerSummaryView';
 import SelvstendigSummary from './components/SelvstendigSummary';
 import SummaryBlock from './components/SummaryBlock';
 import UtbetalingsperioderSummaryView from './components/UtbetalingsperioderSummaryView';
 import UtenlandsoppholdISøkeperiodeSummaryView from './components/UtenlandsoppholdISøkeperiodeSummaryView';
-import JaNeiSvar from './components/JaNeiSvar';
 
 interface Props {
     hjemmePgaSmittevernhensyn: boolean;
@@ -89,8 +89,8 @@ const OppsummeringStep: React.FunctionComponent<Props> = ({
     } = søkerdata;
 
     const apiValues: SøknadApiData = mapFormDataToApiData(values, intl);
-    const { fosterbarn = [] } = apiValues;
-
+    const { fosterbarn = [], selvstendigVirksomheter = [] } = apiValues;
+    const virksomhet = selvstendigVirksomheter.length === 1 ? selvstendigVirksomheter[0] : undefined;
     const apiValidationErrors = validateSoknadApiData(apiValues);
 
     return (
@@ -145,8 +145,8 @@ const OppsummeringStep: React.FunctionComponent<Props> = ({
 
                     {/* Næringsinntekt */}
                     <SelvstendigSummary
-                        selvstendigVirksomheter={apiValues.selvstendigVirksomheter}
                         harFlereVirksomheter={apiValues._harFlereVirksomheter}
+                        virksomhet={virksomhet}
                     />
 
                     {/* Eventuelle andre inntekter */}

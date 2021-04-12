@@ -411,8 +411,8 @@
     "summary.virksomhet.yrkesaktivSisteTreFerdigliknedeÅrene": "Blei yrkesaktiv {dato}",
 
     "selvstendig.erDuSelvstendigNæringsdrivende.spm": "Er du sjølvstendig næringsdrivande?",
-    "selvstendig.list.tittel": "Registrerte verksemder",
-    "selvstendig.list.leggTilLabel": "Legg til verksemd",
+    "selvstendig.virksomhetSummary.tittel": "Verksemd som du har lagt inn:",
+    "selvstendig.virksomhetSummary.registrerKnapp": "Registrer verksemd",
     "selvstendig.dialog.tittel": "Verksemd",
     "selvstendig.summary.harDuHattInntekt.header": "Er du sjølvstendig næringsdrivande?",
 
