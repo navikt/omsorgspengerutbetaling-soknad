@@ -35,7 +35,7 @@
         "@navikt/sif-common-amplitude": "^1.2.5",
         "@navikt/sif-common-core": "^8.5.0",
         "@navikt/sif-common-formik": "^15.5.2",
-        "@navikt/sif-common-forms": "^13.0.3",
+        "@navikt/sif-common-forms": "^13.0.4",
         "@navikt/sif-common-question-config": "^0.0.7",
         "@navikt/sif-common-sentry": "0.0.14",
         "@sentry/browser": "^6.2.5",
@@ -71,7 +71,7 @@
         "react-modal": "^3.12.1",
         "react-router-dom": "^5.2.0",
         "react-simple-timefield": "^3.2.3",
-        "snyk": "^1.531.0",
+        "snyk": "^1.532.0",
         "use-media": "^1.4.0"
     },
     "devDependencies": {
@@ -92,8 +92,8 @@
         "@types/react-document-title": "^2.0.4",
         "@types/react-dom": "^17.0.3",
         "@types/react-router-dom": "^5.1.7",
-        "@typescript-eslint/eslint-plugin": "^4.21.0",
-        "@typescript-eslint/parser": "^4.21.0",
+        "@typescript-eslint/eslint-plugin": "^4.22.0",
+        "@typescript-eslint/parser": "^4.22.0",
         "@wojtekmaj/enzyme-adapter-react-17": "^0.6.1",
         "autoprefixer": "^10.2.5",
         "awesome-typescript-loader": "^5.2.1",
@@ -129,7 +129,7 @@
         "svg-sprite-loader": "^5.2.1",
         "ts-jest": "^26.5.4",
         "typescript": "^4.2.4",
-        "webpack": "^5.31.2",
+        "webpack": "^5.32.0",
         "webpack-dev-server": "^3.11.2"
     },
     "resolutions": {
