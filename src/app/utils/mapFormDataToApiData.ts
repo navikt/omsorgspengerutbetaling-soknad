@@ -4,17 +4,9 @@ import { Locale } from '@navikt/sif-common-core/lib/types/Locale';
 import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
 import { attachmentUploadHasFailed } from '@navikt/sif-common-core/lib/utils/attachmentUtils';
 import { formatDateToApiFormat } from '@navikt/sif-common-core/lib/utils/dateUtils';
-// import { formatDateToApiFormat } from '@navikt/sif-common-core/lib/utils/dateUtils';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import { decimalTimeToTime, timeToIso8601Duration } from '@navikt/sif-common-core/lib/utils/timeUtils';
-// import { decimalTimeToTime, timeToIso8601Duration } from '@navikt/sif-common-core/lib/utils/timeUtils';
-import {
-    Fosterbarn,
-    mapVirksomhetToVirksomhetApiData,
-    Utenlandsopphold,
-    Virksomhet,
-    VirksomhetApiData,
-} from '@navikt/sif-common-forms/lib';
+import { Fosterbarn, mapVirksomhetToVirksomhetApiData, Utenlandsopphold } from '@navikt/sif-common-forms/lib';
 import { FraværDag, FraværPeriode } from '@navikt/sif-common-forms/lib/fravær';
 import { ApiAktivitet } from '../types/AktivitetFravær';
 import {
@@ -65,7 +57,7 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
         frilans_jobberFortsattSomFrilans,
         selvstendig_erSelvstendigNæringsdrivende,
         selvstendig_harFlereVirksomheter,
-        selvstendig_virksomheter,
+        selvstendig_virksomhet,
 
         // Medlemskap
         harBoddUtenforNorgeSiste12Mnd,
@@ -115,11 +107,10 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
         frilans_sluttdato
     );
 
-    const selvstendigVirksomheter = mapVirksomheterTilApiData(
-        intl.locale,
-        selvstendig_erSelvstendigNæringsdrivende,
-        selvstendig_virksomheter
-    );
+    const virksomhet =
+        selvstendig_erSelvstendigNæringsdrivende === YesOrNo.YES && selvstendig_virksomhet !== undefined
+            ? mapVirksomhetToVirksomhetApiData(intl.locale, selvstendig_virksomhet)
+            : undefined;
 
     const apiData: SøknadApiData = {
         språk: (intl.locale as any) === 'en' ? 'nn' : (intl.locale as Locale),
@@ -140,7 +131,7 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
             intl.locale
         ),
         frilans,
-        selvstendigVirksomheter,
+        selvstendigVirksomheter: virksomhet ? [virksomhet] : [],
         opphold: settInnOpphold(perioder_harVærtIUtlandet, perioder_utenlandsopphold, intl.locale), // periode siden, har du oppholdt
         vedlegg: [...vedleggSmittevern, ...vedleggStengtBhgSkole],
         _vedleggStengtSkole: vedleggStengtBhgSkole,
@@ -150,7 +141,7 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
         _varFrilansIPerioden: mapYesOrNoToSvar(frilans_erFrilanser),
         _varSelvstendigNæringsdrivendeIPerioden: mapYesOrNoToSvar(selvstendig_erSelvstendigNæringsdrivende),
         _harFlereVirksomheter:
-            selvstendigVirksomheter.length > 0 && selvstendig_harFlereVirksomheter
+            virksomhet && selvstendig_harFlereVirksomheter
                 ? mapYesOrNoToSvar(selvstendig_harFlereVirksomheter)
                 : undefined,
     };
@@ -199,19 +190,6 @@ const settInnOpphold = (
         ? periodeUtenlandsopphold.map((utenlandsopphold: Utenlandsopphold) => {
               return mapBostedUtlandToApiData(utenlandsopphold, locale);
           })
-        : [];
-};
-
-const mapVirksomheterTilApiData = (
-    locale: string,
-    erSelvstendigNæringsdrivende?: YesOrNo,
-    virksomheter?: Virksomhet[],
-    harBesvartFiskerPåBladB?: boolean
-): VirksomhetApiData[] => {
-    return erSelvstendigNæringsdrivende && erSelvstendigNæringsdrivende === YesOrNo.YES && virksomheter
-        ? virksomheter.map((virksomhet: Virksomhet) =>
-              mapVirksomhetToVirksomhetApiData(locale, virksomhet, harBesvartFiskerPåBladB)
-          )
         : [];
 };
 

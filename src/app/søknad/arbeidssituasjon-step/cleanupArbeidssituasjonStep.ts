@@ -17,7 +17,7 @@ export const cleanupArbeidssituasjonStep = (values: SøknadFormData): SøknadFor
     }
     // Cleanup selvstendig næringsdrivende
     if (selvstendig_erSelvstendigNæringsdrivende === YesOrNo.NO) {
-        cleanedValues.selvstendig_virksomheter = undefined;
+        cleanedValues.selvstendig_virksomhet = undefined;
         cleanedValues.selvstendig_harFlereVirksomheter = undefined;
     }
     return cleanedValues;

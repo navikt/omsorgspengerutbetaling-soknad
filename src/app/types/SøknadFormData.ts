@@ -40,7 +40,7 @@ export enum SøknadFormField {
     frilans_sluttdato = 'frilans_sluttdato',
     selvstendig_erSelvstendigNæringsdrivende = 'selvstendig_erSelvstendigNæringsdrivende',
     selvstendig_harFlereVirksomheter = 'selvstendig_harFlereVirksomheter',
-    selvstendig_virksomheter = 'selvstendig_virksomheter',
+    selvstendig_virksomhet = 'selvstendig_virksomhet',
 
     // Medlemskap
     harBoddUtenforNorgeSiste12Mnd = 'harBoddUtenforNorgeSiste12Mnd',
@@ -75,7 +75,7 @@ export interface SøknadFormData {
     [SøknadFormField.frilans_sluttdato]?: string;
     [SøknadFormField.selvstendig_erSelvstendigNæringsdrivende]: YesOrNo;
     [SøknadFormField.selvstendig_harFlereVirksomheter]?: YesOrNo;
-    [SøknadFormField.selvstendig_virksomheter]?: Virksomhet[];
+    [SøknadFormField.selvstendig_virksomhet]?: Virksomhet;
 
     // Barn
     [SøknadFormField.harFosterbarn]: YesOrNo;
@@ -103,7 +103,7 @@ export type FrilansFormData = Pick<
 export type SelvstendigFormData = Pick<
     SøknadFormData,
     | SøknadFormField.selvstendig_erSelvstendigNæringsdrivende
-    | SøknadFormField.selvstendig_virksomheter
+    | SøknadFormField.selvstendig_virksomhet
     | SøknadFormField.selvstendig_harFlereVirksomheter
 >;
 
@@ -133,7 +133,6 @@ export const initialValues: SøknadFormData = {
     [SøknadFormField.frilans_erFrilanser]: YesOrNo.UNANSWERED,
     [SøknadFormField.selvstendig_erSelvstendigNæringsdrivende]: YesOrNo.UNANSWERED,
     [SøknadFormField.selvstendig_harFlereVirksomheter]: YesOrNo.UNANSWERED,
-    [SøknadFormField.selvstendig_virksomheter]: [],
 
     [SøknadFormField.aktivitetFravær]: [],
 

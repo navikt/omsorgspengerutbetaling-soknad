@@ -3,15 +3,15 @@ import { IntlShape, useIntl } from 'react-intl';
 import SummaryList from '@navikt/sif-common-core/lib/components/summary-list/SummaryList';
 import { Time } from '@navikt/sif-common-core/lib/types/Time';
 import { apiStringDateToDate, prettifyDate } from '@navikt/sif-common-core/lib/utils/dateUtils';
+import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import { iso8601DurationToTime, timeToDecimalTime } from '@navikt/sif-common-core/lib/utils/timeUtils';
 import { FraværÅrsak, getFraværÅrsakTekstKort, timeText } from '@navikt/sif-common-forms/lib/fravær';
+import dayjs from 'dayjs';
+import flatten from 'lodash/flatten';
+import uniq from 'lodash/uniq';
+import { ApiAktivitet } from '../../../types/AktivitetFravær';
 import { UtbetalingsperiodeApi } from '../../../types/SøknadApiData';
 import SummaryBlock from './SummaryBlock';
-import dayjs from 'dayjs';
-import uniq from 'lodash/uniq';
-import flatten from 'lodash/flatten';
-import { ApiAktivitet } from '../../../types/AktivitetFravær';
-import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 
 export interface Props {
     utbetalingsperioder: UtbetalingsperiodeApi[];

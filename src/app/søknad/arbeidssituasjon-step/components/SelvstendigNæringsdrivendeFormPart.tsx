@@ -1,20 +1,20 @@
 import React from 'react';
-import { useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
+import CounsellorPanel from '@navikt/sif-common-core/lib/components/counsellor-panel/CounsellorPanel';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
 import ResponsivePanel from '@navikt/sif-common-core/lib/components/responsive-panel/ResponsivePanel';
 import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import {
-    validateRequiredList,
+    validateRequiredField,
     validateYesOrNoIsAnswered,
 } from '@navikt/sif-common-core/lib/validation/fieldValidations';
-import VirksomhetListAndDialog from '@navikt/sif-common-forms/lib/virksomhet/VirksomhetListAndDialog';
+import VirksomhetInfoAndDialog from '@navikt/sif-common-forms/lib/virksomhet/VirksomhetInfoAndDialog';
 import { StepID } from '../../../config/stepConfig';
 import { SøknadFormData, SøknadFormField } from '../../../types/SøknadFormData';
 import { getEnvironmentVariable } from '../../../utils/envUtils';
 import SøknadFormComponents from '../../SøknadFormComponents';
 import SøknadTempStorage from '../../SøknadTempStorage';
-import CounsellorPanel from '@navikt/sif-common-core/lib/components/counsellor-panel/CounsellorPanel';
 
 interface Props {
     formValues: SøknadFormData;
@@ -23,9 +23,13 @@ interface Props {
 const SelvstendigNæringsdrivendeFormPart: React.FunctionComponent<Props> = ({ formValues: values }) => {
     const intl = useIntl();
     const skipOrgNumValidation = getEnvironmentVariable('SKIP_ORGNUM_VALIDATION') === 'true';
-    const erSelvstendigNæringsdrivende = values.selvstendig_erSelvstendigNæringsdrivende === YesOrNo.YES;
-    const harFlereVirksomheter =
-        erSelvstendigNæringsdrivende && values.selvstendig_harFlereVirksomheter === YesOrNo.YES;
+    const {
+        selvstendig_erSelvstendigNæringsdrivende,
+        selvstendig_virksomhet,
+        selvstendig_harFlereVirksomheter,
+    } = values;
+    const erSelvstendigNæringsdrivende = selvstendig_erSelvstendigNæringsdrivende === YesOrNo.YES;
+    const harFlereVirksomheter = erSelvstendigNæringsdrivende && selvstendig_harFlereVirksomheter === YesOrNo.YES;
     return (
         <>
             <SøknadFormComponents.YesOrNoQuestion
@@ -46,30 +50,31 @@ const SelvstendigNæringsdrivendeFormPart: React.FunctionComponent<Props> = ({ f
 
             {harFlereVirksomheter && (
                 <FormBlock>
-                    <CounsellorPanel>Informasjon om at en må legge til sin eldste virksomhet</CounsellorPanel>
+                    <CounsellorPanel>
+                        <FormattedMessage id="selvstendig.veileder.flereAktiveVirksomheter" />
+                    </CounsellorPanel>
                 </FormBlock>
             )}
 
             {erSelvstendigNæringsdrivende && values.selvstendig_harFlereVirksomheter !== YesOrNo.UNANSWERED && (
                 <FormBlock>
                     <ResponsivePanel>
-                        <VirksomhetListAndDialog
-                            name={SøknadFormField.selvstendig_virksomheter}
-                            maxItems={1}
-                            gjelderFlereVirksomheter={harFlereVirksomheter}
+                        <VirksomhetInfoAndDialog
+                            name={SøknadFormField.selvstendig_virksomhet}
+                            harFlereVirksomheter={harFlereVirksomheter}
                             labels={{
-                                listTitle: harFlereVirksomheter
-                                    ? 'Din registrerte virksomhet'
-                                    : intlHelper(intl, 'selvstendig.list.tittel'),
-                                addLabel: harFlereVirksomheter
-                                    ? 'Registrer virksomhet'
-                                    : intlHelper(intl, 'selvstendig.list.leggTilLabel'),
+                                infoTitle: selvstendig_virksomhet
+                                    ? intlHelper(intl, 'selvstendig.infoDialog.infoTittel')
+                                    : undefined,
+                                editLabel: intlHelper(intl, 'selvstendig.infoDialog.endreKnapp'),
+                                deleteLabel: intlHelper(intl, 'selvstendig.infoDialog.fjernKnapp'),
+                                addLabel: intlHelper(intl, 'selvstendig.infoDialog.registrerKnapp'),
                                 modalTitle: harFlereVirksomheter
-                                    ? 'Opplysninger om virksomhet'
-                                    : intlHelper(intl, 'selvstendig.dialog.tittel'),
+                                    ? intlHelper(intl, 'selvstendig.infoDialog.tittel.flere')
+                                    : intlHelper(intl, 'selvstendig.infoDialog.tittel.en'),
                             }}
                             skipOrgNumValidation={skipOrgNumValidation}
-                            validate={validateRequiredList}
+                            validate={validateRequiredField}
                             onAfterChange={() => {
                                 SøknadTempStorage.update(values, StepID.ARBEIDSSITUASJON);
                             }}

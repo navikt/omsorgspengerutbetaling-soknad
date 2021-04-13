@@ -136,7 +136,7 @@ export const mock1: SøknadApiData = {
     },
     selvstendigVirksomheter: [
         {
-            næringstyper: [Næringstype.FISKER, Næringstype.JORDBRUK, Næringstype.DAGMAMMA, Næringstype.ANNEN],
+            næringstyper: [Næringstype.FISKE, Næringstype.JORDBRUK_SKOGBRUK, Næringstype.DAGMAMMA, Næringstype.ANNEN],
             navnPåVirksomheten: 'Navn på virksomheten',
             registrertINorge: false,
             fraOgMed: '2013-03-04',
@@ -149,7 +149,7 @@ export const mock1: SøknadApiData = {
             },
         },
         {
-            næringstyper: [Næringstype.FISKER, Næringstype.JORDBRUK],
+            næringstyper: [Næringstype.FISKE, Næringstype.JORDBRUK_SKOGBRUK],
             navnPåVirksomheten: 'Kål og ditt OG datt',
             registrertINorge: false,
             fraOgMed: '2018-03-01',
