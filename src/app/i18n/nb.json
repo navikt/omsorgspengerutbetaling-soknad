@@ -82,18 +82,18 @@
     "step.sendButtonLabel": "Send inn søknaden",
     "step.sendButtonAriaLabel": "Send inn søknaden",
 
-    "step.periode.pageTitle": "Første og siste dag du skal søke for",
+    "step.periode.pageTitle": "Første og siste dag du skal søke for - Søknad om utbetaling av omsorgspenger",
     "step.periode.stepTitle": "Første og siste dag du skal søke for",
     "step.periode.stepIndicatorLabel": "Første og siste dag du skal søke for",
 
-    "step.fravaer.pageTitle": "Dager du har vært hjemme med barn",
+    "step.fravaer.pageTitle": "Dager du har vært hjemme med barn - Søknad om utbetaling av omsorgspenger",
     "step.fravaer.stepTitle": "Dager du har vært hjemme med barn",
     "step.fravaer.stepIndicatorLabel": "Dager du har vært hjemme med barn",
 
     "step.fravaerFra.pageTitle": "Fravær fra arbeid som selvstendig næringsdrivende og/eller frilanser",
     "step.fravaerFra.stepTitle": "Fravær fra arbeid som selvstendig næringsdrivende og/eller frilanser",
     "step.fravaerFra.stepIndicatorLabel": "Fravær fra arbeid som selvstendig næringsdrivende og/eller frilanser",
-    "step.fravaerFra.info": "Du har opplyst at du er både selvstendig næringsdrivende og frilanser. Nå trenger vi å vite hvilket arbeid du hadde fravær fra i dagene du var hjemme med barn.",
+    "step.fravaerFra.info": "Du har opplyst at du er både selvstendig næringsdrivende og frilanser. Nå trenger vi å vite hvilket arbeid du hadde fravær fra i dagene du brukte omsorgsdager.",
     "step.fravaerFra.dag.spm": "Hvilket arbeid hadde du fravær fra {dato}?",
 
     "step.arbeidssituasjon.pageTitle": "Arbeidssituasjon - Søknad om utbetaling av omsorgspenger",
@@ -102,12 +102,12 @@
     "step.arbeidssituasjon.info.1": "Nå trenger vi å vite hva som var arbeidssituasjonen din i dagene du søker utbetaling for.",
     "step.arbeidssituasjon.advarsel.ingenSituasjonValgt": "Du må velge minst én av situasjonene over.",
 
-    "step.barn.pageTitle": "Om barn",
+    "step.barn.pageTitle": "Om barn - Søknad om utbetaling av omsorgspenger",
     "step.barn.stepTitle": "Om barn",
     "step.barn.stepIndicatorLabel": "Om barn",
 
-    "step.medlemskap.pageTitle": "Medlemskap - Søknad om utbetaling av omsorgspenger",
-    "step.medlemskap.stepTitle": "Medlemskap",
+    "step.medlemskap.pageTitle": "Medlemskap i folketrygden - Søknad om utbetaling av omsorgspenger",
+    "step.medlemskap.stepTitle": "Medlemskap i folketrygden",
     "step.medlemskap.stepIndicatorLabel": "Om medlemskap i folketrygden",
 
     "step.oppsummering.pageTitle": "Oppsummering - Søknad om utbetaling av omsorgspenger",
@@ -212,7 +212,7 @@
 
     "steg.barn.pageTitle": "Fosterbarn",
     "steg.barn.stepTitle": "Fosterbarn",
-    "steg.barn.intro": "Vi henter inn barn som er registrert på deg fra folkeregisteret, men dette får vi ikke gjort med fosterbarn. Hvis du har fosterbarn kan du selv legge dem til.",
+    "steg.barn.intro": "Vi henter inn barn som er registrert på deg fra folkeregisteret, men dette får vi ikke gjort med fosterbarn. Hvis du har fosterbarn kan du legge dem til selv.",
     "steg.barn.fosterbarn.spm": "Har du fosterbarn?",
     "steg.barn.nextButtonLabel": "Fortsett",
     "steg.barn.dineBarn": "Dine fosterbarn",
@@ -446,7 +446,7 @@
     "selvstendig.veileder.flereAktiveVirksomheter": "Når du har flere aktive næringsvirksomheter skal du kun legge inn den virksomheten som er eldst av dem. Har du for eksempel en virksomhet du startet i 2012 og en annen som du startet i 2020, skal du kun legge inn virksomheten du startet i 2012.",
     "selvstendig.infoDialog.infoTittel": "Næringsvirksomhet som du har lagt inn:",
     "selvstendig.infoDialog.registrerKnapp": "Registrer virksomhet",
-    "selvstendig.infoDialog.endreKnapp": "Endre informasjon",
+    "selvstendig.infoDialog.endreKnapp": "Endre opplysninger",
     "selvstendig.infoDialog.fjernKnapp": "Fjern virksomhet",
     "selvstendig.infoDialog.tittel.en": "Opplysninger om virksomheten din",
     "selvstendig.infoDialog.tittel.flere": "Opplysninger om den eldste virksomheten din",
