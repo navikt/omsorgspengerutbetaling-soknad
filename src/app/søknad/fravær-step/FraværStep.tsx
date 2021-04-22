@@ -6,10 +6,8 @@ import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlo
 import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
 import { date1YearAgo, DateRange, dateToday } from '@navikt/sif-common-core/lib/utils/dateUtils';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
-import {
-    validateRequiredList,
-    validateYesOrNoIsAnswered,
-} from '@navikt/sif-common-core/lib/validation/fieldValidations';
+import { getListValidator, getYesOrNoValidator } from '@navikt/sif-common-formik/lib/validation';
+import { validateAll } from '@navikt/sif-common-formik/lib/validation/validationUtils';
 import BostedUtlandListAndDialog from '@navikt/sif-common-forms/lib/bosted-utland/BostedUtlandListAndDialog';
 import {
     FraværDag,
@@ -19,7 +17,7 @@ import {
 } from '@navikt/sif-common-forms/lib/fravær';
 import FraværDagerListAndDialog from '@navikt/sif-common-forms/lib/fravær/FraværDagerListAndDialog';
 import FraværPerioderListAndDialog from '@navikt/sif-common-forms/lib/fravær/FraværPerioderListAndDialog';
-import { validateAll, validateNoCollisions } from '@navikt/sif-common-forms/lib/fravær/fraværValidationUtils';
+import { validateNoCollisions } from '@navikt/sif-common-forms/lib/fravær/fraværValidationUtils';
 import dayjs from 'dayjs';
 import MinMax from 'dayjs/plugin/minMax';
 import { useFormikContext } from 'formik';
@@ -31,7 +29,7 @@ import getLenker from '../../lenker';
 import { AndreUtbetalinger } from '../../types/AndreUtbetalinger';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import { getPeriodeBoundaries } from '../../utils/periodeUtils';
-import { validateFraværDagHarÅrstall, validateFraværPeriodeHarÅrstall } from '../../validation/fieldValidations';
+import { validateFraværDagerHarÅrstall, validateFraværPerioderHarÅrstall } from '../../validation/fieldValidations';
 import SøknadFormComponents from '../SøknadFormComponents';
 import SøknadStep from '../SøknadStep';
 import './fraværStep.less';
@@ -120,6 +118,11 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
         if (harPerioderMedFravær === YesOrNo.NO) {
             cleanedValues.fraværPerioder = [];
         }
+        // Cleanup andre utbetalinger
+        if (values.harSøktAndreUtbetalinger === YesOrNo.NO) {
+            cleanedValues.andreUtbetalinger = [];
+        }
+
         return cleanedValues;
     };
 
@@ -160,7 +163,7 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                                 </p>
                             </ExpandableInfo>
                         }
-                        validate={validateYesOrNoIsAnswered}
+                        validate={getYesOrNoValidator()}
                     />
                 </FormBlock>
                 {harDekketTiFørsteDagerSelv === YesOrNo.NO && (
@@ -186,7 +189,7 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                     <SøknadFormComponents.YesOrNoQuestion
                         name={SøknadFormField.harPerioderMedFravær}
                         legend={intlHelper(intl, 'step.fravaer.spm.harPerioderMedFravær')}
-                        validate={validateYesOrNoIsAnswered}
+                        validate={getYesOrNoValidator()}
                     />
                 </FormBlock>
 
@@ -199,11 +202,13 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                                 periodeDescription={tidsromBegrensningInfo}
                                 minDate={minDateForFravær}
                                 maxDate={maxDateForFravær}
-                                validate={validateAll([
-                                    validateRequiredList,
-                                    validateFraværPeriodeHarÅrstall(values.fraværPerioder, årstall),
-                                    validateNoCollisions(values.fraværDager, values.fraværPerioder),
-                                ])}
+                                validate={(value) =>
+                                    validateAll([
+                                        () => getListValidator({ required: true })(value),
+                                        () => validateFraværPerioderHarÅrstall(values.fraværPerioder, årstall),
+                                        () => validateNoCollisions(values.fraværDager, values.fraværPerioder)(),
+                                    ])
+                                }
                                 labels={{
                                     listTitle: intlHelper(intl, 'step.fravaer.harPerioderMedFravær.listTitle'),
                                     addLabel: intlHelper(intl, 'step.fravaer.harPerioderMedFravær.addLabel'),
@@ -222,7 +227,7 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                     <SøknadFormComponents.YesOrNoQuestion
                         name={SøknadFormField.harDagerMedDelvisFravær}
                         legend={intlHelper(intl, 'step.fravaer.spm.harDagerMedDelvisFravær')}
-                        validate={validateYesOrNoIsAnswered}
+                        validate={getYesOrNoValidator()}
                     />
                 </FormBlock>
                 {/* DAGER MED DELVIS FRAVÆR*/}
@@ -234,14 +239,13 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                                 dagDescription={tidsromBegrensningInfo}
                                 minDate={minDateForFravær}
                                 maxDate={maxDateForFravær}
-                                validate={validateAll([
-                                    validateRequiredList,
-                                    validateFraværDagHarÅrstall(values.fraværDager, årstall),
-                                    validateNoCollisions(
-                                        values[SøknadFormField.fraværDager],
-                                        values[SøknadFormField.fraværPerioder]
-                                    ),
-                                ])}
+                                validate={(value) =>
+                                    validateAll([
+                                        () => getListValidator({ required: true })(value),
+                                        () => validateFraværDagerHarÅrstall(values.fraværDager, årstall),
+                                        () => validateNoCollisions(values.fraværDager, values.fraværPerioder)(),
+                                    ])
+                                }
                                 labels={{
                                     listTitle: intlHelper(intl, 'step.fravaer.harDagerMedDelvisFravær.listTitle'),
                                     addLabel: intlHelper(intl, 'step.fravaer.harDagerMedDelvisFravær.addLabel'),
@@ -276,7 +280,7 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                                 intl,
                                 'step.fravaer.har_du_oppholdt_deg_i_utlandet_for_dager_du_soker_ok.spm'
                             )}
-                            validate={validateYesOrNoIsAnswered}
+                            validate={getYesOrNoValidator()}
                         />
 
                         {perioder_harVærtIUtlandet === YesOrNo.YES && (
@@ -289,7 +293,7 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                                         addLabel: intlHelper(intl, 'step.fravaer.utenlandsopphold.addLabel'),
                                         modalTitle: intlHelper(intl, 'step.fravaer.utenlandsopphold.modalTitle'),
                                     }}
-                                    validate={validateRequiredList}
+                                    validate={getListValidator({ required: true })}
                                 />
                             </FormBlock>
                         )}
@@ -298,7 +302,7 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                         <SøknadFormComponents.YesOrNoQuestion
                             name={SøknadFormField.harSøktAndreUtbetalinger}
                             legend={intlHelper(intl, 'step.fravaer.harSøktAndreUtbetalinger.spm')}
-                            validate={validateYesOrNoIsAnswered}
+                            validate={getYesOrNoValidator()}
                         />
                         {values.harSøktAndreUtbetalinger === YesOrNo.YES && (
                             <FormBlock>
@@ -322,7 +326,7 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                                             label: intlHelper(intl, 'andreUtbetalinger.midlertidigkompensasjonsnfri'),
                                         },
                                     ]}
-                                    validate={validateRequiredList}
+                                    validate={getListValidator({ required: true })}
                                 />
                             </FormBlock>
                         )}

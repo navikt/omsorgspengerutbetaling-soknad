@@ -1,9 +1,10 @@
-import * as React from 'react';
-import { FormattedMessage } from 'react-intl';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 import CounsellorPanel from '@navikt/sif-common-core/lib/components/counsellor-panel/CounsellorPanel';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
-import { validateRequiredField } from '@navikt/sif-common-core/lib/validation/fieldValidations';
+import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import { dateToISOString } from '@navikt/sif-common-formik/lib';
+import { getRequiredFieldValidator } from '@navikt/sif-common-formik/lib/validation';
 import dayjs from 'dayjs';
 import { useFormikContext } from 'formik';
 import { StepConfigProps, StepID } from '../../config/stepConfig';
@@ -37,6 +38,8 @@ const FraværFraStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmi
         return formData;
     };
 
+    const intl = useIntl();
+
     return (
         <SøknadStep id={StepID.FRAVÆR_FRA} onValidFormSubmit={onValidSubmit} cleanupStep={cleanupStep}>
             <FormBlock>
@@ -48,16 +51,12 @@ const FraværFraStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmi
             <FormBlock>
                 {utbetalingsdatoer.map((date) => {
                     const fieldName = getFieldName(date);
+                    const dato = dayjs(date).format('dddd D. MMM YYYY');
                     return (
                         <FormBlock key={fieldName}>
                             <SøknadFormComponents.RadioGroup
                                 name={fieldName as SøknadFormField}
-                                legend={
-                                    <FormattedMessage
-                                        id="step.fravaerFra.dag.spm"
-                                        values={{ dato: dayjs(date).format('dddd D. MMM YYYY') }}
-                                    />
-                                }
+                                legend={<FormattedMessage id="step.fravaerFra.dag.spm" values={{ dato }} />}
                                 radios={[
                                     {
                                         label: 'Frilanser',
@@ -72,7 +71,12 @@ const FraværFraStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmi
                                         value: Aktivitet.BEGGE,
                                     },
                                 ]}
-                                validate={validateRequiredField}
+                                validate={getRequiredFieldValidator({
+                                    noValue: () =>
+                                        intlHelper(intl, 'appForm.validation.aktivitetFravær.noValue', {
+                                            dato,
+                                        }),
+                                })}
                             />
                         </FormBlock>
                     );

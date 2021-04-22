@@ -8,6 +8,7 @@ import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlo
 import ResponsivePanel from '@navikt/sif-common-core/lib/components/responsive-panel/ResponsivePanel';
 import SummaryList from '@navikt/sif-common-core/lib/components/summary-list/SummaryList';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
+import { getCheckedValidator } from '@navikt/sif-common-formik/lib/validation';
 import { useFormikContext } from 'formik';
 import { Feiloppsummering, FeiloppsummeringFeil } from 'nav-frontend-skjema';
 import { sendApplication } from '../../api/api';
@@ -223,13 +224,7 @@ const OppsummeringStep: React.FunctionComponent<Props> = ({
                     <SøknadFormComponents.ConfirmationCheckbox
                         label={intlHelper(intl, 'steg.oppsummering.bekrefterOpplysninger')}
                         name={SøknadFormField.harBekreftetOpplysninger}
-                        validate={(value) => {
-                            let result;
-                            if (value !== true) {
-                                result = intlHelper(intl, 'steg.oppsummering.bekrefterOpplysninger.ikkeBekreftet');
-                            }
-                            return result;
-                        }}
+                        validate={getCheckedValidator()}
                     />
                 </Box>
             )}

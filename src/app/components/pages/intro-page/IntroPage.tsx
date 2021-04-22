@@ -10,13 +10,16 @@ import Knappelenke from '@navikt/sif-common-core/lib/components/knappelenke/Knap
 import Page from '@navikt/sif-common-core/lib/components/page/Page';
 import StepBanner from '@navikt/sif-common-core/lib/components/step-banner/StepBanner';
 import bemUtils from '@navikt/sif-common-core/lib/utils/bemUtils';
-import { commonFieldErrorRenderer } from '@navikt/sif-common-core/lib/utils/commonFieldErrorRenderer';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import { getTypedFormComponents, UnansweredQuestionsInfo, YesOrNo } from '@navikt/sif-common-formik/lib';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import Lenke from 'nav-frontend-lenker';
 import RouteConfig, { getRouteUrl } from '../../../config/routeConfig';
 import SmittevernInfo from '../../information/SmittevernInfo';
+import {
+    getSummaryFieldErrorRenderer,
+    getFieldErrorRenderer,
+} from '@navikt/sif-common-formik/lib/utils/formikErrorRenderUtils';
 import './introPage.less';
 
 const bem = bemUtils('introPage');
@@ -158,7 +161,8 @@ const IntroPage: React.FunctionComponent = () => {
 
                         return (
                             <PageForm.Form
-                                fieldErrorRenderer={(error) => commonFieldErrorRenderer(intl, error)}
+                                fieldErrorRenderer={getFieldErrorRenderer(intl)}
+                                summaryFieldErrorRenderer={getSummaryFieldErrorRenderer(intl)}
                                 includeButtons={false}
                                 noButtonsContentRenderer={() => {
                                     return kanBrukeSøknaden ||

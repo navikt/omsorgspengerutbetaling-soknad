@@ -1,11 +1,11 @@
 import RouteConfig from '../config/routeConfig';
 import { getStepConfig, StepID } from '../config/stepConfig';
-import { SøknadFormData, SøknadFormField } from '../types/SøknadFormData';
+import { SøknadFormData } from '../types/SøknadFormData';
 import {
     arbeidssituasjonStepIsAvailable,
-    medlemskapStepIsAvailable,
-    fraværStepIsAvailable,
     barnStepIsAvailable,
+    fraværStepIsAvailable,
+    medlemskapStepIsAvailable,
     summaryStepAvailable,
 } from './stepUtils';
 
@@ -39,7 +39,7 @@ export const isAvailable = (path: StepID | RouteConfig, values: SøknadFormData)
         case StepID.OPPSUMMERING:
             return summaryStepAvailable(values);
         case RouteConfig.SØKNAD_SENDT_ROUTE:
-            return values[SøknadFormField.harBekreftetOpplysninger];
+            return values.harBekreftetOpplysninger;
     }
     return true;
 };

@@ -3,7 +3,10 @@ import { useIntl } from 'react-intl';
 import { ApplikasjonHendelse, useAmplitudeInstance, useLogSidevisning } from '@navikt/sif-common-amplitude/lib';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
 import StepFooter from '@navikt/sif-common-core/lib/components/step-footer/StepFooter';
-import { commonFieldErrorRenderer } from '@navikt/sif-common-core/lib/utils/commonFieldErrorRenderer';
+import {
+    getFieldErrorRenderer,
+    getSummaryFieldErrorRenderer,
+} from '@navikt/sif-common-formik/lib/utils/formikErrorRenderUtils';
 import { useFormikContext } from 'formik';
 import { Knapp } from 'nav-frontend-knapper';
 import Step, { StepProps } from '../components/step/Step';
@@ -55,7 +58,8 @@ const SøknadStep: React.FunctionComponent<Props> = (props) => {
                 includeButtons={false}
                 includeValidationSummary={true}
                 runDelayedFormValidation={true}
-                fieldErrorRenderer={(error) => commonFieldErrorRenderer(intl, error)}>
+                fieldErrorRenderer={getFieldErrorRenderer(intl)}
+                summaryFieldErrorRenderer={getSummaryFieldErrorRenderer(intl)}>
                 {children}
                 {props.showSubmitButton !== false && (
                     <FormBlock>

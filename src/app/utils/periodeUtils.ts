@@ -1,9 +1,8 @@
+import { ValidationResult } from '@navikt/sif-common-formik/lib/validation/types';
+import { FraværDag, FraværPeriode, FraværÅrsak } from '@navikt/sif-common-forms/lib';
 import dayjs, { Dayjs } from 'dayjs';
 import minMax from 'dayjs/plugin/minMax';
-import { createFieldValidationError } from '@navikt/sif-common-core/lib/validation/fieldValidations';
-import { FieldValidationResult } from '@navikt/sif-common-core/lib/validation/types';
 import { AppFieldValidationErrors } from '../validation/fieldValidations';
-import { FraværDag, FraværPeriode, FraværÅrsak } from '@navikt/sif-common-forms/lib';
 
 dayjs.extend(minMax);
 
@@ -37,11 +36,11 @@ export const erHelg = (date: Date): boolean => {
     return dayName === 0 || dayName === 6;
 };
 
-export const validatePeriodeNotWeekend = (date: Date): FieldValidationResult =>
-    erHelg(date) ? createFieldValidationError(AppFieldValidationErrors.ikke_lørdag_eller_søndag_periode) : undefined;
+export const validatePeriodeNotWeekend = (date: Date): ValidationResult<string> =>
+    erHelg(date) ? AppFieldValidationErrors.ikke_lørdag_eller_søndag_periode : undefined;
 
-export const validateFraværDelerAvDagNotWeekend = (date: Date): FieldValidationResult =>
-    erHelg(date) ? createFieldValidationError(AppFieldValidationErrors.ikke_lørdag_eller_søndag_dag) : undefined;
+export const validateFraværDelerAvDagNotWeekend = (date: Date): ValidationResult<string> =>
+    erHelg(date) ? AppFieldValidationErrors.ikke_lørdag_eller_søndag_dag : undefined;
 
 export const harFraværPgaSmittevernhensyn = (perioder: FraværPeriode[], dager: FraværDag[]): boolean => {
     return [...perioder, ...dager].findIndex(({ årsak }) => årsak === FraværÅrsak.smittevernhensyn) >= 0;
