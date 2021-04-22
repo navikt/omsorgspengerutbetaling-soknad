@@ -58,8 +58,8 @@ const SøknadStep: React.FunctionComponent<Props> = (props) => {
                 includeButtons={false}
                 includeValidationSummary={true}
                 runDelayedFormValidation={true}
-                fieldErrorRenderer={getFieldErrorRenderer(intl)}
-                summaryFieldErrorRenderer={getSummaryFieldErrorRenderer(intl)}>
+                fieldErrorRenderer={getFieldErrorRenderer(intl, 'validation')}
+                summaryFieldErrorRenderer={getSummaryFieldErrorRenderer(intl, 'validation')}>
                 {children}
                 {props.showSubmitButton !== false && (
                     <FormBlock>
