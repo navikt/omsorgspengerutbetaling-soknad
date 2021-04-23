@@ -4,14 +4,8 @@ import {
     getTotalSizeOfAttachments,
     MAX_TOTAL_ATTACHMENT_SIZE_BYTES,
 } from '@navikt/sif-common-core/lib/utils/attachmentUtils';
-import {
-    date1YearAgo,
-    date1YearFromNow,
-    dateRangesCollide,
-    dateRangesExceedsRange,
-} from '@navikt/sif-common-core/lib/utils/dateUtils';
 import { ValidationResult } from '@navikt/sif-common-formik/lib/validation/types';
-import { FraværDag, FraværPeriode, Utenlandsopphold } from '@navikt/sif-common-forms/lib';
+import { FraværDag, FraværPeriode } from '@navikt/sif-common-forms/lib';
 
 export enum AppFieldValidationErrors {
     'påkrevd' = 'fieldvalidation.påkrevd',
@@ -45,34 +39,6 @@ export enum AppFieldValidationErrors {
     'frilans_startEtterDagensDato' = 'fieldvalidation.frilans_startEtterDagensDato',
     'frilans_startEtterSlutt' = 'fieldvalidation.frilans_startEtterSlutt',
 }
-
-export const validateUtenlandsoppholdSiste12Mnd = (utenlandsopphold: Utenlandsopphold[]): ValidationResult<any> => {
-    if (utenlandsopphold.length === 0) {
-        return AppFieldValidationErrors.utenlandsopphold_ikke_registrert;
-    }
-    const dateRanges = utenlandsopphold.map((u) => ({ from: u.fom, to: u.tom }));
-    if (dateRangesCollide(dateRanges)) {
-        return AppFieldValidationErrors.utenlandsopphold_overlapper;
-    }
-    if (dateRangesExceedsRange(dateRanges, { from: date1YearAgo, to: new Date() })) {
-        return AppFieldValidationErrors.utenlandsopphold_utenfor_periode;
-    }
-    return undefined;
-};
-
-export const validateUtenlandsoppholdNeste12Mnd = (utenlandsopphold: Utenlandsopphold[]): ValidationResult<any> => {
-    if (utenlandsopphold.length === 0) {
-        return AppFieldValidationErrors.utenlandsopphold_ikke_registrert;
-    }
-    const dateRanges = utenlandsopphold.map((u) => ({ from: u.fom, to: u.tom }));
-    if (dateRangesCollide(dateRanges)) {
-        return AppFieldValidationErrors.utenlandsopphold_overlapper;
-    }
-    if (dateRangesExceedsRange(dateRanges, { from: new Date(), to: date1YearFromNow })) {
-        return AppFieldValidationErrors.utenlandsopphold_utenfor_periode;
-    }
-    return undefined;
-};
 
 export const validateDocuments = (attachments: Attachment[]): ValidationResult<string> => {
     const uploadedAttachments = attachments.filter((attachment) => attachmentHasBeenUploaded(attachment));

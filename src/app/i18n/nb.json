@@ -485,9 +485,13 @@
     "validation.harFosterbarn.yesOrNoIsUnanswered": "Feltet er påkrevd",
     "validation.fosterbarn.listIsEmpty": "Du har ikke registrert noen fosterbarn",
     "validation.harBoddUtenforNorgeSiste12Mnd.yesOrNoIsUnanswered": "Feltet er påkrevd",
-    "validation.utenlandsoppholdSiste12Mnd.fieldvalidation.utenlandsopphold_ikke_registrert": "Du har ikke registrert noen utenlandsopphold for perioden",
+    "validation.utenlandsoppholdSiste12Mnd.utenlandsopphold_ikke_registrert": "Du har ikke registrert noen utenlandsopphold for perioden",
+    "validation.utenlandsoppholdSiste12Mnd.utenlandsopphold_overlapper": "Ett eller flere av utenlandsoppholdene har datoer som overlapper",
+    "validation.utenlandsoppholdSiste12Mnd.utenlandsopphold_utenfor_periode": "Ett eller flere av utenlandsoppholdene er utenfor tillatt tidsrom",
     "validation.skalBoUtenforNorgeNeste12Mnd.yesOrNoIsUnanswered": "Feltet er påkrevd",
-    "validation.utenlandsoppholdNeste12Mnd.fieldvalidation.utenlandsopphold_ikke_registrert": "Du har ikke registrert noen utenlandsopphold for perioden",
+    "validation.utenlandsoppholdNeste12Mnd.utenlandsopphold_ikke_registrert": "Du har ikke registrert noen utenlandsopphold for perioden",
+    "validation.utenlandsoppholdNeste12Mnd.utenlandsopphold_overlapper": "Ett eller flere av utenlandsoppholdene har datoer som overlapper",
+    "validation.utenlandsoppholdNeste12Mnd.utenlandsopphold_utenfor_periode": "Ett eller flere av utenlandsoppholdene er utenfor tillatt tidsrom",
     "validation.harBekreftetOpplysninger.notChecked": "Du må bekrefte opplysningene"
 
 }
