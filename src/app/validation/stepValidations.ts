@@ -2,13 +2,13 @@ import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
 import { Utenlandsopphold } from '@navikt/sif-common-forms/lib';
 import { FraværDag, FraværPeriode } from '@navikt/sif-common-forms/lib/fravær';
 import { frilansIsValid, selvstendigIsValid } from '../søknad/arbeidssituasjon-step/arbeidssituasjonUtils';
+import { SøknadFormData, SøknadFormField } from '../types/SøknadFormData';
 import {
     delvisFraværIsValid,
+    fraværsperioderIsValid,
     minimumEnUtbetalingsperiode,
     oppholdIsValid,
-    fraværsperioderIsValid,
-} from '../søknad/fravær-step/fraværStepConfig';
-import { SøknadFormData, SøknadFormField } from '../types/SøknadFormData';
+} from './fraværStepValidation';
 
 export const welcomingPageIsValid = ({ harForståttRettigheterOgPlikter }: SøknadFormData): boolean =>
     harForståttRettigheterOgPlikter === true;

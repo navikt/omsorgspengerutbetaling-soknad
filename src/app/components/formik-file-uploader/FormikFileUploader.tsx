@@ -10,6 +10,7 @@ import {
     VALID_EXTENSIONS,
 } from '@navikt/sif-common-core/lib/utils/attachmentUtils';
 import { TypedFormInputValidationProps } from '@navikt/sif-common-formik/lib';
+import { ValidationError } from '@navikt/sif-common-formik/lib/validation/types';
 import { ArrayHelpers, useFormikContext } from 'formik';
 import { uploadFile } from '../../api/api';
 import SøknadFormComponents from '../../søknad/SøknadFormComponents';
@@ -20,7 +21,7 @@ export type FieldArrayReplaceFn = (index: number, value: any) => void;
 export type FieldArrayPushFn = (obj: any) => void;
 export type FieldArrayRemoveFn = (index: number) => undefined;
 
-interface Props extends TypedFormInputValidationProps<SøknadFormField> {
+interface Props extends TypedFormInputValidationProps<SøknadFormField, ValidationError> {
     name: SøknadFormField;
     label: string;
     onFileInputClick?: () => void;

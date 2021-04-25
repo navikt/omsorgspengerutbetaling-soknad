@@ -34,7 +34,7 @@ const MedlemsskapStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubm
                 <SøknadFormComponents.YesOrNoQuestion
                     legend={intlHelper(intl, 'steg.medlemsskap.annetLandSiste12.spm')}
                     name={SøknadFormField.harBoddUtenforNorgeSiste12Mnd}
-                    validate={MedlemskapStepFieldValidations[SøknadFormField.harBoddUtenforNorgeSiste12Mnd]}
+                    validate={MedlemskapStepFieldValidations.harBoddUtenforNorgeSiste12Mnd}
                     description={
                         <ExpandableInfo title={intlHelper(intl, 'steg.medlemsskap.hvaBetyrDette')}>
                             {intlHelper(intl, 'steg.medlemsskap.annetLandSiste12.hjelp')}
@@ -48,7 +48,7 @@ const MedlemsskapStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubm
                         name={SøknadFormField.utenlandsoppholdSiste12Mnd}
                         minDate={date1YearAgo}
                         maxDate={dateToday}
-                        validate={MedlemskapStepFieldValidations[SøknadFormField.utenlandsoppholdSiste12Mnd]}
+                        validate={MedlemskapStepFieldValidations.utenlandsoppholdSiste12Mnd}
                         labels={{
                             addLabel: intlHelper(intl, 'steg.medlemsskap.utenlandsopphold.leggTilLabel'),
                             modalTitle: intlHelper(intl, 'steg.medlemsskap.annetLandSiste12.listeTittel'),
@@ -60,7 +60,7 @@ const MedlemsskapStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubm
                 <SøknadFormComponents.YesOrNoQuestion
                     legend={intlHelper(intl, 'steg.medlemsskap.annetLandNeste12.spm')}
                     name={SøknadFormField.skalBoUtenforNorgeNeste12Mnd}
-                    validate={MedlemskapStepFieldValidations[SøknadFormField.skalBoUtenforNorgeNeste12Mnd]}
+                    validate={MedlemskapStepFieldValidations.skalBoUtenforNorgeNeste12Mnd}
                     description={
                         <ExpandableInfo title={intlHelper(intl, 'steg.medlemsskap.hvaBetyrDette')}>
                             {intlHelper(intl, 'steg.medlemsskap.annetLandNeste12.hjelp')}
@@ -74,7 +74,7 @@ const MedlemsskapStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubm
                         minDate={dateToday}
                         maxDate={date1YearFromNow}
                         name={SøknadFormField.utenlandsoppholdNeste12Mnd}
-                        validate={MedlemskapStepFieldValidations[SøknadFormField.utenlandsoppholdNeste12Mnd]}
+                        validate={MedlemskapStepFieldValidations.utenlandsoppholdNeste12Mnd}
                         labels={{
                             addLabel: intlHelper(intl, 'steg.medlemsskap.utenlandsopphold.leggTilLabel'),
                             modalTitle: intlHelper(intl, 'steg.medlemsskap.annetLandNeste12.listeTittel'),

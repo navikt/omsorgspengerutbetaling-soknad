@@ -1,15 +1,10 @@
 import * as React from 'react';
-import { IntlShape, useIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { ApplikasjonHendelse, useAmplitudeInstance, useLogSidevisning } from '@navikt/sif-common-amplitude/lib';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
 import StepFooter from '@navikt/sif-common-core/lib/components/step-footer/StepFooter';
-import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
-import { FieldErrorType } from '@navikt/sif-common-formik/lib';
-import {
-    FormikFieldErrorRender,
-    FormikSummaryFieldErrorRender,
-} from '@navikt/sif-common-formik/lib/components/typed-formik-form/TypedFormikForm';
-import { isFunction, useFormikContext } from 'formik';
+import fieldErrorHandler from '@navikt/sif-common-formik/lib/validation/fieldErrorHandler';
+import { useFormikContext } from 'formik';
 import { Knapp } from 'nav-frontend-knapper';
 import Step, { StepProps } from '../components/step/Step';
 import { getStepConfig } from '../config/stepConfig';
@@ -30,22 +25,12 @@ export interface FormikStepProps {
 
 type Props = FormikStepProps & StepProps;
 
-const getIntlFormErrorRenderer = (intl: IntlShape): FormikFieldErrorRender => (error) => {
-    if (isFunction(error)) {
-        return error();
-    }
-    return intlHelper(intl, error);
-};
-
-const getIntlSummaryErrorRenderer = (intl: IntlShape): FormikSummaryFieldErrorRender => (
-    error: FieldErrorType,
-    fieldName: string
-) => {
-    return {
-        skjemaelementId: fieldName,
-        feilmelding: isFunction(error) ? error() : intl.formatMessage({ id: error }),
-    };
-};
+export type FieldError =
+    | string
+    | {
+          key: string;
+          values?: any;
+      };
 
 const SøknadStep: React.FunctionComponent<Props> = (props) => {
     const formik = useFormikContext<SøknadFormData>();
@@ -77,8 +62,7 @@ const SøknadStep: React.FunctionComponent<Props> = (props) => {
                 includeButtons={false}
                 includeValidationSummary={true}
                 runDelayedFormValidation={true}
-                fieldErrorRenderer={getIntlFormErrorRenderer(intl)}
-                summaryFieldErrorRenderer={getIntlSummaryErrorRenderer(intl)}>
+                fieldErrorHandler={fieldErrorHandler(intl, 'validation')}>
                 {children}
                 {props.showSubmitButton !== false && (
                     <FormBlock>

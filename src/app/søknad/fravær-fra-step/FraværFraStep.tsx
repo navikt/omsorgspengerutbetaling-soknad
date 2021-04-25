@@ -1,8 +1,7 @@
 import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import CounsellorPanel from '@navikt/sif-common-core/lib/components/counsellor-panel/CounsellorPanel';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
-import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import { dateToISOString } from '@navikt/sif-common-formik/lib';
 import { getRequiredFieldValidator } from '@navikt/sif-common-formik/lib/validation';
 import dayjs from 'dayjs';
@@ -38,8 +37,6 @@ const FraværFraStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmi
         return formData;
     };
 
-    const intl = useIntl();
-
     return (
         <SøknadStep id={StepID.FRAVÆR_FRA} onValidFormSubmit={onValidSubmit} cleanupStep={cleanupStep}>
             <FormBlock>
@@ -71,12 +68,16 @@ const FraværFraStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmi
                                         value: Aktivitet.BEGGE,
                                     },
                                 ]}
-                                validate={getRequiredFieldValidator({
-                                    noValue: () =>
-                                        intlHelper(intl, 'appForm.validation.aktivitetFravær.noValue', {
-                                            dato,
-                                        }),
-                                })}
+                                validate={(value) => {
+                                    const error = getRequiredFieldValidator()(value);
+                                    return error
+                                        ? {
+                                              key: 'validation.aktivitetFravær.noValue',
+                                              values: { dato },
+                                              isUniqueKey: true,
+                                          }
+                                        : undefined;
+                                }}
                             />
                         </FormBlock>
                     );

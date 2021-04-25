@@ -14,7 +14,7 @@ interface Props {
     openBehandlingAvPersonopplysningerModal: () => void;
 }
 
-const AppForm = getTypedFormComponents<SøknadFormField, SøknadFormData>();
+const AppForm = getTypedFormComponents<SøknadFormField, SøknadFormData, string>();
 
 const bem = bemHelper('welcomingPage');
 

@@ -12,14 +12,12 @@ import StepBanner from '@navikt/sif-common-core/lib/components/step-banner/StepB
 import bemUtils from '@navikt/sif-common-core/lib/utils/bemUtils';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import { getTypedFormComponents, UnansweredQuestionsInfo, YesOrNo } from '@navikt/sif-common-formik/lib';
+import getFieldErrorHandler from '@navikt/sif-common-formik/lib/validation/fieldErrorHandler';
+import { ValidationError } from '@navikt/sif-common-formik/lib/validation/types';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import Lenke from 'nav-frontend-lenker';
 import RouteConfig, { getRouteUrl } from '../../../config/routeConfig';
 import SmittevernInfo from '../../information/SmittevernInfo';
-import {
-    getSummaryFieldErrorRenderer,
-    getFieldErrorRenderer,
-} from '@navikt/sif-common-formik/lib/utils/formikErrorRenderUtils';
 import './introPage.less';
 
 const bem = bemUtils('introPage');
@@ -47,7 +45,7 @@ const initialValues = {
     [PageFormField.smittevernHensyn]: YesOrNo.UNANSWERED,
     [PageFormField.hjemmePgaKarantene]: YesOrNo.UNANSWERED,
 };
-const PageForm = getTypedFormComponents<PageFormField, PageFormValues>();
+const PageForm = getTypedFormComponents<PageFormField, PageFormValues, ValidationError>();
 
 const IntroPage: React.FunctionComponent = () => {
     const intl = useIntl();
@@ -161,8 +159,7 @@ const IntroPage: React.FunctionComponent = () => {
 
                         return (
                             <PageForm.Form
-                                fieldErrorRenderer={getFieldErrorRenderer(intl)}
-                                summaryFieldErrorRenderer={getSummaryFieldErrorRenderer(intl)}
+                                fieldErrorHandler={getFieldErrorHandler(intl, 'introForm')}
                                 includeButtons={false}
                                 noButtonsContentRenderer={() => {
                                     return kanBrukeSøknaden ||
