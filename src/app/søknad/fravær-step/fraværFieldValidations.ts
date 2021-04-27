@@ -6,6 +6,7 @@ import { validateNoCollisions } from '@navikt/sif-common-forms/lib/fravær/frav�
 
 enum FraværErrors {
     ulikeÅrstall = 'ulikeÅrstall',
+    perioderEllerDagerOverlapper = 'perioderEllerDagerOverlapper',
 }
 
 export const getFraværPerioderValidator = ({
@@ -18,7 +19,8 @@ export const getFraværPerioderValidator = ({
     return validateAll<ValidationError>([
         () => getListValidator({ required: true })(fraværPerioder),
         () => (fraværPerioderHarÅrstall(fraværPerioder, årstall) === false ? FraværErrors.ulikeÅrstall : undefined),
-        () => validateNoCollisions(fraværDager, fraværPerioder),
+        () =>
+            validateNoCollisions(fraværDager, fraværPerioder) ? FraværErrors.perioderEllerDagerOverlapper : undefined,
     ]);
 };
 
@@ -32,7 +34,8 @@ export const getFraværDagerValidator = ({
     return validateAll<ValidationError>([
         () => getListValidator({ required: true })(fraværDager),
         () => (fraværDagerHarÅrstall(fraværDager, årstall) === false ? FraværErrors.ulikeÅrstall : undefined),
-        () => validateNoCollisions(fraværDager, fraværPerioder),
+        () =>
+            validateNoCollisions(fraværDager, fraværPerioder) ? FraværErrors.perioderEllerDagerOverlapper : undefined,
     ]);
 };
 
