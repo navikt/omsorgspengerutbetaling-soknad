@@ -74,7 +74,7 @@ const FraværFraStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmi
                                         ? {
                                               key: 'validation.aktivitetFravær.noValue',
                                               values: { dato },
-                                              isUniqueKey: true,
+                                              keepKeyUnaltered: true,
                                           }
                                         : undefined;
                                 }}

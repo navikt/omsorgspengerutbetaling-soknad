@@ -110,7 +110,7 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                 {/* DAGER MED FULLT FRAVÆR*/}
                 {harPerioderMedFravær === YesOrNo.YES && (
                     <>
-                        <FormBlock margin="xl">
+                        <FormBlock margin="l">
                             <FraværPerioderListAndDialog<SøknadFormField>
                                 name={SøknadFormField.fraværPerioder}
                                 periodeDescription={<FraværStepInfo.Tidsbegrensning />}
@@ -141,7 +141,7 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                 {/* DAGER MED DELVIS FRAVÆR*/}
                 {harDagerMedDelvisFravær === YesOrNo.YES && (
                     <>
-                        <FormBlock margin="xl">
+                        <FormBlock margin="l">
                             <FraværDagerListAndDialog<SøknadFormField>
                                 name={SøknadFormField.fraværDager}
                                 dagDescription={<FraværStepInfo.Tidsbegrensning />}

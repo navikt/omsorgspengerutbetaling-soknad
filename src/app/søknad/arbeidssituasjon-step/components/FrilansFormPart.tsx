@@ -7,12 +7,7 @@ import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
 import { dateToday } from '@navikt/sif-common-core/lib/utils/dateUtils';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import datepickerUtils from '@navikt/sif-common-formik/lib/components/formik-datepicker/datepickerUtils';
-import {
-    getDateValidator,
-    getRequiredFieldValidator,
-    getYesOrNoValidator,
-} from '@navikt/sif-common-formik/lib/validation';
-import { validateAll } from '@navikt/sif-common-formik/lib/validation/validationUtils';
+import { getDateValidator, getYesOrNoValidator } from '@navikt/sif-common-formik/lib/validation';
 import { SøknadFormData, SøknadFormField } from '../../../types/SøknadFormData';
 import SøknadFormComponents from '../../SøknadFormComponents';
 import FrilansEksempeltHtml from './FrilansEksempelHtml';
@@ -48,16 +43,10 @@ const FrilansFormPart: React.FunctionComponent<Props> = ({
                                 label={intlHelper(intl, 'frilanser.nårStartet.spm')}
                                 showYearSelector={true}
                                 maxDate={dateToday}
-                                validate={(value) =>
-                                    validateAll([
-                                        () => getRequiredFieldValidator()(value),
-                                        () =>
-                                            getDateValidator({
-                                                required: true,
-                                                max: dateToday,
-                                            })(value),
-                                    ])
-                                }
+                                validate={getDateValidator({
+                                    required: true,
+                                    max: dateToday,
+                                })}
                             />
                         </FormBlock>
                         <FormBlock>
@@ -75,17 +64,11 @@ const FrilansFormPart: React.FunctionComponent<Props> = ({
                                     showYearSelector={true}
                                     minDate={datepickerUtils.getDateFromDateString(frilans_startdato)}
                                     maxDate={dateToday}
-                                    validate={(value) =>
-                                        validateAll([
-                                            () => getRequiredFieldValidator()(value),
-                                            () =>
-                                                getDateValidator({
-                                                    required: true,
-                                                    min: datepickerUtils.getDateFromDateString(frilans_startdato),
-                                                    max: dateToday,
-                                                })(value),
-                                        ])
-                                    }
+                                    validate={getDateValidator({
+                                        required: true,
+                                        min: datepickerUtils.getDateFromDateString(frilans_startdato),
+                                        max: dateToday,
+                                    })}
                                 />
                             </FormBlock>
                         )}
