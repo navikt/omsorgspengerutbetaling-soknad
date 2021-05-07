@@ -6,16 +6,11 @@ import ResponsivePanel from '@navikt/sif-common-core/lib/components/responsive-p
 import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
 import { dateToday } from '@navikt/sif-common-core/lib/utils/dateUtils';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
-import {
-    validateAll,
-    validateRequiredField,
-    validateYesOrNoIsAnswered,
-} from '@navikt/sif-common-core/lib/validation/fieldValidations';
+import datepickerUtils from '@navikt/sif-common-formik/lib/components/formik-datepicker/datepickerUtils';
+import { getDateValidator, getYesOrNoValidator } from '@navikt/sif-common-formik/lib/validation';
 import { SøknadFormData, SøknadFormField } from '../../../types/SøknadFormData';
 import SøknadFormComponents from '../../SøknadFormComponents';
 import FrilansEksempeltHtml from './FrilansEksempelHtml';
-import { validateFrilanserSluttdato, validateFrilanserStartdato } from '../../../validation/fieldValidations';
-import datepickerUtils from '@navikt/sif-common-formik/lib/components/formik-datepicker/datepickerUtils';
 
 interface Props {
     formValues: SøknadFormData;
@@ -37,7 +32,7 @@ const FrilansFormPart: React.FunctionComponent<Props> = ({
                         <FrilansEksempeltHtml />
                     </ExpandableInfo>
                 }
-                validate={validateYesOrNoIsAnswered}
+                validate={getYesOrNoValidator()}
             />
             {erFrilanser && (
                 <FormBlock margin="l">
@@ -48,14 +43,17 @@ const FrilansFormPart: React.FunctionComponent<Props> = ({
                                 label={intlHelper(intl, 'frilanser.nårStartet.spm')}
                                 showYearSelector={true}
                                 maxDate={dateToday}
-                                validate={validateAll([validateRequiredField, validateFrilanserStartdato])}
+                                validate={getDateValidator({
+                                    required: true,
+                                    max: dateToday,
+                                })}
                             />
                         </FormBlock>
                         <FormBlock>
                             <SøknadFormComponents.YesOrNoQuestion
                                 name={SøknadFormField.frilans_jobberFortsattSomFrilans}
                                 legend={intlHelper(intl, 'frilanser.jobberFortsatt.spm')}
-                                validate={validateYesOrNoIsAnswered}
+                                validate={getYesOrNoValidator()}
                             />
                         </FormBlock>
                         {harSluttetSomFrilanser && (
@@ -66,10 +64,11 @@ const FrilansFormPart: React.FunctionComponent<Props> = ({
                                     showYearSelector={true}
                                     minDate={datepickerUtils.getDateFromDateString(frilans_startdato)}
                                     maxDate={dateToday}
-                                    validate={validateAll([
-                                        validateRequiredField,
-                                        validateFrilanserSluttdato(frilans_startdato),
-                                    ])}
+                                    validate={getDateValidator({
+                                        required: true,
+                                        min: datepickerUtils.getDateFromDateString(frilans_startdato),
+                                        max: dateToday,
+                                    })}
                                 />
                             </FormBlock>
                         )}

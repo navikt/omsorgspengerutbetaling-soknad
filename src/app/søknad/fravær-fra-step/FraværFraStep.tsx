@@ -1,9 +1,9 @@
-import * as React from 'react';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import CounsellorPanel from '@navikt/sif-common-core/lib/components/counsellor-panel/CounsellorPanel';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
-import { validateRequiredField } from '@navikt/sif-common-core/lib/validation/fieldValidations';
 import { dateToISOString } from '@navikt/sif-common-formik/lib';
+import { getRequiredFieldValidator } from '@navikt/sif-common-formik/lib/validation';
 import dayjs from 'dayjs';
 import { useFormikContext } from 'formik';
 import { StepConfigProps, StepID } from '../../config/stepConfig';
@@ -48,16 +48,12 @@ const FraværFraStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmi
             <FormBlock>
                 {utbetalingsdatoer.map((date) => {
                     const fieldName = getFieldName(date);
+                    const dato = dayjs(date).format('dddd D. MMM YYYY');
                     return (
                         <FormBlock key={fieldName}>
                             <SøknadFormComponents.RadioGroup
                                 name={fieldName as SøknadFormField}
-                                legend={
-                                    <FormattedMessage
-                                        id="step.fravaerFra.dag.spm"
-                                        values={{ dato: dayjs(date).format('dddd D. MMM YYYY') }}
-                                    />
-                                }
+                                legend={<FormattedMessage id="step.fravaerFra.dag.spm" values={{ dato }} />}
                                 radios={[
                                     {
                                         label: 'Frilanser',
@@ -72,7 +68,16 @@ const FraværFraStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmi
                                         value: Aktivitet.BEGGE,
                                     },
                                 ]}
-                                validate={validateRequiredField}
+                                validate={(value) => {
+                                    const error = getRequiredFieldValidator()(value);
+                                    return error
+                                        ? {
+                                              key: 'validation.aktivitetFravær.noValue',
+                                              values: { dato },
+                                              keepKeyUnaltered: true,
+                                          }
+                                        : undefined;
+                                }}
                             />
                         </FormBlock>
                     );

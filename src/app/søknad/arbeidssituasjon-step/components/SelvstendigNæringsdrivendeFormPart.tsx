@@ -5,10 +5,7 @@ import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlo
 import ResponsivePanel from '@navikt/sif-common-core/lib/components/responsive-panel/ResponsivePanel';
 import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
-import {
-    validateRequiredField,
-    validateYesOrNoIsAnswered,
-} from '@navikt/sif-common-core/lib/validation/fieldValidations';
+import { getRequiredFieldValidator, getYesOrNoValidator } from '@navikt/sif-common-formik/lib/validation';
 import VirksomhetInfoAndDialog from '@navikt/sif-common-forms/lib/virksomhet/VirksomhetInfoAndDialog';
 import { StepID } from '../../../config/stepConfig';
 import { SøknadFormData, SøknadFormField } from '../../../types/SøknadFormData';
@@ -35,7 +32,7 @@ const SelvstendigNæringsdrivendeFormPart: React.FunctionComponent<Props> = ({ f
             <SøknadFormComponents.YesOrNoQuestion
                 name={SøknadFormField.selvstendig_erSelvstendigNæringsdrivende}
                 legend={intlHelper(intl, 'selvstendig.erDuSelvstendigNæringsdrivende.spm')}
-                validate={validateYesOrNoIsAnswered}
+                validate={getYesOrNoValidator()}
             />
 
             {erSelvstendigNæringsdrivende && (
@@ -43,7 +40,7 @@ const SelvstendigNæringsdrivendeFormPart: React.FunctionComponent<Props> = ({ f
                     <SøknadFormComponents.YesOrNoQuestion
                         name={SøknadFormField.selvstendig_harFlereVirksomheter}
                         legend={intlHelper(intl, 'selvstendig.harFlereVirksomheter.spm')}
-                        validate={validateYesOrNoIsAnswered}
+                        validate={getYesOrNoValidator()}
                     />
                 </FormBlock>
             )}
@@ -74,7 +71,7 @@ const SelvstendigNæringsdrivendeFormPart: React.FunctionComponent<Props> = ({ f
                                     : intlHelper(intl, 'selvstendig.infoDialog.tittel.en'),
                             }}
                             skipOrgNumValidation={skipOrgNumValidation}
-                            validate={validateRequiredField}
+                            validate={getRequiredFieldValidator()}
                             onAfterChange={() => {
                                 SøknadTempStorage.update(values, StepID.ARBEIDSSITUASJON);
                             }}

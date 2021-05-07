@@ -5,7 +5,6 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import Lenke from 'nav-frontend-lenker';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
 import bemHelper from '@navikt/sif-common-core/lib/utils/bemUtils';
-import { commonFieldErrorRenderer } from '@navikt/sif-common-core/lib/utils/commonFieldErrorRenderer';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import { SøknadFormData, SøknadFormField } from '../../../types/SøknadFormData';
 
@@ -15,7 +14,7 @@ interface Props {
     openBehandlingAvPersonopplysningerModal: () => void;
 }
 
-const AppForm = getTypedFormComponents<SøknadFormField, SøknadFormData>();
+const AppForm = getTypedFormComponents<SøknadFormField, SøknadFormData, string>();
 
 const bem = bemHelper('welcomingPage');
 
@@ -26,10 +25,7 @@ const SamtykkeForm: React.FunctionComponent<Props> = ({
 }) => {
     const intl = useIntl();
     return (
-        <AppForm.Form
-            onValidSubmit={onConfirm}
-            includeButtons={false}
-            fieldErrorRenderer={(error) => commonFieldErrorRenderer(intl, error)}>
+        <AppForm.Form onValidSubmit={onConfirm} includeButtons={false}>
             <FormBlock>
                 <AppForm.ConfirmationCheckbox
                     label={intlHelper(intl, 'welcomingPage.samtykke.tekst')}

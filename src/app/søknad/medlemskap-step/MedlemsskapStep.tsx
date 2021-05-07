@@ -6,24 +6,19 @@ import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlo
 import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
 import { date1YearAgo, date1YearFromNow, dateToday } from '@navikt/sif-common-core/lib/utils/dateUtils';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
-import { validateYesOrNoIsAnswered } from '@navikt/sif-common-core/lib/validation/fieldValidations';
 import BostedUtlandListAndDialog from '@navikt/sif-common-forms/lib/bosted-utland/BostedUtlandListAndDialog';
 import { useFormikContext } from 'formik';
 import Lenke from 'nav-frontend-lenker';
 import { StepConfigProps, StepID } from '../../config/stepConfig';
 import getLenker from '../../lenker';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
-import {
-    validateUtenlandsoppholdNeste12Mnd,
-    validateUtenlandsoppholdSiste12Mnd,
-} from '../../validation/fieldValidations';
 import SøknadFormComponents from '../SøknadFormComponents';
 import SøknadStep from '../SøknadStep';
+import MedlemskapStepFieldValidations from './medlemskapFieldValidations';
 
 const MedlemsskapStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) => {
     const intl = useIntl();
     const { values } = useFormikContext<SøknadFormData>();
-
     return (
         <SøknadStep id={StepID.MEDLEMSKAP} onValidFormSubmit={onValidSubmit}>
             <CounsellorPanel>
@@ -39,7 +34,7 @@ const MedlemsskapStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubm
                 <SøknadFormComponents.YesOrNoQuestion
                     legend={intlHelper(intl, 'steg.medlemsskap.annetLandSiste12.spm')}
                     name={SøknadFormField.harBoddUtenforNorgeSiste12Mnd}
-                    validate={validateYesOrNoIsAnswered}
+                    validate={MedlemskapStepFieldValidations.harBoddUtenforNorgeSiste12Mnd}
                     description={
                         <ExpandableInfo title={intlHelper(intl, 'steg.medlemsskap.hvaBetyrDette')}>
                             {intlHelper(intl, 'steg.medlemsskap.annetLandSiste12.hjelp')}
@@ -53,7 +48,7 @@ const MedlemsskapStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubm
                         name={SøknadFormField.utenlandsoppholdSiste12Mnd}
                         minDate={date1YearAgo}
                         maxDate={dateToday}
-                        validate={validateUtenlandsoppholdSiste12Mnd}
+                        validate={MedlemskapStepFieldValidations.utenlandsoppholdSiste12Mnd}
                         labels={{
                             addLabel: intlHelper(intl, 'steg.medlemsskap.utenlandsopphold.leggTilLabel'),
                             modalTitle: intlHelper(intl, 'steg.medlemsskap.annetLandSiste12.listeTittel'),
@@ -65,7 +60,7 @@ const MedlemsskapStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubm
                 <SøknadFormComponents.YesOrNoQuestion
                     legend={intlHelper(intl, 'steg.medlemsskap.annetLandNeste12.spm')}
                     name={SøknadFormField.skalBoUtenforNorgeNeste12Mnd}
-                    validate={validateYesOrNoIsAnswered}
+                    validate={MedlemskapStepFieldValidations.skalBoUtenforNorgeNeste12Mnd}
                     description={
                         <ExpandableInfo title={intlHelper(intl, 'steg.medlemsskap.hvaBetyrDette')}>
                             {intlHelper(intl, 'steg.medlemsskap.annetLandNeste12.hjelp')}
@@ -79,7 +74,7 @@ const MedlemsskapStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubm
                         minDate={dateToday}
                         maxDate={date1YearFromNow}
                         name={SøknadFormField.utenlandsoppholdNeste12Mnd}
-                        validate={validateUtenlandsoppholdNeste12Mnd}
+                        validate={MedlemskapStepFieldValidations.utenlandsoppholdNeste12Mnd}
                         labels={{
                             addLabel: intlHelper(intl, 'steg.medlemsskap.utenlandsopphold.leggTilLabel'),
                             modalTitle: intlHelper(intl, 'steg.medlemsskap.annetLandNeste12.listeTittel'),

@@ -1,6 +1,6 @@
-import { SøknadApiData } from '../types/SøknadApiData';
+import { hasValue } from '@navikt/sif-common-formik/lib/validation/validationUtils';
 import { FeiloppsummeringFeil } from 'nav-frontend-skjema';
-import { hasValue } from './fieldValidations';
+import { SøknadApiData } from '../types/SøknadApiData';
 
 export const validateSoknadApiData = (apiValues: SøknadApiData): FeiloppsummeringFeil[] => {
     const errors: FeiloppsummeringFeil[] = [];
