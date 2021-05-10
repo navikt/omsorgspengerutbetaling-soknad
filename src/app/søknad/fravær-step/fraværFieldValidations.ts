@@ -9,35 +9,31 @@ enum FraværErrors {
     perioderEllerDagerOverlapper = 'perioderEllerDagerOverlapper',
 }
 
-export const getFraværPerioderValidator = ({
-    fraværDager,
-    årstall,
-}: {
-    fraværDager: FraværDag[];
-    årstall?: number;
-}) => (fraværPerioder: FraværPeriode[]) => {
-    return validateAll<ValidationError>([
-        () => getListValidator({ required: true })(fraværPerioder),
-        () => (fraværPerioderHarÅrstall(fraværPerioder, årstall) === false ? FraværErrors.ulikeÅrstall : undefined),
-        () =>
-            validateNoCollisions(fraværDager, fraværPerioder) ? FraværErrors.perioderEllerDagerOverlapper : undefined,
-    ]);
-};
+export const getFraværPerioderValidator =
+    ({ fraværDager, årstall }: { fraværDager: FraværDag[]; årstall?: number }) =>
+    (fraværPerioder: FraværPeriode[]) => {
+        return validateAll<ValidationError>([
+            () => getListValidator({ required: true })(fraværPerioder),
+            () => (fraværPerioderHarÅrstall(fraværPerioder, årstall) === false ? FraværErrors.ulikeÅrstall : undefined),
+            () =>
+                validateNoCollisions(fraværDager, fraværPerioder)
+                    ? FraværErrors.perioderEllerDagerOverlapper
+                    : undefined,
+        ]);
+    };
 
-export const getFraværDagerValidator = ({
-    fraværPerioder,
-    årstall,
-}: {
-    fraværPerioder: FraværPeriode[];
-    årstall?: number;
-}) => (fraværDager: FraværDag[]) => {
-    return validateAll<ValidationError>([
-        () => getListValidator({ required: true })(fraværDager),
-        () => (fraværDagerHarÅrstall(fraværDager, årstall) === false ? FraværErrors.ulikeÅrstall : undefined),
-        () =>
-            validateNoCollisions(fraværDager, fraværPerioder) ? FraværErrors.perioderEllerDagerOverlapper : undefined,
-    ]);
-};
+export const getFraværDagerValidator =
+    ({ fraværPerioder, årstall }: { fraværPerioder: FraværPeriode[]; årstall?: number }) =>
+    (fraværDager: FraværDag[]) => {
+        return validateAll<ValidationError>([
+            () => getListValidator({ required: true })(fraværDager),
+            () => (fraværDagerHarÅrstall(fraværDager, årstall) === false ? FraværErrors.ulikeÅrstall : undefined),
+            () =>
+                validateNoCollisions(fraværDager, fraværPerioder)
+                    ? FraværErrors.perioderEllerDagerOverlapper
+                    : undefined,
+        ]);
+    };
 
 const fraværPerioderHarÅrstall = (perioder: FraværPeriode[], årstall?: number): boolean => {
     if (årstall !== undefined) {
