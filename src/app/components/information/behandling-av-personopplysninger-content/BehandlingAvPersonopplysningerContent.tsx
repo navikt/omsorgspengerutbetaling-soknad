@@ -4,7 +4,6 @@ import Box from '@navikt/sif-common-core/lib/components/box/Box';
 import Lenke from 'nav-frontend-lenker';
 import { Ingress, Systemtittel } from 'nav-frontend-typografi';
 import getLenker from '../../../lenker';
-import './behandlingAvPersonopplysningerContent.less';
 
 const BehandlingAvPersonopplysningerContent: React.FunctionComponent = () => {
     const intl = useIntl();
