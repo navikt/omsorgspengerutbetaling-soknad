@@ -1,15 +1,16 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { SIFCommonPageKey, useLogSidevisning } from '@navikt/sif-common-amplitude/lib';
 import Box from '@navikt/sif-common-core/lib/components/box/Box';
+import InfoDialog from '@navikt/sif-common-core/lib/components/dialogs/info-dialog/InfoDialog';
 import FrontPageBanner from '@navikt/sif-common-core/lib/components/front-page-banner/FrontPageBanner';
 import Page from '@navikt/sif-common-core/lib/components/page/Page';
 import bemHelper from '@navikt/sif-common-core/lib/utils/bemUtils';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import { Sidetittel } from 'nav-frontend-typografi';
 import { StepConfigProps } from '../../../config/stepConfig';
-import BehandlingAvPersonopplysningerModal from '../../information/behandling-av-personopplysninger-modal/BehandlingAvPersonopplysningerModal';
-import DinePlikterModal from '../../information/dine-plikter-modal/DinePlikterModal';
+import BehandlingAvPersonopplysningerContent from '../../information/behandling-av-personopplysninger-content/BehandlingAvPersonopplysningerContent';
+import DinePlikterContent from '../../information/dine-plikter-content/DinePlikterContent';
 import SamtykkeForm from './SamtykkeForm';
 import './welcomingPage.less';
 
@@ -17,10 +18,15 @@ const bem = bemHelper('welcomingPage');
 
 type Props = Omit<StepConfigProps, 'formValues'>;
 
+interface DialogState {
+    dinePlikterModalOpen?: boolean;
+    behandlingAvPersonopplysningerModalOpen?: boolean;
+}
+
 const WelcomingPage: React.FunctionComponent<Props> = ({ onValidSubmit }) => {
+    const [dialogState, setDialogState] = useState<DialogState>({});
+    const { dinePlikterModalOpen, behandlingAvPersonopplysningerModalOpen } = dialogState;
     const intl = useIntl();
-    const [dinePlikterModalOpen, setDinePlikterModalOpen] = React.useState(false);
-    const [behandlingAvPersonopplysningerModalOpen, setBehandlingAvPersonopplysningerModalOpen] = React.useState(false);
 
     useLogSidevisning(SIFCommonPageKey.velkommen);
 
@@ -44,22 +50,27 @@ const WelcomingPage: React.FunctionComponent<Props> = ({ onValidSubmit }) => {
                     </Sidetittel>
                 </Box>
                 <SamtykkeForm
-                    onOpenDinePlikterModal={() => setDinePlikterModalOpen(true)}
-                    openBehandlingAvPersonopplysningerModal={() => setBehandlingAvPersonopplysningerModalOpen(true)}
+                    onOpenDinePlikterModal={() => setDialogState({ dinePlikterModalOpen: true })}
+                    openBehandlingAvPersonopplysningerModal={() =>
+                        setDialogState({ behandlingAvPersonopplysningerModalOpen: true })
+                    }
                     onConfirm={onValidSubmit}
                 />
             </Page>
 
-            <DinePlikterModal
-                isOpen={dinePlikterModalOpen}
-                onRequestClose={() => setDinePlikterModalOpen(false)}
+            <InfoDialog
                 contentLabel={intlHelper(intl, 'welcomingPage.modal.omDinePlikter.tittel')}
-            />
-            <BehandlingAvPersonopplysningerModal
-                isOpen={behandlingAvPersonopplysningerModalOpen}
-                onRequestClose={() => setBehandlingAvPersonopplysningerModalOpen(false)}
-                contentLabel={intlHelper(intl, 'welcomingPage.modal.behandlingAvPersonalia.tittel')}
-            />
+                isOpen={dinePlikterModalOpen === true}
+                onRequestClose={(): void => setDialogState({ dinePlikterModalOpen: false })}>
+                <DinePlikterContent />
+            </InfoDialog>
+
+            <InfoDialog
+                isOpen={behandlingAvPersonopplysningerModalOpen === true}
+                onRequestClose={(): void => setDialogState({ behandlingAvPersonopplysningerModalOpen: false })}
+                contentLabel={intlHelper(intl, 'welcomingPage.modal.behandlingAvPersonalia.tittel')}>
+                <BehandlingAvPersonopplysningerContent />
+            </InfoDialog>
         </>
     );
 };
