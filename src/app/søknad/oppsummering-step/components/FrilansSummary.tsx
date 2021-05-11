@@ -28,6 +28,11 @@ const FrilansSummary: React.FunctionComponent<Props> = ({ frilans }) => {
                     <SummaryBlock header={intlHelper(intl, 'frilanser.summary.jobberFortsatt.header')}>
                         <JaNeiSvar harSvartJa={frilans.jobberFortsattSomFrilans} />
                     </SummaryBlock>
+                    {frilans.jobberFortsattSomFrilans === false && frilans.sluttdato && (
+                        <SummaryBlock header={intlHelper(intl, 'frilanser.summary.nårSluttet.header')}>
+                            <DatoSvar apiDato={frilans.sluttdato} />
+                        </SummaryBlock>
+                    )}
                 </>
             )}
         </SummarySection>

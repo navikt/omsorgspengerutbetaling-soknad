@@ -23,6 +23,7 @@ import { valuesToAlleDokumenterISøknaden } from '../../utils/attachmentsUtils';
 import { navigateToLoginPage } from '../../utils/navigationUtils';
 import { validateDocuments } from '../../validation/fieldValidations';
 import SøknadStep from '../SøknadStep';
+import getLenker from '../../lenker';
 
 const StengtBhgSkoleDokumenterStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) => {
     const intl = useIntl();
@@ -50,12 +51,16 @@ const StengtBhgSkoleDokumenterStep: React.FunctionComponent<StepConfigProps> = (
             buttonDisabled={hasPendingUploads || attachmentsSizeOver24Mb}>
             <FormBlock>
                 <CounsellorPanel>
-                    <p>
+                    <Box padBottom={'l'}>
                         <FormattedMessage id="steg.vedlegg_stengtSkoleBhg.info.1" />
-                    </p>
-                    <p>
-                        <FormattedMessage id="steg.vedlegg_stengtSkoleBhg.info.2" />
-                    </p>
+                    </Box>
+                    <Box padBottom={'l'}>
+                        <FormattedMessage id="steg.vedlegg_stengtSkoleBhg.info.2" />{' '}
+                        <Lenke href={getLenker(intl.locale).veiledningEttersendelse} target="_blank">
+                            <FormattedMessage id="steg.vedlegg_stengtSkoleBhg.info.3" />
+                        </Lenke>
+                        <FormattedMessage id="steg.vedlegg_stengtSkoleBhg.info.4" />
+                    </Box>
                 </CounsellorPanel>
             </FormBlock>
             <Box margin="l">

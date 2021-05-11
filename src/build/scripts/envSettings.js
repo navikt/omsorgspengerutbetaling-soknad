@@ -14,6 +14,7 @@ function createEnvSettingsFile(settingsFile) {
                 NYNORSK: '${process.env.NYNORSK}',
                 APPSTATUS_PROJECT_ID: '${process.env.APPSTATUS_PROJECT_ID}',
                 APPSTATUS_DATASET: '${process.env.APPSTATUS_DATASET}',
+                SKIP_ORGNUM_VALIDATION: '${process.env.SKIP_ORGNUM_VALIDATION}',
             };`
         );
     });

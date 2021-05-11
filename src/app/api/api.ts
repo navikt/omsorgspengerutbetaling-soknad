@@ -1,10 +1,11 @@
 import axios from 'axios';
 import axiosConfig from '../config/axiosConfig';
 import { ResourceType } from '../types/ResourceType';
+import { Person } from '../types/Søkerdata';
 import { SøknadApiData } from '../types/SøknadApiData';
 import { getApiUrlByResourceType, sendMultipartPostRequest } from '../utils/apiUtils';
 
-export const getSøker = () => axios.get(getApiUrlByResourceType(ResourceType.SØKER), axiosConfig);
+export const getSøker = () => axios.get<Person>(getApiUrlByResourceType(ResourceType.SØKER), axiosConfig);
 
 export const sendApplication = (data: SøknadApiData) =>
     axios.post(getApiUrlByResourceType(ResourceType.SEND_SØKNAD), data, axiosConfig);

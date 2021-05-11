@@ -1,11 +1,11 @@
 import RouteConfig from '../config/routeConfig';
 import { getStepConfig, StepID } from '../config/stepConfig';
-import { SøknadFormData, SøknadFormField } from '../types/SøknadFormData';
+import { SøknadFormData } from '../types/SøknadFormData';
 import {
-    inntektStepIsAvailable,
-    medlemskapStepIsAvailable,
-    periodeStepIsAvailable,
+    arbeidssituasjonStepIsAvailable,
     barnStepIsAvailable,
+    fraværStepIsAvailable,
+    medlemskapStepIsAvailable,
     summaryStepAvailable,
 } from './stepUtils';
 
@@ -16,25 +16,30 @@ export const getSøknadRoute = (stepId: StepID | undefined) => {
     return undefined;
 };
 
-export const getNextStepRoute = (stepId: StepID, formData?: SøknadFormData): string | undefined => {
+export const getNextStepId = (stepId: StepID, formData?: SøknadFormData): StepID | undefined => {
     const stepConfig = getStepConfig(formData);
-    return stepConfig[stepId] ? getSøknadRoute(stepConfig[stepId].nextStep) : undefined;
+    return stepConfig[stepId] ? stepConfig[stepId].nextStep : undefined;
+};
+
+export const getNextStepRoute = (stepId: StepID, formData?: SøknadFormData): string | undefined => {
+    const nextStepId = getNextStepId(stepId, formData);
+    return nextStepId ? getSøknadRoute(nextStepId) : undefined;
 };
 
 export const isAvailable = (path: StepID | RouteConfig, values: SøknadFormData) => {
     switch (path) {
-        case StepID.PERIODE:
-            return periodeStepIsAvailable(values);
-        case StepID.INNTEKT:
-            return inntektStepIsAvailable(values);
+        case StepID.FRAVÆR:
+            return fraværStepIsAvailable(values);
         case StepID.BARN:
             return barnStepIsAvailable(values);
+        case StepID.ARBEIDSSITUASJON:
+            return arbeidssituasjonStepIsAvailable(values);
         case StepID.MEDLEMSKAP:
             return medlemskapStepIsAvailable(values);
         case StepID.OPPSUMMERING:
             return summaryStepAvailable(values);
         case RouteConfig.SØKNAD_SENDT_ROUTE:
-            return values[SøknadFormField.harBekreftetOpplysninger];
+            return values.harBekreftetOpplysninger;
     }
     return true;
 };

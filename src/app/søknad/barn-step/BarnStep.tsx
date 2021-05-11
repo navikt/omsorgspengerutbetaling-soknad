@@ -1,29 +1,26 @@
 import * as React from 'react';
-import { useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
+import CounsellorPanel from '@navikt/sif-common-core/lib/components/counsellor-panel/CounsellorPanel';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
+import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
-import {
-    validateRequiredList,
-    validateYesOrNoIsAnswered,
-} from '@navikt/sif-common-core/lib/validation/fieldValidations';
-import { YesOrNo } from '@navikt/sif-common-formik/lib';
+import { getListValidator } from '@navikt/sif-common-formik/lib/validation';
+import getYesOrNoValidator from '@navikt/sif-common-formik/lib/validation/getYesOrNoValidator';
 import FosterbarnListAndDialog from '@navikt/sif-common-forms/lib/fosterbarn/FosterbarnListAndDialog';
 import { useFormikContext } from 'formik';
 import { StepConfigProps, StepID } from '../../config/stepConfig';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import SøknadFormComponents from '../SøknadFormComponents';
 import SøknadStep from '../SøknadStep';
-import { BarnStepQuestions } from './config';
 
 const BarnStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) => {
     const intl = useIntl();
     const { values } = useFormikContext<SøknadFormData>();
-    const visibility = BarnStepQuestions.getVisbility(values);
 
     const cleanupStep = (valuesToBeCleaned: SøknadFormData): SøknadFormData => {
-        const { har_fosterbarn } = values;
+        const { harFosterbarn } = values;
         const cleanedValues = { ...valuesToBeCleaned };
-        if (har_fosterbarn === YesOrNo.NO) {
+        if (harFosterbarn === YesOrNo.NO) {
             cleanedValues.fosterbarn = [];
         }
         return cleanedValues;
@@ -32,24 +29,25 @@ const BarnStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) =
     return (
         <SøknadStep id={StepID.BARN} onValidFormSubmit={onValidSubmit} cleanupStep={cleanupStep}>
             <FormBlock>
-                <SøknadFormComponents.YesOrNoQuestion
-                    name={SøknadFormField.har_fosterbarn}
-                    legend={intlHelper(intl, 'steg.barn.fosterbarn.spm')}
-                    validate={validateYesOrNoIsAnswered}
-                />
+                <CounsellorPanel>
+                    <FormattedMessage id="steg.barn.intro" />
+                </CounsellorPanel>
             </FormBlock>
-            {visibility.isVisible(SøknadFormField.fosterbarn) && (
-                <FormBlock margin="l">
-                    <FosterbarnListAndDialog name={SøknadFormField.fosterbarn} validate={validateRequiredList} />
-                </FormBlock>
-            )}
             <FormBlock>
                 <SøknadFormComponents.YesOrNoQuestion
-                    name={SøknadFormField.har_fått_ekstra_omsorgsdager}
-                    legend={intlHelper(intl, 'steg.barn.har_fått_ekstra_omsorgsdager.spm')}
-                    validate={validateYesOrNoIsAnswered}
+                    name={SøknadFormField.harFosterbarn}
+                    legend={intlHelper(intl, 'steg.barn.fosterbarn.spm')}
+                    validate={getYesOrNoValidator()}
                 />
             </FormBlock>
+            {values.harFosterbarn === YesOrNo.YES && (
+                <FormBlock margin="l">
+                    <FosterbarnListAndDialog
+                        name={SøknadFormField.fosterbarn}
+                        validate={getListValidator({ required: true })}
+                    />
+                </FormBlock>
+            )}
         </SøknadStep>
     );
 };

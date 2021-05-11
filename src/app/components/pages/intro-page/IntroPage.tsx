@@ -10,9 +10,10 @@ import Knappelenke from '@navikt/sif-common-core/lib/components/knappelenke/Knap
 import Page from '@navikt/sif-common-core/lib/components/page/Page';
 import StepBanner from '@navikt/sif-common-core/lib/components/step-banner/StepBanner';
 import bemUtils from '@navikt/sif-common-core/lib/utils/bemUtils';
-import { commonFieldErrorRenderer } from '@navikt/sif-common-core/lib/utils/commonFieldErrorRenderer';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import { getTypedFormComponents, UnansweredQuestionsInfo, YesOrNo } from '@navikt/sif-common-formik/lib';
+import intlFormErrorHandler from '@navikt/sif-common-formik/lib/validation/intlFormErrorHandler';
+import { ValidationError } from '@navikt/sif-common-formik/lib/validation/types';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import Lenke from 'nav-frontend-lenker';
 import RouteConfig, { getRouteUrl } from '../../../config/routeConfig';
@@ -44,7 +45,7 @@ const initialValues = {
     [PageFormField.smittevernHensyn]: YesOrNo.UNANSWERED,
     [PageFormField.hjemmePgaKarantene]: YesOrNo.UNANSWERED,
 };
-const PageForm = getTypedFormComponents<PageFormField, PageFormValues>();
+const PageForm = getTypedFormComponents<PageFormField, PageFormValues, ValidationError>();
 
 const IntroPage: React.FunctionComponent = () => {
     const intl = useIntl();
@@ -158,7 +159,7 @@ const IntroPage: React.FunctionComponent = () => {
 
                         return (
                             <PageForm.Form
-                                fieldErrorRenderer={(error) => commonFieldErrorRenderer(intl, error)}
+                                formErrorHandler={intlFormErrorHandler(intl, 'introForm')}
                                 includeButtons={false}
                                 noButtonsContentRenderer={() => {
                                     return kanBrukeSøknaden ||

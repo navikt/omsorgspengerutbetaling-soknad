@@ -1,4 +1,5 @@
-import { Næringstype } from '@navikt/sif-common-forms/lib';
+import { FraværÅrsak, Næringstype } from '@navikt/sif-common-forms/lib';
+import { ApiAktivitet } from '../../types/AktivitetFravær';
 import { SøknadApiData } from '../../types/SøknadApiData';
 
 export const mock1: SøknadApiData = {
@@ -59,30 +60,43 @@ export const mock1: SøknadApiData = {
             tilOgMed: '2020-03-03',
             antallTimerPlanlagt: null,
             antallTimerBorte: null,
+            årsak: FraværÅrsak.ordinært,
+            aktivitetFravær: [ApiAktivitet.FRILANSER],
         },
         {
             fraOgMed: '2020-03-04',
             tilOgMed: '2020-03-05',
             antallTimerPlanlagt: null,
             antallTimerBorte: null,
+            årsak: FraværÅrsak.ordinært,
+            aktivitetFravær: [ApiAktivitet.FRILANSER],
         },
         {
             fraOgMed: '2020-03-09',
             tilOgMed: '2020-03-09',
             antallTimerPlanlagt: 'PT5H0M',
             antallTimerBorte: 'PT5H0M',
+            årsak: FraværÅrsak.ordinært,
+            aktivitetFravær: [ApiAktivitet.FRILANSER],
         },
         {
             fraOgMed: '2020-03-10',
             tilOgMed: '2020-03-10',
             antallTimerPlanlagt: 'PT5H0M',
             antallTimerBorte: 'PT5H0M',
+            årsak: FraværÅrsak.ordinært,
+            aktivitetFravær: [ApiAktivitet.FRILANSER],
         },
     ],
-    hjemmePgaSmittevernhensyn: false,
     vedlegg: [],
+    harDekketTiFørsteDagerSelv: true,
     _vedleggSmittevern: [],
     _vedleggStengtSkole: [],
+    _harSøktAndreUtbetalinger: true,
+    _harFosterbarn: true,
+    _varFrilansIPerioden: true,
+    _varSelvstendigNæringsdrivendeIPerioden: true,
+    _harFlereVirksomheter: false,
     andreUtbetalinger: [],
     bosteder: [
         {
@@ -122,25 +136,27 @@ export const mock1: SøknadApiData = {
     },
     selvstendigVirksomheter: [
         {
-            næringstyper: [Næringstype.FISKER, Næringstype.JORDBRUK, Næringstype.DAGMAMMA, Næringstype.ANNEN],
+            næringstyper: [Næringstype.FISKE, Næringstype.JORDBRUK_SKOGBRUK, Næringstype.DAGMAMMA, Næringstype.ANNEN],
             navnPåVirksomheten: 'Navn på virksomheten',
             registrertINorge: false,
             fraOgMed: '2013-03-04',
             tilOgMed: null,
             fiskerErPåBladB: true,
+            erNyoppstartet: false,
             regnskapsfører: {
                 navn: 'Mr regnskapsfører',
                 telefon: '99887766',
             },
         },
         {
-            næringstyper: [Næringstype.FISKER, Næringstype.JORDBRUK],
+            næringstyper: [Næringstype.FISKE, Næringstype.JORDBRUK_SKOGBRUK],
             navnPåVirksomheten: 'Kål og ditt OG datt',
             registrertINorge: false,
             fraOgMed: '2018-03-01',
             tilOgMed: '2019-03-07',
             næringsinntekt: 12345678,
             fiskerErPåBladB: false,
+            erNyoppstartet: false,
         },
     ],
 };

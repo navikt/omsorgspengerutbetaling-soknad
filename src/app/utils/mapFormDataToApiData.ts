@@ -6,20 +6,21 @@ import { attachmentUploadHasFailed } from '@navikt/sif-common-core/lib/utils/att
 import { formatDateToApiFormat } from '@navikt/sif-common-core/lib/utils/dateUtils';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import { decimalTimeToTime, timeToIso8601Duration } from '@navikt/sif-common-core/lib/utils/timeUtils';
-import { Utenlandsopphold, Virksomhet, mapVirksomhetToVirksomhetApiData } from '@navikt/sif-common-forms/lib';
+import { Fosterbarn, mapVirksomhetToVirksomhetApiData, Utenlandsopphold } from '@navikt/sif-common-forms/lib';
 import { FraværDag, FraværPeriode } from '@navikt/sif-common-forms/lib/fravær';
+import { ApiAktivitet } from '../types/AktivitetFravær';
 import {
+    ApiFosterbarn,
     SøknadApiData,
     UtbetalingsperiodeApi,
     UtenlandsoppholdApiData,
-    VirksomhetApiData,
     YesNoSpørsmålOgSvar,
     YesNoSvar,
 } from '../types/SøknadApiData';
 import { SøknadFormData } from '../types/SøknadFormData';
-import { Feature, isFeatureEnabled } from './featureToggleUtils';
 import { mapBostedUtlandToApiData } from './formToApiMaps/mapBostedUtlandToApiData';
 import { mapFrilansToApiData } from './formToApiMaps/mapFrilansToApiData';
+import { delFraværPerioderOppIDager, getApiAktivitetForDag, getAktivitetFromAktivitetFravær } from './fraværUtils';
 
 const getVedleggUrlFromAttachments = (attachments: Attachment[]): string[] => {
     return (
@@ -35,32 +36,28 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
         harForståttRettigheterOgPlikter,
         harBekreftetOpplysninger,
 
-        // Periode
-        fraværPerioder,
-        fraværDager,
+        // Fravær
+        harDekketTiFørsteDagerSelv,
         perioder_harVærtIUtlandet,
         perioder_utenlandsopphold,
-        har_søkt_andre_utbetalinger,
-        andre_utbetalinger,
+        harSøktAndreUtbetalinger,
+        andreUtbetalinger,
 
-        hjemmePgaStengtBhgSkole,
+        // Barn
+        fosterbarn,
+        harFosterbarn,
+
         dokumenterStengtBkgSkole = [],
-
-        hjemmePgaSmittevernhensyn,
         dokumenterSmittevernhensyn = [],
 
         // Inntekt
-        frilans_harHattInntektSomFrilanser,
+        frilans_erFrilanser,
         frilans_startdato,
+        frilans_sluttdato,
         frilans_jobberFortsattSomFrilans,
-        selvstendig_harHattInntektSomSN,
-        selvstendig_virksomheter,
-        er_arbeidstaker,
-
-        // Barn
-        har_fosterbarn,
-        fosterbarn,
-        har_fått_ekstra_omsorgsdager,
+        selvstendig_erSelvstendigNæringsdrivende,
+        selvstendig_harFlereVirksomheter,
+        selvstendig_virksomhet,
 
         // Medlemskap
         harBoddUtenforNorgeSiste12Mnd,
@@ -69,30 +66,51 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
         utenlandsoppholdNeste12Mnd,
     } = formValues;
 
-    const yesOrNoQuestions: YesNoSpørsmålOgSvar[] = [
-        {
-            spørsmål: intlHelper(intl, 'step.inntekt.er_arbeidstaker'),
-            svar: mapYesOrNoToSvar(er_arbeidstaker),
-        },
-        {
-            spørsmål: intl.formatMessage({ id: 'steg.barn.har_fått_ekstra_omsorgsdager.spm' }),
-            svar: mapYesOrNoToSvar(har_fått_ekstra_omsorgsdager),
-        },
-        {
-            spørsmål: intlHelper(intl, 'steg.barn.fosterbarn.spm'),
-            svar: mapYesOrNoToSvar(har_fosterbarn),
-        },
-    ];
+    const yesOrNoQuestions: YesNoSpørsmålOgSvar[] = [];
 
-    if (har_søkt_andre_utbetalinger === YesOrNo.NO) {
+    if (harSøktAndreUtbetalinger === YesOrNo.NO) {
         yesOrNoQuestions.push({
-            spørsmål: intlHelper(intl, 'step.periode.har_søkt_andre_utbetalinger.spm'),
-            svar: mapYesOrNoToSvar(har_søkt_andre_utbetalinger),
+            spørsmål: intlHelper(intl, 'step.fravaer.harSøktAndreUtbetalinger.spm'),
+            svar: mapYesOrNoToSvar(harSøktAndreUtbetalinger),
         });
     }
+    if (frilans_erFrilanser) {
+        yesOrNoQuestions.push({
+            spørsmål: intlHelper(intl, 'frilanser.erFrilanser.spm'),
+            svar: mapYesOrNoToSvar(frilans_erFrilanser),
+        });
+    }
+    if (selvstendig_erSelvstendigNæringsdrivende) {
+        yesOrNoQuestions.push({
+            spørsmål: intlHelper(intl, 'selvstendig.erDuSelvstendigNæringsdrivende.spm'),
+            svar: mapYesOrNoToSvar(selvstendig_erSelvstendigNæringsdrivende),
+        });
+    }
+    if (selvstendig_harFlereVirksomheter) {
+        yesOrNoQuestions.push({
+            spørsmål: intlHelper(intl, 'selvstendig.harFlereVirksomheter.spm'),
+            svar: mapYesOrNoToSvar(selvstendig_harFlereVirksomheter),
+        });
+    }
+    yesOrNoQuestions.push({
+        spørsmål: intlHelper(intl, 'steg.barn.fosterbarn.spm'),
+        svar: mapYesOrNoToSvar(harFosterbarn),
+    });
 
     const vedleggSmittevern = getVedleggUrlFromAttachments(dokumenterSmittevernhensyn);
     const vedleggStengtBhgSkole = getVedleggUrlFromAttachments(dokumenterStengtBkgSkole);
+
+    const frilans = mapFrilansToApiData(
+        frilans_erFrilanser,
+        frilans_jobberFortsattSomFrilans,
+        frilans_startdato,
+        frilans_sluttdato
+    );
+
+    const virksomhet =
+        selvstendig_erSelvstendigNæringsdrivende === YesOrNo.YES && selvstendig_virksomhet !== undefined
+            ? mapVirksomhetToVirksomhetApiData(intl.locale, selvstendig_virksomhet)
+            : undefined;
 
     const apiData: SøknadApiData = {
         språk: (intl.locale as any) === 'en' ? 'nn' : (intl.locale as Locale),
@@ -100,9 +118,11 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
             harForståttRettigheterOgPlikter,
             harBekreftetOpplysninger,
         },
+        harDekketTiFørsteDagerSelv: mapYesOrNoToSvar(harDekketTiFørsteDagerSelv),
         spørsmål: [...yesOrNoQuestions],
-        andreUtbetalinger: har_søkt_andre_utbetalinger === YesOrNo.YES ? [...andre_utbetalinger] : [],
-        utbetalingsperioder: mapPeriodeTilUtbetalingsperiode(fraværPerioder, fraværDager),
+        fosterbarn: fosterbarn.map(mapFosterbarnToApiFosterbarn),
+        andreUtbetalinger: harSøktAndreUtbetalinger === YesOrNo.YES ? [...andreUtbetalinger] : [],
+        utbetalingsperioder: getUtbetalingsperioderApiFromFormData(formValues),
         bosteder: settInnBosteder(
             harBoddUtenforNorgeSiste12Mnd,
             utenlandsoppholdSiste12Mnd,
@@ -110,64 +130,28 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
             utenlandsoppholdNeste12Mnd,
             intl.locale
         ),
+        frilans,
+        selvstendigVirksomheter: virksomhet ? [virksomhet] : [],
         opphold: settInnOpphold(perioder_harVærtIUtlandet, perioder_utenlandsopphold, intl.locale), // periode siden, har du oppholdt
-        frilans: mapFrilansToApiData(
-            frilans_harHattInntektSomFrilanser,
-            frilans_jobberFortsattSomFrilans,
-            frilans_startdato
-        ),
-        selvstendigVirksomheter: settInnVirksomheter(
-            intl.locale,
-            selvstendig_harHattInntektSomSN,
-            selvstendig_virksomheter
-        ),
-        hjemmePgaSmittevernhensyn: hjemmePgaSmittevernhensyn === YesOrNo.YES,
-        hjemmePgaStengtBhgSkole: isFeatureEnabled(Feature.STENGT_BHG_SKOLE)
-            ? hjemmePgaStengtBhgSkole === YesOrNo.YES
-            : undefined,
         vedlegg: [...vedleggSmittevern, ...vedleggStengtBhgSkole],
         _vedleggStengtSkole: vedleggStengtBhgSkole,
         _vedleggSmittevern: vedleggSmittevern,
+        _harSøktAndreUtbetalinger: mapYesOrNoToSvar(harSøktAndreUtbetalinger),
+        _harFosterbarn: mapYesOrNoToSvar(harFosterbarn),
+        _varFrilansIPerioden: mapYesOrNoToSvar(frilans_erFrilanser),
+        _varSelvstendigNæringsdrivendeIPerioden: mapYesOrNoToSvar(selvstendig_erSelvstendigNæringsdrivende),
+        _harFlereVirksomheter:
+            virksomhet && selvstendig_harFlereVirksomheter
+                ? mapYesOrNoToSvar(selvstendig_harFlereVirksomheter)
+                : undefined,
     };
-
-    if (har_fosterbarn === YesOrNo.YES && har_fosterbarn.length > 0) {
-        apiData.fosterbarn = fosterbarn.map((barn) => {
-            const { fødselsnummer } = barn;
-            return { fødselsnummer };
-        });
-    }
 
     return apiData;
 };
 
-export const mapPeriodeTilUtbetalingsperiode = (
-    fraværPerioder: FraværPeriode[],
-    fraværDager: FraværDag[]
-): UtbetalingsperiodeApi[] => {
-    const periodeMappedTilUtbetalingsperiode: UtbetalingsperiodeApi[] = fraværPerioder.map(
-        (periode: FraværPeriode): UtbetalingsperiodeApi => {
-            return {
-                fraOgMed: formatDateToApiFormat(periode.from),
-                tilOgMed: formatDateToApiFormat(periode.to),
-                antallTimerPlanlagt: null,
-                antallTimerBorte: null,
-            };
-        }
-    );
-
-    const fraværDeleravDagMappedTilUtbetalingsperiode: UtbetalingsperiodeApi[] = fraværDager.map(
-        (fraværDag: FraværDag): UtbetalingsperiodeApi => {
-            return {
-                fraOgMed: formatDateToApiFormat(fraværDag.dato),
-                tilOgMed: formatDateToApiFormat(fraværDag.dato),
-                antallTimerPlanlagt: timeToIso8601Duration(decimalTimeToTime(parseFloat(fraværDag.timerArbeidsdag))),
-                antallTimerBorte: timeToIso8601Duration(decimalTimeToTime(parseFloat(fraværDag.timerFravær))),
-            };
-        }
-    );
-
-    return [...periodeMappedTilUtbetalingsperiode, ...fraværDeleravDagMappedTilUtbetalingsperiode];
-};
+export const mapFosterbarnToApiFosterbarn = ({ fødselsnummer }: Fosterbarn): ApiFosterbarn => ({
+    identitetsnummer: fødselsnummer,
+});
 
 export const mapYesOrNoToSvar = (input: YesOrNo): YesNoSvar => {
     return input === YesOrNo.YES;
@@ -209,15 +193,65 @@ const settInnOpphold = (
         : [];
 };
 
-const settInnVirksomheter = (
-    locale: string,
-    harHattInntektSomSN?: YesOrNo,
-    virksomheter?: Virksomhet[],
-    harBesvartFiskerPåBladB?: boolean
-): VirksomhetApiData[] => {
-    return harHattInntektSomSN && harHattInntektSomSN === YesOrNo.YES && virksomheter
-        ? virksomheter.map((virksomhet: Virksomhet) =>
-              mapVirksomhetToVirksomhetApiData(locale, virksomhet, harBesvartFiskerPåBladB)
-          )
-        : [];
+export const getUtbetalingsperioderApiFromFormData = (formValues: SøknadFormData): UtbetalingsperiodeApi[] => {
+    const {
+        fraværDager,
+        fraværPerioder,
+        aktivitetFravær,
+        frilans_erFrilanser,
+        selvstendig_erSelvstendigNæringsdrivende,
+    } = formValues;
+    const erFrilanser = frilans_erFrilanser === YesOrNo.YES;
+    const erSN = selvstendig_erSelvstendigNæringsdrivende === YesOrNo.YES;
+
+    const apiAktivitet: ApiAktivitet[] = getAktivitetFromAktivitetFravær(aktivitetFravær, erFrilanser, erSN);
+
+    if (apiAktivitet.length === 1) {
+        return [
+            ...fraværDager.map((dag) => mapFraværDagTilUtbetalingsperiodeApi(dag, apiAktivitet)),
+            ...fraværPerioder.map((periode) => mapFraværPeriodeTilUtbetalingsperiodeApi(periode, apiAktivitet)),
+        ];
+    } else if (apiAktivitet.length === 2) {
+        return [
+            ...fraværDager.map((dag) =>
+                mapFraværDagTilUtbetalingsperiodeApi(dag, getApiAktivitetForDag(dag.dato, aktivitetFravær))
+            ),
+            ...delFraværPerioderOppIDager(fraværPerioder).map((periodeDag) =>
+                mapFraværPeriodeTilUtbetalingsperiodeApi(
+                    periodeDag,
+                    getApiAktivitetForDag(periodeDag.fraOgMed, aktivitetFravær)
+                )
+            ),
+        ];
+    } else {
+        throw new Error('Missing aktivitet');
+    }
+};
+
+export const mapFraværPeriodeTilUtbetalingsperiodeApi = (
+    periode: FraværPeriode,
+    aktivitetFravær: ApiAktivitet[]
+): UtbetalingsperiodeApi => {
+    return {
+        fraOgMed: formatDateToApiFormat(periode.fraOgMed),
+        tilOgMed: formatDateToApiFormat(periode.tilOgMed),
+        antallTimerPlanlagt: null,
+        antallTimerBorte: null,
+        årsak: periode.årsak,
+        aktivitetFravær,
+    };
+};
+
+export const mapFraværDagTilUtbetalingsperiodeApi = (
+    fraværDag: FraværDag,
+    aktivitetFravær: ApiAktivitet[]
+): UtbetalingsperiodeApi => {
+    return {
+        fraOgMed: formatDateToApiFormat(fraværDag.dato),
+        tilOgMed: formatDateToApiFormat(fraværDag.dato),
+        antallTimerPlanlagt: timeToIso8601Duration(decimalTimeToTime(parseFloat(fraværDag.timerArbeidsdag))),
+        antallTimerBorte: timeToIso8601Duration(decimalTimeToTime(parseFloat(fraværDag.timerFravær))),
+        årsak: fraværDag.årsak,
+        aktivitetFravær,
+    };
 };

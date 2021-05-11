@@ -1,15 +1,17 @@
 import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
 import { SøknadFormData } from '../types/SøknadFormData';
+import { harFraværPgaSmittevernhensyn, harFraværPgaStengBhgSkole } from '../utils/periodeUtils';
 import { getSøknadRoute } from '../utils/routeUtils';
 import routeConfig from './routeConfig';
 
 export enum StepID {
-    'BARN' = 'barn',
-    'PERIODE' = 'periode',
+    'FRAVÆR' = 'fravaer',
     'DOKUMENTER_STENGT_SKOLE_BHG' = 'vedlegg_stengtSkoleBhg',
     'DOKUMENTER_SMITTEVERNHENSYN' = 'vedlegg_smittevernhensyn',
+    'ARBEIDSSITUASJON' = 'arbeidssituasjon',
+    'FRAVÆR_FRA' = 'fravaerFra',
     'LEGEERKLÆRING' = 'legeerklaering',
-    'INNTEKT' = 'inntekt',
+    'BARN' = 'barn',
     'MEDLEMSKAP' = 'medlemskap',
     'OPPSUMMERING' = 'oppsummering',
 }
@@ -43,35 +45,45 @@ const getStepConfigItemTextKeys = (stepId: StepID): StepConfigItemTexts => {
 export const getStepConfig = (formData?: SøknadFormData): StepConfigInterface => {
     let idx = 0;
 
-    const { hjemmePgaStengtBhgSkole, hjemmePgaSmittevernhensyn } = formData || {};
-    const skalViseStengtSkoleBhgDokumenterStep = hjemmePgaStengtBhgSkole === YesOrNo.YES;
-    const skalViseSmittevernDokumenterStep = hjemmePgaSmittevernhensyn === YesOrNo.YES;
+    const erFrilanser = formData?.frilans_erFrilanser === YesOrNo.YES;
+    const erSelvstendigNæringsdrivende = formData?.selvstendig_erSelvstendigNæringsdrivende === YesOrNo.YES;
 
-    const getNextStepAfterPeriodeStep = (): StepID => {
+    const skalViseFraværFraSteg = erFrilanser && erSelvstendigNæringsdrivende;
+
+    const skalViseStengtSkoleBhgDokumenterStep = harFraværPgaStengBhgSkole(
+        formData?.fraværPerioder || [],
+        formData?.fraværDager || []
+    );
+    const skalViseSmittevernDokumenterStep = harFraværPgaSmittevernhensyn(
+        formData?.fraværPerioder || [],
+        formData?.fraværDager || []
+    );
+
+    const getNextStepAfterFraværStep = (): StepID => {
         if (skalViseStengtSkoleBhgDokumenterStep) {
             return StepID.DOKUMENTER_STENGT_SKOLE_BHG;
         }
         if (skalViseSmittevernDokumenterStep) {
             return StepID.DOKUMENTER_SMITTEVERNHENSYN;
         }
-        return StepID.INNTEKT;
+        return StepID.ARBEIDSSITUASJON;
     };
 
-    const getPrevioustStepForInntektStep = (): StepID => {
+    const getPrevioustStepForArbeidssituasjonStep = (): StepID => {
         if (skalViseSmittevernDokumenterStep) {
             return StepID.DOKUMENTER_SMITTEVERNHENSYN;
         }
         if (skalViseStengtSkoleBhgDokumenterStep) {
             return StepID.DOKUMENTER_STENGT_SKOLE_BHG;
         }
-        return StepID.PERIODE;
+        return StepID.FRAVÆR;
     };
 
     const configDelEn = {
-        [StepID.PERIODE]: {
-            ...getStepConfigItemTextKeys(StepID.PERIODE),
+        [StepID.FRAVÆR]: {
+            ...getStepConfigItemTextKeys(StepID.FRAVÆR),
             index: idx++,
-            nextStep: getNextStepAfterPeriodeStep(),
+            nextStep: getNextStepAfterFraværStep(),
             backLinkHref: routeConfig.WELCOMING_PAGE_ROUTE,
         },
     };
@@ -81,8 +93,10 @@ export const getStepConfig = (formData?: SøknadFormData): StepConfigInterface =
               [StepID.DOKUMENTER_STENGT_SKOLE_BHG]: {
                   ...getStepConfigItemTextKeys(StepID.DOKUMENTER_STENGT_SKOLE_BHG),
                   index: idx++,
-                  nextStep: skalViseSmittevernDokumenterStep ? StepID.DOKUMENTER_SMITTEVERNHENSYN : StepID.INNTEKT,
-                  backLinkHref: getSøknadRoute(StepID.PERIODE),
+                  nextStep: skalViseSmittevernDokumenterStep
+                      ? StepID.DOKUMENTER_SMITTEVERNHENSYN
+                      : StepID.ARBEIDSSITUASJON,
+                  backLinkHref: getSøknadRoute(StepID.FRAVÆR),
               },
           }
         : undefined;
@@ -92,27 +106,34 @@ export const getStepConfig = (formData?: SøknadFormData): StepConfigInterface =
               [StepID.DOKUMENTER_SMITTEVERNHENSYN]: {
                   ...getStepConfigItemTextKeys(StepID.DOKUMENTER_SMITTEVERNHENSYN),
                   index: idx++,
-                  nextStep: StepID.INNTEKT,
+                  nextStep: StepID.ARBEIDSSITUASJON,
                   backLinkHref: skalViseStengtSkoleBhgDokumenterStep
                       ? getSøknadRoute(StepID.DOKUMENTER_STENGT_SKOLE_BHG)
-                      : getSøknadRoute(StepID.PERIODE),
+                      : getSøknadRoute(StepID.FRAVÆR),
               },
           }
         : undefined;
 
     const configDelTo = {
-        [StepID.INNTEKT]: {
-            ...getStepConfigItemTextKeys(StepID.INNTEKT),
+        [StepID.ARBEIDSSITUASJON]: {
+            ...getStepConfigItemTextKeys(StepID.ARBEIDSSITUASJON),
+            index: idx++,
+            nextStep: skalViseFraværFraSteg ? StepID.FRAVÆR_FRA : StepID.BARN,
+            backLinkHref: getPrevioustStepForArbeidssituasjonStep(),
+        },
+        [StepID.FRAVÆR_FRA]: {
+            ...getStepConfigItemTextKeys(StepID.FRAVÆR_FRA),
             index: idx++,
             nextStep: StepID.BARN,
-            backLinkHref: getPrevioustStepForInntektStep(),
+            backLinkHref: getSøknadRoute(StepID.ARBEIDSSITUASJON),
         },
         [StepID.BARN]: {
             ...getStepConfigItemTextKeys(StepID.BARN),
             index: idx++,
             nextStep: StepID.MEDLEMSKAP,
-            backLinkHref: getSøknadRoute(StepID.INNTEKT),
+            backLinkHref: getSøknadRoute(skalViseFraværFraSteg ? StepID.FRAVÆR_FRA : StepID.ARBEIDSSITUASJON),
         },
+
         [StepID.MEDLEMSKAP]: {
             ...getStepConfigItemTextKeys(StepID.MEDLEMSKAP),
             index: idx++,

@@ -1,6 +1,7 @@
 import { getTypedFormComponents } from '@navikt/sif-common-formik/lib';
+import { ValidationError } from '@navikt/sif-common-formik/lib/validation/types';
 import { SøknadFormData, SøknadFormField } from '../types/SøknadFormData';
 
-const TypedFormComponents = getTypedFormComponents<SøknadFormField, SøknadFormData>();
+const SøknadFormComponents = getTypedFormComponents<SøknadFormField, SøknadFormData, ValidationError>();
 
-export default TypedFormComponents;
+export default SøknadFormComponents;
