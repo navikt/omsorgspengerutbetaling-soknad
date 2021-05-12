@@ -146,7 +146,7 @@ const OppsummeringStep: React.FunctionComponent<Props> = ({
 
                     {/* Næringsinntekt */}
                     <SelvstendigSummary
-                        harFlereVirksomheter={apiValues._harFlereVirksomheter}
+                        harFlereVirksomheter={apiValues.harFlereAktiveVirksomheter}
                         virksomhet={virksomhet}
                     />
 

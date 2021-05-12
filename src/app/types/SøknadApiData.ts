@@ -75,5 +75,5 @@ export interface SøknadApiData {
     _harFosterbarn: boolean;
     _varFrilansIPerioden: boolean;
     _varSelvstendigNæringsdrivendeIPerioden: boolean;
-    _harFlereVirksomheter?: boolean;
+    harFlereAktiveVirksomheter?: boolean;
 }

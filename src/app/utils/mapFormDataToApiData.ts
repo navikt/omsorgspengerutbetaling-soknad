@@ -140,7 +140,7 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
         _harFosterbarn: mapYesOrNoToSvar(harFosterbarn),
         _varFrilansIPerioden: mapYesOrNoToSvar(frilans_erFrilanser),
         _varSelvstendigNæringsdrivendeIPerioden: mapYesOrNoToSvar(selvstendig_erSelvstendigNæringsdrivende),
-        _harFlereVirksomheter:
+        harFlereAktiveVirksomheter:
             virksomhet && selvstendig_harFlereVirksomheter
                 ? mapYesOrNoToSvar(selvstendig_harFlereVirksomheter)
                 : undefined,
