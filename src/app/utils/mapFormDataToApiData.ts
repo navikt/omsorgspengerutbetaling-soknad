@@ -107,9 +107,13 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
         frilans_sluttdato
     );
 
+    const harFlereVirksomheter = selvstendig_harFlereVirksomheter
+        ? mapYesOrNoToSvar(selvstendig_harFlereVirksomheter)
+        : undefined;
+
     const virksomhet =
         selvstendig_erSelvstendigNæringsdrivende === YesOrNo.YES && selvstendig_virksomhet !== undefined
-            ? mapVirksomhetToVirksomhetApiData(intl.locale, selvstendig_virksomhet)
+            ? mapVirksomhetToVirksomhetApiData(intl.locale, selvstendig_virksomhet, harFlereVirksomheter)
             : undefined;
 
     const apiData: SøknadApiData = {
@@ -140,10 +144,6 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
         _harFosterbarn: mapYesOrNoToSvar(harFosterbarn),
         _varFrilansIPerioden: mapYesOrNoToSvar(frilans_erFrilanser),
         _varSelvstendigNæringsdrivendeIPerioden: mapYesOrNoToSvar(selvstendig_erSelvstendigNæringsdrivende),
-        _harFlereVirksomheter:
-            virksomhet && selvstendig_harFlereVirksomheter
-                ? mapYesOrNoToSvar(selvstendig_harFlereVirksomheter)
-                : undefined,
     };
 
     return apiData;

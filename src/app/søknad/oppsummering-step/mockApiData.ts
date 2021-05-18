@@ -96,7 +96,6 @@ export const mock1: SøknadApiData = {
     _harFosterbarn: true,
     _varFrilansIPerioden: true,
     _varSelvstendigNæringsdrivendeIPerioden: true,
-    _harFlereVirksomheter: false,
     andreUtbetalinger: [],
     bosteder: [
         {
@@ -147,6 +146,7 @@ export const mock1: SøknadApiData = {
                 navn: 'Mr regnskapsfører',
                 telefon: '99887766',
             },
+            harFlereAktiveVirksomheter: false,
         },
         {
             næringstyper: [Næringstype.FISKE, Næringstype.JORDBRUK_SKOGBRUK],
@@ -157,6 +157,7 @@ export const mock1: SøknadApiData = {
             næringsinntekt: 12345678,
             fiskerErPåBladB: false,
             erNyoppstartet: false,
+            harFlereAktiveVirksomheter: false,
         },
     ],
 };
