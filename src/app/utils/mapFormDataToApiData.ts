@@ -86,12 +86,7 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
             svar: mapYesOrNoToSvar(selvstendig_erSelvstendigNæringsdrivende),
         });
     }
-    if (selvstendig_harFlereVirksomheter) {
-        yesOrNoQuestions.push({
-            spørsmål: intlHelper(intl, 'selvstendig.harFlereVirksomheter.spm'),
-            svar: mapYesOrNoToSvar(selvstendig_harFlereVirksomheter),
-        });
-    }
+
     yesOrNoQuestions.push({
         spørsmål: intlHelper(intl, 'steg.barn.fosterbarn.spm'),
         svar: mapYesOrNoToSvar(harFosterbarn),
