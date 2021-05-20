@@ -9,10 +9,9 @@ import SummaryBlock from './SummaryBlock';
 
 interface Props {
     virksomhet?: VirksomhetApiData;
-    harFlereVirksomheter: boolean | undefined;
 }
 
-const SelvstendigSummary: React.FunctionComponent<Props> = ({ virksomhet, harFlereVirksomheter }) => {
+const SelvstendigSummary: React.FunctionComponent<Props> = ({ virksomhet }) => {
     const intl = useIntl();
     return (
         <SummarySection header={intlHelper(intl, 'summary.virksomhet.header')}>
@@ -20,7 +19,7 @@ const SelvstendigSummary: React.FunctionComponent<Props> = ({ virksomhet, harFle
                 <JaNeiSvar harSvartJa={virksomhet !== undefined} />
             </SummaryBlock>
             <SummaryBlock header={intlHelper(intl, 'summary.virksomhet.harFlereVirksomheter.header')}>
-                <JaNeiSvar harSvartJa={harFlereVirksomheter} />
+                <JaNeiSvar harSvartJa={virksomhet?.harFlereAktiveVirksomheter} />
             </SummaryBlock>
             {virksomhet && (
                 <SummaryBlock header={intlHelper(intl, 'summary.virksomhet.virksomhetInfo.tittel')}>
