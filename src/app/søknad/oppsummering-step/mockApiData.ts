@@ -96,7 +96,6 @@ export const mock1: SøknadApiData = {
     _harFosterbarn: true,
     _varFrilansIPerioden: true,
     _varSelvstendigNæringsdrivendeIPerioden: true,
-    _harFlereVirksomheter: false,
     andreUtbetalinger: [],
     bosteder: [
         {
