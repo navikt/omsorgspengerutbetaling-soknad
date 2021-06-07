@@ -8,6 +8,8 @@ interface Lenker {
     dittNAV: string;
     søkeEkstraDager: string;
     veiledningEttersendelse: string;
+    skatteetaten: string;
+    skatteetatenSN: string;
 }
 
 const LenkerBokmål: Lenker = {
@@ -23,6 +25,9 @@ const LenkerBokmål: Lenker = {
     søkeEkstraDager: 'https://www.nav.no/familie/sykdom-i-familien/nb/omsorgspenger#Nar-kan-du-soke-om-ekstra-dager',
     veiledningEttersendelse:
         'https://www.dev.nav.no/soknader/nb/person/familie/omsorgspenger/NAV%2009-06.05/ettersendelse',
+    skatteetaten: 'https://www.skatteetaten.no/skjema/mine-inntekter-og-arbeidsforhold/',
+    skatteetatenSN:
+        'https://www.skatteetaten.no/person/skatt/hjelp-til-riktig-skatt/arbeid-trygd-og-pensjon/hobby-ekstrainntekt-og-smajobber/lonnsarbeid-i-hjemmet/lonn-betalt-over-60-000/naringsdrivende-oppdragstakere',
 };
 
 const LenkerNynorsk: Partial<Lenker> = {
@@ -31,6 +36,9 @@ const LenkerNynorsk: Partial<Lenker> = {
     vilkårOmsorgspenger: 'https://www.nav.no/familie/sykdom-i-familien/nn/omsorgspenger',
     rettOgPlikt:
         'https://www.nav.no/no/NAV+og+samfunn/Om+NAV/Nynorsk/du-har-plikt-til-%C3%A5-gje-nav-riktige-opplysningar',
+    skatteetaten: 'https://www.skatteetaten.no/nn/skjema/mine-inntekter-og-arbeidsforhold/',
+    skatteetatenSN:
+        'https://www.skatteetaten.no/person/skatt/hjelp-til-riktig-skatt/arbeid-trygd-og-pensjon/hobby-ekstrainntekt-og-smajobber/lonnsarbeid-i-hjemmet/lonn-betalt-over-60-000/naringsdrivende-oppdragstakere',
 };
 
 const getLenker = (locale?: string): Lenker => {
