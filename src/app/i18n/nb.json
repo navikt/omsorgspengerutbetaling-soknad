@@ -102,6 +102,14 @@
     "step.arbeidssituasjon.info.1": "Nå trenger vi å vite hva som var arbeidssituasjonen din i dagene du søker utbetaling for.",
     "step.arbeidssituasjon.advarsel.ingenSituasjonValgt": "Du må velge minst én av situasjonene over.",
 
+    "step.arbeidssituasjon.frilanser.hjelpetekst.tittel": "Hva betyr det å være frilanser?",
+    "step.arbeidssituasjon.frilanser.hjelpetekst": "Du er frilanser når du mottar lønn for enkeltstående oppdrag uten å være fast eller midlertidig ansatt hos den du utfører oppdraget for. Hvis du er usikker på om du er frilanser må du sjekke om oppdragene dine er registrert som frilansoppdrag på",
+    "step.arbeidssituasjon.frilanser.hjelpetekst.skatteetatenLenke": "skatteetaten sine nettsider.",
+
+    "step.arbeidssituasjon.selvstendig.hjelpetekst.tittel": "Hva betyr det å være selvstendig næringsdrivende?",
+    "step.arbeidssituasjon.selvstendig.hjelpetekst": "Du er selvstendig næringsdrivende når du enten har et enkeltpersonforetak (ENK), et ansvarlig selskap (ANS), eller et ansvarlig selskap med delt ansvar (DA).",
+    "step.arbeidssituasjon.selvstendig.hjelpetekst.snSkatteetatenLenke": "I tillegg kan du lese på skatteetatens side om andre situasjoner hvor du kan regnes som selvstendig næringsdrivende.",
+
     "step.barn.pageTitle": "Om barn - Søknad om utbetaling av omsorgspenger",
     "step.barn.stepTitle": "Om barn",
     "step.barn.stepIndicatorLabel": "Om barn",

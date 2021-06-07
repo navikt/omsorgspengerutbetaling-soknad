@@ -1,5 +1,5 @@
 import React from 'react';
-import { useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import ExpandableInfo from '@navikt/sif-common-core/lib/components/expandable-content/ExpandableInfo';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
 import ResponsivePanel from '@navikt/sif-common-core/lib/components/responsive-panel/ResponsivePanel';
@@ -10,7 +10,8 @@ import datepickerUtils from '@navikt/sif-common-formik/lib/components/formik-dat
 import { getDateValidator, getYesOrNoValidator } from '@navikt/sif-common-formik/lib/validation';
 import { SøknadFormData, SøknadFormField } from '../../../types/SøknadFormData';
 import SøknadFormComponents from '../../SøknadFormComponents';
-import FrilansEksempeltHtml from './FrilansEksempelHtml';
+import Lenke from 'nav-frontend-lenker';
+import getLenker from '../../../lenker';
 
 interface Props {
     formValues: SøknadFormData;
@@ -28,8 +29,13 @@ const FrilansFormPart: React.FunctionComponent<Props> = ({
                 name={SøknadFormField.frilans_erFrilanser}
                 legend={intlHelper(intl, 'frilanser.erFrilanser.spm')}
                 description={
-                    <ExpandableInfo title="Hva er en frilanser?">
-                        <FrilansEksempeltHtml />
+                    <ExpandableInfo title={intlHelper(intl, 'step.arbeidssituasjon.frilanser.hjelpetekst.tittel')}>
+                        <>
+                            {intlHelper(intl, 'step.arbeidssituasjon.frilanser.hjelpetekst')}{' '}
+                            <Lenke href={getLenker(intl.locale).skatteetaten} target="_blank">
+                                <FormattedMessage id="step.arbeidssituasjon.frilanser.hjelpetekst.skatteetatenLenke" />
+                            </Lenke>
+                        </>
                     </ExpandableInfo>
                 }
                 validate={getYesOrNoValidator()}

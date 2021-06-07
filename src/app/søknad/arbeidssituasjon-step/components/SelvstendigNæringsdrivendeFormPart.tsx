@@ -12,6 +12,9 @@ import { SøknadFormData, SøknadFormField } from '../../../types/SøknadFormDat
 import { getEnvironmentVariable } from '../../../utils/envUtils';
 import SøknadFormComponents from '../../SøknadFormComponents';
 import SøknadTempStorage from '../../SøknadTempStorage';
+import ExpandableInfo from '@navikt/sif-common-core/lib/components/expandable-content/ExpandableInfo';
+import Lenke from 'nav-frontend-lenker';
+import getLenker from '../../../lenker';
 
 interface Props {
     formValues: SøknadFormData;
@@ -30,6 +33,16 @@ const SelvstendigNæringsdrivendeFormPart: React.FunctionComponent<Props> = ({ f
                 name={SøknadFormField.selvstendig_erSelvstendigNæringsdrivende}
                 legend={intlHelper(intl, 'selvstendig.erDuSelvstendigNæringsdrivende.spm')}
                 validate={getYesOrNoValidator()}
+                description={
+                    <ExpandableInfo title={intlHelper(intl, 'step.arbeidssituasjon.selvstendig.hjelpetekst.tittel')}>
+                        <>
+                            {intlHelper(intl, 'step.arbeidssituasjon.selvstendig.hjelpetekst')}{' '}
+                            <Lenke href={getLenker(intl.locale).skatteetatenSN} target="_blank">
+                                <FormattedMessage id="step.arbeidssituasjon.selvstendig.hjelpetekst.snSkatteetatenLenke" />
+                            </Lenke>
+                        </>
+                    </ExpandableInfo>
+                }
             />
 
             {erSelvstendigNæringsdrivende && (
