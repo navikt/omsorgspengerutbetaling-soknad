@@ -21,7 +21,7 @@ describe('cleanupArbeidssituasjonStep', () => {
             fom: new Date(),
             harRegnskapsfører: YesOrNo.NO,
             navnPåVirksomheten: 'abc',
-            næringstyper: [Næringstype.ANNEN],
+            næringstype: Næringstype.ANNEN,
             registrertINorge: YesOrNo.YES,
         },
         selvstendig_erSelvstendigNæringsdrivende: YesOrNo.YES,
