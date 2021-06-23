@@ -62,20 +62,22 @@ const SøknadStep: React.FunctionComponent<Props> = (props) => {
                 includeButtons={false}
                 includeValidationSummary={true}
                 runDelayedFormValidation={true}
-                formErrorHandler={intlFormErrorHandler(intl, 'validation')}>
+                formErrorHandler={intlFormErrorHandler(intl, 'validation')}
+                formFooter={
+                    props.showSubmitButton !== false ? (
+                        <FormBlock>
+                            <Knapp
+                                type="hoved"
+                                htmlType="submit"
+                                className={'step__button'}
+                                spinner={showButtonSpinner || false}
+                                disabled={buttonDisabled || false}>
+                                {texts.nextButtonLabel}
+                            </Knapp>
+                        </FormBlock>
+                    ) : undefined
+                }>
                 {children}
-                {props.showSubmitButton !== false && (
-                    <FormBlock>
-                        <Knapp
-                            type="hoved"
-                            htmlType="submit"
-                            className={'step__button'}
-                            spinner={showButtonSpinner || false}
-                            disabled={buttonDisabled || false}>
-                            {texts.nextButtonLabel}
-                        </Knapp>
-                    </FormBlock>
-                )}
             </SøknadFormComponents.Form>
             <StepFooter
                 onAvbrytOgFortsettSenere={handleAvsluttOgFortsettSenere}
