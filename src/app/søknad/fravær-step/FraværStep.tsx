@@ -21,6 +21,8 @@ import SøknadStep from '../SøknadStep';
 import FraværStepInfo from './FraværStepInfo';
 import fraværStepUtils from './fraværStepUtils';
 import { getFraværDagerValidator, getFraværPerioderValidator } from './fraværFieldValidations';
+import { validerFravær } from '../../validation/fraværStepValidation';
+import { ValidationError, ValidationResult } from '@navikt/sif-common-formik/lib/validation/types';
 
 const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) => {
     const { values } = useFormikContext<SøknadFormData>();
@@ -68,8 +70,7 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
             onValidFormSubmit={() => {
                 onValidSubmit();
             }}
-            cleanupStep={fraværStepUtils.cleanupFraværStep}
-            showSubmitButton={kanIkkeFortsette === false}>
+            cleanupStep={fraværStepUtils.cleanupFraværStep}>
             <FormBlock>
                 <FraværStepInfo.IntroVeileder />
             </FormBlock>
@@ -104,7 +105,12 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                     <SøknadFormComponents.YesOrNoQuestion
                         name={SøknadFormField.harPerioderMedFravær}
                         legend={intlHelper(intl, 'step.fravaer.spm.harPerioderMedFravær')}
-                        validate={getYesOrNoValidator()}
+                        validate={(value: YesOrNo): ValidationResult<ValidationError> => {
+                            if (value === YesOrNo.UNANSWERED) {
+                                return getYesOrNoValidator()(value);
+                            }
+                            return validerFravær(kanIkkeFortsette);
+                        }}
                     />
                 </FormBlock>
                 {/* DAGER MED FULLT FRAVÆR*/}
@@ -135,7 +141,12 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                     <SøknadFormComponents.YesOrNoQuestion
                         name={SøknadFormField.harDagerMedDelvisFravær}
                         legend={intlHelper(intl, 'step.fravaer.spm.harDagerMedDelvisFravær')}
-                        validate={getYesOrNoValidator()}
+                        validate={(value: YesOrNo): ValidationResult<ValidationError> => {
+                            if (value === YesOrNo.UNANSWERED) {
+                                return getYesOrNoValidator()(value);
+                            }
+                            return validerFravær(kanIkkeFortsette);
+                        }}
                     />
                 </FormBlock>
                 {/* DAGER MED DELVIS FRAVÆR*/}

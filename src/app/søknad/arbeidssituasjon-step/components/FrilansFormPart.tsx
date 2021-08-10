@@ -12,13 +12,17 @@ import { SøknadFormData, SøknadFormField } from '../../../types/SøknadFormDat
 import SøknadFormComponents from '../../SøknadFormComponents';
 import Lenke from 'nav-frontend-lenker';
 import getLenker from '../../../lenker';
+import { ValidationError, ValidationResult } from '@navikt/sif-common-formik/lib/validation/types';
+import { validerArbeidssituasjon } from '../../../validation/arbeidssituasjonStepValidation';
 
 interface Props {
     formValues: SøknadFormData;
+    showSubmitButton: boolean;
 }
 
 const FrilansFormPart: React.FunctionComponent<Props> = ({
     formValues: { frilans_erFrilanser, frilans_jobberFortsattSomFrilans, frilans_startdato },
+    showSubmitButton,
 }) => {
     const erFrilanser = frilans_erFrilanser === YesOrNo.YES;
     const harSluttetSomFrilanser = frilans_jobberFortsattSomFrilans === YesOrNo.NO;
@@ -38,7 +42,13 @@ const FrilansFormPart: React.FunctionComponent<Props> = ({
                         </>
                     </ExpandableInfo>
                 }
-                validate={getYesOrNoValidator()}
+                // validate={getYesOrNoValidator()}
+                validate={(value: YesOrNo): ValidationResult<ValidationError> => {
+                    if (value === YesOrNo.UNANSWERED) {
+                        return getYesOrNoValidator()(value);
+                    }
+                    return validerArbeidssituasjon(showSubmitButton);
+                }}
             />
             {erFrilanser && (
                 <FormBlock margin="l">

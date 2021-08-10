@@ -431,6 +431,8 @@
     "validation.for_mange_dokumenter": "For mange dokumenter er lastet opp.",
     "validation.samlet_storrelse_for_hoy": "Total samlet størrelse for dokumentene du har lastet opp overstiger grensen på 24Mb.",
     "validation.harDekketTiFørsteDagerSelv.yesOrNoIsUnanswered": "Du må svare ja eller nei på om du har dekket de 10 første dagene selv.",
+    "validation.harPerioderMedFravær.ingenFravær": "Du må velge én av situasjonene.",
+    "validation.harDagerMedDelvisFravær.ingenFravær": "Du må velge én av situasjonene.",
     "validation.harPerioderMedFravær.yesOrNoIsUnanswered": "Du må svare ja eller nei på om du har hatt hele dager med fravær fra jobb.",
     "validation.fraværPerioder.listIsEmpty": "Du har ikke lagt til dager med fullt fravær.",
     "validation.fraværPerioder.ulikeÅrstall": "Du har lagt til fravær som er i flere år. En søknad kan kun inneholde fravær i ett år.",
@@ -440,6 +442,9 @@
     "validation.perioder_utenlandsopphold.listIsEmpty": "Du har svart du har vært i utlandet i perioden du søker for, du må derfor legge til utenlandsopphold.",
     "validation.harSøktAndreUtbetalinger.yesOrNoIsUnanswered": "Du må svare ja eller nei på om du har søkt om andre utbetalinger fra NAV.",
     "validation.andreUtbetalinger.listIsEmpty": "Du har ikke valgt hvilke andre utbetalinger du har søkt om.",
+
+    "validation.frilans_erFrilanser.ingenValg": "Du må velge minst én av situasjonene.",
+    "validation.selvstendig_erSelvstendigNæringsdrivende.ingenValg": "Du må velge minst én av situasjonene.",
 
     "validation.frilans_erFrilanser.yesOrNoIsUnanswered": "Du må svare ja eller nei på om du var frilanser.",
     "validation.frilans_startdato.dateHasNoValue": "Du må fylle ut når du startet som frilanser.",

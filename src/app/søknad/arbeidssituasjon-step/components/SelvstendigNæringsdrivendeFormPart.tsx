@@ -13,14 +13,20 @@ import { getEnvironmentVariable } from '../../../utils/envUtils';
 import SøknadFormComponents from '../../SøknadFormComponents';
 import SøknadTempStorage from '../../SøknadTempStorage';
 import ExpandableInfo from '@navikt/sif-common-core/lib/components/expandable-content/ExpandableInfo';
+import { validerArbeidssituasjon } from '../../../validation/arbeidssituasjonStepValidation';
 import Lenke from 'nav-frontend-lenker';
 import getLenker from '../../../lenker';
+import { ValidationError, ValidationResult } from '@navikt/sif-common-formik/lib/validation/types';
 
 interface Props {
     formValues: SøknadFormData;
+    showSubmitButton: boolean;
 }
 
-const SelvstendigNæringsdrivendeFormPart: React.FunctionComponent<Props> = ({ formValues: values }) => {
+const SelvstendigNæringsdrivendeFormPart: React.FunctionComponent<Props> = ({
+    formValues: values,
+    showSubmitButton,
+}) => {
     const intl = useIntl();
     const skipOrgNumValidation = getEnvironmentVariable('SKIP_ORGNUM_VALIDATION') === 'true';
     const { selvstendig_erSelvstendigNæringsdrivende, selvstendig_virksomhet, selvstendig_harFlereVirksomheter } =
@@ -32,7 +38,12 @@ const SelvstendigNæringsdrivendeFormPart: React.FunctionComponent<Props> = ({ f
             <SøknadFormComponents.YesOrNoQuestion
                 name={SøknadFormField.selvstendig_erSelvstendigNæringsdrivende}
                 legend={intlHelper(intl, 'selvstendig.erDuSelvstendigNæringsdrivende.spm')}
-                validate={getYesOrNoValidator()}
+                validate={(value: YesOrNo): ValidationResult<ValidationError> => {
+                    if (value === YesOrNo.UNANSWERED) {
+                        return getYesOrNoValidator()(value);
+                    }
+                    return validerArbeidssituasjon(showSubmitButton);
+                }}
                 description={
                     <ExpandableInfo title={intlHelper(intl, 'step.arbeidssituasjon.selvstendig.hjelpetekst.tittel')}>
                         <>

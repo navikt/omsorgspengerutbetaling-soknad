@@ -2,7 +2,6 @@ const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
 const webpackConfig = require('../webpack/webpack.config.dev');
 const configureDevServer = require('../webpack/devserver.config');
-const getDecorator = require('./decorator');
 const path = require('path');
 const createEnvSettingsFile = require('./envSettings');
 

@@ -29,7 +29,6 @@ const ArbeidssituasjonStep: React.FunctionComponent<StepConfigProps> = ({ onVali
         <SøknadStep
             id={StepID.ARBEIDSSITUASJON}
             onValidFormSubmit={onValidSubmit}
-            showSubmitButton={showSubmitButton}
             cleanupStep={cleanupArbeidssituasjonStep}>
             <CounsellorPanel>
                 <p>
@@ -38,11 +37,11 @@ const ArbeidssituasjonStep: React.FunctionComponent<StepConfigProps> = ({ onVali
             </CounsellorPanel>
 
             <Box margin="xxl" padBottom="l">
-                <FrilansFormPart formValues={values} />
+                <FrilansFormPart formValues={values} showSubmitButton={showSubmitButton} />
             </Box>
 
             <Box margin="l" padBottom="l">
-                <SelvstendigNæringsdrivendeFormPart formValues={values} />
+                <SelvstendigNæringsdrivendeFormPart formValues={values} showSubmitButton={showSubmitButton} />
             </Box>
             {!showSubmitButton && (
                 <FormBlock margin="l">

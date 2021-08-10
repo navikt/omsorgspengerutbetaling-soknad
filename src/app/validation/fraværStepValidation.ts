@@ -1,6 +1,14 @@
 import { YesOrNo } from '@navikt/sif-common-formik/lib';
 import { Utenlandsopphold } from '@navikt/sif-common-forms/lib';
 import { FraværDag, FraværPeriode } from '@navikt/sif-common-forms/lib/fravær';
+import { ValidationError, ValidationResult } from '@navikt/sif-common-formik/lib/validation/types';
+
+export const validerFravær = (kanIkkeFortsette: boolean): ValidationResult<ValidationError> => {
+    if (kanIkkeFortsette) {
+        return { key: 'ingenFravær' };
+    }
+    return undefined;
+};
 
 export const fraværsperioderIsValid = (harPerioderMedFravær: YesOrNo, fraværPerioder: FraværPeriode[]): boolean =>
     harPerioderMedFravær === YesOrNo.NO || (harPerioderMedFravær === YesOrNo.YES && fraværPerioder.length > 0);
