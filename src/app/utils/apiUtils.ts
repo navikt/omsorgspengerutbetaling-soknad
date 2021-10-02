@@ -1,13 +1,11 @@
 import axios, { AxiosError } from 'axios';
 import HttpStatus from 'http-status-codes';
-import axiosConfig from '../config/axiosConfig';
+import { axiosMultipartConfig } from '../config/axiosConfig';
 import { ResourceType } from '../types/ResourceType';
 import { getEnvironmentVariable } from './envUtils';
 
-export const multipartConfig = { headers: { 'Content-Type': 'multipart/form-data' }, ...axiosConfig };
-
 export const sendMultipartPostRequest = (url: string, formData: FormData) => {
-    return axios.post(url, formData, multipartConfig);
+    return axios.post(url, formData, axiosMultipartConfig);
 };
 
 export const isForbidden = ({ response }: AxiosError) =>

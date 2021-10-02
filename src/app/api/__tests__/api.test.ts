@@ -1,5 +1,5 @@
 import axios from 'axios';
-import axiosConfig from '../../config/axiosConfig';
+import { axiosJsonConfig } from '../../config/axiosConfig';
 import { ResourceType } from '../../types/ResourceType';
 import { getApiUrlByResourceType, sendMultipartPostRequest } from '../../utils/apiUtils';
 import { deleteFile, getSøker, sendApplication, uploadFile } from '../api';
@@ -16,7 +16,7 @@ describe('api', () => {
     describe('getSøker', () => {
         it('should call axios.get with correct URL and axios config', () => {
             getSøker();
-            expect(axios.get).toHaveBeenCalledWith(getApiUrlByResourceType(ResourceType.SØKER), axiosConfig);
+            expect(axios.get).toHaveBeenCalledWith(getApiUrlByResourceType(ResourceType.SØKER), axiosJsonConfig);
         });
     });
 
@@ -27,7 +27,7 @@ describe('api', () => {
             expect(axios.post).toHaveBeenCalledWith(
                 getApiUrlByResourceType(ResourceType.SEND_SØKNAD),
                 data,
-                axiosConfig
+                axiosJsonConfig
             );
         });
     });
@@ -43,7 +43,7 @@ describe('api', () => {
     describe('deleteFile', () => {
         it('should call axios.delete on the specified url', () => {
             deleteFile(mockedApiUrl);
-            expect(axios.delete).toHaveBeenCalledWith(mockedApiUrl, axiosConfig);
+            expect(axios.delete).toHaveBeenCalledWith(mockedApiUrl, axiosJsonConfig);
         });
     });
 });
