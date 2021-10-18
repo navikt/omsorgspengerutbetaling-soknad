@@ -66,7 +66,7 @@ export interface SøknadApiData {
     opphold: UtenlandsoppholdApiData[]; // hvis ja på har oppholdt seg i utlandet
     bosteder: UtenlandsoppholdApiData[]; // medlemskap-siden
     frilans?: Frilans;
-    selvstendigVirksomheter: VirksomhetApiData[];
+    selvstendigNæringsdrivende?: VirksomhetApiData;
     vedlegg: string[];
     harDekketTiFørsteDagerSelv: boolean;
     _vedleggSmittevern: string[];
