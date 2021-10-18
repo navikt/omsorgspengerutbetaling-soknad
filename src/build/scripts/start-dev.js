@@ -8,7 +8,6 @@ require('dotenv').config();
 
 getDecorator().then((decoratorData) => {
     const compiler = webpack(webpackConfig);
-    const server = new WebpackDevServer(compiler, configureDevServer(decoratorData));
-
-    server.listen(8083, '127.0.0.1', () => console.log('Started server on http://localhost:8083'));
+    const server = new WebpackDevServer(configureDevServer(decoratorData), compiler);
+    server.start();
 });
