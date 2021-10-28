@@ -90,8 +90,8 @@ const OppsummeringStep: React.FunctionComponent<Props> = ({
     } = søkerdata;
 
     const apiValues: SøknadApiData = mapFormDataToApiData(values, intl);
-    const { fosterbarn = [], selvstendigVirksomheter = [] } = apiValues;
-    const virksomhet = selvstendigVirksomheter.length === 1 ? selvstendigVirksomheter[0] : undefined;
+    const { fosterbarn = [] } = apiValues;
+
     const apiValidationErrors = validateSoknadApiData(apiValues);
 
     return (
@@ -145,7 +145,7 @@ const OppsummeringStep: React.FunctionComponent<Props> = ({
                     <FrilansSummary frilans={apiValues.frilans} />
 
                     {/* Næringsinntekt */}
-                    <SelvstendigSummary virksomhet={virksomhet} />
+                    <SelvstendigSummary virksomhet={apiValues.selvstendigNæringsdrivende} />
 
                     {/* Eventuelle andre inntekter */}
                     <SummarySection header={intlHelper(intl, 'summary.andreIntekter.header')}>

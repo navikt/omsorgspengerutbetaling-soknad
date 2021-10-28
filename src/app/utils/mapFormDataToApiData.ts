@@ -130,7 +130,7 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
             intl.locale
         ),
         frilans,
-        selvstendigVirksomheter: virksomhet ? [virksomhet] : [],
+        selvstendigNæringsdrivende: virksomhet,
         opphold: settInnOpphold(perioder_harVærtIUtlandet, perioder_utenlandsopphold, intl.locale), // periode siden, har du oppholdt
         vedlegg: [...vedleggSmittevern, ...vedleggStengtBhgSkole],
         _vedleggStengtSkole: vedleggStengtBhgSkole,

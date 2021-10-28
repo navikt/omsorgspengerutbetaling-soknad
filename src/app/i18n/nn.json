@@ -122,7 +122,6 @@
     "welcomingPage.begynnsøknad": "Gå til søknaden",
 
     "modal.personopplysninger.dialogtittel": "Om behandling av personopplysninger",
-    "modal.personopplysninger.1": "Slik behandler NAV personopplysningene dine",
     "modal.personopplysninger.2": "Vi innhenter og mottar opplysninger om deg for å behandle saken din. Det er nødvendig for at du skal få riktig tjeneste.",
     "modal.personopplysninger.3": "Hvilke opplysninger innhenter vi?",
     "modal.personopplysninger.4": "Opplysningene vi innhenter kommer enten fra deg eller fra offentlige registre:",
@@ -254,8 +253,6 @@
     "vedleggsliste.fjernKnapp": "Fjern vedlegg",
     "vedleggsliste.ingenLegeerklæringLastetOpp": "Ingen vedlegg er lasta opp",
     "vedleggsliste.ingenSamværsavtaleLastetOpp": "Ingen vedlegg er lasta opp",
-
-
 
     "avbrytSøknadDialog.avbrytSøknadLabel": "Ja, avbryt søknaden",
     "avbrytSøknadDialog.fortsettSøknadLabel": "Nei",
