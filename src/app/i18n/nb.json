@@ -263,9 +263,8 @@
     "page.generalErrorPage.tittel": "Noe gikk galt...",
     "page.generalErrorPage.tekst": "Beklager, her har det dessverre skjedd en feil.",
 
-    "page.ikkeTilgang.sidetittel": "Søknad om ekstra omsorgsdager",
+    "page.ikkeTilgang.sidetittel": "Søknad om utbetaling av omsorgspenger til selvstendig næringsdrivende eller frilansere",
     "page.ikkeTilgang.tekst": "Du har ikke tilgang til denne siden. Dersom du er under 18 år, må en av foreldrene dine eller en foresatt skrive under på søknaden sammen med deg. Du må derfor fylle ut søknaden på papir og sende den i posten.",
-    "page.ikkeTilgang.lastNed": "Her kan du laste ned papirsøknaden",
 
     "vedleggsliste.fjernKnapp": "Fjern vedlegg",
     "vedleggsliste.ingenLegeerklæringLastetOpp": "Ingen vedlegg er lastet opp",
