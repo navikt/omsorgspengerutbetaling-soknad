@@ -1,6 +1,6 @@
 export enum ResourceType {
     SEND_SØKNAD = 'soknad',
-    SØKER = 'soker-umyndig',
+    SØKER = 'soker',
     VEDLEGG = 'vedlegg',
     MELLOMLAGRING = 'mellomlagring',
 }
