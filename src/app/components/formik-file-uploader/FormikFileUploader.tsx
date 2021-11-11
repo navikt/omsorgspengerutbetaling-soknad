@@ -15,7 +15,7 @@ import { ArrayHelpers, useFormikContext } from 'formik';
 import { uploadFile } from '../../api/api';
 import SøknadFormComponents from '../../søknad/SøknadFormComponents';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
-import * as apiUtils from '../../utils/apiUtils';
+import apiUtils from '@navikt/sif-common-core/lib/utils/apiUtils';
 
 export type FieldArrayReplaceFn = (index: number, value: any) => void;
 export type FieldArrayPushFn = (obj: any) => void;
@@ -46,7 +46,7 @@ const FormikFileUploader: React.FunctionComponent<Props> = ({
                 attachment.url = response.headers.location;
                 attachment.uploaded = true;
             } catch (error) {
-                if (apiUtils.isForbidden(error) || apiUtils.isUnauthorized(error)) {
+                if (apiUtils.isUnauthorized(error)) {
                     onUnauthorizedOrForbiddenUpload();
                 }
                 setAttachmentPendingToFalse(attachment);

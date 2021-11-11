@@ -1,9 +1,7 @@
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import { axiosMultipartConfig } from '../../config/axiosConfig';
 import { ResourceType } from '../../types/ResourceType';
-import { getApiUrlByResourceType, isForbidden, isUnauthorized, sendMultipartPostRequest } from '../apiUtils';
-
-let axiosErrorMock: AxiosError;
+import { getApiUrlByResourceType, sendMultipartPostRequest } from '../apiUtils';
 
 const mockedApiUrl = 'mockedApiUrl';
 jest.mock('./../envUtils.ts', () => {
@@ -11,45 +9,6 @@ jest.mock('./../envUtils.ts', () => {
 });
 
 describe('apiUtils', () => {
-    beforeEach(() => {
-        axiosErrorMock = {
-            config: {},
-            isAxiosError: false,
-            name: '',
-            message: '',
-            toJSON: () => ({}),
-            response: { status: 200, data: {}, statusText: '', headers: [], config: {} },
-        };
-    });
-
-    describe('isForbidden', () => {
-        it('should return true if response.status is 403', () => {
-            axiosErrorMock.response!.status = 403;
-            expect(isForbidden(axiosErrorMock)).toBe(true);
-        });
-
-        it('should return false if response status is not 403', () => {
-            axiosErrorMock.response!.status = 200;
-            expect(isForbidden(axiosErrorMock)).toBe(false);
-            axiosErrorMock.response = undefined;
-            expect(isForbidden(axiosErrorMock)).toBe(false);
-        });
-    });
-
-    describe('isUnauthorized', () => {
-        it('should return true if response.status is 401', () => {
-            axiosErrorMock.response!.status = 401;
-            expect(isUnauthorized(axiosErrorMock)).toBe(true);
-        });
-
-        it('should return false if response status is not 401', () => {
-            axiosErrorMock.response!.status = 200;
-            expect(isUnauthorized(axiosErrorMock)).toBe(false);
-            axiosErrorMock.response = undefined;
-            expect(isUnauthorized(axiosErrorMock)).toBe(false);
-        });
-    });
-
     describe('sendMultipartPostRequest', () => {
         it('should use axios to send a multipart post request', () => {
             const formData = new FormData();

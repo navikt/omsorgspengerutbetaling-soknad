@@ -4,7 +4,6 @@ export interface Person {
     mellomnavn: string;
     kjønn: string;
     fødselsnummer: string;
-    myndig: boolean;
 }
 
 export interface Søkerdata {

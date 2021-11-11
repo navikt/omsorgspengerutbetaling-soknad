@@ -7,3 +7,6 @@ module.exports.get = async (req, res) => {
     const json = await Utils.readJsonAndParseAsync(path);
     res.json(json);
 };
+module.exports.getUmyndig = async (req, res) => {
+    res.send(451);
+};

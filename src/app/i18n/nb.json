@@ -41,6 +41,7 @@
     "datovelger.tom": "Til og med",
 
     "banner.title": "Søknad om utbetaling av omsorgspenger til selvstendig næringsdrivende eller frilansere",
+    "application.title": "Søknad om utbetaling av omsorgspenger til selvstendig næringsdrivende eller frilansere",
 
     "page.loadingPage.tekst": "Laster ...",
     "page.form.ubesvarteSpørsmålInfo": "For å komme videre, må du svare på alle spørsmålene ovenfor",
@@ -262,11 +263,9 @@
     "page.generalErrorPage.tittel": "Noe gikk galt...",
     "page.generalErrorPage.tekst": "Beklager, her har det dessverre skjedd en feil.",
 
-    "page.ikkeMyndig.sidetittel": "Søknad om ekstra omsorgsdager - ikke myndig",
-    "page.ikkeMyndig.banner.tittel": "Hei!",
-    "page.ikkeMyndig.banner.tekst": "Fordi du er under 18 år, må en av foreldrene dine eller en foresatt skrive under på søknaden sammen med deg. Du må derfor fylle ut søknaden på papir og sende den i posten.",
-    "page.ikkeMyndig.banner.lastNed": "Her kan du laste ned papirsøknaden",
-    "page.ikkeMyndig.tittel": "Søknad om ekstra omsorgsdager",
+    "page.ikkeTilgang.sidetittel": "Søknad om ekstra omsorgsdager",
+    "page.ikkeTilgang.tekst": "Du har ikke tilgang til denne siden. Dersom du er under 18 år, må en av foreldrene dine eller en foresatt skrive under på søknaden sammen med deg. Du må derfor fylle ut søknaden på papir og sende den i posten.",
+    "page.ikkeTilgang.lastNed": "Her kan du laste ned papirsøknaden",
 
     "vedleggsliste.fjernKnapp": "Fjern vedlegg",
     "vedleggsliste.ingenLegeerklæringLastetOpp": "Ingen vedlegg er lastet opp",
