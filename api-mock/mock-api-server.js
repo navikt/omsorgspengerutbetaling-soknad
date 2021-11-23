@@ -19,6 +19,7 @@ router.get('/health/isReady', Health.isReady);
 router.get('/arbeidsgiver', Arbeidsgiver.get);
 router.get('/barn', Barn.get);
 router.get('/soker', Soker.get);
+router.get('/soker-umyndig', Soker.getUmyndig);
 router.post('/soknad', Soknad.post);
 router.post('/vedlegg', Vedlegg.post);
 router.get('/mellomlagring', Mellomlagring.get);

@@ -7,7 +7,7 @@ import { SøkerdataContextProvider } from '../context/SøkerdataContext';
 import { Person, Søkerdata } from '../types/Søkerdata';
 import { initialValues, SøknadFormData } from '../types/SøknadFormData';
 import { TemporaryStorage } from '../types/TemporaryStorage';
-import * as apiUtils from '../utils/apiUtils';
+import { isForbidden, isUnauthorized } from '@navikt/sif-common-core/lib/utils/apiUtils';
 import appSentryLogger from '../utils/appSentryLogger';
 import {
     navigateTo,
@@ -18,17 +18,16 @@ import {
     userIsOnStep,
 } from '../utils/navigationUtils';
 import SøknadTempStorage, { STORAGE_VERSION } from './SøknadTempStorage';
+import IkkeTilgangPage from '../components/pages/ikke-tilgang-page/IkkeTilgangPage';
 
 interface Props {
-    contentLoadedRenderer: (
-        søkerdata?: Søkerdata | undefined,
-        formData?: SøknadFormData | undefined
-    ) => React.ReactNode;
+    contentLoadedRenderer: (formData?: SøknadFormData | undefined) => React.ReactNode;
 }
 
 interface LoadState {
     isLoading: boolean;
     doApiCalls: boolean;
+    hasNoAccess?: boolean;
     error?: boolean;
 }
 
@@ -83,9 +82,11 @@ const SøknadEssentialsLoader: React.FunctionComponent<Props> = ({ contentLoaded
                     const [søkerResponse, tempStorage] = await Promise.all([getSøker(), SøknadTempStorage.rehydrate()]);
                     handleEssentialsFetchSuccess(søkerResponse, tempStorage);
                 } catch (error) {
-                    if (apiUtils.isForbidden(error) || apiUtils.isUnauthorized(error)) {
+                    if (isUnauthorized(error)) {
                         navigateToLoginPage();
                         setLoadState({ isLoading: true, doApiCalls: false, error: undefined });
+                    } else if (isForbidden(error)) {
+                        setLoadState({ isLoading: false, doApiCalls: false, error: false, hasNoAccess: true });
                     } else if (!userIsCurrentlyOnErrorPage()) {
                         appSentryLogger.logApiError(error);
                         navigateToErrorPage(history);
@@ -101,14 +102,18 @@ const SøknadEssentialsLoader: React.FunctionComponent<Props> = ({ contentLoaded
         }
     }, [essentials, loadState, history]);
 
-    const { isLoading, error } = loadState;
+    const { isLoading, error, hasNoAccess } = loadState;
+
+    if (hasNoAccess) {
+        return <IkkeTilgangPage />;
+    }
 
     return (
         <LoadWrapper
             isLoading={isLoading && error === undefined}
             contentRenderer={() => (
                 <SøkerdataContextProvider value={essentials?.søkerdata}>
-                    {contentLoadedRenderer(essentials?.søkerdata, essentials?.formData)}
+                    {contentLoadedRenderer(essentials?.formData)}
                 </SøkerdataContextProvider>
             )}
         />

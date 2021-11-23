@@ -22,7 +22,7 @@ import { SøkerdataContext } from '../../context/SøkerdataContext';
 import { Søkerdata } from '../../types/Søkerdata';
 import { ApiFosterbarn, SøknadApiData } from '../../types/SøknadApiData';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
-import * as apiUtils from '../../utils/apiUtils';
+import apiUtils from '@navikt/sif-common-core/lib/utils/apiUtils';
 import appSentryLogger from '../../utils/appSentryLogger';
 import { mapFormDataToApiData } from '../../utils/mapFormDataToApiData';
 import { navigateTo, navigateToLoginPage } from '../../utils/navigationUtils';

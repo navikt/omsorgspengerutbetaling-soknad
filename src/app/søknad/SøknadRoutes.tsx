@@ -9,7 +9,7 @@ import WelcomingPage from '../components/pages/welcoming-page/WelcomingPage';
 import RouteConfig from '../config/routeConfig';
 import { StepID } from '../config/stepConfig';
 import { SøknadFormData } from '../types/SøknadFormData';
-import * as apiUtils from '../utils/apiUtils';
+import apiUtils from '@navikt/sif-common-core/lib/utils/apiUtils';
 import appSentryLogger from '../utils/appSentryLogger';
 import { navigateTo, navigateToLoginPage } from '../utils/navigationUtils';
 import { harFraværPgaSmittevernhensyn, harFraværPgaStengBhgSkole } from '../utils/periodeUtils';
