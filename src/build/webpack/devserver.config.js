@@ -6,6 +6,9 @@ const envSettings = require('../../../envSettings');
 
 const configureDevServer = (decoratorFragments) => ({
     onBeforeSetupMiddleware: (devServer) => {
+        if (!devServer) {
+            throw new Error('webpack-dev-server is not defined');
+        }
         devServer.app.engine('html', mustacheExpress());
         devServer.app.set('views', `${__dirname}/../../../dist/dev`);
         devServer.app.set('view engine', 'mustache');
