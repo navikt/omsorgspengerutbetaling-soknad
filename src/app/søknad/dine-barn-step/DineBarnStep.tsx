@@ -77,6 +77,16 @@ export const cleanupDineBarnStep = (values: SøknadFormData, barn: Barn[], andre
     }
 
     if (minstEtBarn12årIårellerYngre(barn, andreBarn) === false) {
+        if (barn.length + andreBarn.length === 1) {
+            const barnId = barn.length === 1 ? barn[0].aktørId : andreBarn[0].fnr;
+            const harUtvidetRett = values.harUtvidetRett === YesOrNo.YES;
+            return {
+                ...values,
+                harDekketTiFørsteDagerSelv: undefined,
+                harUtvidetRettFor: harUtvidetRett ? [barnId] : [],
+            };
+        }
+
         return {
             ...values,
             harDekketTiFørsteDagerSelv: undefined,
@@ -157,12 +167,15 @@ const DineBarnStep: React.FC<Props> = ({ barn, søker, onValidSubmit }) => {
                         <Box margin="xl">
                             {harUtvidetRett === YesOrNo.YES && (
                                 <>
-                                    <SøknadFormComponents.CheckboxPanelGroup
-                                        legend={intlHelper(intl, 'step.dine-barn.utvidetRettFor.spm')}
-                                        name={SøknadFormField.harUtvidetRettFor}
-                                        checkboxes={barnOptions}
-                                        validate={getListValidator({ required: true })}
-                                    />
+                                    {barn.length + andreBarn.length > 1 && (
+                                        <SøknadFormComponents.CheckboxPanelGroup
+                                            legend={intlHelper(intl, 'step.dine-barn.utvidetRettFor.spm')}
+                                            name={SøknadFormField.harUtvidetRettFor}
+                                            checkboxes={barnOptions}
+                                            validate={getListValidator({ required: true })}
+                                        />
+                                    )}
+
                                     <Box margin="l">
                                         <AlertStripeInfo>
                                             <FormattedMessage id="step.dine-barn.utvidetRettFor.info" />
