@@ -100,6 +100,7 @@
     "step.dine-barn.harFåttEkstraOmsorgsdager.spm": "Har du fått ekstra omsorgsdager for barn fordi barnet har kronisk sykdom eller funksjonshemming?",
     "step.dine-barn.harFåttEkstraOmsorgsdager.nei.alertStripe": "Siden alle barna dine er 13 år i år eller eldre og du ikke har ekstra omsorgsdager for noen av barna har du ikke rett til å bruke omsorgsdager.",
     "step.dine-barn.utvidetRettFor.spm": "Kryss av for det eller de barna som har utvidet rett",
+    "step.dine-barn.utvidetRettFor.info": "Siden du har kun barn over 13 og du har utvidet rett kan du søke utbetaling fra NAV fra den første dagen du bruker. Gå videre til neste steg for å legge inn dager du søker utbetaling for.",
 
     "step.dine-barn.bekrefterDektTiDagerSelv.info": "Du må selv dekke de 10 første dagene du bruker hvert kalenderår. Hvis du søker uten å ha dekket alle de 10 første dagene selv, vil du få avslag på søknaden",
     "step.dine-barn.bekrefterDektTiDagerSelv.label": "For å gå videre må du bekrefte at du allerede har dekt 10 dager selv i år",

@@ -156,13 +156,21 @@ const DineBarnStep: React.FC<Props> = ({ barn, søker, onValidSubmit }) => {
                         </Box>
                         <Box margin="xl">
                             {harUtvidetRett === YesOrNo.YES && (
-                                <SøknadFormComponents.CheckboxPanelGroup
-                                    legend={intlHelper(intl, 'step.dine-barn.utvidetRettFor.spm')}
-                                    name={SøknadFormField.harUtvidetRettFor}
-                                    checkboxes={barnOptions}
-                                    validate={getListValidator({ required: true })}
-                                />
+                                <>
+                                    <SøknadFormComponents.CheckboxPanelGroup
+                                        legend={intlHelper(intl, 'step.dine-barn.utvidetRettFor.spm')}
+                                        name={SøknadFormField.harUtvidetRettFor}
+                                        checkboxes={barnOptions}
+                                        validate={getListValidator({ required: true })}
+                                    />
+                                    <Box margin="l">
+                                        <AlertStripeInfo>
+                                            <FormattedMessage id="step.dine-barn.utvidetRettFor.info" />
+                                        </AlertStripeInfo>
+                                    </Box>
+                                </>
                             )}
+
                             {harUtvidetRett === YesOrNo.NO && (
                                 <AlertStripeInfo>
                                     <FormattedMessage id="step.dine-barn.harFåttEkstraOmsorgsdager.nei.alertStripe" />
