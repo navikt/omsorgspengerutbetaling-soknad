@@ -19,8 +19,8 @@ import UploadedStengtDocumentsList from '../../components/uploaded-stengt-docume
 import RouteConfig from '../../config/routeConfig';
 import { StepID } from '../../config/stepConfig';
 import { SøkerdataContext } from '../../context/SøkerdataContext';
-import { Søkerdata } from '../../types/Søkerdata';
-import { ApiFosterbarn, SøknadApiData } from '../../types/SøknadApiData';
+import { Barn, Søkerdata } from '../../types/Søkerdata';
+import { SøknadApiData } from '../../types/SøknadApiData';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import apiUtils from '@navikt/sif-common-core/lib/utils/apiUtils';
 import appSentryLogger from '../../utils/appSentryLogger';
@@ -37,22 +37,21 @@ import SelvstendigSummary from './components/SelvstendigSummary';
 import SummaryBlock from './components/SummaryBlock';
 import UtbetalingsperioderSummaryView from './components/UtbetalingsperioderSummaryView';
 import UtenlandsoppholdISøkeperiodeSummaryView from './components/UtenlandsoppholdISøkeperiodeSummaryView';
+import DineBarnSummaryList from './components/DineBarnSummaryList';
 
 interface Props {
     hjemmePgaSmittevernhensyn: boolean;
     hjemmePgaStengtBhgSkole: boolean;
+    registrerteBarn: Barn[];
     onApplicationSent: (apiValues: SøknadApiData, søkerdata: Søkerdata) => void;
 }
 
 const renderApiDataFeil = (feil: FeiloppsummeringFeil) => <span>{feil.feilmelding}</span>;
 
-const fosterbarnListItemRenderer = (fosterbarn: ApiFosterbarn): JSX.Element => {
-    return <>{fosterbarn.identitetsnummer}</>;
-};
-
-const OppsummeringStep: React.FunctionComponent<Props> = ({
+const OppsummeringStep: React.FC<Props> = ({
     hjemmePgaStengtBhgSkole,
     hjemmePgaSmittevernhensyn,
+    registrerteBarn,
     onApplicationSent,
 }) => {
     const intl = useIntl();
@@ -89,11 +88,10 @@ const OppsummeringStep: React.FunctionComponent<Props> = ({
         person: { fornavn, mellomnavn, etternavn, fødselsnummer },
     } = søkerdata;
 
-    const apiValues: SøknadApiData = mapFormDataToApiData(values, intl);
-    const { fosterbarn = [] } = apiValues;
+    const apiValues: SøknadApiData = mapFormDataToApiData(values, intl, registrerteBarn);
 
     const apiValidationErrors = validateSoknadApiData(apiValues);
-
+    console.log(apiValues);
     return (
         <SøknadStep
             id={StepID.OPPSUMMERING}
@@ -120,23 +118,20 @@ const OppsummeringStep: React.FunctionComponent<Props> = ({
                         />
                     </SummarySection>
 
-                    {/* Om barn */}
-                    <SummarySection header={intlHelper(intl, 'steg.oppsummering.barn.header')}>
-                        <SummaryBlock header={intlHelper(intl, 'steg.barn.fosterbarn.spm')}>
-                            <JaNeiSvar harSvartJa={apiValues._harFosterbarn} />
-                        </SummaryBlock>
-                        {fosterbarn.length > 0 && (
-                            <SummaryBlock header={intlHelper(intl, 'steg.oppsummering.barn.alleBarn')}>
-                                <SummaryList items={fosterbarn} itemRenderer={fosterbarnListItemRenderer} />
-                            </SummaryBlock>
-                        )}
+                    {/* Dine Barn */}
+                    <SummarySection header={intlHelper(intl, 'steg.oppsummering.dineBarn')}>
+                        <DineBarnSummaryList barn={apiValues.barn} />
                     </SummarySection>
 
                     {/* Omsorgsdager du søker utbetaling for */}
                     <SummarySection header={intlHelper(intl, 'steg.oppsummering.utbetalinger.header')}>
-                        <SummaryBlock header={intlHelper(intl, 'step.fravaer.spm.harDekketTiFørsteDagerSelv')}>
-                            <JaNeiSvar harSvartJa={apiValues.harDekketTiFørsteDagerSelv} />
-                        </SummaryBlock>
+                        {apiValues.harDekketTiFørsteDagerSelv && (
+                            <SummaryBlock
+                                header={intlHelper(
+                                    intl,
+                                    'steg.oppsummering.dineBarn.bekrefterDektTiDagerSelv'
+                                )}></SummaryBlock>
+                        )}
                         <UtbetalingsperioderSummaryView utbetalingsperioder={apiValues.utbetalingsperioder} />
                         <UtenlandsoppholdISøkeperiodeSummaryView utenlandsopphold={apiValues.opphold} />
                     </SummarySection>

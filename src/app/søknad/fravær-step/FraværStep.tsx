@@ -10,7 +10,7 @@ import { fraværDagToFraværDateRange, fraværPeriodeToDateRange } from '@navikt
 import FraværDagerListAndDialog from '@navikt/sif-common-forms/lib/fravær/FraværDagerListAndDialog';
 import FraværPerioderListAndDialog from '@navikt/sif-common-forms/lib/fravær/FraværPerioderListAndDialog';
 import { useFormikContext } from 'formik';
-import { AlertStripeAdvarsel, AlertStripeInfo } from 'nav-frontend-alertstriper';
+import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import FormSection from '../../components/form-section/FormSection';
 import { StepConfigProps, StepID } from '../../config/stepConfig';
 import { AndreUtbetalinger } from '../../types/AndreUtbetalinger';
@@ -24,14 +24,8 @@ import { getFraværDagerValidator, getFraværPerioderValidator } from './fravær
 
 const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) => {
     const { values } = useFormikContext<SøknadFormData>();
-    const {
-        harPerioderMedFravær,
-        harDagerMedDelvisFravær,
-        perioder_harVærtIUtlandet,
-        fraværDager,
-        fraværPerioder,
-        harDekketTiFørsteDagerSelv,
-    } = values;
+    const { harPerioderMedFravær, harDagerMedDelvisFravær, perioder_harVærtIUtlandet, fraværDager, fraværPerioder } =
+        values;
 
     const intl = useIntl();
     const [årstall, setÅrstall] = useState<number | undefined>();
@@ -73,28 +67,6 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
             <FormBlock>
                 <FraværStepInfo.IntroVeileder />
             </FormBlock>
-            <FormSection title={intlHelper(intl, 'step.fravaer.dekkeSelv.tittel')}>
-                <FormBlock margin="l">
-                    <SøknadFormComponents.YesOrNoQuestion
-                        name={SøknadFormField.harDekketTiFørsteDagerSelv}
-                        legend={intlHelper(intl, 'step.fravaer.spm.harDekketTiFørsteDagerSelv')}
-                        description={<FraværStepInfo.HarDekketTiFørsteDagerSelv />}
-                        validate={getYesOrNoValidator()}
-                    />
-                </FormBlock>
-                {harDekketTiFørsteDagerSelv === YesOrNo.NO && (
-                    <FormBlock>
-                        <AlertStripeInfo>
-                            <p style={{ marginTop: '0' }}>
-                                <FormattedMessage id="step.fravaer.ikkeDekket.info.1" />
-                            </p>
-                            <p>
-                                <FormattedMessage id="step.fravaer.ikkeDekket.info.2" />
-                            </p>
-                        </AlertStripeInfo>
-                    </FormBlock>
-                )}
-            </FormSection>
 
             <FormSection title={intlHelper(intl, 'step.fravaer.dager.tittel')}>
                 <p>

@@ -1,9 +1,10 @@
+import { Barn } from '../types/Søkerdata';
 import RouteConfig from '../config/routeConfig';
 import { getStepConfig, StepID } from '../config/stepConfig';
 import { SøknadFormData } from '../types/SøknadFormData';
 import {
     arbeidssituasjonStepIsAvailable,
-    barnStepIsAvailable,
+    dineBarnStepIsAvailable,
     fraværStepIsAvailable,
     medlemskapStepIsAvailable,
     summaryStepAvailable,
@@ -26,12 +27,12 @@ export const getNextStepRoute = (stepId: StepID, formData?: SøknadFormData): st
     return nextStepId ? getSøknadRoute(nextStepId) : undefined;
 };
 
-export const isAvailable = (path: StepID | RouteConfig, values: SøknadFormData) => {
+export const isAvailable = (path: StepID | RouteConfig, values: SøknadFormData, registrerteBarn?: Barn[]) => {
     switch (path) {
+        case StepID.DINE_BARN:
+            return dineBarnStepIsAvailable(values);
         case StepID.FRAVÆR:
-            return fraværStepIsAvailable(values);
-        case StepID.BARN:
-            return barnStepIsAvailable(values);
+            return fraværStepIsAvailable(values, registrerteBarn);
         case StepID.ARBEIDSSITUASJON:
             return arbeidssituasjonStepIsAvailable(values);
         case StepID.MEDLEMSKAP:

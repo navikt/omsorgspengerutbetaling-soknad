@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
-import { getSøker } from '../api/api';
+import { getSøker, getBarn, BarnResultType } from '../api/api';
 import LoadWrapper from '../components/load-wrapper/LoadWrapper';
 import { SøkerdataContextProvider } from '../context/SøkerdataContext';
 import { Person, Søkerdata } from '../types/Søkerdata';
@@ -21,7 +21,11 @@ import SøknadTempStorage, { STORAGE_VERSION } from './SøknadTempStorage';
 import IkkeTilgangPage from '../components/pages/ikke-tilgang-page/IkkeTilgangPage';
 
 interface Props {
-    contentLoadedRenderer: (formData?: SøknadFormData | undefined) => React.ReactNode;
+    contentLoadedRenderer: (
+        søkerdata?: Søkerdata,
+        barn?: BarnResultType,
+        formData?: SøknadFormData | undefined
+    ) => React.ReactNode;
 }
 
 interface LoadState {
@@ -32,7 +36,8 @@ interface LoadState {
 }
 
 interface Essentials {
-    søkerdata: Søkerdata | undefined;
+    søkerdata: Søkerdata;
+    barn: BarnResultType;
     formData: SøknadFormData | undefined;
 }
 
@@ -51,6 +56,7 @@ const SøknadEssentialsLoader: React.FunctionComponent<Props> = ({ contentLoaded
     useEffect(() => {
         const handleEssentialsFetchSuccess = (
             søkerResponse: AxiosResponse<Person>,
+            barnResponse: AxiosResponse<BarnResultType>,
             tempStorageResponse?: AxiosResponse
         ) => {
             const tempStorage = getValidTemporaryStorage(tempStorageResponse?.data);
@@ -61,6 +67,7 @@ const SøknadEssentialsLoader: React.FunctionComponent<Props> = ({ contentLoaded
                 søkerdata: {
                     person: søkerResponse.data,
                 },
+                barn: barnResponse.data,
                 formData: formData || { ...initialValues },
             });
 
@@ -79,8 +86,12 @@ const SøknadEssentialsLoader: React.FunctionComponent<Props> = ({ contentLoaded
         async function loadEssentials() {
             if (essentials?.søkerdata === undefined && loadState.error === undefined) {
                 try {
-                    const [søkerResponse, tempStorage] = await Promise.all([getSøker(), SøknadTempStorage.rehydrate()]);
-                    handleEssentialsFetchSuccess(søkerResponse, tempStorage);
+                    const [søkerResponse, barnResponse, tempStorage] = await Promise.all([
+                        getSøker(),
+                        getBarn(),
+                        SøknadTempStorage.rehydrate(),
+                    ]);
+                    handleEssentialsFetchSuccess(søkerResponse, barnResponse, tempStorage);
                 } catch (error) {
                     if (isUnauthorized(error)) {
                         navigateToLoginPage();
@@ -113,7 +124,7 @@ const SøknadEssentialsLoader: React.FunctionComponent<Props> = ({ contentLoaded
             isLoading={isLoading && error === undefined}
             contentRenderer={() => (
                 <SøkerdataContextProvider value={essentials?.søkerdata}>
-                    {contentLoadedRenderer(essentials?.formData)}
+                    {contentLoadedRenderer(essentials?.søkerdata, essentials?.barn, essentials?.formData)}
                 </SøkerdataContextProvider>
             )}
         />

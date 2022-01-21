@@ -1,9 +1,10 @@
-const MockConfig = require('../mock.config');
-const Utils = require('../utils/utils');
+const barnMock = {
+    barn: [
+        { fødselsdato: '1990-01-02', fornavn: 'Barn', mellomnavn: 'Barne', etternavn: 'Barnesen', aktørId: '1' },
+        { fødselsdato: '1990-01-02', fornavn: 'Mock', etternavn: 'Mocknes', aktørId: '2' },
+    ],
+};
 
-const path = `${MockConfig.MOCK_DATA_DIR}/barn.json5`;
-
-module.exports.get = async (req, res) => {
-    const json = await Utils.readJsonAndParseAsync(path);
-    res.json(json);
+module.exports.get = (req, res) => {
+    res.send(barnMock);
 };

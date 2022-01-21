@@ -49,8 +49,13 @@ export interface Land {
     landkode?: string;
     landnavn?: string;
 }
-export interface ApiFosterbarn {
+
+export interface ApiBarn {
     identitetsnummer?: string;
+    aktørId?: string;
+    fødselsdato: ApiStringDate;
+    navn: string;
+    utvidetRett?: boolean;
 }
 
 export interface SøknadApiData {
@@ -60,7 +65,6 @@ export interface SøknadApiData {
         harForståttRettigheterOgPlikter: boolean;
     };
     spørsmål: YesNoSpørsmålOgSvar[];
-    fosterbarn?: ApiFosterbarn[];
     utbetalingsperioder: UtbetalingsperiodeApi[]; // perioder
     andreUtbetalinger: AndreUtbetalinger[];
     opphold: UtenlandsoppholdApiData[]; // hvis ja på har oppholdt seg i utlandet
@@ -68,11 +72,11 @@ export interface SøknadApiData {
     frilans?: Frilans;
     selvstendigNæringsdrivende?: VirksomhetApiData;
     vedlegg: string[];
-    harDekketTiFørsteDagerSelv: boolean;
+    harDekketTiFørsteDagerSelv?: boolean;
+    barn: ApiBarn[];
     _vedleggSmittevern: string[];
     _vedleggStengtSkole: string[];
     _harSøktAndreUtbetalinger: boolean;
-    _harFosterbarn: boolean;
     _varFrilansIPerioden: boolean;
     _varSelvstendigNæringsdrivendeIPerioden: boolean;
 }

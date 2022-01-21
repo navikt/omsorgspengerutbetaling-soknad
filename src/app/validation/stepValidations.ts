@@ -1,6 +1,7 @@
 import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
 import { Utenlandsopphold } from '@navikt/sif-common-forms/lib';
 import { FraværDag, FraværPeriode } from '@navikt/sif-common-forms/lib/fravær';
+import { minstEtBarn12årIårellerYngre } from '../søknad/dine-barn-step/DineBarnStep';
 import { frilansIsValid, selvstendigIsValid } from '../søknad/arbeidssituasjon-step/arbeidssituasjonUtils';
 import { SøknadFormData, SøknadFormField } from '../types/SøknadFormData';
 import {
@@ -9,9 +10,28 @@ import {
     minimumEnUtbetalingsperiode,
     oppholdIsValid,
 } from './fraværStepValidation';
+import { Barn } from '../types/Søkerdata';
 
 export const welcomingPageIsValid = ({ harForståttRettigheterOgPlikter }: SøknadFormData): boolean =>
     harForståttRettigheterOgPlikter === true;
+
+export const dineBarnStepIsValid = (formData: SøknadFormData, registrerteBarn: Barn[]): boolean => {
+    if (minstEtBarn12årIårellerYngre(registrerteBarn, formData.andreBarn)) {
+        return (
+            formData.harUtvidetRett === YesOrNo.UNANSWERED &&
+            formData.harUtvidetRettFor.length === 0 &&
+            formData.harDekketTiFørsteDagerSelv === true
+        );
+    }
+    if (minstEtBarn12årIårellerYngre(registrerteBarn, formData.andreBarn) === false) {
+        return (
+            formData.harDekketTiFørsteDagerSelv === undefined &&
+            formData.harUtvidetRett === YesOrNo.YES &&
+            formData.harUtvidetRettFor.length > 0
+        );
+    }
+    return false;
+};
 
 export const fraværStepIsValid = (formData: SøknadFormData): boolean => {
     const harPerioderMedFravær: YesOrNo = formData[SøknadFormField.harPerioderMedFravær];
@@ -32,10 +52,6 @@ export const fraværStepIsValid = (formData: SøknadFormData): boolean => {
 
 export const arbeidssituasjonStepIsValid = (formData: SøknadFormData): boolean => {
     return frilansIsValid(formData) && selvstendigIsValid(formData);
-};
-
-export const barnStepIsValid = (): boolean => {
-    return true;
 };
 
 export const medlemskapStepIsValid = ({
