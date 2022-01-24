@@ -23,6 +23,7 @@ import { CheckboksPanelProps } from 'nav-frontend-skjema';
 import CounsellorPanel from '@navikt/sif-common-core/lib/components/counsellor-panel/CounsellorPanel';
 import dayjs from 'dayjs';
 import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
+import { Systemtittel } from 'nav-frontend-typografi';
 
 interface OwnProps {
     barn: Barn[];
@@ -98,7 +99,7 @@ export const cleanupDineBarnStep = (values: SøknadFormData, barn: Barn[], andre
 const DineBarnStep: React.FC<Props> = ({ barn, søker, onValidSubmit }) => {
     const intl = useIntl();
     const {
-        values: { andreBarn, harUtvidetRett },
+        values: { andreBarn, harUtvidetRett, harUtvidetRettFor },
     } = useFormikContext<SøknadFormData>();
 
     const barnOptions = getBarnOptions(barn, andreBarn);
@@ -144,9 +145,9 @@ const DineBarnStep: React.FC<Props> = ({ barn, søker, onValidSubmit }) => {
                 <AnnetBarnListAndDialog<SøknadFormField>
                     name={SøknadFormField.andreBarn}
                     labels={{
-                        addLabel: 'Legg til barn',
-                        listTitle: 'Andre barn',
-                        modalTitle: 'Legg til barn',
+                        addLabel: intlHelper(intl, 'step.dine-barn.annetBarnListAndDialog.addLabel'),
+                        listTitle: intlHelper(intl, 'step.dine-barn.annetBarnListAndDialog.listTitle'),
+                        modalTitle: intlHelper(intl, 'step.dine-barn.annetBarnListAndDialog.modalTitle'),
                     }}
                     maxDate={dateToday}
                     minDate={nYearsAgo(18)}
@@ -156,49 +157,68 @@ const DineBarnStep: React.FC<Props> = ({ barn, søker, onValidSubmit }) => {
             </Box>
             {minstEtBarn12årIårellerYngre(barn, andreBarn) === false && (
                 <FormBlock margin="xxxl">
-                    <ContentWithHeader header={intlHelper(intl, 'step.dine-barn.harFåttEkstraOmsorgsdager.label')}>
-                        <Box margin="xl">
-                            <SøknadFormComponents.YesOrNoQuestion
-                                name={SøknadFormField.harUtvidetRett}
-                                legend={intlHelper(intl, 'step.dine-barn.harFåttEkstraOmsorgsdager.spm')}
-                                validate={getYesOrNoValidator()}
-                            />
-                        </Box>
-                        <Box margin="xl">
-                            {harUtvidetRett === YesOrNo.YES && (
-                                <>
-                                    {barn.length + andreBarn.length > 1 && (
+                    <Systemtittel>
+                        <FormattedMessage id="step.dine-barn.harFåttEkstraOmsorgsdager.label" />
+                    </Systemtittel>
+
+                    <Box margin="xl">
+                        <SøknadFormComponents.YesOrNoQuestion
+                            name={SøknadFormField.harUtvidetRett}
+                            legend={
+                                barn.length + andreBarn.length === 1
+                                    ? intlHelper(intl, 'step.dine-barn.harFåttEkstraOmsorgsdager.spm.ettBarn')
+                                    : intlHelper(intl, 'step.dine-barn.harFåttEkstraOmsorgsdager.spm')
+                            }
+                            validate={getYesOrNoValidator()}
+                        />
+                    </Box>
+                    <Box margin="xl">
+                        {harUtvidetRett === YesOrNo.YES && (
+                            <>
+                                {barn.length + andreBarn.length > 1 && (
+                                    <>
                                         <SøknadFormComponents.CheckboxPanelGroup
                                             legend={intlHelper(intl, 'step.dine-barn.utvidetRettFor.spm')}
                                             name={SøknadFormField.harUtvidetRettFor}
                                             checkboxes={barnOptions}
                                             validate={getListValidator({ required: true })}
                                         />
-                                    )}
-
+                                        {harUtvidetRettFor.length > 0 && (
+                                            <Box margin="l">
+                                                <AlertStripeInfo>
+                                                    <FormattedMessage id="step.dine-barn.utvidetRettFor.info" />
+                                                </AlertStripeInfo>
+                                            </Box>
+                                        )}
+                                    </>
+                                )}
+                                {barn.length + andreBarn.length === 1 && (
                                     <Box margin="l">
                                         <AlertStripeInfo>
-                                            <FormattedMessage id="step.dine-barn.utvidetRettFor.info" />
+                                            <FormattedMessage id="step.dine-barn.utvidetRettFor.info.ettBarn" />
                                         </AlertStripeInfo>
                                     </Box>
-                                </>
-                            )}
+                                )}
+                            </>
+                        )}
 
-                            {harUtvidetRett === YesOrNo.NO && (
-                                <AlertStripeInfo>
-                                    <FormattedMessage id="step.dine-barn.harFåttEkstraOmsorgsdager.nei.alertStripe" />
-                                </AlertStripeInfo>
-                            )}
-                        </Box>
-                    </ContentWithHeader>
+                        {harUtvidetRett === YesOrNo.NO && (
+                            <AlertStripeInfo>
+                                <FormattedMessage id="step.dine-barn.harFåttEkstraOmsorgsdager.nei.alertStripe" />
+                            </AlertStripeInfo>
+                        )}
+                    </Box>
                 </FormBlock>
             )}
             {minstEtBarn12årIårellerYngre(barn, andreBarn) && (
                 <Box>
                     <FormBlock margin="xl">
-                        <AlertStripeInfo>
+                        <Systemtittel>
+                            <FormattedMessage id="step.dine-barn.bekrefterDektTiDagerSelv.info.titel" />
+                        </Systemtittel>
+                        <Box margin="m">
                             <FormattedMessage id="step.dine-barn.bekrefterDektTiDagerSelv.info" />
-                        </AlertStripeInfo>
+                        </Box>
                     </FormBlock>
                     <FormBlock margin="xl">
                         <ContentWithHeader header={intlHelper(intl, 'step.dine-barn.bekrefterDektTiDagerSelv.label')}>
