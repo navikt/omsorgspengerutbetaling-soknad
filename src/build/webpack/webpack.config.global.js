@@ -71,7 +71,6 @@ const webpackConfig = {
             extensions: ['ts', 'tsx'],
             failOnWarning: false,
         }),
-
     ],
 };
 
