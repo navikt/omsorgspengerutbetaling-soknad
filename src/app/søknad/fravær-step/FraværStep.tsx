@@ -185,17 +185,20 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                                         {
                                             id: AndreUtbetalinger.dagpenger,
                                             value: AndreUtbetalinger.dagpenger,
-                                            label: intlHelper(intl, 'andreUtbetalinger.dagpenger'),
+                                            label: intlHelper(intl, 'andreUtbetalinger.DAGPENGER'),
                                         },
                                         {
                                             id: AndreUtbetalinger.sykepenger,
                                             value: AndreUtbetalinger.sykepenger,
-                                            label: intlHelper(intl, 'andreUtbetalinger.sykepenger'),
+                                            label: intlHelper(intl, 'andreUtbetalinger.SYKEPENGER'),
                                         },
                                         {
                                             id: AndreUtbetalinger.midlertidigkompensasjonsnfri,
                                             value: AndreUtbetalinger.midlertidigkompensasjonsnfri,
-                                            label: intlHelper(intl, 'andreUtbetalinger.midlertidigkompensasjonsnfri'),
+                                            label: intlHelper(
+                                                intl,
+                                                'andreUtbetalinger.MIDLERTIDIG_KOMPENSASJON_SN_FRI'
+                                            ),
                                         },
                                     ]}
                                     validate={getListValidator({ required: true })}

@@ -1,5 +1,5 @@
 export enum AndreUtbetalinger {
-    'dagpenger' = 'dagpenger',
-    'sykepenger' = 'sykepenger',
-    'midlertidigkompensasjonsnfri' = 'midlertidigkompensasjonsnfri',
+    'dagpenger' = 'DAGPENGER',
+    'sykepenger' = 'SYKEPENGER',
+    'midlertidigkompensasjonsnfri' = 'MIDLERTIDIG_KOMPENSASJON_SN_FRI',
 }

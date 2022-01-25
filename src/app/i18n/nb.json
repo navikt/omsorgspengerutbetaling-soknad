@@ -63,9 +63,9 @@
     "fileUploadErrors.part1": "Det har dessverre skjedd en feil under opplasting av følgende vedlegg:",
     "formikValidationErrorSummary.tittel": "Du må rette opp i følgende feil:",
 
-    "andreUtbetalinger.dagpenger": "Dagpenger",
-    "andreUtbetalinger.sykepenger": "Sykepenger",
-    "andreUtbetalinger.midlertidigkompensasjonsnfri": "Midlertidig kompensasjon for selvstendig næringsdrivende og frilanser",
+    "andreUtbetalinger.DAGPENGER": "Dagpenger",
+    "andreUtbetalinger.SYKEPENGER": "Sykepenger",
+    "andreUtbetalinger.MIDLERTIDIG_KOMPENSASJON_SN_FRI": "Midlertidig kompensasjon for selvstendig næringsdrivende og frilanser",
 
     "arbeidssituasjon.arbeidstaker": "Arbeidstaker",
     "arbeidssituasjon.selvstendigNæringsdrivende": "Selvstendig næringsdrivende",

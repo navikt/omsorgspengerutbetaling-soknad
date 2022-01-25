@@ -62,9 +62,9 @@
     "fileUploadErrors.part1": "Det har dessverre skjedd ein feil under opplastinga av dei følgjande vedlegga:",
     "formikValidationErrorSummary.tittel": "Du må rette opp i følgjande feil:",
 
-    "andreUtbetalinger.dagpenger": "Dagpengar",
-    "andreUtbetalinger.sykepenger": "Sjukepengar",
-    "andreUtbetalinger.midlertidigkompensasjonsnfri": "Mellombels kompensasjon for sjølvstendig næringsdrivande og frilansarar",
+    "andreUtbetalinger.DAGPENGER": "Dagpengar",
+    "andreUtbetalinger.SYKEPENGER": "Sjukepengar",
+    "andreUtbetalinger.MIDLERTIDIG_KOMPENSASJON_SN_FRI": "Mellombels kompensasjon for sjølvstendig næringsdrivande og frilansarar",
 
     "arbeidssituasjon.arbeidstaker": "Arbeidstakar",
     "arbeidssituasjon.selvstendigNæringsdrivende": "Sjølvstendig næringsdrivande",
