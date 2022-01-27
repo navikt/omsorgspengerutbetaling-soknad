@@ -24,8 +24,14 @@ import { getFraværDagerValidator, getFraværPerioderValidator } from './fravær
 
 const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) => {
     const { values } = useFormikContext<SøknadFormData>();
-    const { harPerioderMedFravær, harDagerMedDelvisFravær, perioder_harVærtIUtlandet, fraværDager, fraværPerioder } =
-        values;
+    const {
+        harPerioderMedFravær,
+        harDagerMedDelvisFravær,
+        perioder_harVærtIUtlandet,
+        fraværDager,
+        fraværPerioder,
+        harUtvidetRettFor,
+    } = values;
 
     const intl = useIntl();
     const [årstall, setÅrstall] = useState<number | undefined>();
@@ -51,10 +57,9 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
 
     const kanIkkeFortsette = harPerioderMedFravær === YesOrNo.NO && harDagerMedDelvisFravær === YesOrNo.NO;
     const harRegistrertFravær = fraværDager.length + fraværPerioder.length > 0;
+    const søkerHarBarnMedUtvidetRett = harUtvidetRettFor.length > 0;
     const minDateForFravær = harRegistrertFravær ? gyldigTidsrom.from : date1YearAgo;
     const maxDateForFravær = harRegistrertFravær ? gyldigTidsrom.to : dateToday;
-    const inneværendeÅr = new Date().getFullYear();
-    const forrigeÅr = inneværendeÅr - 1;
 
     return (
         <SøknadStep
@@ -70,7 +75,11 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
 
             <FormSection title={intlHelper(intl, 'step.fravaer.dager.tittel')}>
                 <p>
-                    <FormattedMessage id="step.fravaer.dager.info" values={{ forrigeÅr, inneværendeÅr }} />
+                    {søkerHarBarnMedUtvidetRett ? (
+                        <FormattedMessage id="step.fravaer.dager.info.harBarnMedUtvidetRett" />
+                    ) : (
+                        <FormattedMessage id="step.fravaer.dager.info" />
+                    )}
                 </p>
                 <FormBlock>
                     <SøknadFormComponents.YesOrNoQuestion
