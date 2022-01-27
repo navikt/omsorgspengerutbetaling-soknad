@@ -17,6 +17,7 @@ export const mapAndreBarnToApiBarn = (
         utvidetRett: harDekketTiFørsteDagerSelv
             ? undefined
             : harUtvidetRettFor.filter((fnr) => fnr === annetBarn.fnr).length === 1,
+        årsakenTilÅLeggeBarnet: annetBarn.årsakenTilÅLeggeBarnet,
     };
 };
 

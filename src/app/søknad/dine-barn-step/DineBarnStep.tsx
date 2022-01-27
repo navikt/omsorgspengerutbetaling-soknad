@@ -153,6 +153,7 @@ const DineBarnStep: React.FC<Props> = ({ barn, søker, onValidSubmit }) => {
                     minDate={nYearsAgo(18)}
                     disallowedFødselsnumre={[søker.fødselsnummer]}
                     aldersGrenseText={intlHelper(intl, 'step.dine-barn.formLeggTilBarn.aldersGrenseInfo')}
+                    visÅrsakenTilÅLeggeBarnet={true}
                 />
             </Box>
             {minstEtBarn12årIårellerYngre(barn, andreBarn) === false && (

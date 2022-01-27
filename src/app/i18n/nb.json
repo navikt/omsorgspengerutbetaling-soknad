@@ -244,6 +244,8 @@
     "steg.oppsummering.dineBarn.bekrefterDektTiDagerSelv": "Jeg bekrefter at jeg allerede har dekt 10 dager selv i år",
     "step.oppsummering.dineBarn.listItem": " (fnr. {identitetsnummer})",
     "step.oppsummering.dineBarn.listItem.utvidetRett": "(har utvidet rett)",
+    "step.oppsummering.dineBarn.listItem.årsak.FOSTERBARN": "(Barnet er mitt fosterbarn)",
+    "step.oppsummering.dineBarn.listItem.årsak.BARNET_BOR_I_UTLANDET": "(Barnet bor i utlandet)",
 
     "steg.oppsummering.arbeidssituasjon.header": "Din arbeidssituasjon",
     "steg.oppsummering.harSøktOmAndreUtbetalinger": "Hvilke andre utbetalinger har du søkt om?",

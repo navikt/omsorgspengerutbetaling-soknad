@@ -3,6 +3,7 @@ import { ApiStringDate } from '@navikt/sif-common-core/lib/types/ApiStringDate';
 import { Locale } from '@navikt/sif-common-core/lib/types/Locale';
 import { AndreUtbetalinger } from './AndreUtbetalinger';
 import { ApiAktivitet } from './AktivitetFravær';
+import { Årsak } from '@navikt/sif-common-forms/lib/annet-barn/types';
 
 export type ISO8601Duration = string;
 
@@ -56,6 +57,7 @@ export interface ApiBarn {
     fødselsdato: ApiStringDate;
     navn: string;
     utvidetRett?: boolean;
+    årsakenTilÅLeggeBarnet?: Årsak;
 }
 
 export interface SøknadApiData {
