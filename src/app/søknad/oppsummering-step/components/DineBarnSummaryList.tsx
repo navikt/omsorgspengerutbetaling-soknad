@@ -17,9 +17,7 @@ const DineBarnSummaryList = ({ barn }: Props) => {
             <SummaryList
                 items={barn}
                 itemRenderer={({ identitetsnummer, navn, utvidetRett, type }: ApiBarn) => {
-                    const fnr = identitetsnummer
-                        ? intlHelper(intl, 'step.oppsummering.dineBarn.listItem', { identitetsnummer })
-                        : '';
+                    const fnr = identitetsnummer ? identitetsnummer : '';
                     const harUtvidetRett = utvidetRett
                         ? intlHelper(intl, 'step.oppsummering.dineBarn.listItem.utvidetRett')
                         : '';
@@ -27,7 +25,8 @@ const DineBarnSummaryList = ({ barn }: Props) => {
                         type !== Årsak.annet && type !== RegisterteBarnTypeApi.fraOppslag
                             ? intlHelper(intl, `step.oppsummering.dineBarn.listItem.årsak.${type}`)
                             : '';
-                    return <>{`${navn}${fnr} ${harUtvidetRett} ${barnType}`}</>;
+                    const punktum = type === RegisterteBarnTypeApi.fraOppslag && utvidetRett ? '.' : '';
+                    return <>{`${navn}${punktum} ${fnr} ${barnType} ${harUtvidetRett}`}</>;
                 }}
             />
         </Box>

@@ -243,9 +243,9 @@
     "steg.oppsummering.dineBarn": "Dine Barn",
     "steg.oppsummering.dineBarn.bekrefterDektTiDagerSelv": "Har du dekket de 10 første omsorgsdagene selv?",
     "step.oppsummering.dineBarn.listItem": " (fnr. {identitetsnummer})",
-    "step.oppsummering.dineBarn.listItem.utvidetRett": "(har utvidet rett)",
-    "step.oppsummering.dineBarn.listItem.årsak.FOSTERBARN": "(Barnet er mitt fosterbarn)",
-    "step.oppsummering.dineBarn.listItem.årsak.BARNET_BOR_I_UTLANDET": "(Barnet bor i utlandet)",
+    "step.oppsummering.dineBarn.listItem.utvidetRett": "Ekstra omsorgsdager.",
+    "step.oppsummering.dineBarn.listItem.årsak.FOSTERBARN": "(Barnet er mitt fosterbarn).",
+    "step.oppsummering.dineBarn.listItem.årsak.BARNET_BOR_I_UTLANDET": "(Barnet bor i utlandet).",
 
     "steg.oppsummering.arbeidssituasjon.header": "Din arbeidssituasjon",
     "steg.oppsummering.harSøktOmAndreUtbetalinger": "Hvilke andre utbetalinger har du søkt om?",
