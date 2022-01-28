@@ -51,13 +51,17 @@ export interface Land {
     landnavn?: string;
 }
 
+export enum RegisterteBarnTypeApi {
+    'fraOppslag' = 'FRA_OPPSLAG',
+}
+
 export interface ApiBarn {
     identitetsnummer?: string;
     aktørId?: string;
     fødselsdato: ApiStringDate;
     navn: string;
     utvidetRett?: boolean;
-    årsakenTilÅLeggeBarnet?: Årsak;
+    type: RegisterteBarnTypeApi | Årsak;
 }
 
 export interface SøknadApiData {

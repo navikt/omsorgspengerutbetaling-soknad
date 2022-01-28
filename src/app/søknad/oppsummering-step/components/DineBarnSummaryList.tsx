@@ -2,7 +2,7 @@ import React from 'react';
 import SummaryList from '@navikt/sif-common-core/lib/components/summary-list/SummaryList';
 import { useIntl } from 'react-intl';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
-import { ApiBarn } from '../../../types/SøknadApiData';
+import { ApiBarn, RegisterteBarnTypeApi } from '../../../types/SøknadApiData';
 import Box from '@navikt/sif-common-core/lib/components/box/Box';
 import { Årsak } from '@navikt/sif-common-forms/lib/annet-barn/types';
 
@@ -16,18 +16,18 @@ const DineBarnSummaryList = ({ barn }: Props) => {
         <Box margin="l">
             <SummaryList
                 items={barn}
-                itemRenderer={({ identitetsnummer, navn, utvidetRett, årsakenTilÅLeggeBarnet }: ApiBarn) => {
+                itemRenderer={({ identitetsnummer, navn, utvidetRett, type }: ApiBarn) => {
                     const fnr = identitetsnummer
                         ? intlHelper(intl, 'step.oppsummering.dineBarn.listItem', { identitetsnummer })
                         : '';
                     const harUtvidetRett = utvidetRett
                         ? intlHelper(intl, 'step.oppsummering.dineBarn.listItem.utvidetRett')
                         : '';
-                    const årsakenTilÅLeggeBarnetTekst =
-                        årsakenTilÅLeggeBarnet && årsakenTilÅLeggeBarnet !== Årsak.annet
-                            ? intlHelper(intl, `step.oppsummering.dineBarn.listItem.årsak.${årsakenTilÅLeggeBarnet}`)
+                    const barnType =
+                        type !== Årsak.annet && type !== RegisterteBarnTypeApi.fraOppslag
+                            ? intlHelper(intl, `step.oppsummering.dineBarn.listItem.årsak.${type}`)
                             : '';
-                    return <>{`${navn}${fnr} ${harUtvidetRett} ${årsakenTilÅLeggeBarnetTekst}`}</>;
+                    return <>{`${navn}${fnr} ${harUtvidetRett} ${barnType}`}</>;
                 }}
             />
         </Box>

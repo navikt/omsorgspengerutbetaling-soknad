@@ -91,7 +91,7 @@ const OppsummeringStep: React.FC<Props> = ({
     const apiValues: SøknadApiData = mapFormDataToApiData(values, intl, registrerteBarn);
 
     const apiValidationErrors = validateSoknadApiData(apiValues);
-
+    console.log(apiValues);
     return (
         <SøknadStep
             id={StepID.OPPSUMMERING}
