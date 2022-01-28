@@ -121,17 +121,16 @@ const OppsummeringStep: React.FC<Props> = ({
                     {/* Dine Barn */}
                     <SummarySection header={intlHelper(intl, 'steg.oppsummering.dineBarn')}>
                         <DineBarnSummaryList barn={apiValues.barn} />
+                        {apiValues.harDekketTiFørsteDagerSelv && (
+                            <SummaryBlock
+                                header={intlHelper(intl, 'steg.oppsummering.dineBarn.bekrefterDektTiDagerSelv')}>
+                                <JaNeiSvar harSvartJa={apiValues.harDekketTiFørsteDagerSelv} />
+                            </SummaryBlock>
+                        )}
                     </SummarySection>
 
                     {/* Omsorgsdager du søker utbetaling for */}
                     <SummarySection header={intlHelper(intl, 'steg.oppsummering.utbetalinger.header')}>
-                        {apiValues.harDekketTiFørsteDagerSelv && (
-                            <SummaryBlock
-                                header={intlHelper(
-                                    intl,
-                                    'steg.oppsummering.dineBarn.bekrefterDektTiDagerSelv'
-                                )}></SummaryBlock>
-                        )}
                         <UtbetalingsperioderSummaryView utbetalingsperioder={apiValues.utbetalingsperioder} />
                         <UtenlandsoppholdISøkeperiodeSummaryView utenlandsopphold={apiValues.opphold} />
                     </SummarySection>

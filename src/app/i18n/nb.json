@@ -241,7 +241,7 @@
     "steg.oppsummering.søker.fnr": "Fødselsnummer: {fødselsnummer}",
 
     "steg.oppsummering.dineBarn": "Dine Barn",
-    "steg.oppsummering.dineBarn.bekrefterDektTiDagerSelv": "Jeg bekrefter at jeg allerede har dekt 10 dager selv i år",
+    "steg.oppsummering.dineBarn.bekrefterDektTiDagerSelv": "Har du dekket de 10 første omsorgsdagene selv?",
     "step.oppsummering.dineBarn.listItem": " (fnr. {identitetsnummer})",
     "step.oppsummering.dineBarn.listItem.utvidetRett": "(har utvidet rett)",
     "step.oppsummering.dineBarn.listItem.årsak.FOSTERBARN": "(Barnet er mitt fosterbarn)",
