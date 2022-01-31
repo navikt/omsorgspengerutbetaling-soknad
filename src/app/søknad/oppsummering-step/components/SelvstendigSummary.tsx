@@ -11,20 +11,23 @@ interface Props {
     virksomhet?: VirksomhetApiData;
 }
 
-const SelvstendigSummary: React.FunctionComponent<Props> = ({ virksomhet }) => {
+const SelvstendigSummary: React.FC<Props> = ({ virksomhet }) => {
     const intl = useIntl();
     return (
         <SummarySection header={intlHelper(intl, 'summary.virksomhet.header')}>
             <SummaryBlock header={intlHelper(intl, 'summary.virksomhet.harDuHattInntekt.header')}>
                 <JaNeiSvar harSvartJa={virksomhet !== undefined} />
             </SummaryBlock>
-            <SummaryBlock header={intlHelper(intl, 'summary.virksomhet.harFlereVirksomheter.header')}>
-                <JaNeiSvar harSvartJa={virksomhet?.harFlereAktiveVirksomheter} />
-            </SummaryBlock>
+
             {virksomhet && (
-                <SummaryBlock header={intlHelper(intl, 'summary.virksomhet.virksomhetInfo.tittel')}>
-                    <VirksomhetSummary virksomhet={virksomhet} />
-                </SummaryBlock>
+                <>
+                    <SummaryBlock header={intlHelper(intl, 'summary.virksomhet.harFlereVirksomheter.header')}>
+                        <JaNeiSvar harSvartJa={virksomhet?.harFlereAktiveVirksomheter} />
+                    </SummaryBlock>
+                    <SummaryBlock header={intlHelper(intl, 'summary.virksomhet.virksomhetInfo.tittel')}>
+                        <VirksomhetSummary virksomhet={virksomhet} />
+                    </SummaryBlock>
+                </>
             )}
         </SummarySection>
     );
