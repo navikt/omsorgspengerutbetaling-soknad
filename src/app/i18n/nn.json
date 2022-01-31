@@ -89,10 +89,6 @@
     "step.arbeidssituasjon.info.1": "Nå treng vi å vite kva som var din arbeidssituasjon på den første dagen du søkjer om utbetaling for.",
     "step.arbeidssituasjon.advarsel.ingenSituasjonValgt": "Du må velje minst éin av situasjonane over.",
 
-    "step.barn.pageTitle": "Barn – Søknad om utbetaling av omsorgspenger",
-    "step.barn.stepTitle": "Barn",
-    "step.barn.stepIndicatorLabel": "Barn",
-
     "step.medlemskap.pageTitle": "Medlemskap i folketrygden - Søknad om utbetaling av omsorgspenger",
     "step.medlemskap.stepTitle": "Medlemskap",
     "step.medlemskap.stepIndicatorLabel": "Om medlemskap i folketrygda",

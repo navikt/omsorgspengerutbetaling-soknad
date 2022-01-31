@@ -87,9 +87,9 @@
     "step.periode.stepTitle": "Første og siste dag du skal søke for",
     "step.periode.stepIndicatorLabel": "Første og siste dag du skal søke for",
 
-    "step.dine-barn.pageTitle": "Dine barn",
-    "step.dine-barn.stepTitle": "Dine barn",
-    "step.dine-barn.stepIndicatorLabel": "Dine barn",
+    "step.dine-barn.pageTitle": "Om barn",
+    "step.dine-barn.stepTitle": "Om barn",
+    "step.dine-barn.stepIndicatorLabel": "Om barn",
     "step.dine-barn.counsellorPanel.avsnitt.1": "Som selvstendig næringsdrivende eller frilanser må du som hovedregel dekke de 10 første omsorgsdagene selv. Du kan altså ha rett til utbetaling av omsorgsdager fra den 11. dagen. De 10 første dagene som du skal dekke selv, trenger ikke å tas ut sammenhengende.",
     "step.dine-barn.counsellorPanel.avsnitt.2": "Du kan ha rett til utbetaling fra den første dagen når du kun har barn som fyller 13 år i år eller er eldre, og som har kronisk sykdom eller funksjonshemning. Dette gjelder bare når du har søkt og fått ekstra omsorgsdager for barn i denne situasjonen.",
 
@@ -110,8 +110,8 @@
 
     "step.dine-barn.bekrefterDektTiDagerSelv.info.titel": "Omsorgsdager du må dekke selv",
     "step.dine-barn.bekrefterDektTiDagerSelv.info": "Når du har barn som har fylt 12 år i år, eller er yngre, må du dekke de 10 første omsorgsdagene du bruker hvert kalenderår. Du kan søke om utbetaling fra NAV fra den 11. dagen.",
-    "step.dine-barn.bekrefterDektTiDagerSelv.label": "For å gå videre må du bekrefte at du har dekket 10 omsorgsdager i år",
-    "step.dine-barn.bekrefterDektTiDagerSelv": "Ja, jeg bekrefter at jeg selv har dekket 10 omsorgsdager i år",
+    "step.dine-barn.bekrefterDektTiDagerSelv.label": "For å gå videre må du bekrefte at du har dekket 10 omsorgsdager i år:",
+    "step.dine-barn.bekrefterDektTiDagerSelv": "Ja, jeg bekrefter at jeg har dekket 10 omsorgsdager i år.",
 
     "step.dine-barn.nextButtonLabel": "Fortsett",
     "step.dine-barn.info.ingenbarn.1": "Vi fant ingen barn registrert på deg. Har du  barn som ikke er registrert her, kan du selv legge inn disse. Dette kan være fosterbarn, eller om du har barn som er fylt 18 år og som har ekstra omsorgsdager på grunn av kronisk sykdom eller funksjonshemning.",
@@ -144,10 +144,6 @@
     "step.arbeidssituasjon.selvstendig.hjelpetekst.tittel": "Hva betyr det å være selvstendig næringsdrivende?",
     "step.arbeidssituasjon.selvstendig.hjelpetekst": "Du er selvstendig næringsdrivende når du enten har et enkeltpersonforetak (ENK), et ansvarlig selskap (ANS), eller et ansvarlig selskap med delt ansvar (DA).",
     "step.arbeidssituasjon.selvstendig.hjelpetekst.snSkatteetatenLenke": "I tillegg kan du lese på skatteetatens side om andre situasjoner hvor du kan regnes som selvstendig næringsdrivende.",
-
-    "step.barn.pageTitle": "Om barn - Søknad om utbetaling av omsorgspenger",
-    "step.barn.stepTitle": "Om barn",
-    "step.barn.stepIndicatorLabel": "Om barn",
 
     "step.medlemskap.pageTitle": "Medlemskap i folketrygden - Søknad om utbetaling av omsorgspenger",
     "step.medlemskap.stepTitle": "Medlemskap i folketrygden",
