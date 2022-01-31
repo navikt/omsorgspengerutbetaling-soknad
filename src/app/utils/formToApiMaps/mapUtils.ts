@@ -1,5 +1,5 @@
 import { formatName } from '@navikt/sif-common-core/lib/utils/personUtils';
-import { AnnetBarn, Årsak } from '@navikt/sif-common-forms/lib/annet-barn/types';
+import { AnnetBarn, BarnType } from '@navikt/sif-common-forms/lib/annet-barn/types';
 import { ApiBarn, RegisterteBarnTypeApi } from '../../types/SøknadApiData';
 import { Barn } from '../../types/Søkerdata';
 import { formatDateToApiFormat } from '@navikt/sif-common-core/lib/utils/dateUtils';
@@ -17,7 +17,7 @@ export const mapAndreBarnToApiBarn = (
         utvidetRett: harDekketTiFørsteDagerSelv
             ? undefined
             : harUtvidetRettFor.filter((fnr) => fnr === annetBarn.fnr).length === 1,
-        type: annetBarn.årsakenTilÅLeggeBarnet ? annetBarn.årsakenTilÅLeggeBarnet : Årsak.annet,
+        type: annetBarn.type ? annetBarn.type : BarnType.annet,
     };
 };
 

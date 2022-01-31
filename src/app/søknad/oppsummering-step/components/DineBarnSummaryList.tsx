@@ -4,7 +4,7 @@ import { useIntl } from 'react-intl';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import { ApiBarn, RegisterteBarnTypeApi } from '../../../types/SøknadApiData';
 import Box from '@navikt/sif-common-core/lib/components/box/Box';
-import { Årsak } from '@navikt/sif-common-forms/lib/annet-barn/types';
+import { BarnType } from '@navikt/sif-common-forms/lib/annet-barn/types';
 
 interface Props {
     barn: ApiBarn[];
@@ -22,7 +22,7 @@ const DineBarnSummaryList = ({ barn }: Props) => {
                         ? intlHelper(intl, 'step.oppsummering.dineBarn.listItem.utvidetRett')
                         : '';
                     const barnType =
-                        type !== Årsak.annet && type !== RegisterteBarnTypeApi.fraOppslag
+                        type !== BarnType.annet && type !== RegisterteBarnTypeApi.fraOppslag
                             ? intlHelper(intl, `step.oppsummering.dineBarn.listItem.årsak.${type}`)
                             : '';
                     const punktum = type === RegisterteBarnTypeApi.fraOppslag && utvidetRett ? '.' : '';
