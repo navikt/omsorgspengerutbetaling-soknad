@@ -1,7 +1,6 @@
 import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
 import { Utenlandsopphold } from '@navikt/sif-common-forms/lib';
 import { FraværDag, FraværPeriode } from '@navikt/sif-common-forms/lib/fravær';
-import { minstEtBarn12årIårellerYngre } from '../søknad/dine-barn-step/DineBarnStep';
 import { frilansIsValid, selvstendigIsValid } from '../søknad/arbeidssituasjon-step/arbeidssituasjonUtils';
 import { SøknadFormData, SøknadFormField } from '../types/SøknadFormData';
 import {
@@ -11,6 +10,7 @@ import {
     oppholdIsValid,
 } from './fraværStepValidation';
 import { Barn } from '../types/Søkerdata';
+import { minstEtBarn12årIårellerYngre } from '../søknad/dine-barn-step/dineBarnStepUtils';
 
 export const welcomingPageIsValid = ({ harForståttRettigheterOgPlikter }: SøknadFormData): boolean =>
     harForståttRettigheterOgPlikter === true;

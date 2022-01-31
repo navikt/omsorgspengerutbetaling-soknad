@@ -5,7 +5,6 @@ import ContentWithHeader from '@navikt/sif-common-core/lib/components/content-wi
 import ItemList from '@navikt/sif-common-core/lib/components/item-list/ItemList';
 import { dateToday, prettifyDate } from '@navikt/sif-common-core/lib/utils/dateUtils';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
-import { formatName } from '@navikt/sif-common-core/lib/utils/personUtils';
 import AnnetBarnListAndDialog from '@navikt/sif-common-forms/lib/annet-barn/AnnetBarnListAndDialog';
 import { useFormikContext } from 'formik';
 import AlertStripe from 'nav-frontend-alertstriper';
@@ -18,12 +17,11 @@ import SøknadFormComponents from '../SøknadFormComponents';
 import { getCheckedValidator, getListValidator, getYesOrNoValidator } from '@navikt/sif-common-formik/lib/validation';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
-import { AnnetBarn } from '@navikt/sif-common-forms/lib/annet-barn/types';
-import { CheckboksPanelProps } from 'nav-frontend-skjema';
 import CounsellorPanel from '@navikt/sif-common-core/lib/components/counsellor-panel/CounsellorPanel';
-import dayjs from 'dayjs';
 import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
 import { Systemtittel } from 'nav-frontend-typografi';
+import { formatName } from '@navikt/sif-common-core/lib/utils/personUtils';
+import { cleanupDineBarnStep, getBarnOptions, minstEtBarn12årIårellerYngre } from './dineBarnStepUtils';
 
 interface OwnProps {
     barn: Barn[];
@@ -44,56 +42,6 @@ const barnItemLabelRenderer = (barn: Barn, intl: IntlShape): React.ReactNode => 
             </span>
         </div>
     );
-};
-
-const getBarnOptions = (barn: Barn[] = [], andreBarn: AnnetBarn[] = []): CheckboksPanelProps[] => {
-    return [
-        ...barn.map((barnet) => ({
-            label: `${formatName(barnet.fornavn, barnet.etternavn)} ${prettifyDate(barnet.fødselsdato)}`,
-            value: barnet.aktørId,
-        })),
-        ...andreBarn.map((barnet) => ({
-            label: `${barnet.navn} ${prettifyDate(barnet.fødselsdato)} `,
-            value: barnet.fnr,
-        })),
-    ];
-};
-
-export const minstEtBarn12årIårellerYngre = (barn: Barn[], andreBarn: AnnetBarn[]): boolean | undefined => {
-    if (barn.length > 0 || andreBarn.length > 0) {
-        const barn12ellerYngre = barn.some((barn) => dayjs().year() - dayjs(barn.fødselsdato).year() <= 12);
-        const andreBarn12ellerYngre = andreBarn.some((barn) => dayjs().year() - dayjs(barn.fødselsdato).year() <= 12);
-        return barn12ellerYngre || andreBarn12ellerYngre;
-    }
-    return undefined;
-};
-
-export const cleanupDineBarnStep = (values: SøknadFormData, barn: Barn[], andreBarn: AnnetBarn[]): SøknadFormData => {
-    if (minstEtBarn12årIårellerYngre(barn, andreBarn)) {
-        return {
-            ...values,
-            harUtvidetRett: YesOrNo.UNANSWERED,
-            harUtvidetRettFor: [],
-        };
-    }
-
-    if (minstEtBarn12årIårellerYngre(barn, andreBarn) === false) {
-        if (barn.length + andreBarn.length === 1) {
-            const barnId = barn.length === 1 ? barn[0].aktørId : andreBarn[0].fnr;
-            const harUtvidetRett = values.harUtvidetRett === YesOrNo.YES;
-            return {
-                ...values,
-                harDekketTiFørsteDagerSelv: undefined,
-                harUtvidetRettFor: harUtvidetRett ? [barnId] : [],
-            };
-        }
-
-        return {
-            ...values,
-            harDekketTiFørsteDagerSelv: undefined,
-        };
-    }
-    return values;
 };
 
 const DineBarnStep: React.FC<Props> = ({ barn, søker, onValidSubmit }) => {
