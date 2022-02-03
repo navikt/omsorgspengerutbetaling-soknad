@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FormattedMessage, IntlShape, useIntl } from 'react-intl';
 import Box from '@navikt/sif-common-core/lib/components/box/Box';
 import ContentWithHeader from '@navikt/sif-common-core/lib/components/content-with-header/ContentWithHeader';
@@ -52,7 +52,14 @@ const DineBarnStep: React.FC<Props> = ({ barn, søker, formValues: values, onVal
     const kanIkkeFortsette = minstEtBarn12årIårellerYngre(barn, andreBarn) === false && harUtvidetRett === YesOrNo.NO;
     harUtvidetRett === YesOrNo.YES;
     const kanFortsette = ((barn !== undefined && barn.length > 0) || andreBarn.length > 0) && !kanIkkeFortsette;
-    console.log(values);
+
+    const [andreBarnChanged, setAndreBarnChanged] = useState(false);
+    useEffect(() => {
+        if (andreBarnChanged === true) {
+            setAndreBarnChanged(false);
+            SøknadTempStorage.update(values, StepID.DINE_BARN);
+        }
+    }, [andreBarnChanged, values]);
     return (
         <SøknadStep
             id={StepID.DINE_BARN}
@@ -100,9 +107,7 @@ const DineBarnStep: React.FC<Props> = ({ barn, søker, formValues: values, onVal
                     disallowedFødselsnumre={[søker.fødselsnummer]}
                     aldersGrenseText={intlHelper(intl, 'step.dine-barn.formLeggTilBarn.aldersGrenseInfo')}
                     visBarnTypeValg={true}
-                    onAfterChange={() => {
-                        SøknadTempStorage.update(values, StepID.DINE_BARN);
-                    }}
+                    onAfterChange={() => setAndreBarnChanged(true)}
                 />
             </Box>
             {minstEtBarn12årIårellerYngre(barn, andreBarn) === false && (
