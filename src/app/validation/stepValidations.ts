@@ -54,6 +54,13 @@ export const arbeidssituasjonStepIsValid = (formData: SøknadFormData): boolean 
     return frilansIsValid(formData) && selvstendigIsValid(formData);
 };
 
+export const viseFravæFraSteg = (formData: SøknadFormData): boolean => {
+    const erFrilanser = formData?.frilans_erFrilanser === YesOrNo.YES;
+    const erSelvstendigNæringsdrivende = formData?.selvstendig_erSelvstendigNæringsdrivende === YesOrNo.YES;
+
+    return erFrilanser && erSelvstendigNæringsdrivende;
+};
+
 export const medlemskapStepIsValid = ({
     harBoddUtenforNorgeSiste12Mnd,
     skalBoUtenforNorgeNeste12Mnd,

@@ -159,6 +159,11 @@
     "page.unavailable.1": "Den digitale søknaden dessverre ikke tilgjengelig på grunn av teknisk feil. Vi jobber med å løse feilen slik at du kan søke digitalt.",
     "page.unavailable.2": "Vi beklager.",
 
+    "page.invalidStepPage.sidetittel": "Oops, nå skjedde det en feil...",
+    "page.invalidStepPage.tittel": "Oops, nå skjedde det en feil...",
+    "page.invalidStepPage.tekst": "Du er kommet til en side du ikke trenger å fylle ut. Dette kan skje hvis du går frem og tilbake i søknaden gjennom pilene i nettleseren (pilene helt øverst til venstre på siden). Du unngår dette problemet hvis du heller bruker knapper og lenker som ligger inne i selve søknaden for å gå frem eller tilbake.:",
+    "page.invalidStepPage.tilbakeLenke": "Gå tilbake til forrige side",
+
     "welcomingPage.sidetittel": "Søknad om utbetaling av omsorgspenger",
     "welcomingPage.banner.tittel": "Hei,",
     "welcomingPage.banner.tekst": "jeg vil hjelpe deg med å fylle ut søknaden!",
@@ -253,7 +258,6 @@
     "steg.oppsummering.utlandetNeste12.header": "Skal du bo i utlandet i de neste 12 månedene?",
     "steg.oppsummering.utlandetSiste12.liste.header": "Utenlandsopphold siste 12 måneder",
     "steg.oppsummering.utlandetNeste12.liste.header": "Utenlandsopphold neste 12 måneder",
-    "steg.oppsummering.legeerklæring.header": "Legeerklæring",
     "steg.oppsummering.samværsavtale.header": "Avtale om delt bosted",
     "steg.oppsummering.bekrefterOpplysninger": "Jeg bekrefter at opplysningene jeg har gitt er riktige, og at jeg ikke har holdt tilbake opplysninger som har betydning for min rett til omsorgspenger.",
     "steg.oppsummering.bekrefterOpplysninger.ikkeBekreftet": "Du må bekrefte opplysningene",

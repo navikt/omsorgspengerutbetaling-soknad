@@ -1,11 +1,12 @@
 import { Barn } from '../types/Søkerdata';
 import RouteConfig from '../config/routeConfig';
-import { getStepConfig, StepID } from '../config/stepConfig';
+import { getSøknadStepConfig, StepID } from '../config/stepConfig';
 import { SøknadFormData } from '../types/SøknadFormData';
 import {
     arbeidssituasjonStepIsAvailable,
     dineBarnStepIsAvailable,
     fraværStepIsAvailable,
+    fraværFraStepIsAvailable,
     medlemskapStepIsAvailable,
     summaryStepAvailable,
 } from './stepUtils';
@@ -17,14 +18,11 @@ export const getSøknadRoute = (stepId: StepID | undefined) => {
     return undefined;
 };
 
-export const getNextStepId = (stepId: StepID, formData?: SøknadFormData): StepID | undefined => {
-    const stepConfig = getStepConfig(formData);
-    return stepConfig[stepId] ? stepConfig[stepId].nextStep : undefined;
-};
-
 export const getNextStepRoute = (stepId: StepID, formData?: SøknadFormData): string | undefined => {
-    const nextStepId = getNextStepId(stepId, formData);
-    return nextStepId ? getSøknadRoute(nextStepId) : undefined;
+    const stepConfig = getSøknadStepConfig(formData);
+    return stepConfig[stepId] && stepConfig[stepId].included === true
+        ? getSøknadRoute(stepConfig[stepId].nextStep)
+        : undefined;
 };
 
 export const isAvailable = (path: StepID | RouteConfig, values: SøknadFormData, registrerteBarn?: Barn[]) => {
@@ -35,6 +33,8 @@ export const isAvailable = (path: StepID | RouteConfig, values: SøknadFormData,
             return fraværStepIsAvailable(values, registrerteBarn);
         case StepID.ARBEIDSSITUASJON:
             return arbeidssituasjonStepIsAvailable(values);
+        case StepID.FRAVÆR_FRA:
+            return fraværFraStepIsAvailable(values);
         case StepID.MEDLEMSKAP:
             return medlemskapStepIsAvailable(values);
         case StepID.OPPSUMMERING:

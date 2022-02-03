@@ -24,26 +24,12 @@ const formValues = {} as any;
 describe('routeUtils', () => {
     describe('getSøknadRoute', () => {
         it('should prefix provided string with a common prefix for routes', () => {
-            const s1 = StepID.LEGEERKLÆRING;
             const s2 = StepID.OPPSUMMERING;
-            expect(getSøknadRoute(s1)).toEqual(`${RouteConfig.SØKNAD_ROUTE_PREFIX}/${s1}`);
             expect(getSøknadRoute(s2)).toEqual(`${RouteConfig.SØKNAD_ROUTE_PREFIX}/${s2}`);
         });
     });
 
     describe('isAvailable', () => {
-        // it('should return result from calling legeerklæringStepAvailable if route=StepID.LEGEERKLÆRING', () => {
-        //     const result = isAvailable(StepID.LEGEERKLÆRING, formValues);
-        //     expect(stepUtils.legeerklæringStepAvailable).toHaveBeenCalledWith(formValues);
-        //     expect(result).toEqual(stepUtils.legeerklæringStepAvailable(formValues));
-        // });
-
-        // it('should return result from calling medlemskapStepAvailable if route=StepID.MEDLEMSKAP', () => {
-        //     const result = isAvailable(StepID.MEDLEMSKAP, formValues);
-        //     expect(stepUtils.medlemskapStepIsAvailable).toHaveBeenCalledWith(formValues);
-        //     expect(result).toEqual(stepUtils.medlemskapStepIsAvailable(formValues));
-        // });
-
         it('should return result from calling summaryStepAvailable if route=StepID.SUMMARY', () => {
             const result = isAvailable(StepID.OPPSUMMERING, formValues);
             expect(stepUtils.summaryStepAvailable).toHaveBeenCalledWith(formValues);

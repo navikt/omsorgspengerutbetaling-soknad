@@ -7,6 +7,7 @@ import {
     dineBarnStepIsValid,
     fraværStepIsValid,
     medlemskapStepIsValid,
+    viseFravæFraSteg,
     welcomingPageIsValid,
 } from '../validation/stepValidations';
 import { Barn } from '../types/Søkerdata';
@@ -27,6 +28,9 @@ export const fraværStepIsAvailable = (formData: SøknadFormData, registrerteBar
     dineBarnStepIsValid(formData, registrerteBarn);
 
 export const arbeidssituasjonStepIsAvailable = (formData: SøknadFormData) => fraværStepIsValid(formData);
+
+export const fraværFraStepIsAvailable = (formData: SøknadFormData) =>
+    arbeidssituasjonStepIsAvailable(formData) && viseFravæFraSteg(formData);
 
 export const medlemskapStepIsAvailable = (formData: SøknadFormData) =>
     arbeidssituasjonStepIsAvailable(formData) && arbeidssituasjonStepIsValid(formData);

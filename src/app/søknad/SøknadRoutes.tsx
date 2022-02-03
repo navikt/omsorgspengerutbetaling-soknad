@@ -87,6 +87,7 @@ const SøknadRoutes: React.FC<Props> = ({ søker, barn = [] }) => {
                         <DineBarnStep
                             barn={barn}
                             søker={søker}
+                            formValues={values}
                             onValidSubmit={() => navigateToNextStepFrom(StepID.DINE_BARN)}
                         />
                     )}
