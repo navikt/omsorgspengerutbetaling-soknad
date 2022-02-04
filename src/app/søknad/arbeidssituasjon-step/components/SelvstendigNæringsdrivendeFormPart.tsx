@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import CounsellorPanel from '@navikt/sif-common-core/lib/components/counsellor-panel/CounsellorPanel';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
@@ -20,13 +20,22 @@ interface Props {
     formValues: SøknadFormData;
 }
 
-const SelvstendigNæringsdrivendeFormPart: React.FunctionComponent<Props> = ({ formValues: values }) => {
+const SelvstendigNæringsdrivendeFormPart: React.FC<Props> = ({ formValues: values }) => {
     const intl = useIntl();
     const skipOrgNumValidation = getEnvironmentVariable('SKIP_ORGNUM_VALIDATION') === 'true';
     const { selvstendig_erSelvstendigNæringsdrivende, selvstendig_virksomhet, selvstendig_harFlereVirksomheter } =
         values;
     const erSelvstendigNæringsdrivende = selvstendig_erSelvstendigNæringsdrivende === YesOrNo.YES;
     const harFlereVirksomheter = erSelvstendigNæringsdrivende && selvstendig_harFlereVirksomheter === YesOrNo.YES;
+    const [virksomhetChanged, setVirksomhetChanged] = useState(false);
+
+    useEffect(() => {
+        if (virksomhetChanged === true) {
+            setVirksomhetChanged(false);
+            SøknadTempStorage.update(values, StepID.ARBEIDSSITUASJON);
+        }
+    }, [virksomhetChanged, values]);
+
     return (
         <>
             <SøknadFormComponents.YesOrNoQuestion
@@ -82,9 +91,7 @@ const SelvstendigNæringsdrivendeFormPart: React.FunctionComponent<Props> = ({ f
                             }}
                             skipOrgNumValidation={skipOrgNumValidation}
                             validate={getRequiredFieldValidator()}
-                            onAfterChange={() => {
-                                SøknadTempStorage.update(values, StepID.ARBEIDSSITUASJON);
-                            }}
+                            onAfterChange={() => setVirksomhetChanged(true)}
                         />
                     </ResponsivePanel>
                 </FormBlock>
