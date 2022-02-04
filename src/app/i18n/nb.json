@@ -93,8 +93,9 @@
     "step.dine-barn.counsellorPanel.avsnitt.1": "Som selvstendig næringsdrivende eller frilanser må du som hovedregel dekke de 10 første omsorgsdagene selv. Du kan altså ha rett til utbetaling av omsorgsdager fra den 11. dagen. De 10 første dagene som du skal dekke selv, trenger ikke å tas ut sammenhengende.",
     "step.dine-barn.counsellorPanel.avsnitt.2": "Du kan ha rett til utbetaling fra den første dagen når du kun har barn som fyller 13 år i år eller er eldre, og som har kronisk sykdom eller funksjonshemning. Dette gjelder bare når du har søkt og fått ekstra omsorgsdager for barn i denne situasjonen.",
 
+    "step.dine-barn.seksjonsTittel": "Dine barn",
     "step.dine-barn.født": "Født",
-    "step.dine-barn.listHeader.registrerteBarn": "Dine barn",
+
     "step.dine-barn.annetBarnListAndDialog.addLabel": "Legg til barn",
     "step.dine-barn.annetBarnListAndDialog.listTitle": "Barn du har lagt til",
     "step.dine-barn.annetBarnListAndDialog.modalTitle": "Legg til barn",
