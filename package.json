@@ -27,7 +27,7 @@
         "@navikt/sif-common-amplitude": "^2.2.3",
         "@navikt/sif-common-core": "^9.6.0",
         "@navikt/sif-common-formik": "^20.5.4",
-        "@navikt/sif-common-forms": "^16.5.0",
+        "@navikt/sif-common-forms": "^16.5.1",
         "@navikt/sif-common-question-config": "^0.0.7",
         "@navikt/sif-common-sentry": "0.3.0",
         "@sentry/browser": "^6.17.6",
