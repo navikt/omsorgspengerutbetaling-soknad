@@ -104,7 +104,7 @@
     "step.dine-barn.harFåttEkstraOmsorgsdager.spm": "Har du fått ekstra omsorgsdager for barn som har kronisk sykdom eller funksjonshemning?",
     "step.dine-barn.harFåttEkstraOmsorgsdager.spm.ettBarn": "Har du fått ekstra omsorgsdager for barnet på grunn av kronisk sykdom eller funksjonshemning?",
 
-    "step.dine-barn.harFåttEkstraOmsorgsdager.nei.alertStripe": "Du har ikke rett til å bruke omsorgsdager. Når du kun har barn som er 13 år eller eldre, må du ha søkt om og fått ekstra omsorgsdager for å kunne bruke omsorgsdager.",
+    "step.dine-barn.harFåttEkstraOmsorgsdager.nei.alertStripe": "Du har ikke rett til å bruke omsorgsdager. Når du kun har barn som er 13 år i år eller eldre, må du ha søkt om og fått ekstra omsorgsdager for å kunne bruke omsorgsdager.",
     "step.dine-barn.utvidetRettFor.spm": "Kryss av for barn du har fått ekstra omsorgsdager for:",
     "step.dine-barn.utvidetRettFor.info": "Du kan ha rett til utbetaling fra NAV fra den første omsorgsdagen du brukte. Dette er fordi du kun har barn som er 13 år i år eller eldre, og som du har fått ekstra omsorgsdager for. Gå videre til neste steg og legg inn dagene du vil søke utbetaling for.",
     "step.dine-barn.utvidetRettFor.info.ettBarn": "Du kan ha rett til utbetaling fra NAV fra den første omsorgsdagen du brukte. Dette er fordi du kun har barn som er 13 år i år eller eldre, og som du har fått ekstra omsorgsdager for. Gå videre til neste steg og legg inn dagene du vil søke utbetaling for.",
