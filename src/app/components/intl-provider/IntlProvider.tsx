@@ -7,9 +7,9 @@ import MessagesPreview from '@navikt/sif-common-core/lib/dev-utils/intl/messages
 import { allCommonMessages } from '@navikt/sif-common-core/lib/i18n/allCommonMessages';
 import { Locale } from '@navikt/sif-common-core/lib/types/Locale';
 import bostedUtlandMessages from '@navikt/sif-common-forms/lib/bosted-utland/bostedUtlandMessages';
-import fosterbarnMessages from '@navikt/sif-common-forms/lib/fosterbarn/fosterbarnMessages';
 import fraværMessages from '@navikt/sif-common-forms/lib/fravær/fraværMessages';
 import virksomhetMessages from '@navikt/sif-common-forms/lib/virksomhet/virksomhetMessages';
+import annetBarnMessages from '@navikt/sif-common-forms/lib/annet-barn/annetBarnMessages';
 import dayjs from 'dayjs';
 
 export const appBokmålstekster = require('../../i18n/nb.json');
@@ -22,16 +22,16 @@ const bokmålstekster = {
     ...allCommonMessages.nb,
     ...bostedUtlandMessages.nb,
     ...fraværMessages.nb,
-    ...fosterbarnMessages.nb,
     ...virksomhetMessages.nb,
     ...appBokmålstekster,
+    ...annetBarnMessages.nb,
 };
 const nynorsktekster = {
     ...allCommonMessages.nn,
     ...bostedUtlandMessages.nn,
     ...fraværMessages.nn,
-    ...fosterbarnMessages.nn,
     ...virksomhetMessages.nn,
+    ...annetBarnMessages.nn,
     ...appNynorsktekster,
 };
 

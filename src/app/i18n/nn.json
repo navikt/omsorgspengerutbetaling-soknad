@@ -62,9 +62,9 @@
     "fileUploadErrors.part1": "Det har dessverre skjedd ein feil under opplastinga av dei følgjande vedlegga:",
     "formikValidationErrorSummary.tittel": "Du må rette opp i følgjande feil:",
 
-    "andreUtbetalinger.dagpenger": "Dagpengar",
-    "andreUtbetalinger.sykepenger": "Sjukepengar",
-    "andreUtbetalinger.midlertidigkompensasjonsnfri": "Mellombels kompensasjon for sjølvstendig næringsdrivande og frilansarar",
+    "andreUtbetalinger.DAGPENGER": "Dagpengar",
+    "andreUtbetalinger.SYKEPENGER": "Sjukepengar",
+    "andreUtbetalinger.MIDLERTIDIG_KOMPENSASJON_SN_FRI": "Mellombels kompensasjon for sjølvstendig næringsdrivande og frilansarar",
 
     "arbeidssituasjon.arbeidstaker": "Arbeidstakar",
     "arbeidssituasjon.selvstendigNæringsdrivende": "Sjølvstendig næringsdrivande",
@@ -88,10 +88,6 @@
     "step.arbeidssituasjon.stepIndicatorLabel": "Inntekt",
     "step.arbeidssituasjon.info.1": "Nå treng vi å vite kva som var din arbeidssituasjon på den første dagen du søkjer om utbetaling for.",
     "step.arbeidssituasjon.advarsel.ingenSituasjonValgt": "Du må velje minst éin av situasjonane over.",
-
-    "step.barn.pageTitle": "Barn – Søknad om utbetaling av omsorgspenger",
-    "step.barn.stepTitle": "Barn",
-    "step.barn.stepIndicatorLabel": "Barn",
 
     "step.medlemskap.pageTitle": "Medlemskap i folketrygden - Søknad om utbetaling av omsorgspenger",
     "step.medlemskap.stepTitle": "Medlemskap",
@@ -222,7 +218,6 @@
     "steg.oppsummering.utlandetNeste12.header": "Skal bu i utlandet dei neste 12 månadene",
     "steg.oppsummering.utlandetSiste12.liste.header": "Utanlandsopphald dei siste 12 månadene",
     "steg.oppsummering.utlandetNeste12.liste.header": "Utanlandsopphald dei neste 12 månadene",
-    "steg.oppsummering.legeerklæring.header": "Legeerklæring",
     "steg.oppsummering.samværsavtale.header": "Avtale om delt bustad",
     "steg.oppsummering.bekrefterOpplysninger": "Eg stadfestar at opplysningane eg har gitt, er riktige, og at eg ikkje har halde tilbake opplysningar som er viktige for retten min til omsorgspenger.",
     "steg.oppsummering.bekrefterOpplysninger.ikkeBekreftet": "Du må bekrefte opplysningane",

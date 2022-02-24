@@ -10,7 +10,7 @@ import { fraværDagToFraværDateRange, fraværPeriodeToDateRange } from '@navikt
 import FraværDagerListAndDialog from '@navikt/sif-common-forms/lib/fravær/FraværDagerListAndDialog';
 import FraværPerioderListAndDialog from '@navikt/sif-common-forms/lib/fravær/FraværPerioderListAndDialog';
 import { useFormikContext } from 'formik';
-import { AlertStripeAdvarsel, AlertStripeInfo } from 'nav-frontend-alertstriper';
+import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import FormSection from '../../components/form-section/FormSection';
 import { StepConfigProps, StepID } from '../../config/stepConfig';
 import { AndreUtbetalinger } from '../../types/AndreUtbetalinger';
@@ -30,7 +30,7 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
         perioder_harVærtIUtlandet,
         fraværDager,
         fraværPerioder,
-        harDekketTiFørsteDagerSelv,
+        harUtvidetRettFor,
     } = values;
 
     const intl = useIntl();
@@ -57,10 +57,9 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
 
     const kanIkkeFortsette = harPerioderMedFravær === YesOrNo.NO && harDagerMedDelvisFravær === YesOrNo.NO;
     const harRegistrertFravær = fraværDager.length + fraværPerioder.length > 0;
+    const søkerHarBarnMedUtvidetRett = harUtvidetRettFor.length > 0;
     const minDateForFravær = harRegistrertFravær ? gyldigTidsrom.from : date1YearAgo;
     const maxDateForFravær = harRegistrertFravær ? gyldigTidsrom.to : dateToday;
-    const inneværendeÅr = new Date().getFullYear();
-    const forrigeÅr = inneværendeÅr - 1;
 
     return (
         <SøknadStep
@@ -73,32 +72,14 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
             <FormBlock>
                 <FraværStepInfo.IntroVeileder />
             </FormBlock>
-            <FormSection title={intlHelper(intl, 'step.fravaer.dekkeSelv.tittel')}>
-                <FormBlock margin="l">
-                    <SøknadFormComponents.YesOrNoQuestion
-                        name={SøknadFormField.harDekketTiFørsteDagerSelv}
-                        legend={intlHelper(intl, 'step.fravaer.spm.harDekketTiFørsteDagerSelv')}
-                        description={<FraværStepInfo.HarDekketTiFørsteDagerSelv />}
-                        validate={getYesOrNoValidator()}
-                    />
-                </FormBlock>
-                {harDekketTiFørsteDagerSelv === YesOrNo.NO && (
-                    <FormBlock>
-                        <AlertStripeInfo>
-                            <p style={{ marginTop: '0' }}>
-                                <FormattedMessage id="step.fravaer.ikkeDekket.info.1" />
-                            </p>
-                            <p>
-                                <FormattedMessage id="step.fravaer.ikkeDekket.info.2" />
-                            </p>
-                        </AlertStripeInfo>
-                    </FormBlock>
-                )}
-            </FormSection>
 
             <FormSection title={intlHelper(intl, 'step.fravaer.dager.tittel')}>
                 <p>
-                    <FormattedMessage id="step.fravaer.dager.info" values={{ forrigeÅr, inneværendeÅr }} />
+                    {søkerHarBarnMedUtvidetRett ? (
+                        <FormattedMessage id="step.fravaer.dager.info.harBarnMedUtvidetRett" />
+                    ) : (
+                        <FormattedMessage id="step.fravaer.dager.info" />
+                    )}
                 </p>
                 <FormBlock>
                     <SøknadFormComponents.YesOrNoQuestion
@@ -213,17 +194,20 @@ const FraværStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }
                                         {
                                             id: AndreUtbetalinger.dagpenger,
                                             value: AndreUtbetalinger.dagpenger,
-                                            label: intlHelper(intl, 'andreUtbetalinger.dagpenger'),
+                                            label: intlHelper(intl, 'andreUtbetalinger.DAGPENGER'),
                                         },
                                         {
                                             id: AndreUtbetalinger.sykepenger,
                                             value: AndreUtbetalinger.sykepenger,
-                                            label: intlHelper(intl, 'andreUtbetalinger.sykepenger'),
+                                            label: intlHelper(intl, 'andreUtbetalinger.SYKEPENGER'),
                                         },
                                         {
                                             id: AndreUtbetalinger.midlertidigkompensasjonsnfri,
                                             value: AndreUtbetalinger.midlertidigkompensasjonsnfri,
-                                            label: intlHelper(intl, 'andreUtbetalinger.midlertidigkompensasjonsnfri'),
+                                            label: intlHelper(
+                                                intl,
+                                                'andreUtbetalinger.MIDLERTIDIG_KOMPENSASJON_SN_FRI'
+                                            ),
                                         },
                                     ]}
                                     validate={getListValidator({ required: true })}

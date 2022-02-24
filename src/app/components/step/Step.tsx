@@ -51,7 +51,7 @@ const Step: React.FunctionComponent<Props> = ({ id, stepConfig, useValidationErr
                     }}
                 />
             )}
-            <StepIndicator stepConfig={stepConfig} activeStep={conf.index} />
+            <StepIndicator stepConfig={stepConfig} activeStep={conf.stepNumber} />
             <Box margin="xxl">
                 <Innholdstittel tag="h1" className={bem.element('title')}>
                     {stepTexts.stepTitle}

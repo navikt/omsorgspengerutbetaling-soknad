@@ -4,11 +4,13 @@ import { StepConfigInterface, StepConfigItemTexts, StepID } from '../config/step
 import { SøknadFormData } from '../types/SøknadFormData';
 import {
     arbeidssituasjonStepIsValid,
-    barnStepIsValid,
+    dineBarnStepIsValid,
     fraværStepIsValid,
     medlemskapStepIsValid,
+    viseFravæFraSteg,
     welcomingPageIsValid,
 } from '../validation/stepValidations';
+import { Barn } from '../types/Søkerdata';
 
 export const getStepTexts = (intl: IntlShape, stepId: StepID, stepConfig: StepConfigInterface): StepConfigItemTexts => {
     const conf = stepConfig[stepId];
@@ -20,12 +22,15 @@ export const getStepTexts = (intl: IntlShape, stepId: StepID, stepConfig: StepCo
     };
 };
 
-export const fraværStepIsAvailable = (formData: SøknadFormData) => welcomingPageIsValid(formData);
+export const dineBarnStepIsAvailable = (formData: SøknadFormData) => welcomingPageIsValid(formData);
 
-export const barnStepIsAvailable = (formData: SøknadFormData) => fraværStepIsValid(formData);
+export const fraværStepIsAvailable = (formData: SøknadFormData, registrerteBarn: Barn[] = []) =>
+    dineBarnStepIsValid(formData, registrerteBarn);
 
-export const arbeidssituasjonStepIsAvailable = (formData: SøknadFormData) =>
-    barnStepIsAvailable(formData) && barnStepIsValid();
+export const arbeidssituasjonStepIsAvailable = (formData: SøknadFormData) => fraværStepIsValid(formData);
+
+export const fraværFraStepIsAvailable = (formData: SøknadFormData) =>
+    arbeidssituasjonStepIsAvailable(formData) && viseFravæFraSteg(formData);
 
 export const medlemskapStepIsAvailable = (formData: SøknadFormData) =>
     arbeidssituasjonStepIsAvailable(formData) && arbeidssituasjonStepIsValid(formData);

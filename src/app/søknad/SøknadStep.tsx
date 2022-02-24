@@ -7,12 +7,13 @@ import intlFormErrorHandler from '@navikt/sif-common-formik/lib/validation/intlF
 import { useFormikContext } from 'formik';
 import { Knapp } from 'nav-frontend-knapper';
 import Step, { StepProps } from '../components/step/Step';
-import { getStepConfig } from '../config/stepConfig';
+import { getSøknadStepConfig } from '../config/stepConfig';
 import { SøknadFormData } from '../types/SøknadFormData';
 import { navigateToNAVno, navigateToWelcomePage } from '../utils/navigationUtils';
 import { getStepTexts } from '../utils/stepUtils';
 import SøknadFormComponents from './SøknadFormComponents';
 import SøknadTempStorage from './SøknadTempStorage';
+import InvalidStepPage from '../components/pages/invalid-step-page/InvalidStepPage';
 
 export interface FormikStepProps {
     showSubmitButton?: boolean;
@@ -36,7 +37,7 @@ const SøknadStep: React.FunctionComponent<Props> = (props) => {
     const formik = useFormikContext<SøknadFormData>();
     const intl = useIntl();
     const { children, onValidFormSubmit, showButtonSpinner, buttonDisabled, id, cleanupStep } = props;
-    const stepConfig = getStepConfig(formik.values);
+    const stepConfig = getSøknadStepConfig(formik.values);
     const { logHendelse } = useAmplitudeInstance();
     const texts = getStepTexts(intl, id, stepConfig);
 
@@ -53,6 +54,10 @@ const SøknadStep: React.FunctionComponent<Props> = (props) => {
             navigateToWelcomePage();
         });
     };
+
+    if (stepConfig === undefined || stepConfig[id] === undefined || stepConfig[id].included === false) {
+        return <InvalidStepPage stepId={id} />;
+    }
 
     return (
         <Step stepConfig={stepConfig} {...props}>

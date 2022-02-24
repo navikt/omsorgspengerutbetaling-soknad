@@ -4,8 +4,8 @@ import { Virksomhet } from '@navikt/sif-common-forms/lib/virksomhet/types';
 import { Attachment } from '@navikt/sif-common-core/lib/types/Attachment';
 import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
 import { AndreUtbetalinger } from './AndreUtbetalinger';
-import { Fosterbarn } from '@navikt/sif-common-forms/lib';
 import { AktivitetFravær } from './AktivitetFravær';
+import { AnnetBarn } from '@navikt/sif-common-forms/lib/annet-barn/types';
 
 export enum SøknadFormField {
     harForståttRettigheterOgPlikter = 'harForståttRettigheterOgPlikter',
@@ -23,8 +23,9 @@ export enum SøknadFormField {
     andreUtbetalinger = 'andreUtbetalinger',
 
     // Barn
-    harFosterbarn = 'harFosterbarn',
-    fosterbarn = 'fosterbarn',
+    andreBarn = 'andreBarn',
+    harUtvidetRett = 'harUtvidetRett',
+    harUtvidetRettFor = 'harUtvidetRettFor',
 
     // Dokumenter
     dokumenterStengtBkgSkole = 'dokumenterStengtBkgSkole',
@@ -53,8 +54,14 @@ export interface SøknadFormData {
     [SøknadFormField.harForståttRettigheterOgPlikter]: boolean;
     [SøknadFormField.harBekreftetOpplysninger]: boolean;
 
+    // Barn
+    [SøknadFormField.andreBarn]: AnnetBarn[];
+    [SøknadFormField.harDekketTiFørsteDagerSelv]: boolean | undefined;
+    [SøknadFormField.harUtvidetRett]: YesOrNo;
+    [SøknadFormField.harUtvidetRettFor]: Array<string>;
+
     // Fravær
-    [SøknadFormField.harDekketTiFørsteDagerSelv]: YesOrNo;
+
     [SøknadFormField.harPerioderMedFravær]: YesOrNo;
     [SøknadFormField.fraværPerioder]: FraværPeriode[];
     [SøknadFormField.harDagerMedDelvisFravær]: YesOrNo;
@@ -76,10 +83,6 @@ export interface SøknadFormData {
     [SøknadFormField.selvstendig_erSelvstendigNæringsdrivende]: YesOrNo;
     [SøknadFormField.selvstendig_harFlereVirksomheter]?: YesOrNo;
     [SøknadFormField.selvstendig_virksomhet]?: Virksomhet;
-
-    // Barn
-    [SøknadFormField.harFosterbarn]: YesOrNo;
-    [SøknadFormField.fosterbarn]: Fosterbarn[];
 
     // Fravær fra
     [SøknadFormField.aktivitetFravær]: AktivitetFravær[];
@@ -111,8 +114,13 @@ export const initialValues: SøknadFormData = {
     [SøknadFormField.harForståttRettigheterOgPlikter]: false,
     [SøknadFormField.harBekreftetOpplysninger]: false,
 
+    // Barn
+    [SøknadFormField.andreBarn]: [],
+    [SøknadFormField.harDekketTiFørsteDagerSelv]: undefined,
+    [SøknadFormField.harUtvidetRett]: YesOrNo.UNANSWERED,
+    [SøknadFormField.harUtvidetRettFor]: [],
+
     // Fravær
-    [SøknadFormField.harDekketTiFørsteDagerSelv]: YesOrNo.UNANSWERED,
     [SøknadFormField.harPerioderMedFravær]: YesOrNo.UNANSWERED,
     [SøknadFormField.fraværPerioder]: [],
     [SøknadFormField.harDagerMedDelvisFravær]: YesOrNo.UNANSWERED,
@@ -121,10 +129,6 @@ export const initialValues: SøknadFormData = {
     [SøknadFormField.perioder_utenlandsopphold]: [],
     [SøknadFormField.harSøktAndreUtbetalinger]: YesOrNo.UNANSWERED,
     [SøknadFormField.andreUtbetalinger]: [],
-
-    // Barn
-    [SøknadFormField.harFosterbarn]: YesOrNo.UNANSWERED,
-    [SøknadFormField.fosterbarn]: [],
 
     [SøknadFormField.dokumenterStengtBkgSkole]: [],
     [SøknadFormField.dokumenterSmittevernhensyn]: [],

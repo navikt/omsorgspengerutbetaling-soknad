@@ -9,9 +9,29 @@ import {
     minimumEnUtbetalingsperiode,
     oppholdIsValid,
 } from './fraværStepValidation';
+import { Barn } from '../types/Søkerdata';
+import { minstEtBarn12årIårellerYngre } from '../søknad/dine-barn-step/dineBarnStepUtils';
 
 export const welcomingPageIsValid = ({ harForståttRettigheterOgPlikter }: SøknadFormData): boolean =>
     harForståttRettigheterOgPlikter === true;
+
+export const dineBarnStepIsValid = (formData: SøknadFormData, registrerteBarn: Barn[]): boolean => {
+    if (minstEtBarn12årIårellerYngre(registrerteBarn, formData.andreBarn)) {
+        return (
+            formData.harUtvidetRett === YesOrNo.UNANSWERED &&
+            formData.harUtvidetRettFor.length === 0 &&
+            formData.harDekketTiFørsteDagerSelv === true
+        );
+    }
+    if (minstEtBarn12årIårellerYngre(registrerteBarn, formData.andreBarn) === false) {
+        return (
+            formData.harDekketTiFørsteDagerSelv === undefined &&
+            formData.harUtvidetRett === YesOrNo.YES &&
+            formData.harUtvidetRettFor.length > 0
+        );
+    }
+    return false;
+};
 
 export const fraværStepIsValid = (formData: SøknadFormData): boolean => {
     const harPerioderMedFravær: YesOrNo = formData[SøknadFormField.harPerioderMedFravær];
@@ -34,8 +54,11 @@ export const arbeidssituasjonStepIsValid = (formData: SøknadFormData): boolean 
     return frilansIsValid(formData) && selvstendigIsValid(formData);
 };
 
-export const barnStepIsValid = (): boolean => {
-    return true;
+export const viseFravæFraSteg = (formData: SøknadFormData): boolean => {
+    const erFrilanser = formData?.frilans_erFrilanser === YesOrNo.YES;
+    const erSelvstendigNæringsdrivende = formData?.selvstendig_erSelvstendigNæringsdrivende === YesOrNo.YES;
+
+    return erFrilanser && erSelvstendigNæringsdrivende;
 };
 
 export const medlemskapStepIsValid = ({

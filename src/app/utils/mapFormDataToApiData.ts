@@ -6,11 +6,10 @@ import { attachmentUploadHasFailed } from '@navikt/sif-common-core/lib/utils/att
 import { formatDateToApiFormat } from '@navikt/sif-common-core/lib/utils/dateUtils';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import { decimalTimeToTime, timeToIso8601Duration } from '@navikt/sif-common-core/lib/utils/timeUtils';
-import { Fosterbarn, mapVirksomhetToVirksomhetApiData, Utenlandsopphold } from '@navikt/sif-common-forms/lib';
+import { mapVirksomhetToVirksomhetApiData, Utenlandsopphold } from '@navikt/sif-common-forms/lib';
 import { FraværDag, FraværPeriode } from '@navikt/sif-common-forms/lib/fravær';
 import { ApiAktivitet } from '../types/AktivitetFravær';
 import {
-    ApiFosterbarn,
     SøknadApiData,
     UtbetalingsperiodeApi,
     UtenlandsoppholdApiData,
@@ -21,6 +20,8 @@ import { SøknadFormData } from '../types/SøknadFormData';
 import { mapBostedUtlandToApiData } from './formToApiMaps/mapBostedUtlandToApiData';
 import { mapFrilansToApiData } from './formToApiMaps/mapFrilansToApiData';
 import { delFraværPerioderOppIDager, getApiAktivitetForDag, getAktivitetFromAktivitetFravær } from './fraværUtils';
+import { Barn } from '../types/Søkerdata';
+import { mapBarnToApiData } from './formToApiMaps/mapBarnToApiData';
 
 const getVedleggUrlFromAttachments = (attachments: Attachment[]): string[] => {
     return (
@@ -31,21 +32,26 @@ const getVedleggUrlFromAttachments = (attachments: Attachment[]): string[] => {
     );
 };
 
-export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShape): SøknadApiData => {
+export const mapFormDataToApiData = (
+    formValues: SøknadFormData,
+    intl: IntlShape,
+    registrerteBarn: Barn[]
+): SøknadApiData => {
     const {
         harForståttRettigheterOgPlikter,
         harBekreftetOpplysninger,
 
-        // Fravær
+        //Barn
+        andreBarn,
+        harUtvidetRettFor,
         harDekketTiFørsteDagerSelv,
+
+        // Fravær
+
         perioder_harVærtIUtlandet,
         perioder_utenlandsopphold,
         harSøktAndreUtbetalinger,
         andreUtbetalinger,
-
-        // Barn
-        fosterbarn,
-        harFosterbarn,
 
         dokumenterStengtBkgSkole = [],
         dokumenterSmittevernhensyn = [],
@@ -87,11 +93,6 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
         });
     }
 
-    yesOrNoQuestions.push({
-        spørsmål: intlHelper(intl, 'steg.barn.fosterbarn.spm'),
-        svar: mapYesOrNoToSvar(harFosterbarn),
-    });
-
     const vedleggSmittevern = getVedleggUrlFromAttachments(dokumenterSmittevernhensyn);
     const vedleggStengtBhgSkole = getVedleggUrlFromAttachments(dokumenterStengtBkgSkole);
 
@@ -117,9 +118,9 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
             harForståttRettigheterOgPlikter,
             harBekreftetOpplysninger,
         },
-        harDekketTiFørsteDagerSelv: mapYesOrNoToSvar(harDekketTiFørsteDagerSelv),
+        harDekketTiFørsteDagerSelv: harDekketTiFørsteDagerSelv,
+        barn: mapBarnToApiData(andreBarn, harUtvidetRettFor, registrerteBarn, harDekketTiFørsteDagerSelv),
         spørsmål: [...yesOrNoQuestions],
-        fosterbarn: fosterbarn.map(mapFosterbarnToApiFosterbarn),
         andreUtbetalinger: harSøktAndreUtbetalinger === YesOrNo.YES ? [...andreUtbetalinger] : [],
         utbetalingsperioder: getUtbetalingsperioderApiFromFormData(formValues),
         bosteder: settInnBosteder(
@@ -136,17 +137,12 @@ export const mapFormDataToApiData = (formValues: SøknadFormData, intl: IntlShap
         _vedleggStengtSkole: vedleggStengtBhgSkole,
         _vedleggSmittevern: vedleggSmittevern,
         _harSøktAndreUtbetalinger: mapYesOrNoToSvar(harSøktAndreUtbetalinger),
-        _harFosterbarn: mapYesOrNoToSvar(harFosterbarn),
         _varFrilansIPerioden: mapYesOrNoToSvar(frilans_erFrilanser),
         _varSelvstendigNæringsdrivendeIPerioden: mapYesOrNoToSvar(selvstendig_erSelvstendigNæringsdrivende),
     };
 
     return apiData;
 };
-
-export const mapFosterbarnToApiFosterbarn = ({ fødselsnummer }: Fosterbarn): ApiFosterbarn => ({
-    identitetsnummer: fødselsnummer,
-});
 
 export const mapYesOrNoToSvar = (input: YesOrNo): YesNoSvar => {
     return input === YesOrNo.YES;

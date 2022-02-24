@@ -15,7 +15,6 @@ import { navigateTo, navigateToLoginPage } from '../utils/navigationUtils';
 import { harFraværPgaSmittevernhensyn, harFraværPgaStengBhgSkole } from '../utils/periodeUtils';
 import { getNextStepRoute, getSøknadRoute, isAvailable } from '../utils/routeUtils';
 import ArbeidssituasjonStep from './arbeidssituasjon-step/ArbeidssituasjonStep';
-import BarnStep from './barn-step/BarnStep';
 import FraværStep from './fravær-step/FraværStep';
 import MedlemsskapStep from './medlemskap-step/MedlemsskapStep';
 import OppsummeringStep from './oppsummering-step/OppsummeringStep';
@@ -23,12 +22,19 @@ import SmittevernDokumenterStep from './smittevern-dokumenter-step/SmittvernDoku
 import StengtBhgSkoleDokumenterStep from './stengt-bhg-skole-dokumenter-step/StengtBhgSkoleDokumenterStep';
 import SøknadTempStorage from './SøknadTempStorage';
 import FraværFraStep from './fravær-fra-step/FraværFraStep';
+import DineBarnStep from './dine-barn-step/DineBarnStep';
+import { Barn, Person } from '../types/Søkerdata';
 
 export interface KvitteringInfo {
     søkernavn: string;
 }
 
-const SøknadRoutes: React.FunctionComponent = () => {
+interface Props {
+    barn?: Barn[];
+    søker: Person;
+}
+
+const SøknadRoutes: React.FC<Props> = ({ søker, barn = [] }) => {
     const [søknadHasBeenSent, setSøknadHasBeenSent] = React.useState(false);
     const { values, resetForm } = useFormikContext<SøknadFormData>();
 
@@ -62,7 +68,7 @@ const SøknadRoutes: React.FunctionComponent = () => {
         await logSoknadStartet(SKJEMANAVN);
         setTimeout(() => {
             SøknadTempStorage.create().then(() => {
-                navigateTo(`${RouteConfig.SØKNAD_ROUTE_PREFIX}/${StepID.FRAVÆR}`, history);
+                navigateTo(`${RouteConfig.SØKNAD_ROUTE_PREFIX}/${StepID.DINE_BARN}`, history);
             });
         });
     };
@@ -74,17 +80,24 @@ const SøknadRoutes: React.FunctionComponent = () => {
                 render={() => <WelcomingPage onValidSubmit={startSoknad} />}
             />
 
-            {isAvailable(StepID.FRAVÆR, values) && (
+            {isAvailable(StepID.DINE_BARN, values) && (
                 <Route
-                    path={getSøknadRoute(StepID.FRAVÆR)}
-                    render={() => <FraværStep onValidSubmit={() => navigateToNextStepFrom(StepID.FRAVÆR)} />}
+                    path={getSøknadRoute(StepID.DINE_BARN)}
+                    render={() => (
+                        <DineBarnStep
+                            barn={barn}
+                            søker={søker}
+                            formValues={values}
+                            onValidSubmit={() => navigateToNextStepFrom(StepID.DINE_BARN)}
+                        />
+                    )}
                 />
             )}
 
-            {isAvailable(StepID.BARN, values) && (
+            {isAvailable(StepID.FRAVÆR, values, barn) && (
                 <Route
-                    path={getSøknadRoute(StepID.BARN)}
-                    render={() => <BarnStep onValidSubmit={() => navigateToNextStepFrom(StepID.BARN)} />}
+                    path={getSøknadRoute(StepID.FRAVÆR)}
+                    render={() => <FraværStep onValidSubmit={() => navigateToNextStepFrom(StepID.FRAVÆR)} />}
                 />
             )}
 
@@ -140,6 +153,7 @@ const SøknadRoutes: React.FunctionComponent = () => {
                         <OppsummeringStep
                             hjemmePgaSmittevernhensyn={fraværPgaSmittevernhensyn}
                             hjemmePgaStengtBhgSkole={fraværPgaStengBhgSkole}
+                            registrerteBarn={barn}
                             onApplicationSent={() => {
                                 setSøknadHasBeenSent(true);
                                 resetForm();

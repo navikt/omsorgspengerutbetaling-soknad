@@ -1,11 +1,17 @@
 import axios from 'axios';
 import { axiosJsonConfig } from '../config/axiosConfig';
 import { ResourceType } from '../types/ResourceType';
-import { Person } from '../types/Søkerdata';
+import { Barn, Person } from '../types/Søkerdata';
 import { SøknadApiData } from '../types/SøknadApiData';
 import { getApiUrlByResourceType, sendMultipartPostRequest } from '../utils/apiUtils';
 
+export interface BarnResultType {
+    barn: Barn[];
+}
+
 export const getSøker = () => axios.get<Person>(getApiUrlByResourceType(ResourceType.SØKER), axiosJsonConfig);
+
+export const getBarn = () => axios.get<BarnResultType>(getApiUrlByResourceType(ResourceType.BARN), axiosJsonConfig);
 
 export const sendApplication = (data: SøknadApiData) =>
     axios.post(getApiUrlByResourceType(ResourceType.SEND_SØKNAD), data, axiosJsonConfig);
