@@ -23,7 +23,6 @@ const SøknadTempStorage: SøknadPersistenceInterface = {
         return persistSetup.create();
     },
     update: (formData: SøknadFormData, lastStepID: StepID) => {
-        console.log(formData);
         return persistSetup.update({ formData, metadata: { lastStepID, version: STORAGE_VERSION } });
     },
     purge: persistSetup.purge,
