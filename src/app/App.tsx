@@ -17,7 +17,6 @@ import './styles/app.less';
 
 appSentryLogger.init();
 
-// Trigger build
 const localeFromSessionStorage = getLocaleFromSessionStorage();
 
 const getAppStatusSanityConfig = () => {
