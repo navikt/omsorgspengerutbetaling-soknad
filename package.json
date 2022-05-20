@@ -32,7 +32,7 @@
         "@navikt/sif-common-question-config": "^0.0.7",
         "@navikt/sif-common-sentry": "0.3.0",
         "@sentry/browser": "^6.18.2",
-        "@snyk/protect": "^1.871.0",
+        "@snyk/protect": "^1.935.0",
         "@testing-library/react": "^12.1.4",
         "amplitude-js": "^8.17.0",
         "axios": "^0.25.0",
