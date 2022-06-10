@@ -30,7 +30,7 @@
         "@navikt/sif-common-sentry": "0.3.1",
         "@snyk/protect": "^1.947.0",
         "amplitude-js": "^8.18.4",
-        "axios": "^0.25.0",
+        "axios": "^0.27.2",
         "busboy": "^1.6.0",
         "compression": "^1.7.4",
         "dotenv": "^16.0.1",
