@@ -10,8 +10,6 @@ For å kjøre opp app'en i dev:
 1.  `npm install`.
 2.  `npm run start`.
 
-TODO: Legg til beskrivelse av bruke av mock backend
-
 For å kjøre enhetstester:
 
 1.  `npm install && npm test`.
