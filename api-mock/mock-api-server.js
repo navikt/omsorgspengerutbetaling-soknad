@@ -2,7 +2,6 @@ const express = require('express');
 
 const Health = require('./modules/health');
 const Mellomlagring = require('./modules/mellomlagring');
-const Arbeidsgiver = require('./modules/arbeidsgiver');
 const Barn = require('./modules/barn');
 const Soker = require('./modules/soker');
 const Soknad = require('./modules/soknad');
@@ -16,7 +15,6 @@ const router = express.Router();
 
 router.get('/health/isAlive', Health.isAlive);
 router.get('/health/isReady', Health.isReady);
-router.get('/arbeidsgiver', Arbeidsgiver.get);
 router.get('/oppslag/barn', Barn.get);
 router.get('/oppslag/soker', Soker.get);
 router.get('/oppslag/soker-umyndig', Soker.getUmyndig);
