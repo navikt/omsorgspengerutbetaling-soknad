@@ -2,7 +2,6 @@ const express = require('express');
 
 const Health = require('./modules/health');
 const Mellomlagring = require('./modules/mellomlagring');
-const Arbeidsgiver = require('./modules/arbeidsgiver');
 const Barn = require('./modules/barn');
 const Soker = require('./modules/soker');
 const Soknad = require('./modules/soknad');
@@ -16,16 +15,15 @@ const router = express.Router();
 
 router.get('/health/isAlive', Health.isAlive);
 router.get('/health/isReady', Health.isReady);
-router.get('/arbeidsgiver', Arbeidsgiver.get);
-router.get('/barn', Barn.get);
-router.get('/soker', Soker.get);
-router.get('/soker-umyndig', Soker.getUmyndig);
-router.post('/soknad', Soknad.post);
+router.get('/oppslag/barn', Barn.get);
+router.get('/oppslag/soker', Soker.get);
+router.get('/oppslag/soker-umyndig', Soker.getUmyndig);
+router.post('/omsorgspenger-utbetaling-snf/innsending', Soknad.post);
 router.post('/vedlegg', Vedlegg.post);
-router.get('/mellomlagring', Mellomlagring.get);
-router.post('/mellomlagring', Mellomlagring.post);
-router.put('/mellomlagring', Mellomlagring.put);
-router.delete('/mellomlagring', Mellomlagring.del);
+router.get('/mellomlagring/OMSORGSPENGER_UTBETALING_SNF', Mellomlagring.get);
+router.post('/mellomlagring/OMSORGSPENGER_UTBETALING_SNF', Mellomlagring.post);
+router.put('/mellomlagring/OMSORGSPENGER_UTBETALING_SNF', Mellomlagring.put);
+router.delete('/mellomlagring/OMSORGSPENGER_UTBETALING_SNF', Mellomlagring.del);
 
 server.use(express.json());
 server.use((req, res, next) => {
