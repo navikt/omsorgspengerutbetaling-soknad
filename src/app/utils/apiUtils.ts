@@ -8,5 +8,5 @@ export const sendMultipartPostRequest = (url: string, formData: FormData) => {
 };
 
 export const getApiUrlByResourceType = (resourceType: ResourceType) => {
-    return `${getEnvironmentVariable('API_URL')}/${resourceType}`;
+    return `${getEnvironmentVariable('FRONTEND_API_PATH')}/${resourceType}`;
 };
