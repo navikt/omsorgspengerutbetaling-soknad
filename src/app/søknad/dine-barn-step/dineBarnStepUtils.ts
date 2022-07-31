@@ -2,8 +2,8 @@ import { prettifyDate } from '@navikt/sif-common-core/lib/utils/dateUtils';
 import { formatName } from '@navikt/sif-common-core/lib/utils/personUtils';
 import { YesOrNo } from '@navikt/sif-common-formik/lib';
 import { AnnetBarn } from '@navikt/sif-common-forms/lib/annet-barn/types';
-import { Barn } from 'app/types/Søkerdata';
-import { SøknadFormData } from 'app/types/SøknadFormData';
+import { Barn } from '../../types/Søkerdata';
+import { SøknadFormData } from '../../types/SøknadFormData';
 import dayjs from 'dayjs';
 import { CheckboksPanelProps } from 'nav-frontend-skjema';
 

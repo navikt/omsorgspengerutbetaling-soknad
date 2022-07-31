@@ -1,12 +1,6 @@
-import axios from 'axios';
-import { axiosMultipartConfig } from '../config/axiosConfig';
-import { ResourceType } from '../types/ResourceType';
+import { ApiEndpoint } from '../types/ApiEndpoint';
 import { getEnvironmentVariable } from './envUtils';
 
-export const sendMultipartPostRequest = (url: string, formData: FormData) => {
-    return axios.post(url, formData, axiosMultipartConfig);
-};
-
-export const getApiUrlByResourceType = (resourceType: ResourceType) => {
+export const getApiUrlByResourceType = (resourceType: ApiEndpoint) => {
     return `${getEnvironmentVariable('FRONTEND_API_PATH')}/${resourceType}`;
 };

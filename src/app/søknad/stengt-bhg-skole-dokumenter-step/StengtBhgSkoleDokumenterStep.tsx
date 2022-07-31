@@ -17,15 +17,15 @@ import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import Lenke from 'nav-frontend-lenker';
 import FormikFileUploader from '../../components/formik-file-uploader/FormikFileUploader';
 import UploadedStengtDocumentsList from '../../components/uploaded-stengt-documents-list/UploadedStengtDocumentsList';
-import { StepConfigProps, StepID } from '../../config/stepConfig';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import { valuesToAlleDokumenterISøknaden } from '../../utils/attachmentsUtils';
-import { navigateToLoginPage } from '../../utils/navigationUtils';
+import { relocateToLoginPage } from '../../utils/navigationUtils';
 import { validateDocuments } from '../../validation/fieldValidations';
-import SøknadStep from '../SøknadStep';
 import getLenker from '../../lenker';
+import SoknadFormStep from '../SoknadFormStep';
+import { StepID } from '../soknadStepsConfig';
 
-const StengtBhgSkoleDokumenterStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) => {
+const StengtBhgSkoleDokumenterStep: React.FC = () => {
     const intl = useIntl();
     const { values } = useFormikContext<SøknadFormData>();
     const [filesThatDidntGetUploaded, setFilesThatDidntGetUploaded] = React.useState<File[]>([]);
@@ -40,14 +40,13 @@ const StengtBhgSkoleDokumenterStep: React.FunctionComponent<StepConfigProps> = (
 
     const uploadFailed = async () => {
         await logUserLoggedOut('Ved opplasting av dokument');
-        navigateToLoginPage();
+        relocateToLoginPage();
     };
 
     return (
-        <SøknadStep
+        <SoknadFormStep
             id={StepID.DOKUMENTER_STENGT_SKOLE_BHG}
-            onValidFormSubmit={onValidSubmit}
-            useValidationErrorSummary={true}
+            includeValidationSummary={true}
             buttonDisabled={hasPendingUploads || attachmentsSizeOver24Mb}>
             <FormBlock>
                 <CounsellorPanel>
@@ -101,7 +100,7 @@ const StengtBhgSkoleDokumenterStep: React.FunctionComponent<StepConfigProps> = (
             <Box margin="l">
                 <UploadedStengtDocumentsList wrapNoAttachmentsInBox={true} includeDeletionFunctionality={true} />
             </Box>
-        </SøknadStep>
+        </SoknadFormStep>
     );
 };
 

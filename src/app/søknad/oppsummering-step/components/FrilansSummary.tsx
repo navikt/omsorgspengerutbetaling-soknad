@@ -1,11 +1,11 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
-import SummarySection from '../../../components/summary-section/SummarySection';
+import SummarySection from '@navikt/sif-common-soknad/lib/soknad-summary/summary-section/SummarySection';
 import { Frilans } from '../../../types/SøknadApiData';
-import DatoSvar from './DatoSvar';
-import JaNeiSvar from './JaNeiSvar';
-import SummaryBlock from './SummaryBlock';
+import SummaryBlock from '@navikt/sif-common-soknad/lib/soknad-summary/summary-block/SummaryBlock';
+import DatoSvar from '@navikt/sif-common-core/lib/components/summary-enkeltsvar/DatoSvar';
+import JaNeiSvar from '@navikt/sif-common-core/lib/components/summary-enkeltsvar/JaNeiSvar';
 
 interface Props {
     frilans?: Frilans;

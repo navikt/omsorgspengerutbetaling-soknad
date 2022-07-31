@@ -8,9 +8,9 @@ import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 import SummaryList from '@navikt/sif-common-core/lib/components/summary-list/SummaryList';
 import { UtenlandsoppholdApiData } from '../../../types/SøknadApiData';
-import JaNeiSvar from './JaNeiSvar';
+import JaNeiSvar from '@navikt/sif-common-core/lib/components/summary-enkeltsvar/JaNeiSvar';
 import { renderUtenlandsoppholdIPeriodenSummary } from './renderUtenlandsoppholdSummary';
-import SummaryBlock from './SummaryBlock';
+import SummaryBlock from '@navikt/sif-common-soknad/lib/soknad-summary/summary-block/SummaryBlock';
 
 dayjs.extend(isSameOrBefore);
 dayjs.extend(isSameOrAfter);

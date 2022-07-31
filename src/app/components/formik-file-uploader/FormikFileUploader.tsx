@@ -12,10 +12,11 @@ import {
 import { TypedFormInputValidationProps } from '@navikt/sif-common-formik/lib';
 import { ValidationError } from '@navikt/sif-common-formik/lib/validation/types';
 import { ArrayHelpers, useFormikContext } from 'formik';
-import { uploadFile } from '../../api/api';
-import SøknadFormComponents from '../../søknad/SøknadFormComponents';
+import api from '../../api/api';
+import SoknadFormComponents from '../../søknad/SoknadFormComponents';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import apiUtils from '@navikt/sif-common-core/lib/utils/apiUtils';
+import { ApiEndpoint } from '../../types/ApiEndpoint';
 
 export type FieldArrayReplaceFn = (index: number, value: any) => void;
 export type FieldArrayPushFn = (obj: any) => void;
@@ -41,7 +42,7 @@ const FormikFileUploader: React.FunctionComponent<Props> = ({
         const { file } = attachment;
         if (isFileObject(file)) {
             try {
-                const response = await uploadFile(file);
+                const response = await api.uploadFile(ApiEndpoint.VEDLEGG, file);
                 attachment = setAttachmentPendingToFalse(attachment);
                 attachment.url = response.headers.location;
                 attachment.uploaded = true;
@@ -112,7 +113,7 @@ const FormikFileUploader: React.FunctionComponent<Props> = ({
     }
 
     return (
-        <SøknadFormComponents.FileInput
+        <SoknadFormComponents.FileInput
             name={name}
             acceptedExtensions={VALID_EXTENSIONS.join(', ')}
             onFilesSelect={async (files: File[], { push, replace }: ArrayHelpers) => {

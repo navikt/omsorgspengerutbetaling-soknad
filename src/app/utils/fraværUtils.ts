@@ -7,9 +7,11 @@ import dayjs from 'dayjs';
 
 export const getUtbetalingsdatoerFraFravær = (perioder: FraværPeriode[], dager: FraværDag[]): Date[] => {
     const datoerIPeriode = perioder.map((p) => getDatesWithinDateRange({ from: p.fraOgMed, to: p.tilOgMed }));
+
     const datoer: Date[] = uniqBy([...flatten(datoerIPeriode), ...dager.map((d) => d.dato)], (d) => {
         return dateToISOString(d);
     });
+    datoer;
     return datoer.filter((d) => dateErHelg(d) === false).sort(sortByDate);
 };
 

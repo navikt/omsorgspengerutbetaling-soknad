@@ -1,6 +1,3 @@
-import { Barn } from '../types/Søkerdata';
-import RouteConfig from '../config/routeConfig';
-import { getSøknadStepConfig, StepID } from '../config/stepConfig';
 import { SøknadFormData } from '../types/SøknadFormData';
 import {
     arbeidssituasjonStepIsAvailable,
@@ -10,37 +7,46 @@ import {
     medlemskapStepIsAvailable,
     summaryStepAvailable,
 } from './stepUtils';
+import { StepID } from '../søknad/soknadStepsConfig';
+import { Barn } from '../types/Søkerdata';
+import { harFraværPgaSmittevernhensyn, harFraværPgaStengBhgSkole } from './periodeUtils';
 
-export const getSøknadRoute = (stepId: StepID | undefined) => {
-    if (stepId !== undefined) {
-        return `${RouteConfig.SØKNAD_ROUTE_PREFIX}/${stepId}`;
+export const getAvailableSteps = (values: SøknadFormData, registrerteBarn: Barn[]): StepID[] => {
+    const steps: StepID[] = [];
+
+    const fraværPgaStengBhgSkole: boolean = harFraværPgaStengBhgSkole(values.fraværPerioder, values.fraværDager);
+    const fraværPgaSmittevernhensyn: boolean = harFraværPgaSmittevernhensyn(values.fraværPerioder, values.fraværDager);
+
+    if (dineBarnStepIsAvailable(values)) {
+        steps.push(StepID.DINE_BARN);
     }
-    return undefined;
-};
 
-export const getNextStepRoute = (stepId: StepID, formData?: SøknadFormData): string | undefined => {
-    const stepConfig = getSøknadStepConfig(formData);
-    return stepConfig[stepId] && stepConfig[stepId].included === true
-        ? getSøknadRoute(stepConfig[stepId].nextStep)
-        : undefined;
-};
-
-export const isAvailable = (path: StepID | RouteConfig, values: SøknadFormData, registrerteBarn?: Barn[]) => {
-    switch (path) {
-        case StepID.DINE_BARN:
-            return dineBarnStepIsAvailable(values);
-        case StepID.FRAVÆR:
-            return fraværStepIsAvailable(values, registrerteBarn);
-        case StepID.ARBEIDSSITUASJON:
-            return arbeidssituasjonStepIsAvailable(values);
-        case StepID.FRAVÆR_FRA:
-            return fraværFraStepIsAvailable(values);
-        case StepID.MEDLEMSKAP:
-            return medlemskapStepIsAvailable(values);
-        case StepID.OPPSUMMERING:
-            return summaryStepAvailable(values);
-        case RouteConfig.SØKNAD_SENDT_ROUTE:
-            return values.harBekreftetOpplysninger;
+    if (fraværStepIsAvailable(values, registrerteBarn)) {
+        steps.push(StepID.FRAVÆR);
     }
-    return true;
+
+    if (arbeidssituasjonStepIsAvailable(values)) {
+        steps.push(StepID.ARBEIDSSITUASJON);
+    }
+
+    if (fraværFraStepIsAvailable(values)) {
+        steps.push(StepID.FRAVÆR_FRA);
+    }
+
+    if (fraværPgaStengBhgSkole) {
+        steps.push(StepID.DOKUMENTER_STENGT_SKOLE_BHG);
+    }
+    if (fraværPgaSmittevernhensyn) {
+        steps.push(StepID.DOKUMENTER_SMITTEVERNHENSYN);
+    }
+
+    if (medlemskapStepIsAvailable(values)) {
+        steps.push(StepID.MEDLEMSKAP);
+    }
+
+    if (summaryStepAvailable(values)) {
+        steps.push(StepID.OPPSUMMERING);
+    }
+
+    return steps;
 };

@@ -8,7 +8,7 @@ import {
     fileExtensionIsValid,
 } from '@navikt/sif-common-core/lib/utils/attachmentUtils';
 import { removeElementFromArray } from '@navikt/sif-common-core/lib/utils/listUtils';
-import { deleteFile } from '../../api/api';
+import api from '../../api/api';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 
 interface Props {
@@ -35,7 +35,7 @@ const UploadedSmittevernDocumentsList: React.FunctionComponent<Props> = ({ inclu
                     attachment.pending = true;
                     setFieldValue(SøknadFormField.dokumenterSmittevernhensyn, dokumenter);
                     if (attachment.url) {
-                        deleteFile(attachment.url).then(
+                        api.deleteFile(attachment.url).then(
                             () => {
                                 setFieldValue(
                                     SøknadFormField.dokumenterSmittevernhensyn,

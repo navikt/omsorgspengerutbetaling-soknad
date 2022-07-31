@@ -27,6 +27,8 @@
     "Dato": "Dato",
     "dato": "dato",
 
+    "page.error.pageTitle": "Noe gikk galt ...",
+
     "fravær.antallTimer": "Antall timer",
     "fravær.time": "time",
     "fravær.timer": "timer",
@@ -90,6 +92,7 @@
     "step.dine-barn.pageTitle": "Om barn",
     "step.dine-barn.stepTitle": "Om barn",
     "step.dine-barn.stepIndicatorLabel": "Om barn",
+    "step.dine-barn.nextButtonLabel": "Fortsett",
     "step.dine-barn.counsellorPanel.avsnitt.1": "Når du er selvstendig næringsdrivende eller frilanser, må du som hovedregel selv dekke de 10 første omsorgsdagene du bruker hvert kalenderår. Du kan altså ha rett til utbetaling av omsorgspenger fra den 11. dagen per kalenderår. De 10 første dagene som du skal dekke selv, trenger ikke å tas ut sammenhengende.",
     "step.dine-barn.counsellorPanel.avsnitt.2": "Du kan ha rett til utbetaling fra den første dagen når du kun har barn som fyller 13 år i år eller er eldre, og som har kronisk sykdom eller funksjonshemning. Dette gjelder bare når du har søkt og fått ekstra omsorgsdager for barn i denne situasjonen.",
 
@@ -114,7 +117,6 @@
     "step.dine-barn.bekrefterDektTiDagerSelv.label": "For å gå videre må du bekrefte at du har dekket 10 omsorgsdager i år:",
     "step.dine-barn.bekrefterDektTiDagerSelv": "Ja, jeg bekrefter at jeg har dekket 10 omsorgsdager i år.",
 
-    "step.dine-barn.nextButtonLabel": "Fortsett",
     "step.dine-barn.info.ingenbarn.1": "Vi fant ingen barn registrert på deg. Har du  barn som ikke er registrert her, kan du selv legge inn disse. Dette kan være fosterbarn, eller om du har barn som er fylt 18 år og som har ekstra omsorgsdager på grunn av kronisk sykdom eller funksjonshemning.",
     "step.dine-barn.info.ingenbarn.2": "Du må registrere minst ett barn for å kunne gå videre i søknaden.",
     "step.dine-barn.info.spm.andreBarn": "Har du barn som ikke er registrert her?",
@@ -125,16 +127,19 @@
     "step.fravaer.pageTitle": "Dager du har vært hjemme med barn - Søknad om utbetaling av omsorgspenger",
     "step.fravaer.stepTitle": "Dager du har vært hjemme med barn",
     "step.fravaer.stepIndicatorLabel": "Dager du har vært hjemme med barn",
+    "step.fravaer.nextButtonLabel": "Fortsett",
 
     "step.fravaerFra.pageTitle": "Fravær fra arbeid som selvstendig næringsdrivende og/eller frilanser",
     "step.fravaerFra.stepTitle": "Fravær fra arbeid som selvstendig næringsdrivende og/eller frilanser",
     "step.fravaerFra.stepIndicatorLabel": "Fravær fra arbeid som selvstendig næringsdrivende og/eller frilanser",
+    "step.fravaerFra.nextButtonLabel": "Fortsett",
     "step.fravaerFra.info": "Du har opplyst at du er både selvstendig næringsdrivende og frilanser. Nå trenger vi å vite hvilket arbeid du hadde fravær fra i dagene du brukte omsorgsdager.",
     "step.fravaerFra.dag.spm": "Hvilket arbeid hadde du fravær fra {dato}?",
 
     "step.arbeidssituasjon.pageTitle": "Arbeidssituasjon - Søknad om utbetaling av omsorgspenger",
     "step.arbeidssituasjon.stepTitle": "Arbeidssituasjon",
     "step.arbeidssituasjon.stepIndicatorLabel": "Arbeidssituasjon",
+    "step.arbeidssituasjon.nextButtonLabel": "Fortsett",
     "step.arbeidssituasjon.info.1": "Nå trenger vi å vite hva som var arbeidssituasjonen din i dagene du søker utbetaling for.",
     "step.arbeidssituasjon.advarsel.ingenSituasjonValgt": "Du må velge minst én av situasjonene over.",
 
@@ -149,10 +154,12 @@
     "step.medlemskap.pageTitle": "Medlemskap i folketrygden - Søknad om utbetaling av omsorgspenger",
     "step.medlemskap.stepTitle": "Medlemskap i folketrygden",
     "step.medlemskap.stepIndicatorLabel": "Om medlemskap i folketrygden",
+    "step.medlemskap.nextButtonLabel": "Fortsett",
 
     "step.oppsummering.pageTitle": "Oppsummering - Søknad om utbetaling av omsorgspenger",
     "step.oppsummering.stepTitle": "Oppsummering",
     "step.oppsummering.stepIndicatorLabel": "Oppsummering",
+    "step.oppsummering.nextButtonLabel": "Send søknad",
 
     "introPage.tittel": "Søknad om utbetaling av omsorgspenger",
     "introPage.stegTittel": "Kan jeg søke om utbetaling av omsorgspenger?",
@@ -191,7 +198,6 @@
     "step.periode.sisteDagMedFravær.spm": "Hva er siste dag du skal søke for?",
 
     "step.fravaer.counsellorpanel.content": "I de fleste tilfeller må man som selvstendig næringsdrivende og frilanser betale de 10 første dager med omsorgspenger i året selv.",
-
     "step.fravaer.dager_med_fullt_fravært.label": "Dager med fullt fravær",
     "step.fravaer.dager_med_fullt_fravært.info": "TODO",
     "step.fravaer.dager_med_delvis_fravært.label": "Dager med delvis fravær",
@@ -345,6 +351,7 @@
     "step.vedlegg_smittevernhensyn.stepTitle": "Last opp bekreftelse fra lege",
     "step.vedlegg_smittevernhensyn.pageTitle": "Last opp dokumenter",
     "step.vedlegg_smittevernhensyn.stepIndicatorLabel": "Last opp dokumenter",
+    "step.vedlegg_smittevernhensyn.nextButtonLabel": "Fortsett",
     "steg.vedlegg_smittevernhensyn.vedlegg": "Last opp bekreftelse fra lege",
     "steg.vedlegg_smittevernhensyn.info.1": "Her skal du laste opp bekreftelse fra lege på at det er særlige smittevernhensyn som gjør at barnet ikke kan gå i barnehage eller skole. Det gjør du enten ved å ta bilde av bekreftelsen, eller ved å skanne den.",
     "steg.vedlegg_smittevernhensyn.info.2": "Vi kan ikke behandle søknaden din før vi mottar bekreftelsen. Hvis du ikke har bekreftelsen tilgjengelig nå, anbefaler vi at du venter med å søke til du har den tilgjengelig. Hvis du ikke kan vente med å sende søknaden, kan du fortsette uten bekreftelsen, men da må du ettersende den så snart som mulig.",
@@ -353,6 +360,7 @@
 
     "step.vedlegg_stengtSkoleBhg.stepTitle": "Last opp bekreftelse fra barnehagen eller skolen",
     "step.vedlegg_stengtSkoleBhg.pageTitle": "Last opp dokumenter",
+    "step.vedlegg_stengtSkoleBhg.nextButtonLabel": "Fortsett",
     "step.vedlegg_stengtSkoleBhg.stepIndicatorLabel": "Last opp dokumenter",
     "steg.vedlegg_stengtSkoleBhg.vedlegg": "Last opp bekreftelse fra barnehagen eller skolen",
     "steg.vedlegg_stengtSkoleBhg.info.1": "Her skal du laste opp bekreftelse fra barnehagen eller skolen på at de har vært stengt på grunn av koronaviruset. Det gjør du enten ved å ta bilde av bekreftelsen, eller ved å skanne den.",
@@ -447,8 +455,7 @@
     "modal.personopplysninger.6.2": "hvordan du får innsyn i saksbehandlingen",
     "modal.personopplysninger.6.3": "hvordan du kan klage hvis du er uenig",
     "modal.personopplysninger.7.1": "Vil du vite mer om hvordan NAV behandler personopplysninger? Se ",
-    "modal.personopplysninger.7.2": "nav.no/personvern",
-    "modal.personopplysninger.7.3": ".",
+    "modal.personopplysninger.7.2": "nav.no/personvern.",
 
     "validation.harUtvidetRett.yesOrNoIsUnanswered": "Du må svare at du har fått ekstra omsorgsdager for barn fordi barnet har kronisk sykdom eller funksjonshemming eller ikke.",
     "validation.harUtvidetRettFor.listIsEmpty": "Du må krysse av for det eller de barna som har utvidet rett.",

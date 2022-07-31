@@ -17,15 +17,15 @@ import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import Lenke from 'nav-frontend-lenker';
 import FormikFileUploader from '../../components/formik-file-uploader/FormikFileUploader';
 import UploadedSmittevernDocumentsList from '../../components/uploaded-smittevern-documents-list/UploadedSmittevernDocumentsList';
-import { StepConfigProps, StepID } from '../../config/stepConfig';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import { valuesToAlleDokumenterISøknaden } from '../../utils/attachmentsUtils';
-import { navigateToLoginPage } from '../../utils/navigationUtils';
+import { relocateToLoginPage } from '../../utils/navigationUtils';
 import { validateDocuments } from '../../validation/fieldValidations';
-import SøknadStep from '../SøknadStep';
 import getLenker from '../../lenker';
+import SoknadFormStep from '../SoknadFormStep';
+import { StepID } from '../soknadStepsConfig';
 
-const SmittevernDokumenterStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) => {
+const SmittevernDokumenterStep: React.FC = () => {
     const intl = useIntl();
     const { values } = useFormikContext<SøknadFormData>();
     const [filesThatDidntGetUploaded, setFilesThatDidntGetUploaded] = React.useState<File[]>([]);
@@ -39,14 +39,13 @@ const SmittevernDokumenterStep: React.FunctionComponent<StepConfigProps> = ({ on
 
     const uploadFailed = async () => {
         await logUserLoggedOut('Ved opplasting av dokument');
-        navigateToLoginPage();
+        relocateToLoginPage();
     };
 
     return (
-        <SøknadStep
+        <SoknadFormStep
             id={StepID.DOKUMENTER_SMITTEVERNHENSYN}
-            onValidFormSubmit={onValidSubmit}
-            useValidationErrorSummary={true}
+            includeValidationSummary={true}
             buttonDisabled={hasPendingUploads || attachmentsSizeOver24Mb}>
             <FormBlock>
                 <CounsellorPanel>
@@ -100,7 +99,7 @@ const SmittevernDokumenterStep: React.FunctionComponent<StepConfigProps> = ({ on
             <Box margin="l">
                 <UploadedSmittevernDocumentsList wrapNoAttachmentsInBox={true} includeDeletionFunctionality={true} />
             </Box>
-        </SøknadStep>
+        </SoknadFormStep>
     );
 };
 

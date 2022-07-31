@@ -7,20 +7,24 @@ import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import { getRequiredFieldValidator, getYesOrNoValidator } from '@navikt/sif-common-formik/lib/validation';
 import VirksomhetInfoAndDialog from '@navikt/sif-common-forms/lib/virksomhet/VirksomhetInfoAndDialog';
-import { StepID } from '../../../config/stepConfig';
 import { SøknadFormData, SøknadFormField } from '../../../types/SøknadFormData';
 import { getEnvironmentVariable } from '../../../utils/envUtils';
-import SøknadFormComponents from '../../SøknadFormComponents';
-import SøknadTempStorage from '../../SøknadTempStorage';
+import SoknadFormComponents from '../../SoknadFormComponents';
 import ExpandableInfo from '@navikt/sif-common-core/lib/components/expandable-content/ExpandableInfo';
 import Lenke from 'nav-frontend-lenker';
 import getLenker from '../../../lenker';
+import { StepID } from '../../../søknad/soknadStepsConfig';
+import SøknadTempStorage from '../../../søknad/SoknadTempStorage';
+import { Barn, Person } from '../../../types/Søkerdata';
 
 interface Props {
     formValues: SøknadFormData;
+    barn: Barn[];
+    søker: Person;
+    soknadId?: string;
 }
 
-const SelvstendigNæringsdrivendeFormPart: React.FC<Props> = ({ formValues: values }) => {
+const SelvstendigNæringsdrivendeFormPart: React.FC<Props> = ({ formValues: values, barn, søker, soknadId }) => {
     const intl = useIntl();
     const skipOrgNumValidation = getEnvironmentVariable('SKIP_ORGNUM_VALIDATION') === 'true';
     const { selvstendig_erSelvstendigNæringsdrivende, selvstendig_virksomhet, selvstendig_harFlereVirksomheter } =
@@ -30,15 +34,15 @@ const SelvstendigNæringsdrivendeFormPart: React.FC<Props> = ({ formValues: valu
     const [virksomhetChanged, setVirksomhetChanged] = useState(false);
 
     useEffect(() => {
-        if (virksomhetChanged === true) {
+        if (virksomhetChanged === true && soknadId !== undefined) {
             setVirksomhetChanged(false);
-            SøknadTempStorage.update(values, StepID.ARBEIDSSITUASJON);
+            SøknadTempStorage.update(soknadId, values, StepID.ARBEIDSSITUASJON, { søker: søker, barn: barn });
         }
-    }, [virksomhetChanged, values]);
+    }, [virksomhetChanged, values, soknadId, søker, barn]);
 
     return (
         <>
-            <SøknadFormComponents.YesOrNoQuestion
+            <SoknadFormComponents.YesOrNoQuestion
                 name={SøknadFormField.selvstendig_erSelvstendigNæringsdrivende}
                 legend={intlHelper(intl, 'selvstendig.erDuSelvstendigNæringsdrivende.spm')}
                 validate={getYesOrNoValidator()}
@@ -56,7 +60,7 @@ const SelvstendigNæringsdrivendeFormPart: React.FC<Props> = ({ formValues: valu
 
             {erSelvstendigNæringsdrivende && (
                 <FormBlock>
-                    <SøknadFormComponents.YesOrNoQuestion
+                    <SoknadFormComponents.YesOrNoQuestion
                         name={SøknadFormField.selvstendig_harFlereVirksomheter}
                         legend={intlHelper(intl, 'selvstendig.harFlereVirksomheter.spm')}
                         validate={getYesOrNoValidator()}

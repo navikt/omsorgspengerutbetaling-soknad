@@ -6,14 +6,14 @@ import { dateToISOString } from '@navikt/sif-common-formik/lib';
 import { getRequiredFieldValidator } from '@navikt/sif-common-formik/lib/validation';
 import dayjs from 'dayjs';
 import { useFormikContext } from 'formik';
-import { StepConfigProps, StepID } from '../../config/stepConfig';
 import { Aktivitet, AktivitetFravær } from '../../types/AktivitetFravær';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import { getUtbetalingsdatoerFraFravær } from '../../utils/fraværUtils';
-import SøknadFormComponents from '../SøknadFormComponents';
-import SøknadStep from '../SøknadStep';
+import SoknadFormComponents from '../SoknadFormComponents';
+import SoknadFormStep from '../SoknadFormStep';
+import { StepID } from '../soknadStepsConfig';
 
-const FraværFraStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) => {
+const FraværFraStep: React.FC = () => {
     const {
         values: { fraværDager, fraværPerioder },
     } = useFormikContext<SøknadFormData>();
@@ -22,6 +22,7 @@ const FraværFraStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmi
         const key = dateToISOString(dato);
         return `${SøknadFormField.aktivitetFravær}_${key}`;
     };
+
     const utbetalingsdatoer = getUtbetalingsdatoerFraFravær(fraværPerioder, fraværDager);
 
     const cleanupStep = (formData: SøknadFormData): SøknadFormData => {
@@ -38,7 +39,7 @@ const FraværFraStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmi
     };
 
     return (
-        <SøknadStep id={StepID.FRAVÆR_FRA} onValidFormSubmit={onValidSubmit} cleanupStep={cleanupStep}>
+        <SoknadFormStep id={StepID.FRAVÆR_FRA} onStepCleanup={cleanupStep}>
             <FormBlock>
                 <CounsellorPanel>
                     <FormattedMessage id="step.fravaerFra.info" />
@@ -51,7 +52,7 @@ const FraværFraStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmi
                     const dato = dayjs(date).format('dddd D. MMM YYYY');
                     return (
                         <FormBlock key={fieldName}>
-                            <SøknadFormComponents.RadioGroup
+                            <SoknadFormComponents.RadioGroup
                                 name={fieldName as SøknadFormField}
                                 legend={<FormattedMessage id="step.fravaerFra.dag.spm" values={{ dato }} />}
                                 radios={[
@@ -83,7 +84,7 @@ const FraværFraStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmi
                     );
                 })}
             </FormBlock>
-        </SøknadStep>
+        </SoknadFormStep>
     );
 };
 

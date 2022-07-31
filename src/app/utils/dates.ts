@@ -4,8 +4,6 @@ import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 
 dayjs.extend(isSameOrBefore);
 
-export const date3MonthsAgo = dayjs().subtract(3, 'months').toDate();
-
 export const sortByDate = (d1: Date, d2: Date): number => (dayjs(d1).isAfter(d2, 'day') ? 1 : -1);
 
 export const getDatesWithinDateRange = ({ from, to }: DateRange): Date[] => {

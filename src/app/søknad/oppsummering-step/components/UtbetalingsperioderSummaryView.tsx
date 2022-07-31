@@ -11,7 +11,7 @@ import flatten from 'lodash/flatten';
 import uniq from 'lodash/uniq';
 import { ApiAktivitet } from '../../../types/AktivitetFravær';
 import { UtbetalingsperiodeApi } from '../../../types/SøknadApiData';
-import SummaryBlock from './SummaryBlock';
+import SummaryBlock from '@navikt/sif-common-soknad/lib/soknad-summary/summary-block/SummaryBlock';
 
 export interface Props {
     utbetalingsperioder: UtbetalingsperiodeApi[];
