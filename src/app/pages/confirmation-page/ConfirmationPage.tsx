@@ -13,7 +13,7 @@ import './confirmationPage.less';
 
 const bem = bemUtils('confirmationPage');
 
-const ConfirmationPage: React.FunctionComponent = () => {
+const ConfirmationPage: React.FC = () => {
     const intl = useIntl();
 
     useLogSidevisning(SIFCommonPageKey.kvittering);

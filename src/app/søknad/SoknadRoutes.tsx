@@ -92,7 +92,7 @@ const SøknadRoutes: React.FC<Props> = ({ søker, barn = [], soknadId }) => {
                 <LoadWrapper
                     isLoading={isPending(sendSoknadStatus.status) || isInitial(sendSoknadStatus.status)}
                     contentRenderer={() => {
-                        if (isSuccess(sendSoknadStatus.status) && <ConfirmationPage />) {
+                        if (isSuccess(sendSoknadStatus.status)) {
                             return <ConfirmationPage />;
                         }
                         if (isFailure(sendSoknadStatus.status)) {
