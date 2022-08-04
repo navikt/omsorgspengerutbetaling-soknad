@@ -65,7 +65,7 @@ const BehandlingAvPersonopplysningerContent: React.FunctionComponent = () => {
             </Box>
             <Box margin="xl">
                 <p>
-                    <FormattedMessage id="Vil du vite mer om hvordan NAV behandler personopplysninger? Se " />
+                    <FormattedMessage id="modal.personopplysninger.7.1" />
                     {` `}
                     <Lenke href={getLenker(intl.locale).personvern} target="_blank">
                         <FormattedMessage id="modal.personopplysninger.7.2" />
