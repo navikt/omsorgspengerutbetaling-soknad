@@ -8,6 +8,7 @@ import {
     isFileObject,
     mapFileToPersistedFile,
     VALID_EXTENSIONS,
+    compressImageFile,
 } from '@navikt/sif-common-core/lib/utils/attachmentUtils';
 import { TypedFormInputValidationProps } from '@navikt/sif-common-formik/lib';
 import { ValidationError } from '@navikt/sif-common-formik/lib/validation/types';
@@ -117,7 +118,12 @@ const FormikFileUploader: React.FunctionComponent<Props> = ({
             name={name}
             acceptedExtensions={VALID_EXTENSIONS.join(', ')}
             onFilesSelect={async (files: File[], { push, replace }: ArrayHelpers) => {
-                const attachments = files.map((file) => addPendingAttachmentToFieldArray(file, push));
+                const compressedFiles: File[] = await Promise.all(
+                    files.map(async (file): Promise<File> => {
+                        return await compressImageFile(file, { maxSizeMB: 1 });
+                    })
+                );
+                const attachments = compressedFiles.map((file) => addPendingAttachmentToFieldArray(file, push));
                 await uploadAttachments([...(values as any)[name], ...attachments], replace);
             }}
             onClick={onFileInputClick}
