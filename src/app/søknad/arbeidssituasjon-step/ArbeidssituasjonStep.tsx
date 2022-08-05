@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Box from '@navikt/sif-common-core/lib/components/box/Box';
 import CounsellorPanel from '@navikt/sif-common-core/lib/components/counsellor-panel/CounsellorPanel';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
 import FormattedHtmlMessage from '@navikt/sif-common-core/lib/components/formatted-html-message/FormattedHtmlMessage';
@@ -43,13 +42,13 @@ const ArbeidssituasjonStep: React.FC<Props> = ({ barn, søker, soknadId }: Props
                 </p>
             </CounsellorPanel>
 
-            <Box margin="xxl" padBottom="l">
+            <FormBlock>
                 <FrilansFormPart formValues={values} />
-            </Box>
+            </FormBlock>
 
-            <Box margin="l" padBottom="l">
+            <FormBlock>
                 <SelvstendigNæringsdrivendeFormPart formValues={values} barn={barn} søker={søker} soknadId={soknadId} />
-            </Box>
+            </FormBlock>
             {!showSubmitButton && (
                 <FormBlock margin="l">
                     <AlertStripeAdvarsel>

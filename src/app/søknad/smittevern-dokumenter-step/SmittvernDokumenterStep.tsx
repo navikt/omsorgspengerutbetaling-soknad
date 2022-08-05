@@ -61,9 +61,9 @@ const SmittevernDokumenterStep: React.FC = () => {
                     </Box>
                 </CounsellorPanel>
             </FormBlock>
-            <Box margin="l">
+            <FormBlock>
                 <PictureScanningGuide />
-            </Box>
+            </FormBlock>
             {totalSize <= MAX_TOTAL_ATTACHMENT_SIZE_BYTES && (
                 <FormBlock>
                     <FormikFileUploader

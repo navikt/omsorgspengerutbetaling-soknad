@@ -30,7 +30,7 @@ const MedlemsskapStep: React.FC = () => {
                     .
                 </p>
             </CounsellorPanel>
-            <FormBlock margin="xxl">
+            <FormBlock>
                 <SoknadFormComponents.YesOrNoQuestion
                     legend={intlHelper(intl, 'steg.medlemsskap.annetLandSiste12.spm')}
                     name={SøknadFormField.harBoddUtenforNorgeSiste12Mnd}

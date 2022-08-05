@@ -72,44 +72,47 @@ const DineBarnStep: React.FC<Props> = ({ barn, søker, soknadId }: Props) => {
                     <FormattedMessage id="step.dine-barn.counsellorPanel.avsnitt.2" />
                 </Box>
             </CounsellorPanel>
-            <FormSection title={intlHelper(intl, 'step.dine-barn.seksjonsTittel')}>
-                {barn.length > 0 && (
-                    <Box>
-                        <ItemList<Barn>
-                            getItemId={(registrerteBarn): string => registrerteBarn.aktørId}
-                            getItemTitle={(registrerteBarn): string => registrerteBarn.etternavn}
-                            labelRenderer={(barn): React.ReactNode => barnItemLabelRenderer(barn, intl)}
-                            items={barn}
+            <FormBlock>
+                <FormSection title={intlHelper(intl, 'step.dine-barn.seksjonsTittel')}>
+                    {barn.length > 0 && (
+                        <Box>
+                            <ItemList<Barn>
+                                getItemId={(registrerteBarn): string => registrerteBarn.aktørId}
+                                getItemTitle={(registrerteBarn): string => registrerteBarn.etternavn}
+                                labelRenderer={(barn): React.ReactNode => barnItemLabelRenderer(barn, intl)}
+                                items={barn}
+                            />
+                        </Box>
+                    )}
+
+                    <FormBlock>
+                        <ContentWithHeader
+                            header={
+                                andreBarn.length === 0
+                                    ? intlHelper(intl, 'step.dine-barn.info.spm.andreBarn')
+                                    : intlHelper(intl, 'step.dine-barn.info.spm.flereBarn')
+                            }>
+                            {intlHelper(intl, 'step.dine-barn.info.spm.text')}
+                        </ContentWithHeader>
+                    </FormBlock>
+                    <Box margin="l">
+                        <AnnetBarnListAndDialog<SøknadFormField>
+                            name={SøknadFormField.andreBarn}
+                            labels={{
+                                addLabel: intlHelper(intl, 'step.dine-barn.annetBarnListAndDialog.addLabel'),
+                                listTitle: intlHelper(intl, 'step.dine-barn.annetBarnListAndDialog.listTitle'),
+                                modalTitle: intlHelper(intl, 'step.dine-barn.annetBarnListAndDialog.modalTitle'),
+                            }}
+                            maxDate={dateToday}
+                            minDate={nYearsAgo(18)}
+                            disallowedFødselsnumre={[...[søker.fødselsnummer], ...andreBarnFnr]}
+                            aldersGrenseText={intlHelper(intl, 'step.dine-barn.formLeggTilBarn.aldersGrenseInfo')}
+                            visBarnTypeValg={true}
+                            onAfterChange={() => setAndreBarnChanged(true)}
                         />
                     </Box>
-                )}
-                <FormBlock>
-                    <ContentWithHeader
-                        header={
-                            andreBarn.length === 0
-                                ? intlHelper(intl, 'step.dine-barn.info.spm.andreBarn')
-                                : intlHelper(intl, 'step.dine-barn.info.spm.flereBarn')
-                        }>
-                        {intlHelper(intl, 'step.dine-barn.info.spm.text')}
-                    </ContentWithHeader>
-                </FormBlock>
-                <Box margin="l">
-                    <AnnetBarnListAndDialog<SøknadFormField>
-                        name={SøknadFormField.andreBarn}
-                        labels={{
-                            addLabel: intlHelper(intl, 'step.dine-barn.annetBarnListAndDialog.addLabel'),
-                            listTitle: intlHelper(intl, 'step.dine-barn.annetBarnListAndDialog.listTitle'),
-                            modalTitle: intlHelper(intl, 'step.dine-barn.annetBarnListAndDialog.modalTitle'),
-                        }}
-                        maxDate={dateToday}
-                        minDate={nYearsAgo(18)}
-                        disallowedFødselsnumre={[...[søker.fødselsnummer], ...andreBarnFnr]}
-                        aldersGrenseText={intlHelper(intl, 'step.dine-barn.formLeggTilBarn.aldersGrenseInfo')}
-                        visBarnTypeValg={true}
-                        onAfterChange={() => setAndreBarnChanged(true)}
-                    />
-                </Box>
-            </FormSection>
+                </FormSection>
+            </FormBlock>
             {minstEtBarn12årIårellerYngre(barn, andreBarn) === false && (
                 <FormSection title={intlHelper(intl, 'step.dine-barn.harFåttEkstraOmsorgsdager.label')}>
                     <SoknadFormComponents.YesOrNoQuestion
