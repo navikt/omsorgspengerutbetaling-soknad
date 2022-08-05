@@ -94,6 +94,7 @@ const Soknad = ({ søker, barn, soknadTempStorage: tempStorage }: Props) => {
         await soknadTempStorage.purge();
         await logSoknadSent(SKJEMANAVN);
         setSendSoknadStatus({ failures: 0, status: success(apiValues) });
+        setInitialFormData({ ...initialValues });
         setSoknadId(undefined);
         resetFormikForm();
         navigateToKvitteringPage(history);
