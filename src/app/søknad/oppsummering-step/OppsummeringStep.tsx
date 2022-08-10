@@ -9,8 +9,6 @@ import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import { getCheckedValidator } from '@navikt/sif-common-formik/lib/validation';
 import { Feiloppsummering, FeiloppsummeringFeil } from 'nav-frontend-skjema';
 import SummarySection from '@navikt/sif-common-soknad/lib/soknad-summary/summary-section/SummarySection';
-import UploadedSmittevernDocumentsList from '../../components/uploaded-smittevern-documents-list/UploadedSmittevernDocumentsList';
-import UploadedStengtDocumentsList from '../../components/uploaded-stengt-documents-list/UploadedStengtDocumentsList';
 import { Person } from '../../types/Søkerdata';
 import { SøknadApiData } from '../../types/SøknadApiData';
 import { SøknadFormField } from '../../types/SøknadFormData';
@@ -29,10 +27,14 @@ import SoknadFormStep from '../SoknadFormStep';
 import { isPending } from '@devexperts/remote-data-ts';
 import { StepID } from '../soknadStepsConfig';
 import { useSoknadContext } from '../SoknadContext';
+import AttachmentList from '@navikt/sif-common-core/lib/components/attachment-list/AttachmentList';
+import { Attachment } from '@navikt/sif-common-core/lib/types/Attachment';
 
 interface Props {
     hjemmePgaSmittevernhensyn: boolean;
+    dokumenterSmittevernhensyn: Attachment[];
     hjemmePgaStengtBhgSkole: boolean;
+    dokumenterStengtBkgSkole: Attachment[];
     søker: Person;
     apiValues?: SøknadApiData;
 }
@@ -40,8 +42,10 @@ interface Props {
 const renderApiDataFeil = (feil: FeiloppsummeringFeil) => <span>{feil.feilmelding}</span>;
 
 const OppsummeringStep: React.FC<Props> = ({
-    hjemmePgaStengtBhgSkole,
     hjemmePgaSmittevernhensyn,
+    dokumenterSmittevernhensyn,
+    hjemmePgaStengtBhgSkole,
+    dokumenterStengtBkgSkole,
     søker,
     apiValues,
 }) => {
@@ -131,11 +135,11 @@ const OppsummeringStep: React.FC<Props> = ({
                                     <Box margin="s">
                                         <SummaryBlock
                                             header={intlHelper(intl, 'steg.oppsummering.dokumenterSmittevern.header')}>
-                                            {apiValues._vedleggSmittevern.length === 0 && (
+                                            {dokumenterSmittevernhensyn.length === 0 && (
                                                 <FormattedMessage id={'steg.oppsummering.dokumenter.ikkelastetopp'} />
                                             )}
-                                            {apiValues._vedleggSmittevern.length > 0 && (
-                                                <UploadedSmittevernDocumentsList includeDeletionFunctionality={false} />
+                                            {dokumenterSmittevernhensyn.length > 0 && (
+                                                <AttachmentList attachments={dokumenterSmittevernhensyn} />
                                             )}
                                         </SummaryBlock>
                                     </Box>
@@ -147,11 +151,11 @@ const OppsummeringStep: React.FC<Props> = ({
                                                 intl,
                                                 'steg.oppsummering.dokumenterStengtBhgSkole.header'
                                             )}>
-                                            {apiValues._vedleggStengtSkole.length === 0 && (
+                                            {dokumenterStengtBkgSkole.length === 0 && (
                                                 <FormattedMessage id={'steg.oppsummering.dokumenter.ikkelastetopp'} />
                                             )}
-                                            {apiValues._vedleggStengtSkole.length > 0 && (
-                                                <UploadedStengtDocumentsList includeDeletionFunctionality={false} />
+                                            {dokumenterStengtBkgSkole.length > 0 && (
+                                                <AttachmentList attachments={dokumenterStengtBkgSkole} />
                                             )}
                                         </SummaryBlock>
                                     </Box>

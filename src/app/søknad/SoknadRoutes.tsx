@@ -65,7 +65,9 @@ const SøknadRoutes: React.FC<Props> = ({ søker, barn = [], soknadId }) => {
                 return (
                     <OppsummeringStep
                         hjemmePgaSmittevernhensyn={fraværPgaSmittevernhensyn}
+                        dokumenterSmittevernhensyn={values.dokumenterSmittevernhensyn}
                         hjemmePgaStengtBhgSkole={fraværPgaStengBhgSkole}
+                        dokumenterStengtBkgSkole={values.dokumenterStengtBkgSkole}
                         apiValues={apiValues}
                         søker={søker}
                     />
