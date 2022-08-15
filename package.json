@@ -19,12 +19,12 @@
     },
     "dependencies": {
         "@navikt/sif-common-amplitude": "^2.4.0",
-        "@navikt/sif-common-core": "12.0.2",
-        "@navikt/sif-common-formik": "^22.0.2",
-        "@navikt/sif-common-forms": "^16.7.0",
-        "@navikt/sif-common-sentry": "0.3.1",
+        "@navikt/sif-common-core": "12.0.5-beta.0",
+        "@navikt/sif-common-formik": "^23.1.0",
+        "@navikt/sif-common-forms": "^17.4.1",
+        "@navikt/sif-common-sentry": "0.3.2",
         "@navikt/sif-common-soknad": "^5.3.1",
-        "@snyk/protect": "^1.981.0",
+        "@snyk/protect": "^1.986.0",
         "axios": "^0.25.0",
         "busboy": "^1.6.0",
         "compression": "^1.7.4",
@@ -99,5 +99,8 @@
     "resolutions": {
         "babel-core": "7.0.0-bridge.0"
     },
-    "snyk": true
+    "snyk": true,
+    "overrides": {
+        "@navikt/sif-common-core": "12.0.5-beta.0"
+    }
 }
