@@ -1,6 +1,5 @@
 import { IntlShape } from 'react-intl';
 import { Attachment } from '@navikt/sif-common-core/lib/types/Attachment';
-import { Locale } from '@navikt/sif-common-core/lib/types/Locale';
 import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
 import { attachmentUploadHasFailed } from '@navikt/sif-common-core/lib/utils/attachmentUtils';
 import { formatDateToApiFormat } from '@navikt/sif-common-core/lib/utils/dateUtils';
@@ -22,6 +21,7 @@ import { mapFrilansToApiData } from './formToApiMaps/mapFrilansToApiData';
 import { delFraværPerioderOppIDager, getApiAktivitetForDag, getAktivitetFromAktivitetFravær } from './fraværUtils';
 import { Barn } from '../types/Søkerdata';
 import { mapBarnToApiData } from './formToApiMaps/mapBarnToApiData';
+import { getLocaleForApi } from '@navikt/sif-common-core/lib/utils/localeUtils';
 
 const getVedleggUrlFromAttachments = (attachments: Attachment[]): string[] => {
     return (
@@ -113,7 +113,7 @@ export const mapFormDataToApiData = (
             : undefined;
 
     const apiData: SøknadApiData = {
-        språk: (intl.locale as any) === 'en' ? 'nn' : (intl.locale as Locale),
+        språk: getLocaleForApi(intl.locale),
         bekreftelser: {
             harForståttRettigheterOgPlikter,
             harBekreftetOpplysninger,
