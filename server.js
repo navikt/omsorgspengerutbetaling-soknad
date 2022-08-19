@@ -82,7 +82,6 @@ const startServer = async (html) => {
 
             router: async (req) => {
                 if (req.headers['authorization'] !== undefined) {
-                    console.log('Utvekslet token fra wondewall');
                     const token = req.headers['authorization'].replace('Bearer ', '');
                     if (isExpiredOrNotAuthorized(token)) {
                         return undefined;
@@ -93,7 +92,6 @@ const startServer = async (html) => {
                     }
                 } else if (req.cookies['selvbetjening-idtoken'] !== undefined) {
                     const selvbetjeningIdtoken = req.cookies['selvbetjening-idtoken'];
-                    console.log('token fra selvbetjeningIdtoken');
                     if (isExpiredOrNotAuthorized(selvbetjeningIdtoken)) {
                         return undefined;
                     }
