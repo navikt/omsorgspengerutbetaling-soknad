@@ -22,13 +22,14 @@ import { delFraværPerioderOppIDager, getApiAktivitetForDag, getAktivitetFromAkt
 import { Barn } from '../types/Søkerdata';
 import { mapBarnToApiData } from './formToApiMaps/mapBarnToApiData';
 import { getLocaleForApi } from '@navikt/sif-common-core/lib/utils/localeUtils';
+import { getAttachmentURLBackend } from './attachmentUtilsAuthToken';
 
 const getVedleggUrlFromAttachments = (attachments: Attachment[]): string[] => {
     return (
         attachments
             .filter((attachment) => !attachmentUploadHasFailed(attachment))
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            .map(({ url }) => url!)
+            .map(({ url }) => getAttachmentURLBackend(url))
     );
 };
 

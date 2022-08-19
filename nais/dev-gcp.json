@@ -10,6 +10,7 @@
     "env": {
         "DEKORATOR_URL": "https://dekoratoren.dev.nav.no/?simple=true&chatbot=false&urlLookupTable=false",
         "API_URL": "https://k9-brukerdialog-api.dev.nav.no",
+        "FRONTEND_VEDLEGG_URL": "https://omsorgspengerutbetaling-soknad.dev.nav.no/api",
         "FRONTEND_API_PATH": "/api",
         "PUBLIC_PATH": "/familie/sykdom-i-familien/soknad/omsorgspengerutbetaling",
         "LOGIN_URL": "https://loginservice.dev.nav.no/login?redirect=https://omsorgspengerutbetaling-soknad.dev.nav.no/familie/sykdom-i-familien/soknad/omsorgspengerutbetaling/soknad",
