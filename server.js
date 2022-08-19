@@ -88,6 +88,7 @@ const startServer = async (html) => {
                     }
                     const exchangedToken = await exchangeToken(token);
                     if (exchangedToken != null && !exchangedToken.expired() && exchangedToken.access_token) {
+                        console.log('Utvekslet token fra wondewall');
                         req.headers['authorization'] = `Bearer ${exchangedToken.access_token}`;
                     }
                 } else if (req.cookies['selvbetjening-idtoken'] !== undefined) {
@@ -98,9 +99,13 @@ const startServer = async (html) => {
 
                     const exchangedToken = await exchangeToken(selvbetjeningIdtoken);
                     if (exchangedToken != null && !exchangedToken.expired() && exchangedToken.access_token) {
+                        console.log('token fra selvbetjeningIdtoken');
                         req.headers['authorization'] = `Bearer ${exchangedToken.access_token}`;
                     }
-                } else return undefined;
+                } else {
+                    console.log('Ingen token sendes cookies');
+                    return undefined;
+                }
 
                 return undefined;
             },
