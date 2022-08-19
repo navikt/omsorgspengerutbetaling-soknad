@@ -82,24 +82,24 @@ const startServer = async (html) => {
 
             router: async (req) => {
                 if (req.headers['authorization'] !== undefined) {
+                    console.log('Utvekslet token fra wondewall');
                     const token = req.headers['authorization'].replace('Bearer ', '');
                     if (isExpiredOrNotAuthorized(token)) {
                         return undefined;
                     }
                     const exchangedToken = await exchangeToken(token);
                     if (exchangedToken != null && !exchangedToken.expired() && exchangedToken.access_token) {
-                        console.log('Utvekslet token fra wondewall');
                         req.headers['authorization'] = `Bearer ${exchangedToken.access_token}`;
                     }
                 } else if (req.cookies['selvbetjening-idtoken'] !== undefined) {
                     const selvbetjeningIdtoken = req.cookies['selvbetjening-idtoken'];
+                    console.log('token fra selvbetjeningIdtoken');
                     if (isExpiredOrNotAuthorized(selvbetjeningIdtoken)) {
                         return undefined;
                     }
 
                     const exchangedToken = await exchangeToken(selvbetjeningIdtoken);
                     if (exchangedToken != null && !exchangedToken.expired() && exchangedToken.access_token) {
-                        console.log('token fra selvbetjeningIdtoken');
                         req.headers['authorization'] = `Bearer ${exchangedToken.access_token}`;
                     }
                 } else {
