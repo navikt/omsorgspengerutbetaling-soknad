@@ -4,8 +4,6 @@ import minMax from 'dayjs/plugin/minMax';
 
 dayjs.extend(minMax);
 
-export const isSameDay = (d1: Date, d2: Date): boolean => dayjs(d1).isSame(d2, 'day');
-
 export const getPeriodeBoundaries = (
     perioderMedFravær: FraværPeriode[],
     dagerMedFravær: FraværDag[]
@@ -27,11 +25,6 @@ export const getPeriodeBoundaries = (
         min: min !== undefined ? min.toDate() : undefined,
         max: max !== undefined ? max.toDate() : undefined,
     };
-};
-
-export const erHelg = (date: Date): boolean => {
-    const dayName = date.getDay();
-    return dayName === 0 || dayName === 6;
 };
 
 export const harFraværPgaSmittevernhensyn = (perioder: FraværPeriode[], dager: FraværDag[]): boolean => {

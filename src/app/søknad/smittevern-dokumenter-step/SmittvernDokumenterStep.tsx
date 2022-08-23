@@ -1,9 +1,7 @@
 import * as React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { useAmplitudeInstance } from '@navikt/sif-common-amplitude/lib';
 import Box from '@navikt/sif-common-core/lib/components/box/Box';
 import CounsellorPanel from '@navikt/sif-common-core/lib/components/counsellor-panel/CounsellorPanel';
-import FileUploadErrors from '@navikt/sif-common-core/lib/components/file-upload-errors/FileUploadErrors';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
 import PictureScanningGuide from '@navikt/sif-common-core/lib/components/picture-scanning-guide/PictureScanningGuide';
 import { Attachment } from '@navikt/sif-common-core/lib/types/Attachment';
@@ -13,40 +11,30 @@ import {
 } from '@navikt/sif-common-core/lib/utils/attachmentUtils';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import { useFormikContext } from 'formik';
-import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import Lenke from 'nav-frontend-lenker';
-import FormikFileUploader from '../../components/formik-file-uploader/FormikFileUploader';
-import UploadedSmittevernDocumentsList from '../../components/uploaded-smittevern-documents-list/UploadedSmittevernDocumentsList';
-import { StepConfigProps, StepID } from '../../config/stepConfig';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import { valuesToAlleDokumenterISøknaden } from '../../utils/attachmentsUtils';
-import { navigateToLoginPage } from '../../utils/navigationUtils';
-import { validateDocuments } from '../../validation/fieldValidations';
-import SøknadStep from '../SøknadStep';
 import getLenker from '../../lenker';
+import SoknadFormStep from '../SoknadFormStep';
+import { StepID } from '../soknadStepsConfig';
+import FormikVedleggsKomponent from '../../components/VedleggComponent/FormikVedleggsKomponent';
 
-const SmittevernDokumenterStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) => {
+const SmittevernDokumenterStep: React.FC = () => {
     const intl = useIntl();
     const { values } = useFormikContext<SøknadFormData>();
-    const [filesThatDidntGetUploaded, setFilesThatDidntGetUploaded] = React.useState<File[]>([]);
+
     const hasPendingUploads: boolean =
         (values.dokumenterSmittevernhensyn || []).find((a: any) => a.pending === true) !== undefined;
+
     const alleDokumenterISøknaden: Attachment[] = valuesToAlleDokumenterISøknaden(values);
+
     const totalSize = getTotalSizeOfAttachments(alleDokumenterISøknaden);
     const attachmentsSizeOver24Mb = totalSize > MAX_TOTAL_ATTACHMENT_SIZE_BYTES;
 
-    const { logUserLoggedOut } = useAmplitudeInstance();
-
-    const uploadFailed = async () => {
-        await logUserLoggedOut('Ved opplasting av dokument');
-        navigateToLoginPage();
-    };
-
     return (
-        <SøknadStep
+        <SoknadFormStep
             id={StepID.DOKUMENTER_SMITTEVERNHENSYN}
-            onValidFormSubmit={onValidSubmit}
-            useValidationErrorSummary={true}
+            includeValidationSummary={true}
             buttonDisabled={hasPendingUploads || attachmentsSizeOver24Mb}>
             <FormBlock>
                 <CounsellorPanel>
@@ -62,45 +50,16 @@ const SmittevernDokumenterStep: React.FunctionComponent<StepConfigProps> = ({ on
                     </Box>
                 </CounsellorPanel>
             </FormBlock>
-            <Box margin="l">
+            <FormBlock>
                 <PictureScanningGuide />
-            </Box>
-            {totalSize <= MAX_TOTAL_ATTACHMENT_SIZE_BYTES && (
-                <FormBlock>
-                    <FormikFileUploader
-                        name={SøknadFormField.dokumenterSmittevernhensyn}
-                        label={intlHelper(intl, 'steg.vedlegg_smittevernhensyn.vedlegg')}
-                        onErrorUploadingAttachments={setFilesThatDidntGetUploaded}
-                        onFileInputClick={() => {
-                            setFilesThatDidntGetUploaded([]);
-                        }}
-                        onUnauthorizedOrForbiddenUpload={uploadFailed}
-                        validate={validateDocuments}
-                    />
-                </FormBlock>
-            )}
-            {totalSize > MAX_TOTAL_ATTACHMENT_SIZE_BYTES && (
-                <Box margin="l">
-                    <AlertStripeAdvarsel>
-                        <FormattedMessage id={'dokumenter.advarsel.totalstørrelse.1'} />
-                        <Lenke
-                            target={'_blank'}
-                            rel={'noopener noreferrer'}
-                            href={
-                                'https://www.nav.no/soknader/nb/person/familie/omsorgspenger/NAV%2009-35.01/ettersendelse'
-                            }>
-                            <FormattedMessage id={'dokumenter.advarsel.totalstørrelse.2'} />
-                        </Lenke>
-                    </AlertStripeAdvarsel>
-                </Box>
-            )}
-            <Box margin="m">
-                <FileUploadErrors filesThatDidntGetUploaded={filesThatDidntGetUploaded} />
-            </Box>
-            <Box margin="l">
-                <UploadedSmittevernDocumentsList wrapNoAttachmentsInBox={true} includeDeletionFunctionality={true} />
-            </Box>
-        </SøknadStep>
+            </FormBlock>
+            <FormikVedleggsKomponent
+                uploadButtonLabel={intlHelper(intl, 'steg.vedlegg_smittevernhensyn.vedlegg')}
+                formikName={SøknadFormField.dokumenterSmittevernhensyn}
+                dokumenter={values.dokumenterSmittevernhensyn}
+                alleDokumenterISøknaden={alleDokumenterISøknaden}
+            />
+        </SoknadFormStep>
     );
 };
 

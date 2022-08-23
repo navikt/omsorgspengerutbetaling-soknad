@@ -81,15 +81,28 @@ const startServer = async (html) => {
             },
 
             router: async (req) => {
-                const selvbetjeningIdtoken = req.cookies['selvbetjening-idtoken'];
+                if (req.headers['authorization'] !== undefined) {
+                    const token = req.headers['authorization'].replace('Bearer ', '');
+                    if (isExpiredOrNotAuthorized(token)) {
+                        return undefined;
+                    }
+                    const exchangedToken = await exchangeToken(token);
+                    if (exchangedToken != null && !exchangedToken.expired() && exchangedToken.access_token) {
+                        req.headers['authorization'] = `Bearer ${exchangedToken.access_token}`;
+                    }
+                } else if (req.cookies['selvbetjening-idtoken'] !== undefined) {
+                    const selvbetjeningIdtoken = req.cookies['selvbetjening-idtoken'];
+                    if (isExpiredOrNotAuthorized(selvbetjeningIdtoken)) {
+                        return undefined;
+                    }
 
-                if (isExpiredOrNotAuthorized(selvbetjeningIdtoken)) {
+                    const exchangedToken = await exchangeToken(selvbetjeningIdtoken);
+                    if (exchangedToken != null && !exchangedToken.expired() && exchangedToken.access_token) {
+                        req.headers['authorization'] = `Bearer ${exchangedToken.access_token}`;
+                    }
+                } else {
+                    console.log('Ingen token sendes cookies');
                     return undefined;
-                }
-
-                const exchangedToken = await exchangeToken(selvbetjeningIdtoken);
-                if (exchangedToken != null && !exchangedToken.expired() && exchangedToken.access_token) {
-                    req.headers['authorization'] = `Bearer ${exchangedToken.access_token}`;
                 }
 
                 return undefined;

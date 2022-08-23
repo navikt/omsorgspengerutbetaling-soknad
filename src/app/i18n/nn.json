@@ -27,16 +27,6 @@
     "Dato": "Dato",
     "dato": "dato",
 
-    "fravær.antallTimer": "Tal timar",
-    "fravær.time": "time",
-    "fravær.timer": "timar",
-    "fravær.timer.label": "Timar",
-    "fravær.delvis.fjern.fjernDag": "Fjern dag med delvis fråvær  ({dato}, {timer})",
-    "fravær.delvis.fjern.fjernDagUtenTimer": "Fjern dag med delvis fråvær  ({dato}, talet på timar ikkje valt)",
-    "fravær.delvis.fjern.fjernTimer": "Fjern dag med delvis fråvær (dato ikkje vald, {timer} valde)",
-    "fravær.delvis.fjern.fjernUtenDagOgTimer": "Fjern dag med delvis fråvær (dato og talet på timar ikkje valde)",
-    "list.fjernKnapp": "Fjern",
-
     "datovelger.fom": "Fra og med",
     "datovelger.tom": "Til og med",
 
@@ -62,46 +52,37 @@
     "fileUploadErrors.part1": "Det har dessverre skjedd ein feil under opplastinga av dei følgjande vedlegga:",
     "formikValidationErrorSummary.tittel": "Du må rette opp i følgjande feil:",
 
-    "andreUtbetalinger.DAGPENGER": "Dagpengar",
-    "andreUtbetalinger.SYKEPENGER": "Sjukepengar",
-    "andreUtbetalinger.MIDLERTIDIG_KOMPENSASJON_SN_FRI": "Mellombels kompensasjon for sjølvstendig næringsdrivande og frilansarar",
-
-    "arbeidssituasjon.arbeidstaker": "Arbeidstakar",
-    "arbeidssituasjon.selvstendigNæringsdrivende": "Sjølvstendig næringsdrivande",
-    "arbeidssituasjon.frilanser": "Frilansar",
-
-    "relasjonTilBarnet.mor": "Mor",
-    "relasjonTilBarnet.far": "Far",
-    "relasjonTilBarnet.adoptivforelder": "Adoptivforelder",
-    "relasjonTilBarnet.fosterforelder": "Fosterforelder",
-
-    "step.nextButtonLabel": "Fortset",
-    "step.sendButtonLabel": "Send inn søknaden",
-    "step.sendButtonAriaLabel": "Send inn søknaden",
-
-    "step.fravaer.pageTitle": "Periodar – Søknad om utbetaling av omsorgspenger",
-    "step.fravaer.stepTitle": "Kva dagar har du vore heime med barn?",
-    "step.fravaer.stepIndicatorLabel": "Kva dagar har du vore heime med barn?",
-
-    "step.arbeidssituasjon.pageTitle": "Inntekt – Søknad om utbetaling av omsorgspenger",
-    "step.arbeidssituasjon.stepTitle": "Inntekt",
-    "step.arbeidssituasjon.stepIndicatorLabel": "Inntekt",
-    "step.arbeidssituasjon.info.1": "Nå treng vi å vite kva som var din arbeidssituasjon på den første dagen du søkjer om utbetaling for.",
-    "step.arbeidssituasjon.advarsel.ingenSituasjonValgt": "Du må velje minst éin av situasjonane over.",
-
-    "step.medlemskap.pageTitle": "Medlemskap i folketrygden - Søknad om utbetaling av omsorgspenger",
-    "step.medlemskap.stepTitle": "Medlemskap",
-    "step.medlemskap.stepIndicatorLabel": "Om medlemskap i folketrygda",
-
-    "step.oppsummering.pageTitle": "Oppsummering – Søknad om utbetaling av omsorgspenger",
-    "step.oppsummering.stepTitle": "Oppsummering",
-    "step.oppsummering.stepIndicatorLabel": "Oppsummering",
-
     "introPage.tittel": "Søknad om utbetaling av omsorgspenger",
     "introPage.stegTittel": "Kan eg søkje om utbetaling av omsorgspenger?",
+    "introPage.info.1.html": "Denne søknaden bruker du når du er <strong>sjølvstendig næringsdrivande eller frilansar</strong> og skal søkje om utbetaling av omsorgspenger. Dersom du er tilsett i eige AS, blir du rekna som arbeidstakar, då skal du eller rekneskapsføraren din ",
+    "introPage.info.2": "sende inntektsmelding til NAV",
+    "introPage.info.3": "Du kan søkje om omsorgspenger når du har vore heime frå jobb fordi",
+    "introPage.info.4": "barnet er sjukt eller barnepassaren er sjuk",
+    "introPage.info.5": "barnehagen eller skulen er stengd på grunn av koronaviruset",
+    "introPage.info.6": "barnet ikkje kan gå i barnehage/skule/SFO på grunn av særlege smittevernomsyn",
+    "introPage.info.6.1": "barnet er i karantene på grunn av koronaviruset",
+    "introPage.info.7.1": "Ver merksam på at du om du har søkt om ",
+    "introPage.info.7.2": "kompensasjon for tapt inntekt som sjølvstendig næringsdrivande og/eller frilansar",
+    "introPage.info.7.3": ", kan du ikkje søkje om omsorgspenger for den same perioden.",
+    "introPage.info.8.1": "Dersom du har søkt om kompensasjon, men no ønskjer å søkje om omsorgspenger, må du trekkje søknaden din om kompensasjon. Dette gjer du ved å ",
+    "introPage.info.8.2": "skrive ei melding til oss",
+    "introPage.info.8.3": ". Under tema vel du jobbsøkjar (sjølv om du ikkje er jobbsøkjar).",
 
-    "page.unavailable.1": "Den digitale søknaden er dessverre ikkje tilgjengeleg på grunn av ein teknisk feil. Vi jobbar med å løyse feilen slik at du kan søkje digitalt.",
-    "page.unavailable.2": "Vi beklagar.",
+    "introPage.form.spm.erSelvstendigEllerFrilanser": "Er du sjølvstendig næringsdrivande eller frilansar?",
+    "introPage.form.spm.smittevernhensyn": "Har du vore heime med barn av særlege smittevernomsyn?",
+    "introPage.form.spm.smittevernhensyn.description.tittel": "Kva meiner vi med særlege smittevernomsyn?",
+    "introPage.form.spm.smittevernhensyn.description.info.html": "Når barnehagen eller skulen er open, men du må vere heime med barnet ditt på grunn av <strong>særlege smittevernomsyn</strong>, kan du bruke omsorgsdagar. Det er ein lege som avgjer om det ligg føre særlege smittevernomsyn. Det kan vere smittevernsomsyn til barnet eller andre familiemedlemmer som bur med barnet.",
+    "introPage.form.spm.hjemmePgaStengt": "Har du vore heime frå jobb fordi skulen/barnehagen/SFO er stengd på grunn av koronaviruset?",
+    "introPage.form.spm.hjemmePgaSykdom": "Har du vore heime frå jobb fordi barnet er blitt sjukt eller barnepassaren er blitt sjuk?",
+    "introPage.form.spm.hjemmePgaKarantene": "Har du vore heime frå jobb fordi barnet har vore i karantene på grunn av koronaviruset?",
+
+    "introPage.søknadGjelderKunFor.1.html": "Denne søknaden gjeld <strong>berre for sjølvstendig næringsdrivande og frilansarar</strong> som skal søkje om utbetaling av omsorgspenger.",
+    "introPage.søknadGjelderKunFor.2.html": "Dersom du er <strong>arbeidstakar</strong>, skal du ikkje søkje om utbetaling av omsorgspenger. Arbeidsgivaren din skal betale ut lønn til deg som vanleg dei dagane du tek ut omsorgsdagar.",
+    "introPage.kanIkkeBrukeSøknad.html": "Du kan <strong>berre</strong> bruke denne søknaden dersom du er heime frå jobb på grunn av éin av situasjonane det er gjort greie for over.",
+    "introPage.smittevernInfo.1.html": "I søknaden må du laste opp ei stadfesting frå lege. Legen må stadfeste at barnet ikkje kan gå i barnehagen eller på skulen fordi det er <strong>særlege smittevernomsyn</strong> i samband med koronaviruset som det må takast hand om for anten barnet eller ein familiemedlem som barnet bur saman med. Legen skal ikkje gi opp diagnose eller kva familiemedlem det gjeld.",
+    "introPage.smittevernInfo.2": "Dersom du ikkje har stadfestinga tilgjengeleg når du søkjer, kan du ettersende stadfestinga. Vi kan ikkje behandle søknaden før vi får stadfestinga.",
+    "introPage.stengtBhgSkole.1": "I søknaden må du laste opp ei stadfestinga frå barnehagen eller skulen på at dei har stengt.",
+    "introPage.stengtBhgSkole.2": "Dersom du ikkje har stadfestinga tilgjengeleg når du søkjer, kan du ettersende den. Vi kan ikkje behandle søknaden før vi mottar stadfestinga.",
 
     "welcomingPage.sidetittel": "Søknad om utbetaling av omsorgspenger",
     "welcomingPage.banner.tittel": "Hei,",
@@ -116,6 +97,13 @@
     "welcomingPage.modal.omDinePlikter.tittel": "Om pliktene dine",
     "welcomingPage.modal.behandlingAvPersonalia.tittel": "Om behandling av personopplysningar",
     "welcomingPage.begynnsøknad": "Gå til søknaden",
+
+    "modal.minePlikter.tittel": "Pliktene mine",
+    "modal.minePlikter.part1": "Eg forstår at det kan få konsekvensar for retten min til omsorgspenger dersom eg",
+    "modal.minePlikter.part1a": "gir uriktig informasjon eller",
+    "modal.minePlikter.part1b": "held tilbake opplysningar",
+    "modal.minePlikter.part2a": "Eg har lese og forstått det som står på",
+    "modal.minePlikter.part2b": "nav.no/rettogplikt",
 
     "modal.personopplysninger.dialogtittel": "Om behandling av personopplysninger",
     "modal.personopplysninger.2": "Vi innhenter og mottar opplysninger om deg for å behandle saken din. Det er nødvendig for at du skal få riktig tjeneste.",
@@ -135,13 +123,6 @@
     "modal.personopplysninger.7.1": "Vil du vite mer om hvordan NAV behandler personopplysninger? Se ",
     "modal.personopplysninger.7.2": "nav.no/personvern",
     "modal.personopplysninger.7.3": ".",
-
-    "modal.minePlikter.tittel": "Pliktene mine",
-    "modal.minePlikter.part1": "Eg forstår at det kan få konsekvensar for retten min til omsorgspenger dersom eg",
-    "modal.minePlikter.part1a": "gir uriktig informasjon eller",
-    "modal.minePlikter.part1b": "held tilbake opplysningar",
-    "modal.minePlikter.part2a": "Eg har lese og forstått det som står på",
-    "modal.minePlikter.part2b": "nav.no/rettogplikt",
 
     "step.fravaer.counsellorpanel.content": "I dei fleste tilfella må ein som sjølvstendig næringsdrivande og frilansar betale dei 10 første daagane i året med omsorgspenger sjølv.",
     "step.fravaer.dager_med_fullt_fravært.label": "Dagar med fullt fråvær",
@@ -179,6 +160,54 @@
     "step.fravaer.måVelgeSituasjon": "Du må velje éin av situasjonane over.",
     "step.fravaer.utenlandsopphold.addLabel": "Legg til nytt utanlandsopphald",
     "step.fravaer.utenlandsopphold.modalTitle": "Utanlandsopphald dei siste 12 månadene",
+
+    "fravær.antallTimer": "Tal timar",
+    "fravær.time": "time",
+    "fravær.timer": "timar",
+    "fravær.timer.label": "Timar",
+    "fravær.delvis.fjern.fjernDag": "Fjern dag med delvis fråvær  ({dato}, {timer})",
+    "fravær.delvis.fjern.fjernDagUtenTimer": "Fjern dag med delvis fråvær  ({dato}, talet på timar ikkje valt)",
+    "fravær.delvis.fjern.fjernTimer": "Fjern dag med delvis fråvær (dato ikkje vald, {timer} valde)",
+    "fravær.delvis.fjern.fjernUtenDagOgTimer": "Fjern dag med delvis fråvær (dato og talet på timar ikkje valde)",
+    "list.fjernKnapp": "Fjern",
+
+    "andreUtbetalinger.DAGPENGER": "Dagpengar",
+    "andreUtbetalinger.SYKEPENGER": "Sjukepengar",
+    "andreUtbetalinger.MIDLERTIDIG_KOMPENSASJON_SN_FRI": "Mellombels kompensasjon for sjølvstendig næringsdrivande og frilansarar",
+
+    "arbeidssituasjon.arbeidstaker": "Arbeidstakar",
+    "arbeidssituasjon.selvstendigNæringsdrivende": "Sjølvstendig næringsdrivande",
+    "arbeidssituasjon.frilanser": "Frilansar",
+
+    "relasjonTilBarnet.mor": "Mor",
+    "relasjonTilBarnet.far": "Far",
+    "relasjonTilBarnet.adoptivforelder": "Adoptivforelder",
+    "relasjonTilBarnet.fosterforelder": "Fosterforelder",
+
+    "step.nextButtonLabel": "Fortset",
+    "step.sendButtonLabel": "Send inn søknaden",
+    "step.sendButtonAriaLabel": "Send inn søknaden",
+
+    "step.fravaer.pageTitle": "Periodar – Søknad om utbetaling av omsorgspenger",
+    "step.fravaer.stepTitle": "Kva dagar har du vore heime med barn?",
+    "step.fravaer.stepIndicatorLabel": "Kva dagar har du vore heime med barn?",
+
+    "step.arbeidssituasjon.pageTitle": "Inntekt – Søknad om utbetaling av omsorgspenger",
+    "step.arbeidssituasjon.stepTitle": "Inntekt",
+    "step.arbeidssituasjon.stepIndicatorLabel": "Inntekt",
+    "step.arbeidssituasjon.info.1": "Nå treng vi å vite kva som var din arbeidssituasjon på den første dagen du søkjer om utbetaling for.",
+    "step.arbeidssituasjon.advarsel.ingenSituasjonValgt": "Du må velje minst éin av situasjonane over.",
+
+    "step.medlemskap.pageTitle": "Medlemskap i folketrygden - Søknad om utbetaling av omsorgspenger",
+    "step.medlemskap.stepTitle": "Medlemskap",
+    "step.medlemskap.stepIndicatorLabel": "Om medlemskap i folketrygda",
+
+    "step.oppsummering.pageTitle": "Oppsummering – Søknad om utbetaling av omsorgspenger",
+    "step.oppsummering.stepTitle": "Oppsummering",
+    "step.oppsummering.stepIndicatorLabel": "Oppsummering",
+
+    "page.unavailable.1": "Den digitale søknaden er dessverre ikkje tilgjengeleg på grunn av ein teknisk feil. Vi jobbar med å løyse feilen slik at du kan søkje digitalt.",
+    "page.unavailable.2": "Vi beklagar.",
 
     "steg.arbeid.spm": "Kva er arbeidssituasjonen din? Du kan velje fleire.",
 
@@ -265,35 +294,6 @@
     "dokumenter.advarsel.totalstørrelse.1": "Du har totalt lasta opp meir enn grensa på 24 Mb. Det betyr at du må fjerne nokre av dei vedlegga du har lasta opp. Dersom det betyr at du ikkje får plass til alt du ønskjer å sende nå, kan du ",
     "dokumenter.advarsel.totalstørrelse.2": "ettersende fleire dokumenter.",
 
-    "steg.intro.info.1.html": "Denne søknaden bruker du når du er <strong>sjølvstendig næringsdrivande eller frilansar</strong> og skal søkje om utbetaling av omsorgspenger. Dersom du er tilsett i eige AS, blir du rekna som arbeidstakar, då skal du eller rekneskapsføraren din ",
-    "steg.intro.info.2": "sende inntektsmelding til NAV",
-    "steg.intro.info.3": "Du kan søkje om omsorgspenger når du har vore heime frå jobb fordi",
-    "steg.intro.info.4": "barnet er sjukt eller barnepassaren er sjuk",
-    "steg.intro.info.5": "barnehagen eller skulen er stengd på grunn av koronaviruset",
-    "steg.intro.info.6": "barnet ikkje kan gå i barnehage/skule/SFO på grunn av særlege smittevernomsyn",
-    "steg.intro.info.6.1": "barnet er i karantene på grunn av koronaviruset",
-    "steg.intro.info.7.1": "Ver merksam på at du om du har søkt om ",
-    "steg.intro.info.7.2": "kompensasjon for tapt inntekt som sjølvstendig næringsdrivande og/eller frilansar",
-    "steg.intro.info.7.3": ", kan du ikkje søkje om omsorgspenger for den same perioden.",
-    "steg.intro.info.8.1": "Dersom du har søkt om kompensasjon, men no ønskjer å søkje om omsorgspenger, må du trekkje søknaden din om kompensasjon. Dette gjer du ved å ",
-    "steg.intro.info.8.2": "skrive ei melding til oss",
-    "steg.intro.info.8.3": ". Under tema vel du jobbsøkjar (sjølv om du ikkje er jobbsøkjar).",
-
-    "steg.intro.form.spm.erSelvstendigEllerFrilanser": "Er du sjølvstendig næringsdrivande eller frilansar?",
-    "steg.intro.form.spm.smittevernhensyn": "Har du vore heime med barn av særlege smittevernomsyn?",
-    "steg.intro.form.spm.hjemmePgaStengt.2021": "Har du vore heime frå jobb fordi skulen/barnehagen/SFO er stengd på grunn av koronaviruset?",
-
-    "steg.intro.form.spm.hjemmePgaSykdom": "Har du vore heime frå jobb fordi barnet er blitt sjukt eller barnepassaren er blitt sjuk?",
-    "steg.intro.form.spm.hjemmePgaKarantene": "Har du vore heime frå jobb fordi barnet har vore i karantene på grunn av koronaviruset?",
-
-    "steg.intro.søknadGjelderKunFor.1.html": "Denne søknaden gjeld <strong>berre for sjølvstendig næringsdrivande og frilansarar</strong> som skal søkje om utbetaling av omsorgspenger.",
-    "steg.intro.søknadGjelderKunFor.2.html": "Dersom du er <strong>arbeidstakar</strong>, skal du ikkje søkje om utbetaling av omsorgspenger. Arbeidsgivaren din skal betale ut lønn til deg som vanleg dei dagane du tek ut omsorgsdagar.",
-    "steg.intro.kanIkkeBrukeSøknad.html": "Du kan <strong>berre</strong> bruke denne søknaden dersom du er heime frå jobb på grunn av éin av situasjonane det er gjort greie for over.",
-    "steg.intro.smittevernInfo.1.html": "I søknaden må du laste opp ei stadfesting frå lege. Legen må stadfeste at barnet ikkje kan gå i barnehagen eller på skulen fordi det er <strong>særlege smittevernomsyn</strong> i samband med koronaviruset som det må takast hand om for anten barnet eller ein familiemedlem som barnet bur saman med. Legen skal ikkje gi opp diagnose eller kva familiemedlem det gjeld.",
-    "steg.intro.smittevernInfo.2": "Dersom du ikkje har stadfestinga tilgjengeleg når du søkjer, kan du ettersende stadfestinga. Vi kan ikkje behandle søknaden før vi får stadfestinga.",
-    "steg.intro.stengtBhgSkole.1": "I søknaden må du laste opp ei stadfestinga frå barnehagen eller skulen på at dei har stengt.",
-    "steg.intro.stengtBhgSkole.2": "Dersom du ikkje har stadfestinga tilgjengeleg når du søkjer, kan du ettersende den. Vi kan ikkje behandle søknaden før vi mottar stadfestinga.",
-
     "steg.oppsummering.dokumenter.header": "Vedlegg",
     "steg.oppsummering.dokumenter.ingenVedlegg": "Ingen vedlegg er lasta opp",
     "steg.oppsummering.dokumenterSmittevern.header": "Stadfesting frå lege",
@@ -333,9 +333,6 @@
     "psg-temp.icon.label.shadow": "Det er skugge på dokumentet i biletet",
     "psg-temp.lenkepanel.url": "https://www.nav.no/no/nav-og-samfunn/kontakt-nav/relatert-informasjon/ta-bilde-av-vedleggene-med-mobilen",
     "psg-temp.lenkepanel.text": "Meir hjelp til å laste opp vedlegg (blir opna i eit nytt vindauge).",
-
-    "info.smittevern.tittel": "Kva meiner vi med særlege smittevernomsyn?",
-    "info.smittevern.info.html": "Når barnehagen eller skulen er open, men du må vere heime med barnet ditt på grunn av <strong>særlege smittevernomsyn</strong>, kan du bruke omsorgsdagar. Det er ein lege som avgjer om det ligg føre særlege smittevernomsyn. Det kan vere smittevernsomsyn til barnet eller andre familiemedlemmer som bur med barnet.",
 
     "næringstype.FISKE": "Fiske",
     "næringstype.JORDBRUK_SKOGBRUK": "Jordbruk",

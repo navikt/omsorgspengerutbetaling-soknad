@@ -1,6 +1,5 @@
 import { IntlShape } from 'react-intl';
 import { Attachment } from '@navikt/sif-common-core/lib/types/Attachment';
-import { Locale } from '@navikt/sif-common-core/lib/types/Locale';
 import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
 import { attachmentUploadHasFailed } from '@navikt/sif-common-core/lib/utils/attachmentUtils';
 import { formatDateToApiFormat } from '@navikt/sif-common-core/lib/utils/dateUtils';
@@ -22,13 +21,15 @@ import { mapFrilansToApiData } from './formToApiMaps/mapFrilansToApiData';
 import { delFraværPerioderOppIDager, getApiAktivitetForDag, getAktivitetFromAktivitetFravær } from './fraværUtils';
 import { Barn } from '../types/Søkerdata';
 import { mapBarnToApiData } from './formToApiMaps/mapBarnToApiData';
+import { getLocaleForApi } from '@navikt/sif-common-core/lib/utils/localeUtils';
+import { getAttachmentURLBackend } from './attachmentUtilsAuthToken';
 
 const getVedleggUrlFromAttachments = (attachments: Attachment[]): string[] => {
     return (
         attachments
             .filter((attachment) => !attachmentUploadHasFailed(attachment))
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            .map(({ url }) => url!)
+            .map(({ url }) => getAttachmentURLBackend(url))
     );
 };
 
@@ -113,7 +114,7 @@ export const mapFormDataToApiData = (
             : undefined;
 
     const apiData: SøknadApiData = {
-        språk: (intl.locale as any) === 'en' ? 'nn' : (intl.locale as Locale),
+        språk: getLocaleForApi(intl.locale),
         bekreftelser: {
             harForståttRettigheterOgPlikter,
             harBekreftetOpplysninger,

@@ -9,18 +9,18 @@ import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import BostedUtlandListAndDialog from '@navikt/sif-common-forms/lib/bosted-utland/BostedUtlandListAndDialog';
 import { useFormikContext } from 'formik';
 import Lenke from 'nav-frontend-lenker';
-import { StepConfigProps, StepID } from '../../config/stepConfig';
 import getLenker from '../../lenker';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
-import SøknadFormComponents from '../SøknadFormComponents';
-import SøknadStep from '../SøknadStep';
 import MedlemskapStepFieldValidations from './medlemskapFieldValidations';
+import SoknadFormStep from '../SoknadFormStep';
+import { StepID } from '../soknadStepsConfig';
+import SoknadFormComponents from '../SoknadFormComponents';
 
-const MedlemsskapStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) => {
+const MedlemsskapStep: React.FC = () => {
     const intl = useIntl();
     const { values } = useFormikContext<SøknadFormData>();
     return (
-        <SøknadStep id={StepID.MEDLEMSKAP} onValidFormSubmit={onValidSubmit}>
+        <SoknadFormStep id={StepID.MEDLEMSKAP}>
             <CounsellorPanel>
                 <p>
                     <FormattedMessage id="steg.medlemsskap.info.1" />
@@ -30,8 +30,8 @@ const MedlemsskapStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubm
                     .
                 </p>
             </CounsellorPanel>
-            <FormBlock margin="xxl">
-                <SøknadFormComponents.YesOrNoQuestion
+            <FormBlock>
+                <SoknadFormComponents.YesOrNoQuestion
                     legend={intlHelper(intl, 'steg.medlemsskap.annetLandSiste12.spm')}
                     name={SøknadFormField.harBoddUtenforNorgeSiste12Mnd}
                     validate={MedlemskapStepFieldValidations.harBoddUtenforNorgeSiste12Mnd}
@@ -57,7 +57,7 @@ const MedlemsskapStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubm
                 </FormBlock>
             )}
             <FormBlock>
-                <SøknadFormComponents.YesOrNoQuestion
+                <SoknadFormComponents.YesOrNoQuestion
                     legend={intlHelper(intl, 'steg.medlemsskap.annetLandNeste12.spm')}
                     name={SøknadFormField.skalBoUtenforNorgeNeste12Mnd}
                     validate={MedlemskapStepFieldValidations.skalBoUtenforNorgeNeste12Mnd}
@@ -82,7 +82,7 @@ const MedlemsskapStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubm
                     />
                 </FormBlock>
             )}
-        </SøknadStep>
+        </SoknadFormStep>
     );
 };
 

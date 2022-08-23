@@ -1,17 +1,17 @@
 import * as React from 'react';
-import Box from '@navikt/sif-common-core/lib/components/box/Box';
 import CounsellorPanel from '@navikt/sif-common-core/lib/components/counsellor-panel/CounsellorPanel';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
 import FormattedHtmlMessage from '@navikt/sif-common-core/lib/components/formatted-html-message/FormattedHtmlMessage';
 import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
 import { useFormikContext } from 'formik';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
-import { StepConfigProps, StepID } from '../../config/stepConfig';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
-import SøknadStep from '../SøknadStep';
 import { cleanupArbeidssituasjonStep } from './cleanupArbeidssituasjonStep';
 import FrilansFormPart from './components/FrilansFormPart';
 import SelvstendigNæringsdrivendeFormPart from './components/SelvstendigNæringsdrivendeFormPart';
+import SoknadFormStep from '../SoknadFormStep';
+import { StepID } from '../soknadStepsConfig';
+import { Barn, Person } from '../../types/Søkerdata';
 
 const shouldShowSubmitButton = (søknadFormData: SøknadFormData): boolean => {
     const erFrilanser: YesOrNo = søknadFormData[SøknadFormField.frilans_erFrilanser];
@@ -21,29 +21,34 @@ const shouldShowSubmitButton = (søknadFormData: SøknadFormData): boolean => {
     return !(erFrilanser === YesOrNo.NO && erSelvstendigNæringsdrivende === YesOrNo.NO);
 };
 
-const ArbeidssituasjonStep: React.FunctionComponent<StepConfigProps> = ({ onValidSubmit }) => {
+interface Props {
+    barn: Barn[];
+    søker: Person;
+    soknadId?: string;
+}
+
+const ArbeidssituasjonStep: React.FC<Props> = ({ barn, søker, soknadId }: Props) => {
     const { values } = useFormikContext<SøknadFormData>();
     const showSubmitButton = shouldShowSubmitButton(values);
 
     return (
-        <SøknadStep
+        <SoknadFormStep
             id={StepID.ARBEIDSSITUASJON}
-            onValidFormSubmit={onValidSubmit}
             showSubmitButton={showSubmitButton}
-            cleanupStep={cleanupArbeidssituasjonStep}>
+            onStepCleanup={cleanupArbeidssituasjonStep}>
             <CounsellorPanel>
                 <p>
                     <FormattedHtmlMessage id="step.arbeidssituasjon.info.1" />
                 </p>
             </CounsellorPanel>
 
-            <Box margin="xxl" padBottom="l">
+            <FormBlock>
                 <FrilansFormPart formValues={values} />
-            </Box>
+            </FormBlock>
 
-            <Box margin="l" padBottom="l">
-                <SelvstendigNæringsdrivendeFormPart formValues={values} />
-            </Box>
+            <FormBlock>
+                <SelvstendigNæringsdrivendeFormPart formValues={values} barn={barn} søker={søker} soknadId={soknadId} />
+            </FormBlock>
             {!showSubmitButton && (
                 <FormBlock margin="l">
                     <AlertStripeAdvarsel>
@@ -51,7 +56,7 @@ const ArbeidssituasjonStep: React.FunctionComponent<StepConfigProps> = ({ onVali
                     </AlertStripeAdvarsel>
                 </FormBlock>
             )}
-        </SøknadStep>
+        </SoknadFormStep>
     );
 };
 

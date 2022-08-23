@@ -30,6 +30,7 @@ export const dineBarnStepIsValid = (formData: SøknadFormData, registrerteBarn: 
             formData.harUtvidetRettFor.length > 0
         );
     }
+
     return false;
 };
 

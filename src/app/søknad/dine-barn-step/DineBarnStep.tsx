@@ -8,11 +8,9 @@ import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import AnnetBarnListAndDialog from '@navikt/sif-common-forms/lib/annet-barn/AnnetBarnListAndDialog';
 import AlertStripe from 'nav-frontend-alertstriper';
 import { nYearsAgo } from '../../utils/aldersUtils';
-import { StepID } from '../../config/stepConfig';
 import { Barn, Person } from '../../types/Søkerdata';
-import SøknadStep from '../SøknadStep';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
-import SøknadFormComponents from '../SøknadFormComponents';
+import SoknadFormComponents from '../SoknadFormComponents';
 import { getCheckedValidator, getListValidator, getYesOrNoValidator } from '@navikt/sif-common-formik/lib/validation';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
@@ -20,18 +18,19 @@ import CounsellorPanel from '@navikt/sif-common-core/lib/components/counsellor-p
 import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
 import { formatName } from '@navikt/sif-common-core/lib/utils/personUtils';
 import { cleanupDineBarnStep, getBarnOptions, minstEtBarn12årIårellerYngre } from './dineBarnStepUtils';
-import SøknadTempStorage from '../SøknadTempStorage';
-import FormSection from '../../components/form-section/FormSection';
+import SoknadTempStorage from '../SoknadTempStorage';
+import FormSection from '@navikt/sif-common-core/lib/components/form-section/FormSection';
 import bemUtils from '@navikt/sif-common-core/lib/utils/bemUtils';
+import { useFormikContext } from 'formik';
 import './dineBarn.less';
-interface OwnProps {
+import { StepID } from '../soknadStepsConfig';
+import SoknadFormStep from '../SoknadFormStep';
+
+interface Props {
     barn: Barn[];
     søker: Person;
-    formValues: SøknadFormData;
-    onValidSubmit: () => void;
+    soknadId?: string;
 }
-
-type Props = OwnProps;
 
 const bem = bemUtils('dineBarn');
 
@@ -45,75 +44,78 @@ const barnItemLabelRenderer = (barn: Barn, intl: IntlShape): React.ReactNode => 
     );
 };
 
-const DineBarnStep: React.FC<Props> = ({ barn, søker, formValues: values, onValidSubmit }) => {
+const DineBarnStep: React.FC<Props> = ({ barn, søker, soknadId }: Props) => {
     const intl = useIntl();
-    const [andreBarnChanged, setAndreBarnChanged] = useState(false);
+    const { values } = useFormikContext<SøknadFormData>();
     const { andreBarn, harUtvidetRett, harUtvidetRettFor } = values;
+    const [andreBarnChanged, setAndreBarnChanged] = useState(false);
     const barnOptions = getBarnOptions(barn, andreBarn);
     const andreBarnFnr = andreBarn.map((barn) => barn.fnr);
     const kanIkkeFortsette = minstEtBarn12årIårellerYngre(barn, andreBarn) === false && harUtvidetRett === YesOrNo.NO;
     const kanFortsette = ((barn !== undefined && barn.length > 0) || andreBarn.length > 0) && !kanIkkeFortsette;
 
     useEffect(() => {
-        if (andreBarnChanged === true) {
+        if (andreBarnChanged === true && soknadId !== undefined) {
             setAndreBarnChanged(false);
-            SøknadTempStorage.update(values, StepID.DINE_BARN);
+            SoknadTempStorage.update(soknadId, values, StepID.DINE_BARN, { søker: søker, barn: barn });
         }
-    }, [andreBarnChanged, values]);
+    }, [andreBarnChanged, barn, soknadId, søker, values]);
 
     return (
-        <SøknadStep
+        <SoknadFormStep
             id={StepID.DINE_BARN}
             showSubmitButton={kanFortsette}
-            onValidFormSubmit={onValidSubmit}
-            cleanupStep={(values): SøknadFormData => cleanupDineBarnStep(values, barn, andreBarn)}>
+            onStepCleanup={(values): SøknadFormData => cleanupDineBarnStep(values, barn, andreBarn)}>
             <CounsellorPanel>
                 <FormattedMessage id="step.dine-barn.counsellorPanel.avsnitt.1" />
                 <Box margin="l">
                     <FormattedMessage id="step.dine-barn.counsellorPanel.avsnitt.2" />
                 </Box>
             </CounsellorPanel>
-            <FormSection title={intlHelper(intl, 'step.dine-barn.seksjonsTittel')}>
-                {barn.length > 0 && (
-                    <Box>
-                        <ItemList<Barn>
-                            getItemId={(registrerteBarn): string => registrerteBarn.aktørId}
-                            getItemTitle={(registrerteBarn): string => registrerteBarn.etternavn}
-                            labelRenderer={(barn): React.ReactNode => barnItemLabelRenderer(barn, intl)}
-                            items={barn}
+            <FormBlock>
+                <FormSection title={intlHelper(intl, 'step.dine-barn.seksjonsTittel')}>
+                    {barn.length > 0 && (
+                        <Box>
+                            <ItemList<Barn>
+                                getItemId={(registrerteBarn): string => registrerteBarn.aktørId}
+                                getItemTitle={(registrerteBarn): string => registrerteBarn.etternavn}
+                                labelRenderer={(barn): React.ReactNode => barnItemLabelRenderer(barn, intl)}
+                                items={barn}
+                            />
+                        </Box>
+                    )}
+
+                    <FormBlock>
+                        <ContentWithHeader
+                            header={
+                                andreBarn.length === 0
+                                    ? intlHelper(intl, 'step.dine-barn.info.spm.andreBarn')
+                                    : intlHelper(intl, 'step.dine-barn.info.spm.flereBarn')
+                            }>
+                            {intlHelper(intl, 'step.dine-barn.info.spm.text')}
+                        </ContentWithHeader>
+                    </FormBlock>
+                    <Box margin="l">
+                        <AnnetBarnListAndDialog<SøknadFormField>
+                            name={SøknadFormField.andreBarn}
+                            labels={{
+                                addLabel: intlHelper(intl, 'step.dine-barn.annetBarnListAndDialog.addLabel'),
+                                listTitle: intlHelper(intl, 'step.dine-barn.annetBarnListAndDialog.listTitle'),
+                                modalTitle: intlHelper(intl, 'step.dine-barn.annetBarnListAndDialog.modalTitle'),
+                            }}
+                            maxDate={dateToday}
+                            minDate={nYearsAgo(18)}
+                            disallowedFødselsnumre={[...[søker.fødselsnummer], ...andreBarnFnr]}
+                            aldersGrenseText={intlHelper(intl, 'step.dine-barn.formLeggTilBarn.aldersGrenseInfo')}
+                            visBarnTypeValg={true}
+                            onAfterChange={() => setAndreBarnChanged(true)}
                         />
                     </Box>
-                )}
-                <FormBlock>
-                    <ContentWithHeader
-                        header={
-                            andreBarn.length === 0
-                                ? intlHelper(intl, 'step.dine-barn.info.spm.andreBarn')
-                                : intlHelper(intl, 'step.dine-barn.info.spm.flereBarn')
-                        }>
-                        {intlHelper(intl, 'step.dine-barn.info.spm.text')}
-                    </ContentWithHeader>
-                </FormBlock>
-                <Box margin="l">
-                    <AnnetBarnListAndDialog<SøknadFormField>
-                        name={SøknadFormField.andreBarn}
-                        labels={{
-                            addLabel: intlHelper(intl, 'step.dine-barn.annetBarnListAndDialog.addLabel'),
-                            listTitle: intlHelper(intl, 'step.dine-barn.annetBarnListAndDialog.listTitle'),
-                            modalTitle: intlHelper(intl, 'step.dine-barn.annetBarnListAndDialog.modalTitle'),
-                        }}
-                        maxDate={dateToday}
-                        minDate={nYearsAgo(18)}
-                        disallowedFødselsnumre={[...[søker.fødselsnummer], ...andreBarnFnr]}
-                        aldersGrenseText={intlHelper(intl, 'step.dine-barn.formLeggTilBarn.aldersGrenseInfo')}
-                        visBarnTypeValg={true}
-                        onAfterChange={() => setAndreBarnChanged(true)}
-                    />
-                </Box>
-            </FormSection>
+                </FormSection>
+            </FormBlock>
             {minstEtBarn12årIårellerYngre(barn, andreBarn) === false && (
                 <FormSection title={intlHelper(intl, 'step.dine-barn.harFåttEkstraOmsorgsdager.label')}>
-                    <SøknadFormComponents.YesOrNoQuestion
+                    <SoknadFormComponents.YesOrNoQuestion
                         name={SøknadFormField.harUtvidetRett}
                         legend={
                             barn.length + andreBarn.length === 1
@@ -128,7 +130,7 @@ const DineBarnStep: React.FC<Props> = ({ barn, søker, formValues: values, onVal
                             <>
                                 {barn.length + andreBarn.length > 1 && (
                                     <>
-                                        <SøknadFormComponents.CheckboxPanelGroup
+                                        <SoknadFormComponents.CheckboxPanelGroup
                                             legend={intlHelper(intl, 'step.dine-barn.utvidetRettFor.spm')}
                                             name={SøknadFormField.harUtvidetRettFor}
                                             checkboxes={barnOptions}
@@ -166,7 +168,7 @@ const DineBarnStep: React.FC<Props> = ({ barn, søker, formValues: values, onVal
                     <FormattedMessage id="step.dine-barn.bekrefterDektTiDagerSelv.info" />
                     <FormBlock>
                         <ContentWithHeader header={intlHelper(intl, 'step.dine-barn.bekrefterDektTiDagerSelv.label')}>
-                            <SøknadFormComponents.ConfirmationCheckbox
+                            <SoknadFormComponents.ConfirmationCheckbox
                                 label={intlHelper(intl, 'step.dine-barn.bekrefterDektTiDagerSelv')}
                                 name={SøknadFormField.harDekketTiFørsteDagerSelv}
                                 validate={getCheckedValidator()}
@@ -181,7 +183,7 @@ const DineBarnStep: React.FC<Props> = ({ barn, søker, formValues: values, onVal
                     <AlertStripe type={'advarsel'}>{intlHelper(intl, 'step.dine-barn.info.ingenbarn.2')}</AlertStripe>
                 </Box>
             )}
-        </SøknadStep>
+        </SoknadFormStep>
     );
 };
 

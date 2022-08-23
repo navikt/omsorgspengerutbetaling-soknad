@@ -1,7 +1,0 @@
-// .json5 allows comments from javascript
-{
-    fornavn: 'Test',
-    mellomnavn: null,
-    etternavn: 'Testesen',
-    fødselsnummer: '23038520075',
-}

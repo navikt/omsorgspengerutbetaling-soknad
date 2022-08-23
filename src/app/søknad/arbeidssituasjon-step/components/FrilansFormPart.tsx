@@ -9,15 +9,15 @@ import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import datepickerUtils from '@navikt/sif-common-formik/lib/components/formik-datepicker/datepickerUtils';
 import { getDateValidator, getYesOrNoValidator } from '@navikt/sif-common-formik/lib/validation';
 import { SøknadFormData, SøknadFormField } from '../../../types/SøknadFormData';
-import SøknadFormComponents from '../../SøknadFormComponents';
 import Lenke from 'nav-frontend-lenker';
 import getLenker from '../../../lenker';
+import SoknadFormComponents from '../../../søknad/SoknadFormComponents';
 
 interface Props {
     formValues: SøknadFormData;
 }
 
-const FrilansFormPart: React.FunctionComponent<Props> = ({
+const FrilansFormPart: React.FC<Props> = ({
     formValues: { frilans_erFrilanser, frilans_jobberFortsattSomFrilans, frilans_startdato },
 }) => {
     const erFrilanser = frilans_erFrilanser === YesOrNo.YES;
@@ -25,7 +25,7 @@ const FrilansFormPart: React.FunctionComponent<Props> = ({
     const intl = useIntl();
     return (
         <>
-            <SøknadFormComponents.YesOrNoQuestion
+            <SoknadFormComponents.YesOrNoQuestion
                 name={SøknadFormField.frilans_erFrilanser}
                 legend={intlHelper(intl, 'frilanser.erFrilanser.spm')}
                 description={
@@ -44,7 +44,7 @@ const FrilansFormPart: React.FunctionComponent<Props> = ({
                 <FormBlock margin="l">
                     <ResponsivePanel className={'responsivePanel'}>
                         <FormBlock margin="none">
-                            <SøknadFormComponents.DatePicker
+                            <SoknadFormComponents.DatePicker
                                 name={SøknadFormField.frilans_startdato}
                                 label={intlHelper(intl, 'frilanser.nårStartet.spm')}
                                 showYearSelector={true}
@@ -56,7 +56,7 @@ const FrilansFormPart: React.FunctionComponent<Props> = ({
                             />
                         </FormBlock>
                         <FormBlock>
-                            <SøknadFormComponents.YesOrNoQuestion
+                            <SoknadFormComponents.YesOrNoQuestion
                                 name={SøknadFormField.frilans_jobberFortsattSomFrilans}
                                 legend={intlHelper(intl, 'frilanser.jobberFortsatt.spm')}
                                 validate={getYesOrNoValidator()}
@@ -64,7 +64,7 @@ const FrilansFormPart: React.FunctionComponent<Props> = ({
                         </FormBlock>
                         {harSluttetSomFrilanser && (
                             <FormBlock>
-                                <SøknadFormComponents.DatePicker
+                                <SoknadFormComponents.DatePicker
                                     name={SøknadFormField.frilans_sluttdato}
                                     label={intlHelper(intl, 'frilanser.nårSluttet.spm')}
                                     showYearSelector={true}

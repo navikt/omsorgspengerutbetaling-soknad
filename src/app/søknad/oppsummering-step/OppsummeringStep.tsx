@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { useHistory } from 'react-router-dom';
-import { useAmplitudeInstance } from '@navikt/sif-common-amplitude/lib';
 import Box from '@navikt/sif-common-core/lib/components/box/Box';
 import CounsellorPanel from '@navikt/sif-common-core/lib/components/counsellor-panel/CounsellorPanel';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
@@ -9,197 +7,169 @@ import ResponsivePanel from '@navikt/sif-common-core/lib/components/responsive-p
 import SummaryList from '@navikt/sif-common-core/lib/components/summary-list/SummaryList';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import { getCheckedValidator } from '@navikt/sif-common-formik/lib/validation';
-import { useFormikContext } from 'formik';
 import { Feiloppsummering, FeiloppsummeringFeil } from 'nav-frontend-skjema';
-import { sendApplication } from '../../api/api';
-import { SKJEMANAVN } from '../../App';
-import SummarySection from '../../components/summary-section/SummarySection';
-import UploadedSmittevernDocumentsList from '../../components/uploaded-smittevern-documents-list/UploadedSmittevernDocumentsList';
-import UploadedStengtDocumentsList from '../../components/uploaded-stengt-documents-list/UploadedStengtDocumentsList';
-import RouteConfig from '../../config/routeConfig';
-import { StepID } from '../../config/stepConfig';
-import { SøkerdataContext } from '../../context/SøkerdataContext';
-import { Barn, Søkerdata } from '../../types/Søkerdata';
+import SummarySection from '@navikt/sif-common-soknad/lib/soknad-summary/summary-section/SummarySection';
+import { Person } from '../../types/Søkerdata';
 import { SøknadApiData } from '../../types/SøknadApiData';
-import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
-import apiUtils from '@navikt/sif-common-core/lib/utils/apiUtils';
-import appSentryLogger from '../../utils/appSentryLogger';
-import { mapFormDataToApiData } from '../../utils/mapFormDataToApiData';
-import { navigateTo, navigateToLoginPage } from '../../utils/navigationUtils';
+import { SøknadFormField } from '../../types/SøknadFormData';
 import { validateSoknadApiData } from '../../validation/apiDataValidation';
-import SøknadFormComponents from '../SøknadFormComponents';
-import SøknadStep from '../SøknadStep';
+import SoknadFormComponents from '../SoknadFormComponents';
 import FrilansSummary from './components/FrilansSummary';
-import JaNeiSvar from './components/JaNeiSvar';
+import JaNeiSvar from '@navikt/sif-common-core/lib/components/summary-enkeltsvar/JaNeiSvar';
 import MedlemskapSummaryView from './components/MedlemskapSummaryView';
 import NavnOgFodselsnummerSummaryView from './components/NavnOgFodselsnummerSummaryView';
 import SelvstendigSummary from './components/SelvstendigSummary';
-import SummaryBlock from './components/SummaryBlock';
+import SummaryBlock from '@navikt/sif-common-soknad/lib/soknad-summary/summary-block/SummaryBlock';
 import UtbetalingsperioderSummaryView from './components/UtbetalingsperioderSummaryView';
 import UtenlandsoppholdISøkeperiodeSummaryView from './components/UtenlandsoppholdISøkeperiodeSummaryView';
 import DineBarnSummaryList from './components/DineBarnSummaryList';
+import SoknadFormStep from '../SoknadFormStep';
+import { isPending } from '@devexperts/remote-data-ts';
+import { StepID } from '../soknadStepsConfig';
+import { useSoknadContext } from '../SoknadContext';
+import AttachmentList from '@navikt/sif-common-core/lib/components/attachment-list/AttachmentList';
+import { Attachment } from '@navikt/sif-common-core/lib/types/Attachment';
 
 interface Props {
     hjemmePgaSmittevernhensyn: boolean;
+    dokumenterSmittevernhensyn: Attachment[];
     hjemmePgaStengtBhgSkole: boolean;
-    registrerteBarn: Barn[];
-    onApplicationSent: (apiValues: SøknadApiData, søkerdata: Søkerdata) => void;
+    dokumenterStengtBkgSkole: Attachment[];
+    søker: Person;
+    apiValues?: SøknadApiData;
 }
 
 const renderApiDataFeil = (feil: FeiloppsummeringFeil) => <span>{feil.feilmelding}</span>;
 
 const OppsummeringStep: React.FC<Props> = ({
-    hjemmePgaStengtBhgSkole,
     hjemmePgaSmittevernhensyn,
-    registrerteBarn,
-    onApplicationSent,
+    dokumenterSmittevernhensyn,
+    hjemmePgaStengtBhgSkole,
+    dokumenterStengtBkgSkole,
+    søker,
+    apiValues,
 }) => {
     const intl = useIntl();
-    const { values } = useFormikContext<SøknadFormData>();
-    const søkerdata = React.useContext(SøkerdataContext);
-    const history = useHistory();
+    const { sendSoknadStatus, sendSoknad } = useSoknadContext();
+    const { fornavn, mellomnavn, etternavn, fødselsnummer } = søker;
 
-    const [sendingInProgress, setSendingInProgress] = useState(false);
-    const { logSoknadFailed, logSoknadSent, logUserLoggedOut } = useAmplitudeInstance();
-
-    async function doSendSoknad(data: SøknadApiData, søker: Søkerdata) {
-        setSendingInProgress(true);
-        try {
-            await sendApplication(data);
-            await logSoknadSent(SKJEMANAVN);
-            onApplicationSent(apiValues, søker);
-        } catch (error) {
-            if (apiUtils.isForbidden(error) || apiUtils.isUnauthorized(error)) {
-                await logUserLoggedOut('Innsending av søknad');
-                navigateToLoginPage();
-            } else {
-                logSoknadFailed(SKJEMANAVN);
-                appSentryLogger.logApiError(error);
-                navigateTo(RouteConfig.ERROR_PAGE_ROUTE, history);
-            }
-        }
-    }
-
-    if (!søkerdata) {
-        return null;
-    }
-
-    const {
-        person: { fornavn, mellomnavn, etternavn, fødselsnummer },
-    } = søkerdata;
-
-    const apiValues: SøknadApiData = mapFormDataToApiData(values, intl, registrerteBarn);
-
-    const apiValidationErrors = validateSoknadApiData(apiValues);
+    const apiValidationErrors = apiValues ? validateSoknadApiData(apiValues) : [];
 
     return (
-        <SøknadStep
+        <SoknadFormStep
             id={StepID.OPPSUMMERING}
-            onValidFormSubmit={() => {
-                setTimeout(() => {
-                    doSendSoknad(apiValues, søkerdata); // La view oppdatere seg først
-                });
-            }}
-            useValidationErrorSummary={false}
-            buttonDisabled={sendingInProgress || apiValidationErrors.length > 0}
-            showButtonSpinner={sendingInProgress}>
+            includeValidationSummary={false}
+            showButtonSpinner={isPending(sendSoknadStatus.status)}
+            buttonDisabled={isPending(sendSoknadStatus.status)}
+            onSendSoknad={apiValues ? () => sendSoknad(apiValues) : undefined}>
             <CounsellorPanel>
                 <FormattedMessage id="steg.oppsummering.info" />
             </CounsellorPanel>
-            <Box margin="xl">
-                <ResponsivePanel border={true}>
-                    {/* Om deg */}
-                    <SummarySection header={intlHelper(intl, 'steg.oppsummering.søker.omDeg')}>
-                        <NavnOgFodselsnummerSummaryView
-                            fornavn={fornavn}
-                            etternavn={etternavn}
-                            mellomnavn={mellomnavn}
-                            fødselsnummer={fødselsnummer}
-                        />
-                    </SummarySection>
-
-                    {/* Dine Barn */}
-                    <SummarySection header={intlHelper(intl, 'steg.oppsummering.dineBarn')}>
-                        <DineBarnSummaryList barn={apiValues.barn} />
-                        {apiValues.harDekketTiFørsteDagerSelv && (
-                            <SummaryBlock
-                                header={intlHelper(intl, 'steg.oppsummering.dineBarn.bekrefterDektTiDagerSelv')}>
-                                <JaNeiSvar harSvartJa={apiValues.harDekketTiFørsteDagerSelv} />
-                            </SummaryBlock>
-                        )}
-                    </SummarySection>
-
-                    {/* Omsorgsdager du søker utbetaling for */}
-                    <SummarySection header={intlHelper(intl, 'steg.oppsummering.utbetalinger.header')}>
-                        <UtbetalingsperioderSummaryView utbetalingsperioder={apiValues.utbetalingsperioder} />
-                        <UtenlandsoppholdISøkeperiodeSummaryView utenlandsopphold={apiValues.opphold} />
-                    </SummarySection>
-
-                    {/* Frilansinntekt */}
-                    <FrilansSummary frilans={apiValues.frilans} />
-
-                    {/* Næringsinntekt */}
-                    <SelvstendigSummary virksomhet={apiValues.selvstendigNæringsdrivende} />
-
-                    {/* Eventuelle andre inntekter */}
-                    <SummarySection header={intlHelper(intl, 'summary.andreIntekter.header')}>
-                        <SummaryBlock header={intlHelper(intl, 'step.fravaer.harSøktAndreUtbetalinger.spm')}>
-                            <JaNeiSvar harSvartJa={apiValues._harSøktAndreUtbetalinger} />
-                        </SummaryBlock>
-                        {apiValues.andreUtbetalinger.length > 0 && (
-                            <SummaryBlock header={intlHelper(intl, 'steg.oppsummering.harSøktOmAndreUtbetalinger')}>
-                                <SummaryList
-                                    items={apiValues.andreUtbetalinger}
-                                    itemRenderer={(utbetaling) => (
-                                        <span>{intlHelper(intl, `andreUtbetalinger.${utbetaling}`)}</span>
-                                    )}
+            {apiValues === undefined && <div>Api verdier mangler</div>}
+            {apiValues !== undefined && (
+                <>
+                    <Box margin="xl">
+                        <ResponsivePanel border={true}>
+                            {/* Om deg */}
+                            <SummarySection header={intlHelper(intl, 'steg.oppsummering.søker.omDeg')}>
+                                <NavnOgFodselsnummerSummaryView
+                                    fornavn={fornavn}
+                                    etternavn={etternavn}
+                                    mellomnavn={mellomnavn}
+                                    fødselsnummer={fødselsnummer}
                                 />
-                            </SummaryBlock>
-                        )}
-                    </SummarySection>
+                            </SummarySection>
 
-                    {/* Medlemskap i folketrygden */}
-                    <SummarySection header={intlHelper(intl, 'steg.oppsummering.medlemskap.header')}>
-                        <MedlemskapSummaryView bosteder={apiValues.bosteder} />
-                    </SummarySection>
+                            {/* Dine Barn */}
+                            <SummarySection header={intlHelper(intl, 'steg.oppsummering.dineBarn')}>
+                                <DineBarnSummaryList barn={apiValues.barn} />
+                                {apiValues.harDekketTiFørsteDagerSelv && (
+                                    <SummaryBlock
+                                        header={intlHelper(
+                                            intl,
+                                            'steg.oppsummering.dineBarn.bekrefterDektTiDagerSelv'
+                                        )}>
+                                        <JaNeiSvar harSvartJa={apiValues.harDekketTiFørsteDagerSelv} />
+                                    </SummaryBlock>
+                                )}
+                            </SummarySection>
 
-                    {/* Vedlegg */}
-                    <SummarySection header={intlHelper(intl, 'steg.oppsummering.dokumenter.header')}>
-                        {hjemmePgaSmittevernhensyn && (
-                            <Box margin="s">
-                                <SummaryBlock
-                                    header={intlHelper(intl, 'steg.oppsummering.dokumenterSmittevern.header')}>
-                                    {apiValues._vedleggSmittevern.length === 0 && (
-                                        <FormattedMessage id={'steg.oppsummering.dokumenter.ikkelastetopp'} />
-                                    )}
-                                    {apiValues._vedleggSmittevern.length > 0 && (
-                                        <UploadedSmittevernDocumentsList includeDeletionFunctionality={false} />
-                                    )}
+                            {/* Omsorgsdager du søker utbetaling for */}
+                            <SummarySection header={intlHelper(intl, 'steg.oppsummering.utbetalinger.header')}>
+                                <UtbetalingsperioderSummaryView utbetalingsperioder={apiValues.utbetalingsperioder} />
+                                <UtenlandsoppholdISøkeperiodeSummaryView utenlandsopphold={apiValues.opphold} />
+                            </SummarySection>
+
+                            {/* Frilansinntekt */}
+                            <FrilansSummary frilans={apiValues.frilans} />
+
+                            {/* Næringsinntekt */}
+                            <SelvstendigSummary virksomhet={apiValues.selvstendigNæringsdrivende} />
+
+                            {/* Eventuelle andre inntekter */}
+                            <SummarySection header={intlHelper(intl, 'summary.andreIntekter.header')}>
+                                <SummaryBlock header={intlHelper(intl, 'step.fravaer.harSøktAndreUtbetalinger.spm')}>
+                                    <JaNeiSvar harSvartJa={apiValues._harSøktAndreUtbetalinger} />
                                 </SummaryBlock>
-                            </Box>
-                        )}
-                        {hjemmePgaStengtBhgSkole && (
-                            <Box margin="s">
-                                <SummaryBlock
-                                    header={intlHelper(intl, 'steg.oppsummering.dokumenterStengtBhgSkole.header')}>
-                                    {apiValues._vedleggStengtSkole.length === 0 && (
-                                        <FormattedMessage id={'steg.oppsummering.dokumenter.ikkelastetopp'} />
-                                    )}
-                                    {apiValues._vedleggStengtSkole.length > 0 && (
-                                        <UploadedStengtDocumentsList includeDeletionFunctionality={false} />
-                                    )}
-                                </SummaryBlock>
-                            </Box>
-                        )}
-                        {!hjemmePgaSmittevernhensyn && !hjemmePgaStengtBhgSkole && (
-                            <Box margin="s">
-                                <FormattedMessage id={'steg.oppsummering.dokumenter.ingenVedlegg'} />
-                            </Box>
-                        )}
-                    </SummarySection>
-                </ResponsivePanel>
-            </Box>
+                                {apiValues.andreUtbetalinger.length > 0 && (
+                                    <SummaryBlock
+                                        header={intlHelper(intl, 'steg.oppsummering.harSøktOmAndreUtbetalinger')}>
+                                        <SummaryList
+                                            items={apiValues.andreUtbetalinger}
+                                            itemRenderer={(utbetaling) => (
+                                                <span>{intlHelper(intl, `andreUtbetalinger.${utbetaling}`)}</span>
+                                            )}
+                                        />
+                                    </SummaryBlock>
+                                )}
+                            </SummarySection>
 
+                            {/* Medlemskap i folketrygden */}
+                            <SummarySection header={intlHelper(intl, 'steg.oppsummering.medlemskap.header')}>
+                                <MedlemskapSummaryView bosteder={apiValues.bosteder} />
+                            </SummarySection>
+
+                            {/* Vedlegg */}
+                            <SummarySection header={intlHelper(intl, 'steg.oppsummering.dokumenter.header')}>
+                                {hjemmePgaSmittevernhensyn && (
+                                    <Box margin="s">
+                                        <SummaryBlock
+                                            header={intlHelper(intl, 'steg.oppsummering.dokumenterSmittevern.header')}>
+                                            {dokumenterSmittevernhensyn.length === 0 && (
+                                                <FormattedMessage id={'steg.oppsummering.dokumenter.ikkelastetopp'} />
+                                            )}
+                                            {dokumenterSmittevernhensyn.length > 0 && (
+                                                <AttachmentList attachments={dokumenterSmittevernhensyn} />
+                                            )}
+                                        </SummaryBlock>
+                                    </Box>
+                                )}
+                                {hjemmePgaStengtBhgSkole && (
+                                    <Box margin="s">
+                                        <SummaryBlock
+                                            header={intlHelper(
+                                                intl,
+                                                'steg.oppsummering.dokumenterStengtBhgSkole.header'
+                                            )}>
+                                            {dokumenterStengtBkgSkole.length === 0 && (
+                                                <FormattedMessage id={'steg.oppsummering.dokumenter.ikkelastetopp'} />
+                                            )}
+                                            {dokumenterStengtBkgSkole.length > 0 && (
+                                                <AttachmentList attachments={dokumenterStengtBkgSkole} />
+                                            )}
+                                        </SummaryBlock>
+                                    </Box>
+                                )}
+                                {!hjemmePgaSmittevernhensyn && !hjemmePgaStengtBhgSkole && (
+                                    <Box margin="s">
+                                        <FormattedMessage id={'steg.oppsummering.dokumenter.ingenVedlegg'} />
+                                    </Box>
+                                )}
+                            </SummarySection>
+                        </ResponsivePanel>
+                    </Box>
+                </>
+            )}
             {apiValidationErrors.length > 0 && (
                 <FormBlock>
                     <Feiloppsummering
@@ -212,14 +182,14 @@ const OppsummeringStep: React.FC<Props> = ({
 
             {apiValidationErrors.length === 0 && (
                 <Box margin="l">
-                    <SøknadFormComponents.ConfirmationCheckbox
+                    <SoknadFormComponents.ConfirmationCheckbox
                         label={intlHelper(intl, 'steg.oppsummering.bekrefterOpplysninger')}
                         name={SøknadFormField.harBekreftetOpplysninger}
                         validate={getCheckedValidator()}
                     />
                 </Box>
             )}
-        </SøknadStep>
+        </SoknadFormStep>
     );
 };
 
