@@ -24,29 +24,23 @@ const bem = bemUtils('introPage');
 enum PageFormField {
     'erSelvstendigEllerFrilanser' = 'erSelvstendigEllerFrilanser',
     'hjemmePgaStengt' = 'hjemmePgaStengt',
-    'hjemmePgaSykdom' = 'hjemmePgaSykdom',
     'smittevernHensyn' = 'smittevernHensyn',
-    'hjemmePgaKarantene' = 'hjemmePgaKarantene',
 }
 
 interface PageFormValues {
     [PageFormField.erSelvstendigEllerFrilanser]: YesOrNo;
     [PageFormField.hjemmePgaStengt]: YesOrNo;
-    [PageFormField.hjemmePgaSykdom]: YesOrNo;
     [PageFormField.smittevernHensyn]: YesOrNo;
-    [PageFormField.hjemmePgaKarantene]: YesOrNo;
 }
 
 const initialValues = {
     [PageFormField.erSelvstendigEllerFrilanser]: YesOrNo.UNANSWERED,
     [PageFormField.hjemmePgaStengt]: YesOrNo.UNANSWERED,
-    [PageFormField.hjemmePgaSykdom]: YesOrNo.UNANSWERED,
     [PageFormField.smittevernHensyn]: YesOrNo.UNANSWERED,
-    [PageFormField.hjemmePgaKarantene]: YesOrNo.UNANSWERED,
 };
 const PageForm = getTypedFormComponents<PageFormField, PageFormValues, ValidationError>();
 
-const IntroPage: React.FunctionComponent = () => {
+const IntroPage: React.FC = () => {
     const intl = useIntl();
     useLogSidevisning(SIFCommonPageKey.intro);
     return (
@@ -58,43 +52,15 @@ const IntroPage: React.FunctionComponent = () => {
                 <InformationPoster>
                     <p>
                         <FormattedHtmlMessage id="introPage.info.1.html" />
+                    </p>
+                    <p>
+                        <FormattedMessage id="introPage.info.2" />
                         <Lenke
                             href="https://www.nav.no/no/bedrift/tjenester-og-skjemaer/nav-og-altinn-tjenester/inntektsmelding"
                             target="_blank">
-                            <FormattedHtmlMessage id="introPage.info.2" />
+                            <FormattedHtmlMessage id="introPage.info.3" />
                         </Lenke>
                         .
-                    </p>
-                    <p>
-                        <FormattedHtmlMessage id="introPage.info.3" />
-                    </p>
-                    <ul>
-                        <li>
-                            <FormattedHtmlMessage id="introPage.info.4" />
-                        </li>
-                        <li>
-                            <FormattedHtmlMessage id="introPage.info.5" />
-                        </li>
-                        <li>
-                            <FormattedHtmlMessage id="introPage.info.6" />
-                        </li>
-                        <li>
-                            <FormattedHtmlMessage id="introPage.info.6.1" />
-                        </li>
-                    </ul>
-                    <p>
-                        <FormattedHtmlMessage id="introPage.info.7.1" />
-                        <Lenke href="https://www.nav.no/arbeid/inntektskompensasjon" target="_blank">
-                            <FormattedHtmlMessage id="introPage.info.7.2" />
-                        </Lenke>
-                        <FormattedHtmlMessage id="introPage.info.7.3" />
-                    </p>
-                    <p>
-                        <FormattedHtmlMessage id="introPage.info.8.1" />
-                        <Lenke href="https://www.nav.no/person/kontakt-oss/nb/skriv-til-oss" target="_blank">
-                            <FormattedHtmlMessage id="introPage.info.8.2" />
-                        </Lenke>
-                        <FormattedHtmlMessage id="introPage.info.8.3" />
                     </p>
                 </InformationPoster>
             </Box>
@@ -102,59 +68,31 @@ const IntroPage: React.FunctionComponent = () => {
                 <PageForm.FormikWrapper
                     onSubmit={() => null}
                     initialValues={initialValues}
-                    renderForm={({
-                        values: {
-                            erSelvstendigEllerFrilanser,
-                            hjemmePgaStengt,
-                            hjemmePgaSykdom,
-                            smittevernHensyn,
-                            hjemmePgaKarantene,
-                        },
-                    }) => {
+                    renderForm={({ values: { erSelvstendigEllerFrilanser, hjemmePgaStengt, smittevernHensyn } }) => {
                         const kanBrukeSøknaden =
                             (erSelvstendigEllerFrilanser === YesOrNo.YES && smittevernHensyn === YesOrNo.YES) ||
                             (erSelvstendigEllerFrilanser === YesOrNo.YES &&
                                 smittevernHensyn === YesOrNo.NO &&
-                                hjemmePgaStengt === YesOrNo.YES) ||
-                            (erSelvstendigEllerFrilanser === YesOrNo.YES &&
-                                smittevernHensyn === YesOrNo.NO &&
-                                hjemmePgaStengt === YesOrNo.NO &&
-                                hjemmePgaSykdom === YesOrNo.YES) ||
-                            (erSelvstendigEllerFrilanser === YesOrNo.YES &&
-                                smittevernHensyn === YesOrNo.NO &&
-                                hjemmePgaStengt === YesOrNo.NO &&
-                                hjemmePgaSykdom === YesOrNo.NO &&
-                                hjemmePgaKarantene === YesOrNo.YES);
+                                hjemmePgaStengt === YesOrNo.YES);
 
                         const skalViseSmittevernSpørsmål = erSelvstendigEllerFrilanser === YesOrNo.YES;
 
                         const skalViseStengtBarnehageSpørsmål =
                             erSelvstendigEllerFrilanser === YesOrNo.YES && smittevernHensyn === YesOrNo.NO;
 
-                        const skalViseSykBarnepasserSpørsmål =
-                            erSelvstendigEllerFrilanser === YesOrNo.YES &&
-                            smittevernHensyn === YesOrNo.NO &&
-                            hjemmePgaStengt === YesOrNo.NO;
-
-                        const skalViseKaranteneSpørsmål =
-                            erSelvstendigEllerFrilanser === YesOrNo.YES &&
-                            smittevernHensyn === YesOrNo.NO &&
-                            hjemmePgaStengt === YesOrNo.NO &&
-                            hjemmePgaSykdom === YesOrNo.NO;
-
                         const skalViseSmittevernInfo =
                             erSelvstendigEllerFrilanser === YesOrNo.YES && smittevernHensyn === YesOrNo.YES;
 
                         const skalViseStengtBhgSkoleInfo =
-                            skalViseSmittevernInfo !== true && hjemmePgaStengt === YesOrNo.YES;
+                            erSelvstendigEllerFrilanser === YesOrNo.YES &&
+                            skalViseSmittevernInfo !== true &&
+                            hjemmePgaStengt === YesOrNo.YES;
 
                         const skalViseErIkkeFrilansEllerSelvstendigInfo = erSelvstendigEllerFrilanser === YesOrNo.NO;
                         const skalViseKanIkkeBrukeSøknadenInfo =
                             erSelvstendigEllerFrilanser === YesOrNo.YES &&
                             smittevernHensyn === YesOrNo.NO &&
-                            hjemmePgaStengt === YesOrNo.NO &&
-                            hjemmePgaSykdom === YesOrNo.NO &&
-                            hjemmePgaKarantene === YesOrNo.NO;
+                            hjemmePgaStengt === YesOrNo.NO;
 
                         return (
                             <PageForm.Form
@@ -186,7 +124,6 @@ const IntroPage: React.FunctionComponent = () => {
                                                         'introPage.form.spm.smittevernhensyn.description.tittel'
                                                     )}>
                                                     <FormattedHtmlMessage id="introPage.form.spm.smittevernhensyn.description.info.html" />
-                                                    ;
                                                 </ExpandableInfo>
                                             }
                                         />
@@ -198,23 +135,6 @@ const IntroPage: React.FunctionComponent = () => {
                                         <PageForm.YesOrNoQuestion
                                             name={PageFormField.hjemmePgaStengt}
                                             legend={intlHelper(intl, 'introPage.form.spm.hjemmePgaStengt')}
-                                        />
-                                    </FormBlock>
-                                )}
-                                {skalViseSykBarnepasserSpørsmål && (
-                                    <FormBlock>
-                                        <PageForm.YesOrNoQuestion
-                                            name={PageFormField.hjemmePgaSykdom}
-                                            legend={intlHelper(intl, 'introPage.form.spm.hjemmePgaSykdom')}
-                                        />
-                                    </FormBlock>
-                                )}
-
-                                {skalViseKaranteneSpørsmål && (
-                                    <FormBlock>
-                                        <PageForm.YesOrNoQuestion
-                                            name={PageFormField.hjemmePgaKarantene}
-                                            legend={intlHelper(intl, 'introPage.form.spm.hjemmePgaKarantene')}
                                         />
                                     </FormBlock>
                                 )}
