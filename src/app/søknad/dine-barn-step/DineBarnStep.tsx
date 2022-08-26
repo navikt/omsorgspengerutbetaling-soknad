@@ -3,7 +3,7 @@ import { FormattedMessage, IntlShape, useIntl } from 'react-intl';
 import Box from '@navikt/sif-common-core/lib/components/box/Box';
 import ContentWithHeader from '@navikt/sif-common-core/lib/components/content-with-header/ContentWithHeader';
 import ItemList from '@navikt/sif-common-core/lib/components/item-list/ItemList';
-import { dateToday, prettifyDate } from '@navikt/sif-common-core/lib/utils/dateUtils';
+import { dateToday, prettifyDate } from '@navikt/sif-common-utils';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import AnnetBarnListAndDialog from '@navikt/sif-common-forms/lib/annet-barn/AnnetBarnListAndDialog';
 import AlertStripe from 'nav-frontend-alertstriper';

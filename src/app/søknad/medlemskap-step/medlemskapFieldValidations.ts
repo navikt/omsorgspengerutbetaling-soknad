@@ -1,9 +1,5 @@
-import {
-    date1YearAgo,
-    date1YearFromNow,
-    dateRangesCollide,
-    dateRangesExceedsRange,
-} from '@navikt/sif-common-core/lib/utils/dateUtils';
+import { date1YearAgo, date1YearFromNow, dateRangesCollide } from '@navikt/sif-common-utils';
+import { dateRangesExceedsRange } from '@navikt/sif-common-core/lib/utils/dateUtils';
 import { getYesOrNoValidator } from '@navikt/sif-common-formik/lib/validation';
 import { Utenlandsopphold } from '@navikt/sif-common-forms/lib';
 import { SøknadFormField } from '../../types/SøknadFormData';

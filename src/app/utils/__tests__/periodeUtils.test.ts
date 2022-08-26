@@ -1,4 +1,4 @@
-import { apiStringDateToDate } from '@navikt/sif-common-core/lib/utils/dateUtils';
+import { ISODateToDate } from '@navikt/sif-common-utils';
 import { FraværDag, FraværPeriode, FraværÅrsak } from '@navikt/sif-common-forms/lib';
 import dayjs from 'dayjs';
 import { getPeriodeBoundaries, harFraværPgaSmittevernhensyn, harFraværPgaStengBhgSkole } from '../periodeUtils';
@@ -67,23 +67,23 @@ describe('getPeriodeBoundaries', () => {
 
     describe('fravær', () => {
         const perioderPgaSmittevernhensyn: FraværPeriode = {
-            fraOgMed: apiStringDateToDate('2020-10-10'),
-            tilOgMed: apiStringDateToDate('2020-10-11'),
+            fraOgMed: ISODateToDate('2020-10-10'),
+            tilOgMed: ISODateToDate('2020-10-11'),
             årsak: FraværÅrsak.smittevernhensyn,
         };
         const dagPgaSmittevernhensyn: FraværDag = {
-            dato: apiStringDateToDate('2020-10-10'),
+            dato: ISODateToDate('2020-10-10'),
             årsak: FraværÅrsak.smittevernhensyn,
             timerArbeidsdag: '2',
             timerFravær: '1',
         };
         const perioderPgaStengBhgSkole: FraværPeriode = {
-            fraOgMed: apiStringDateToDate('2020-10-10'),
-            tilOgMed: apiStringDateToDate('2020-10-11'),
+            fraOgMed: ISODateToDate('2020-10-10'),
+            tilOgMed: ISODateToDate('2020-10-11'),
             årsak: FraværÅrsak.stengtSkoleBhg,
         };
         const dagPgaStengBhgSkole: FraværDag = {
-            dato: apiStringDateToDate('2020-10-10'),
+            dato: ISODateToDate('2020-10-10'),
             årsak: FraværÅrsak.stengtSkoleBhg,
             timerArbeidsdag: '2',
             timerFravær: '1',

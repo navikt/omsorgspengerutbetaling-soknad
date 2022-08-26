@@ -1,4 +1,4 @@
-import { prettifyDate } from '@navikt/sif-common-core/lib/utils/dateUtils';
+import { prettifyDate } from '@navikt/sif-common-utils';
 import { formatName } from '@navikt/sif-common-core/lib/utils/personUtils';
 import { YesOrNo } from '@navikt/sif-common-formik/lib';
 import { AnnetBarn } from '@navikt/sif-common-forms/lib/annet-barn/types';

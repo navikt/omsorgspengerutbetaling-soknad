@@ -1,5 +1,5 @@
 import React from 'react';
-import { apiStringDateToDate, prettifyDateExtended } from '@navikt/sif-common-core/lib/utils/dateUtils';
+import { ISODateToDate, prettifyDateExtended } from '@navikt/sif-common-utils';
 import bemUtils from '@navikt/sif-common-core/lib/utils/bemUtils';
 
 import './utenlandsoppholdSummaryItem.less';
@@ -11,8 +11,8 @@ export const renderUtenlandsoppholdIPeriodenSummary = (opphold: Utenlandsopphold
     return (
         <div className={bem.block}>
             <span className={bem.element('dates')}>
-                {prettifyDateExtended(apiStringDateToDate(opphold.fraOgMed))} -{' '}
-                {prettifyDateExtended(apiStringDateToDate(opphold.tilOgMed))}
+                {prettifyDateExtended(ISODateToDate(opphold.fraOgMed))} -{' '}
+                {prettifyDateExtended(ISODateToDate(opphold.tilOgMed))}
             </span>
             <span className={bem.element('country')}>{opphold.landnavn}</span>
         </div>
