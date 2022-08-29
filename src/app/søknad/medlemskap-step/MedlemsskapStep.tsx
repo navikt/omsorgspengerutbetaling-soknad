@@ -4,7 +4,7 @@ import CounsellorPanel from '@navikt/sif-common-core/lib/components/counsellor-p
 import ExpandableInfo from '@navikt/sif-common-core/lib/components/expandable-content/ExpandableInfo';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
 import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
-import { date1YearAgo, date1YearFromNow, dateToday } from '@navikt/sif-common-core/lib/utils/dateUtils';
+import { date1YearAgo, date1YearFromNow, dateToday } from '@navikt/sif-common-utils';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import BostedUtlandListAndDialog from '@navikt/sif-common-forms/lib/bosted-utland/BostedUtlandListAndDialog';
 import { useFormikContext } from 'formik';

@@ -1,6 +1,6 @@
 import datepickerUtils from '@navikt/sif-common-formik/lib/components/formik-datepicker/datepickerUtils';
 import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
-import { formatDateToApiFormat } from '@navikt/sif-common-core/lib/utils/dateUtils';
+import { dateToISODate } from '@navikt/sif-common-utils';
 import { Frilans } from '../../types/SøknadApiData';
 
 export const mapFrilansToApiData = (
@@ -17,9 +17,9 @@ export const mapFrilansToApiData = (
             return undefined;
         }
         const frilans: Frilans = {
-            startdato: formatDateToApiFormat(startDate),
+            startdato: dateToISODate(startDate),
             jobberFortsattSomFrilans: jobberFortsattSomFrilans === YesOrNo.YES,
-            sluttdato: endDate ? formatDateToApiFormat(endDate) : undefined,
+            sluttdato: endDate ? dateToISODate(endDate) : undefined,
         };
         return frilans;
     }

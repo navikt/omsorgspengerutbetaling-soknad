@@ -1,7 +1,7 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
 import Box from '@navikt/sif-common-core/lib/components/box/Box';
-import { apiStringDateToDate, dateToday } from '@navikt/sif-common-core/lib/utils/dateUtils';
+import { ISODateToDate, dateToday } from '@navikt/sif-common-utils';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import dayjs from 'dayjs';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
@@ -23,8 +23,8 @@ const MedlemskapSummaryView: React.FunctionComponent<Props> = (props) => {
     const { bosteder } = props;
     const intl = useIntl();
 
-    const bostederSiste12 = bosteder.filter((b) => dayjs(apiStringDateToDate(b.tilOgMed)).isSameOrBefore(dateToday));
-    const bostederNeste12 = bosteder.filter((b) => dayjs(apiStringDateToDate(b.tilOgMed)).isSameOrAfter(dateToday));
+    const bostederSiste12 = bosteder.filter((b) => dayjs(ISODateToDate(b.tilOgMed)).isSameOrBefore(dateToday));
+    const bostederNeste12 = bosteder.filter((b) => dayjs(ISODateToDate(b.tilOgMed)).isSameOrAfter(dateToday));
     return (
         <>
             <SummaryBlock header={intlHelper(intl, 'steg.oppsummering.utlandetSiste12.header')}>

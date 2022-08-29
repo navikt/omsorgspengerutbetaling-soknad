@@ -2,7 +2,7 @@ import React from 'react';
 import { IntlShape, useIntl } from 'react-intl';
 import SummaryList from '@navikt/sif-common-core/lib/components/summary-list/SummaryList';
 import { Time } from '@navikt/sif-common-core/lib/types/Time';
-import { apiStringDateToDate, prettifyDate } from '@navikt/sif-common-core/lib/utils/dateUtils';
+import { ISODateToDate, prettifyDate } from '@navikt/sif-common-utils';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import { iso8601DurationToTime, timeToDecimalTime } from '@navikt/sif-common-core/lib/utils/timeUtils';
 import { FraværÅrsak, getFraværÅrsakTekstKort, timeText } from '@navikt/sif-common-forms/lib/fravær';
@@ -100,7 +100,7 @@ export const renderUtbetalingsperiodeDag = (
     )}`;
     return (
         <div style={{ marginBottom: '.5rem' }}>
-            {renderEnkeltdagElement(apiStringDateToDate(dag.dato))}
+            {renderEnkeltdagElement(ISODateToDate(dag.dato))}
             Skulle jobbet {antallTimerSkulleJobbet}. Borte fra jobb {antallTimerBorteFraJobb}.
             {renderÅrsakElement(dag.årsak, intl)}
             {renderFraværAktivitetElement(dag.aktivitetFravær, visAktivitet, intl)}
@@ -113,8 +113,8 @@ const renderUtbetalingsperiode = (
     visAktivitet: boolean,
     intl: IntlShape
 ): JSX.Element => {
-    const fom = apiStringDateToDate(periode.fraOgMed);
-    const tom = apiStringDateToDate(periode.tilOgMed);
+    const fom = ISODateToDate(periode.fraOgMed);
+    const tom = ISODateToDate(periode.tilOgMed);
 
     return (
         <div style={{ marginBottom: '.5rem' }}>

@@ -4,7 +4,7 @@ import ExpandableInfo from '@navikt/sif-common-core/lib/components/expandable-co
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
 import ResponsivePanel from '@navikt/sif-common-core/lib/components/responsive-panel/ResponsivePanel';
 import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
-import { dateToday } from '@navikt/sif-common-core/lib/utils/dateUtils';
+import { dateToday } from '@navikt/sif-common-utils';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import datepickerUtils from '@navikt/sif-common-formik/lib/components/formik-datepicker/datepickerUtils';
 import { getDateValidator, getYesOrNoValidator } from '@navikt/sif-common-formik/lib/validation';

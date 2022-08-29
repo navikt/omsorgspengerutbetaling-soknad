@@ -1,5 +1,5 @@
 import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
-import { date1YearAgo, dateToday } from '@navikt/sif-common-core/lib/utils/dateUtils';
+import { date1YearAgo, dateToday } from '@navikt/sif-common-utils';
 import { DateRange } from '@navikt/sif-common-formik/lib';
 import { FraværDag, FraværPeriode } from '@navikt/sif-common-forms/lib';
 import dayjs from 'dayjs';

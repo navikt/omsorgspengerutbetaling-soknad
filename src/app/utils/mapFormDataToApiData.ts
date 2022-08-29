@@ -2,7 +2,6 @@ import { IntlShape } from 'react-intl';
 import { Attachment } from '@navikt/sif-common-core/lib/types/Attachment';
 import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
 import { attachmentUploadHasFailed } from '@navikt/sif-common-core/lib/utils/attachmentUtils';
-import { formatDateToApiFormat } from '@navikt/sif-common-core/lib/utils/dateUtils';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import { decimalTimeToTime, timeToIso8601Duration } from '@navikt/sif-common-core/lib/utils/timeUtils';
 import { mapVirksomhetToVirksomhetApiData, Utenlandsopphold } from '@navikt/sif-common-forms/lib';
@@ -23,6 +22,7 @@ import { Barn } from '../types/Søkerdata';
 import { mapBarnToApiData } from './formToApiMaps/mapBarnToApiData';
 import { getLocaleForApi } from '@navikt/sif-common-core/lib/utils/localeUtils';
 import { getAttachmentURLBackend } from './attachmentUtilsAuthToken';
+import { dateToISODate } from '@navikt/sif-common-utils';
 
 const getVedleggUrlFromAttachments = (attachments: Attachment[]): string[] => {
     return (
@@ -225,8 +225,8 @@ export const mapFraværPeriodeTilUtbetalingsperiodeApi = (
     aktivitetFravær: ApiAktivitet[]
 ): UtbetalingsperiodeApi => {
     return {
-        fraOgMed: formatDateToApiFormat(periode.fraOgMed),
-        tilOgMed: formatDateToApiFormat(periode.tilOgMed),
+        fraOgMed: dateToISODate(periode.fraOgMed),
+        tilOgMed: dateToISODate(periode.tilOgMed),
         antallTimerPlanlagt: null,
         antallTimerBorte: null,
         årsak: periode.årsak,
@@ -239,8 +239,8 @@ export const mapFraværDagTilUtbetalingsperiodeApi = (
     aktivitetFravær: ApiAktivitet[]
 ): UtbetalingsperiodeApi => {
     return {
-        fraOgMed: formatDateToApiFormat(fraværDag.dato),
-        tilOgMed: formatDateToApiFormat(fraværDag.dato),
+        fraOgMed: dateToISODate(fraværDag.dato),
+        tilOgMed: dateToISODate(fraværDag.dato),
         antallTimerPlanlagt: timeToIso8601Duration(decimalTimeToTime(parseFloat(fraværDag.timerArbeidsdag))),
         antallTimerBorte: timeToIso8601Duration(decimalTimeToTime(parseFloat(fraværDag.timerFravær))),
         årsak: fraværDag.årsak,
