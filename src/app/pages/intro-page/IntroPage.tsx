@@ -22,19 +22,16 @@ import './introPage.less';
 const bem = bemUtils('introPage');
 
 enum PageFormField {
-    'erSelvstendigEllerFrilanser' = 'erSelvstendigEllerFrilanser',
     'hjemmePgaStengt' = 'hjemmePgaStengt',
     'smittevernHensyn' = 'smittevernHensyn',
 }
 
 interface PageFormValues {
-    [PageFormField.erSelvstendigEllerFrilanser]: YesOrNo;
     [PageFormField.hjemmePgaStengt]: YesOrNo;
     [PageFormField.smittevernHensyn]: YesOrNo;
 }
 
 const initialValues = {
-    [PageFormField.erSelvstendigEllerFrilanser]: YesOrNo.UNANSWERED,
     [PageFormField.hjemmePgaStengt]: YesOrNo.UNANSWERED,
     [PageFormField.smittevernHensyn]: YesOrNo.UNANSWERED,
 };
@@ -68,67 +65,48 @@ const IntroPage: React.FC = () => {
                 <PageForm.FormikWrapper
                     onSubmit={() => null}
                     initialValues={initialValues}
-                    renderForm={({ values: { erSelvstendigEllerFrilanser, hjemmePgaStengt, smittevernHensyn } }) => {
-                        const kanBrukeSøknaden =
-                            (erSelvstendigEllerFrilanser === YesOrNo.YES && smittevernHensyn === YesOrNo.YES) ||
-                            (erSelvstendigEllerFrilanser === YesOrNo.YES &&
-                                smittevernHensyn === YesOrNo.NO &&
-                                hjemmePgaStengt === YesOrNo.YES);
+                    renderForm={({ values: { hjemmePgaStengt, smittevernHensyn } }) => {
+                        const skalViseSmittevernInfo = smittevernHensyn === YesOrNo.YES;
 
-                        const skalViseSmittevernSpørsmål = erSelvstendigEllerFrilanser === YesOrNo.YES;
-
-                        const skalViseStengtBarnehageSpørsmål =
-                            erSelvstendigEllerFrilanser === YesOrNo.YES && smittevernHensyn === YesOrNo.NO;
-
-                        const skalViseSmittevernInfo =
-                            erSelvstendigEllerFrilanser === YesOrNo.YES && smittevernHensyn === YesOrNo.YES;
+                        const skalViseStengtBarnehageSpørsmål = smittevernHensyn === YesOrNo.NO;
 
                         const skalViseStengtBhgSkoleInfo =
-                            erSelvstendigEllerFrilanser === YesOrNo.YES &&
-                            skalViseSmittevernInfo !== true &&
-                            hjemmePgaStengt === YesOrNo.YES;
+                            smittevernHensyn === YesOrNo.NO && hjemmePgaStengt === YesOrNo.YES;
 
-                        const skalViseErIkkeFrilansEllerSelvstendigInfo = erSelvstendigEllerFrilanser === YesOrNo.NO;
-                        const skalViseKanIkkeBrukeSøknadenInfo =
-                            erSelvstendigEllerFrilanser === YesOrNo.YES &&
-                            smittevernHensyn === YesOrNo.NO &&
-                            hjemmePgaStengt === YesOrNo.NO;
+                        const skalViseGåTilSøknadLink =
+                            skalViseSmittevernInfo ||
+                            (skalViseStengtBarnehageSpørsmål && hjemmePgaStengt !== YesOrNo.UNANSWERED);
+
+                        const showNotAllQuestionsAnsweredMessage = !skalViseGåTilSøknadLink;
 
                         return (
                             <PageForm.Form
                                 formErrorHandler={intlFormErrorHandler(intl, 'introForm')}
                                 includeButtons={false}
-                                noButtonsContentRenderer={() => {
-                                    return kanBrukeSøknaden ||
-                                        skalViseKanIkkeBrukeSøknadenInfo ||
-                                        skalViseErIkkeFrilansEllerSelvstendigInfo ? null : (
-                                        <UnansweredQuestionsInfo>
-                                            <FormattedMessage id="page.form.ubesvarteSpørsmålInfo" />
-                                        </UnansweredQuestionsInfo>
-                                    );
-                                }}>
-                                <PageForm.YesOrNoQuestion
-                                    name={PageFormField.erSelvstendigEllerFrilanser}
-                                    legend={intlHelper(intl, 'introPage.form.spm.erSelvstendigEllerFrilanser')}
-                                />
-
-                                {skalViseSmittevernSpørsmål && (
-                                    <FormBlock>
-                                        <PageForm.YesOrNoQuestion
-                                            name={PageFormField.smittevernHensyn}
-                                            legend={intlHelper(intl, 'introPage.form.spm.smittevernhensyn')}
-                                            description={
-                                                <ExpandableInfo
-                                                    title={intlHelper(
-                                                        intl,
-                                                        'introPage.form.spm.smittevernhensyn.description.tittel'
-                                                    )}>
-                                                    <FormattedHtmlMessage id="introPage.form.spm.smittevernhensyn.description.info.html" />
-                                                </ExpandableInfo>
-                                            }
-                                        />
-                                    </FormBlock>
-                                )}
+                                noButtonsContentRenderer={
+                                    showNotAllQuestionsAnsweredMessage
+                                        ? () => (
+                                              <UnansweredQuestionsInfo>
+                                                  <FormattedMessage id="page.form.ubesvarteSpørsmålInfo" />
+                                              </UnansweredQuestionsInfo>
+                                          )
+                                        : undefined
+                                }>
+                                <FormBlock>
+                                    <PageForm.YesOrNoQuestion
+                                        name={PageFormField.smittevernHensyn}
+                                        legend={intlHelper(intl, 'introPage.form.spm.smittevernhensyn')}
+                                        description={
+                                            <ExpandableInfo
+                                                title={intlHelper(
+                                                    intl,
+                                                    'introPage.form.spm.smittevernhensyn.description.tittel'
+                                                )}>
+                                                <FormattedHtmlMessage id="introPage.form.spm.smittevernhensyn.description.info.html" />
+                                            </ExpandableInfo>
+                                        }
+                                    />
+                                </FormBlock>
 
                                 {skalViseStengtBarnehageSpørsmål && (
                                     <FormBlock>
@@ -139,26 +117,14 @@ const IntroPage: React.FC = () => {
                                     </FormBlock>
                                 )}
 
-                                {skalViseErIkkeFrilansEllerSelvstendigInfo && (
-                                    <Box margin="xl">
-                                        <AlertStripeInfo>
-                                            <>
-                                                <p style={{ marginTop: 0, marginBottom: 0 }}>
-                                                    <FormattedHtmlMessage id="introPage.søknadGjelderKunFor.1.html" />
-                                                </p>
-                                                <p>
-                                                    <FormattedHtmlMessage id="introPage.søknadGjelderKunFor.2.html" />
-                                                </p>
-                                            </>
-                                        </AlertStripeInfo>
-                                    </Box>
-                                )}
-
-                                {skalViseKanIkkeBrukeSøknadenInfo && (
+                                {skalViseSmittevernInfo && (
                                     <Box margin="xl">
                                         <AlertStripeInfo>
                                             <p style={{ marginTop: 0, marginBottom: 0 }}>
-                                                <FormattedHtmlMessage id="introPage.kanIkkeBrukeSøknad.html" />
+                                                <FormattedHtmlMessage id="introPage.smittevernInfo.1.html" />
+                                            </p>
+                                            <p>
+                                                <FormattedHtmlMessage id="introPage.smittevernInfo.2" />
                                             </p>
                                         </AlertStripeInfo>
                                     </Box>
@@ -177,20 +143,7 @@ const IntroPage: React.FC = () => {
                                     </Box>
                                 )}
 
-                                {skalViseSmittevernInfo && (
-                                    <Box margin="xl">
-                                        <AlertStripeInfo>
-                                            <p style={{ marginTop: 0, marginBottom: 0 }}>
-                                                <FormattedHtmlMessage id="introPage.smittevernInfo.1.html" />
-                                            </p>
-                                            <p>
-                                                <FormattedHtmlMessage id="introPage.smittevernInfo.2" />
-                                            </p>
-                                        </AlertStripeInfo>
-                                    </Box>
-                                )}
-
-                                {kanBrukeSøknaden && (
+                                {skalViseGåTilSøknadLink && (
                                     <>
                                         <Box
                                             margin="xl"

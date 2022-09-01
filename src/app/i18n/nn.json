@@ -57,12 +57,9 @@
     "introPage.info.1.html": "Denne søknaden bruker du når du er <strong>sjølvstendig næringsdrivande eller frilansar</strong> og skal søkje om utbetaling av omsorgspenger. Dersom du er tilsett i eige AS, blir du rekna som arbeidstakar, då skal du eller rekneskapsføraren din ",
     "introPage.info.2": "sende inntektsmelding til NAV",
 
-    "introPage.form.spm.erSelvstendigEllerFrilanser": "Er du sjølvstendig næringsdrivande eller frilansar?",
     "introPage.form.spm.smittevernhensyn.description.tittel": "Kva meiner vi med særlege smittevernomsyn?",
 
-    "introPage.søknadGjelderKunFor.1.html": "Denne søknaden gjeld <strong>berre for sjølvstendig næringsdrivande og frilansarar</strong> som skal søkje om utbetaling av omsorgspenger.",
     "introPage.søknadGjelderKunFor.2.html": "Dersom du er <strong>arbeidstakar</strong>, skal du ikkje søkje om utbetaling av omsorgspenger. Arbeidsgivaren din skal betale ut lønn til deg som vanleg dei dagane du tek ut omsorgsdagar.",
-    "introPage.kanIkkeBrukeSøknad.html": "Du kan <strong>berre</strong> bruke denne søknaden dersom du er heime frå jobb på grunn av éin av situasjonane det er gjort greie for over.",
     "introPage.smittevernInfo.1.html": "I søknaden må du laste opp ei stadfesting frå lege. Legen må stadfeste at barnet ikkje kan gå i barnehagen eller på skulen fordi det er <strong>særlege smittevernomsyn</strong> i samband med koronaviruset som det må takast hand om for anten barnet eller ein familiemedlem som barnet bur saman med. Legen skal ikkje gi opp diagnose eller kva familiemedlem det gjeld.",
     "introPage.smittevernInfo.2": "Dersom du ikkje har stadfestinga tilgjengeleg når du søkjer, kan du ettersende stadfestinga. Vi kan ikkje behandle søknaden før vi får stadfestinga.",
     "introPage.stengtBhgSkole.1": "I søknaden må du laste opp ei stadfestinga frå barnehagen eller skulen på at dei har stengt.",
