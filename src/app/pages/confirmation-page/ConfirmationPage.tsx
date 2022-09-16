@@ -35,19 +35,12 @@ const ConfirmationPage: React.FC = () => {
                 <ul className="checklist">
                     <li>
                         <FormattedMessage id="page.confirmation.checklist.1.a" />
-                        <Lenke
-                            href="https://www.nav.no/soknader/nb/person/familie/omsorgspenger/NAV%2009-35.01/ettersendelse"
-                            target="_blank">
-                            <FormattedMessage id="page.confirmation.checklist.1.b" />
-                        </Lenke>
-                        .
                     </li>
                     <li>
                         <FormattedMessage id="page.confirmation.checklist.2.a" />{' '}
                         <Lenke href={getLenker(intl.locale).saksbehandlingstider} target="_blank">
                             <FormattedMessage id="page.confirmation.checklist.2.b" />
-                        </Lenke>{' '}
-                        <FormattedMessage id="page.confirmation.checklist.2.c" />
+                        </Lenke>
                     </li>
                 </ul>
             </Box>
