@@ -5,7 +5,6 @@ interface Lenker {
     personvern: string;
     rettOgPlikt: string;
     saksbehandlingstider: string;
-    dittNAV: string;
     søkeEkstraDager: string;
     veiledningEttersendelse: string;
     skatteetaten: string;
@@ -20,8 +19,8 @@ const LenkerBokmål: Lenker = {
     personvern:
         'https://www.nav.no/no/NAV+og+samfunn/Om+NAV/personvern-i-arbeids-og-velferdsetaten/personvernerkl%C3%A6ring-for-arbeids-og-velferdsetaten',
     rettOgPlikt: 'https://nav.no/rettOgPlikt',
-    saksbehandlingstider: 'https://www.nav.no/no/NAV+og+samfunn/Om+NAV/Saksbehandlingstider+i+NAV',
-    dittNAV: `https://www.nav.no/no/Ditt+NAV`,
+    saksbehandlingstider: 'https://www.nav.no/saksbehandlingstider',
+
     søkeEkstraDager: 'https://www.nav.no/familie/sykdom-i-familien/nb/omsorgspenger#Nar-kan-du-soke-om-ekstra-dager',
     veiledningEttersendelse:
         'https://www.dev.nav.no/soknader/nb/person/familie/omsorgspenger/NAV%2009-35.01/ettersendelse',
