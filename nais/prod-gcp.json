@@ -6,7 +6,7 @@
     "minReplicas": "1",
     "maxReplicas": "1",
     "ingresses": ["https://www.nav.no/familie/sykdom-i-familien/soknad/omsorgspengerutbetaling"],
-    "externalHosts": ["omsorgspengerutbetalingsoknad-api.nav.no", "www.nav.no"],
+    "externalHosts": ["www.nav.no"],
     "env": {
         "DEKORATOR_URL": "https://www.nav.no/dekoratoren/?simple=true&chatbot=false&logoutUrl=https://www.nav.no/familie/sykdom-i-familien/soknad/omsorgspengerutbetaling/oauth2/logout",
         "API_URL": "https://k9-brukerdialog-api.nav.no",
