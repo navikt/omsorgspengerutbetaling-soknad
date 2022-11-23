@@ -47,24 +47,6 @@
     "fileUploadErrors.part1": "Det har dessverre skjedd en feil under opplasting av følgende vedlegg:",
     "formikValidationErrorSummary.tittel": "Du må rette opp i følgende feil:",
 
-    "introPage.tittel": "Søknad om utbetaling av omsorgspenger",
-    "introPage.stegTittel": "Kan jeg søke om utbetaling av omsorgspenger?",
-
-    "introPage.info.1.html": "Denne søknaden bruker du når du er <strong>selvstendig næringsdrivende eller frilanser</strong> og skal søke om utbetaling av omsorgspenger.",
-    "introPage.info.2": "Hvis du er ansatt i eget AS regnes du som arbeidstaker, da skal du eller din regnskapsfører ",
-    "introPage.info.3": "sende inntektsmelding til NAV",
-
-    "introPage.form.spm.smittevernhensyn": "Har du vært hjemme med barn grunnet særlige smittevernhensyn i forbindelse med koronaviruset?",
-    "introPage.form.spm.smittevernhensyn.description.tittel": "Hva menes med særlige smittevernhensyn?",
-    "introPage.form.spm.smittevernhensyn.description.info.html": "Når barnehagen eller skolen er åpen, men du må være hjemme med barnet ditt på grunn <strong>av særlige smittevernhensyn</strong> i forbindelse med koronaviruset, kan du bruke omsorgsdager. Det er en lege som avgjør om det foreligger særlige smittevernhensyn. Det kan være smittevernhensyn til barnet eller andre familiemedlemmer som bor med barnet.",
-    "introPage.form.spm.hjemmePgaStengt": "Har du vært hjemme fra jobb fordi barnehagen eller skolen har vært stengt på grunn av koronaviruset?",
-
-    "introPage.søknadGjelderKunFor.2.html": "Hvis du er <strong>arbeidstaker</strong>, skal du ikke søke om utbetaling av omsorgspenger. Arbeidsgiveren din skal utbetale deg lønn som vanlig de dagene du tar ut omsorgsdager.",
-    "introPage.smittevernInfo.1.html": "I søknaden må du laste opp en bekreftelse fra lege. Legen må bekrefte at barnet ikke kan gå i barnehage eller skole fordi det er <strong>særlige smittevernhensyn</strong> i forbindelse med koronaviruset som må ivaretas for enten barnet eller et familiemedlem som barnet bor sammen med. Legen skal ikke oppgi diagnose eller hvilket familiemedlem det gjelder.",
-    "introPage.smittevernInfo.2": "Hvis du ikke har bekreftelse tilgjengelig når du søker, kan du ettersende den. Vi kan ikke behandle søknaden før vi mottar bekreftelsen.",
-    "introPage.stengtBhgSkole.1": "I søknaden må du laste opp en bekreftelse fra barnehagen eller skolen på at de har stengt.",
-    "introPage.stengtBhgSkole.2": "Hvis du ikke har bekreftelsen tilgjengelig når du søker, kan du ettersende den. Vi kan ikke behandle søknaden før vi mottar bekreftelsen.",
-
     "welcomingPage.sidetittel": "Søknad om utbetaling av omsorgspenger",
     "welcomingPage.banner.tittel": "Hei,",
     "welcomingPage.banner.tekst": "jeg vil hjelpe deg med å fylle ut søknaden!",

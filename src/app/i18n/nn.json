@@ -52,19 +52,6 @@
     "fileUploadErrors.part1": "Det har dessverre skjedd ein feil under opplastinga av dei følgjande vedlegga:",
     "formikValidationErrorSummary.tittel": "Du må rette opp i følgjande feil:",
 
-    "introPage.tittel": "Søknad om utbetaling av omsorgspenger",
-    "introPage.stegTittel": "Kan eg søkje om utbetaling av omsorgspenger?",
-    "introPage.info.1.html": "Denne søknaden bruker du når du er <strong>sjølvstendig næringsdrivande eller frilansar</strong> og skal søkje om utbetaling av omsorgspenger. Dersom du er tilsett i eige AS, blir du rekna som arbeidstakar, då skal du eller rekneskapsføraren din ",
-    "introPage.info.2": "sende inntektsmelding til NAV",
-
-    "introPage.form.spm.smittevernhensyn.description.tittel": "Kva meiner vi med særlege smittevernomsyn?",
-
-    "introPage.søknadGjelderKunFor.2.html": "Dersom du er <strong>arbeidstakar</strong>, skal du ikkje søkje om utbetaling av omsorgspenger. Arbeidsgivaren din skal betale ut lønn til deg som vanleg dei dagane du tek ut omsorgsdagar.",
-    "introPage.smittevernInfo.1.html": "I søknaden må du laste opp ei stadfesting frå lege. Legen må stadfeste at barnet ikkje kan gå i barnehagen eller på skulen fordi det er <strong>særlege smittevernomsyn</strong> i samband med koronaviruset som det må takast hand om for anten barnet eller ein familiemedlem som barnet bur saman med. Legen skal ikkje gi opp diagnose eller kva familiemedlem det gjeld.",
-    "introPage.smittevernInfo.2": "Dersom du ikkje har stadfestinga tilgjengeleg når du søkjer, kan du ettersende stadfestinga. Vi kan ikkje behandle søknaden før vi får stadfestinga.",
-    "introPage.stengtBhgSkole.1": "I søknaden må du laste opp ei stadfestinga frå barnehagen eller skulen på at dei har stengt.",
-    "introPage.stengtBhgSkole.2": "Dersom du ikkje har stadfestinga tilgjengeleg når du søkjer, kan du ettersende den. Vi kan ikkje behandle søknaden før vi mottar stadfestinga.",
-
     "welcomingPage.sidetittel": "Søknad om utbetaling av omsorgspenger",
     "welcomingPage.banner.tittel": "Hei,",
     "welcomingPage.banner.tekst": "eg vil hjelpe deg med å fylle ut søknaden!",

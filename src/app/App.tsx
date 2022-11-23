@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { render } from 'react-dom';
-import { Route } from 'react-router-dom';
+import { Redirect, Route } from 'react-router-dom';
 import { AmplitudeProvider } from '@navikt/sif-common-amplitude/lib';
 import Modal from 'nav-frontend-modal';
-import IntroPage from './pages/intro-page/IntroPage';
 import RouteConfig from './config/routeConfig';
 import appSentryLogger from './utils/appSentryLogger';
 import { getEnvironmentVariable } from './utils/envUtils';
@@ -37,12 +36,14 @@ const App: React.FunctionComponent = () => {
                 publicPath={publicPath}>
                 <SoknadApplicationCommonRoutes
                     contentRoutes={[
-                        <Route path="/" key="intro" exact={true} component={IntroPage} />,
                         <Route
                             path={RouteConfig.SØKNAD_ROUTE_PREFIX}
                             key="soknad"
                             component={SoknadRemoteDataFetcher}
                         />,
+                        <Route path={'/'} key="redirect">
+                            <Redirect path="/" key="start" to={RouteConfig.WELCOMING_PAGE_ROUTE} />,
+                        </Route>,
                     ]}
                 />
             </SoknadApplication>
