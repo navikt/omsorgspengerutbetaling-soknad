@@ -98,8 +98,6 @@
     "step.fravaer.dager_med_delvis_fravært.label": "Dagar med delvis fråvær",
     "step.fravaer.dager_med_delvis_fravært.info": "TODO",
     "step.fravaer.har_du_oppholdt_deg_i_utlandet_for_dager_du_soker_ok.spm": "Har du vore i utlandet nokre av dagane du søkjer om omsorgspenger for?",
-    "step.fravaer.harSøktAndreUtbetalinger.spm": "Har du søkt om andre utbetalingar frå NAV i samband med koronasituasjonen?",
-    "step.fravaer.hvilke_utbetalinger.spm": "Kva andre utbetalingar frå NAV har du søkt om",
 
     "step.fravaer.info2021.1": "No skal du legga inn dagane du har hatt fråvær frå jobb fordi du har vore heime med omsorgsdagar. Du kan få utbetalt omsorgspenger i opptil tre månader tilbake i tid, rekna frå månaden før NAV fekk søknad frå deg.",
     "step.fravaer.info2021.2": "For omsorgsdagar du bruker i 2021 må du sjølv dekka dei 10 første dagane.",
@@ -138,10 +136,6 @@
     "fravær.delvis.fjern.fjernTimer": "Fjern dag med delvis fråvær (dato ikkje vald, {timer} valde)",
     "fravær.delvis.fjern.fjernUtenDagOgTimer": "Fjern dag med delvis fråvær (dato og talet på timar ikkje valde)",
     "list.fjernKnapp": "Fjern",
-
-    "andreUtbetalinger.DAGPENGER": "Dagpengar",
-    "andreUtbetalinger.SYKEPENGER": "Sjukepengar",
-    "andreUtbetalinger.MIDLERTIDIG_KOMPENSASJON_SN_FRI": "Mellombels kompensasjon for sjølvstendig næringsdrivande og frilansarar",
 
     "arbeidssituasjon.arbeidstaker": "Arbeidstakar",
     "arbeidssituasjon.selvstendigNæringsdrivende": "Sjølvstendig næringsdrivande",
@@ -206,7 +200,6 @@
     "steg.oppsummering.barnet.deltOmsorg.header": "Deler du omsorga med den andre forelderen?",
 
     "steg.oppsummering.arbeidssituasjon.header": "Arbeidssituasjonen din",
-    "steg.oppsummering.harSøktOmAndreUtbetalinger": "Andre utbetalingar som det er søkt om frå NAV",
     "steg.oppsummering.utbetalinger.header": "Omsorgsdagar du søker utbetaling for",
 
     "steg.oppsummering.medlemskap.header": "Medlemskap i folketrygden",
@@ -340,7 +333,5 @@
     "frilanser.summary.header": "Frilansinntekt",
     "frilanser.summary.harDuHattInntekt.header": "Er du frilansar?",
     "frilanser.summary.nårStartet.header": "Når starta du som frilansar?",
-    "frilanser.summary.jobberFortsatt.header": "Jobbar du framleis som frilansar?",
-
-    "summary.andreIntekter.header": "Eventuelle andre inntekter"
+    "frilanser.summary.jobberFortsatt.header": "Jobbar du framleis som frilansar?"
 }

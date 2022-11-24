@@ -3,7 +3,6 @@ import { FraværDag, FraværPeriode } from '@navikt/sif-common-forms/lib/fravær
 import { Virksomhet } from '@navikt/sif-common-forms/lib/virksomhet/types';
 import { Attachment } from '@navikt/sif-common-core/lib/types/Attachment';
 import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
-import { AndreUtbetalinger } from './AndreUtbetalinger';
 import { AktivitetFravær } from './AktivitetFravær';
 import { AnnetBarn } from '@navikt/sif-common-forms/lib/annet-barn/types';
 
@@ -19,8 +18,6 @@ export enum SøknadFormField {
     fraværDager = 'fraværDager',
     perioder_harVærtIUtlandet = 'perioder_harVærtIUtlandet',
     perioder_utenlandsopphold = 'perioder_utenlandsopphold',
-    harSøktAndreUtbetalinger = 'harSøktAndreUtbetalinger',
-    andreUtbetalinger = 'andreUtbetalinger',
 
     // Barn
     andreBarn = 'andreBarn',
@@ -68,8 +65,6 @@ export interface SøknadFormData {
     [SøknadFormField.fraværDager]: FraværDag[];
     [SøknadFormField.perioder_harVærtIUtlandet]: YesOrNo;
     [SøknadFormField.perioder_utenlandsopphold]: Utenlandsopphold[];
-    [SøknadFormField.harSøktAndreUtbetalinger]: YesOrNo;
-    [SøknadFormField.andreUtbetalinger]: AndreUtbetalinger[];
 
     // Dokumenter
     [SøknadFormField.dokumenterStengtBkgSkole]: Attachment[];
@@ -127,8 +122,6 @@ export const initialValues: SøknadFormData = {
     [SøknadFormField.fraværDager]: [],
     [SøknadFormField.perioder_harVærtIUtlandet]: YesOrNo.UNANSWERED,
     [SøknadFormField.perioder_utenlandsopphold]: [],
-    [SøknadFormField.harSøktAndreUtbetalinger]: YesOrNo.UNANSWERED,
-    [SøknadFormField.andreUtbetalinger]: [],
 
     [SøknadFormField.dokumenterStengtBkgSkole]: [],
     [SøknadFormField.dokumenterSmittevernhensyn]: [],

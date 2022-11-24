@@ -1,7 +1,6 @@
 import { FraværÅrsak, VirksomhetApiData } from '@navikt/sif-common-forms/lib';
 import { ApiStringDate } from '@navikt/sif-common-core/lib/types/ApiStringDate';
 import { Locale } from '@navikt/sif-common-core/lib/types/Locale';
-import { AndreUtbetalinger } from './AndreUtbetalinger';
 import { ApiAktivitet } from './AktivitetFravær';
 import { BarnType } from '@navikt/sif-common-forms/lib/annet-barn/types';
 
@@ -72,7 +71,6 @@ export interface SøknadApiData {
     };
     spørsmål: YesNoSpørsmålOgSvar[];
     utbetalingsperioder: UtbetalingsperiodeApi[]; // perioder
-    andreUtbetalinger: AndreUtbetalinger[];
     opphold: UtenlandsoppholdApiData[]; // hvis ja på har oppholdt seg i utlandet
     bosteder: UtenlandsoppholdApiData[]; // medlemskap-siden
     frilans?: Frilans;
@@ -82,7 +80,6 @@ export interface SøknadApiData {
     barn: ApiBarn[];
     _vedleggSmittevern: string[];
     _vedleggStengtSkole: string[];
-    _harSøktAndreUtbetalinger: boolean;
     _varFrilansIPerioden: boolean;
     _varSelvstendigNæringsdrivendeIPerioden: boolean;
 }

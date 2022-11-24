@@ -9,16 +9,13 @@ import { SøknadFormData } from '../../types/SøknadFormData';
 dayjs.extend(MinMax);
 
 const cleanupFraværStep = (values: SøknadFormData): SøknadFormData => {
-    const { harDagerMedDelvisFravær, harPerioderMedFravær, harSøktAndreUtbetalinger } = values;
+    const { harDagerMedDelvisFravær, harPerioderMedFravær } = values;
     const cleanedValues = { ...values };
     if (harDagerMedDelvisFravær === YesOrNo.NO) {
         cleanedValues.fraværDager = [];
     }
     if (harPerioderMedFravær === YesOrNo.NO) {
         cleanedValues.fraværPerioder = [];
-    }
-    if (harSøktAndreUtbetalinger === YesOrNo.NO) {
-        cleanedValues.andreUtbetalinger = [];
     }
 
     return cleanedValues;

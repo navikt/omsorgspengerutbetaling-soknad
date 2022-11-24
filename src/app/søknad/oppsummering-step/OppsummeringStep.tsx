@@ -4,7 +4,6 @@ import Box from '@navikt/sif-common-core/lib/components/box/Box';
 import CounsellorPanel from '@navikt/sif-common-core/lib/components/counsellor-panel/CounsellorPanel';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
 import ResponsivePanel from '@navikt/sif-common-core/lib/components/responsive-panel/ResponsivePanel';
-import SummaryList from '@navikt/sif-common-core/lib/components/summary-list/SummaryList';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import { getCheckedValidator } from '@navikt/sif-common-formik/lib/validation';
 import { Feiloppsummering, FeiloppsummeringFeil } from 'nav-frontend-skjema';
@@ -105,24 +104,6 @@ const OppsummeringStep: React.FC<Props> = ({
 
                             {/* Næringsinntekt */}
                             <SelvstendigSummary virksomhet={apiValues.selvstendigNæringsdrivende} />
-
-                            {/* Eventuelle andre inntekter */}
-                            <SummarySection header={intlHelper(intl, 'summary.andreIntekter.header')}>
-                                <SummaryBlock header={intlHelper(intl, 'step.fravaer.harSøktAndreUtbetalinger.spm')}>
-                                    <JaNeiSvar harSvartJa={apiValues._harSøktAndreUtbetalinger} />
-                                </SummaryBlock>
-                                {apiValues.andreUtbetalinger.length > 0 && (
-                                    <SummaryBlock
-                                        header={intlHelper(intl, 'steg.oppsummering.harSøktOmAndreUtbetalinger')}>
-                                        <SummaryList
-                                            items={apiValues.andreUtbetalinger}
-                                            itemRenderer={(utbetaling) => (
-                                                <span>{intlHelper(intl, `andreUtbetalinger.${utbetaling}`)}</span>
-                                            )}
-                                        />
-                                    </SummaryBlock>
-                                )}
-                            </SummarySection>
 
                             {/* Medlemskap i folketrygden */}
                             <SummarySection header={intlHelper(intl, 'steg.oppsummering.medlemskap.header')}>

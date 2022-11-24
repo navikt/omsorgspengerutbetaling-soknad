@@ -51,8 +51,6 @@ export const mapFormDataToApiData = (
 
         perioder_harVærtIUtlandet,
         perioder_utenlandsopphold,
-        harSøktAndreUtbetalinger,
-        andreUtbetalinger,
 
         dokumenterStengtBkgSkole = [],
         dokumenterSmittevernhensyn = [],
@@ -75,12 +73,6 @@ export const mapFormDataToApiData = (
 
     const yesOrNoQuestions: YesNoSpørsmålOgSvar[] = [];
 
-    if (harSøktAndreUtbetalinger === YesOrNo.NO) {
-        yesOrNoQuestions.push({
-            spørsmål: intlHelper(intl, 'step.fravaer.harSøktAndreUtbetalinger.spm'),
-            svar: mapYesOrNoToSvar(harSøktAndreUtbetalinger),
-        });
-    }
     if (frilans_erFrilanser) {
         yesOrNoQuestions.push({
             spørsmål: intlHelper(intl, 'frilanser.erFrilanser.spm'),
@@ -122,7 +114,6 @@ export const mapFormDataToApiData = (
         harDekketTiFørsteDagerSelv: harDekketTiFørsteDagerSelv,
         barn: mapBarnToApiData(andreBarn, harUtvidetRettFor, registrerteBarn, harDekketTiFørsteDagerSelv),
         spørsmål: [...yesOrNoQuestions],
-        andreUtbetalinger: harSøktAndreUtbetalinger === YesOrNo.YES ? [...andreUtbetalinger] : [],
         utbetalingsperioder: getUtbetalingsperioderApiFromFormData(formValues),
         bosteder: settInnBosteder(
             harBoddUtenforNorgeSiste12Mnd,
@@ -137,7 +128,6 @@ export const mapFormDataToApiData = (
         vedlegg: [...vedleggSmittevern, ...vedleggStengtBhgSkole],
         _vedleggStengtSkole: vedleggStengtBhgSkole,
         _vedleggSmittevern: vedleggSmittevern,
-        _harSøktAndreUtbetalinger: mapYesOrNoToSvar(harSøktAndreUtbetalinger),
         _varFrilansIPerioden: mapYesOrNoToSvar(frilans_erFrilanser),
         _varSelvstendigNæringsdrivendeIPerioden: mapYesOrNoToSvar(selvstendig_erSelvstendigNæringsdrivende),
     };
