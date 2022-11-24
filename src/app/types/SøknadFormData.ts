@@ -27,6 +27,7 @@ export enum SøknadFormField {
     // Dokumenter
     dokumenterStengtBkgSkole = 'dokumenterStengtBkgSkole',
     dokumenterSmittevernhensyn = 'dokumenterSmittevernhensyn',
+    dokumenterLegeerklæring = 'dokumenterLegeerklæring',
 
     // Fravær fra
     aktivitetFravær = 'aktivitetFravær',
@@ -69,6 +70,7 @@ export interface SøknadFormData {
     // Dokumenter
     [SøknadFormField.dokumenterStengtBkgSkole]: Attachment[];
     [SøknadFormField.dokumenterSmittevernhensyn]: Attachment[];
+    [SøknadFormField.dokumenterLegeerklæring]: Attachment[];
 
     // Inntekt
     [SøknadFormField.frilans_erFrilanser]: YesOrNo;
@@ -125,6 +127,7 @@ export const initialValues: SøknadFormData = {
 
     [SøknadFormField.dokumenterStengtBkgSkole]: [],
     [SøknadFormField.dokumenterSmittevernhensyn]: [],
+    [SøknadFormField.dokumenterLegeerklæring]: [],
 
     // Arbeidssituasjon
     [SøknadFormField.frilans_erFrilanser]: YesOrNo.UNANSWERED,

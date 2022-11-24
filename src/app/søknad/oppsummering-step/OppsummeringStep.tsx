@@ -34,6 +34,7 @@ interface Props {
     dokumenterSmittevernhensyn: Attachment[];
     hjemmePgaStengtBhgSkole: boolean;
     dokumenterStengtBkgSkole: Attachment[];
+    dokumenterLegeerklæring: Attachment[];
     søker: Person;
     apiValues?: SøknadApiData;
 }
@@ -45,6 +46,7 @@ const OppsummeringStep: React.FC<Props> = ({
     dokumenterSmittevernhensyn,
     hjemmePgaStengtBhgSkole,
     dokumenterStengtBkgSkole,
+    dokumenterLegeerklæring,
     søker,
     apiValues,
 }) => {
@@ -112,6 +114,17 @@ const OppsummeringStep: React.FC<Props> = ({
 
                             {/* Vedlegg */}
                             <SummarySection header={intlHelper(intl, 'steg.oppsummering.dokumenter.header')}>
+                                <Box margin="s">
+                                    <SummaryBlock
+                                        header={intlHelper(intl, 'steg.oppsummering.dokumenterLegeerklæring.header')}>
+                                        {dokumenterLegeerklæring.length === 0 && (
+                                            <FormattedMessage id={'steg.oppsummering.dokumenter.ikkelastetopp'} />
+                                        )}
+                                        {dokumenterLegeerklæring.length > 0 && (
+                                            <AttachmentList attachments={dokumenterLegeerklæring} />
+                                        )}
+                                    </SummaryBlock>
+                                </Box>
                                 {hjemmePgaSmittevernhensyn && (
                                     <Box margin="s">
                                         <SummaryBlock
@@ -139,11 +152,6 @@ const OppsummeringStep: React.FC<Props> = ({
                                                 <AttachmentList attachments={dokumenterStengtBkgSkole} />
                                             )}
                                         </SummaryBlock>
-                                    </Box>
-                                )}
-                                {!hjemmePgaSmittevernhensyn && !hjemmePgaStengtBhgSkole && (
-                                    <Box margin="s">
-                                        <FormattedMessage id={'steg.oppsummering.dokumenter.ingenVedlegg'} />
                                     </Box>
                                 )}
                             </SummarySection>

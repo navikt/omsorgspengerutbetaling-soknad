@@ -6,6 +6,7 @@ import {
     fraværFraStepIsAvailable,
     medlemskapStepIsAvailable,
     summaryStepAvailable,
+    legeerklæringStepIsAvailable,
 } from './stepUtils';
 import { StepID } from '../søknad/soknadStepsConfig';
 import { Barn } from '../types/Søkerdata';
@@ -23,6 +24,10 @@ export const getAvailableSteps = (values: SøknadFormData, registrerteBarn: Barn
 
     if (fraværStepIsAvailable(values, registrerteBarn)) {
         steps.push(StepID.FRAVÆR);
+    }
+
+    if (legeerklæringStepIsAvailable(values)) {
+        steps.push(StepID.DOKUMENTER_LEGEERKLÆRING);
     }
 
     if (arbeidssituasjonStepIsAvailable(values)) {

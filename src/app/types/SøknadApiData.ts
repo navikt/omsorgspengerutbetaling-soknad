@@ -80,6 +80,7 @@ export interface SøknadApiData {
     barn: ApiBarn[];
     _vedleggSmittevern: string[];
     _vedleggStengtSkole: string[];
+    _vedleggLegeerklæring: string[];
     _varFrilansIPerioden: boolean;
     _varSelvstendigNæringsdrivendeIPerioden: boolean;
 }

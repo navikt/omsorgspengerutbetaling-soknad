@@ -28,6 +28,7 @@ import { useIntl } from 'react-intl';
 import { useSoknadContext } from './SoknadContext';
 import soknadStepUtils from '@navikt/sif-common-soknad/lib/soknad-step/soknadStepUtils';
 import VelkommenPage from '../pages/velkommen-page/VelkommenPage';
+import LegeerklæringDokumenterStep from './legeerklæring-dokumenter-step/LegeerklæringDokumenterStep';
 
 interface Props {
     søker: Person;
@@ -54,6 +55,8 @@ const SøknadRoutes: React.FC<Props> = ({ søker, barn = [], soknadId }) => {
                 return <StengtBhgSkoleDokumenterStep />;
             case StepID.DOKUMENTER_SMITTEVERNHENSYN:
                 return <SmittevernDokumenterStep />;
+            case StepID.DOKUMENTER_LEGEERKLÆRING:
+                return <LegeerklæringDokumenterStep />;
             case StepID.ARBEIDSSITUASJON:
                 return <ArbeidssituasjonStep barn={barn} søker={søker} soknadId={soknadId} />;
             case StepID.FRAVÆR_FRA:
@@ -68,6 +71,7 @@ const SøknadRoutes: React.FC<Props> = ({ søker, barn = [], soknadId }) => {
                         dokumenterSmittevernhensyn={values.dokumenterSmittevernhensyn}
                         hjemmePgaStengtBhgSkole={fraværPgaStengBhgSkole}
                         dokumenterStengtBkgSkole={values.dokumenterStengtBkgSkole}
+                        dokumenterLegeerklæring={values.dokumenterLegeerklæring}
                         apiValues={apiValues}
                         søker={søker}
                     />

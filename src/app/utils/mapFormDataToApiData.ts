@@ -54,6 +54,7 @@ export const mapFormDataToApiData = (
 
         dokumenterStengtBkgSkole = [],
         dokumenterSmittevernhensyn = [],
+        dokumenterLegeerklæring = [],
 
         // Inntekt
         frilans_erFrilanser,
@@ -88,6 +89,7 @@ export const mapFormDataToApiData = (
 
     const vedleggSmittevern = getVedleggUrlFromAttachments(dokumenterSmittevernhensyn);
     const vedleggStengtBhgSkole = getVedleggUrlFromAttachments(dokumenterStengtBkgSkole);
+    const vedleggLegeerklæring = getVedleggUrlFromAttachments(dokumenterLegeerklæring);
 
     const frilans = mapFrilansToApiData(
         frilans_erFrilanser,
@@ -125,9 +127,10 @@ export const mapFormDataToApiData = (
         frilans,
         selvstendigNæringsdrivende: virksomhet,
         opphold: settInnOpphold(perioder_harVærtIUtlandet, perioder_utenlandsopphold, intl.locale), // periode siden, har du oppholdt
-        vedlegg: [...vedleggSmittevern, ...vedleggStengtBhgSkole],
+        vedlegg: [...vedleggSmittevern, ...vedleggStengtBhgSkole, ...vedleggLegeerklæring],
         _vedleggStengtSkole: vedleggStengtBhgSkole,
         _vedleggSmittevern: vedleggSmittevern,
+        _vedleggLegeerklæring: vedleggLegeerklæring,
         _varFrilansIPerioden: mapYesOrNoToSvar(frilans_erFrilanser),
         _varSelvstendigNæringsdrivendeIPerioden: mapYesOrNoToSvar(selvstendig_erSelvstendigNæringsdrivende),
     };
