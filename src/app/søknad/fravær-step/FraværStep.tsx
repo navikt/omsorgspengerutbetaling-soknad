@@ -2,7 +2,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
 import { YesOrNo } from '@navikt/sif-common-core/lib/types/YesOrNo';
-import { date1YearAgo, DateRange, dateToday } from '@navikt/sif-common-utils';
+//import { date1YearAgo, DateRange, dateToday } from '@navikt/sif-common-utils';
+import { date1YearAgo, DateRange } from '@navikt/sif-common-utils';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import { getListValidator, getYesOrNoValidator } from '@navikt/sif-common-formik/lib/validation';
 import BostedUtlandListAndDialog from '@navikt/sif-common-forms/lib/bosted-utland/BostedUtlandListAndDialog';
@@ -59,7 +60,11 @@ const FraværStep: React.FC = () => {
     const harRegistrertFravær = fraværDager.length + fraværPerioder.length > 0;
     const søkerHarBarnMedUtvidetRett = harUtvidetRettFor.length > 0;
     const minDateForFravær = harRegistrertFravær ? gyldigTidsrom.from : date1YearAgo;
-    const maxDateForFravær = harRegistrertFravær ? gyldigTidsrom.to : dateToday;
+
+    // const maxDateForFravær = harRegistrertFravær ? gyldigTidsrom.to : dateToday;
+
+    //OBS! TODO Bruk dette kun til test
+    const maxDateForFravær = harRegistrertFravær ? gyldigTidsrom.to : new Date('05.03.2023');
 
     return (
         <SoknadFormStep
