@@ -150,9 +150,9 @@
     "relasjonTilBarnet.adoptivforelder": "Adoptivforelder",
     "relasjonTilBarnet.fosterforelder": "Fosterforelder",
 
-    "step.fravaer.pageTitle": "Dager du har vært hjemme med barn - Søknad om utbetaling av omsorgspenger",
-    "step.fravaer.stepTitle": "Dager du har vært hjemme med barn",
-    "step.fravaer.stepIndicatorLabel": "Dager du har vært hjemme med barn",
+    "step.fravaer.pageTitle": "Dager du søker om utbetaling for - Søknad om utbetaling av omsorgspenger",
+    "step.fravaer.stepTitle": "Dager du søker om utbetaling for",
+    "step.fravaer.stepIndicatorLabel": "Dager du søker om utbetaling for",
     "step.fravaer.nextButtonLabel": "Fortsett",
     "step.fravaer.counsellorpanel.content": "I de fleste tilfeller må man som selvstendig næringsdrivende og frilanser betale de 10 første dager med omsorgspenger i året selv.",
     "step.fravaer.dager_med_fullt_fravært.label": "Dager med fullt fravær",
