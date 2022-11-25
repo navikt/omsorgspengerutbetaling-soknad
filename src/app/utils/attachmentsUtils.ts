@@ -5,6 +5,7 @@ import { attachmentHasBeenUploaded } from '@navikt/sif-common-core/lib/utils/att
 export const valuesToAlleDokumenterISøknaden = (values: SøknadFormData): Attachment[] => [
     ...values.dokumenterSmittevernhensyn,
     ...values.dokumenterStengtBkgSkole,
+    ...values.dokumenterLegeerklæring,
 ];
 
 export const getUploadedAttachments = (attachments: Attachment[]): Attachment[] =>

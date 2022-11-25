@@ -5,17 +5,24 @@ import { FraværDag, FraværPeriode } from '@navikt/sif-common-forms/lib';
 import dayjs from 'dayjs';
 import MinMax from 'dayjs/plugin/minMax';
 import { SøknadFormData } from '../../types/SøknadFormData';
+import { harFraværPgaSmittevernhensyn, harFraværPgaStengBhgSkole } from '../../utils/periodeUtils';
 
 dayjs.extend(MinMax);
 
 const cleanupFraværStep = (values: SøknadFormData): SøknadFormData => {
-    const { harDagerMedDelvisFravær, harPerioderMedFravær } = values;
+    const { harDagerMedDelvisFravær, harPerioderMedFravær, fraværPerioder, fraværDager } = values;
     const cleanedValues = { ...values };
     if (harDagerMedDelvisFravær === YesOrNo.NO) {
         cleanedValues.fraværDager = [];
     }
     if (harPerioderMedFravær === YesOrNo.NO) {
         cleanedValues.fraværPerioder = [];
+    }
+    if (!harFraværPgaSmittevernhensyn(fraværPerioder, fraværDager)) {
+        cleanedValues.dokumenterSmittevernhensyn = [];
+    }
+    if (!harFraværPgaStengBhgSkole(fraværPerioder, fraværDager)) {
+        cleanedValues.dokumenterStengtBkgSkole = [];
     }
 
     return cleanedValues;

@@ -23,6 +23,7 @@ import { mapBarnToApiData } from './formToApiMaps/mapBarnToApiData';
 import { getLocaleForApi } from '@navikt/sif-common-core/lib/utils/localeUtils';
 import { getAttachmentURLBackend } from './attachmentUtilsAuthToken';
 import { dateToISODate } from '@navikt/sif-common-utils';
+import { harFraværPgaSmittevernhensyn, harFraværPgaStengBhgSkole } from './periodeUtils';
 
 const getVedleggUrlFromAttachments = (attachments: Attachment[]): string[] => {
     return (
@@ -48,7 +49,8 @@ export const mapFormDataToApiData = (
         harDekketTiFørsteDagerSelv,
 
         // Fravær
-
+        fraværPerioder,
+        fraværDager,
         perioder_harVærtIUtlandet,
         perioder_utenlandsopphold,
 
@@ -87,8 +89,12 @@ export const mapFormDataToApiData = (
         });
     }
 
-    const vedleggSmittevern = getVedleggUrlFromAttachments(dokumenterSmittevernhensyn);
-    const vedleggStengtBhgSkole = getVedleggUrlFromAttachments(dokumenterStengtBkgSkole);
+    const vedleggSmittevern = harFraværPgaSmittevernhensyn(fraværPerioder, fraværDager)
+        ? getVedleggUrlFromAttachments(dokumenterSmittevernhensyn)
+        : [];
+    const vedleggStengtBhgSkole = harFraværPgaStengBhgSkole(fraværPerioder, fraværDager)
+        ? getVedleggUrlFromAttachments(dokumenterStengtBkgSkole)
+        : [];
     const vedleggLegeerklæring = getVedleggUrlFromAttachments(dokumenterLegeerklæring);
 
     const frilans = mapFrilansToApiData(

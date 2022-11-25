@@ -45,18 +45,18 @@ const SøknadRoutes: React.FC<Props> = ({ søker, barn = [], soknadId }) => {
     const fraværPgaStengBhgSkole: boolean = harFraværPgaStengBhgSkole(values.fraværPerioder, values.fraværDager);
     const fraværPgaSmittevernhensyn: boolean = harFraværPgaSmittevernhensyn(values.fraværPerioder, values.fraværDager);
 
-    const renderSoknadStep = (søker: Person, stepID: StepID): React.ReactNode => {
+    const renderSoknadStep = (søker: Person, stepID: StepID, soknadId: string): React.ReactNode => {
         switch (stepID) {
             case StepID.DINE_BARN:
                 return <DineBarnStep barn={barn} søker={søker} soknadId={soknadId} />;
             case StepID.FRAVÆR:
                 return <FraværStep />;
             case StepID.DOKUMENTER_STENGT_SKOLE_BHG:
-                return <StengtBhgSkoleDokumenterStep />;
+                return <StengtBhgSkoleDokumenterStep barn={barn} søker={søker} soknadId={soknadId} />;
             case StepID.DOKUMENTER_SMITTEVERNHENSYN:
-                return <SmittevernDokumenterStep />;
+                return <SmittevernDokumenterStep barn={barn} søker={søker} soknadId={soknadId} />;
             case StepID.DOKUMENTER_LEGEERKLÆRING:
-                return <LegeerklæringDokumenterStep />;
+                return <LegeerklæringDokumenterStep barn={barn} søker={søker} soknadId={soknadId} />;
             case StepID.ARBEIDSSITUASJON:
                 return <ArbeidssituasjonStep barn={barn} søker={søker} soknadId={soknadId} />;
             case StepID.FRAVÆR_FRA:
@@ -117,7 +117,7 @@ const SøknadRoutes: React.FC<Props> = ({ søker, barn = [], soknadId }) => {
                             key={step}
                             path={soknadStepsConfig[step].route}
                             exact={true}
-                            render={() => renderSoknadStep(søker, step)}
+                            render={() => renderSoknadStep(søker, step, soknadId)}
                         />
                     );
                 })}
