@@ -46,8 +46,8 @@ const StengtBhgSkoleDokumenterStep: React.FC<Props> = ({ barn, søker, soknadId 
             return;
         }
         if (attachments.length !== ref.current.attachments.length) {
-            const formValues = { ...values, dokumenterLegeerklæring: attachments };
-            setFieldValue(SøknadFormField.dokumenterLegeerklæring, attachments);
+            const formValues = { ...values, dokumenterStengtBkgSkole: attachments };
+            setFieldValue(SøknadFormField.dokumenterStengtBkgSkole, attachments);
             SøknadTempStorage.update(soknadId, formValues, StepID.DOKUMENTER_STENGT_SKOLE_BHG, {
                 søker,
                 barn,

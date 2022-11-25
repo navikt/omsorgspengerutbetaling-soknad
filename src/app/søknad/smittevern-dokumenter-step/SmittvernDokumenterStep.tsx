@@ -47,8 +47,8 @@ const SmittevernDokumenterStep: React.FC<Props> = ({ barn, søker, soknadId }) =
             return;
         }
         if (attachments.length !== ref.current.attachments.length) {
-            const formValues = { ...values, dokumenterLegeerklæring: attachments };
-            setFieldValue(SøknadFormField.dokumenterLegeerklæring, attachments);
+            const formValues = { ...values, dokumenterSmittevernhensyn: attachments };
+            setFieldValue(SøknadFormField.dokumenterSmittevernhensyn, attachments);
             SøknadTempStorage.update(soknadId, formValues, StepID.DOKUMENTER_SMITTEVERNHENSYN, {
                 søker,
                 barn,
