@@ -237,18 +237,6 @@
     "vedleggsliste.ingenLegeerklæringLastetOpp": "Ingen vedlegg er lasta opp",
     "vedleggsliste.ingenSamværsavtaleLastetOpp": "Ingen vedlegg er lasta opp",
 
-    "avbrytSøknadDialog.avbrytSøknadLabel": "Ja, avbryt søknaden",
-    "avbrytSøknadDialog.fortsettSøknadLabel": "Nei",
-    "avbrytSøknadDialog.intro": "Det du har fylt ut i søknaden, blir sletta, og du kjem tilbake til velkomstsida.",
-    "avbrytSøknadDialog.spørsmål": "Ønskjer du å slette søknaden?",
-    "avbrytSøknadDialog.tittel": "Avbryt og slett søknaden",
-
-    "fortsettSøknadSenereDialog.avbrytSøknadLabel": "Ja, fortset seinare",
-    "fortsettSøknadSenereDialog.fortsettSøknadLabel": "Nei",
-    "fortsettSøknadSenereDialog.intro": "Vi lagrar søknaden din for deg i 24 timar.",
-    "fortsettSøknadSenereDialog.spørsmål": "Vil du avslutte no og fortsetje seinare?",
-    "fortsettSøknadSenereDialog.tittel": "Avslutt og fortset seinare",
-
     "steg.footer.avbryt": "Avbryt og slett søknaden",
     "steg.footer.fortsettSenere": "Avslutt og fortset seinare",
 
