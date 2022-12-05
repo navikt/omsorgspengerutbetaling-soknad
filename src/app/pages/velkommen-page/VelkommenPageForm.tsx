@@ -1,31 +1,27 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import Box from '@navikt/sif-common-core/lib/components/box/Box';
-import InfoDialog from '@navikt/sif-common-core/lib/components/dialogs/info-dialog/InfoDialog';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
-import { Hovedknapp } from 'nav-frontend-knapper';
-import Lenke from 'nav-frontend-lenker';
-import DinePlikterContent from './dine-plikter/DinePlikter';
-import BehandlingAvPersonopplysningerContent from './personopplysninger/Personopplysninger';
 import { getCheckedValidator } from '@navikt/sif-common-formik/lib/validation';
 import intlFormErrorHandler from '@navikt/sif-common-formik/lib/validation/intlFormErrorHandler';
+import { Hovedknapp } from 'nav-frontend-knapper';
+import Lenke from 'nav-frontend-lenker';
+import { Undertittel } from 'nav-frontend-typografi';
+import getLenker from '../../lenker';
 import SoknadFormComponents from '../../søknad/SoknadFormComponents';
 import { SøknadFormField } from '../../types/SøknadFormData';
-
-interface DialogState {
-    dinePlikterModalOpen?: boolean;
-    behandlingAvPersonopplysningerModalOpen?: boolean;
-}
+import InfoList from './components/info-list/InfoList';
+import bemUtils from '@navikt/sif-common-core/lib/utils/bemUtils';
 
 interface Props {
     onStart: () => void;
 }
 
 const VelkommenPageForm = ({ onStart }: Props) => {
-    const [dialogState, setDialogState] = useState<DialogState>({});
-    const { dinePlikterModalOpen, behandlingAvPersonopplysningerModalOpen } = dialogState;
     const intl = useIntl();
+
+    const bem = bemUtils('welcomingPage');
 
     return (
         <SoknadFormComponents.Form
@@ -34,45 +30,38 @@ const VelkommenPageForm = ({ onStart }: Props) => {
             formErrorHandler={intlFormErrorHandler(intl, 'validation')}>
             <FormBlock>
                 <SoknadFormComponents.ConfirmationCheckbox
-                    label={intlHelper(intl, 'welcomingPage.samtykke.tekst')}
+                    label={intlHelper(intl, 'page.velkommen.form.bekreftLabel')}
                     name={SøknadFormField.harForståttRettigheterOgPlikter}
                     validate={getCheckedValidator()}>
-                    <FormattedMessage
-                        id="welcomingPage.samtykke.harForståttLabel"
-                        values={{
-                            plikterLink: (
-                                <Lenke href="#" onClick={() => setDialogState({ dinePlikterModalOpen: true })}>
-                                    {intlHelper(intl, 'welcomingPage.samtykke.harForståttLabel.lenketekst')}
-                                </Lenke>
-                            ),
-                        }}
-                    />
+                    <Undertittel tag="h2">
+                        <strong>
+                            <FormattedMessage id="page.velkommen.form.ansvar.tittel" />
+                        </strong>
+                    </Undertittel>
+                    <InfoList>
+                        <li>
+                            <FormattedMessage id="page.velkommen.form.ansvar.list.1" />
+                        </li>
+                        <li>
+                            <FormattedMessage id="page.velkommen.form.ansvar.list.2.1" />{' '}
+                            <Lenke href={getLenker(intl.locale).rettOgPlikt} target="_blank">
+                                <FormattedMessage id="page.velkommen.form.ansvar.list.2.2" />
+                            </Lenke>
+                            <FormattedMessage id="page.velkommen.form.ansvar.list.2.3" />
+                        </li>
+                    </InfoList>
                 </SoknadFormComponents.ConfirmationCheckbox>
+
                 <Box textAlignCenter={true} margin="xl">
-                    <Hovedknapp>{intlHelper(intl, 'welcomingPage.begynnsøknad')}</Hovedknapp>
                     <FormBlock>
-                        <Lenke
-                            href="#"
-                            onClick={() => setDialogState({ behandlingAvPersonopplysningerModalOpen: true })}>
-                            <FormattedMessage id="welcomingPage.personopplysninger.lenketekst" />
-                        </Lenke>
+                        <div data-testid={'welcomingPage-begynnsøknad'}>
+                            <Hovedknapp className={bem.element('startApplicationButton')}>
+                                {intlHelper(intl, 'welcomingPage.begynnsøknad')}
+                            </Hovedknapp>
+                        </div>
                     </FormBlock>
                 </Box>
             </FormBlock>
-
-            <InfoDialog
-                contentLabel={intlHelper(intl, 'welcomingPage.modal.omDinePlikter.tittel')}
-                isOpen={dinePlikterModalOpen === true}
-                onRequestClose={() => setDialogState({ dinePlikterModalOpen: false })}>
-                <DinePlikterContent />
-            </InfoDialog>
-
-            <InfoDialog
-                isOpen={behandlingAvPersonopplysningerModalOpen === true}
-                onRequestClose={() => setDialogState({ behandlingAvPersonopplysningerModalOpen: false })}
-                contentLabel={intlHelper(intl, 'welcomingPage.modal.behandlingAvPersonalia.tittel')}>
-                <BehandlingAvPersonopplysningerContent />
-            </InfoDialog>
         </SoknadFormComponents.Form>
     );
 };
