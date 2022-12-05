@@ -34,9 +34,7 @@ const VelkommenPageForm = ({ onStart }: Props) => {
                     name={SøknadFormField.harForståttRettigheterOgPlikter}
                     validate={getCheckedValidator()}>
                     <Undertittel tag="h2">
-                        <strong>
-                            <FormattedMessage id="page.velkommen.form.ansvar.tittel" />
-                        </strong>
+                        <FormattedMessage id="page.velkommen.form.ansvar.tittel" />
                     </Undertittel>
                     <InfoList>
                         <li>
