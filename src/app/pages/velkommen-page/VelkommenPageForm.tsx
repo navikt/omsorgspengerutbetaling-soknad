@@ -45,7 +45,6 @@ const VelkommenPageForm = ({ onStart }: Props) => {
                             <Lenke href={getLenker(intl.locale).rettOgPlikt} target="_blank">
                                 <FormattedMessage id="page.velkommen.form.ansvar.list.2.2" />
                             </Lenke>
-                            <FormattedMessage id="page.velkommen.form.ansvar.list.2.3" />
                         </li>
                     </InfoList>
                 </SoknadFormComponents.ConfirmationCheckbox>
