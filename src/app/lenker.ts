@@ -1,4 +1,5 @@
 interface Lenker {
+    inntektsmelding: string;
     medlemskap: string;
     papirskjemaPrivat: string;
     vilkårOmsorgspenger: string;
@@ -12,6 +13,7 @@ interface Lenker {
 }
 
 const LenkerBokmål: Lenker = {
+    inntektsmelding: 'https://www.nav.no/arbeidsgiver/inntektsmelding',
     medlemskap:
         'https://www.nav.no/no/Person/Flere+tema/Arbeid+og+opphold+i+Norge/Relatert+informasjon/medlemskap-i-folketrygden',
     papirskjemaPrivat: 'https://www.nav.no/soknader/nb/person/familie/omsorgspenger/NAV%2009-06.05/brev',
@@ -30,6 +32,7 @@ const LenkerBokmål: Lenker = {
 };
 
 const LenkerNynorsk: Partial<Lenker> = {
+    inntektsmelding: 'https://www.nav.no/arbeidsgiver/inntektsmelding',
     medlemskap: 'https://www.nav.no/no/Person/Flere+tema/Arbeid+og+opphold+i+Norge/Nynorsk/medlemskap-i-folketrygda',
     papirskjemaPrivat: 'https://www.nav.no/soknader/nb/person/familie/omsorgspenger/NAV%2009-06.05/brev',
     vilkårOmsorgspenger: 'https://www.nav.no/familie/sykdom-i-familien/nn/omsorgspenger',

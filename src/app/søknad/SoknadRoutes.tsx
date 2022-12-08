@@ -87,7 +87,7 @@ const SøknadRoutes: React.FC<Props> = ({ søker, barn = [], soknadId }) => {
     return (
         <Switch>
             <Route path={RouteConfig.SØKNAD_ROUTE_PREFIX} exact={true}>
-                <VelkommenPage />
+                <VelkommenPage søker={søker} />
             </Route>
 
             <Route path={RouteConfig.SØKNAD_SENDT_ROUTE} exact={true}>
