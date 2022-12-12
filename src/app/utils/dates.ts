@@ -19,4 +19,4 @@ export const getDatesWithinDateRange = ({ from, to }: DateRange): Date[] => {
     return dates;
 };
 
-export const skalEndringeneFor2023Brukes = () => dayjs().year() === 2023; //TODO endre til 2023 etter tester
+export const skalEndringeneFor2023Brukes = () => dayjs().year() === 2022; //TODO endre til 2023 etter tester
