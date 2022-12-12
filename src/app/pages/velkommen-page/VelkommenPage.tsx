@@ -1,36 +1,26 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
+import { SIFCommonPageKey, useLogSidevisning } from '@navikt/sif-common-amplitude/lib';
 import Box from '@navikt/sif-common-core/lib/components/box/Box';
-import FrontPageBanner from '@navikt/sif-common-core/lib/components/front-page-banner/FrontPageBanner';
 import Page from '@navikt/sif-common-core/lib/components/page/Page';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
-import VelkommenPageForm from './VelkommenPageForm';
-import { Sidetittel } from 'nav-frontend-typografi';
-import { SIFCommonPageKey, useLogSidevisning } from '@navikt/sif-common-amplitude/lib';
 import { useSoknadContext } from '../../søknad/SoknadContext';
+import VelkommenPageForm from './VelkommenPageForm';
+import './welcomingPage.less';
+import VelkommenGuide from './components/VelkommenGuide';
+import OmSøknaden from './components/OmSøknaden';
+import { Person } from '../../types/Søkerdata';
 
-const VelkommenPage = () => {
+const VelkommenPage = ({ søker }: { søker: Person }) => {
     const intl = useIntl();
     const { startSoknad } = useSoknadContext();
     useLogSidevisning(SIFCommonPageKey.velkommen);
 
     return (
-        <Page
-            title={intlHelper(intl, 'welcomingPage.sidetittel')}
-            topContentRenderer={() => (
-                <FrontPageBanner
-                    bannerSize="large"
-                    counsellorWithSpeechBubbleProps={{
-                        strongText: intlHelper(intl, 'welcomingPage.banner.tittel'),
-                        normalText: intlHelper(intl, 'welcomingPage.banner.tekst'),
-                    }}
-                />
-            )}>
-            <Box margin="xxxl" textAlignCenter={true}>
-                <Sidetittel>{intlHelper(intl, 'welcomingPage.introtittel')}</Sidetittel>
-            </Box>
-
-            <Box margin="xxxl">
+        <Page title={intlHelper(intl, 'welcomingPage.sidetittel')}>
+            <VelkommenGuide navn={søker.fornavn} />
+            <OmSøknaden />
+            <Box margin="xl">
                 <VelkommenPageForm onStart={startSoknad} />
             </Box>
         </Page>
