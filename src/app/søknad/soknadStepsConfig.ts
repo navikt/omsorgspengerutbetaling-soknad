@@ -3,6 +3,7 @@ import soknadStepUtils from '@navikt/sif-common-soknad/lib/soknad-step/soknadSte
 import { harFraværPgaSmittevernhensyn, harFraværPgaStengBhgSkole } from '../utils/periodeUtils';
 import { SøknadFormData } from '../types/SøknadFormData';
 import { YesOrNo } from '@navikt/sif-common-formik/lib';
+import { skalEndringeneFor2023Brukes } from '../utils/dates';
 
 export enum StepID {
     'DINE_BARN' = 'dine-barn',
@@ -35,12 +36,14 @@ const getSoknadSteps = (values: SøknadFormData): StepID[] => {
         values?.fraværDager || []
     );
 
+    const visLegeerklæring = skalEndringeneFor2023Brukes();
+
     const allSteps: ConfigStepHelperType[] = [
         { stepID: StepID.DINE_BARN, included: true },
         { stepID: StepID.FRAVÆR, included: true },
         { stepID: StepID.DOKUMENTER_STENGT_SKOLE_BHG, included: skalViseStengtSkoleBhgDokumenterStep },
         { stepID: StepID.DOKUMENTER_SMITTEVERNHENSYN, included: skalViseSmittevernDokumenterStep },
-        { stepID: StepID.DOKUMENTER_LEGEERKLÆRING, included: true },
+        { stepID: StepID.DOKUMENTER_LEGEERKLÆRING, included: visLegeerklæring },
         { stepID: StepID.ARBEIDSSITUASJON, included: true },
         { stepID: StepID.FRAVÆR_FRA, included: skalViseFraværFraSteg },
         { stepID: StepID.MEDLEMSKAP, included: true },

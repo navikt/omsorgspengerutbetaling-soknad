@@ -44,9 +44,6 @@ const App: React.FunctionComponent = () => {
                             key="soknad"
                             component={SoknadRemoteDataFetcher}
                         />,
-                        <Route path={'/'} key="redirect">
-                            <Redirect path="/" key="start" to={RouteConfig.WELCOMING_PAGE_ROUTE} />,
-                        </Route>,
                     ]}
                 />
             </SoknadApplication>

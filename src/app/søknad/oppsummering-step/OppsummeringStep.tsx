@@ -28,6 +28,7 @@ import { StepID } from '../soknadStepsConfig';
 import { useSoknadContext } from '../SoknadContext';
 import AttachmentList from '@navikt/sif-common-core/lib/components/attachment-list/AttachmentList';
 import { Attachment } from '@navikt/sif-common-core/lib/types/Attachment';
+import { skalEndringeneFor2023Brukes } from '../../utils/dates';
 
 interface Props {
     hjemmePgaSmittevernhensyn: boolean;
@@ -56,6 +57,7 @@ const OppsummeringStep: React.FC<Props> = ({
 
     const apiValidationErrors = apiValues ? validateSoknadApiData(apiValues) : [];
 
+    const visLegeerklæring = skalEndringeneFor2023Brukes();
     return (
         <SoknadFormStep
             id={StepID.OPPSUMMERING}
@@ -114,17 +116,23 @@ const OppsummeringStep: React.FC<Props> = ({
 
                             {/* Vedlegg */}
                             <SummarySection header={intlHelper(intl, 'steg.oppsummering.dokumenter.header')}>
-                                <Box margin="s">
-                                    <SummaryBlock
-                                        header={intlHelper(intl, 'steg.oppsummering.dokumenterLegeerklæring.header')}>
-                                        {dokumenterLegeerklæring.length === 0 && (
-                                            <FormattedMessage id={'steg.oppsummering.dokumenter.ikkelastetopp'} />
-                                        )}
-                                        {dokumenterLegeerklæring.length > 0 && (
-                                            <AttachmentList attachments={dokumenterLegeerklæring} />
-                                        )}
-                                    </SummaryBlock>
-                                </Box>
+                                {visLegeerklæring && (
+                                    <Box margin="s">
+                                        <SummaryBlock
+                                            header={intlHelper(
+                                                intl,
+                                                'steg.oppsummering.dokumenterLegeerklæring.header'
+                                            )}>
+                                            {dokumenterLegeerklæring.length === 0 && (
+                                                <FormattedMessage id={'steg.oppsummering.dokumenter.ikkelastetopp'} />
+                                            )}
+                                            {dokumenterLegeerklæring.length > 0 && (
+                                                <AttachmentList attachments={dokumenterLegeerklæring} />
+                                            )}
+                                        </SummaryBlock>
+                                    </Box>
+                                )}
+
                                 {hjemmePgaSmittevernhensyn && (
                                     <Box margin="s">
                                         <SummaryBlock
@@ -152,6 +160,11 @@ const OppsummeringStep: React.FC<Props> = ({
                                                 <AttachmentList attachments={dokumenterStengtBkgSkole} />
                                             )}
                                         </SummaryBlock>
+                                    </Box>
+                                )}
+                                {!hjemmePgaSmittevernhensyn && !hjemmePgaStengtBhgSkole && !visLegeerklæring && (
+                                    <Box margin="s">
+                                        <FormattedMessage id={'steg.oppsummering.dokumenter.ingenVedlegg'} />
                                     </Box>
                                 )}
                             </SummarySection>

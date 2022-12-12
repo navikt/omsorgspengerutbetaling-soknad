@@ -11,12 +11,14 @@ import {
 import { StepID } from '../søknad/soknadStepsConfig';
 import { Barn } from '../types/Søkerdata';
 import { harFraværPgaSmittevernhensyn, harFraværPgaStengBhgSkole } from './periodeUtils';
+import { skalEndringeneFor2023Brukes } from './dates';
 
 export const getAvailableSteps = (values: SøknadFormData, registrerteBarn: Barn[]): StepID[] => {
     const steps: StepID[] = [];
 
     const fraværPgaStengBhgSkole: boolean = harFraværPgaStengBhgSkole(values.fraværPerioder, values.fraværDager);
     const fraværPgaSmittevernhensyn: boolean = harFraværPgaSmittevernhensyn(values.fraværPerioder, values.fraværDager);
+    const visLegeerklæring = skalEndringeneFor2023Brukes();
 
     if (dineBarnStepIsAvailable(values)) {
         steps.push(StepID.DINE_BARN);
@@ -26,7 +28,7 @@ export const getAvailableSteps = (values: SøknadFormData, registrerteBarn: Barn
         steps.push(StepID.FRAVÆR);
     }
 
-    if (legeerklæringStepIsAvailable(values)) {
+    if (visLegeerklæring && legeerklæringStepIsAvailable(values)) {
         steps.push(StepID.DOKUMENTER_LEGEERKLÆRING);
     }
 
