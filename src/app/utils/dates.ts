@@ -22,4 +22,4 @@ export const getDatesWithinDateRange = ({ from, to }: DateRange): Date[] => {
 };
 
 export const skalEndringeneFor2023Brukes = (fraværDager: FraværDag[], fraværPerioder: FraværPeriode[]) =>
-    dayjs().year() === 2022 && fraværStepUtils.getÅrstallFromFravær(fraværDager, fraværPerioder) === 2023; //TODO endre til 2023 etter tester
+    dayjs().year() === 2023 && fraværStepUtils.getÅrstallFromFravær(fraværDager, fraværPerioder) === 2023;
