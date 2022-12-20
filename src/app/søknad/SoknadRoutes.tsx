@@ -29,6 +29,7 @@ import { useSoknadContext } from './SoknadContext';
 import soknadStepUtils from '@navikt/sif-common-soknad/lib/soknad-step/soknadStepUtils';
 import VelkommenPage from '../pages/velkommen-page/VelkommenPage';
 import LegeerklæringDokumenterStep from './legeerklæring-dokumenter-step/LegeerklæringDokumenterStep';
+import { skalEndringeneFor2023Brukes } from '../utils/dates';
 
 interface Props {
     søker: Person;
@@ -44,6 +45,7 @@ const SøknadRoutes: React.FC<Props> = ({ søker, barn = [], soknadId }) => {
 
     const fraværPgaStengBhgSkole: boolean = harFraværPgaStengBhgSkole(values.fraværPerioder, values.fraværDager);
     const fraværPgaSmittevernhensyn: boolean = harFraværPgaSmittevernhensyn(values.fraværPerioder, values.fraværDager);
+    const visLegeerklæring = skalEndringeneFor2023Brukes(values.fraværDager, values.fraværPerioder);
 
     const renderSoknadStep = (søker: Person, stepID: StepID, soknadId: string): React.ReactNode => {
         switch (stepID) {
@@ -74,6 +76,7 @@ const SøknadRoutes: React.FC<Props> = ({ søker, barn = [], soknadId }) => {
                         dokumenterLegeerklæring={values.dokumenterLegeerklæring}
                         apiValues={apiValues}
                         søker={søker}
+                        visLegeerklæring={visLegeerklæring}
                     />
                 );
         }

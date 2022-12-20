@@ -24,6 +24,7 @@ import { getLocaleForApi } from '@navikt/sif-common-core/lib/utils/localeUtils';
 import { getAttachmentURLBackend } from './attachmentUtilsAuthToken';
 import { dateToISODate } from '@navikt/sif-common-utils';
 import { harFraværPgaSmittevernhensyn, harFraværPgaStengBhgSkole } from './periodeUtils';
+import { skalEndringeneFor2023Brukes } from './dates';
 
 const getVedleggUrlFromAttachments = (attachments: Attachment[]): string[] => {
     return (
@@ -95,7 +96,9 @@ export const mapFormDataToApiData = (
     const vedleggStengtBhgSkole = harFraværPgaStengBhgSkole(fraværPerioder, fraværDager)
         ? getVedleggUrlFromAttachments(dokumenterStengtBkgSkole)
         : [];
-    const vedleggLegeerklæring = getVedleggUrlFromAttachments(dokumenterLegeerklæring);
+    const vedleggLegeerklæring = skalEndringeneFor2023Brukes(fraværDager, fraværPerioder)
+        ? getVedleggUrlFromAttachments(dokumenterLegeerklæring)
+        : [];
 
     const frilans = mapFrilansToApiData(
         frilans_erFrilanser,

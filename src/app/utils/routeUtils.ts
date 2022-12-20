@@ -18,7 +18,8 @@ export const getAvailableSteps = (values: SøknadFormData, registrerteBarn: Barn
 
     const fraværPgaStengBhgSkole: boolean = harFraværPgaStengBhgSkole(values.fraværPerioder, values.fraværDager);
     const fraværPgaSmittevernhensyn: boolean = harFraværPgaSmittevernhensyn(values.fraværPerioder, values.fraværDager);
-    const visLegeerklæring = skalEndringeneFor2023Brukes();
+
+    const visLegeerklæring = skalEndringeneFor2023Brukes(values?.fraværDager || [], values?.fraværPerioder || []);
 
     if (dineBarnStepIsAvailable(values)) {
         steps.push(StepID.DINE_BARN);

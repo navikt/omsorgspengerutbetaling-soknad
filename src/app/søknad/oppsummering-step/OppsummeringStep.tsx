@@ -28,7 +28,6 @@ import { StepID } from '../soknadStepsConfig';
 import { useSoknadContext } from '../SoknadContext';
 import AttachmentList from '@navikt/sif-common-core/lib/components/attachment-list/AttachmentList';
 import { Attachment } from '@navikt/sif-common-core/lib/types/Attachment';
-import { skalEndringeneFor2023Brukes } from '../../utils/dates';
 
 interface Props {
     hjemmePgaSmittevernhensyn: boolean;
@@ -37,6 +36,7 @@ interface Props {
     dokumenterStengtBkgSkole: Attachment[];
     dokumenterLegeerklæring: Attachment[];
     søker: Person;
+    visLegeerklæring: boolean;
     apiValues?: SøknadApiData;
 }
 
@@ -50,6 +50,7 @@ const OppsummeringStep: React.FC<Props> = ({
     dokumenterLegeerklæring,
     søker,
     apiValues,
+    visLegeerklæring,
 }) => {
     const intl = useIntl();
     const { sendSoknadStatus, sendSoknad } = useSoknadContext();
@@ -57,7 +58,6 @@ const OppsummeringStep: React.FC<Props> = ({
 
     const apiValidationErrors = apiValues ? validateSoknadApiData(apiValues) : [];
 
-    const visLegeerklæring = skalEndringeneFor2023Brukes();
     return (
         <SoknadFormStep
             id={StepID.OPPSUMMERING}

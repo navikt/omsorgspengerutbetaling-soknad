@@ -36,7 +36,7 @@ const getSoknadSteps = (values: SøknadFormData): StepID[] => {
         values?.fraværDager || []
     );
 
-    const visLegeerklæring = skalEndringeneFor2023Brukes();
+    const visLegeerklæring = skalEndringeneFor2023Brukes(values?.fraværDager || [], values?.fraværPerioder || []);
 
     const allSteps: ConfigStepHelperType[] = [
         { stepID: StepID.DINE_BARN, included: true },
