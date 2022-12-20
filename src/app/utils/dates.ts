@@ -1,6 +1,8 @@
 import { DateRange } from '@navikt/sif-common-formik/lib';
+import fraværStepUtils from '../søknad/fravær-step/fraværStepUtils';
 import dayjs from 'dayjs';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
+import { FraværDag, FraværPeriode } from '@navikt/sif-common-forms/lib';
 
 dayjs.extend(isSameOrBefore);
 
@@ -18,3 +20,6 @@ export const getDatesWithinDateRange = ({ from, to }: DateRange): Date[] => {
     }
     return dates;
 };
+
+export const skalEndringeneFor2023Brukes = (fraværDager: FraværDag[], fraværPerioder: FraværPeriode[]) =>
+    dayjs().year() === 2023 && fraværStepUtils.getÅrstallFromFravær(fraværDager, fraværPerioder) === 2023;

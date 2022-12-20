@@ -23,6 +23,8 @@ import { mapBarnToApiData } from './formToApiMaps/mapBarnToApiData';
 import { getLocaleForApi } from '@navikt/sif-common-core/lib/utils/localeUtils';
 import { getAttachmentURLBackend } from './attachmentUtilsAuthToken';
 import { dateToISODate } from '@navikt/sif-common-utils';
+import { harFraværPgaSmittevernhensyn, harFraværPgaStengBhgSkole } from './periodeUtils';
+import { skalEndringeneFor2023Brukes } from './dates';
 
 const getVedleggUrlFromAttachments = (attachments: Attachment[]): string[] => {
     return (
@@ -48,14 +50,14 @@ export const mapFormDataToApiData = (
         harDekketTiFørsteDagerSelv,
 
         // Fravær
-
+        fraværPerioder,
+        fraværDager,
         perioder_harVærtIUtlandet,
         perioder_utenlandsopphold,
-        harSøktAndreUtbetalinger,
-        andreUtbetalinger,
 
         dokumenterStengtBkgSkole = [],
         dokumenterSmittevernhensyn = [],
+        dokumenterLegeerklæring = [],
 
         // Inntekt
         frilans_erFrilanser,
@@ -75,12 +77,6 @@ export const mapFormDataToApiData = (
 
     const yesOrNoQuestions: YesNoSpørsmålOgSvar[] = [];
 
-    if (harSøktAndreUtbetalinger === YesOrNo.NO) {
-        yesOrNoQuestions.push({
-            spørsmål: intlHelper(intl, 'step.fravaer.harSøktAndreUtbetalinger.spm'),
-            svar: mapYesOrNoToSvar(harSøktAndreUtbetalinger),
-        });
-    }
     if (frilans_erFrilanser) {
         yesOrNoQuestions.push({
             spørsmål: intlHelper(intl, 'frilanser.erFrilanser.spm'),
@@ -94,8 +90,15 @@ export const mapFormDataToApiData = (
         });
     }
 
-    const vedleggSmittevern = getVedleggUrlFromAttachments(dokumenterSmittevernhensyn);
-    const vedleggStengtBhgSkole = getVedleggUrlFromAttachments(dokumenterStengtBkgSkole);
+    const vedleggSmittevern = harFraværPgaSmittevernhensyn(fraværPerioder, fraværDager)
+        ? getVedleggUrlFromAttachments(dokumenterSmittevernhensyn)
+        : [];
+    const vedleggStengtBhgSkole = harFraværPgaStengBhgSkole(fraværPerioder, fraværDager)
+        ? getVedleggUrlFromAttachments(dokumenterStengtBkgSkole)
+        : [];
+    const vedleggLegeerklæring = skalEndringeneFor2023Brukes(fraværDager, fraværPerioder)
+        ? getVedleggUrlFromAttachments(dokumenterLegeerklæring)
+        : [];
 
     const frilans = mapFrilansToApiData(
         frilans_erFrilanser,
@@ -122,7 +125,6 @@ export const mapFormDataToApiData = (
         harDekketTiFørsteDagerSelv: harDekketTiFørsteDagerSelv,
         barn: mapBarnToApiData(andreBarn, harUtvidetRettFor, registrerteBarn, harDekketTiFørsteDagerSelv),
         spørsmål: [...yesOrNoQuestions],
-        andreUtbetalinger: harSøktAndreUtbetalinger === YesOrNo.YES ? [...andreUtbetalinger] : [],
         utbetalingsperioder: getUtbetalingsperioderApiFromFormData(formValues),
         bosteder: settInnBosteder(
             harBoddUtenforNorgeSiste12Mnd,
@@ -134,10 +136,10 @@ export const mapFormDataToApiData = (
         frilans,
         selvstendigNæringsdrivende: virksomhet,
         opphold: settInnOpphold(perioder_harVærtIUtlandet, perioder_utenlandsopphold, intl.locale), // periode siden, har du oppholdt
-        vedlegg: [...vedleggSmittevern, ...vedleggStengtBhgSkole],
+        vedlegg: [...vedleggSmittevern, ...vedleggStengtBhgSkole, ...vedleggLegeerklæring],
         _vedleggStengtSkole: vedleggStengtBhgSkole,
         _vedleggSmittevern: vedleggSmittevern,
-        _harSøktAndreUtbetalinger: mapYesOrNoToSvar(harSøktAndreUtbetalinger),
+        _vedleggLegeerklæring: vedleggLegeerklæring,
         _varFrilansIPerioden: mapYesOrNoToSvar(frilans_erFrilanser),
         _varSelvstendigNæringsdrivendeIPerioden: mapYesOrNoToSvar(selvstendig_erSelvstendigNæringsdrivende),
     };

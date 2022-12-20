@@ -24,7 +24,7 @@ const shouldShowSubmitButton = (søknadFormData: SøknadFormData): boolean => {
 interface Props {
     barn: Barn[];
     søker: Person;
-    soknadId?: string;
+    soknadId: string;
 }
 
 const ArbeidssituasjonStep: React.FC<Props> = ({ barn, søker, soknadId }: Props) => {

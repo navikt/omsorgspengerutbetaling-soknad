@@ -28,6 +28,8 @@ import { useIntl } from 'react-intl';
 import { useSoknadContext } from './SoknadContext';
 import soknadStepUtils from '@navikt/sif-common-soknad/lib/soknad-step/soknadStepUtils';
 import VelkommenPage from '../pages/velkommen-page/VelkommenPage';
+import LegeerklæringDokumenterStep from './legeerklæring-dokumenter-step/LegeerklæringDokumenterStep';
+import { skalEndringeneFor2023Brukes } from '../utils/dates';
 
 interface Props {
     søker: Person;
@@ -43,17 +45,20 @@ const SøknadRoutes: React.FC<Props> = ({ søker, barn = [], soknadId }) => {
 
     const fraværPgaStengBhgSkole: boolean = harFraværPgaStengBhgSkole(values.fraværPerioder, values.fraværDager);
     const fraværPgaSmittevernhensyn: boolean = harFraværPgaSmittevernhensyn(values.fraværPerioder, values.fraværDager);
+    const visLegeerklæring = skalEndringeneFor2023Brukes(values.fraværDager, values.fraværPerioder);
 
-    const renderSoknadStep = (søker: Person, stepID: StepID): React.ReactNode => {
+    const renderSoknadStep = (søker: Person, stepID: StepID, soknadId: string): React.ReactNode => {
         switch (stepID) {
             case StepID.DINE_BARN:
                 return <DineBarnStep barn={barn} søker={søker} soknadId={soknadId} />;
             case StepID.FRAVÆR:
                 return <FraværStep />;
             case StepID.DOKUMENTER_STENGT_SKOLE_BHG:
-                return <StengtBhgSkoleDokumenterStep />;
+                return <StengtBhgSkoleDokumenterStep barn={barn} søker={søker} soknadId={soknadId} />;
             case StepID.DOKUMENTER_SMITTEVERNHENSYN:
-                return <SmittevernDokumenterStep />;
+                return <SmittevernDokumenterStep barn={barn} søker={søker} soknadId={soknadId} />;
+            case StepID.DOKUMENTER_LEGEERKLÆRING:
+                return <LegeerklæringDokumenterStep barn={barn} søker={søker} soknadId={soknadId} />;
             case StepID.ARBEIDSSITUASJON:
                 return <ArbeidssituasjonStep barn={barn} søker={søker} soknadId={soknadId} />;
             case StepID.FRAVÆR_FRA:
@@ -68,8 +73,10 @@ const SøknadRoutes: React.FC<Props> = ({ søker, barn = [], soknadId }) => {
                         dokumenterSmittevernhensyn={values.dokumenterSmittevernhensyn}
                         hjemmePgaStengtBhgSkole={fraværPgaStengBhgSkole}
                         dokumenterStengtBkgSkole={values.dokumenterStengtBkgSkole}
+                        dokumenterLegeerklæring={values.dokumenterLegeerklæring}
                         apiValues={apiValues}
                         søker={søker}
+                        visLegeerklæring={visLegeerklæring}
                     />
                 );
         }
@@ -113,7 +120,7 @@ const SøknadRoutes: React.FC<Props> = ({ søker, barn = [], soknadId }) => {
                             key={step}
                             path={soknadStepsConfig[step].route}
                             exact={true}
-                            render={() => renderSoknadStep(søker, step)}
+                            render={() => renderSoknadStep(søker, step, soknadId)}
                         />
                     );
                 })}

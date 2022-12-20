@@ -14,7 +14,9 @@ export const dineBarnStepIsAvailable = (formData: SøknadFormData) => welcomingP
 export const fraværStepIsAvailable = (formData: SøknadFormData, registrerteBarn: Barn[]) =>
     dineBarnStepIsValid(formData, registrerteBarn);
 
-export const arbeidssituasjonStepIsAvailable = (formData: SøknadFormData) => fraværStepIsValid(formData);
+export const legeerklæringStepIsAvailable = (formData: SøknadFormData) => fraværStepIsValid(formData);
+
+export const arbeidssituasjonStepIsAvailable = (formData: SøknadFormData) => legeerklæringStepIsAvailable(formData);
 
 export const fraværFraStepIsAvailable = (formData: SøknadFormData) =>
     arbeidssituasjonStepIsAvailable(formData) && viseFravæFraSteg(formData);

@@ -18,8 +18,8 @@ import getLenker from '../../lenker';
 import SoknadFormStep from '../SoknadFormStep';
 import { StepID } from '../soknadStepsConfig';
 import FormikVedleggsKomponent from '../../components/VedleggComponent/FormikVedleggsKomponent';
-import { Barn, Person } from '../../types/Søkerdata';
 import SøknadTempStorage from '../SoknadTempStorage';
+import { Barn, Person } from '../../types/Søkerdata';
 
 interface Props {
     barn: Barn[];
@@ -27,12 +27,12 @@ interface Props {
     soknadId: string;
 }
 
-const SmittevernDokumenterStep: React.FC<Props> = ({ barn, søker, soknadId }) => {
+const LegeerklæringDokumenterStep: React.FC<Props> = ({ barn, søker, soknadId }) => {
     const intl = useIntl();
     const { values, setFieldValue } = useFormikContext<SøknadFormData>();
 
     const attachments: Attachment[] = React.useMemo(() => {
-        return values ? values[SøknadFormField.dokumenterSmittevernhensyn] : [];
+        return values ? values[SøknadFormField.dokumenterLegeerklæring] : [];
     }, [values]);
 
     const hasPendingUploads: boolean = attachments.find((a) => a.pending === true) !== undefined;
@@ -47,9 +47,9 @@ const SmittevernDokumenterStep: React.FC<Props> = ({ barn, søker, soknadId }) =
             return;
         }
         if (attachments.length !== ref.current.attachments.length) {
-            const formValues = { ...values, dokumenterSmittevernhensyn: attachments };
-            setFieldValue(SøknadFormField.dokumenterSmittevernhensyn, attachments);
-            SøknadTempStorage.update(soknadId, formValues, StepID.DOKUMENTER_SMITTEVERNHENSYN, {
+            const formValues = { ...values, dokumenterLegeerklæring: attachments };
+            setFieldValue(SøknadFormField.dokumenterLegeerklæring, attachments);
+            SøknadTempStorage.update(soknadId, formValues, StepID.DOKUMENTER_LEGEERKLÆRING, {
                 søker,
                 barn,
             });
@@ -61,20 +61,19 @@ const SmittevernDokumenterStep: React.FC<Props> = ({ barn, søker, soknadId }) =
 
     return (
         <SoknadFormStep
-            id={StepID.DOKUMENTER_SMITTEVERNHENSYN}
+            id={StepID.DOKUMENTER_LEGEERKLÆRING}
             includeValidationSummary={true}
             buttonDisabled={hasPendingUploads || attachmentsSizeOver24Mb}>
             <FormBlock>
                 <CounsellorPanel>
                     <Box padBottom={'l'}>
-                        <FormattedMessage id="steg.vedlegg_smittevernhensyn.info.1" />
+                        <FormattedMessage id="step.vedlegg_legeerklæring.counsellorpanel.1" />{' '}
+                        <Lenke href={getLenker(intl.locale).veiledningEttersendelse} target="_blank">
+                            <FormattedMessage id="step.vedlegg_legeerklæring.counsellorpanel.1.lenkeEttersending" />
+                        </Lenke>
                     </Box>
                     <Box padBottom={'l'}>
-                        <FormattedMessage id="steg.vedlegg_smittevernhensyn.info.2" />{' '}
-                        <Lenke href={getLenker(intl.locale).veiledningEttersendelse} target="_blank">
-                            <FormattedMessage id="steg.vedlegg_smittevernhensyn.info.3" />
-                        </Lenke>
-                        <FormattedMessage id="steg.vedlegg_smittevernhensyn.info.4" />
+                        <FormattedMessage id="step.vedlegg_legeerklæring.counsellorpanel.2" />{' '}
                     </Box>
                 </CounsellorPanel>
             </FormBlock>
@@ -82,13 +81,13 @@ const SmittevernDokumenterStep: React.FC<Props> = ({ barn, søker, soknadId }) =
                 <PictureScanningGuide />
             </FormBlock>
             <FormikVedleggsKomponent
-                uploadButtonLabel={intlHelper(intl, 'steg.vedlegg_smittevernhensyn.vedlegg')}
-                formikName={SøknadFormField.dokumenterSmittevernhensyn}
-                dokumenter={values.dokumenterSmittevernhensyn}
+                uploadButtonLabel={intlHelper(intl, 'step.vedlegg_legeerklæring.uploadBtn')}
+                formikName={SøknadFormField.dokumenterLegeerklæring}
+                dokumenter={values.dokumenterLegeerklæring}
                 alleDokumenterISøknaden={alleDokumenterISøknaden}
             />
         </SoknadFormStep>
     );
 };
 
-export default SmittevernDokumenterStep;
+export default LegeerklæringDokumenterStep;

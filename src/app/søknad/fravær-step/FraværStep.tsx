@@ -12,7 +12,6 @@ import FraværPerioderListAndDialog from '@navikt/sif-common-forms/lib/fravær/F
 import { useFormikContext } from 'formik';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import FormSection from '@navikt/sif-common-core/lib/components/form-section/FormSection';
-import { AndreUtbetalinger } from '../../types/AndreUtbetalinger';
 import { SøknadFormData, SøknadFormField } from '../../types/SøknadFormData';
 import { getPeriodeBoundaries } from '../../utils/periodeUtils';
 import SoknadFormComponents from '../SoknadFormComponents';
@@ -171,42 +170,6 @@ const FraværStep: React.FC = () => {
                                         addLabel: intlHelper(intl, 'step.fravaer.utenlandsopphold.addLabel'),
                                         modalTitle: intlHelper(intl, 'step.fravaer.utenlandsopphold.modalTitle'),
                                     }}
-                                    validate={getListValidator({ required: true })}
-                                />
-                            </FormBlock>
-                        )}
-                    </FormSection>
-                    <FormSection title={intlHelper(intl, 'step.fravaer.andreUtbetalinger')}>
-                        <SoknadFormComponents.YesOrNoQuestion
-                            name={SøknadFormField.harSøktAndreUtbetalinger}
-                            legend={intlHelper(intl, 'step.fravaer.harSøktAndreUtbetalinger.spm')}
-                            validate={getYesOrNoValidator()}
-                        />
-                        {values.harSøktAndreUtbetalinger === YesOrNo.YES && (
-                            <FormBlock>
-                                <SoknadFormComponents.CheckboxPanelGroup
-                                    name={SøknadFormField.andreUtbetalinger}
-                                    legend={intlHelper(intl, 'step.fravaer.hvilke_utbetalinger.spm')}
-                                    checkboxes={[
-                                        {
-                                            id: AndreUtbetalinger.dagpenger,
-                                            value: AndreUtbetalinger.dagpenger,
-                                            label: intlHelper(intl, 'andreUtbetalinger.DAGPENGER'),
-                                        },
-                                        {
-                                            id: AndreUtbetalinger.sykepenger,
-                                            value: AndreUtbetalinger.sykepenger,
-                                            label: intlHelper(intl, 'andreUtbetalinger.SYKEPENGER'),
-                                        },
-                                        {
-                                            id: AndreUtbetalinger.midlertidigkompensasjonsnfri,
-                                            value: AndreUtbetalinger.midlertidigkompensasjonsnfri,
-                                            label: intlHelper(
-                                                intl,
-                                                'andreUtbetalinger.MIDLERTIDIG_KOMPENSASJON_SN_FRI'
-                                            ),
-                                        },
-                                    ]}
                                     validate={getListValidator({ required: true })}
                                 />
                             </FormBlock>

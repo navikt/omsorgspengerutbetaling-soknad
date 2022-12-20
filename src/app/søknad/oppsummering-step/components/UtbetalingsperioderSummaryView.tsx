@@ -65,8 +65,8 @@ const getFraværAktivitetString = (aktivitetFravær: ApiAktivitet[], intl: IntlS
           });
 };
 
-const renderÅrsakElement = (årsak: FraværÅrsak, intl: IntlShape): JSX.Element | null => {
-    return årsak !== FraværÅrsak.ordinært ? (
+const renderÅrsakElement = (intl: IntlShape, årsak?: FraværÅrsak): JSX.Element | null => {
+    return årsak && årsak !== FraværÅrsak.ordinært ? (
         <div>
             {intlHelper(intl, 'steg.oppsummering.fravær.årsak', {
                 årsak: getFraværÅrsakTekstKort(årsak, intl),
@@ -102,7 +102,7 @@ export const renderUtbetalingsperiodeDag = (
         <div style={{ marginBottom: '.5rem' }}>
             {renderEnkeltdagElement(ISODateToDate(dag.dato))}
             Skulle jobbet {antallTimerSkulleJobbet}. Borte fra jobb {antallTimerBorteFraJobb}.
-            {renderÅrsakElement(dag.årsak, intl)}
+            {renderÅrsakElement(intl, dag.årsak)}
             {renderFraværAktivitetElement(dag.aktivitetFravær, visAktivitet, intl)}
         </div>
     );
@@ -121,13 +121,13 @@ const renderUtbetalingsperiode = (
             {periode.fraOgMed === periode.tilOgMed ? (
                 <div>
                     {renderEnkeltdagElement(fom)}
-                    {renderÅrsakElement(periode.årsak, intl)}
+                    {renderÅrsakElement(intl, periode.årsak)}
                     {renderFraværAktivitetElement(periode.aktivitetFravær, visAktivitet, intl)}
                 </div>
             ) : (
                 <div>
                     Fra og med {prettifyDate(fom)}, til og med {prettifyDate(tom)}
-                    {renderÅrsakElement(periode.årsak, intl)}
+                    {renderÅrsakElement(intl, periode.årsak)}
                     {renderFraværAktivitetElement(periode.aktivitetFravær, visAktivitet, intl)}
                 </div>
             )}

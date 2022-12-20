@@ -4,7 +4,6 @@ import Box from '@navikt/sif-common-core/lib/components/box/Box';
 import CounsellorPanel from '@navikt/sif-common-core/lib/components/counsellor-panel/CounsellorPanel';
 import FormBlock from '@navikt/sif-common-core/lib/components/form-block/FormBlock';
 import ResponsivePanel from '@navikt/sif-common-core/lib/components/responsive-panel/ResponsivePanel';
-import SummaryList from '@navikt/sif-common-core/lib/components/summary-list/SummaryList';
 import intlHelper from '@navikt/sif-common-core/lib/utils/intlUtils';
 import { getCheckedValidator } from '@navikt/sif-common-formik/lib/validation';
 import { Feiloppsummering, FeiloppsummeringFeil } from 'nav-frontend-skjema';
@@ -35,7 +34,9 @@ interface Props {
     dokumenterSmittevernhensyn: Attachment[];
     hjemmePgaStengtBhgSkole: boolean;
     dokumenterStengtBkgSkole: Attachment[];
+    dokumenterLegeerklæring: Attachment[];
     søker: Person;
+    visLegeerklæring: boolean;
     apiValues?: SøknadApiData;
 }
 
@@ -46,8 +47,10 @@ const OppsummeringStep: React.FC<Props> = ({
     dokumenterSmittevernhensyn,
     hjemmePgaStengtBhgSkole,
     dokumenterStengtBkgSkole,
+    dokumenterLegeerklæring,
     søker,
     apiValues,
+    visLegeerklæring,
 }) => {
     const intl = useIntl();
     const { sendSoknadStatus, sendSoknad } = useSoknadContext();
@@ -106,24 +109,6 @@ const OppsummeringStep: React.FC<Props> = ({
                             {/* Næringsinntekt */}
                             <SelvstendigSummary virksomhet={apiValues.selvstendigNæringsdrivende} />
 
-                            {/* Eventuelle andre inntekter */}
-                            <SummarySection header={intlHelper(intl, 'summary.andreIntekter.header')}>
-                                <SummaryBlock header={intlHelper(intl, 'step.fravaer.harSøktAndreUtbetalinger.spm')}>
-                                    <JaNeiSvar harSvartJa={apiValues._harSøktAndreUtbetalinger} />
-                                </SummaryBlock>
-                                {apiValues.andreUtbetalinger.length > 0 && (
-                                    <SummaryBlock
-                                        header={intlHelper(intl, 'steg.oppsummering.harSøktOmAndreUtbetalinger')}>
-                                        <SummaryList
-                                            items={apiValues.andreUtbetalinger}
-                                            itemRenderer={(utbetaling) => (
-                                                <span>{intlHelper(intl, `andreUtbetalinger.${utbetaling}`)}</span>
-                                            )}
-                                        />
-                                    </SummaryBlock>
-                                )}
-                            </SummarySection>
-
                             {/* Medlemskap i folketrygden */}
                             <SummarySection header={intlHelper(intl, 'steg.oppsummering.medlemskap.header')}>
                                 <MedlemskapSummaryView bosteder={apiValues.bosteder} />
@@ -131,6 +116,23 @@ const OppsummeringStep: React.FC<Props> = ({
 
                             {/* Vedlegg */}
                             <SummarySection header={intlHelper(intl, 'steg.oppsummering.dokumenter.header')}>
+                                {visLegeerklæring && (
+                                    <Box margin="s">
+                                        <SummaryBlock
+                                            header={intlHelper(
+                                                intl,
+                                                'steg.oppsummering.dokumenterLegeerklæring.header'
+                                            )}>
+                                            {dokumenterLegeerklæring.length === 0 && (
+                                                <FormattedMessage id={'steg.oppsummering.dokumenter.ikkelastetopp'} />
+                                            )}
+                                            {dokumenterLegeerklæring.length > 0 && (
+                                                <AttachmentList attachments={dokumenterLegeerklæring} />
+                                            )}
+                                        </SummaryBlock>
+                                    </Box>
+                                )}
+
                                 {hjemmePgaSmittevernhensyn && (
                                     <Box margin="s">
                                         <SummaryBlock
@@ -160,7 +162,7 @@ const OppsummeringStep: React.FC<Props> = ({
                                         </SummaryBlock>
                                     </Box>
                                 )}
-                                {!hjemmePgaSmittevernhensyn && !hjemmePgaStengtBhgSkole && (
+                                {!hjemmePgaSmittevernhensyn && !hjemmePgaStengtBhgSkole && !visLegeerklæring && (
                                     <Box margin="s">
                                         <FormattedMessage id={'steg.oppsummering.dokumenter.ingenVedlegg'} />
                                     </Box>
