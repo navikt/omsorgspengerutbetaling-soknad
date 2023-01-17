@@ -180,9 +180,10 @@
     "step.vedlegg_legeerklæring.pageTitle": "Legeerklæring",
     "step.vedlegg_legeerklæring.stepTitle": "Last opp legeerklæring",
     "step.vedlegg_legeerklæring.stepIndicatorLabel": "Last opp din legeerklæring",
-    "step.vedlegg_legeerklæring.counsellorpanel.1": "Når du søker om utbetaling for mer enn 3 sammenhengende dager, må du laste opp en legeerklæring som gjelder fra og med den 4. dagen. Hvis du ikke har legeerklæring tilgjengelig nå, kan du ettersende den så snart som mulig.",
-    "step.vedlegg_legeerklæring.counsellorpanel.1.lenkeEttersending": "Her får du veiledning til hvordan du ettersender dokumentasjon.",
-    "step.vedlegg_legeerklæring.counsellorpanel.2": "Du trenger altså ikke legeerklæring hvis du søker for kortere perioder, eller enkeltdager.",
+    "step.vedlegg_legeerklæring.counsellorpanel.1": "Hvis du søker om utbetaling for mer enn 3 sammenhengende dager, må du laste opp en legeerklæring som gjelder fra og med den 4. dagen.",
+    "step.vedlegg_legeerklæring.counsellorpanel.2": "Hvis du søker for kortere periode eller for enkeltdager trenger du ikke legeerklæring. Du kan da fortsette søknaden uten å laste opp noe.",
+    "step.vedlegg_legeerklæring.counsellorpanel.3": "Hvis du søker for mer enn 3 sammenhengende dager, men ikke har legeerklæring tilgjengelig nå,",
+    "step.vedlegg_legeerklæring.counsellorpanel.3.lenkeEttersending": "kan du ettersende den her.",
 
     "step.vedlegg_legeerklæring.uploadBtn": "Last opp legeerklæring",
     "step.vedlegg_legeerklæring.nextButtonLabel": "Fortsett",
