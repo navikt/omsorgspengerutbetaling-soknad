@@ -67,13 +67,16 @@ const LegeerklæringDokumenterStep: React.FC<Props> = ({ barn, søker, soknadId 
             <FormBlock>
                 <CounsellorPanel>
                     <Box padBottom={'l'}>
-                        <FormattedMessage id="step.vedlegg_legeerklæring.counsellorpanel.1" />{' '}
-                        <Lenke href={getLenker(intl.locale).veiledningEttersendelse} target="_blank">
-                            <FormattedMessage id="step.vedlegg_legeerklæring.counsellorpanel.1.lenkeEttersending" />
-                        </Lenke>
+                        <FormattedMessage id="step.vedlegg_legeerklæring.counsellorpanel.1" />
                     </Box>
                     <Box padBottom={'l'}>
-                        <FormattedMessage id="step.vedlegg_legeerklæring.counsellorpanel.2" />{' '}
+                        <FormattedMessage id="step.vedlegg_legeerklæring.counsellorpanel.2" />
+                    </Box>
+                    <Box padBottom={'l'}>
+                        <FormattedMessage id="step.vedlegg_legeerklæring.counsellorpanel.3" />
+                        <Lenke href={getLenker(intl.locale).veiledningEttersendelse} target="_blank">
+                            <FormattedMessage id="step.vedlegg_legeerklæring.counsellorpanel.3.lenkeEttersending" />
+                        </Lenke>
                     </Box>
                 </CounsellorPanel>
             </FormBlock>
