@@ -11,7 +11,7 @@ interface BarnResultType {
 }
 const getBarnRemoteData = async (): Promise<BarnRemoteData> => {
     try {
-        const { data } = await api.get<BarnResultType>(ApiEndpoint.BARN, 'ytelse=omsorgspenger-utbetaling-snf');
+        const { data } = await api.get<BarnResultType>(ApiEndpoint.BARN);
         return Promise.resolve(success(data.barn));
     } catch (error) {
         return Promise.reject(failure(error));
