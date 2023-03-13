@@ -60,7 +60,7 @@
         "@testing-library/react": "^12.1.5",
         "@types/enzyme": "^3.10.12",
         "@types/intl": "^1.2.0",
-        "@types/jest": "^29.2.5",
+        "@types/jest": "^29.4.1",
         "@types/lodash": "^4.14.191",
         "@types/object-hash": "^2.2.1",
         "@types/react": "^17.0.40",
