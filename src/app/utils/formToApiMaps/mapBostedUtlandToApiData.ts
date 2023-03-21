@@ -1,5 +1,4 @@
-import { countryIsMemberOfEøsOrEfta } from '@navikt/sif-common-core/lib/utils/countryUtils';
-import { getCountryName } from '@navikt/sif-common-formik/lib';
+import { countryIsMemberOfEøsOrEfta, getCountryName } from '@navikt/sif-common-formik/lib';
 import { BostedUtland } from '@navikt/sif-common-forms/lib';
 import { dateToISODate } from '@navikt/sif-common-utils';
 import { UtenlandsoppholdApiData } from '../../types/SøknadApiData';
