@@ -29,6 +29,8 @@ spec:
             memory: 128Mi
     accessPolicy:
         outbound:
+            rules: 
+             - application: k9-brukerdialog-api
             external:
             {{#each externalHosts as |host|}}
             - host: {{host}}
