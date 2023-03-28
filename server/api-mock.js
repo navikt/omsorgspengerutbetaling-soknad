@@ -41,7 +41,7 @@ const barnMock = {
     ],
 };
 
-const MELLOMLAGRING_JSON = `${os.tmpdir()}/omsorgspenger-utbetaling-arbeidstaker-mellomlagring.json`;
+const MELLOMLAGRING_JSON = `${os.tmpdir()}/omsorgspenger-utbetaling-snf-mellomlagring.json`;
 
 const isJSON = (str) => {
     try {
