@@ -19,7 +19,7 @@ const envSettings = () => {
     const appSettings = `
      window.appSettings = {
          API_URL: '${API_URL}',
-         VEDLEGG_API_URL: '${VEDLEGG_API_URL},
+         VEDLEGG_API_URL: '${VEDLEGG_API_URL}',
          FRONTEND_API_PATH: '${FRONTEND_API_PATH}',
          FRONTEND_VEDLEGG_URL:'${FRONTEND_VEDLEGG_URL}',
          PUBLIC_PATH: '${PUBLIC_PATH}',
