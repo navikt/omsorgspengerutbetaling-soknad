@@ -14,9 +14,7 @@
         "start-no-decorator": "node ./src/build/scripts/start-dev-no-decorator.js",
         "snd": "node ./src/build/scripts/start-dev-no-decorator.js",
         "start": "node ./src/build/scripts/start-dev.js",
-        "test": "react-scripts test --watchAll=false --env=jsdom",
-        "snyk-protect": "snyk-protect",
-        "prepare": "npm run snyk-protect"
+        "test": "react-scripts test --watchAll=false --env=jsdom"
     },
     "dependencies": {
         "@navikt/sif-common-amplitude": "^2.7.3",
@@ -26,7 +24,6 @@
         "@navikt/sif-common-sentry": "0.5.5",
         "@navikt/sif-common-soknad": "^6.0.1",
         "@navikt/sif-common-utils": "^3.17.2",
-        "@snyk/protect": "^1.1128.0",
         "axios": "^0.27.2",
         "busboy": "^1.6.0",
         "compression": "^1.7.4",
@@ -100,6 +97,5 @@
     },
     "resolutions": {
         "babel-core": "7.0.0-bridge.0"
-    },
-    "snyk": true
+    }
 }
